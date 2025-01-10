@@ -8,7 +8,6 @@ public class PopUpMainScene : UI_Popup
 {
     enum Buttons
     {
-        GameStart,
         GameGuide,
         GameOut
     }
@@ -22,14 +21,17 @@ public class PopUpMainScene : UI_Popup
         base.Init();
         SetResolution();
         Bind<Button>(typeof(Buttons));
-        GetButton((int)Buttons.GameStart).gameObject.AddUIEvent(GameStartClicked);
+
         GetButton((int)Buttons.GameGuide).gameObject.AddUIEvent(GameGuideClicked);
         GetButton((int)Buttons.GameOut).gameObject.AddUIEvent(GameOut);
     }
+    /*
     void GameStartClicked(PointerEventData eventData)
     {
         Managers.Scene.LoadScene(Define.Scene.MainGame);
     }
+    */
+
     void GameGuideClicked(PointerEventData eventData)
     {
         Managers.UI.ShowPopUpUI<GameGuide>();
