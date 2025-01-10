@@ -4,11 +4,18 @@ public class Enemy : MonoBehaviour
 {
     public float moveSpeed = 2f;  // 적의 이동 속도
     [SerializeField] private GamePlayDefine.AttackType enemyType = GamePlayDefine.AttackType.D;
+    [SerializeField] private float upDownDebuf = 0.5f;
+    [SerializeField] private float colliderDebuf = 0.5f;
     private Transform playerTransform;
 
     private void Start()
     {
         playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재위치받기
+
+        if (enemyType == GamePlayDefine.AttackType.W || enemyType == GamePlayDefine.AttackType.S)
+        {
+            moveSpeed *= upDownDebuf;
+        }
     }
 
     private void Update()
@@ -28,6 +35,7 @@ public class Enemy : MonoBehaviour
         if (collision.tag == "detectArea")
         {
             Managers.Game.AddAttackableEnemy(enemyType.ToString(), this.gameObject); 
+            moveSpeed *= colliderDebuf;
         }
         else if (collision.tag == "Player")
         {
