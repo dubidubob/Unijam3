@@ -1,17 +1,28 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class MovingEnemy : MonoBehaviour
 {
+    /*phase 변수*/
     public float moveSpeed = 2f;  // 적의 이동 속도
+
     [SerializeField] private GamePlayDefine.AttackType enemyType = GamePlayDefine.AttackType.D;
-    [SerializeField] private float upDownDebuf = 0.5f;
-    [SerializeField] private float colliderDebuf = 0.5f;
+    [SerializeField] private float upDownDebuf = 0.7f;
+    [SerializeField] private float colliderDebuf = 0.8f;
     private Transform playerTransform;
+
+    public void SetDead()
+    {
+        Destroy(gameObject);
+    }
 
     private void Start()
     {
         playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재위치받기
+        DebufUpdown();
+    }
 
+    private void DebufUpdown()
+    {
         if (enemyType == GamePlayDefine.AttackType.W || enemyType == GamePlayDefine.AttackType.S)
         {
             moveSpeed *= upDownDebuf;
@@ -41,9 +52,5 @@ public class Enemy : MonoBehaviour
         {
             SetDead();
         }
-    }
-    public void SetDead()
-    {
-        Destroy(gameObject);
     }
 }

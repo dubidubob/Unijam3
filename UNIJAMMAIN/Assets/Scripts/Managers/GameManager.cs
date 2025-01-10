@@ -44,7 +44,7 @@ public class GameManager
                 return;
             }
 
-            go.GetComponent<Enemy>().SetDead();
+            go.GetComponent<MovingEnemy>().SetDead();
             return;
         }
 
