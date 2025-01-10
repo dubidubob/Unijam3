@@ -17,7 +17,6 @@ public class DataManager
         public Dictionary<int, int> currentLevel = new Dictionary<int, int>();
     public string Stage;
         public Define.WholeGameData gameData;
-        public Define.Items Items;
         public Define.VolumeData volumeData = new Define.VolumeData();
 
     public void Init()
