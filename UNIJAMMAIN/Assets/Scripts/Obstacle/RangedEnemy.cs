@@ -21,9 +21,10 @@ public class RangedEnemy : MonoBehaviour
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
-                isDying = true;
                 DyingAnim();
             });
+
+        transform.localScale = Vector3.one; 
     }
 
     private void DyingAnim()
@@ -39,7 +40,11 @@ public class RangedEnemy : MonoBehaviour
         spriteRenderer
             .DOFade(0f, 0.7f)
             .OnComplete(() =>
-            SetDead(false));
+            {
+                isDying = true;
+                SetDead(false);
+            } 
+        );
     }
 
     public void SetDead(bool isAttackedByPlayer = true) 
