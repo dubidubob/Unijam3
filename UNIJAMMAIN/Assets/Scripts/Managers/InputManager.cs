@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,16 +6,35 @@ public class InputManager
 {
     public Action KeyAction = null;
     public Action<Define.MouseEvent> MouseAction = null;
+    public Action<String> KeycodeAction = null;
     bool _pressed = false;
     public void OnUpdate()
     {
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
-        }
+        } 
         if (Input.anyKey && KeyAction != null)
         {
             KeyAction.Invoke();
+
+            {
+                // 체크할 키 배열
+                KeyCode[] keysToCheck = {
+                KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D,
+                KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow
+            };
+
+                // 눌린 키가 배열에 있는지 확인
+                foreach (KeyCode key in keysToCheck)
+                {
+                    if (Input.GetKeyDown(key))
+                    {
+                        KeycodeAction.Invoke(key.ToString());
+                        return;
+                    }
+                }
+            }
         }
         if (MouseAction != null)
         {

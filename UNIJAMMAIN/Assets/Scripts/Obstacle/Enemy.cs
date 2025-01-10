@@ -2,15 +2,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public enum AttackType //무슨 키로 받을지
-    {
-        keyW,
-        keyA,
-        keyS,
-        keyD,
-        MaxCnt
-    }
-
     public enum State // player의 콜라이더 안에 들어가면 바뀜
     { 
         Attackable,

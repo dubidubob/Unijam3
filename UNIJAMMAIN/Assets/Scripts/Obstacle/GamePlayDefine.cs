@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameDefine : MonoBehaviour
+public class GamePlayDefine
 {
-    void Start()
+    public enum AttackType //무슨 키로 받을지
     {
-        
-    }
-
-    void Update()
-    {
-        
+        keyW,
+        keyA,
+        keyS,
+        keyD,
+        MaxCnt
     }
 }
