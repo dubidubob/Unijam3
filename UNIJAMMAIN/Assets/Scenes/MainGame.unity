@@ -153,10 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypeSO: {fileID: 11400000, guid: 1d1844feaf0c26144983d8a02bd24731, type: 2}
-  firstPhase: 7
-  secondPhase: 5
-  thirdPhase: 3
+  firstPhaseDuration: 5
+  secondPhaseDuration: 5
+  thirdPhaseDuration: 2
   testData: 0
+  initialInterval: 0.2
 --- !u!4 &72922435
 Transform:
   m_ObjectHideFlags: 0

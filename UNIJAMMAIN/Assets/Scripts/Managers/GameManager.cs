@@ -41,6 +41,7 @@ public class GameManager
             GameObject go = attacks[key].Dequeue();
             if (go == null)
             {
+                Debug.LogError("왜 go가 null이 됐지?");
                 return;
             }
 

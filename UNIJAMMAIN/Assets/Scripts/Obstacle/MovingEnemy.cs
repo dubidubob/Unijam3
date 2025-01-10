@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
 {
     public float moveSpeed = 2f;  // ���� �̵� �ӵ�
@@ -8,15 +10,17 @@ public class MovingEnemy : MonoBehaviour
     [SerializeField] private float upDownDebuf = 0.7f;
     [SerializeField] private float colliderDebuf = 0.8f;
     private Transform playerTransform;
-
+    private Poolable poolable;
     public void SetDead()
     {
-        Destroy(gameObject);
+        Managers.Pool.Push(poolable);
+        //Destroy(gameObject);
     }
 
     private void Start()
     {
         playerTransform = GameObject.FindWithTag("Player").transform; // �÷��̾��� ������ġ�ޱ�
+        poolable = GetComponent<Poolable>();
         DebufUpdown();
     }
 

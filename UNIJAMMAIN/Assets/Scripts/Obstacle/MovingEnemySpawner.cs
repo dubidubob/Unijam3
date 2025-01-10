@@ -10,11 +10,19 @@ public class MovingEnemySpawner : MonoBehaviour
     [SerializeField] float thirdPhaseDuration = 2f;
     [SerializeField] float testData = 0;
 
-    [SerializeField] private float initialInterval = 1f; // �ʱ� ���� ����(��)
+    [SerializeField] private float initialInterval = 0.5f; // �ʱ� ���� ����(��)
 
     private float currentInterval;
     private MovingAttackType enemyType;
 
+    private void Awake()
+    {
+        //for (int i = 0; i < (int)MovingAttackType.MaxCnt; i++)
+        //{
+        //    var enemy = enemyTypeSO.GetEnemies((MovingAttackType)i);
+        //    Managers.Pool.CreatePool(enemy.go);
+        //}
+    }
     private void OnEnable()
     {
         currentInterval = initialInterval;
@@ -49,8 +57,11 @@ public class MovingEnemySpawner : MonoBehaviour
     {
         enemyType = (MovingAttackType)Random.Range(0, (int)MovingAttackType.MaxCnt);
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
-        GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
-        go.GetComponent<MovingEnemy>();
+
+        Poolable poolable = Managers.Pool.Pop(enemy.go);
+        poolable.gameObject.transform.position = new Vector3(enemy.pos.x, enemy.pos.y, 0);
+
+        //GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
         Debug.Log($"instantiate {enemyType}");
     }
 }
