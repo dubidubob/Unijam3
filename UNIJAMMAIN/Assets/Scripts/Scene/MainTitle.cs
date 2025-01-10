@@ -17,6 +17,7 @@ public class MainTitle : BaseScene
     private void Start()
     {
         Init();
+        Managers.UI.ShowPopUpUI<PopUpMainScene>();
     }
 
     public void IsStart()
