@@ -17,7 +17,6 @@ public class GamePlayDefine
         LeftUp,
         LeftDown,
         RightUp,
-        RightDown,
-        MaxCnt
+        RightDown
     }
 }

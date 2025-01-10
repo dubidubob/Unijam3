@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using static EnemyTypeSO;
+using static EnemyTypeSO2;
 using static GamePlayDefine;
 
 public class SpawnerManager : MonoBehaviour
@@ -11,7 +12,7 @@ public class SpawnerManager : MonoBehaviour
     [SerializeField] float thirdPhaseDuration = 2f;
     [SerializeField] float testData = 0;
 
-    [SerializeField] private float initialInterval = 1f; // ÃÊ±â °ø°Ý °£°Ý(ÃÊ)
+    [SerializeField] private float initialInterval = 1f; // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½)
 
     private float currentInterval;
     private AttackType enemyType;
@@ -38,11 +39,11 @@ public class SpawnerManager : MonoBehaviour
 
         while (remainingTime > 0)
         {
-            // ÁöÁ¤µÈ °£°Ý¸¶´Ù ³ëµå¸¦ »ý¼º
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½ï¿½ ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½
             yield return new WaitForSeconds(currentInterval);
             InitiateRandomNode();
 
-            // ³²Àº ½Ã°£ ¾÷µ¥ÀÌÆ®
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
             remainingTime -= currentInterval;
             testData = remainingTime;
         }
@@ -54,6 +55,13 @@ public class SpawnerManager : MonoBehaviour
         EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
         GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
         go.GetComponent<MovingEnemy>();
+        Debug.Log($"instantiate {enemyType}");
+    }
+    private void InitiateRandomNode2()
+    {
+        rangedEnemyType = (RangedAttackType)Random.Range(0, (int)RangedAttackType.MaxCnt);
+        EnemyData2 enemy = enemyTypeS02.GetEnemies(rangedEnemyType);
+        GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
         Debug.Log($"instantiate {enemyType}");
     }
 }

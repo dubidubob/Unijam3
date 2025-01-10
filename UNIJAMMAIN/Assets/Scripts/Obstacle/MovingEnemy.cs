@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class MovingEnemy : MonoBehaviour
 {
-    /*phase º¯¼ö*/
-    public float moveSpeed = 2f;  // ÀûÀÇ ÀÌµ¿ ¼Óµµ
+    /*phase ï¿½ï¿½ï¿½ï¿½*/
+    public float moveSpeed = 2f;  // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½
 
     [SerializeField] private GamePlayDefine.AttackType enemyType = GamePlayDefine.AttackType.D;
     [SerializeField] private float upDownDebuf = 0.7f;
@@ -17,7 +17,7 @@ public class MovingEnemy : MonoBehaviour
 
     private void Start()
     {
-        playerTransform = GameObject.FindWithTag("Player").transform; // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀçÀ§Ä¡¹Þ±â
+        playerTransform = GameObject.FindWithTag("Player").transform; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½Þ±ï¿½
         DebufUpdown();
     }
 
@@ -31,14 +31,17 @@ public class MovingEnemy : MonoBehaviour
 
     private void Update()
     {
-        // ÇÃ·¹ÀÌ¾î¸¦ ÇâÇÑ ¹æÇâ °è»ê
-        Vector3 direction = (playerTransform.position - transform.position).normalized;
+        if (ArrowCheck==false)
+        {
+            // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            Vector3 direction = (playerTransform.position - transform.position).normalized;
 
-        // ÀûÀÇ »õ·Î¿î À§Ä¡ °è»ê
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerTransform.position, moveSpeed * Time.deltaTime);
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, playerTransform.position, moveSpeed * Time.deltaTime);
 
-        // ÀûÀ» »õ·Î¿î À§Ä¡·Î ÀÌµ¿
-        transform.position = newPosition;
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½
+            transform.position = newPosition;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
