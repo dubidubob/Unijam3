@@ -2,7 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
-[RequireComponent(typeof(RangedEnemyActivater))] 
+[RequireComponent(typeof(RangedEnemyActivater))]
+
 public class SpawnController : MonoBehaviour
 {
     private MovingEnemySpawner movingEnemySpawner;
@@ -41,32 +42,37 @@ public class SpawnController : MonoBehaviour
         phase1.movingPhaseDuration = 12f;
         phase1.movingDefaultSpeed = 2f;
         phase1.movingTargetSpeed = 2.5f;
-        phase1.movingIntervalDecRate = 0.9f;
+        phase1.movingIntervalDecRate = 0.1f;
 
         phase2.movingPhaseDuration = 12f;
         phase2.movingDefaultSpeed = phase1.movingTargetSpeed; //2.5
         phase2.movingTargetSpeed = 3f;
-        phase2.movingIntervalDecRate = 0.8f;
+        phase2.movingIntervalDecRate = 0.1f;
         phase2.rangedDefaultLifetime = 3f;
         phase2.rangedTargetLifetime = 2f;
-        phase2.rangedIntervalDecRate = 0.6f;
+        phase2.rangedIntervalDecRate = 0.1f;
 
         phase3.movingPhaseDuration = 6f;
         phase3.movingDefaultSpeed = phase2.movingTargetSpeed; //3
         phase3.movingTargetSpeed = 3.5f;
-        phase3.movingIntervalDecRate = 0.7f;
+        phase3.movingIntervalDecRate = 0.1f;
         phase3.rangedDefaultLifetime = phase2.rangedTargetLifetime; //2
         phase3.rangedTargetLifetime = 1f;
-        phase3.rangedIntervalDecRate = 0.6f;
+        phase3.rangedIntervalDecRate = 0.1f;
         phase3.canMouseInputTwo = false;
-        phase3.mouseIntervalDecRate = 0.6f;
+        phase3.mouseIntervalDecRate = 0.1f;
     }
 
-    [SerializeField] private float initialInterval = 2f;
+    [SerializeField] private float initialInterval = 1.5f;
 
-    private float currentInterval;
-    private float timeElapsed = 0f;    // 속도가 증가하는 데 사용될 누적 시간
+    private float currentMovingInterval;
+    private float currentRangedInterval;
+    
+    private float movingTimeElapsed = 0f;    // 속도가 증가하는 데 사용될 누적 시간
+    private float rangedTimeElapsed = 0f;
+
     private float currentSpeed;        // 각 스폰 시점에 적용할 현재 속도
+    private float currentLifetime;
     
     private void Awake()
     {
@@ -78,7 +84,8 @@ public class SpawnController : MonoBehaviour
     private void Start()
     {
         InitPhases();
-        currentInterval = initialInterval;
+        currentMovingInterval = initialInterval;
+        currentRangedInterval = initialInterval;
         currentSpeed = phase1.movingDefaultSpeed;
         StartCoroutine(PhaseRoutine());
     }
@@ -110,38 +117,68 @@ public class SpawnController : MonoBehaviour
     }
 
     private IEnumerator RunTouch(PhaseMouse phase) { yield return null; }
-    private IEnumerator RunRanged(PhaseRanged phase) { yield return null; }
-    private IEnumerator RunMoving(PhaseMoving phase)
+    private IEnumerator RunRanged(PhaseRanged phase) 
     {
         float remainingTime = phase.movingPhaseDuration;
+        bool isDecIntervalChecked = false;
 
         while (remainingTime > 0)
         {
-            if(remainingTime < phase.movingPhaseDuration*0.5) //phase 시간의 반이 지나가면 간격이 준다.
-                currentInterval *= phase.movingIntervalDecRate;
+            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase 시간의 반이 지나가면 간격이 준다.
+            {
+                currentRangedInterval -= phase.rangedIntervalDecRate;
+                isDecIntervalChecked = true;
+            }
 
-            yield return new WaitForSeconds(currentInterval);
-            UpdateCurrentSpeed(phase.movingPhaseDuration, phase.movingDefaultSpeed, phase.movingTargetSpeed);
+            yield return new WaitForSeconds(currentRangedInterval);
+            currentLifetime = UpdateCurrentData(rangedTimeElapsed, phase.movingPhaseDuration, phase.rangedDefaultLifetime, phase.rangedTargetLifetime);
+            GetRangedEnemy(currentLifetime);
+
+            remainingTime -= currentMovingInterval;
+        }
+    }
+    private IEnumerator RunMoving(PhaseMoving phase)
+    {
+        float remainingTime = phase.movingPhaseDuration;
+        bool isDecIntervalChecked = false;
+
+        while (remainingTime > 0)
+        {
+            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase 시간의 반이 지나가면 간격이 준다.
+            {
+                currentMovingInterval -= phase.movingIntervalDecRate;
+                isDecIntervalChecked = true;
+            }
+
+            yield return new WaitForSeconds(currentMovingInterval);
+            currentSpeed = UpdateCurrentData(movingTimeElapsed, phase.movingPhaseDuration, phase.movingDefaultSpeed, phase.movingTargetSpeed);
             GetMovingEnemy(currentSpeed);
 
-            remainingTime -= currentInterval;
+            remainingTime -= currentMovingInterval;
         }
     }
 
-    private void UpdateCurrentSpeed(float timeToMaxSpeed, float defaultSpeed, float targetSpeed)
+    private float UpdateCurrentData(float timeElapsed, float timeToTargetData, float defaultData, float targetData)
     {
-        if (timeElapsed < timeToMaxSpeed)
+        if (timeElapsed < timeToTargetData)
         {
-            timeElapsed += currentInterval;
+            timeElapsed += currentMovingInterval;
 
-            float t = Mathf.Clamp01(timeElapsed / timeToMaxSpeed);
-            currentSpeed = Mathf.Lerp(defaultSpeed, targetSpeed, t);
+            float t = Mathf.Clamp01(timeElapsed / timeToTargetData);
+            return Mathf.Lerp(defaultData, targetData, t);
         }
+
+        return targetData;
     }
 
     private void GetMovingEnemy(float currentSpeed)
     {
         movingEnemySpawner.InitiateRandomNode(currentSpeed);
+    }
+
+    private void GetRangedEnemy(float currentLifetime)
+    {
+        rangedEnemyActivater.ActivateEnemy(currentLifetime);
     }
 }
 

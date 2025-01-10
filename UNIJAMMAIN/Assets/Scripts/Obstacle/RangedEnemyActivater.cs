@@ -66,7 +66,7 @@ public class RangedEnemyActivater : MonoBehaviour
         yMax = halfHeight;
     }
 
-    public void ActivateEnemy()
+    public void ActivateEnemy(float lifeTime)
     {
         CheckActivated();
 
@@ -83,6 +83,8 @@ public class RangedEnemyActivater : MonoBehaviour
             Debug.Log($"{go.attackType}");
         }
         var chosenEnemy = deactivatedEnemies[randomIndex]; // 미리 적을 변수에 담아둔다.
+        RangedEnemy rangedEnemy = chosenEnemy.go.GetComponent<RangedEnemy>();
+        rangedEnemy.SetLifetime(lifeTime);
 
         activatedEnemies.Add(chosenEnemy); // 활성 리스트로 이동
         deactivatedEnemies.RemoveAt(randomIndex); // 비활성 리스트에서 제거

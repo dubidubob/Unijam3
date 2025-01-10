@@ -47,6 +47,11 @@ public class RangedEnemy : MonoBehaviour
         );
     }
 
+    public void SetLifetime(float lifetime)
+    {
+        lifeDuration = lifetime;
+    }
+
     public void SetDead(bool isAttackedByPlayer = true) 
     {
         if (!isAttackedByPlayer)
