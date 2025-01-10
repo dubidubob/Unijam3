@@ -26,10 +26,4 @@ public class GameManager
     {
         currentState = GameState.Battle;
     }
-
-    public void GoJump()
-    {
-        
-    }
-
 }
