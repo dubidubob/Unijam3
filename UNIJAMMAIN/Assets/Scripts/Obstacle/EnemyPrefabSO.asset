@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - AttackType: 0
-    go: {fileID: 2720163792543638372, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+    go: {fileID: 6675202317933231663, guid: 3e67de0a07cd4c947a7571c2c526ba8f, type: 3}
     pos: {x: -8, y: 0, z: 0}
   - AttackType: 1
-    go: {fileID: 2720163792543638372, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+    go: {fileID: 7900203436363712245, guid: 93a95e33e13422a488ea5b8477279fc6, type: 3}
     pos: {x: 8, y: 0, z: 0}
   - AttackType: 2
-    go: {fileID: 2720163792543638372, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+    go: {fileID: 3334619242903778439, guid: 9875b3b94099a8b49911e1c6cc6e11bb, type: 3}
     pos: {x: 0, y: 5, z: 0}
   - AttackType: 3
-    go: {fileID: 2720163792543638372, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+    go: {fileID: 5146144790307344661, guid: 26b829a2b23a26245a458a37676809ad, type: 3}
     pos: {x: 0, y: -5, z: 0}

@@ -6,16 +6,23 @@ using static GamePlayDefine;
 public class SpawnerManager : MonoBehaviour
 {
     [SerializeField] EnemyTypeSO enemyTypeSO;
+    [SerializeField] float defaultTime = 20f;
     AttackType enemyType;
 
-    void Start()
-    {   
-        InitiateRandomNode();
-        InitiateRandomNode();
-        InitiateRandomNode();
-        InitiateRandomNode();
+    private void OnEnable()
+    {
+        StartCoroutine(TestPhase());
     }
-    
+    private IEnumerator TestPhase()
+    {
+        float curTime = defaultTime;
+        while (defaultTime > 0) {
+            yield return new WaitForSeconds(0.5f);
+            InitiateRandomNode();
+            defaultTime--;
+        }
+    }
+
     private void InitiateRandomNode()
     {
         enemyType = (AttackType)Random.Range(0, (int)AttackType.MaxCnt);

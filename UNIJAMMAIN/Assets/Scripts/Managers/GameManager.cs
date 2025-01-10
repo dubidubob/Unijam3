@@ -39,11 +39,11 @@ public class GameManager
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
         {
             GameObject go = attacks[key].Dequeue();
-            if (go.GetComponent<Enemy>() == null)
+            if (go == null)
             {
-                Debug.Log("enemy 부착 필요");
                 return;
             }
+
             go.GetComponent<Enemy>().SetDead();
             return;
         }
