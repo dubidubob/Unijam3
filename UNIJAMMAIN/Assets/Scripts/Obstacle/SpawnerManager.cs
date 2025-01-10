@@ -31,16 +31,16 @@ public class SpawnerManager : MonoBehaviour
         string str = "";
         switch (attack)
         {
-            case AttackType.arrowLeft:
+            case AttackType.LeftArrow:
                 str = "LeftArrow";
                 break;
-            case AttackType.arrowRight:
+            case AttackType.RightArrow:
                 str = "RightArrow";
                 break;
-            case AttackType.arrowUp:
+            case AttackType.UpArrow:
                 str = "UpArrow";
                 break;
-            case AttackType.arrowDown:
+            case AttackType.DownArrow:
                 str = "DownArrow";
                 break;
         }

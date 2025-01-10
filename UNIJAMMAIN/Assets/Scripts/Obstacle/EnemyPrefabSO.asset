@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: EnemyPrefabSO
   m_EditorClassIdentifier: 
   enemies:
-  - AttackType: 1
-    go: {fileID: 5203033918725381660, guid: 5da37da780192144699fe2f158dbfbf7, type: 3}
-    pos: {x: -8, y: 0, z: 0}
   - AttackType: 0
-    go: {fileID: 5203033918725381660, guid: 5da37da780192144699fe2f158dbfbf7, type: 3}
+    go: {fileID: 2720163792543638372, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+    pos: {x: -8, y: 0, z: 0}
+  - AttackType: 1
+    go: {fileID: 2720163792543638372, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
     pos: {x: 8, y: 0, z: 0}
   - AttackType: 2
-    go: {fileID: 5203033918725381660, guid: 5da37da780192144699fe2f158dbfbf7, type: 3}
+    go: {fileID: 2720163792543638372, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
     pos: {x: 0, y: 5, z: 0}
   - AttackType: 3
-    go: {fileID: 5203033918725381660, guid: 5da37da780192144699fe2f158dbfbf7, type: 3}
+    go: {fileID: 2720163792543638372, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
     pos: {x: 0, y: -5, z: 0}

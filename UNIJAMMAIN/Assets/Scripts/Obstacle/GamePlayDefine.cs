@@ -6,10 +6,10 @@ public class GamePlayDefine
 {
     public enum AttackType //무슨 키로 받을지
     {
-        arrowRight,
-        arrowLeft,
-        arrowUp,
-        arrowDown,
+        LeftArrow,
+        RightArrow,
+        UpArrow,
+        DownArrow,
         MaxCnt
     }
 }
