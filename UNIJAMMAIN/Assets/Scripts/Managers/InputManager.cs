@@ -10,10 +10,10 @@ public class InputManager
     bool _pressed = false;
     public void OnUpdate()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
+        //if (EventSystem.current.IsPointerOverGameObject())
+        //{
+        //    return;
+        //}
         if (Input.anyKey)
         {
             {

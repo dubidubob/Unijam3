@@ -66,7 +66,7 @@ public class RangedEnemyActivater : MonoBehaviour
         yMax = halfHeight;
     }
 
-    private void ActivateEnemy()
+    public void ActivateEnemy()
     {
         CheckActivated();
 
