@@ -13,7 +13,7 @@ public class MovingEnemySpawner : MonoBehaviour
     [SerializeField] private float initialInterval = 1f; // �ʱ� ���� ����(��)
 
     private float currentInterval;
-    private AttackType enemyType;
+    private MovingAttackType enemyType;
 
     private void OnEnable()
     {
@@ -47,7 +47,7 @@ public class MovingEnemySpawner : MonoBehaviour
 
     private void InitiateRandomNode()
     {
-        enemyType = (AttackType)Random.Range(0, (int)AttackType.MaxCnt);
+        enemyType = (MovingAttackType)Random.Range(0, (int)MovingAttackType.MaxCnt);
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
         GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
         go.GetComponent<MovingEnemy>();

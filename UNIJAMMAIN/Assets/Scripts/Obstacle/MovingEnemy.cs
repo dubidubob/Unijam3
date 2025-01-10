@@ -4,7 +4,7 @@ public class MovingEnemy : MonoBehaviour
 {
     public float moveSpeed = 2f;  // ���� �̵� �ӵ�
 
-    [SerializeField] private GamePlayDefine.AttackType enemyType = GamePlayDefine.AttackType.D;
+    [SerializeField] private GamePlayDefine.MovingAttackType enemyType = GamePlayDefine.MovingAttackType.D;
     [SerializeField] private float upDownDebuf = 0.7f;
     [SerializeField] private float colliderDebuf = 0.8f;
     private Transform playerTransform;
@@ -22,7 +22,7 @@ public class MovingEnemy : MonoBehaviour
 
     private void DebufUpdown()
     {
-        if (enemyType == GamePlayDefine.AttackType.W || enemyType == GamePlayDefine.AttackType.S)
+        if (enemyType == GamePlayDefine.MovingAttackType.W || enemyType == GamePlayDefine.MovingAttackType.S)
         {
             moveSpeed *= upDownDebuf;
         }

@@ -7,14 +7,14 @@ public class EnemyTypeSO : ScriptableObject
     [System.Serializable]
     public struct EnemyData
     { 
-        public GamePlayDefine.AttackType AttackType;
+        public GamePlayDefine.MovingAttackType AttackType;
         public GameObject go;
         public Vector3 pos;
     }
 
     [SerializeField] private List<EnemyData> enemies;
 
-    public EnemyData GetEnemies(GamePlayDefine.AttackType attack)
+    public EnemyData GetEnemies(GamePlayDefine.MovingAttackType attack)
     {
         EnemyData go = new EnemyData();
 
