@@ -10,7 +10,6 @@ public class InputManager
     bool _pressed = false;
     public void OnUpdate()
     {
-        Debug.Log("key invoked");
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
