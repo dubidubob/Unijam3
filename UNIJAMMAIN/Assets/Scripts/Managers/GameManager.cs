@@ -60,7 +60,7 @@ public class GameManager
         attacks[key].Enqueue(go);
     }
 
-    private void DecHealth()
+    public void DecHealth()
     {
         Debug.Log("Dec Health");
     }

@@ -1,10 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using static EnemyTypeSO;
-using static EnemyTypeSO2;
 using static GamePlayDefine;
 
-public class SpawnerManager : MonoBehaviour
+public class MovingEnemySpawner : MonoBehaviour
 {
     [SerializeField] EnemyTypeSO enemyTypeSO;
     [SerializeField] float firstPhaseDuration = 5f;
@@ -39,11 +37,9 @@ public class SpawnerManager : MonoBehaviour
 
         while (remainingTime > 0)
         {
-            // ������ ���ݸ��� ��带 ����
             yield return new WaitForSeconds(currentInterval);
             InitiateRandomNode();
 
-            // ���� �ð� ������Ʈ
             remainingTime -= currentInterval;
             testData = remainingTime;
         }
@@ -52,16 +48,9 @@ public class SpawnerManager : MonoBehaviour
     private void InitiateRandomNode()
     {
         enemyType = (AttackType)Random.Range(0, (int)AttackType.MaxCnt);
-        EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
+        EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
         GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
         go.GetComponent<MovingEnemy>();
-        Debug.Log($"instantiate {enemyType}");
-    }
-    private void InitiateRandomNode2()
-    {
-        rangedEnemyType = (RangedAttackType)Random.Range(0, (int)RangedAttackType.MaxCnt);
-        EnemyData2 enemy = enemyTypeS02.GetEnemies(rangedEnemyType);
-        GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
         Debug.Log($"instantiate {enemyType}");
     }
 }
