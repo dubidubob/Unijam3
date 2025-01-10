@@ -49,4 +49,9 @@ public class Enemy : MonoBehaviour
     { 
 
     }
+
+    public void SetDead()
+    { 
+        Destroy(gameObject);
+    }
 }

@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager
 {
@@ -26,16 +24,37 @@ public class GameManager
         currentState = GameState.Battle;
     }
 
-    private Dictionary<string, Queue<Transform>> attacks = new Dictionary<string, Queue<Transform>>();
+    private Dictionary<string, Queue<GameObject>> attacks = new Dictionary<string, Queue<GameObject>>();
 
     public void ReceiveKey(string key)
     {
         Debug.Log($"key pressed : {key}");
-      //queue   
+        if (attacks.ContainsKey(key) && attacks[key].Count > 0)
+        {
+            GameObject go = attacks[key].Dequeue();
+            if (go.GetComponent<Enemy>() == null)
+            {
+                Debug.Log("enemy 부착 필요");
+                return;
+            }
+            go.GetComponent<Enemy>().SetDead();
+            return;
+        }
+
+        DecHealth();
     }
 
-    public void ReceiveTrans(string key, Transform transform)
-    { 
-        //해당 객체의 특정 스크립트 함수를 실행시키면 지가 알아서
+    public void AddAttackableEnemy(string key, GameObject go)
+    {
+        if (!attacks.ContainsKey(key))
+        {
+            attacks[key] = new Queue<GameObject>();
+        }
+        attacks[key].Enqueue(go);
+    }
+
+    private void DecHealth()
+    {
+        Debug.Log("Dec Health");
     }
 }

@@ -6,10 +6,10 @@ public class GamePlayDefine
 {
     public enum AttackType //무슨 키로 받을지
     {
-        keyW,
-        keyA,
-        keyS,
-        keyD,
+        arrowRight,
+        arrowLeft,
+        arrowUp,
+        arrowDown,
         MaxCnt
     }
 }
