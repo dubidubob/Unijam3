@@ -10,14 +10,13 @@ public class InputManager
     bool _pressed = false;
     public void OnUpdate()
     {
+        Debug.Log("key invoked");
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
         } 
-        if (Input.anyKey && KeyAction != null)
+        if (Input.anyKey)
         {
-            KeyAction.Invoke();
-
             {
                 // 체크할 키 배열
                 KeyCode[] keysToCheck = {
@@ -30,7 +29,8 @@ public class InputManager
                 {
                     if (Input.GetKeyDown(key))
                     {
-                        KeycodeAction.Invoke(key.ToString());
+                        if(KeycodeAction != null) KeycodeAction.Invoke(key.ToString());
+                        Managers.Game.ReceiveKey(key.ToString());
                         return;
                     }
                 }

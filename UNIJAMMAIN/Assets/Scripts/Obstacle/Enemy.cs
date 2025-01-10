@@ -9,9 +9,6 @@ public class Enemy : MonoBehaviour
         Dead,
     }
 
-
-
-    private AttackType enemyType { get; set; }
     private State attack { get; set; }
     private SpriteRenderer spriteRenderer { get; set; }
 
@@ -25,27 +22,27 @@ public class Enemy : MonoBehaviour
 
     private void SetType()
     {
-        enemyType = (AttackType)Random.Range(0, (int)AttackType.MaxCnt);
-        Debug.Log($"this enemyType {enemyType}");
+        //enemyType = (AttackType)Random.Range(0, (int)AttackType.MaxCnt);
+        //Debug.Log($"this enemyType {enemyType}");
 
-        switch (enemyType)
-        {
-            case AttackType.keyW:
-                spriteRenderer.color = Color.red;
-                break;
-            case AttackType.keyA:
-                spriteRenderer.color = Color.yellow;
-                break;
-            case AttackType.keyS:
-                spriteRenderer.color = Color.blue;
-                break;
-            case AttackType.keyD:
-                spriteRenderer.color = Color.black;
-                break;
-            default:
-                Debug.Log("Key not matched");
-                break;
-        }
+        //switch (enemyType)
+        //{
+        //    case AttackType.keyW:
+        //        spriteRenderer.color = Color.red;
+        //        break;
+        //    case AttackType.keyA:
+        //        spriteRenderer.color = Color.yellow;
+        //        break;
+        //    case AttackType.keyS:
+        //        spriteRenderer.color = Color.blue;
+        //        break;
+        //    case AttackType.keyD:
+        //        spriteRenderer.color = Color.black;
+        //        break;
+        //    default:
+        //        Debug.Log("Key not matched");
+        //        break;
+        //}
     }
 
     private void SendEnemyTransform()

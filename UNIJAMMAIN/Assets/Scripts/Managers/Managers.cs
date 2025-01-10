@@ -25,8 +25,6 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static DataManager Data { get { return Instance._data; } } 
     public static JsonManager Json {  get { return Instance._json; } }
-
-
     public static SceneManagerEx Scene { get { return Instance._scene; } }
 
 
@@ -41,7 +39,7 @@ public class Managers : MonoBehaviour
         _input.OnUpdate();
     }
 
-    static void Init()
+    public static void Init()
     {
 
         if (s_instance == null)
