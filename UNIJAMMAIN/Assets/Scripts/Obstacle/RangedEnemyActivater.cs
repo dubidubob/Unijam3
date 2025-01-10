@@ -4,13 +4,14 @@ using static GamePlayDefine;
 
 public class RangedEnemyActivater : MonoBehaviour
 {
+    [System.Serializable]
     private struct RangedEnemyInfo
     {
         public RangedAttackType attackType;
         public GameObject go;
     }
 
-    [SerializeField] private float boundaryOffset = 0.5f; // 화면 가장자리로부터 얼마나 안쪽으로 스폰할지 결정하는 값
+    [SerializeField] private float boundaryOffset = 1f; // 화면 가장자리로부터 얼마나 안쪽으로 스폰할지 결정하는 값
     [SerializeField] List<RangedEnemyInfo> deactivatedEnemies;
     private List<RangedEnemyInfo> activatedEnemies = new List<RangedEnemyInfo>();
 
@@ -18,9 +19,6 @@ public class RangedEnemyActivater : MonoBehaviour
     float xMax = 0;
     float yMin = 0;
     float yMax = 0;
-
-    float randX = 0f;
-    float randY = 0f;
 
     private void Awake()
     {
@@ -71,42 +69,51 @@ public class RangedEnemyActivater : MonoBehaviour
     private void ActivateEnemy()
     {
         CheckActivated();
+
+        if (deactivatedEnemies.Count == 0) //전부 활성화 되어있으면
+        {
+            return;
+        }
+
         int randomIndex = Random.Range(0, deactivatedEnemies.Count);
 
-        if (randomIndex == 0) return; //전부 활성화되어 있으면
-
+        Debug.Log("Deactivate 중 하나 Activate!");
+        foreach (var go in deactivatedEnemies)
+        {
+            Debug.Log($"{go.attackType}");
+        }
         var chosenEnemy = deactivatedEnemies[randomIndex]; // 미리 적을 변수에 담아둔다.
-
-        PosAndActivateNode(chosenEnemy);
 
         activatedEnemies.Add(chosenEnemy); // 활성 리스트로 이동
         deactivatedEnemies.RemoveAt(randomIndex); // 비활성 리스트에서 제거
+
+        PosAndActivateNode(chosenEnemy);
     }
 
     private void CheckActivated()
     {
-        if (activatedEnemies.Count > 0)
+        for (int i = activatedEnemies.Count - 1; i >= 0; i--)
         {
-            foreach (RangedEnemyInfo enemy in activatedEnemies)
+            if (!activatedEnemies[i].go.activeSelf)
             {
-                if (enemy.go.activeSelf)
-                {
-                    activatedEnemies.Remove(enemy);
-                    deactivatedEnemies.Add(enemy);
-                }
+                RangedEnemyInfo enemy = activatedEnemies[i];
+                activatedEnemies.RemoveAt(i);
+                deactivatedEnemies.Add(enemy);
             }
         }
     }
 
     private void PosAndActivateNode(RangedEnemyInfo enemy)
     {
+        float randX = 0f;
+        float randY = 0f;
+
         switch (enemy.attackType)
         {
             case RangedAttackType.LeftUp:
                 randX = Random.Range(xMin + boundaryOffset, -boundaryOffset);
                 randY = Random.Range(boundaryOffset, yMax - boundaryOffset);
                 break;
-
 
             case RangedAttackType.LeftDown:
                 randX = Random.Range(xMin + boundaryOffset, -boundaryOffset);
@@ -125,6 +132,7 @@ public class RangedEnemyActivater : MonoBehaviour
         }
 
         enemy.go.transform.position = new Vector3(randX, randY, 0f);
+        Debug.Log($"set active {enemy.attackType}, at {randX}, {randY}");
         enemy.go.SetActive(true);
     }
 }

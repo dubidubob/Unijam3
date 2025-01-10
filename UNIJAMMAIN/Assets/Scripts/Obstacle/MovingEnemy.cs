@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class MovingEnemy : MonoBehaviour
 {
-    /*phase ����*/
     public float moveSpeed = 2f;  // ���� �̵� �ӵ�
 
     [SerializeField] private GamePlayDefine.AttackType enemyType = GamePlayDefine.AttackType.D;
@@ -31,17 +30,14 @@ public class MovingEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (ArrowCheck==false)
-        {
-            // �÷��̾ ���� ���� ���
-            Vector3 direction = (playerTransform.position - transform.position).normalized;
+        // �÷��̾ ���� ���� ���
+        Vector3 direction = (playerTransform.position - transform.position).normalized;
 
-            // ���� ���ο� ��ġ ���
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, playerTransform.position, moveSpeed * Time.deltaTime);
+        // ���� ���ο� ��ġ ���
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerTransform.position, moveSpeed * Time.deltaTime);
 
-            // ���� ���ο� ��ġ�� �̵�
-            transform.position = newPosition;
-        }
+        // ���� ���ο� ��ġ�� �̵�
+        transform.position = newPosition;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
