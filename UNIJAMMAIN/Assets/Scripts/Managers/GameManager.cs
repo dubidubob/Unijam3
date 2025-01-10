@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager
 {
+    public Transform playerTransform;
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함
     public enum GameState
     {
@@ -24,6 +25,12 @@ public class GameManager
     public void GameStart()
     {
         currentState = GameState.Battle;
+        Debug.Log("코드실행완료");
+        playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재위치받기
+    }
+    public Transform GetPlayerTransform()
+    {
+        return playerTransform;
     }
 
     private Dictionary<string, Queue<Transform>> attacks = new Dictionary<string, Queue<Transform>>();

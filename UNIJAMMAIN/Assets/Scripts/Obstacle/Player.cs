@@ -11,4 +11,5 @@ public class Player : MonoBehaviour
             Debug.Log("Space key was pressed.");
         }
     }
+
 }

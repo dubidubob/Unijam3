@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour
         attack = State.Attackable;
         SetType();
         SendEnemyTransform();
+
+
+
     }
 
     private void SetType()
