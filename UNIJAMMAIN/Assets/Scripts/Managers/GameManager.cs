@@ -41,10 +41,11 @@ public class GameManager
             GameObject go = attacks[key].Dequeue();
             if (go == null)
             {
+                Debug.LogError("왜 go가 null이 됐지?");
                 return;
             }
 
-            go.GetComponent<Enemy>().SetDead();
+            go.GetComponent<MovingEnemy>().SetDead();
             return;
         }
 
@@ -60,7 +61,7 @@ public class GameManager
         attacks[key].Enqueue(go);
     }
 
-    private void DecHealth()
+    public void DecHealth()
     {
         Debug.Log("Dec Health");
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GamePlayDefine
 {
-    public enum AttackType //무슨 키로 받을지
+    public enum MovingAttackType //무슨 키로 받을지
     {
         A,
         D,

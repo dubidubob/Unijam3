@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 72922435}
   - component: {fileID: 72922434}
+  - component: {fileID: 72922436}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -153,7 +154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypeSO: {fileID: 11400000, guid: 1d1844feaf0c26144983d8a02bd24731, type: 2}
-  defaultTime: 20
+  firstPhaseDuration: 5
+  secondPhaseDuration: 5
+  thirdPhaseDuration: 2
+  testData: 0
+  initialInterval: 0.2
 --- !u!4 &72922435
 Transform:
   m_ObjectHideFlags: 0
@@ -169,6 +174,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &72922436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72922433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2e7d7de1f8d234c975d1dc4fe6e31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &175620256
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +215,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: 0.002990059, w: 0.9999955}
   m_LocalPosition: {x: -0.0259, y: 0.0179, z: -0.029430903}
-  m_LocalScale: {x: 6.7676196, y: 4.7374573, z: 9.4748125}
+  m_LocalScale: {x: 4.44, y: 3.108081, z: 6.2160954}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2016210101}
@@ -841,7 +858,6 @@ GameObject:
   - component: {fileID: 2016210101}
   - component: {fileID: 2016210100}
   - component: {fileID: 2016210102}
-  - component: {fileID: 2016210103}
   - component: {fileID: 2016210104}
   - component: {fileID: 2016210105}
   m_Layer: 0
@@ -931,18 +947,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016210098}
   m_CullTransparentMesh: 1
---- !u!114 &2016210103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016210098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f442dae11fd9f5847a07846cc94914c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &2016210104
 BoxCollider2D:
   m_ObjectHideFlags: 0
