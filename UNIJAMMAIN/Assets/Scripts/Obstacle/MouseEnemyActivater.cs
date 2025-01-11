@@ -11,11 +11,6 @@ public class MouseEnemyActivater : MonoBehaviour
     {
         Panels.Add(LeftOne);
         Panels.Add(RightOne);
-        
-        ActivateRandomPanel(false);
-        ActivateRandomPanel(false);
-        ActivateRandomPanel(false);
-        ActivateRandomPanel(false);
     }
     public void ActivateRandomPanel(bool canTwo)
     {

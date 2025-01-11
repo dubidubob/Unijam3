@@ -15,9 +15,10 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetSpeed(float defaultSpeed)
+    public void SetSpeed(float defaultSpeed, float rangeDebuf)
     { 
         currentSpeed = defaultSpeed;
+        colliderDebuf = rangeDebuf;
     }
 
     private void Update()

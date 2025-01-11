@@ -5,6 +5,11 @@ public class SettingValues : MonoBehaviour
 {
     [SerializeField] private SpawnController spawnController;
 
+    [Header("Overall")]
+    [SerializeField] private TMP_InputField initialInterval;
+    [SerializeField] private TMP_InputField rangeDebuf;
+    [SerializeField] private TMP_InputField updownDebuf;
+
     [Header("Phase1")]
     [SerializeField] private TMP_InputField phase1Duration;
     [SerializeField] private TMP_InputField phase1DefaultSpeed;
@@ -36,6 +41,11 @@ public class SettingValues : MonoBehaviour
 
     public void Confirm()
     {
+        // == Overalll ==
+        UpdateFloatValue(ref spawnController.initialInterval, initialInterval.text);
+        UpdateFloatValue(ref spawnController.rangeDebuf, rangeDebuf.text);
+        UpdateFloatValue(ref spawnController.updownDebuf, updownDebuf.text);
+
         // === Phase 1 ===
         UpdateFloatValue(ref spawnController.phase1.movingPhaseDuration, phase1Duration.text);
         UpdateFloatValue(ref spawnController.phase1.movingDefaultSpeed, phase1DefaultSpeed.text);

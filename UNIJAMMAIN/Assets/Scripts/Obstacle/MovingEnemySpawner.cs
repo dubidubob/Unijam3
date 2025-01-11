@@ -10,7 +10,7 @@ public class MovingEnemySpawner : MonoBehaviour
     private MovingEnemy movingEnemy;
     private Poolable poolable;
 
-    public void InitiateRandomNode(float currentSpeed)
+    public void InitiateRandomNode(float currentSpeed, float rangeDebuf, float updownDebuf)
     {
         enemyType = (MovingAttackType)Random.Range(0, (int)MovingAttackType.MaxCnt);
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
@@ -18,9 +18,10 @@ public class MovingEnemySpawner : MonoBehaviour
         poolable = Managers.Pool.Pop(enemy.go);
         poolable.gameObject.transform.position = new Vector3(enemy.pos.x, enemy.pos.y, 0);
 
+        upDownDebuf = updownDebuf;
         currentSpeed = ApplyDebufUpdown(currentSpeed);
         movingEnemy = poolable.gameObject.GetComponent<MovingEnemy>();
-        movingEnemy.SetSpeed(currentSpeed);
+        movingEnemy.SetSpeed(currentSpeed, rangeDebuf);
 
         //GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
         Debug.Log($"instantiate {enemyType}");
@@ -28,7 +29,7 @@ public class MovingEnemySpawner : MonoBehaviour
 
     private float ApplyDebufUpdown(float currentSpeed)
     {
-        if (enemyType == GamePlayDefine.MovingAttackType.W || enemyType == GamePlayDefine.MovingAttackType.S)
+        if (enemyType == MovingAttackType.W || enemyType == MovingAttackType.S)
         {
             return currentSpeed *= upDownDebuf;
         }
