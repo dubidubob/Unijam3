@@ -1,12 +1,20 @@
 using System;
 using UnityEngine;
-
+using System.Collections.Generic;
 public class InputManager
 {
     public Action KeyAction = null;
     public Action<Define.MouseEvent> MouseAction = null;
     public Action<GamePlayDefine.RangedAttackType> KeyArrowcodeAction = null;
     public Action SettingpopAction = null;
+    public List<KeyCode> keysToCheck = new List<KeyCode> {
+                KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D,
+                };
+    public List<KeyCode> keysToCheckArrow = new List<KeyCode> {
+                 KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow
+                };
+
+    public Action<KeyCode> KeyBoardChecking = null;
     public void OnUpdate()
     {
         //if (EventSystem.current.IsPointerOverGameObject())
@@ -18,22 +26,15 @@ public class InputManager
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 SettingpopAction.Invoke();
-            }
-            {
-                // 체크할 키 배열
-                KeyCode[] keysToCheck = {
-                KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D,
-                };
-                KeyCode[] keysToCheckArrow = {
-                KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow
-            };
-
+            }   
+           
                 // 눌린 키가 배열에 있는지 확인
                 foreach (KeyCode key in keysToCheck)
                 {
                     
-                    if(Managers.Tracker.keyPressCounts[key.ToString()]<4&&Input.GetKeyDown(key))
+                    if(Managers.Tracker.keyPressCounts[key.ToString()]<4&&Input.GetKeyDown(key)) // WASD
                     {
+                        KeyBoardChecking.Invoke(key);
                         Debug.Log(key.ToString());
                         Managers.Game.ReceiveKey(key.ToString());
                         return;
@@ -99,8 +100,6 @@ public class InputManager
                 }
             }
         }
-
-    }
 
     public void Clear()
     {

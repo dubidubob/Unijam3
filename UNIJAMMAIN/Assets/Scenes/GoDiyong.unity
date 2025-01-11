@@ -7272,7 +7272,6 @@ MonoBehaviour:
   uiFill: {fileID: 835060358}
   BackGround: {fileID: 1185622468}
   Duration: 5
-  StageCount: 0
 --- !u!1 &844530978
 GameObject:
   m_ObjectHideFlags: 0
@@ -13042,7 +13041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1358877080}
-  - component: {fileID: 1358877079}
+  - component: {fileID: 1358877081}
   m_Layer: 0
   m_Name: '@DiyongManager'
   m_TagString: Untagged
@@ -13050,18 +13049,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1358877079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358877078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee5db0930ab9d14b849598c139c83eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1358877080
 Transform:
   m_ObjectHideFlags: 0
@@ -13077,6 +13064,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1358877081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358877078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34ea012acf5bebd4595a602f510612ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  W: {fileID: 1709222065}
+  A: {fileID: 1402679773}
+  S: {fileID: 921985009}
+  D: {fileID: 1135005879}
+  LeftUp: {fileID: 1577912344}
+  LeftDown: {fileID: 1776234063}
+  RightUp: {fileID: 2029314061}
+  RightDown: {fileID: 1618372152}
+  ActionGo: {fileID: 0}
 --- !u!1 &1364961388
 GameObject:
   m_ObjectHideFlags: 0
