@@ -96,8 +96,6 @@ public class SpawnController : MonoBehaviour
             Pause();
             Managers.UI.ShowPopUpUI<GameOver>();
 
-            //illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
-            //Managers.Scene.LoadScene("BadEnding");
             return;
         }
     }
