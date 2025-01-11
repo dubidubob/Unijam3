@@ -61,6 +61,9 @@ public class MainUIs : MonoBehaviour
 
     private void ChangeBg(int phase)
     {
+        if (Bgs.Count <= phase)
+            return;
+
         if (phase > 0)
             bgPlace.sprite = Bgs[phase - 1];
         else

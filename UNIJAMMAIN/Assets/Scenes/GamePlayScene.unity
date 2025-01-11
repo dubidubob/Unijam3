@@ -13131,6 +13131,32 @@ MonoBehaviour:
   LeftDown: {fileID: 1776234063}
   RightUp: {fileID: 2029314061}
   RightDown: {fileID: 1618372152}
+  W:
+    go: {fileID: 1709222065}
+    sp: {fileID: 21300000, guid: eda5a8a7eb9b9ce4c8e90b262f0cb3e7, type: 3}
+  A:
+    go: {fileID: 1402679773}
+    sp: {fileID: 21300000, guid: e6ab363b6e988a84fbe7b72d8ac099fd, type: 3}
+  S:
+    go: {fileID: 921985009}
+    sp: {fileID: 21300000, guid: fe5c4aa43c499254bb2283b1e56fc548, type: 3}
+  D:
+    go: {fileID: 1135005879}
+    sp: {fileID: 21300000, guid: d3ce47d7cb63583429f36cdbeda20da8, type: 3}
+  LeftUp:
+    go: {fileID: 1577912344}
+    sp: {fileID: 21300000, guid: 35a7856bd3e858940b73632b19319806, type: 3}
+  LeftDown:
+    go: {fileID: 1776234063}
+    sp: {fileID: 21300000, guid: 1fdf46ee592052c438ac47e43604c0d2, type: 3}
+  RightUp:
+    go: {fileID: 2029314061}
+    sp: {fileID: 21300000, guid: 837f906bb497f634b91a1555ba55b953, type: 3}
+  RightDown:
+    go: {fileID: 1618372152}
+    sp: {fileID: 21300000, guid: 655ab9241e1d10049b87a378d26a9791, type: 3}
+  spriteRenderer: {fileID: 1796204204}
+  nonActionSprite: {fileID: 21300000, guid: 58e42cda7d879ff45832109343c9eb51, type: 3}
 --- !u!1 &1364961388
 GameObject:
   m_ObjectHideFlags: 0
