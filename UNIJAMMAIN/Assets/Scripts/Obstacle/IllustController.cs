@@ -10,7 +10,7 @@ public class IllustController : MonoBehaviour
     [SerializeField] List<Image> images;
     [SerializeField] GameObject gotoTitle;
     private float duration = 2f;
-    private float numDuration = 0.9f;
+    private float numDuration = 0.8f;
 
     private void Start()
     {
@@ -18,8 +18,11 @@ public class IllustController : MonoBehaviour
         { 
             go.gameObject.SetActive(false);
         }
+    }
 
-
+    private IEnumerator test()
+    {
+        yield return ShowIllust(GamePlayDefine.IllustType.Num);
     }
 
     //private IEnumerator 
@@ -46,6 +49,8 @@ public class IllustController : MonoBehaviour
         // 局聪皋捞记 贸府
         if (illustType == GamePlayDefine.IllustType.Num)
         {
+            yield return new WaitForSecondsRealtime(0.5f);
+
             for (int i = 0; i < spriteLists.Count; i++)
             {
                 if (i > 0)
@@ -55,26 +60,34 @@ public class IllustController : MonoBehaviour
 
                 images[i].gameObject.SetActive(true);
 
+                images[i].transform.localScale = Vector3.one * 2;
                 // 局聪皋捞记 矫累
                 yield return images[i].transform
-                    .DOScale(Vector3.one * 1.5f, numDuration)
+                    .DOScale(Vector3.one * 0.5f, numDuration)
                     .SetUpdate(true)
+                    .OnComplete(() => { images[i].transform.DOScale(Vector3.one * 1.2f, 1 - numDuration); })
                     .WaitForCompletion();
+
+                yield return new WaitForSecondsRealtime(1 - numDuration);
             }
+            images[spriteLists.Count].gameObject.SetActive(false);
         }
         else
         {
             for (int i = 0; i < spriteLists.Count; i++)
             {
+                Color color = images[i].color;
+                color.a = 0f;
+                images[i].color = color;
+
                 images[i].gameObject.SetActive(true);
 
                 // Fade 局聪皋捞记
                 yield return images[i]
                     .DOFade(1f, duration)
                     .SetUpdate(true)
+                    .OnComplete(() => { images[i].gameObject.SetActive(false); })
                     .WaitForCompletion();
-
-                images[i].gameObject.SetActive(false);
             }
 
             // Success/Fail 贸府
