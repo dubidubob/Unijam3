@@ -21,6 +21,12 @@ public class InputManager
             {
                 SettingpopAction.Invoke();
             }
+
+            if (Time.timeScale == 0f)
+            {
+                return;
+            }
+
             {
                 // 체크할 키 배열
                 KeyCode[] keysToCheck = {
