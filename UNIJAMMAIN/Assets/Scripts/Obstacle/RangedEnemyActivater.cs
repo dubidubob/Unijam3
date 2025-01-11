@@ -9,11 +9,13 @@ public class RangedEnemyActivater : MonoBehaviour
     {
         public RangedAttackType attackType;
         public GameObject go;
+    
     }
 
     [SerializeField] private float boundaryOffset = 1f;
     [SerializeField] List<RangedEnemyInfo> deactivatedEnemies;
     private List<RangedEnemyInfo> activatedEnemies = new List<RangedEnemyInfo>();
+    public DiyongManager Diyong;
 
     private void Awake()
     {

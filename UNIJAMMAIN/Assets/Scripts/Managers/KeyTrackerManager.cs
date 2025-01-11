@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 public class KeyTrackerManager
 {
     // Ű���� ���� Ƚ���� ������ ����
@@ -16,6 +17,7 @@ public class KeyTrackerManager
         { "RightUp", 0 },
         { "RightDown",0 }
     };
+    public Action<string> KeyArrowMissed = null;
 
     // ��� ó�� ���� Ƚ��
     private int maxPressCount = 4;
@@ -27,10 +29,11 @@ public class KeyTrackerManager
         {
             keyPressCounts[key]++;
             Debug.Log($"{key} Misspressed {keyPressCounts[key]} times");
+            
+
             if (keyPressCounts[key] == maxPressCount )
             {
-                keyPressCounts[key]++;
-                Debug.Log($"{key} is blocked.");
+                KeyArrowMissed.Invoke(key);
                 StaticCoroutine.StartStaticCoroutine(BlockRealease(key));
                 Debug.Log($"{key} is blocked.");
             }

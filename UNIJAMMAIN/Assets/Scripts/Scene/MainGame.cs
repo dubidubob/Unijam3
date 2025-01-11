@@ -24,7 +24,7 @@ public class MainGame : BaseScene   // MainGame Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BaseScene Å
     {
         Init();
 
-        Managers.UI.ShowPopUpUI<S1_PopUp>();
+        // Managers.UI.ShowPopUpUI<S1_PopUp>();
 
         Managers.Game.GameStart();
     }

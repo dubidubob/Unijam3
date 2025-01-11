@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using DG.Tweening;
@@ -15,82 +16,56 @@ public class S1_PopUp : UI_Popup
     }
     private IEnumerator animationGo()
     {
-
         float elapsedTime = 0f;
-        S1_01.DOFade(1f, 0.5f);
+        S1_01.DOFade(1f, 2f);
 
-        while (elapsedTime < 0.5f)
+        while (elapsedTime < duration)
         {
-            elapsedTime += Time.deltaTime;  // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
-            yield return null;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            elapsedTime += Time.deltaTime;  // °æ°ú ½Ã°£ Áõ°¡
+            yield return null;  // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
         }
         elapsedTime = 0f;
-        S1_02.DOFade(1f, 0.5f);
-        while (elapsedTime < 0.5f)
+        S1_02.DOFade(1f, 2f);
+        while (elapsedTime < duration)
         {
-            elapsedTime += Time.deltaTime;  // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
-            yield return null;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            elapsedTime += Time.deltaTime;  // °æ°ú ½Ã°£ Áõ°¡
+            yield return null;  // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
         }
         elapsedTime = 0f;
-        S1_03.DOFade(1f, 0.5f);
+        S1_03.DOFade(1f, 2f);
 
 
 
-        yield return new WaitForSeconds(2f);
-
-        S1_01.DOFade(1f, duration).SetUpdate(true);
-        yield return new WaitForSecondsRealtime(duration);
-        S1_02.DOFade(1f, duration).SetUpdate(true);
-        yield return new WaitForSecondsRealtime(duration);
-        S1_03.DOFade(1f, duration).SetUpdate(true);
-
-        yield return new WaitForSecondsRealtime(3f);
-
+        yield return new WaitForSeconds(3f);
         ClosePopUPUI();
     }
-
-    private IEnumerator animationTextGo()
-    {
-    Hu_01.DOFade(1f, duration_text)
-    .SetUpdate(true);
-
-    yield return new WaitForSecondsRealtime(duration_text);
-
-    U_02.DOFade(1f, duration_text).SetUpdate(true);
-
-    yield return new WaitForSecondsRealtime(duration_text);
+        private IEnumerator animationTextGo()
+        {
+        float elapsedTime = 0;
         
+            Hu_01.DOFade(1f, 1.5f);
 
-            Hu_01.DOFade(1f, 0.5f);
-
-             while (elapsedTime < 0.5f)
+             while (elapsedTime < duration_text)
              {
-            elapsedTime += Time.deltaTime;  // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
-            yield return null;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            elapsedTime += Time.deltaTime;  // °æ°ú ½Ã°£ Áõ°¡
+            yield return null;  // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
         }
         elapsedTime = 0f;
-        U_02.DOFade(1f, 0.5f);
-        while (elapsedTime < 0.5f)
+        U_02.DOFade(1f, 1.5f);
+        while (elapsedTime < duration_text)
         {
-            elapsedTime += Time.deltaTime;  // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
-            yield return null;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            elapsedTime += Time.deltaTime;  // °æ°ú ½Ã°£ Áõ°¡
+            yield return null;  // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
         }
         elapsedTime = 0f;
-        U_03.DOFade(1f, 0.5f);
-        while (elapsedTime < 0.5f)
+        U_03.DOFade(1f, 1.5f);
+        while (elapsedTime < duration_text)
         {
-            elapsedTime += Time.deltaTime;  // ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
-            yield return null;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            elapsedTime += Time.deltaTime;  // °æ°ú ½Ã°£ Áõ°¡
+            yield return null;  // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
         }
         elapsedTime = 0f;
-        Ung_04.DOFade(1f, 2f);
+        Ung_04.DOFade(1f, 1.5f);
 
         }
-
-    U_03.DOFade(1f, duration_text).SetUpdate(true);
-    yield return new WaitForSecondsRealtime(duration_text);
-        
-    Ung_04.DOFade(1f, duration_text).SetUpdate(true);
-    }
-
 }
