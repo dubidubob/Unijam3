@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
@@ -9,7 +10,7 @@ public class SpawnController : MonoBehaviour
     private MovingEnemySpawner movingEnemySpawner;
     private RangedEnemyActivater rangedEnemyActivater;
 
-    private class PhaseMoving
+    public class PhaseMoving
     {
         //gimic1
         public float movingDefaultSpeed;
@@ -18,7 +19,7 @@ public class SpawnController : MonoBehaviour
         public float movingIntervalDecRate;
     }
 
-    private class PhaseRanged : PhaseMoving
+    public class PhaseRanged : PhaseMoving
     {
         //gimic2
         public float rangedDefaultLifetime;
@@ -26,16 +27,16 @@ public class SpawnController : MonoBehaviour
         public float rangedIntervalDecRate;
     }
 
-    private class PhaseMouse : PhaseRanged
+    public class PhaseMouse : PhaseRanged
     {
         //gimic3
-        public bool canMouseInputTwo;
+        public int cntMouseInputTwo;
         public float mouseIntervalDecRate;
     }
 
-    PhaseMoving phase1 = new PhaseMoving();
-    PhaseRanged phase2 = new PhaseRanged();
-    PhaseMouse phase3 = new PhaseMouse();
+    public PhaseMoving phase1 = new PhaseMoving();
+    public PhaseRanged phase2 = new PhaseRanged();
+    public PhaseMouse phase3 = new PhaseMouse();
 
     private void InitPhases()
     {
@@ -59,7 +60,7 @@ public class SpawnController : MonoBehaviour
         phase3.rangedDefaultLifetime = phase2.rangedTargetLifetime; //2
         phase3.rangedTargetLifetime = 1f;
         phase3.rangedIntervalDecRate = 0.1f;
-        phase3.canMouseInputTwo = false;
+        phase3.cntMouseInputTwo = 2;
         phase3.mouseIntervalDecRate = 0.1f;
     }
 
@@ -73,12 +74,16 @@ public class SpawnController : MonoBehaviour
 
     private float currentSpeed;        // 각 스폰 시점에 적용할 현재 속도
     private float currentLifetime;
-    
+
+    private bool isPaused = false;
     private void Awake()
     {
         // 필요한 컴포넌트 가져오기
         movingEnemySpawner = GetComponent<MovingEnemySpawner>();
         rangedEnemyActivater = GetComponent<RangedEnemyActivater>();
+
+        Managers.Input.SettingpopAction -= ControlTime;
+        Managers.Input.SettingpopAction += ControlTime;
     }
 
     private void Start()
@@ -87,6 +92,45 @@ public class SpawnController : MonoBehaviour
         currentMovingInterval = initialInterval;
         currentRangedInterval = initialInterval;
         currentSpeed = phase1.movingDefaultSpeed;
+        currentLifetime = phase2.rangedDefaultLifetime;
+        StartCoroutine(PhaseRoutine());
+    }
+
+    private void ControlTime()
+    {
+        if(isPaused)
+            Resume();
+        else
+            Pause();
+    }
+
+    private void Pause()
+    {
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    private void Resume()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+        Debug.Log("Resume됨!");
+    }
+
+    public void InitAgain()
+    {
+        Resume();
+        
+        StopAllCoroutines();
+
+        movingTimeElapsed = 0f;    // 속도가 증가하는 데 사용될 누적 시간
+        rangedTimeElapsed = 0f;
+
+        currentMovingInterval = initialInterval;
+        currentRangedInterval = initialInterval;
+
+        currentSpeed = phase1.movingDefaultSpeed;
+        currentLifetime = phase2.rangedDefaultLifetime;
         StartCoroutine(PhaseRoutine());
     }
 

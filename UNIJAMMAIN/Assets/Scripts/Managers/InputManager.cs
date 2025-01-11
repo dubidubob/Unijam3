@@ -7,6 +7,7 @@ public class InputManager
     public Action KeyAction = null;
     public Action<Define.MouseEvent> MouseAction = null;
     public Action<GamePlayDefine.RangedAttackType> KeyArrowcodeAction = null;
+    public Action SettingpopAction = null;
     bool _pressed = false;
     public void OnUpdate()
     {
@@ -16,6 +17,10 @@ public class InputManager
         //}
         if (Input.anyKey)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SettingpopAction.Invoke();
+            }
             {
                 // 체크할 키 배열
                 KeyCode[] keysToCheck = {
