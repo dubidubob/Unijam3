@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.Audio;
 public class PopUpMainScene : UI_Popup
 {
     public TMP_Text GuideText;
@@ -24,9 +25,13 @@ public class PopUpMainScene : UI_Popup
     public Image FillingBoot;
 
     public GameObject Option;
-
+    public Sprite[] sprites;
+    public Image OptionBGM, OptionSFX;
+    private int BgmLevel = 2;
+    private int SFXLevel = 2;
 
     private float delay = 0.05f;
+
     enum Buttons
     {
         GameOption,
@@ -39,7 +44,7 @@ public class PopUpMainScene : UI_Popup
     {
         Init();
         text = getText0;
-
+       // Managers.UI.ShowPopUpUI<S1_PopUp>();
     }
 
     public override void Init()
@@ -59,23 +64,33 @@ public class PopUpMainScene : UI_Popup
 
         if (!Managers.Sound._audioSources[(int)Define.Sound.BGM].isPlaying)
         {
-            Managers.Sound.Play("Sounds/BGM/Main_Bgm");
+            Managers.Sound.Play("Sounds/BGM/Main_Bgm",Define.Sound.BGM);
+            Managers.Sound._audioSources[1].volume = 0.4f;
+            Managers.Sound._audioSources[2].volume = 0.4f;
         }
     }
     
     void BGMClicked(PointerEventData eventData)
     {
-
+        BgmLevel++;
+        if (BgmLevel == 5) { BgmLevel = 0; }
+        OptionBGM.sprite = sprites[BgmLevel];
+        Managers.Sound._audioSources[1].volume = 0.2f*BgmLevel;
+        
     }
 
     void SFXClicked(PointerEventData eventData)
     {
+        SFXLevel++;
+        if(SFXLevel==5) { SFXLevel = 0; }
+        OptionSFX.sprite = sprites[SFXLevel];
+        Managers.Sound._audioSources[2].volume = 0.2f * SFXLevel;
 
     }
 
     IEnumerator textPrint(float delay=0.15f)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0f);
         Guide = GuideTextBald;
         for (int i = 0; i < 2; i++)
         {   

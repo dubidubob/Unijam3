@@ -17,55 +17,55 @@ public class S1_PopUp : UI_Popup
     private IEnumerator animationGo()
     {
         float elapsedTime = 0f;
-        S1_01.DOFade(1f, 2f);
+        S1_01.DOFade(1f, 0.5f);
 
-        while (elapsedTime < duration)
+        while (elapsedTime < 0.5f)
         {
             elapsedTime += Time.deltaTime;  // 경과 시간 증가
             yield return null;  // 다음 프레임까지 대기
         }
         elapsedTime = 0f;
-        S1_02.DOFade(1f, 2f);
-        while (elapsedTime < duration)
+        S1_02.DOFade(1f, 0.5f);
+        while (elapsedTime < 0.5f)
         {
             elapsedTime += Time.deltaTime;  // 경과 시간 증가
             yield return null;  // 다음 프레임까지 대기
         }
         elapsedTime = 0f;
-        S1_03.DOFade(1f, 2f);
+        S1_03.DOFade(1f, 0.5f);
 
 
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         ClosePopUPUI();
     }
         private IEnumerator animationTextGo()
         {
         float elapsedTime = 0;
         
-            Hu_01.DOFade(1f, 1.5f);
+            Hu_01.DOFade(1f, 0.5f);
 
-             while (elapsedTime < duration_text)
+             while (elapsedTime < 0.5f)
              {
             elapsedTime += Time.deltaTime;  // 경과 시간 증가
             yield return null;  // 다음 프레임까지 대기
         }
         elapsedTime = 0f;
-        U_02.DOFade(1f, 1.5f);
-        while (elapsedTime < duration_text)
+        U_02.DOFade(1f, 0.5f);
+        while (elapsedTime < 0.5f)
         {
             elapsedTime += Time.deltaTime;  // 경과 시간 증가
             yield return null;  // 다음 프레임까지 대기
         }
         elapsedTime = 0f;
-        U_03.DOFade(1f, 1.5f);
-        while (elapsedTime < duration_text)
+        U_03.DOFade(1f, 0.5f);
+        while (elapsedTime < 0.5f)
         {
             elapsedTime += Time.deltaTime;  // 경과 시간 증가
             yield return null;  // 다음 프레임까지 대기
         }
         elapsedTime = 0f;
-        Ung_04.DOFade(1f, 1.5f);
+        Ung_04.DOFade(1f, 2f);
 
         }
 }
