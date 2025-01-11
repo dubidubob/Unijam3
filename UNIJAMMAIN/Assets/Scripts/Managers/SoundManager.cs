@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SoundManager
 {
@@ -11,6 +12,9 @@ public class SoundManager
     [SerializeField]
     public AudioMixer audioMixer;
     public AudioMixerGroup[] audioMixerGroups;
+    public AudioSource BGM;
+    public AudioSource SFX;
+    
 
     public void Init()
     {
@@ -30,6 +34,8 @@ public class SoundManager
                 go.transform.parent = root.transform;
             }
         }
+        if (audioMixer == null) { Debug.Log("audioMixer is Null"); }
+      
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f)
     {
@@ -136,6 +142,16 @@ public class SoundManager
     {
         AudioSource audioSource1 = _audioSources[(int)Define.Sound.BGM];
         audioSource1.pitch = volume;
+        AudioSource audioSource2 = _audioSources[(int)Define.Sound.SFX];
+        audioSource2.pitch = volume;
+
+    }
+    public void AudiorateBGM(int volume)
+    {
+       
+    }
+    public void AudiorateSFX(int volume)
+    {
         AudioSource audioSource2 = _audioSources[(int)Define.Sound.SFX];
         audioSource2.pitch = volume;
 
