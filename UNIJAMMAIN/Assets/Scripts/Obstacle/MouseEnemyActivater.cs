@@ -20,12 +20,12 @@ public class MouseEnemyActivater : MonoBehaviour
 
         int rand = Random.Range(0, endIdx);
         Debug.Log($"지금 랜덤 이렇게 나왔음!{rand}, {canTwo}");
-        if (rand == 3)
+        if (rand == 2)
         {
             LeftOne.SetActive(true);
             RightOne.SetActive(true);
         }
-        else
+        else if(rand == 1 || rand == 0)
         {
             Panels[rand].SetActive(true);
         }

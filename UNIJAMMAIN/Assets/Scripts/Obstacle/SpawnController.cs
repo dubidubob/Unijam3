@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
-    public GameObject testPanel;
+    public IllustController illustController;
     #region PhaseClasses
     public class PhaseMoving
     {
@@ -111,15 +111,15 @@ public class SpawnController : MonoBehaviour
         StartCoroutine(PhaseRoutine());
     }
 
-    private void Clear()
-    {
-        StopAllCoroutines(); //corountine clear
-        Managers.Pool.Clear(); //moving enemy clear
-        foreach (Transform child in this.transform)
-        { 
-            child.gameObject.SetActive(false);
-        }
-    }
+    //private void Clear()
+    //{
+    //    StopAllCoroutines(); //corountine clear
+    //    Managers.Pool.Clear(); //moving enemy clear
+    //    foreach (Transform child in this.transform)
+    //    { 
+    //        child.gameObject.SetActive(false);
+    //    }
+    //}
     public void InitAgain()
     {
         Resume();
@@ -156,7 +156,6 @@ public class SpawnController : MonoBehaviour
     {
         Time.timeScale = 1f;
         isPaused = false;
-        Debug.Log("ResumeµÊ!");
     }
     #endregion
 
@@ -166,13 +165,31 @@ public class SpawnController : MonoBehaviour
 
         for(int i = 1; i<=phases.Length; i++)
         {
+            if (i == 1)
+            {
+                Pause();
+                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Start);
+                Resume();
+            }
             Debug.LogWarning($"phase {i} start!");
             yield return StartCoroutine(RunPhase(phases[i-1], i));
             Debug.LogWarning($"phase {i} end!");
-            //Clear();
-            testPanel.SetActive(true);
-            yield return new WaitForSeconds(2f); // for illust
-            testPanel.SetActive(false);
+            Pause();
+            if (i == 1)
+            {
+                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Phase1End);
+                Resume();
+            }
+            else if (i == 2)
+            {
+                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Phase2End);
+                Resume();
+            }
+            else
+            {
+                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Success);
+                break;
+            }
         }
     }
 

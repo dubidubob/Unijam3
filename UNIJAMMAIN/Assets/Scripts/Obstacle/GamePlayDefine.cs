@@ -20,4 +20,14 @@ public class GamePlayDefine
         RightDown,
         MaxCnt
     }
+
+    public enum IllustType
+    { 
+        Start,
+        Phase1End,
+        Phase2End,
+        Fail,
+        Success,
+        Num
+    }
 }
