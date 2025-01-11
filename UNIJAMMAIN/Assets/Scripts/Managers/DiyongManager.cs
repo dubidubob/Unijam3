@@ -61,9 +61,12 @@ public class DiyongManager : MonoBehaviour
         }
         else Debug.Log("어떤것도 행해지지않은 오류");
 
-        ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
-          .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
-
+        if (ActionGo != null)
+        {
+            ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
+      .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
+        }
+        
         spriteRenderer.sprite = actionSprite;
         StartCoroutine(SetOriginal());
     }

@@ -7,73 +7,52 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
-    public int testMoving = 0;
-    public int testRanged = 0;
-    public int testTouch = 0;
     public IllustController illustController;
     [SerializeField] bool isMaster = true;
     #region PhaseClasses
     public class PhaseMoving
     {
         //gimic1
+        public float phaseDuration;
+
         public float movingDefaultSpeed;
         public float movingTargetSpeed;
-        public float movingPhaseDuration;
         public float movingIntervalDecRate;
+
+        public PhaseMoving(float phaseDuration, float movingDefaultSpeed, float movingTargetSpeed, float movingIntervalDecRate)
+        {
+            this.phaseDuration = phaseDuration;
+            this.movingDefaultSpeed = movingDefaultSpeed;
+            this.movingTargetSpeed = movingTargetSpeed;
+            this.movingIntervalDecRate = movingIntervalDecRate;
+        }
     }
 
     public class PhaseRanged : PhaseMoving
     {
         //gimic2
-        public float rangedDefaultLifetime;
-        public float rangedTargetLifetime;
         public float rangedIntervalDecRate;
-    }
 
-    public class PhaseMouse : PhaseRanged
-    {
-        //gimic3
-        public int cntMouseInputTwo;
-        public float mouseIntervalDecRate;
+        public PhaseRanged(float phaseDuration, float movingDefaultSpeed, float movingTargetSpeed, float movingIntervalDecRate, float rangedIntervalDecRate)
+            : base(phaseDuration, movingDefaultSpeed, movingTargetSpeed, movingIntervalDecRate) 
+        {
+            this.phaseDuration = phaseDuration;
+
+            this.movingDefaultSpeed = movingDefaultSpeed;
+            this.movingTargetSpeed = movingTargetSpeed;
+            this.movingIntervalDecRate = movingIntervalDecRate;
+
+            this.rangedIntervalDecRate = rangedIntervalDecRate;
+        }
     }
     #endregion
 
-    public PhaseMoving phase1 = new PhaseMoving();
-    public PhaseRanged phase2 = new PhaseRanged();
-    public PhaseMouse phase3 = new PhaseMouse();
+    public PhaseMoving phase1 = new PhaseMoving(44f, 2f, 2.5f, 0.1f);
+    public PhaseRanged phase2 = new PhaseRanged(47f, 2f, 3f, 0.1f, 0.1f);
+    public PhaseRanged phase22 = new PhaseRanged(36f, 3f, 2.2f, 0.1f, 0.1f);
+    public PhaseRanged phase3 = new PhaseRanged(50f, 2.2f, 2.7f, 0.1f, 0.1f);
 
-    private void InitPhases()
-    {
-        phase1.movingPhaseDuration = 6f;
-        phase1.movingDefaultSpeed = 2f;
-        phase1.movingTargetSpeed = 2.5f;
-        phase1.movingIntervalDecRate = 0.1f;
-
-        phase2.movingPhaseDuration = 18f;
-        phase2.movingDefaultSpeed = phase1.movingTargetSpeed; //2.5
-        phase2.movingTargetSpeed = 3f;
-        phase2.movingIntervalDecRate = 0.1f;
-        phase2.rangedDefaultLifetime = 3f;
-        phase2.rangedTargetLifetime = 2f;
-        phase2.rangedIntervalDecRate = 0.1f;
-
-        phase3.movingPhaseDuration = 12f;
-        phase3.movingDefaultSpeed = phase2.movingTargetSpeed; //3
-        phase3.movingTargetSpeed = 3.5f;
-        phase3.movingIntervalDecRate = 0.1f;
-        phase3.rangedDefaultLifetime = phase2.rangedTargetLifetime; //2
-        phase3.rangedTargetLifetime = 1f;
-        phase3.rangedIntervalDecRate = 0.1f;
-        phase3.cntMouseInputTwo = 2;
-        phase3.mouseIntervalDecRate = 0.1f;
-    }
-
-    [HideInInspector]
     public float initialInterval = 1.5f;
-    [HideInInspector]
-    public float rangeDebuf = 0.8f;
-    [HideInInspector]
-    public float updownDebuf = 0.7f;
 
     private MovingEnemySpawner movingEnemySpawner;
     private RangedEnemyActivater rangedEnemyActivater;
@@ -81,19 +60,16 @@ public class SpawnController : MonoBehaviour
 
     private float currentMovingInterval;
     private float currentRangedInterval;
-    private float currentMouseInterval;
     
-    private float movingTimeElapsed = 0f;    // �ӵ��� �����ϴ� �� ���� ���� �ð�
+    private float movingTimeElapsed = 0f;
     private float rangedTimeElapsed = 0f;
 
-    private float currentSpeed;        // �� ���� ������ ������ ���� �ӵ�
-    private float currentLifetime;
-    private float currentMouseActivateCnt;
+    private float currentSpeed;        
 
     private bool isPaused = false;
+
     private void Awake()
     {
-        // �ʿ��� ������Ʈ ��������
         movingEnemySpawner = GetComponent<MovingEnemySpawner>();
         rangedEnemyActivater = GetComponent<RangedEnemyActivater>();
         mouseEnemyActivater = GetComponent<MouseEnemyActivater>();
@@ -106,57 +82,24 @@ public class SpawnController : MonoBehaviour
 
     private void Start()
     {
-        InitPhases();
         currentMovingInterval = initialInterval;
         currentRangedInterval = initialInterval;
-        currentMouseInterval = initialInterval * 3f;
 
         currentSpeed = phase1.movingDefaultSpeed;
-        currentLifetime = phase2.rangedDefaultLifetime;
-        currentMouseActivateCnt = phase3.cntMouseInputTwo;
         StartCoroutine(PhaseRoutine());
     }
-
-    //private void Clear()
-    //{
-    //    StopAllCoroutines(); //corountine clear
-    //    Managers.Pool.Clear(); //moving enemy clear
-    //    foreach (Transform child in this.transform)
-    //    { 
-    //        child.gameObject.SetActive(false);
-    //    }
-    //}
 
     private void CheckDie(int health)
     {
         if (health <= 0 && !isMaster)
         {
             Pause();
-
-            illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
-
             Managers.UI.ShowPopUpUI<GameOver>();
 
-            Managers.Scene.LoadScene("BadEnding");
+            //illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
+            //Managers.Scene.LoadScene("BadEnding");
             return;
         }
-    }
-
-    public void InitAgain()
-    {
-        Resume();
-        
-        movingTimeElapsed = 0f;    // �ӵ��� �����ϴ� �� ���� ���� �ð�
-        rangedTimeElapsed = 0f;
-
-        currentMovingInterval = initialInterval;
-        currentRangedInterval = initialInterval;
-        currentMouseInterval = initialInterval*0.25f;
-
-        currentSpeed = phase1.movingDefaultSpeed;
-        currentLifetime = phase2.rangedDefaultLifetime;
-        currentMouseActivateCnt = phase3.cntMouseInputTwo;
-        StartCoroutine(PhaseRoutine());
     }
 
     #region ControlTime
@@ -183,118 +126,109 @@ public class SpawnController : MonoBehaviour
 
     private IEnumerator PhaseRoutine()
     {
-        PhaseMoving[] phases = { phase1, phase2, phase3 };
+        PhaseMoving[] phases = { phase1, phase2, phase22, phase3 };
 
         for(int i = 1; i<=phases.Length; i++)
         {
             if (i == 1)
             {
                 Pause();
-                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);
+                if (illustController != null)
+                    //일러스트 나옴
+                    yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//숫자 나옴
                 Resume();
             }
             Debug.LogWarning($"phase {i} start!");
-            Managers.Game.IncPhase();
-            movingTimeElapsed = 0f;    // �ӵ��� �����ϴ� �� ���� ���� �ð�
+
+            if(i!=3)
+                Managers.Game.IncPhase();
+
+            movingTimeElapsed = 0f;   
             rangedTimeElapsed = 0f;
+
             yield return StartCoroutine(RunPhase(phases[i-1], i));
+
             Debug.LogWarning($"phase {i} end!");
+            
             Pause();
-            if (i == 1)
-            {
-                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Phase1End);
-                Resume();
-            }
-            else if (i == 2)
-            {
-                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Phase2End);
-                Resume();
-            }
-            else
+            if (i == 4)
             {
                 Managers.Scene.LoadScene("GoodEnding");
                 break;
             }
+            else if (i == 1)
+            {
+                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Phase1End);
+            }
+            else if (i == 3)
+            {
+                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Phase2End);
+            }
+            Resume();
         }
     }
 
     private IEnumerator RunPhase(PhaseMoving phase, int phaseNum)
     {
-        if (phaseNum >= 3)//phase 3
-            StartCoroutine(RunTouch((PhaseMouse)phase));
-        if (phaseNum >= 2)//phase 2, 3
+        if (phaseNum >= 4)//phase 4
+            StartCoroutine(RunTouch((PhaseRanged)phase));
+        if (phaseNum >= 2)//phase 2, 3, 4
             StartCoroutine(RunRanged((PhaseRanged)phase));
-        if (phaseNum >= 1)//phase 1, 2, 3
+        if (phaseNum >= 1)//phase 1, 2, 3, 4
             StartCoroutine(RunMoving((PhaseMoving)phase));
 
-        yield return new WaitForSeconds(phase.movingPhaseDuration);
+        yield return new WaitForSeconds(phase.phaseDuration);
     }
 
-    private IEnumerator RunTouch(PhaseMouse phase) 
+    private IEnumerator RunTouch(PhaseRanged phase) 
     {
-        float remainingTime = phase.movingPhaseDuration;
-        bool isDecIntervalChecked = false;
-        int cnt = phase.cntMouseInputTwo;
+        float remainingTime = phase.phaseDuration;
 
         while (remainingTime > 0)
         {
-            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase �ð��� ���� �������� ������ �ش�.
-            {
-                currentMouseInterval -= phase.mouseIntervalDecRate;
-                isDecIntervalChecked = true;
-            }
+            yield return new WaitForSeconds(10f);
+            GetMouseEnemy();
 
-            yield return new WaitForSeconds(currentMouseInterval);
-            if(cnt > 0) cnt--;
-            bool isTwhoOkay = cnt <= 0 ? true : false;
-            testTouch++;
-            Debug.Log($"different two okay? : {isTwhoOkay}, {testTouch}");
-            GetMouseEnemy(isTwhoOkay);
-
-            remainingTime -= currentMouseInterval;
+            remainingTime -= 10f;
         }
     }
 
     private IEnumerator RunRanged(PhaseRanged phase) 
     {
-        float remainingTime = phase.movingPhaseDuration;
+        float remainingTime = phase.phaseDuration;
         bool isDecIntervalChecked = false;
 
         while (remainingTime > 0)
         {
-            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase �ð��� ���� �������� ������ �ش�.
+            if (remainingTime < phase.phaseDuration * 0.5 && !isDecIntervalChecked) 
             {
                 currentRangedInterval -= phase.rangedIntervalDecRate;
                 isDecIntervalChecked = true;
             }
 
             yield return new WaitForSeconds(currentRangedInterval);
-            currentLifetime = UpdateCurrentRange(phase.movingPhaseDuration, phase.rangedDefaultLifetime, phase.rangedTargetLifetime);
-            testRanged++;
-            // Debug.Log($"different lifetime? : {currentLifetime}, {testRanged}");
-            GetRangedEnemy(currentLifetime);
+            GetRangedEnemy();
 
             remainingTime -= currentRangedInterval;
         }
     }
+
     private IEnumerator RunMoving(PhaseMoving phase)
     {
-        float remainingTime = phase.movingPhaseDuration;
+        float remainingTime = phase.phaseDuration;
         bool isDecIntervalChecked = false;
 
         while (remainingTime > 0)
         {
-            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase �ð��� ���� �������� ������ �ش�.
+            if (remainingTime < phase.phaseDuration * 0.5 && !isDecIntervalChecked) //phase �ð��� ���� �������� ������ �ش�.
             {
                 currentMovingInterval -= phase.movingIntervalDecRate;
                 isDecIntervalChecked = true;
             }
 
             yield return new WaitForSeconds(currentMovingInterval);
-            currentSpeed = UpdateCurrentMoving(phase.movingPhaseDuration, phase.movingDefaultSpeed, phase.movingTargetSpeed);
-            testMoving++;
-            //Debug.Log($"different speed? : {currentSpeed}, {testMoving}");
-            GetMovingEnemy(currentSpeed, rangeDebuf, updownDebuf);
+            currentSpeed = UpdateCurrentMoving(phase.phaseDuration, phase.movingDefaultSpeed, phase.movingTargetSpeed);
+            GetMovingEnemy(currentSpeed);
 
             remainingTime -= currentMovingInterval;
         }
@@ -328,18 +262,46 @@ public class SpawnController : MonoBehaviour
     }
 
 
-    private void GetMovingEnemy(float currentSpeed, float rangeDebuf, float updownDebuf)
+    private void GetMovingEnemy(float currentSpeed)
     {
-        movingEnemySpawner.InitiateRandomNode(currentSpeed, rangeDebuf, updownDebuf);
+        movingEnemySpawner.InitiateRandomNode(currentSpeed);
     }
 
-    private void GetRangedEnemy(float currentLifetime)
+    private void GetRangedEnemy()
     {
-        rangedEnemyActivater.ActivateEnemy(currentLifetime);
+        rangedEnemyActivater.ActivateEnemy();
     }
 
-    private void GetMouseEnemy(bool canTwo)
+    private void GetMouseEnemy()
     {
-        mouseEnemyActivater.ActivateRandomPanel(canTwo);
+        mouseEnemyActivater.ActivateRandomPanel();
     }
+
+
+    //private void Clear()
+    //{
+    //    StopAllCoroutines(); //corountine clear
+    //    Managers.Pool.Clear(); //moving enemy clear
+    //    foreach (Transform child in this.transform)
+    //    { 
+    //        child.gameObject.SetActive(false);
+    //    }
+    //}
+
+    //public void InitAgain()
+    //{
+    //    Resume();
+
+    //    movingTimeElapsed = 0f;    // �ӵ��� �����ϴ� �� ���� ���� �ð�
+    //    rangedTimeElapsed = 0f;
+
+    //    currentMovingInterval = initialInterval;
+    //    currentRangedInterval = initialInterval;
+    //    currentMouseInterval = initialInterval*0.25f;
+
+    //    currentSpeed = phase1.movingDefaultSpeed;
+    //    currentLifetime = phase2.rangedDefaultLifetime;
+    //    StartCoroutine(PhaseRoutine());
+    //}
+
 }

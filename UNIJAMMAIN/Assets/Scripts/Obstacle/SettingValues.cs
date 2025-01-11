@@ -41,44 +41,44 @@ public class SettingValues : MonoBehaviour
 
     public void Confirm()
     {
-        // == Overalll ==
-        UpdateFloatValue(ref spawnController.initialInterval, initialInterval.text);
-        UpdateFloatValue(ref spawnController.rangeDebuf, rangeDebuf.text);
-        UpdateFloatValue(ref spawnController.updownDebuf, updownDebuf.text);
+        //// == Overalll ==
+        //UpdateFloatValue(ref spawnController.initialInterval, initialInterval.text);
+        //UpdateFloatValue(ref spawnController.rangeDebuf, rangeDebuf.text);
+        //UpdateFloatValue(ref spawnController.updownDebuf, updownDebuf.text);
 
-        // === Phase 1 ===
-        UpdateFloatValue(ref spawnController.phase1.movingPhaseDuration, phase1Duration.text);
-        UpdateFloatValue(ref spawnController.phase1.movingDefaultSpeed, phase1DefaultSpeed.text);
-        UpdateFloatValue(ref spawnController.phase1.movingTargetSpeed, phase1TargetSpeed.text);
-        UpdateFloatValue(ref spawnController.phase1.movingIntervalDecRate, phase1IntervalDecRate.text);
+        //// === Phase 1 ===
+        //UpdateFloatValue(ref spawnController.phase1.movingPhaseDuration, phase1Duration.text);
+        //UpdateFloatValue(ref spawnController.phase1.movingDefaultSpeed, phase1DefaultSpeed.text);
+        //UpdateFloatValue(ref spawnController.phase1.movingTargetSpeed, phase1TargetSpeed.text);
+        //UpdateFloatValue(ref spawnController.phase1.movingIntervalDecRate, phase1IntervalDecRate.text);
 
-        // === Phase 2 ===
-        UpdateFloatValue(ref spawnController.phase2.movingPhaseDuration, phase2Duration.text);
-        UpdateFloatValue(ref spawnController.phase2.movingDefaultSpeed, phase2DefaultSpeed.text);
-        UpdateFloatValue(ref spawnController.phase2.movingTargetSpeed, phase2TargetSpeed.text);
-        UpdateFloatValue(ref spawnController.phase2.movingIntervalDecRate, phase2IntervalDecRate.text);
+        //// === Phase 2 ===
+        //UpdateFloatValue(ref spawnController.phase2.movingPhaseDuration, phase2Duration.text);
+        //UpdateFloatValue(ref spawnController.phase2.movingDefaultSpeed, phase2DefaultSpeed.text);
+        //UpdateFloatValue(ref spawnController.phase2.movingTargetSpeed, phase2TargetSpeed.text);
+        //UpdateFloatValue(ref spawnController.phase2.movingIntervalDecRate, phase2IntervalDecRate.text);
 
-        UpdateFloatValue(ref spawnController.phase2.rangedDefaultLifetime, phase2DefaultLifetime.text);
-        UpdateFloatValue(ref spawnController.phase2.rangedTargetLifetime, phase2TargetLifetime.text);
-        UpdateFloatValue(ref spawnController.phase2.rangedIntervalDecRate, phase2RangedIntervalDecRate.text);
+        //UpdateFloatValue(ref spawnController.phase2.rangedDefaultLifetime, phase2DefaultLifetime.text);
+        //UpdateFloatValue(ref spawnController.phase2.rangedTargetLifetime, phase2TargetLifetime.text);
+        //UpdateFloatValue(ref spawnController.phase2.rangedIntervalDecRate, phase2RangedIntervalDecRate.text);
 
-        // === Phase 3 ===
-        UpdateFloatValue(ref spawnController.phase3.movingPhaseDuration, phase3Duration.text);
-        UpdateFloatValue(ref spawnController.phase3.movingDefaultSpeed, phase3DefaultSpeed.text);
-        UpdateFloatValue(ref spawnController.phase3.movingTargetSpeed, phase3TargetSpeed.text);
-        UpdateFloatValue(ref spawnController.phase3.movingIntervalDecRate, phase3IntervalDecRate.text);
+        //// === Phase 3 ===
+        //UpdateFloatValue(ref spawnController.phase3.movingPhaseDuration, phase3Duration.text);
+        //UpdateFloatValue(ref spawnController.phase3.movingDefaultSpeed, phase3DefaultSpeed.text);
+        //UpdateFloatValue(ref spawnController.phase3.movingTargetSpeed, phase3TargetSpeed.text);
+        //UpdateFloatValue(ref spawnController.phase3.movingIntervalDecRate, phase3IntervalDecRate.text);
 
-        UpdateFloatValue(ref spawnController.phase3.rangedDefaultLifetime, phase3DefaultLifetime.text);
-        UpdateFloatValue(ref spawnController.phase3.rangedTargetLifetime, phase3TargetLifetime.text);
-        UpdateFloatValue(ref spawnController.phase3.rangedIntervalDecRate, phase3RangedIntervalDecRate.text);
+        //UpdateFloatValue(ref spawnController.phase3.rangedDefaultLifetime, phase3DefaultLifetime.text);
+        //UpdateFloatValue(ref spawnController.phase3.rangedTargetLifetime, phase3TargetLifetime.text);
+        //UpdateFloatValue(ref spawnController.phase3.rangedIntervalDecRate, phase3RangedIntervalDecRate.text);
 
-        UpdateIntValue(ref spawnController.phase3.cntMouseInputTwo, phase3CntMouseInputTwo.text);
+        //UpdateIntValue(ref spawnController.phase3.cntMouseInputTwo, phase3CntMouseInputTwo.text);
 
-        UpdateFloatValue(ref spawnController.phase3.mouseIntervalDecRate, phase3MouseIntervalDecRate.text);
+        //UpdateFloatValue(ref spawnController.phase3.mouseIntervalDecRate, phase3MouseIntervalDecRate.text);
 
-        Debug.Log("설정값이 적용되었습니다!");
+        //Debug.Log("설정값이 적용되었습니다!");
 
-        spawnController.InitAgain();
+        //spawnController.InitAgain();
     }
 
     private void UpdateFloatValue(ref float field, string input)

@@ -16,11 +16,9 @@ public class GoodEnding : MonoBehaviour
     public Sprite fry;
     public Image erun;
 
-    Camera camera;
     private void Start()
     {
         StartCoroutine(Sequence());
-        camera = Camera.main;
     }
 
     private IEnumerator Sequence()
@@ -31,9 +29,9 @@ public class GoodEnding : MonoBehaviour
         meditate.SetActive(true);
         ByeUI.SetActive(false);
         bg.SetActive(true);
-        camera.DOOrthoSize(3.5f, 4f);
+        Camera.main.DOOrthoSize(3.5f, 4f);
         yield return new WaitForSeconds(4f);
-        camera.transform.DOMoveY(1f, 2f);
+        Camera.main.transform.DOMoveY(1f, 2f);
         yield return new WaitForSeconds(2f);
         human.transform.DOMove(new Vector3(0, 1f, 0), 1.5f);
         yield return new WaitForSeconds(1.5f);
@@ -50,6 +48,6 @@ public class GoodEnding : MonoBehaviour
         yield return new WaitForSeconds(2f);
         erun.DOFade(1f, 1.5f);
         yield return new WaitForSeconds(3f);
-        //Managers.Scene.LoadScene(Define.Scene.TitleScene);
+        Managers.Scene.LoadScene("MainScene");
     }
 }

@@ -12,16 +12,10 @@ public class MouseEnemyActivater : MonoBehaviour
         Panels.Add(LeftOne);
         Panels.Add(RightOne);
     }
-    public void ActivateRandomPanel(bool canTwo)
+    public void ActivateRandomPanel()
     {
-        int endIdx = 2;
-
-        int rand = Random.Range(0, endIdx);
-        Debug.Log($"지금 랜덤 이렇게 나왔음!{rand}, {canTwo}");
-        if(rand == 1 || rand == 0)
-        {
-            Panels[rand].SetActive(true);
-        }
+        int rand = Random.Range(0, 2);
+        Panels[rand].SetActive(true);
     }
 }
 

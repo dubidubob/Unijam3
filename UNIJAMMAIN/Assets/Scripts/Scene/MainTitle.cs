@@ -18,7 +18,7 @@ public class MainTitle : BaseScene
     {
         Init();
         Managers.UI.ShowPopUpUI<PopUpMainScene>();
-        Managers.UI.ShowPopUpUI<GameOver>();
+        //Managers.UI.ShowPopUpUI<GameOver>();
     }
 
     public void IsStart()

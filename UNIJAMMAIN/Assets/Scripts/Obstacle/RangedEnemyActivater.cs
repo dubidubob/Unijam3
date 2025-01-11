@@ -11,14 +11,9 @@ public class RangedEnemyActivater : MonoBehaviour
         public GameObject go;
     }
 
-    [SerializeField] private float boundaryOffset = 1f; // ȭ�� �����ڸ��κ��� �󸶳� �������� �������� �����ϴ� ��
+    [SerializeField] private float boundaryOffset = 1f;
     [SerializeField] List<RangedEnemyInfo> deactivatedEnemies;
     private List<RangedEnemyInfo> activatedEnemies = new List<RangedEnemyInfo>();
-
-    float xMin = 0;
-    float xMax = 0;
-    float yMin = 0;
-    float yMax = 0;
 
     private void Awake()
     {
@@ -54,6 +49,12 @@ public class RangedEnemyActivater : MonoBehaviour
         }
     }
 
+
+    float xMin = 0;
+    float xMax = 0;
+    float yMin = 0;
+    float yMax = 0;
+
     private void InvestScreenSize()
     {
         Camera cam = Camera.main;
@@ -67,7 +68,7 @@ public class RangedEnemyActivater : MonoBehaviour
         yMax = halfHeight;
     }
 
-    public void ActivateEnemy(float lifeTime)
+    public void ActivateEnemy()
     {
         CheckActivated();
 
@@ -80,12 +81,11 @@ public class RangedEnemyActivater : MonoBehaviour
 
         var chosenEnemy = deactivatedEnemies[randomIndex]; // �̸� ���� ������ ��Ƶд�.
         RangedEnemy rangedEnemy = chosenEnemy.go.GetComponent<RangedEnemy>();
-        rangedEnemy.SetLifetime(lifeTime);
 
-        PosAndActivateNode(chosenEnemy, lifeTime);
+        PosAndActivateNode(chosenEnemy);
 
-        activatedEnemies.Add(chosenEnemy); // Ȱ�� ����Ʈ�� �̵�
-        deactivatedEnemies.RemoveAt(randomIndex); // ��Ȱ�� ����Ʈ���� ����
+        activatedEnemies.Add(chosenEnemy); 
+        deactivatedEnemies.RemoveAt(randomIndex);
     }
 
     private void CheckActivated()
@@ -101,7 +101,7 @@ public class RangedEnemyActivater : MonoBehaviour
         }
     }
 
-    private void PosAndActivateNode(RangedEnemyInfo enemy, float lifeTime)
+    private void PosAndActivateNode(RangedEnemyInfo enemy)
     {
         float randX = 0f;
         float randY = 0f;
@@ -130,7 +130,6 @@ public class RangedEnemyActivater : MonoBehaviour
         }
 
         enemy.go.transform.position = new Vector3(randX, randY, 0f);
-        Debug.Log($"set active {enemy.attackType}, at {randX}, {randY}, {lifeTime}");
         enemy.go.SetActive(true);
     }
 }

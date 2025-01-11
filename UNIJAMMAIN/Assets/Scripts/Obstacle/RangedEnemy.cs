@@ -4,34 +4,25 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class RangedEnemy : MonoBehaviour
 {
-    [Header("Enemy Settings")]
-    [SerializeField]
-    private float defaultLifeDuration = 2f;
-
     private float lifeDuration;
+
     private SpriteRenderer spriteRenderer;
     private bool isDying = false;
 
     private Tween colorTween;
     private Tween fadeTween;
 
-    public void SetLifetime(float lifetime)
-    {
-        Debug.Log($"this setlifetime {lifetime}");
-        lifeDuration = lifetime;
-    }
-
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        lifeDuration = defaultLifeDuration;
+        lifeDuration = 3f;
     }
 
     private void OnEnable()
     {
-        Debug.Log($"this lifeDuration {lifeDuration}");
         Init();
     }
+
     private void Init()
     {
         isDying = false;
@@ -49,8 +40,6 @@ public class RangedEnemy : MonoBehaviour
             {
                 DyingAnim();
             });
-
-     
     }
 
     private void DyingAnim()
@@ -70,8 +59,6 @@ public class RangedEnemy : MonoBehaviour
                 SetDead(false);
             });
     }
-
-
 
     public void SetDead(bool isAttackedByPlayer = true)
     {
@@ -93,8 +80,6 @@ public class RangedEnemy : MonoBehaviour
 
     private void OnDisable()
     {
-        lifeDuration = defaultLifeDuration;
-
         // 트윈 정리
         colorTween?.Kill();
         fadeTween?.Kill();
