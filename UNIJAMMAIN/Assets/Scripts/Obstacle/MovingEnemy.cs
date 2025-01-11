@@ -15,17 +15,14 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetSpeed(float defaultSpeed, float rangeDebuf)
+    public void SetSpeed(float defaultSpeed)
     { 
         currentSpeed = defaultSpeed;
-        colliderDebuf = rangeDebuf;
     }
 
     private void Update()
     {
-        // ���� ���ο� ��ġ ���
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, currentSpeed * Time.deltaTime);
-        // ���� ���ο� ��ġ�� �̵�
         transform.position = newPosition;
     }
 

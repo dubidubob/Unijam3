@@ -15,7 +15,8 @@ MonoBehaviour:
   illusts:
   - type: 0
     illustLists:
-    - {fileID: 21300000, guid: f1af0ecb32997f24bb35bafc66cbee4a, type: 3}
+    - {fileID: 21300000, guid: c0b56d07b1c804445b3acae3cc983631, type: 3}
+    - {fileID: 21300000, guid: c0b56d07b1c804445b3acae3cc983631, type: 3}
   - type: 1
     illustLists:
     - {fileID: 21300000, guid: bae5e9bd1e2efdb459ba519fa229acfc, type: 3}
