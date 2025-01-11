@@ -15,29 +15,6 @@ public class S1_PopUp : UI_Popup
     }
     private IEnumerator animationGo()
     {
-
-        float elapsedTime = 0f;
-        S1_01.DOFade(1f, 0.5f);
-
-        while (elapsedTime < 0.5f)
-        {
-            elapsedTime += Time.deltaTime;  // ��� �ð� ����
-            yield return null;  // ���� �����ӱ��� ���
-        }
-        elapsedTime = 0f;
-        S1_02.DOFade(1f, 0.5f);
-        while (elapsedTime < 0.5f)
-        {
-            elapsedTime += Time.deltaTime;  // ��� �ð� ����
-            yield return null;  // ���� �����ӱ��� ���
-        }
-        elapsedTime = 0f;
-        S1_03.DOFade(1f, 0.5f);
-
-
-
-        yield return new WaitForSeconds(2f);
-
         S1_01.DOFade(1f, duration).SetUpdate(true);
         yield return new WaitForSecondsRealtime(duration);
         S1_02.DOFade(1f, duration).SetUpdate(true);
@@ -59,33 +36,6 @@ public class S1_PopUp : UI_Popup
     U_02.DOFade(1f, duration_text).SetUpdate(true);
 
     yield return new WaitForSecondsRealtime(duration_text);
-        
-
-            Hu_01.DOFade(1f, 0.5f);
-
-             while (elapsedTime < 0.5f)
-             {
-            elapsedTime += Time.deltaTime;  // ��� �ð� ����
-            yield return null;  // ���� �����ӱ��� ���
-        }
-        elapsedTime = 0f;
-        U_02.DOFade(1f, 0.5f);
-        while (elapsedTime < 0.5f)
-        {
-            elapsedTime += Time.deltaTime;  // ��� �ð� ����
-            yield return null;  // ���� �����ӱ��� ���
-        }
-        elapsedTime = 0f;
-        U_03.DOFade(1f, 0.5f);
-        while (elapsedTime < 0.5f)
-        {
-            elapsedTime += Time.deltaTime;  // ��� �ð� ����
-            yield return null;  // ���� �����ӱ��� ���
-        }
-        elapsedTime = 0f;
-        Ung_04.DOFade(1f, 2f);
-
-        }
 
     U_03.DOFade(1f, duration_text).SetUpdate(true);
     yield return new WaitForSecondsRealtime(duration_text);
