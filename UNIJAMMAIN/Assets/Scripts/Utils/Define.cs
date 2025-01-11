@@ -72,6 +72,7 @@ public class Define
         Unknown,
         TitleScene,
         MainGame,
+        GamePlayScene,
         MainTitle,
         S1_1,
         S1_2

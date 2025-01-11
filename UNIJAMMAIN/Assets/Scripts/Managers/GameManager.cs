@@ -9,6 +9,7 @@ public class GameManager
     public int currentPhase { get; private set; } = 0;
     public Action<int> ComboContinue = null;
     public Action<int> HealthUpdate = null;
+    public Action<int> PhaseUpdate = null;
     private int Combo = 0;
     private int Health = 0;
     public readonly int MaxHealth = 10;
@@ -114,6 +115,7 @@ public class GameManager
     public void IncPhase()
     {
         currentPhase++;
+        PhaseUpdate?.Invoke(currentPhase);
     }
 
     public int GetPhase()

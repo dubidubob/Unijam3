@@ -15,7 +15,7 @@ public class IllustController : MonoBehaviour
     private void Start()
     {
         foreach (var go in images)
-        { 
+        {
             go.gameObject.SetActive(false);
         }
     }
