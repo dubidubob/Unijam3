@@ -3,7 +3,20 @@ using DG.Tweening;
 
 public class DiyongManager : MonoBehaviour
 {
-    public GameObject W, A, S, D, LeftUp, LeftDown, RightUp, RightDown;
+    private struct KeyData
+    {
+        public GameObject go;
+        public Sprite sp;
+    }
+
+    [SerializeField] private KeyData W;
+    [SerializeField] private KeyData A;
+    [SerializeField] private KeyData S;
+    [SerializeField] private KeyData D;
+    [SerializeField] private KeyData LeftUp;
+    [SerializeField] private KeyData LeftDown;
+    [SerializeField] private KeyData RightUp;
+    [SerializeField] private KeyData RightDown;
 
     private GameObject ActionGo;
     private float originalScale = 0.25f;
@@ -11,83 +24,61 @@ public class DiyongManager : MonoBehaviour
     private void Start()
     {
 
-        Managers.Input.KeyBoardChecking -= PressButtonKeyBoard;
-        Managers.Input.KeyBoardChecking += PressButtonKeyBoard;
+        Managers.Input.KeyBoardChecking -= PressButtonArrow;
+        Managers.Input.KeyBoardChecking += PressButtonArrow;
 
-        Managers.Input.KeyArrowcodeAction -= PressButtonArrow;
-        Managers.Input.KeyArrowcodeAction += PressButtonArrow;
+        Managers.Input.KeyArrowcodeAction -= PressButtonKeyBoard;
+        Managers.Input.KeyArrowcodeAction += PressButtonKeyBoard;
     }
-    void PressButtonKeyBoard(KeyCode attackType) //WASD
+    void PressButtonArrow(KeyCode attackType) //WASD
     {
         string key = attackType.ToString();
         if (key == "W")
         {
-            ActionGo = W;
+            ActionGo = W.go;
         }
         else if (key == "A")
         {
-            ActionGo = A;
+            ActionGo = A.go;
         }
         else if (key == "S")
         {
-            ActionGo = S;
+            ActionGo = S.go;
         }
         else if (key == "D")
         {
-            ActionGo = D;
+            ActionGo = D.go;
         }
-        else Debug.Log("ï¿½î¶²ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
-
-        if (ActionGo != null)
-        {
-            ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
-              .OnComplete(() => { ActionGo.transform.DOScale(Vector3.one, 0.2f);
-                  ActionGoNull();
-              });
-        }
-
+        else Debug.Log("¾î¶²°Íµµ ÇàÇØÁöÁö¾ÊÀº ¿À·ù");
 
         ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
 
     }
-    void ActionGoNull()
-    {
-        Debug.Log("ActionGoNull ï¿½ï¿½ï¿½ï¿½");
-        ActionGo = null;
-    }
-    void PressButtonArrow(GamePlayDefine.RangedAttackType attackType)
+    void PressButtonKeyBoard(GamePlayDefine.RangedAttackType attackType)
     {
         string key = attackType.ToString();
         if (key == "LeftUp")
         {
-            ActionGo = LeftUp;
+            ActionGo = LeftUp.go;
         }
         else if (key == "LeftDown")
         {
-            ActionGo = LeftDown;
+            ActionGo = LeftDown.go;
         }
         else if (key == "RightUp")
         {
-            ActionGo = RightUp;
+            ActionGo = RightUp.go;
         }
         else if (key == "RightDown")
         {
-            ActionGo = RightDown;
+            ActionGo = RightDown.go;
         }
-        else Debug.Log("ï¿½î¶²ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
-
-        ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
-           .OnComplete(() =>
-           {
-               ActionGo.transform.DOScale(Vector3.one, 0.2f);
-               ActionGoNull();
-           });
-           }
- } 
+        else Debug.Log("¾î¶²°Íµµ ÇàÇØÁöÁö¾ÊÀº ¿À·ù");
 
         ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
-           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one* originalScale, 0.2f));
+           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
     }
 }
+
 

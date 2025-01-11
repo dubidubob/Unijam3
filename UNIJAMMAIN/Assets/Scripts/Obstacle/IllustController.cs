@@ -49,7 +49,7 @@ public class IllustController : MonoBehaviour
         // 局聪皋捞记 贸府
         if (illustType == GamePlayDefine.IllustType.Num)
         {
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(0.2f);
 
             for (int i = 0; i < spriteLists.Count; i++)
             {
@@ -70,7 +70,7 @@ public class IllustController : MonoBehaviour
 
                 yield return new WaitForSecondsRealtime(1 - numDuration);
             }
-            images[spriteLists.Count].gameObject.SetActive(false);
+            images[spriteLists.Count-1].gameObject.SetActive(false);
         }
         else
         {

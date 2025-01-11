@@ -185,7 +185,7 @@ public class SpawnController : MonoBehaviour
             if (i == 1)
             {
                 Pause();
-                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Start);
+                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);
                 Resume();
             }
             Debug.LogWarning($"phase {i} start!");
