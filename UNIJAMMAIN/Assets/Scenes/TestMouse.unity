@@ -135,10 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TouchCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3439339439667371778, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4639520216720240912, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
       propertyPath: m_Camera
       value: 
@@ -221,42 +217,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5293114370142640329, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8132880664391720263, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8132880664391720263, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8132880664391720263, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8132880664391720263, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8191539790840822235, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8716838313987366958, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8716838313987366958, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8716838313987366958, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8716838313987366958, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

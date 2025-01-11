@@ -63,8 +63,11 @@ public class SpawnController : MonoBehaviour
         phase3.mouseIntervalDecRate = 0.1f;
     }
 
+    [HideInInspector]
     public float initialInterval = 1.5f;
+    [HideInInspector]
     public float rangeDebuf = 0.8f;
+    [HideInInspector]
     public float updownDebuf = 0.8f;
 
     private MovingEnemySpawner movingEnemySpawner;
@@ -99,7 +102,7 @@ public class SpawnController : MonoBehaviour
         InitPhases();
         currentMovingInterval = initialInterval;
         currentRangedInterval = initialInterval;
-        currentMouseInterval = initialInterval;
+        currentMouseInterval = initialInterval * 0.5f;
 
         currentSpeed = phase1.movingDefaultSpeed;
         currentLifetime = phase2.rangedDefaultLifetime;

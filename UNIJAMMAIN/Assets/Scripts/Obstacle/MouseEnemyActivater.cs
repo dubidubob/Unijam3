@@ -19,6 +19,7 @@ public class MouseEnemyActivater : MonoBehaviour
             endIdx++;
 
         int rand = Random.Range(0, endIdx);
+        Debug.Log($"지금 랜덤 이렇게 나왔음!{rand}, {canTwo}");
         if (rand == 3)
         {
             LeftOne.SetActive(true);
@@ -26,10 +27,7 @@ public class MouseEnemyActivater : MonoBehaviour
         }
         else
         {
-            foreach (GameObject go in Panels)
-            { 
-                go.SetActive(true);
-            }
+            Panels[rand].SetActive(true);
         }
     }
 }

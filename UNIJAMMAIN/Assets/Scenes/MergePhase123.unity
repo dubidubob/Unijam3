@@ -18723,8 +18723,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialInterval: 1.5
-  rangeDebuf: 0
-  updownDebuf: 0
+  rangeDebuf: 0.8
+  updownDebuf: 0.8
 --- !u!114 &5032662942808797822
 MonoBehaviour:
   m_ObjectHideFlags: 0
