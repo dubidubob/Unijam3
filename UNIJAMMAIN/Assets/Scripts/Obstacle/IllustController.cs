@@ -23,7 +23,7 @@ public class IllustController : MonoBehaviour
     {
         var go = illustPrefabSO.GetIllust(illustType);
         List<Sprite> spriteLists = go.illustLists;
-
+        Debug.Log($"sprite 개수 : {spriteLists.Count}");
         // 이미지 초기화
         for (int i = 0; i < spriteLists.Count; i++)
         {

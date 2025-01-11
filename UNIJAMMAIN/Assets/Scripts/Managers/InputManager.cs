@@ -36,7 +36,6 @@ public class InputManager
                     
                     if(Managers.Tracker.keyPressCounts[key.ToString()]<4&&Input.GetKeyDown(key))
                     {
-                        Debug.Log(key.ToString());
                         Managers.Game.ReceiveKey(key.ToString());
                         return;
                     }

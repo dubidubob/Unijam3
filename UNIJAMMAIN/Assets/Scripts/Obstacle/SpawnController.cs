@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
@@ -8,7 +7,11 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
+    public int testMoving = 0;
+    public int testRanged = 0;
+    public int testTouch = 0;
     public IllustController illustController;
+    [SerializeField] bool isMaster = true;
     #region PhaseClasses
     public class PhaseMoving
     {
@@ -70,7 +73,7 @@ public class SpawnController : MonoBehaviour
     [HideInInspector]
     public float rangeDebuf = 0.8f;
     [HideInInspector]
-    public float updownDebuf = 0.8f;
+    public float updownDebuf = 0.7f;
 
     private MovingEnemySpawner movingEnemySpawner;
     private RangedEnemyActivater rangedEnemyActivater;
@@ -97,6 +100,8 @@ public class SpawnController : MonoBehaviour
 
         Managers.Input.SettingpopAction -= ControlTime;
         Managers.Input.SettingpopAction += ControlTime;
+        Managers.Game.HealthUpdate -= CheckDie;
+        Managers.Game.HealthUpdate += CheckDie;
     }
 
     private void Start()
@@ -124,7 +129,7 @@ public class SpawnController : MonoBehaviour
 
     private void CheckDie(int health)
     {
-        if (health < 0)
+        if (health <= 0 && !isMaster)
         {
             Pause();
             illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
@@ -185,6 +190,8 @@ public class SpawnController : MonoBehaviour
             }
             Debug.LogWarning($"phase {i} start!");
             Managers.Game.IncPhase();
+            movingTimeElapsed = 0f;    // 속도가 증가하는 데 사용될 누적 시간
+            rangedTimeElapsed = 0f;
             yield return StartCoroutine(RunPhase(phases[i-1], i));
             Debug.LogWarning($"phase {i} end!");
             Pause();
@@ -234,9 +241,12 @@ public class SpawnController : MonoBehaviour
 
             yield return new WaitForSeconds(currentMouseInterval);
             if(cnt > 0) cnt--;
-            GetMouseEnemy(cnt <= 0);
+            bool isTwhoOkay = cnt <= 0 ? true : false;
+            testTouch++;
+            Debug.Log($"different two okay? : {isTwhoOkay}, {testTouch}");
+            GetMouseEnemy(isTwhoOkay);
 
-            remainingTime -= currentMovingInterval;
+            remainingTime -= currentMouseInterval;
         }
     }
 
@@ -254,10 +264,12 @@ public class SpawnController : MonoBehaviour
             }
 
             yield return new WaitForSeconds(currentRangedInterval);
-            currentLifetime = UpdateCurrentData(rangedTimeElapsed, phase.movingPhaseDuration, phase.rangedDefaultLifetime, phase.rangedTargetLifetime);
+            currentLifetime = UpdateCurrentRange(phase.movingPhaseDuration, phase.rangedDefaultLifetime, phase.rangedTargetLifetime);
+            testRanged++;
+            Debug.Log($"different lifetime? : {currentLifetime}, {testRanged}");
             GetRangedEnemy(currentLifetime);
 
-            remainingTime -= currentMovingInterval;
+            remainingTime -= currentRangedInterval;
         }
     }
     private IEnumerator RunMoving(PhaseMoving phase)
@@ -274,25 +286,42 @@ public class SpawnController : MonoBehaviour
             }
 
             yield return new WaitForSeconds(currentMovingInterval);
-            currentSpeed = UpdateCurrentData(movingTimeElapsed, phase.movingPhaseDuration, phase.movingDefaultSpeed, phase.movingTargetSpeed);
+            currentSpeed = UpdateCurrentMoving(phase.movingPhaseDuration, phase.movingDefaultSpeed, phase.movingTargetSpeed);
+            testMoving++;
+            Debug.Log($"different speed? : {currentSpeed}, {testMoving}");
             GetMovingEnemy(currentSpeed, rangeDebuf, updownDebuf);
 
             remainingTime -= currentMovingInterval;
         }
     }
 
-    private float UpdateCurrentData(float timeElapsed, float timeToTargetData, float defaultData, float targetData)
+    private float UpdateCurrentRange(float timeToTargetData, float defaultData, float targetData)
     {
-        if (timeElapsed < timeToTargetData)
+        if (rangedTimeElapsed < timeToTargetData)
         {
-            timeElapsed += currentMovingInterval;
+            rangedTimeElapsed += currentRangedInterval;
 
-            float t = Mathf.Clamp01(timeElapsed / timeToTargetData);
+            float t = Mathf.Clamp01(rangedTimeElapsed / timeToTargetData);
             return Mathf.Lerp(defaultData, targetData, t);
         }
 
         return targetData;
     }
+
+
+    private float UpdateCurrentMoving(float timeToTargetData, float defaultData, float targetData)
+    {
+        if (movingTimeElapsed < timeToTargetData)
+        {
+            movingTimeElapsed += currentMovingInterval;
+
+            float t = Mathf.Clamp01(movingTimeElapsed / timeToTargetData);
+            return Mathf.Lerp(defaultData, targetData, t);
+        }
+
+        return targetData;
+    }
+
 
     private void GetMovingEnemy(float currentSpeed, float rangeDebuf, float updownDebuf)
     {
