@@ -3,16 +3,32 @@ using UnityEngine;
 
 public class RangedEnemy : MonoBehaviour
 {
-    [SerializeField] private float lifeDuration = 1f;
+    private float lifeDuration;
     SpriteRenderer spriteRenderer;
     bool isDying = false;
+    bool isDurationLocked = false;
 
     private void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        lifeDuration = 2f;
+        isDurationLocked = false;
     }
 
     private void OnEnable()
+    {
+        Debug.Log($"this lifeDuration {lifeDuration}");
+        if(transform.gameObject.activeSelf)
+            isDurationLocked = true;
+        Init();
+    }
+
+    private void OnDisable()
+    {
+        isDurationLocked = false;
+    }
+
+    private void Init()
     {
         spriteRenderer.color = Color.white;
 
@@ -24,13 +40,11 @@ public class RangedEnemy : MonoBehaviour
                 DyingAnim();
             });
 
-        transform.localScale = Vector3.one; 
+        transform.localScale = Vector3.one;
     }
 
     private void DyingAnim()
     {
-        //dying animation
-
         //scale animation
         transform.DOScale(Vector3.one * 0.8f, 0.2f)
             .OnComplete(() => 
@@ -49,7 +63,9 @@ public class RangedEnemy : MonoBehaviour
 
     public void SetLifetime(float lifetime)
     {
-        lifeDuration = lifetime;
+        Debug.Log($"this setlifetime {lifetime}, {isDurationLocked}");
+        if(!isDurationLocked)
+            lifeDuration = lifetime;
     }
 
     public void SetDead(bool isAttackedByPlayer = true) 

@@ -19423,6 +19423,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TouchCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 278962693229823805, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4639520216720240912, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
       propertyPath: m_Camera
       value: 
@@ -19792,7 +19796,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2e7d7de1f8d234c975d1dc4fe6e31f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testMoving: 0
+  testRanged: 0
+  testTouch: 0
   illustController: {fileID: 413534883}
+  isMaster: 1
   initialInterval: 1.5
   rangeDebuf: 0.8
   updownDebuf: 0.8
@@ -19897,11 +19905,11 @@ SceneRoots:
   m_Roots:
   - {fileID: 210544443}
   - {fileID: 1781085417}
+  - {fileID: 806074482}
   - {fileID: 572656401}
   - {fileID: 1149307826}
   - {fileID: 2016210101}
   - {fileID: 2769898147421067717}
   - {fileID: 2449970627332625068}
   - {fileID: 413534887}
-  - {fileID: 806074482}
   - {fileID: 1295321925}

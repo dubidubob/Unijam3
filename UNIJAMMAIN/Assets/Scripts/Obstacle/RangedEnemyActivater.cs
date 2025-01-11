@@ -78,11 +78,6 @@ public class RangedEnemyActivater : MonoBehaviour
 
         int randomIndex = Random.Range(0, deactivatedEnemies.Count);
 
-        Debug.Log("Deactivate 중 하나 Activate!");
-        foreach (var go in deactivatedEnemies)
-        {
-            Debug.Log($"{go.attackType}");
-        }
         var chosenEnemy = deactivatedEnemies[randomIndex]; // 미리 적을 변수에 담아둔다.
         RangedEnemy rangedEnemy = chosenEnemy.go.GetComponent<RangedEnemy>();
         rangedEnemy.SetLifetime(lifeTime);
