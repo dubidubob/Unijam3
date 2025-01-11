@@ -16,6 +16,7 @@ public class Managers : MonoBehaviour
     SceneManagerEx _scene = new SceneManagerEx();
     DataManager _data = new DataManager(); //DataManager가 겹쳐서 추가
     JsonManager _json = new JsonManager();
+    KeyTrackerManager _key = new KeyTrackerManager();
 
 
     public static GameManager Game { get { return Instance._game; } }
@@ -27,6 +28,7 @@ public class Managers : MonoBehaviour
     public static JsonManager Json {  get { return Instance._json; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
 
+    public static KeyTrackerManager Tracker { get { return Instance._key; } }
 
     void Start()
     {

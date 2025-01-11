@@ -24,7 +24,7 @@ public class MovingEnemySpawner : MonoBehaviour
         movingEnemy.SetSpeed(currentSpeed, rangeDebuf);
 
         //GameObject go = Instantiate(enemy.go, enemy.pos, Quaternion.identity);
-        Debug.Log($"instantiate {enemyType}");
+        //Debug.Log($"instantiate {enemyType}");
     }
 
     private float ApplyDebufUpdown(float currentSpeed)

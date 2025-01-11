@@ -11,7 +11,6 @@ public class GameManager
         Battle,
         Store,
         Bless,
-
     }
     public GameState currentState;
     //플레이어 죽을 때 실행시킬 함수
@@ -33,7 +32,7 @@ public class GameManager
 
     private Dictionary<string, Queue<GameObject>> attacks = new Dictionary<string, Queue<GameObject>>();
 
-    public void ReceiveKey(string key)
+    public bool ReceiveKey(string key)
     {
         Debug.Log($"key pressed : {key}");
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
@@ -41,15 +40,17 @@ public class GameManager
             GameObject go = attacks[key].Dequeue();
             if (go == null)
             {
-                Debug.LogError("왜 go가 null이 됐지?");
-                return;
+                Debug.LogError("큰일난오류?");
+                return false;
             }
 
             go.GetComponent<MovingEnemy>().SetDead();
-            return;
+            return true;
         }
 
         DecHealth();
+        Managers.Tracker.MissedKeyPress(key);
+        return false;
     }
 
     public void AddAttackableEnemy(string key, GameObject go)
@@ -61,6 +62,10 @@ public class GameManager
         attacks[key].Enqueue(go);
     }
 
+    public void KeyBlock(string key)
+    {
+
+    }
     public void DecHealth()
     {
         Debug.Log("Dec Health");

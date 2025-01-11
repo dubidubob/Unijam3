@@ -33,17 +33,26 @@ public class InputManager
                 // 눌린 키가 배열에 있는지 확인
                 foreach (KeyCode key in keysToCheck)
                 {
-                    if (Input.GetKeyDown(key))
+                    
+                    if(Managers.Tracker.keyPressCounts[key.ToString()]<4&&Input.GetKeyDown(key))
                     {
+                        Debug.Log(key.ToString());
                         Managers.Game.ReceiveKey(key.ToString());
                         return;
                     }
+                    /*else
+                    {
+                        Debug.Log("KeyBlock으로 누르기에 실패하였습니다.");
+                        return;
+                    }
+                    */
                 }
 
                 foreach (KeyCode key in keysToCheckArrow)
                 {
                     if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow)) // 왼쪽위
                     {
+                    
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         return;
                     }
