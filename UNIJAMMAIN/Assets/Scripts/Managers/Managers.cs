@@ -17,7 +17,7 @@ public class Managers : MonoBehaviour
     DataManager _data = new DataManager(); //DataManager가 겹쳐서 추가
     JsonManager _json = new JsonManager();
     KeyTrackerManager _key = new KeyTrackerManager();
-
+    SoundManager _sound = new SoundManager();
 
     public static GameManager Game { get { return Instance._game; } }
     public static UI_Manager UI { get { return Instance._ui; } }
@@ -30,6 +30,7 @@ public class Managers : MonoBehaviour
 
     public static KeyTrackerManager Tracker { get { return Instance._key; } }
 
+    public static SoundManager Sound { get { return Instance._sound; } }
     void Start()
     {
         Init();
@@ -58,6 +59,7 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
             s_instance._pool.Init();
             s_instance._data.Init();
+            s_instance._sound.Init();
         }
     }
 
@@ -66,6 +68,7 @@ public class Managers : MonoBehaviour
         Input.Clear();
         UI.Clear();
         Pool.Clear();
+        Sound.Clear();
     }
 
 }

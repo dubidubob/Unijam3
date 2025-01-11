@@ -1,50 +1,143 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
-public class SoundManger: MonoBehaviour
+public class SoundManager
 {
-    public static SoundManger instance;
+    public AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
+    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+    [SerializeField]
+    public AudioMixer audioMixer;
+    public AudioMixerGroup[] audioMixerGroups;
 
-    [Header("#BGM")]
-    public AudioClip bgmClip;
-    public float bgmVolume;
-    AudioSource bgmPlayer;
-
-    [Header("#SFX")]
-    public AudioClip sfxClips;
-    public float sfxVolume;
-    public int channels;
-    AudioSource[] sfxPlayers;
-    int channelIndex;
-
-    void Awake()
+    public void Init()
     {
-        instance = this;
-        Init();
+        GameObject root = GameObject.Find("@Sound");
+        if (root == null)
+        {
+            audioMixer = Resources.Load<AudioMixer>("Sounds/SoundSetting");
+            root = new GameObject { name = "@Sound" };
+            Object.DontDestroyOnLoad(root);
+
+            string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
+            for (int i = 0; i < soundNames.Length - 1; i++)
+            {
+                GameObject go = new GameObject { name = soundNames[i] };
+                _audioSources[i] = go.AddComponent<AudioSource>();
+                _audioSources[i].outputAudioMixerGroup = audioMixer.FindMatchingGroups($"{soundNames[i]}")[0];
+                go.transform.parent = root.transform;
+            }
+        }
+    }
+    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f)
+    {
+        if (audioClip == null)
+        {
+            return;
+        }
+        if (type == Define.Sound.BGM)
+        {
+            AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+            audioSource.pitch = pitch;
+            audioSource.clip = audioClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        else
+        {
+            AudioSource audioSource = _audioSources[(int)Define.Sound.SFX];
+            audioSource.pitch = pitch;
+            audioSource.PlayOneShot(audioClip);
+        }
+    }
+    public void PlayDelayed(AudioClip audioClip, float delay, Define.Sound type = Define.Sound.BGM, float pitch = 1.0f)
+    {
+        //audioMixer = Managers.Resource.Load<AudioMixer>("AudioMixer/SoundSetting");
+        if (audioClip == null)
+        {
+            return;
+        }
+        if (type == Define.Sound.BGM)
+        {
+            AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+            audioSource.pitch = pitch;
+            audioSource.clip = audioClip;
+            //audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("BGM")[0];
+            audioSource.PlayDelayed(3.0f);
+        }
+        else
+        {
+            AudioSource audioSource = _audioSources[(int)Define.Sound.SFX];
+            audioSource.pitch = pitch;
+            //audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
+            audioSource.PlayOneShot(audioClip);
+        }
+    }
+    public void Play(string path, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f)
+    {
+        AudioClip audioClip = GetOrAddAudioClip(path, type);
+        Play(audioClip, type, pitch);
+    }
+    public void PlayDelayed(string path, float delay, Define.Sound type = Define.Sound.BGM, float pitch = 1.0f)
+    {
+        AudioClip audioClip = GetOrAddAudioClip(path, type);
+        PlayDelayed(audioClip, delay, type, pitch);
     }
 
-    void Init()
+    AudioClip GetOrAddAudioClip(string path, Define.Sound type = Define.Sound.SFX)
     {
-        // 배경음 플레이어 초기화
-        GameObject bgmObject = new GameObject("BgmPlayer");
-        bgmObject.transform.parent = transform;
-        bgmPlayer = bgmObject.AddComponent<AudioSource>();
-        bgmPlayer.playOnAwake = false;
-        bgmPlayer.loop = true;
-        bgmPlayer.volume = bgmVolume;
-        bgmPlayer.clip = bgmClip;
-
-        // 효과음 플레이어 초기화
-        GameObject sfxObject = new GameObject("SfxPlayer");
-        sfxObject.transform.parent = transform;
-        sfxPlayers = new AudioSource[channels];
-
-        for(int index = 0; index < sfxPlayers.Length; index++)
+        if (path.Contains("Sounds/") == false)
         {
-            sfxPlayers[index] = sfxObject.AddComponent<AudioSource>();
-            sfxPlayers[index].playOnAwake = false;
-            sfxPlayers[index].volume = bgmVolume;
+            path = $"Sounds/{path}";
         }
+        AudioClip audioClip = null;
+        if (type == Define.Sound.BGM)
+        {
+            audioClip = Managers.Resource.Load<AudioClip>(path);
+        }
+        else
+        {
+            if (_audioClips.TryGetValue(path, out audioClip) == false)
+            {
+                audioClip = Managers.Resource.Load<AudioClip>(path);
+                _audioClips.Add(path, audioClip);
+            }
+        }
+        if (audioClip == null)
+        {
+            Debug.Log($"AudioClip Missing : {path}");
+        }
+        return audioClip;
+    }
+    public void Stop(AudioSource audioSource)
+    {
+        audioSource.Stop();
+    }
+    public void Clear()
+    {
+        foreach (AudioSource audioSource in _audioSources)
+        {
+            audioSource.clip = null;
+            audioSource.Stop();
+        }
+        _audioClips.Clear();
+    }
+    public void Audiorate(int volume)
+    {
+        AudioSource audioSource1 = _audioSources[(int)Define.Sound.BGM];
+        audioSource1.pitch = volume;
+        AudioSource audioSource2 = _audioSources[(int)Define.Sound.SFX];
+        audioSource2.pitch = volume;
+
     }
 }
