@@ -33,7 +33,7 @@ public class KeyTrackerManager
         }
         else
         {
-            Managers.Game.KeyBlock(key);
+            //Managers.Game.KeyBl7ock(key);
             Debug.Log($"{key} is blocked.");
         }
     }

@@ -109,7 +109,7 @@ public class SpawnController : MonoBehaviour
         InitPhases();
         currentMovingInterval = initialInterval;
         currentRangedInterval = initialInterval;
-        currentMouseInterval = initialInterval * 0.5f;
+        currentMouseInterval = initialInterval * 3f;
 
         currentSpeed = phase1.movingDefaultSpeed;
         currentLifetime = phase2.rangedDefaultLifetime;
@@ -146,7 +146,7 @@ public class SpawnController : MonoBehaviour
 
         currentMovingInterval = initialInterval;
         currentRangedInterval = initialInterval;
-        currentMouseInterval = initialInterval;
+        currentMouseInterval = initialInterval*0.25f;
 
         currentSpeed = phase1.movingDefaultSpeed;
         currentLifetime = phase2.rangedDefaultLifetime;

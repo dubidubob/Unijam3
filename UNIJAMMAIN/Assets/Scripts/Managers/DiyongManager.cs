@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
@@ -8,7 +6,8 @@ public class DiyongManager : MonoBehaviour
     public GameObject W, A, S, D, LeftUp, LeftDown, RightUp, RightDown;
 
     private GameObject ActionGo;
-    private float upScaleAmount = 1.2f;
+    private float originalScale = 0.25f;
+    private float upScaleAmount = 0.2f;
     private void Start()
     {
 
@@ -39,8 +38,8 @@ public class DiyongManager : MonoBehaviour
         }
         else Debug.Log("어떤것도 행해지지않은 오류");
 
-        ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
-          .OnComplete(() => ActionGo.transform.DOScale(Vector3.one, 0.2f));
+        ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
+          .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
 
     }
     void PressButtonKeyBoard(GamePlayDefine.RangedAttackType attackType)
@@ -64,12 +63,7 @@ public class DiyongManager : MonoBehaviour
         }
         else Debug.Log("어떤것도 행해지지않은 오류");
 
-        ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
-           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one, 0.2f));
+        ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
+           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one* originalScale, 0.2f));
     }
-    public void Block()
-    {
-        
-    }
-
 }
