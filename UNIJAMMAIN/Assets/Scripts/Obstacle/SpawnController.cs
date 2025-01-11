@@ -133,6 +133,8 @@ public class SpawnController : MonoBehaviour
         {
             Pause();
             illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
+
+            Managers.UI.ShowPopUpUI<GameOver>();
             return;
         }
     }

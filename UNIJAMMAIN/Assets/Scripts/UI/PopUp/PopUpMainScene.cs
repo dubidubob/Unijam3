@@ -92,10 +92,10 @@ public class PopUpMainScene : UI_Popup
         float elapsedTime = 0f;
         float startValue = FillingBoot.fillAmount;  // 시작 값은 현재 fillAmount
 
-        while (elapsedTime < 0.2f)
+        while (elapsedTime < 0.4f)
         {
             elapsedTime += Time.deltaTime;  // 경과 시간 증가
-            FillingBoot.fillAmount = Mathf.Lerp(startValue, 1f, elapsedTime / 0.2f);  // fillAmount 변화
+            FillingBoot.fillAmount = Mathf.Lerp(startValue, 1f, elapsedTime / 0.4f);  // fillAmount 변화
             yield return null;  // 다음 프레임까지 대기
         }
 
