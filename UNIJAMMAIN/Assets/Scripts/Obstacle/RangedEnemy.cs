@@ -29,7 +29,7 @@ public class RangedEnemy : MonoBehaviour
         isDying = false;
 
         spriteRenderer.color = Color.white;
-        transform.localScale = Vector3.one;
+        transform.localScale = Vector3.one * 0.37f;
 
         colorTween?.Kill();
         fadeTween?.Kill();
@@ -48,7 +48,7 @@ public class RangedEnemy : MonoBehaviour
         // 크기 변화 시퀀스 생성
         Sequence dyingSequence = DOTween.Sequence();
         dyingSequence.Append(transform.DOScale(Vector3.one * 0.05f, 0.1f).SetEase(Ease.OutBack));
-        dyingSequence.Append(transform.DOMove(new Vector3(0, 0, 0), 0.05f));
+        dyingSequence.Append(transform.DOLocalMove(new Vector3(0, 0, 0), 0.08f));
         dyingSequence.OnComplete(() =>
         {
             isDying = true;

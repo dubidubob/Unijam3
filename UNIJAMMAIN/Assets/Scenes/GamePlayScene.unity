@@ -20998,6 +20998,42 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1701011818387840497, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701011818387840497, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0385aad7ecacacc42a224cf554fa7085, type: 3}
+    - target: {fileID: 1701011818387840497, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701011818387840497, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701011818387840497, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701011818387840497, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1733610347022675727, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1733610347022675727, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0385aad7ecacacc42a224cf554fa7085, type: 3}
+    - target: {fileID: 3439339439667371778, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4639520216720240912, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
       propertyPath: m_Camera
       value: 
@@ -21006,6 +21042,10 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5000746583333192201, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: monsterMouse
+      value: 
+      objectReference: {fileID: 21300000, guid: c51a10e8f2b52b14b9f4436bb8bd7930, type: 3}
     - target: {fileID: 5293114370142640329, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -21084,6 +21124,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5293114370142640329, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191539790840822235, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

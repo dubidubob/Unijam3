@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,8 @@ public class MouseEnemy : MonoBehaviour
     }
 
     [SerializeField] private Dir dir = Dir.Left;
-
+    [SerializeField] private Sprite monsterMouse;
+    private Sprite monsterHi;
     private Image image;
     private Tweener blinkTweener;
     public float initialBlinkDuration = 0.8f; // 시작 블링킹 지속 시간
@@ -25,16 +27,18 @@ public class MouseEnemy : MonoBehaviour
         image = GetComponent<Image>();
         // 초기 색상 설정: 원하는 RGB 색상에 알파 1로 설정 (예: 흰색)
         image.color = new Color(1f, 0f, 0f, 1f);
+        monsterHi = image.sprite;
     }
 
     private void OnEnable()
     {
         currentBlinkDuration = initialBlinkDuration;
-        StartBlinking();
+        StartCoroutine(StartBlinking());
     }
-
-    private void StartBlinking()
+    
+    private IEnumerator StartBlinking()
     {
+        float lifetime = 3f;
         // 기존의 Tweener가 활성화되어 있다면 중단
         if (blinkTweener != null && blinkTweener.IsActive())
         {
@@ -50,8 +54,19 @@ public class MouseEnemy : MonoBehaviour
             {
                 // 다음 블링킹을 위해 지속 시간 감소 (최소값 보장)
                 currentBlinkDuration = Mathf.Max(currentBlinkDuration - blinkSpeedIncrease, minBlinkDuration);
-                StartBlinking(); // 재귀 호출로 다음 블링킹 시작
+                lifetime -= currentBlinkDuration * 2;
+                if (lifetime > 0)
+                    StartBlinking(); // 재귀 호출로 다음 블링킹 시작
+                else
+                {
+                    Managers.Game.DecHealth();
+                    image.sprite = monsterMouse;
+                }
             });
+
+        yield return new WaitForSeconds(0.2f);
+        image.sprite = monsterHi;
+        gameObject.SetActive(false);
     }
 
     private void Update()
