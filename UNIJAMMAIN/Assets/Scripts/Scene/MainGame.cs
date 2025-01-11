@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class MainGame : BaseScene   // MainGame Å¬·¡½º´Â BaseScene Å¬·¡½ºÀÇ ±â´ÉÀ» ±â¹ÝÀ¸·Î °ÔÀÓ ½ÃÀÛ ½Ã ÇÊ¿äÇÑ ÃÊ±âÈ­ ÀÛ¾÷À» ¼öÇàÇÏ´Â Å¬·¡½º
+public class MainGame : BaseScene   // MainGame Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BaseScene Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 {
 
 
@@ -23,7 +23,10 @@ public class MainGame : BaseScene   // MainGame Å¬·¡½º´Â BaseScene Å¬·¡½ºÀÇ ±â´É
     private void Start()
     {
         Init();
+
         Managers.UI.ShowPopUpUI<S1_PopUp>();
+
+        Managers.Game.GameStart();
     }
     public void Option()
     {

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WEnemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3480344345233131748, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ec704b5683b5f954e8fe78566f16060a, type: 2}
     - target: {fileID: 7773876070033433934, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -53,16 +57,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 10afed8d9f7753a4e87937652bc5533b, type: 3}
+    - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_Color.g
-      value: 0.112654686
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8246489728359504820, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: enemyType

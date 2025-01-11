@@ -10,7 +10,7 @@ public class IllustController : MonoBehaviour
     [SerializeField] List<Image> images;
     [SerializeField] GameObject gotoTitle;
     private float duration = 2f;
-    private float numDuration = 0.8f;
+    private float numDuration = 0.5f;
 
     private void Start()
     {
@@ -44,7 +44,7 @@ public class IllustController : MonoBehaviour
         // 局聪皋捞记 贸府
         if (illustType == GamePlayDefine.IllustType.Num)
         {
-            yield return new WaitForSecondsRealtime(0.2f);
+            yield return new WaitForSecondsRealtime(0.1f);
 
             for (int i = 0; i < spriteLists.Count; i++)
             {
@@ -60,7 +60,7 @@ public class IllustController : MonoBehaviour
                 yield return images[i].transform
                     .DOScale(Vector3.one * 0.5f, numDuration)
                     .SetUpdate(true)
-                    .OnComplete(() => { images[i].transform.DOScale(Vector3.one * 1.2f, 1 - numDuration); })
+                    .OnComplete(() => { images[i].transform.DOScale(Vector3.one * 1.2f, 0.2f); })
                     .WaitForCompletion();
 
                 yield return new WaitForSecondsRealtime(1 - numDuration);

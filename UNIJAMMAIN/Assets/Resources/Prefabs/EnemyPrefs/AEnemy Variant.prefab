@@ -14,11 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7773876070033433934, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7773876070033433934, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 10
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7773876070033433934, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60,20 +56,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8246489728359504820, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
-      propertyPath: enemyType
+    - target: {fileID: 7773876070033433934, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
