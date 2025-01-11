@@ -1,9 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager
 {
     public Transform playerTransform;
+    public int currentPhase { get; private set; } = 0;
+    public Action<int> ComboContinue = null;
+    public Action<int> HealthUpdate = null;
+    private int Combo;
+    private int Health;
+    public readonly int MaxHealth = 10;
+    private const int IncHealthUnit = 10;
+
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함
     public enum GameState
     {
@@ -24,6 +33,8 @@ public class GameManager
         currentState = GameState.Battle;
         Debug.Log("코드실행완료");
         playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재위치받기
+        Health = MaxHealth;
+        Time.timeScale = 1f;
     }
     public Transform GetPlayerTransform()
     {
@@ -43,7 +54,7 @@ public class GameManager
                 Debug.LogError("큰일난오류?");
                 return false;
             }
-
+            ComboInc();
             go.GetComponent<MovingEnemy>().SetDead();
             return true;
         }
@@ -66,8 +77,51 @@ public class GameManager
     {
 
     }
+
+    public void ComboInc()
+    {
+        Combo++;
+        if (ComboContinue != null)
+        {
+            ComboContinue.Invoke(Combo);
+        }
+        if (Combo > 0 && Combo % IncHealthUnit == 0)
+        {
+            IncHealth();
+        }
+    }
+
     public void DecHealth()
     {
+        Combo = 0; //무조건 콤보 끊김
+        if (ComboContinue != null)
+        {
+            ComboContinue.Invoke(Combo);
+        }
+        if (Health > 0)
+        {
+            Health--;
+        }
+        HealthUpdate.Invoke(Health);
         Debug.Log("Dec Health");
+    }
+
+    public void IncHealth()
+    {
+        if (Health < 0 || Health < 10)
+            return;
+        Health++;
+        HealthUpdate.Invoke(Health);
+        Debug.Log("Inc Health");
+    }
+
+    public void IncPhase()
+    {
+        currentPhase++;
+    }
+
+    public int GetPhase()
+    {
+        return currentPhase;
     }
 }

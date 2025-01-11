@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
@@ -120,6 +121,17 @@ public class SpawnController : MonoBehaviour
     //        child.gameObject.SetActive(false);
     //    }
     //}
+
+    private void CheckDie(int health)
+    {
+        if (health < 0)
+        {
+            Pause();
+            illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
+            return;
+        }
+    }
+
     public void InitAgain()
     {
         Resume();
@@ -172,6 +184,7 @@ public class SpawnController : MonoBehaviour
                 Resume();
             }
             Debug.LogWarning($"phase {i} start!");
+            Managers.Game.IncPhase();
             yield return StartCoroutine(RunPhase(phases[i-1], i));
             Debug.LogWarning($"phase {i} end!");
             Pause();

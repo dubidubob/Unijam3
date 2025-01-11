@@ -60,6 +60,7 @@ public class MouseEnemy : MonoBehaviour
         {
             StopBlinking();
             Debug.Log($"왼쪽 {dir}");
+            Managers.Game.ComboInc();
             gameObject.SetActive(false);
         }
 
@@ -67,6 +68,7 @@ public class MouseEnemy : MonoBehaviour
         {
             StopBlinking();
             Debug.Log($"오른쪽 {dir}");
+            Managers.Game.ComboInc();
             gameObject.SetActive(false);
         }
     }

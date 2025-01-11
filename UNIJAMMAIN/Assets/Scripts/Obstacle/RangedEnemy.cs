@@ -60,6 +60,7 @@ public class RangedEnemy : MonoBehaviour
         }
         else //player attacked, but late, this not count
         {
+            Managers.Game.ComboInc();
             if (isDying)
                 return;
         }

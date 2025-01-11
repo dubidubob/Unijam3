@@ -47,7 +47,7 @@ public class RangedEnemyActivater : MonoBehaviour
             }
         }
 
-        if (!isExist) 
+        if (!isExist && Managers.Game.GetPhase() > 1) 
         {
             Managers.Game.DecHealth();
             Managers.Tracker.MissedKeyPress(attackType.ToString());
