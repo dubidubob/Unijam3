@@ -21,6 +21,8 @@ public class MainUIs : MonoBehaviour
         Managers.Game.PhaseUpdate += ChangeBg;
 
         MaxHealth = Managers.Game.MaxHealth;
+
+        ChangeBg(Managers.Game.GetPhase());
     }
 
     private void UpdateCombo(int combo)

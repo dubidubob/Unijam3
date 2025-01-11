@@ -132,7 +132,7 @@ public class SpawnController : MonoBehaviour
         if (health <= 0 && !isMaster)
         {
             Pause();
-            illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
+            Managers.Scene.LoadScene("BadEnding");
             return;
         }
     }
@@ -207,7 +207,7 @@ public class SpawnController : MonoBehaviour
             }
             else
             {
-                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Success);
+                Managers.Scene.LoadScene("GoodEnding");
                 break;
             }
         }
