@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class KeyTrackerManager
 {
-    // Å°º°·Î ´©¸¥ È½¼ö¸¦ ÃßÀûÇÒ »çÀü
+    // Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public Dictionary<string, int> keyPressCounts = new Dictionary<string, int>
     {
         { "W", 0 },
@@ -17,10 +17,10 @@ public class KeyTrackerManager
         { "RightDown",0 }
     };
 
-    // ºí·Ï Ã³¸® ±âÁØ È½¼ö
+    // ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½
     private int maxPressCount = 4;
 
-    // WASD °¡ Àß¸ø ´­·ÈÀ» ¶§ ½ÇÇàÇÒ µ¿ÀÛ
+    // WASD ï¿½ï¿½ ï¿½ß¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void MissedKeyPress(string key)
     {
         if (keyPressCounts[key] < maxPressCount)
@@ -38,18 +38,21 @@ public class KeyTrackerManager
     }
     private IEnumerator BlockRealease(string key)
     {
-        Debug.Log("ÄÚ·çÆ¾ÀÌ Á¸ÀçÇÏ±äÇÕ´Ï´Ù.");
+        Debug.Log("ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½Õ´Ï´ï¿½.");
         float CountTime = 2f;
         while(CountTime>=0)
         {
             CountTime -= Time.deltaTime;
             yield return null;
+
+            //Managers.Game.KeyBl7ock(key);
+            Debug.Log($"{key} is blocked.");
+
         }
-        keyPressCounts[key] = 0; // Ä«¿îÆ® ÃÊ±âÈ­
-        Debug.Log("BlockCount°¡ ÃÊ±âÈ­ µÇ¾ú½À´Ï´Ù");
+        keyPressCounts[key] = 0; // Ä«ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
+        Debug.Log("BlockCountï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
     }
 
-    // Æ¯Á¤ Å°ÀÇ ´©¸¥ È½¼ö¸¦ ÃÊ±âÈ­ÇÏ´Â ¸Þ¼­µå
     public void ResetKeyPress(string key)
     {
         if (keyPressCounts.ContainsKey(key))

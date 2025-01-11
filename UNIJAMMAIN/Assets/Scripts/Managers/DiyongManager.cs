@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
@@ -8,7 +6,8 @@ public class DiyongManager : MonoBehaviour
     public GameObject W, A, S, D, LeftUp, LeftDown, RightUp, RightDown;
 
     private GameObject ActionGo;
-    private float upScaleAmount = 1.2f;
+    private float originalScale = 0.25f;
+    private float upScaleAmount = 0.2f;
     private void Start()
     {
 
@@ -37,7 +36,8 @@ public class DiyongManager : MonoBehaviour
         {
             ActionGo = D;
         }
-        else Debug.Log("¾î¶²°Íµµ ÇàÇØÁöÁö¾ÊÀº ¿À·ù");
+        else Debug.Log("ï¿½î¶²ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+
         if (ActionGo != null)
         {
             ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
@@ -46,10 +46,14 @@ public class DiyongManager : MonoBehaviour
               });
         }
 
+
+        ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
+          .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
+
     }
     void ActionGoNull()
     {
-        Debug.Log("ActionGoNull ½ÇÇà");
+        Debug.Log("ActionGoNull ï¿½ï¿½ï¿½ï¿½");
         ActionGo = null;
     }
     void PressButtonArrow(GamePlayDefine.RangedAttackType attackType)
@@ -71,7 +75,7 @@ public class DiyongManager : MonoBehaviour
         {
             ActionGo = RightDown;
         }
-        else Debug.Log("¾î¶²°Íµµ ÇàÇØÁöÁö¾ÊÀº ¿À·ù");
+        else Debug.Log("ï¿½î¶²ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
         ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
            .OnComplete(() =>
@@ -81,4 +85,9 @@ public class DiyongManager : MonoBehaviour
            });
            }
  } 
+
+        ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
+           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one* originalScale, 0.2f));
+    }
+}
 
