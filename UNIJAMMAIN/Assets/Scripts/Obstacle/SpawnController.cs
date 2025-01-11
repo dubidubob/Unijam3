@@ -97,6 +97,8 @@ public class SpawnController : MonoBehaviour
 
         Managers.Input.SettingpopAction -= ControlTime;
         Managers.Input.SettingpopAction += ControlTime;
+        Managers.Game.HealthUpdate -= CheckDie;
+        Managers.Game.HealthUpdate += CheckDie;
     }
 
     private void Start()
@@ -124,7 +126,7 @@ public class SpawnController : MonoBehaviour
 
     private void CheckDie(int health)
     {
-        if (health < 0)
+        if (health <= 0)
         {
             Pause();
             illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
