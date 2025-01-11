@@ -12,13 +12,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RDFarEnemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3113976934788091054, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3455705336919638016, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.4547744
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3455705336919638016, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.7363803
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3455705336919638016, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_LocalPosition.z
@@ -53,16 +57,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5525003423061564624, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 929dc5801e545b54b8c570dffee877ab, type: 3}
+    - target: {fileID: 5525003423061564624, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5525003423061564624, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_Color.g
-      value: 0.093877554
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5525003423061564624, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

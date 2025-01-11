@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LUFarEnemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3113976934788091054, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3455705336919638016, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -53,12 +57,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5525003423061564624, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a67161dea72a1c24293aaf9dc43e45e1, type: 3}
+    - target: {fileID: 5525003423061564624, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5525003423061564624, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5525003423061564624, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: m_Color.r
