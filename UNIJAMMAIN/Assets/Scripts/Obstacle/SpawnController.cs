@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
+    public GameObject testPanel;
     #region PhaseClasses
     public class PhaseMoving
     {
@@ -110,12 +111,19 @@ public class SpawnController : MonoBehaviour
         StartCoroutine(PhaseRoutine());
     }
 
+    private void Clear()
+    {
+        StopAllCoroutines(); //corountine clear
+        Managers.Pool.Clear(); //moving enemy clear
+        foreach (Transform child in this.transform)
+        { 
+            child.gameObject.SetActive(false);
+        }
+    }
     public void InitAgain()
     {
         Resume();
-
-        StopAllCoroutines();
-
+        
         movingTimeElapsed = 0f;    // 속도가 증가하는 데 사용될 누적 시간
         rangedTimeElapsed = 0f;
 
@@ -161,8 +169,10 @@ public class SpawnController : MonoBehaviour
             Debug.LogWarning($"phase {i} start!");
             yield return StartCoroutine(RunPhase(phases[i-1], i));
             Debug.LogWarning($"phase {i} end!");
-            //illust thing
-            //yield return new WaitForSeconds(2f); // for illust
+            //Clear();
+            testPanel.SetActive(true);
+            yield return new WaitForSeconds(2f); // for illust
+            testPanel.SetActive(false);
         }
     }
 
