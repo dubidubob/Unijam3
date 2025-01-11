@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,12 +12,13 @@ public class MouseEnemy : MonoBehaviour
     }
 
     [SerializeField] private Dir dir = Dir.Left;
-
+    [SerializeField] private Sprite monsterMouse;
+    private Sprite monsterHi;
     private Image image;
     private Tweener blinkTweener;
     public float initialBlinkDuration = 0.8f; // 시작 블링킹 지속 시간
     public float minBlinkDuration = 0.05f;     // 블링킹 최소 지속 시간
-    public float blinkSpeedIncrease = 0.1f;  // 매 사이클마다 지속 시간 감소량
+    public float blinkSpeedIncrease = 0.1f;    // 매 사이클마다 지속 시간 감소량
 
     private float currentBlinkDuration;
 
@@ -25,6 +27,7 @@ public class MouseEnemy : MonoBehaviour
         image = GetComponent<Image>();
         // 초기 색상 설정: 원하는 RGB 색상에 알파 1로 설정 (예: 흰색)
         image.color = new Color(1f, 0f, 0f, 1f);
+        monsterHi = image.sprite;
     }
 
     private void OnEnable()
@@ -35,6 +38,7 @@ public class MouseEnemy : MonoBehaviour
 
     private void StartBlinking()
     {
+        float lifetime = 3f;
         // 기존의 Tweener가 활성화되어 있다면 중단
         if (blinkTweener != null && blinkTweener.IsActive())
         {
@@ -50,8 +54,21 @@ public class MouseEnemy : MonoBehaviour
             {
                 // 다음 블링킹을 위해 지속 시간 감소 (최소값 보장)
                 currentBlinkDuration = Mathf.Max(currentBlinkDuration - blinkSpeedIncrease, minBlinkDuration);
-                StartBlinking(); // 재귀 호출로 다음 블링킹 시작
+                lifetime -= currentBlinkDuration * 2;
+                if (lifetime > 0)
+                {
+                    StartBlinking(); // 재귀 호출로 다음 블링킹 시작
+                }
+                else
+                {
+                    Managers.Game.DecHealth();
+                    image.sprite = monsterMouse;
+                    gameObject.SetActive(false); // 깜빡임이 끝난 후 오브젝트 비활성화
+                }
             });
+
+        // 블링킹 중에 sprite를 변경하고 싶다면 여기서 설정
+        image.sprite = monsterHi;
     }
 
     private void Update()
