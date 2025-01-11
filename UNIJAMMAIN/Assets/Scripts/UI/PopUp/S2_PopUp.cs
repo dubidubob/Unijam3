@@ -11,27 +11,14 @@ public class S2_PopUp : UI_Popup
 
     private void Start()
     {
-        StartCoroutine(animationGo());
-       
+        StartCoroutine(animationGo());       
     }
     private IEnumerator animationGo()
     {
-        float elapsedTime = 0f;
-        S2_01.DOFade(1f, 2f);
-
-        while (elapsedTime < 3.5f)
-        {
-            elapsedTime += Time.deltaTime;  // 경과 시간 증가
-            yield return null;  // 다음 프레임까지 대기
-        }
-        elapsedTime = 0f;
-        S2_02.DOFade(1f, 2f);
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;  // 경과 시간 증가
-            yield return null;  // 다음 프레임까지 대기
-        }
-
+        S2_01.DOFade(1f, duration).SetUpdate(true);
+        yield return new WaitForSecondsRealtime(3.5f);
+        S2_02.DOFade(1f, duration).SetUpdate(true);
+        yield return new WaitForSecondsRealtime(duration);
         yield return new WaitForSeconds(3f);
 
         ClosePopUPUI();

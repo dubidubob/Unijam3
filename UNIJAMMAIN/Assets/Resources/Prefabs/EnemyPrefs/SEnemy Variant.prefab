@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SEnemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3480344345233131748, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0e506448b82fbd640a80a690df116614, type: 2}
     - target: {fileID: 7773876070033433934, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -53,8 +57,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 95c2b62c47f25224b9543bdc4a6f3b28, type: 3}
+    - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_Color.b
-      value: 0.031585693
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_Color.g
@@ -62,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8190224632898012245, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8246489728359504820, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: enemyType

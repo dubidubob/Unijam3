@@ -7,6 +7,7 @@ public class MainUIs : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI comboTxt;
     [SerializeField] private Slider healthSilder;
+    [SerializeField] private Slider comboSilder;
     [SerializeField] private Image Combobangsa;
     [SerializeField] private List<Sprite> Bgs;
     [SerializeField] private Image bgPlace;
@@ -27,12 +28,33 @@ public class MainUIs : MonoBehaviour
 
     private void UpdateCombo(int combo)
     {
+        if (combo > 0 && combo % 10 == 0)
+        {
+            ShowComboBangsa();
+        }
+
+        UpdateComboSlide(combo);
+
         comboTxt.text = combo.ToString();
         comboTxt.transform
             .DOScale(Vector3.one * 1.2f, 0.2f)
             .OnComplete(() =>
                 comboTxt.transform.DOScale(Vector3.one, 0.1f)
             );
+    }
+
+    private void UpdateComboSlide(int combo)
+    {
+        int value = combo % 10;
+        comboSilder.value = (float)value / 10f;
+        if (comboSilder.value == 0)
+        {
+            comboSilder.fillRect.gameObject.SetActive(false);
+        }
+        else
+        {
+            comboSilder.fillRect.gameObject.SetActive(true);
+        }
     }
 
     private void ShowComboBangsa()
@@ -54,10 +76,14 @@ public class MainUIs : MonoBehaviour
     private void HealthDec(int health)
     {
         healthSilder.value = (float)health / (float)MaxHealth;
-        
+
         if (healthSilder.value == 0)
-        { 
+        {
             healthSilder.fillRect.gameObject.SetActive(false);
+        }
+        else
+        {
+            healthSilder.fillRect.gameObject.SetActive(true);
         }
     }
 

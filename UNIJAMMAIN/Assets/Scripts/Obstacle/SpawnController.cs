@@ -47,9 +47,9 @@ public class SpawnController : MonoBehaviour
     }
     #endregion
 
-    public PhaseMoving phase1 = new PhaseMoving(44f, 2f, 2.5f, 0.1f);
-    public PhaseRanged phase2 = new PhaseRanged(47f, 2f, 3f, 0.1f, 0.1f);
-    public PhaseRanged phase22 = new PhaseRanged(36f, 3f, 2.2f, 0.1f, 0.1f);
+    public PhaseMoving phase1 = new PhaseMoving(40f, 2f, 2.5f, 0.1f);
+    public PhaseRanged phase2 = new PhaseRanged(40.5f, 2f, 3f, 0.1f, 0.1f);
+    public PhaseRanged phase22 = new PhaseRanged(29.5f, 3f, 2.2f, 0.1f, 0.1f);
     public PhaseRanged phase3 = new PhaseRanged(50f, 2.2f, 2.7f, 0.1f, 0.1f);
 
     public float initialInterval = 1.5f;
@@ -132,8 +132,11 @@ public class SpawnController : MonoBehaviour
             {
                 Pause();
                 if (illustController != null)
-                    //일러스트 나옴
+                {
+                    Managers.UI.ShowPopUpUI<S1_PopUp>();
+                    yield return new WaitForSecondsRealtime(7f);
                     yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//숫자 나옴
+                }
                 Resume();
             }
             Debug.LogWarning($"phase {i} start!");
@@ -156,11 +159,13 @@ public class SpawnController : MonoBehaviour
             }
             else if (i == 1)
             {
-                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Phase1End);
+                Managers.UI.ShowPopUpUI<S2_PopUp>();
+                yield return new WaitForSecondsRealtime(8.5f);
             }
             else if (i == 3)
             {
-                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Phase2End);
+                Managers.UI.ShowPopUpUI<S3_PopUp>();
+                yield return new WaitForSecondsRealtime(8.5f);
             }
             Resume();
         }
