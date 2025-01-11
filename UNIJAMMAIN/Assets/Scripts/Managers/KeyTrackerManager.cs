@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class KeyTrackerManager
 {
-
-    int DownCounts = 3;
-
     // 키별로 누른 횟수를 추적할 사전
     public Dictionary<string, int> keyPressCounts = new Dictionary<string, int>
     {
@@ -30,12 +27,26 @@ public class KeyTrackerManager
         {
             keyPressCounts[key]++;
             Debug.Log($"{key} Misspressed {keyPressCounts[key]} times");
+            if (keyPressCounts[key] == maxPressCount )
+            {
+                keyPressCounts[key]++;
+                Debug.Log($"{key} is blocked.");
+                StaticCoroutine.StartStaticCoroutine(BlockRealease(key));
+                Debug.Log($"{key} is blocked.");
+            }
         }
-        else
+    }
+    private IEnumerator BlockRealease(string key)
+    {
+        Debug.Log("코루틴이 존재하긴합니다.");
+        float CountTime = 2f;
+        while(CountTime>=0)
         {
-            Managers.Game.KeyBlock(key);
-            Debug.Log($"{key} is blocked.");
+            CountTime -= Time.deltaTime;
+            yield return null;
         }
+        keyPressCounts[key] = 0; // 카운트 초기화
+        Debug.Log("BlockCount가 초기화 되었습니다");
     }
 
     // 특정 키의 누른 횟수를 초기화하는 메서드

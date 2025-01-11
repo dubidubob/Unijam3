@@ -266,7 +266,7 @@ public class SpawnController : MonoBehaviour
             yield return new WaitForSeconds(currentRangedInterval);
             currentLifetime = UpdateCurrentRange(phase.movingPhaseDuration, phase.rangedDefaultLifetime, phase.rangedTargetLifetime);
             testRanged++;
-            Debug.Log($"different lifetime? : {currentLifetime}, {testRanged}");
+            // Debug.Log($"different lifetime? : {currentLifetime}, {testRanged}");
             GetRangedEnemy(currentLifetime);
 
             remainingTime -= currentRangedInterval;
@@ -288,7 +288,7 @@ public class SpawnController : MonoBehaviour
             yield return new WaitForSeconds(currentMovingInterval);
             currentSpeed = UpdateCurrentMoving(phase.movingPhaseDuration, phase.movingDefaultSpeed, phase.movingTargetSpeed);
             testMoving++;
-            Debug.Log($"different speed? : {currentSpeed}, {testMoving}");
+            //Debug.Log($"different speed? : {currentSpeed}, {testMoving}");
             GetMovingEnemy(currentSpeed, rangeDebuf, updownDebuf);
 
             remainingTime -= currentMovingInterval;

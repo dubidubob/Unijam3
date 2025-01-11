@@ -12,13 +12,13 @@ public class DiyongManager : MonoBehaviour
     private void Start()
     {
 
-        Managers.Input.KeyBoardChecking -= PressButtonArrow;
-        Managers.Input.KeyBoardChecking += PressButtonArrow;
+        Managers.Input.KeyBoardChecking -= PressButtonKeyBoard;
+        Managers.Input.KeyBoardChecking += PressButtonKeyBoard;
 
-        Managers.Input.KeyArrowcodeAction -= PressButtonKeyBoard;
-        Managers.Input.KeyArrowcodeAction += PressButtonKeyBoard;
+        Managers.Input.KeyArrowcodeAction -= PressButtonArrow;
+        Managers.Input.KeyArrowcodeAction += PressButtonArrow;
     }
-    void PressButtonArrow(KeyCode attackType) //WASD
+    void PressButtonKeyBoard(KeyCode attackType) //WASD
     {
         string key = attackType.ToString();
         if (key == "W")
@@ -38,12 +38,21 @@ public class DiyongManager : MonoBehaviour
             ActionGo = D;
         }
         else Debug.Log("어떤것도 행해지지않은 오류");
-
-        ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
-          .OnComplete(() => ActionGo.transform.DOScale(Vector3.one, 0.2f));
+        if (ActionGo != null)
+        {
+            ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
+              .OnComplete(() => { ActionGo.transform.DOScale(Vector3.one, 0.2f);
+                  ActionGoNull();
+              });
+        }
 
     }
-    void PressButtonKeyBoard(GamePlayDefine.RangedAttackType attackType)
+    void ActionGoNull()
+    {
+        Debug.Log("ActionGoNull 실행");
+        ActionGo = null;
+    }
+    void PressButtonArrow(GamePlayDefine.RangedAttackType attackType)
     {
         string key = attackType.ToString();
         if (key == "LeftUp")
@@ -65,11 +74,11 @@ public class DiyongManager : MonoBehaviour
         else Debug.Log("어떤것도 행해지지않은 오류");
 
         ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
-           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one, 0.2f));
-    }
-    public void Block()
-    {
-        
-    }
+           .OnComplete(() =>
+           {
+               ActionGo.transform.DOScale(Vector3.one, 0.2f);
+               ActionGoNull();
+           });
+           }
+ } 
 
-}

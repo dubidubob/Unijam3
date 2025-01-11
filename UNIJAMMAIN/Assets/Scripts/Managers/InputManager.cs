@@ -37,61 +37,57 @@ public class InputManager
                         KeyBoardChecking.Invoke(key);
                         Debug.Log(key.ToString());
                         Managers.Game.ReceiveKey(key.ToString());
-                        return;
-                    }
-                    else if(Input.GetKeyDown(key))
-                    {
-                      
-                    }
-                    
-                    
-                }
+                         Debug.Log($"{key.ToString()}의 KeyPressCounts : {Managers.Tracker.keyPressCounts[key.ToString()]}");
+
+                     }
+                 }
 
                 foreach (KeyCode key in keysToCheckArrow)
                 {
-                    if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow)) // 왼쪽위
+                    if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow)&& Managers.Tracker.keyPressCounts["LeftUp"] < 4) // 왼쪽위
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         Clear();
                         return;
                     }
-                    else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+                    
+                    else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow)&&Managers.Tracker.keyPressCounts["LeftUp"] < 4)
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         Clear();
                         return;
                     }
-                    else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow)) // 왼쪽아래
+                    else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["LeftDown"] < 4) // 왼쪽아래
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
                         Clear();
                         return;
                     }
-                    else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+                    else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow) && Managers.Tracker.keyPressCounts["LeftDown"] < 4)
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
                         Clear();
                         return;
                     }
-                    else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow)) //오른쪽위
+                    else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow) && Managers.Tracker.keyPressCounts["RightUp"] < 4) //오른쪽위
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
                         Clear();
                         return;
                     }
-                    else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                    else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow) && Managers.Tracker.keyPressCounts["RightUp"] < 4)
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
                         Clear();
                         return;
                     }
-                    else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow)) // 오른쪽 아래
+                    else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4) // 오른쪽 아래
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
                         Clear();
                         return;
                     }
-                    else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+                    else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4)
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
                         Clear();
