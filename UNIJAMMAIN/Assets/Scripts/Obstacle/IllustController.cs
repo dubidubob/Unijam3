@@ -20,11 +20,6 @@ public class IllustController : MonoBehaviour
         }
     }
 
-    private IEnumerator test()
-    {
-        yield return ShowIllust(GamePlayDefine.IllustType.Num);
-    }
-
     //private IEnumerator 
     public IEnumerator ShowIllust(GamePlayDefine.IllustType illustType)
     {

@@ -83,17 +83,17 @@ public class SpawnController : MonoBehaviour
     private float currentRangedInterval;
     private float currentMouseInterval;
     
-    private float movingTimeElapsed = 0f;    // ¼Óµµ°¡ Áõ°¡ÇÏ´Â µ¥ »ç¿ëµÉ ´©Àû ½Ã°£
+    private float movingTimeElapsed = 0f;    // ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     private float rangedTimeElapsed = 0f;
 
-    private float currentSpeed;        // °¢ ½ºÆù ½ÃÁ¡¿¡ Àû¿ëÇÒ ÇöÀç ¼Óµµ
+    private float currentSpeed;        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½
     private float currentLifetime;
     private float currentMouseActivateCnt;
 
     private bool isPaused = false;
     private void Awake()
     {
-        // ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        // ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         movingEnemySpawner = GetComponent<MovingEnemySpawner>();
         rangedEnemyActivater = GetComponent<RangedEnemyActivater>();
         mouseEnemyActivater = GetComponent<MouseEnemyActivater>();
@@ -132,9 +132,12 @@ public class SpawnController : MonoBehaviour
         if (health <= 0 && !isMaster)
         {
             Pause();
+
             illustController.ShowIllust(GamePlayDefine.IllustType.Fail);
 
             Managers.UI.ShowPopUpUI<GameOver>();
+
+            Managers.Scene.LoadScene("BadEnding");
             return;
         }
     }
@@ -143,7 +146,7 @@ public class SpawnController : MonoBehaviour
     {
         Resume();
         
-        movingTimeElapsed = 0f;    // ¼Óµµ°¡ Áõ°¡ÇÏ´Â µ¥ »ç¿ëµÉ ´©Àû ½Ã°£
+        movingTimeElapsed = 0f;    // ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
         rangedTimeElapsed = 0f;
 
         currentMovingInterval = initialInterval;
@@ -192,7 +195,7 @@ public class SpawnController : MonoBehaviour
             }
             Debug.LogWarning($"phase {i} start!");
             Managers.Game.IncPhase();
-            movingTimeElapsed = 0f;    // ¼Óµµ°¡ Áõ°¡ÇÏ´Â µ¥ »ç¿ëµÉ ´©Àû ½Ã°£
+            movingTimeElapsed = 0f;    // ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
             rangedTimeElapsed = 0f;
             yield return StartCoroutine(RunPhase(phases[i-1], i));
             Debug.LogWarning($"phase {i} end!");
@@ -209,7 +212,7 @@ public class SpawnController : MonoBehaviour
             }
             else
             {
-                yield return illustController.ShowIllust(GamePlayDefine.IllustType.Success);
+                Managers.Scene.LoadScene("GoodEnding");
                 break;
             }
         }
@@ -235,7 +238,7 @@ public class SpawnController : MonoBehaviour
 
         while (remainingTime > 0)
         {
-            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase ½Ã°£ÀÇ ¹ÝÀÌ Áö³ª°¡¸é °£°ÝÀÌ ÁØ´Ù.
+            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½.
             {
                 currentMouseInterval -= phase.mouseIntervalDecRate;
                 isDecIntervalChecked = true;
@@ -259,7 +262,7 @@ public class SpawnController : MonoBehaviour
 
         while (remainingTime > 0)
         {
-            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase ½Ã°£ÀÇ ¹ÝÀÌ Áö³ª°¡¸é °£°ÝÀÌ ÁØ´Ù.
+            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½.
             {
                 currentRangedInterval -= phase.rangedIntervalDecRate;
                 isDecIntervalChecked = true;
@@ -281,7 +284,7 @@ public class SpawnController : MonoBehaviour
 
         while (remainingTime > 0)
         {
-            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase ½Ã°£ÀÇ ¹ÝÀÌ Áö³ª°¡¸é °£°ÝÀÌ ÁØ´Ù.
+            if (remainingTime < phase.movingPhaseDuration * 0.5 && !isDecIntervalChecked) //phase ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½.
             {
                 currentMovingInterval -= phase.movingIntervalDecRate;
                 isDecIntervalChecked = true;
