@@ -108,7 +108,7 @@ public class GameManager
 
     public void IncHealth()
     {
-        if (Health < 0 || Health < 10)
+        if (Health < 0 || Health > 10)
             return;
         Health++;
         HealthUpdate.Invoke(Health);

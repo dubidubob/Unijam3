@@ -82,10 +82,10 @@ public class RangedEnemyActivater : MonoBehaviour
         RangedEnemy rangedEnemy = chosenEnemy.go.GetComponent<RangedEnemy>();
         rangedEnemy.SetLifetime(lifeTime);
 
+        PosAndActivateNode(chosenEnemy, lifeTime);
+
         activatedEnemies.Add(chosenEnemy); // 활성 리스트로 이동
         deactivatedEnemies.RemoveAt(randomIndex); // 비활성 리스트에서 제거
-
-        PosAndActivateNode(chosenEnemy);
     }
 
     private void CheckActivated()
@@ -101,7 +101,7 @@ public class RangedEnemyActivater : MonoBehaviour
         }
     }
 
-    private void PosAndActivateNode(RangedEnemyInfo enemy)
+    private void PosAndActivateNode(RangedEnemyInfo enemy, float lifeTime)
     {
         float randX = 0f;
         float randY = 0f;
@@ -130,7 +130,7 @@ public class RangedEnemyActivater : MonoBehaviour
         }
 
         enemy.go.transform.position = new Vector3(randX, randY, 0f);
-        Debug.Log($"set active {enemy.attackType}, at {randX}, {randY}");
+        Debug.Log($"set active {enemy.attackType}, at {randX}, {randY}, {lifeTime}");
         enemy.go.SetActive(true);
     }
 }

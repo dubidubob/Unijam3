@@ -1,38 +1,48 @@
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class RangedEnemy : MonoBehaviour
 {
+    [Header("Enemy Settings")]
+    [SerializeField]
+    private float defaultLifeDuration = 2f;
+
     private float lifeDuration;
-    SpriteRenderer spriteRenderer;
-    bool isDying = false;
-    bool isDurationLocked = false;
+    private SpriteRenderer spriteRenderer;
+    private bool isDying = false;
+
+    private Tween colorTween;
+    private Tween fadeTween;
+
+    public void SetLifetime(float lifetime)
+    {
+        Debug.Log($"this setlifetime {lifetime}");
+        lifeDuration = lifetime;
+    }
 
     private void Awake()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        lifeDuration = 2f;
-        isDurationLocked = false;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        lifeDuration = defaultLifeDuration;
     }
 
     private void OnEnable()
     {
         Debug.Log($"this lifeDuration {lifeDuration}");
-        if(transform.gameObject.activeSelf)
-            isDurationLocked = true;
         Init();
     }
-
-    private void OnDisable()
-    {
-        isDurationLocked = false;
-    }
-
     private void Init()
     {
-        spriteRenderer.color = Color.white;
+        isDying = false;
 
-        spriteRenderer
+        spriteRenderer.color = Color.white;
+        transform.localScale = Vector3.one;
+
+        colorTween?.Kill();
+        fadeTween?.Kill();
+
+        colorTween = spriteRenderer
             .DOColor(Color.red, lifeDuration)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
@@ -40,35 +50,30 @@ public class RangedEnemy : MonoBehaviour
                 DyingAnim();
             });
 
-        transform.localScale = Vector3.one;
+     
     }
 
     private void DyingAnim()
     {
-        //scale animation
-        transform.DOScale(Vector3.one * 0.8f, 0.2f)
-            .OnComplete(() => 
-            transform.DOScale(Vector3.one * 1.7f, 0.5f));
+        // 크기 변화 시퀀스 생성
+        Sequence dyingSequence = DOTween.Sequence();
+        dyingSequence.Append(transform.DOScale(Vector3.one * 0.8f, 0.2f).SetEase(Ease.OutBack));
+        dyingSequence.Append(transform.DOScale(Vector3.one * 1.7f, 0.5f).SetEase(Ease.InBack));
+        dyingSequence.Play();
 
-        // after fade, set active false
-        spriteRenderer
-            .DOFade(0f, 0.7f)
+        // 페이드 아웃 트윈 시작
+        fadeTween = spriteRenderer.DOFade(0f, 0.7f)
+            .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
                 isDying = true;
                 SetDead(false);
-            } 
-        );
+            });
     }
 
-    public void SetLifetime(float lifetime)
-    {
-        Debug.Log($"this setlifetime {lifetime}, {isDurationLocked}");
-        if(!isDurationLocked)
-            lifeDuration = lifetime;
-    }
 
-    public void SetDead(bool isAttackedByPlayer = true) 
+
+    public void SetDead(bool isAttackedByPlayer = true)
     {
         if (!isAttackedByPlayer)
         {
@@ -76,13 +81,22 @@ public class RangedEnemy : MonoBehaviour
         }
         else //player attacked, but late, this not count
         {
-            Managers.Game.ComboInc();
             if (isDying)
                 return;
+
+            Managers.Game.ComboInc();
         }
 
         isDying = false;
         this.gameObject.SetActive(false);
-        return;
+    }
+
+    private void OnDisable()
+    {
+        lifeDuration = defaultLifeDuration;
+
+        // 트윈 정리
+        colorTween?.Kill();
+        fadeTween?.Kill();
     }
 }

@@ -30,7 +30,7 @@ public class MainUIs : MonoBehaviour
     private void HealthDec(int health)
     {
         healthSilder.value = (float)health / (float)MaxHealth;
-        Debug.Log($"healthSilder.value {healthSilder.value}");
+        
         if (healthSilder.value == 0)
         { 
             healthSilder.fillRect.gameObject.SetActive(false);
