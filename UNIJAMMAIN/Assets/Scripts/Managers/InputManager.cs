@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class InputManager
 {
@@ -8,7 +7,6 @@ public class InputManager
     public Action<Define.MouseEvent> MouseAction = null;
     public Action<GamePlayDefine.RangedAttackType> KeyArrowcodeAction = null;
     public Action SettingpopAction = null;
-    bool _pressed = false;
     public void OnUpdate()
     {
         //if (EventSystem.current.IsPointerOverGameObject())
@@ -53,36 +51,51 @@ public class InputManager
                     if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow)) // 왼쪽위
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
+                        Clear();
+                        return;
                     }
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);  
+                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
+                        Clear();
+                        return;
                     }
                     else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow)) // 왼쪽아래
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
+                        Clear();
+                        return;
                     }
                     else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
+                        Clear();
+                        return;
                     }
                     else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow)) //오른쪽위
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
+                        Clear();
+                        return;
                     }
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
+                        Clear();
+                        return;
                     }
                     else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow)) // 오른쪽 아래
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
+                        Clear();
+                        return;
                     }
                     else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
+                        Clear();
+                        return;
                     }
-                    Clear();
                 }
             }
         }

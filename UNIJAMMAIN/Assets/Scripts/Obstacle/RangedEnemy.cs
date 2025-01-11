@@ -79,9 +79,9 @@ public class RangedEnemy : MonoBehaviour
         {
             Managers.Game.DecHealth();
         }
-        else //player attacked, but late, this not count
+        else 
         {
-            if (isDying)
+            if (isDying) //player attacked, but late, this not count
                 return;
 
             Managers.Game.ComboInc();

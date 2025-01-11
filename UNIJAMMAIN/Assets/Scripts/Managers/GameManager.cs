@@ -8,8 +8,8 @@ public class GameManager
     public int currentPhase { get; private set; } = 0;
     public Action<int> ComboContinue = null;
     public Action<int> HealthUpdate = null;
-    private int Combo;
-    private int Health;
+    private int Combo = 0;
+    private int Health = 0;
     public readonly int MaxHealth = 10;
     private const int IncHealthUnit = 10;
 
@@ -83,6 +83,7 @@ public class GameManager
         Combo++;
         if (ComboContinue != null)
         {
+            Debug.Log("Invoke ComboContinue");
             ComboContinue.Invoke(Combo);
         }
         if (Combo > 0 && Combo % IncHealthUnit == 0)
@@ -94,10 +95,8 @@ public class GameManager
     public void DecHealth()
     {
         Combo = 0; //무조건 콤보 끊김
-        if (ComboContinue != null)
-        {
-            ComboContinue.Invoke(Combo);
-        }
+        ComboContinue?.Invoke(Combo);
+        
         if (Health > 0)
         {
             Health--;
@@ -108,8 +107,9 @@ public class GameManager
 
     public void IncHealth()
     {
-        if (Health < 0 || Health > 10)
+        if ((Health <= 0) || (Health > 10))
             return;
+
         Health++;
         HealthUpdate.Invoke(Health);
         Debug.Log("Inc Health");

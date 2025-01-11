@@ -11,7 +11,7 @@ public class RangedEnemyActivater : MonoBehaviour
         public GameObject go;
     }
 
-    [SerializeField] private float boundaryOffset = 1f; // È­¸é °¡ÀåÀÚ¸®·ÎºÎÅÍ ¾ó¸¶³ª ¾ÈÂÊÀ¸·Î ½ºÆùÇÒÁö °áÁ¤ÇÏ´Â °ª
+    [SerializeField] private float boundaryOffset = 1f; // È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ó¸¶³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
     [SerializeField] List<RangedEnemyInfo> deactivatedEnemies;
     private List<RangedEnemyInfo> activatedEnemies = new List<RangedEnemyInfo>();
 
@@ -24,7 +24,7 @@ public class RangedEnemyActivater : MonoBehaviour
     {
         if (deactivatedEnemies == null)
         {
-            Debug.LogAssertion("List Ã¤¿ì¼¼¿ä");
+            Debug.LogAssertion("List Ã¤ï¿½ì¼¼ï¿½ï¿½");
         }
 
         Managers.Input.KeyArrowcodeAction -= DeActivateEnemy;
@@ -71,21 +71,21 @@ public class RangedEnemyActivater : MonoBehaviour
     {
         CheckActivated();
 
-        if (deactivatedEnemies.Count == 0) //ÀüºÎ È°¼ºÈ­ µÇ¾îÀÖÀ¸¸é
+        if (deactivatedEnemies.Count == 0) //ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             return;
         }
 
         int randomIndex = Random.Range(0, deactivatedEnemies.Count);
 
-        var chosenEnemy = deactivatedEnemies[randomIndex]; // ¹Ì¸® ÀûÀ» º¯¼ö¿¡ ´ã¾ÆµÐ´Ù.
+        var chosenEnemy = deactivatedEnemies[randomIndex]; // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ÆµÐ´ï¿½.
         RangedEnemy rangedEnemy = chosenEnemy.go.GetComponent<RangedEnemy>();
         rangedEnemy.SetLifetime(lifeTime);
 
         PosAndActivateNode(chosenEnemy, lifeTime);
 
-        activatedEnemies.Add(chosenEnemy); // È°¼º ¸®½ºÆ®·Î ÀÌµ¿
-        deactivatedEnemies.RemoveAt(randomIndex); // ºñÈ°¼º ¸®½ºÆ®¿¡¼­ Á¦°Å
+        activatedEnemies.Add(chosenEnemy); // È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ìµï¿½
+        deactivatedEnemies.RemoveAt(randomIndex); // ï¿½ï¿½È°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     private void CheckActivated()

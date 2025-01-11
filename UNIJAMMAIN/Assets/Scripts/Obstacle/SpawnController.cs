@@ -44,12 +44,12 @@ public class SpawnController : MonoBehaviour
 
     private void InitPhases()
     {
-        phase1.movingPhaseDuration = 12f;
+        phase1.movingPhaseDuration = 6f;
         phase1.movingDefaultSpeed = 2f;
         phase1.movingTargetSpeed = 2.5f;
         phase1.movingIntervalDecRate = 0.1f;
 
-        phase2.movingPhaseDuration = 12f;
+        phase2.movingPhaseDuration = 18f;
         phase2.movingDefaultSpeed = phase1.movingTargetSpeed; //2.5
         phase2.movingTargetSpeed = 3f;
         phase2.movingIntervalDecRate = 0.1f;
