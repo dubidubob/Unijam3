@@ -137,7 +137,6 @@ public class SpawnController : MonoBehaviour
 
             Managers.UI.ShowPopUpUI<GameOver>();
 
-            Managers.Scene.LoadScene("BadEnding");
             return;
         }
     }
