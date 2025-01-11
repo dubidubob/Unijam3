@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class GameManager
 {
@@ -71,11 +72,6 @@ public class GameManager
             attacks[key] = new Queue<GameObject>();
         }
         attacks[key].Enqueue(go);
-    }
-
-    public void KeyBlock(string key)
-    {
-
     }
 
     public void ComboInc()

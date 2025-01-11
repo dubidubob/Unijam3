@@ -39,12 +39,12 @@ public class InputManager
                         Managers.Game.ReceiveKey(key.ToString());
                         return;
                     }
-                    /*else
+                    else if(Input.GetKeyDown(key))
                     {
-                        Debug.Log("KeyBlock으로 누르기에 실패하였습니다.");
-                        return;
+                      
                     }
-                    */
+                    
+                    
                 }
 
                 foreach (KeyCode key in keysToCheckArrow)

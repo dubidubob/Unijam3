@@ -67,5 +67,9 @@ public class DiyongManager : MonoBehaviour
         ActionGo.transform.DOScale(Vector3.one * upScaleAmount, 0.2f)
            .OnComplete(() => ActionGo.transform.DOScale(Vector3.one, 0.2f));
     }
+    public void Block()
+    {
+        
+    }
 
 }
