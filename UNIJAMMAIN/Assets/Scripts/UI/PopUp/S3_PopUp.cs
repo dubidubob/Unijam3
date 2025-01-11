@@ -19,7 +19,8 @@ public class S3_PopUp : UI_Popup
         S3_01.DOFade(1f, duration).SetUpdate(true);
         yield return new WaitForSecondsRealtime(firstDuration);
         S3_02.DOFade(1f, duration);
-        yield return new WaitForSecondsRealtime(duration+1);
+        yield return new WaitForSecondsRealtime(duration);
+        yield return new WaitForSeconds(3f);
 
         ClosePopUPUI();
     }

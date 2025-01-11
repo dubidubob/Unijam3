@@ -22,6 +22,8 @@ public class MainUIs : MonoBehaviour
         Managers.Game.PhaseUpdate += ChangeBg;
 
         MaxHealth = Managers.Game.MaxHealth;
+
+        ChangeBg(Managers.Game.GetPhase());
     }
 
     private void UpdateCombo(int combo)
@@ -90,7 +92,7 @@ public class MainUIs : MonoBehaviour
         if (Bgs.Count <= phase)
             return;
 
-        if (phase >= 0)
+        if (phase > 0)
             bgPlace.sprite = Bgs[phase - 1];
         else
             Debug.LogWarning($"phase index out {phase}");

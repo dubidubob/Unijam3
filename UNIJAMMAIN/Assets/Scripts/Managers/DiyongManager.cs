@@ -44,7 +44,51 @@ public class DiyongManager : MonoBehaviour
 
         Managers.Tracker.KeyArrowMissed -= MissedKeyPressedArrow;
         Managers.Tracker.KeyArrowMissed += MissedKeyPressedArrow;
-   
+
+        Managers.Tracker.KeyFree -= KeyFreeKeyBoard;
+        Managers.Tracker.KeyFree += KeyFreeKeyBoard;
+    }
+    void KeyFreeKeyBoard(string key)
+    {
+        GameObject gogo;
+        if (key == "W")
+        {
+            gogo = W.go;
+        }
+        else if (key == "A")
+        {
+            gogo = A.go;
+
+        }
+        else if (key == "S")
+        {
+            gogo = S.go;
+        }
+        else if (key == "D")
+        {
+            gogo = D.go;
+        }
+        else if (key == "LeftUp")
+        {
+            gogo = LeftUp.go;
+        }
+        else if (key == "LeftDown")
+        {
+            gogo = LeftDown.go;
+        }
+        else if (key == "RightUp")
+        {
+            gogo = RightUp.go;
+        }
+        else if (key == "RightDown")
+        {
+            gogo = RightDown.go;
+        }
+        else gogo = null;
+        if (gogo != null)
+        {
+            gogo.GetComponentsInChildren<SpriteRenderer>()[1].sprite = null;
+        }
     }
     void MissedKeyPressChecking(string key) //AWSD
     {
@@ -70,6 +114,8 @@ public class DiyongManager : MonoBehaviour
         if (gogo != null)
         {
             int count = Managers.Tracker.keyPressCounts[key];
+            Debug.Log(count);
+            if (count == 0) { gogo.GetComponentsInChildren<SpriteRenderer>()[1].sprite = null;  }
             if (count <= 3)
             {
                 gogo.GetComponentsInChildren<SpriteRenderer>()[1].sprite = StackSprite[Managers.Tracker.keyPressCounts[key]];
@@ -81,6 +127,11 @@ public class DiyongManager : MonoBehaviour
                 gogo.GetComponentsInChildren<SpriteRenderer>()[1].transform.localScale = new Vector3(1f, 1f);
             }
         }
+    }
+
+    public void KeyGoOriginal(string key)
+    {
+
     }
 
     public void MissedKeyPressedArrow(string key)

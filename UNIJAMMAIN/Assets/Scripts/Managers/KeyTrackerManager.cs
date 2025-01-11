@@ -18,7 +18,7 @@ public class KeyTrackerManager
         { "RightDown",0 }
     };
     public Action<string> KeyArrowMissed = null;
-
+    public Action<string> KeyFree = null;
     // ��� ó�� ���� Ƚ��
     private int maxPressCount = 4;
 
@@ -54,6 +54,7 @@ public class KeyTrackerManager
         }
         keyPressCounts[key] = 0; // ī��Ʈ �ʱ�ȭ
         Debug.Log("BlockCount�� �ʱ�ȭ �Ǿ����ϴ�");
+        KeyFree.Invoke(key);
     }
 
     public void ResetKeyPress(string key)

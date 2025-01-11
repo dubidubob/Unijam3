@@ -128,9 +128,6 @@ public class SpawnController : MonoBehaviour
 
         for(int i = 1; i<=phases.Length; i++)
         {
-            if (i != 3)
-                Managers.Game.IncPhase();
-
             if (i == 1)
             {
                 Pause();
@@ -143,6 +140,9 @@ public class SpawnController : MonoBehaviour
                 Resume();
             }
             Debug.LogWarning($"phase {i} start!");
+
+            if(i!=3)
+                Managers.Game.IncPhase();
 
             movingTimeElapsed = 0f;   
             rangedTimeElapsed = 0f;
@@ -160,12 +160,12 @@ public class SpawnController : MonoBehaviour
             else if (i == 1)
             {
                 Managers.UI.ShowPopUpUI<S2_PopUp>();
-                yield return new WaitForSecondsRealtime(6.5f);
+                yield return new WaitForSecondsRealtime(8.5f);
             }
             else if (i == 3)
             {
                 Managers.UI.ShowPopUpUI<S3_PopUp>();
-                yield return new WaitForSecondsRealtime(6.5f);
+                yield return new WaitForSecondsRealtime(8.5f);
             }
             Resume();
         }
