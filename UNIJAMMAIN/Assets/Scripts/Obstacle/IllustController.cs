@@ -18,7 +18,11 @@ public class IllustController : MonoBehaviour
         { 
             go.gameObject.SetActive(false);
         }
+
+
     }
+
+    //private IEnumerator 
     public IEnumerator ShowIllust(GamePlayDefine.IllustType illustType)
     {
         var go = illustPrefabSO.GetIllust(illustType);
@@ -52,7 +56,7 @@ public class IllustController : MonoBehaviour
                 images[i].gameObject.SetActive(true);
 
                 // 애니메이션 시작
-                yield return images[i].rectTransform
+                yield return images[i].transform
                     .DOScale(Vector3.one * 1.5f, numDuration)
                     .SetUpdate(true)
                     .WaitForCompletion();

@@ -21,12 +21,6 @@ public class InputManager
             {
                 SettingpopAction.Invoke();
             }
-
-            if (Time.timeScale == 0f)
-            {
-                return;
-            }
-
             {
                 // 체크할 키 배열
                 KeyCode[] keysToCheck = {
@@ -42,6 +36,7 @@ public class InputManager
                     
                     if(Managers.Tracker.keyPressCounts[key.ToString()]<4&&Input.GetKeyDown(key))
                     {
+                        Debug.Log(key.ToString());
                         Managers.Game.ReceiveKey(key.ToString());
                         return;
                     }
@@ -57,65 +52,37 @@ public class InputManager
                 {
                     if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow)) // 왼쪽위
                     {
-                    
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
-                        return;
                     }
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);  
-                        return;
                     }
-
-                    if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow)) // 왼쪽아래
+                    else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow)) // 왼쪽아래
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
-                        return;
                     }
                     else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
-                        return;
                     }
-
-                    if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow)) //오른쪽위
+                    else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow)) //오른쪽위
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
-                        return;
                     }
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
-                        return;
                     }
-
-                    if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow)) // 오른쪽 아래
+                    else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow)) // 오른쪽 아래
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
-                        return;
                     }
                     else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
-                        return;
                     }
-                }
-            }
-            if (MouseAction != null)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    MouseAction.Invoke(Define.MouseEvent.Press);
-                    _pressed = true;
-                }
-                else
-                {
-                    if (_pressed)
-                    {
-                        //MouseAction.Invoke(Define.MouseEvent.Click);
-                        MouseAction.Invoke(Define.MouseEvent.End);
-                    }
-                    _pressed = false;
+                    Clear();
                 }
             }
         }
