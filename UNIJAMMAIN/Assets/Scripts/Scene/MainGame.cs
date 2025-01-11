@@ -23,6 +23,7 @@ public class MainGame : BaseScene   // MainGame 클래스는 BaseScene 클래스의 기능
     private void Start()
     {
         Init();
+        Managers.UI.ShowPopUpUI<S1_PopUp>();
         Managers.Game.GameStart();
     }
     public void Option()

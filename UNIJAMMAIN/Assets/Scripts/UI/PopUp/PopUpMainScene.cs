@@ -23,13 +23,17 @@ public class PopUpMainScene : UI_Popup
     public string getText0, getText1;
     public Image FillingBoot;
 
+    public GameObject Option;
+
 
     private float delay = 0.05f;
     enum Buttons
     {
         GameOption,
         GameOut,
-        GameStart
+        GameStart,
+        BGMControll,
+        SFXControll
     }
     private void Start()
     {
@@ -47,12 +51,27 @@ public class PopUpMainScene : UI_Popup
         GetButton((int)Buttons.GameOption).gameObject.AddUIEvent(GameOptionClicked);
         GetButton((int)Buttons.GameOut).gameObject.AddUIEvent(GameOut);
         GetButton((int)Buttons.GameStart).gameObject.AddUIEvent(GameStartClicked);
+        GetButton((int)Buttons.BGMControll).gameObject.AddUIEvent(BGMClicked);
+        GetButton((int)Buttons.SFXControll).gameObject.AddUIEvent(SFXClicked);
+
+        Option.SetActive(false);
+
+
         if (!Managers.Sound._audioSources[(int)Define.Sound.BGM].isPlaying)
         {
             Managers.Sound.Play("Sounds/BGM/Main_Bgm");
         }
     }
     
+    void BGMClicked(PointerEventData eventData)
+    {
+
+    }
+
+    void SFXClicked(PointerEventData eventData)
+    {
+
+    }
 
     IEnumerator textPrint(float delay=0.15f)
     {
@@ -112,8 +131,12 @@ public class PopUpMainScene : UI_Popup
 
         transform.DOScaleY(upScaleAmount, 0.5f);
         transform.DOLocalMoveY(60, 0.5f);
-        GameStart.transform.DOLocalMoveY(360, 0.5f);
+   
+        GameStart.transform.DOLocalMoveY(360, 0.5f)
+            .OnComplete(() => Option.SetActive(true));
+            
         
+         
     }
 
     public void DoTweenScaleDown(Transform transform, float downScaleAmount = 1f)
@@ -190,6 +213,7 @@ public class PopUpMainScene : UI_Popup
             MiddleText.color = Color.black;
             DownText.text = "³ª°¡±â";
             gameStartClicked = false;
+            Option.SetActive(false);
         }
     }
 }
