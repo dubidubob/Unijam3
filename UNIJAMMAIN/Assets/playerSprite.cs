@@ -1,55 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class playerSprite : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    public Sprite W, A, S, D, LU, LD, RU, RD;
+    [SerializeField] private Animator animator;
 
     private void Start()
     {
-        Managers.Input.KeyBoardChecking -= forWASD;
-        Managers.Input.KeyBoardChecking += forWASD;
-        Managers.Input.KeyArrowcodeAction -= forLR;
-        Managers.Input.KeyArrowcodeAction += forLR;
+        StartCoroutine(endAnim());
     }
 
-    private void forWASD(KeyCode key)
+    private IEnumerator endAnim()
     {
-        spriteRenderer.transform.GetComponent<Animator>().enabled = false;
-        switch (key)
-        {
-            case KeyCode.A:
-                spriteRenderer.sprite = A;
-                break;
-            case KeyCode.W:
-                spriteRenderer.sprite = W;
-                break;
-            case KeyCode.S:
-                spriteRenderer.sprite = S;
-                break;
-            case KeyCode.D:
-                spriteRenderer.sprite = D;
-                break;
-        }
-    }
-
-    private void forLR(GamePlayDefine.RangedAttackType type)
-    {
-        spriteRenderer.transform.GetComponent<Animator>().enabled = false;
-        switch (type)
-        {
-            case GamePlayDefine.RangedAttackType.LeftDown:
-                spriteRenderer.sprite = LD;
-                break;
-            case GamePlayDefine.RangedAttackType.LeftUp:
-                spriteRenderer.sprite = LU;
-                break;
-            case GamePlayDefine.RangedAttackType.RightDown:
-                spriteRenderer.sprite = RD;
-                break;
-            case GamePlayDefine.RangedAttackType.RightUp:
-                spriteRenderer.sprite = RU;
-                break;
-        }
+        yield return new WaitForSeconds(3f);
+        animator.enabled = false;
+        Debug.Log(animator.enabled = false);
     }
 }

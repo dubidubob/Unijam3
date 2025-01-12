@@ -268,7 +268,12 @@ public class DiyongManager : MonoBehaviour
             target.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
                .OnComplete(() => target.transform.DOScale(Vector3.one * originalScale, 0.2f));
 
-            spriteRenderer.sprite = actionSprite;
+            Animator animator = spriteRenderer.transform.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.enabled = false;
+                spriteRenderer.sprite = actionSprite;
+            }
         }
     }
 }
