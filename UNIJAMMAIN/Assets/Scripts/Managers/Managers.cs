@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -69,6 +67,8 @@ public class Managers : MonoBehaviour
         UI.Clear();
         Pool.Clear();
         Sound.Clear();
+        Tracker.Clear();
+        Game.Clear();
     }
 
 }

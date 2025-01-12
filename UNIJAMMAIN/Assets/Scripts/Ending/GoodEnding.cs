@@ -51,6 +51,7 @@ public class GoodEnding : MonoBehaviour
         yield return new WaitForSeconds(2f);
         erun.DOFade(1f, 1.5f);
         yield return new WaitForSeconds(3f);
+        Managers.Clear();
         Managers.Scene.LoadScene("MainTitle");
     }
 }

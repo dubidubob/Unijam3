@@ -15,6 +15,18 @@ public class GameManager
     public readonly int MaxHealth = 10;
     private const int IncHealthUnit = 10;
 
+    public void Clear()
+    {
+        playerTransform = null;
+        currentPhase = 0;
+        ComboContinue = null;
+        HealthUpdate = null;
+        PhaseUpdate = null;
+        MissedKeyUpdate = null;
+        Combo = 0;
+        Health = 0;
+}
+
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함
     public enum GameState
     {

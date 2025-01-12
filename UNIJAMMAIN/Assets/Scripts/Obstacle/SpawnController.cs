@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
 [RequireComponent(typeof(RangedEnemyActivater))]
@@ -176,12 +174,12 @@ public class SpawnController : MonoBehaviour
             else if (i == 1)
             {
                 Managers.UI.ShowPopUpUI<S2_PopUp>();
-                yield return new WaitForSecondsRealtime(8.5f);
+                yield return new WaitForSecondsRealtime(8f);
             }
             else if (i == 3)
             {
                 Managers.UI.ShowPopUpUI<S3_PopUp>();
-                yield return new WaitForSecondsRealtime(8.5f);
+                yield return new WaitForSecondsRealtime(8f);
             }
             Resume();
         }

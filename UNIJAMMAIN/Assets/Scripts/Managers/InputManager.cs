@@ -71,22 +71,21 @@ public class InputManager
                     
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow)&&Managers.Tracker.keyPressCounts["LeftUp"] < 4)
                     {
-                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
-                    switch (UnityEngine.Random.Range(0, 2))
-                    {
-                        case 0:
-                            {
-                                Managers.Sound.Play("Sounds/SFX/WKey_TL_Action_SFX_1");
-                                break;
-                            }
-                        case 1:
-                            {
-                                Managers.Sound.Play("Sounds/SFX/WKey_TL_Action_SFX_2");
-                                break;
-                            }
-                    }
-                    return;
-                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
+                        Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                        switch (UnityEngine.Random.Range(0, 2))
+                        {
+                            case 0:
+                                {
+                                    Managers.Sound.Play("Sounds/SFX/WKey_TL_Action_SFX_1");
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    Managers.Sound.Play("Sounds/SFX/WKey_TL_Action_SFX_2");
+                                    break;
+                                }
+                        }
+                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         Clear();
                         return;
                     }

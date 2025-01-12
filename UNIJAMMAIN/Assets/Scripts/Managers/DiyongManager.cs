@@ -168,8 +168,11 @@ public class DiyongManager : MonoBehaviour
                 gogo.GetComponentsInChildren<SpriteRenderer>()[1].transform.localScale = new Vector3(1f, 1f);
             }
         }
+    }
 
-
+    private void OnDestroy()
+    {
+        spriteRenderer = null;
     }
     private void Update()
     {
@@ -227,8 +230,11 @@ public class DiyongManager : MonoBehaviour
                 .OnComplete(() => target.transform.DOScale(Vector3.one * originalScale, 0.2f));
         }
 
-        spriteRenderer.sprite = actionSprite;
-        StartCoroutine(SetOriginal());
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = actionSprite;
+            StartCoroutine(SetOriginal());
+        }
     }
 
     private IEnumerator SetOriginal()

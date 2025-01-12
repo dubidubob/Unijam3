@@ -25,6 +25,7 @@ public class GameOver : UI_Popup
     }
     void gohome(PointerEventData eventData)
     {
+        Managers.Clear();
         Managers.Scene.LoadScene(Define.Scene.MainTitle);
     }
     public override void Init()

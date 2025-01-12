@@ -7,7 +7,7 @@ using DG.Tweening;
 public class S2_PopUp : UI_Popup
 {
     public Image S2_01, S2_02;
-    float duration = 2f;
+    float duration = 1.7f;
 
     private void Start()
     {
@@ -16,9 +16,9 @@ public class S2_PopUp : UI_Popup
     private IEnumerator animationGo()
     {
         S2_01.DOFade(1f, duration).SetUpdate(true);
-        yield return new WaitForSecondsRealtime(3.5f);
+        yield return new WaitForSecondsRealtime(3f);
         S2_02.DOFade(1f, duration).SetUpdate(true);
-        yield return new WaitForSecondsRealtime(duration);
+        yield return new WaitForSecondsRealtime(3.2f);
 
         ClosePopUPUI();
     }

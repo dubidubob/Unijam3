@@ -92,7 +92,7 @@ public class MainUIs : MonoBehaviour
         if (Bgs.Count <= phase)
             return;
 
-        if (phase > 0)
+        if (phase > 0 && bgPlace!=null)
             bgPlace.sprite = Bgs[phase - 1];
         else
             Debug.LogWarning($"phase index out {phase}");

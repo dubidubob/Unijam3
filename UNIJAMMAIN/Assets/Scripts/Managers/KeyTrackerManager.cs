@@ -22,6 +22,23 @@ public class KeyTrackerManager
     // ��� ó�� ���� Ƚ��
     private int maxPressCount = 4;
 
+    public void Clear()
+    {
+        keyPressCounts = new Dictionary<string, int>
+    {
+            { "W", 0 },
+        { "A", 0 },
+        { "S", 0 },
+        { "D", 0 },
+        { "LeftUp",0 },
+        { "LeftDown",0 },
+        { "RightUp", 0 },
+        { "RightDown",0 }
+        };
+        KeyArrowMissed = null;
+        KeyFree = null;
+        maxPressCount = 4;
+    }
     // WASD �� �߸� ������ �� ������ ����
     public void MissedKeyPress(string key)
     {
