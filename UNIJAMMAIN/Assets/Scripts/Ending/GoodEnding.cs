@@ -19,7 +19,8 @@ public class GoodEnding : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Sequence());
-        Managers.Sound.Play("/Sounds/BGM/Game_End_Holy_BGM", Define.Sound.BGM);
+        //Assets/Resources
+        Managers.Sound.Play("/Sounds/BGM/Game_End_Holy_BGM.wav", Define.Sound.BGM);
     }
 
     private IEnumerator Sequence()
