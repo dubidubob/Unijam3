@@ -113,7 +113,7 @@ public class SpawnController : MonoBehaviour
 
     private IEnumerator Delay()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(2.5f);
         Managers.UI.ShowPopUpUI<GameOver>();
     }
     #region ControlTime

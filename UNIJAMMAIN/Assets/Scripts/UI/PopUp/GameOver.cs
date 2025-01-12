@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class GameOver : UI_Popup
 {
@@ -18,11 +19,11 @@ public class GameOver : UI_Popup
     {
         Init();
         StartCoroutine(GoingBlack());
-        //Bind<Button>(typeof(Buttons));
-        //GetButton((int)Buttons.Why_Am_I_Here).gameObject.AddUIEvent(gohome);
+        Bind<Button>(typeof(Buttons));
+        GetButton((int)Buttons.Why_Am_I_Here).gameObject.AddUIEvent(gohome);
         
     }
-    void gohome()
+    void gohome(PointerEventData eventData)
     {
         Managers.Scene.LoadScene(Define.Scene.MainTitle);
     }
@@ -37,8 +38,8 @@ public class GameOver : UI_Popup
         goodSleepMan.DOFade(1f, 2f).SetUpdate(true);
         yield return new WaitForSecondsRealtime(2f);
         WhyAmI.DOFade(1f, 4f).SetUpdate(true);
-        yield return new WaitForSecondsRealtime(2f);
-        Managers.Scene.LoadScene(Define.Scene.MainTitle);
+       
+       
     }
 }
 
