@@ -50,6 +50,7 @@ public class InputManager
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
                     KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         Clear();
+                        
                         return;
                     }
                     
