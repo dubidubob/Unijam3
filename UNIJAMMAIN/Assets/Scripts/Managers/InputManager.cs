@@ -26,8 +26,11 @@ public class InputManager
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 SettingpopAction.Invoke();
-            }   
-           
+            }
+
+            if (Time.timeScale == 0f)
+                return;
+
                 // 눌린 키가 배열에 있는지 확인
                 foreach (KeyCode key in keysToCheck)
                 {

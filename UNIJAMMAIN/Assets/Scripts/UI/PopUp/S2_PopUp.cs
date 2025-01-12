@@ -19,7 +19,6 @@ public class S2_PopUp : UI_Popup
         yield return new WaitForSecondsRealtime(3.5f);
         S2_02.DOFade(1f, duration).SetUpdate(true);
         yield return new WaitForSecondsRealtime(duration);
-        yield return new WaitForSeconds(3f);
 
         ClosePopUPUI();
     }
