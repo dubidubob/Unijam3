@@ -50,7 +50,10 @@ public class GoodEnding : MonoBehaviour
         egg.transform.localScale = Vector3.one * 0.1f;
         yield return new WaitForSeconds(2f);
         erun.DOFade(1f, 1.5f);
-        yield return new WaitForSeconds(3f);
+    }
+
+    public void OnClickGohome()
+    {
         Managers.Clear();
         Managers.Scene.LoadScene("MainTitle");
     }
