@@ -44,7 +44,7 @@ public class RangedEnemy : MonoBehaviour
 
     private void DyingAnim()
     {
-        // Å©±â º¯È­ ½ÃÄö½º »ý¼º
+        // Å©ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Sequence dyingSequence = DOTween.Sequence();
         dyingSequence.Append(transform.DOScale(Vector3.one * 0.05f, 0.1f).SetEase(Ease.OutBack));
         dyingSequence.Append(transform.DOLocalMove(new Vector3(0, 0, 0), 0.08f));
@@ -54,7 +54,7 @@ public class RangedEnemy : MonoBehaviour
             SetDead(false);
         });
 
-        // ½ÃÄö½º ½ÃÀÛ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         dyingSequence.Play();
     }
 
@@ -78,7 +78,7 @@ public class RangedEnemy : MonoBehaviour
 
     private void OnDisable()
     {
-        // Æ®À© Á¤¸®
+        // Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         colorTween?.Kill();
         fadeTween?.Kill();
     }

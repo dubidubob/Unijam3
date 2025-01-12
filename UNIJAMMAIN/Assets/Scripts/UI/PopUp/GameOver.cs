@@ -8,7 +8,7 @@ public class GameOver : UI_Popup
 {
     public Image blackPanel,goodSleepMan,WhyAmI;
     public TMP_Text text;
-    private float duration = 3f;  // ¾ÏÀü±îÁö °É¸®´Â ½Ã°£
+    private float duration = 3f;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     enum Buttons
     {
         Why_Am_I_Here

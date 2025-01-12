@@ -58,6 +58,7 @@ public class MouseEnemy : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && dir == Dir.Left)
         {
+            Managers.Sound.Play("Sounds/SFX/Mouse_Monster_Death_SFX");
             StopBlinking();
             Debug.Log($"¿ÞÂÊ {dir}");
             Managers.Game.ComboInc();
@@ -66,6 +67,7 @@ public class MouseEnemy : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && dir == Dir.Right)
         {
+            Managers.Sound.Play("Sounds/SFX/Mouse_Monster_Death_SFX");
             StopBlinking();
             Debug.Log($"¿À¸¥ÂÊ {dir}");
             Managers.Game.ComboInc();
