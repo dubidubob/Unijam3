@@ -53,13 +53,39 @@ public class InputManager
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
                     KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         Clear();
-                        
-                        return;
+                    switch (UnityEngine.Random.Range(0, 2))
+                    {
+                        case 0:
+                            {
+                                Managers.Sound.Play("Sounds/SFX/WKey_TL_Action_SFX_1");
+                                break;
+                            }
+                        case 1:
+                            {
+                                Managers.Sound.Play("Sounds/SFX/WKey_TL_Action_SFX_2");
+                                break;
+                            }
+                    }
+                    return;
                     }
                     
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow)&&Managers.Tracker.keyPressCounts["LeftUp"] < 4)
                     {
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    switch (UnityEngine.Random.Range(0, 2))
+                    {
+                        case 0:
+                            {
+                                Managers.Sound.Play("Sounds/SFX/WKey_TL_Action_SFX_1");
+                                break;
+                            }
+                        case 1:
+                            {
+                                Managers.Sound.Play("Sounds/SFX/WKey_TL_Action_SFX_2");
+                                break;
+                            }
+                    }
+                    return;
                     KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         Clear();
                         return;
@@ -95,6 +121,20 @@ public class InputManager
                     else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4) // 오른쪽 아래
                     {
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    switch (UnityEngine.Random.Range(0, 2))
+                    {
+                        case 0:
+                            {
+                                Managers.Sound.Play("Sounds/SFX/BR_TL_Shout_SFX_1");
+                                break;
+                            }
+                        case 1:
+                            {
+                                Managers.Sound.Play("Sounds/SFX/BR_TL_Shout_SFX_2");
+                                break;
+                            }
+                    }
+                    
                     KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
                         Clear();
                         return;
@@ -103,6 +143,20 @@ public class InputManager
                     else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4)
                     {
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+
+                    switch (UnityEngine.Random.Range(0, 2))
+                    {
+                        case 0:
+                            {
+                                Managers.Sound.Play("Sounds/SFX/BR_TL_Shout_SFX_1");
+                                break;
+                            }
+                        case 1:
+                            {
+                                Managers.Sound.Play("Sounds/SFX/BR_TL_Shout_SFX_2");
+                                break;
+                            }
+                    }
                     KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
                         Clear();
                         return;

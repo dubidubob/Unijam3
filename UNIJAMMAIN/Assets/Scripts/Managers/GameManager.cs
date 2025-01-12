@@ -92,7 +92,7 @@ public class GameManager
             }
             else if (key == "D")
             {
-                switch (UnityEngine.Random.Range(0, 2))
+                switch (UnityEngine.Random.Range(0, 4))
                 {
                     case 0:
                         {
@@ -104,6 +104,12 @@ public class GameManager
                             Managers.Sound.Play("Sounds/SFX/DKey_Action_SFX_1");
                             break;
                         }
+                    case 2:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/DKey_TR_BL_Action_SFX_1");
+                            break;
+                        }
+
                 }
             }
             else if (key == "W")
@@ -120,7 +126,9 @@ public class GameManager
                             Managers.Sound.Play("Sounds/SFX/WKey_Action_SFX_1");
                             break;
                         }
+
                 }
+
                 switch (UnityEngine.Random.Range(0, 2))
                 {
                     case 0:
