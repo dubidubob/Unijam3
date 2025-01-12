@@ -6,7 +6,7 @@ public class Timer : MonoBehaviour
 {
     public Image uiFill;
     public Image BackGround;
-    private float Duration = 43f;  // Duration in seconds
+    private float Duration = 38f;  // Duration in seconds
     private float elapsedTime = 0f;
     private int StageCount = 0;
 

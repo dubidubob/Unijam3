@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
 [RequireComponent(typeof(RangedEnemyActivater))]
@@ -9,6 +10,7 @@ public class SpawnController : MonoBehaviour
 {
     public IllustController illustController;
     [SerializeField] bool isMaster = true;
+    [SerializeField] GameObject black;
     #region PhaseClasses
     public class PhaseMoving
     {
@@ -96,6 +98,7 @@ public class SpawnController : MonoBehaviour
             Pause();
             //애니메이션으로 죽어야함.
             Managers.Sound.Play("/Sounds/SFX/Game_Over_Man_Falling");
+            black.SetActive(true);
             Managers.UI.ShowPopUpUI<GameOver>();
 
             return;
