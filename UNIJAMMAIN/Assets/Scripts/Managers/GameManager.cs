@@ -9,6 +9,7 @@ public class GameManager
     public Action<int> ComboContinue = null;
     public Action<int> HealthUpdate = null;
     public Action<int> PhaseUpdate = null;
+    public Action<string> MissedKeyUpdate = null;
     private int Combo = 0;
     private int Health = 0;
     public readonly int MaxHealth = 10;
@@ -62,6 +63,7 @@ public class GameManager
 
         DecHealth();
         Managers.Tracker.MissedKeyPress(key);
+        MissedKeyUpdate.Invoke(key);
         return false;
     }
 

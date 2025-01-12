@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using DG.Tweening;
@@ -15,32 +16,56 @@ public class S1_PopUp : UI_Popup
     }
     private IEnumerator animationGo()
     {
-        S1_01.DOFade(1f, duration).SetUpdate(true);
-        yield return new WaitForSecondsRealtime(duration);
-        S1_02.DOFade(1f, duration).SetUpdate(true);
-        yield return new WaitForSecondsRealtime(duration);
-        S1_03.DOFade(1f, duration).SetUpdate(true);
+        float elapsedTime = 0f;
+        S1_01.DOFade(1f, 2f);
 
-        yield return new WaitForSecondsRealtime(3f);
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;  // 경과 시간 증가
+            yield return null;  // 다음 프레임까지 대기
+        }
+        elapsedTime = 0f;
+        S1_02.DOFade(1f, 2f);
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;  // 경과 시간 증가
+            yield return null;  // 다음 프레임까지 대기
+        }
+        elapsedTime = 0f;
+        S1_03.DOFade(1f, 2f);
 
+
+
+        yield return new WaitForSeconds(3f);
         ClosePopUPUI();
     }
-
-    private IEnumerator animationTextGo()
-    {
-    Hu_01.DOFade(1f, duration_text)
-    .SetUpdate(true);
-
-    yield return new WaitForSecondsRealtime(duration_text);
-
-    U_02.DOFade(1f, duration_text).SetUpdate(true);
-
-    yield return new WaitForSecondsRealtime(duration_text);
-
-    U_03.DOFade(1f, duration_text).SetUpdate(true);
-    yield return new WaitForSecondsRealtime(duration_text);
+        private IEnumerator animationTextGo()
+        {
+        float elapsedTime = 0;
         
-    Ung_04.DOFade(1f, duration_text).SetUpdate(true);
-    }
+            Hu_01.DOFade(1f, 1.5f);
 
+             while (elapsedTime < duration_text)
+             {
+            elapsedTime += Time.deltaTime;  // 경과 시간 증가
+            yield return null;  // 다음 프레임까지 대기
+        }
+        elapsedTime = 0f;
+        U_02.DOFade(1f, 1.5f);
+        while (elapsedTime < duration_text)
+        {
+            elapsedTime += Time.deltaTime;  // 경과 시간 증가
+            yield return null;  // 다음 프레임까지 대기
+        }
+        elapsedTime = 0f;
+        U_03.DOFade(1f, 1.5f);
+        while (elapsedTime < duration_text)
+        {
+            elapsedTime += Time.deltaTime;  // 경과 시간 증가
+            yield return null;  // 다음 프레임까지 대기
+        }
+        elapsedTime = 0f;
+        Ung_04.DOFade(1f, 1.5f);
+
+        }
 }

@@ -9,11 +9,13 @@ public class RangedEnemyActivater : MonoBehaviour
     {
         public RangedAttackType attackType;
         public GameObject go;
+    
     }
 
     [SerializeField] private float boundaryOffset = 1f;
     [SerializeField] List<RangedEnemyInfo> deactivatedEnemies;
     private List<RangedEnemyInfo> activatedEnemies = new List<RangedEnemyInfo>();
+    public DiyongManager Diyong;
 
     private void Awake()
     {
@@ -45,6 +47,7 @@ public class RangedEnemyActivater : MonoBehaviour
         if (!isExist && Managers.Game.GetPhase() > 1) 
         {
             Managers.Game.DecHealth();
+            Diyong.MissedKeyPressedArrow(attackType.ToString());
             Managers.Tracker.MissedKeyPress(attackType.ToString());
         }
     }
@@ -109,23 +112,23 @@ public class RangedEnemyActivater : MonoBehaviour
         switch (enemy.attackType)
         {
             case RangedAttackType.LeftUp:
-                randX = Random.Range(xMin + boundaryOffset, -boundaryOffset);
-                randY = Random.Range(boundaryOffset, yMax - boundaryOffset);
+                randX = UnityEngine.Random.Range(xMin + boundaryOffset, -boundaryOffset);
+                randY = UnityEngine.Random.Range(boundaryOffset, yMax - boundaryOffset);
                 break;
 
             case RangedAttackType.LeftDown:
-                randX = Random.Range(xMin + boundaryOffset, -boundaryOffset);
-                randY = Random.Range(yMin + boundaryOffset, -boundaryOffset);
+                randX = UnityEngine.Random.Range(xMin + boundaryOffset, -boundaryOffset);
+                randY = UnityEngine.Random.Range(yMin + boundaryOffset, -boundaryOffset);
                 break;
 
             case RangedAttackType.RightUp:
-                randX = Random.Range(boundaryOffset, xMax - boundaryOffset);
-                randY = Random.Range(boundaryOffset, yMax - boundaryOffset);
+                randX = UnityEngine.Random.Range(boundaryOffset, xMax - boundaryOffset);
+                randY = UnityEngine.Random.Range(boundaryOffset, yMax - boundaryOffset);
                 break;
 
             case RangedAttackType.RightDown:
-                randX = Random.Range(boundaryOffset, xMax - boundaryOffset);
-                randY = Random.Range(yMin + boundaryOffset, -boundaryOffset);
+                randX = UnityEngine.Random.Range(boundaryOffset, xMax - boundaryOffset);
+                randY = UnityEngine.Random.Range(yMin + boundaryOffset, -boundaryOffset);
                 break;
         }
 

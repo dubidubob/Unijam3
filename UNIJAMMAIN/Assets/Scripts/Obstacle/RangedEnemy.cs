@@ -1,4 +1,3 @@
-using System.Threading.Tasks.Sources;
 using DG.Tweening;
 using UnityEngine;
 
@@ -29,7 +28,7 @@ public class RangedEnemy : MonoBehaviour
         isDying = false;
 
         spriteRenderer.color = Color.white;
-        transform.localScale = Vector3.one * 0.37f;
+        transform.localScale = Vector3.one;
 
         colorTween?.Kill();
         fadeTween?.Kill();
@@ -47,16 +46,18 @@ public class RangedEnemy : MonoBehaviour
     {
         // 크기 변화 시퀀스 생성
         Sequence dyingSequence = DOTween.Sequence();
-        dyingSequence.Append(transform.DOScale(Vector3.one * 0.05f, 0.1f).SetEase(Ease.OutBack));
-        dyingSequence.Append(transform.DOLocalMove(new Vector3(0, 0, 0), 0.08f));
-        dyingSequence.OnComplete(() =>
-        {
-            isDying = true;
-            SetDead(false);
-        });
-
-        // 시퀀스 시작
+        dyingSequence.Append(transform.DOScale(Vector3.one * 0.8f, 0.2f).SetEase(Ease.OutBack));
+        dyingSequence.Append(transform.DOScale(Vector3.one * 1.7f, 0.5f).SetEase(Ease.InBack));
         dyingSequence.Play();
+
+        // 페이드 아웃 트윈 시작
+        fadeTween = spriteRenderer.DOFade(0f, 0.7f)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                isDying = true;
+                SetDead(false);
+            });
     }
 
     public void SetDead(bool isAttackedByPlayer = true)

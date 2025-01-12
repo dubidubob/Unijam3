@@ -67,11 +67,13 @@ public class PopUpMainScene : UI_Popup
             Managers.Sound.Play("Sounds/BGM/Main_Bgm",Define.Sound.BGM);
             Managers.Sound._audioSources[1].volume = 0.4f;
             Managers.Sound._audioSources[2].volume = 0.4f;
+           
         }
     }
     
     void BGMClicked(PointerEventData eventData)
     {
+        Managers.Sound.Play("Sounds/SFX/Setting_Button_SFX");
         BgmLevel++;
         if (BgmLevel == 5) { BgmLevel = 0; }
         OptionBGM.sprite = sprites[BgmLevel];
@@ -81,6 +83,7 @@ public class PopUpMainScene : UI_Popup
 
     void SFXClicked(PointerEventData eventData)
     {
+        Managers.Sound.Play("Sounds/SFX/Setting_Button_SFX");
         SFXLevel++;
         if(SFXLevel==5) { SFXLevel = 0; }
         OptionSFX.sprite = sprites[SFXLevel];
@@ -164,8 +167,10 @@ public class PopUpMainScene : UI_Popup
 
     void GameStartClicked(PointerEventData eventData)
     {
+        Managers.Sound.Play("Sounds/SFX/Main_Button_SFX");
         if (gameStartClicked == false)
         {
+            
             UpText.text = "";
             MiddleText.text = "게임시작";
             MiddleText.color = Color.red;
@@ -187,6 +192,7 @@ public class PopUpMainScene : UI_Popup
 
     void GameOptionClicked(PointerEventData eventData)
     {
+         Managers.Sound.Play("Sounds/SFX/Main_Button_SFX");
         if (gameStartClicked == true) // Nothing
         {
             Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
@@ -204,7 +210,8 @@ public class PopUpMainScene : UI_Popup
     }
     void GameOut(PointerEventData eventData)
     {
-        if(gameStartClicked == true) // 이건 이제 메인으로 버튼임.
+        Managers.Sound.Play("Sounds/SFX/Main_Button_SFX");
+        if (gameStartClicked == true) // 이건 이제 메인으로 버튼임.
         {
             GuideTextBald.text = "";
             FillingBoot.fillAmount = 0;
