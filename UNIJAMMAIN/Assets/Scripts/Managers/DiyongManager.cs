@@ -188,7 +188,7 @@ public class DiyongManager : MonoBehaviour
     }
     public void text()
     {
-        Debug.Log("Å×½º½º½º½º½º");
+        Debug.Log("ï¿½×½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
     }
     void PressButtonArrow(KeyCode attackType) // WASD
     {
@@ -221,7 +221,7 @@ public class DiyongManager : MonoBehaviour
 
         if (gogo != null)
         {
-            // ·ÎÄÃ º¯¼ö·Î gogo ÂüÁ¶¸¦ °íÁ¤
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ gogo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             GameObject target = gogo;
 
             target.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)

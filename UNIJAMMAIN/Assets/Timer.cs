@@ -6,7 +6,7 @@ public class Timer : MonoBehaviour
 {
     public Image uiFill;
     public Image BackGround;
-    public int Duration;  // Duration in seconds
+    private float Duration = 43f;  // Duration in seconds
     private float elapsedTime = 0f;
     private int StageCount = 0;
 
@@ -32,19 +32,21 @@ public class Timer : MonoBehaviour
     {
         elapsedTime = 0;
         StageCount++;
-        switch(StageCount)
+        switch (StageCount)
         {
             case 1:
-
                 BackGround.color = Color.red;
                 uiFill.color = Color.blue;
+                Duration = 73f;
                 StartCoroutine(UpdateTimer());
                 break;
             case 2:
-                break;
-            case 3:
+                BackGround.color = Color.blue;
+                uiFill.color = Color.yellow;
+                Duration = 45f;
+                StartCoroutine(UpdateTimer());
                 break;
         }
-         
+
     }
 }

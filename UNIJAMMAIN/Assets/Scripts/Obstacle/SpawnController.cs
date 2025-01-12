@@ -134,7 +134,7 @@ public class SpawnController : MonoBehaviour
                 if (illustController != null)
                 {
                     Managers.UI.ShowPopUpUI<S1_PopUp>();
-                    yield return new WaitForSecondsRealtime(7f);
+                    yield return new WaitForSecondsRealtime(6f);
                     yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//숫자 나옴
                 }
                 Resume();
