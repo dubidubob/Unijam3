@@ -190,39 +190,44 @@ public class DiyongManager : MonoBehaviour
     {
         Debug.Log("테스스스스스");
     }
-    void PressButtonArrow(KeyCode attackType) //WASD
+    void PressButtonArrow(KeyCode attackType) // WASD
     {
+        GameObject gogo;
         string key = attackType.ToString();
         if (key == "W")
         {
-            ActionGo = W.go;
+            gogo = W.go;
             actionSprite = W.sp;
-            
         }
         else if (key == "A")
         {
-            ActionGo = A.go;
+            gogo = A.go;
             actionSprite = A.sp;
-            
         }
         else if (key == "S")
         {
-            ActionGo = S.go;
+            gogo = S.go;
             actionSprite = S.sp;
         }
         else if (key == "D")
         {
-            ActionGo = D.go;
+            gogo = D.go;
             actionSprite = D.sp;
         }
-        else Debug.Log("어떤것도 행해지지않은 오류");
-
-        if (ActionGo != null)
+        else
         {
-            ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
-      .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
+            gogo = null;
         }
-        
+
+        if (gogo != null)
+        {
+            // 로컬 변수로 gogo 참조를 고정
+            GameObject target = gogo;
+
+            target.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
+                .OnComplete(() => target.transform.DOScale(Vector3.one * originalScale, 0.2f));
+        }
+
         spriteRenderer.sprite = actionSprite;
         StartCoroutine(SetOriginal());
     }
@@ -235,33 +240,37 @@ public class DiyongManager : MonoBehaviour
     }
     void PressButtonKeyBoard(GamePlayDefine.RangedAttackType attackType)
     {
+        GameObject gogo;
         string key = attackType.ToString();
         if (key == "LeftUp")
         {
-            ActionGo = LeftUp.go;
+            gogo = LeftUp.go;
             actionSprite = LeftUp.sp;
         }
         else if (key == "LeftDown")
         {
-            ActionGo = LeftDown.go;
+            gogo = LeftDown.go;
             actionSprite = LeftDown.sp;
         }
         else if (key == "RightUp")
         {
-            ActionGo = RightUp.go;
+            gogo = RightUp.go;
             actionSprite = RightUp.sp;
         }
         else if (key == "RightDown")
         {
-            ActionGo = RightDown.go;
+            gogo = RightDown.go;
             actionSprite = RightDown.sp;
         }
-        else Debug.Log("어떤것도 행해지지않은 오류");
+        else gogo = null;
+        if (gogo != null)
+        {
+            GameObject target = gogo;
+            target.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
+               .OnComplete(() => target.transform.DOScale(Vector3.one * originalScale, 0.2f));
 
-        ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
-           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
-
-        spriteRenderer.sprite = actionSprite;
+            spriteRenderer.sprite = actionSprite;
+        }
     }
 }
 
