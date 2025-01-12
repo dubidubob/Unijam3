@@ -1035,7 +1035,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiFill: {fileID: 835060358}
   BackGround: {fileID: 1185622468}
-  Duration: 5
 --- !u!1 &921985009
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,6 +2161,7 @@ GameObject:
   - component: {fileID: 1796204204}
   - component: {fileID: 1796204206}
   - component: {fileID: 1796204203}
+  - component: {fileID: 1796204207}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2255,7 +2255,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 716ac17215eadb541b006e8768e71d9c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58e42cda7d879ff45832109343c9eb51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2303,6 +2303,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1796204207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796204202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108b538f90f9e764ea3e5a2673c3631f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  W: {fileID: 21300000, guid: eda5a8a7eb9b9ce4c8e90b262f0cb3e7, type: 3}
+  A: {fileID: 21300000, guid: e6ab363b6e988a84fbe7b72d8ac099fd, type: 3}
+  S: {fileID: 21300000, guid: fe5c4aa43c499254bb2283b1e56fc548, type: 3}
+  D: {fileID: 21300000, guid: d3ce47d7cb63583429f36cdbeda20da8, type: 3}
+  LU: {fileID: 21300000, guid: 35a7856bd3e858940b73632b19319806, type: 3}
+  LD: {fileID: 21300000, guid: 1fdf46ee592052c438ac47e43604c0d2, type: 3}
+  RU: {fileID: 21300000, guid: 837f906bb497f634b91a1555ba55b953, type: 3}
+  RD: {fileID: 21300000, guid: 655ab9241e1d10049b87a378d26a9791, type: 3}
 --- !u!1 &1878281397
 GameObject:
   m_ObjectHideFlags: 0
@@ -3180,7 +3200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   illustController: {fileID: 413534883}
-  isMaster: 1
+  isMaster: 0
   initialInterval: 1.5
 --- !u!114 &5032662942808797822
 MonoBehaviour:

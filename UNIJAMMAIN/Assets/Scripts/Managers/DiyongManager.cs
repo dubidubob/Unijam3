@@ -63,11 +63,12 @@ public class DiyongManager : MonoBehaviour
 
         if (ActionGo != null)
         {
-            ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
-      .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
+            ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.1f)
+      .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.1f));
         }
         
-        spriteRenderer.sprite = actionSprite;
+        if(spriteRenderer!=null)
+            spriteRenderer.sprite = actionSprite;
         StartCoroutine(SetOriginal());
     }
 
@@ -102,8 +103,8 @@ public class DiyongManager : MonoBehaviour
         }
         else Debug.Log("어떤것도 행해지지않은 오류");
 
-        ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.2f)
-           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.2f));
+        ActionGo.transform.DOScale(Vector3.one * (originalScale + upScaleAmount), 0.1f)
+           .OnComplete(() => ActionGo.transform.DOScale(Vector3.one * originalScale, 0.1f));
 
         spriteRenderer.sprite = actionSprite;
     }
