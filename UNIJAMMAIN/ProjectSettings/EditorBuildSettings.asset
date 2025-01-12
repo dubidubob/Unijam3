@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainTitle.unity
     guid: 7c70661857aff724da68e0a4e25dbb29
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainGame.unity
     guid: 6697d5c91cf589a4fac9960da6db0081
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MergePhase123.unity
     guid: e133d411e220f384abcee4e2c860cb47
   - enabled: 1

@@ -68,7 +68,7 @@ MonoBehaviour:
   m_text: "\uBA70\uCE60 \uB4A4...."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
-  m_sharedMaterial: {fileID: 7150730949596282364, guid: 315c3108e711594458dead04d790c64a, type: 2}
+  m_sharedMaterial: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
