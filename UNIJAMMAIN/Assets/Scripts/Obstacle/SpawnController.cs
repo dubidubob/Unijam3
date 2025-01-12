@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
@@ -11,6 +12,8 @@ public class SpawnController : MonoBehaviour
     public IllustController illustController;
     [SerializeField] bool isMaster = true;
     [SerializeField] GameObject black;
+    [SerializeField] GameObject balladang;
+    [SerializeField] GameObject player;
     #region PhaseClasses
     public class PhaseMoving
     {
@@ -96,15 +99,23 @@ public class SpawnController : MonoBehaviour
         if (health <= 0 && !isMaster)
         {
             Pause();
+            StopAllCoroutines();
             //애니메이션으로 죽어야함.
             Managers.Sound.Play("/Sounds/SFX/Game_Over_Man_Falling");
-            black.SetActive(true);
-            Managers.UI.ShowPopUpUI<GameOver>();
+            player.SetActive(false);
+            Resume();
+            balladang.SetActive(true);
+            StartCoroutine(Delay());
 
             return;
         }
     }
 
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        Managers.UI.ShowPopUpUI<GameOver>();
+    }
     #region ControlTime
     private void ControlTime()
     {
