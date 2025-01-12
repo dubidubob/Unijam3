@@ -14,6 +14,9 @@ public class RangedEnemyActivater : MonoBehaviour
 
     [SerializeField] private float boundaryOffset = 1f;
     [SerializeField] List<RangedEnemyInfo> deactivatedEnemies;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    public Sprite LU, LD, RU, RD;
+
     private List<RangedEnemyInfo> activatedEnemies = new List<RangedEnemyInfo>();
     public DiyongManager Diyong;
 
@@ -39,6 +42,21 @@ public class RangedEnemyActivater : MonoBehaviour
             {
                 RangedEnemy rangedEnemy = enemy.go.GetComponent<RangedEnemy>();
                 if (rangedEnemy != null) { rangedEnemy.SetDead(); }
+                switch (attackType)
+                {
+                    case RangedAttackType.LeftUp:
+                        spriteRenderer.sprite = LU;
+                        break;
+                    case RangedAttackType.LeftDown:
+                        spriteRenderer.sprite = LD; ;
+                        break;
+                    case RangedAttackType.RightUp:
+                        spriteRenderer.sprite = RU;
+                        break;
+                    case RangedAttackType.RightDown:
+                        spriteRenderer.sprite = RD;
+                        break;
+                }
                 isExist = true;
                 break;
             }

@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class playerSprite : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     public Sprite W, A, S, D, LU, LD, RU, RD;
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
         Managers.Input.KeyBoardChecking -= forWASD;
         Managers.Input.KeyBoardChecking += forWASD;
         Managers.Input.KeyArrowcodeAction -= forLR;
@@ -17,6 +15,7 @@ public class playerSprite : MonoBehaviour
 
     private void forWASD(KeyCode key)
     {
+        spriteRenderer.transform.GetComponent<Animator>().enabled = false;
         switch (key)
         {
             case KeyCode.A:
@@ -36,6 +35,7 @@ public class playerSprite : MonoBehaviour
 
     private void forLR(GamePlayDefine.RangedAttackType type)
     {
+        spriteRenderer.transform.GetComponent<Animator>().enabled = false;
         switch (type)
         {
             case GamePlayDefine.RangedAttackType.LeftDown:

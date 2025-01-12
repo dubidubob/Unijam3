@@ -1427,7 +1427,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiFill: {fileID: 835060358}
   BackGround: {fileID: 1185622468}
-  Duration: 5
 --- !u!1 &921985009
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,7 +2818,6 @@ GameObject:
   - component: {fileID: 1796204204}
   - component: {fileID: 1796204206}
   - component: {fileID: 1796204203}
-  - component: {fileID: 1796204207}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3824,6 +3822,11 @@ MonoBehaviour:
     go: {fileID: 2999808236935223804}
   - attackType: 3
     go: {fileID: 1505694347681260727}
+  spriteRenderer: {fileID: 1796204204}
+  LU: {fileID: 21300000, guid: 35a7856bd3e858940b73632b19319806, type: 3}
+  LD: {fileID: 21300000, guid: 1fdf46ee592052c438ac47e43604c0d2, type: 3}
+  RU: {fileID: 21300000, guid: 837f906bb497f634b91a1555ba55b953, type: 3}
+  RD: {fileID: 21300000, guid: 655ab9241e1d10049b87a378d26a9791, type: 3}
   Diyong: {fileID: 1358877081}
 --- !u!1 &5032662942808797819
 GameObject:
