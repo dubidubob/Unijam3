@@ -23,7 +23,7 @@ public class ResourceManager
 
         if (Resources.Load<T>(path) == null)
         {
-            Debug.Log($"Failed to load Resource : {path}");
+            Debug.Log($"Failed to load Resource : {path}"); 
         }
 
         return Resources.Load<T>(path);

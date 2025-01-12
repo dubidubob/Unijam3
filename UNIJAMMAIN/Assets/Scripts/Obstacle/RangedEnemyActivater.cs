@@ -56,7 +56,7 @@ public class RangedEnemyActivater : MonoBehaviour
                     case RangedAttackType.RightDown:
                         spriteRenderer.sprite = RD;
                         break;
-                }
+                } Managers.Sound.Play("Range_Monster_Death_SFX");
                 isExist = true;
                 break;
             }

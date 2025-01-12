@@ -84,7 +84,7 @@ public class PopUpMainScene : UI_Popup
 
     void SFXClicked(PointerEventData eventData)
     {
-        Managers.Sound.Play("Sounds/SFX/Setting_Button_SFX");
+        Managers.Sound.Play("Sounds/SFX/Setting_Volume_Button_SFX");
         SFXLevel++;
         if(SFXLevel==5) { SFXLevel = 0; }
         OptionSFX.sprite = sprites[SFXLevel];

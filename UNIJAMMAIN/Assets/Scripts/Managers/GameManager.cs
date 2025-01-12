@@ -51,7 +51,21 @@ public class GameManager
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
         {
             GameObject go = attacks[key].Dequeue();
-            if (go == null)
+
+            switch (UnityEngine.Random.Range(0, 2))
+            {
+                case 0:
+                    {
+                        Managers.Sound.Play("Sounds/SFX/WASD_Glass_Broken_SFX_2");
+                        break;
+                    }
+                case 1:
+                    {
+                        Managers.Sound.Play("Sounds/SFX/WASD_Glass_Broken_SFX_1");
+                        break;
+                    }
+            }
+                    if (go == null)
             {
                 Debug.LogError("큰일난오류?");
                 return false;
@@ -107,7 +121,21 @@ public class GameManager
                             break;
                         }
                 }
-            }
+                switch (UnityEngine.Random.Range(0, 2))
+                {
+                    case 0:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_1");
+                            break;
+                        }
+                    case 1:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_2");
+                            break;
+                        }
+
+                }
+                }
             else if (key == "S")
             {
                 switch (UnityEngine.Random.Range(0, 2))
@@ -122,6 +150,20 @@ public class GameManager
                             Managers.Sound.Play("Sounds/SFX/SKey_Action_SFX_1");
                             break;
                         }
+                }
+                switch (UnityEngine.Random.Range(0, 2))
+                {
+                    case 0:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_1");
+                            break;
+                        }
+                    case 1:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_2");
+                            break;
+                        }
+
                 }
             }
            
