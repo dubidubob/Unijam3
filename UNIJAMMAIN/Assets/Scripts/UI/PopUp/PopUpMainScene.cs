@@ -31,6 +31,7 @@ public class PopUpMainScene : UI_Popup
     private int SFXLevel = 2;
 
     private float delay = 0.05f;
+    private bool canout = true;
 
     enum Buttons
     {
@@ -73,7 +74,7 @@ public class PopUpMainScene : UI_Popup
     
     void BGMClicked(PointerEventData eventData)
     {
-        Managers.Sound.Play("Sounds/SFX/Setting_Button_SFX");
+        Managers.Sound.Play("Sounds/SFX/Setting_Volume_Button_SFX");
         BgmLevel++;
         if (BgmLevel == 5) { BgmLevel = 0; }
         OptionBGM.sprite = sprites[BgmLevel];
@@ -93,7 +94,7 @@ public class PopUpMainScene : UI_Popup
 
     IEnumerator textPrint(float delay=0.15f)
     {
-        yield return new WaitForSeconds(0f);
+        yield return new WaitForSeconds(0.3f);
         Guide = GuideTextBald;
         for (int i = 0; i < 2; i++)
         {   
@@ -142,6 +143,22 @@ public class PopUpMainScene : UI_Popup
 
 
 
+    public void DoTweenScaleUpInStart(Transform transform, float upScaleAmount = 10f)
+    {
+        // transform.DOScale(Vector3.one * upScaleAmount, 0.2f);
+        //   .OnComplete(() => transform.DOScale(Vector3.one, 0.2f));
+        
+        transform.DOScaleY(upScaleAmount, 0.5f);
+        transform.DOLocalMoveY(60, 0.5f);
+        canout = false;
+        GameStart.transform.DOLocalMoveY(360, 0.5f)
+            .OnComplete(() =>
+            {
+                canout = true;
+            }
+                );
+   
+    }
     public void DoTweenScaleUp(Transform transform, float upScaleAmount = 10f)
     {
         // transform.DOScale(Vector3.one * upScaleAmount, 0.2f);
@@ -149,12 +166,15 @@ public class PopUpMainScene : UI_Popup
 
         transform.DOScaleY(upScaleAmount, 0.5f);
         transform.DOLocalMoveY(60, 0.5f);
-   
+        canout = false;
         GameStart.transform.DOLocalMoveY(360, 0.5f)
-            .OnComplete(() => Option.SetActive(true));
-            
-        
-         
+            .OnComplete(() =>
+            {
+                Option.SetActive(true);
+                canout = true;
+            }
+                );
+
     }
 
     public void DoTweenScaleDown(Transform transform, float downScaleAmount = 1f)
@@ -176,7 +196,7 @@ public class PopUpMainScene : UI_Popup
             MiddleText.color = Color.red;
             DownText.text = "메인으로";
 
-            DoTweenScaleUp(GameStartBlank.transform);
+            DoTweenScaleUpInStart(GameStartBlank.transform);
 
             StartCoroutine(textPrint(delay));
 
@@ -211,7 +231,7 @@ public class PopUpMainScene : UI_Popup
     void GameOut(PointerEventData eventData)
     {
         Managers.Sound.Play("Sounds/SFX/Main_Button_SFX");
-        if (gameStartClicked == true) // 이건 이제 메인으로 버튼임.
+        if (gameStartClicked == true&&canout==true) // 이건 이제 메인으로 버튼임.
         {
             GuideTextBald.text = "";
             FillingBoot.fillAmount = 0;
@@ -227,7 +247,7 @@ public class PopUpMainScene : UI_Popup
 
 
         }
-        else if(gameOptionClicked==true) // 이건 이제 옵션나가기버튼임
+        else if(gameOptionClicked==true&&canout==true) // 이건 이제 옵션나가기버튼임
         {
             DoTweenScaleDown(GameStartBlank.transform);
             UpText.text = "게임시작";

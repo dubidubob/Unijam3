@@ -34,7 +34,8 @@ public class InputManager
                     
                     if(Managers.Tracker.keyPressCounts[key.ToString()]<4&&Input.GetKeyDown(key)) // WASD
                     {
-                        KeyBoardChecking.Invoke(key);
+                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyBoardChecking.Invoke(key);
                         Debug.Log(key.ToString());
                         Managers.Game.ReceiveKey(key.ToString());
                          Debug.Log($"{key.ToString()}의 KeyPressCounts : {Managers.Tracker.keyPressCounts[key.ToString()]}");
@@ -46,50 +47,59 @@ public class InputManager
                 {
                     if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow)&& Managers.Tracker.keyPressCounts["LeftUp"] < 4) // 왼쪽위
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
+                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         Clear();
                         return;
                     }
                     
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow)&&Managers.Tracker.keyPressCounts["LeftUp"] < 4)
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
+                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         Clear();
                         return;
                     }
                     else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["LeftDown"] < 4) // 왼쪽아래
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
+                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
                         Clear();
                         return;
                     }
                     else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow) && Managers.Tracker.keyPressCounts["LeftDown"] < 4)
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
+                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
                         Clear();
                         return;
                     }
                     else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow) && Managers.Tracker.keyPressCounts["RightUp"] < 4) //오른쪽위
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
+                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
                         Clear();
                         return;
                     }
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow) && Managers.Tracker.keyPressCounts["RightUp"] < 4)
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
+                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
                         Clear();
                         return;
                     }
                     else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4) // 오른쪽 아래
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
+                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
                         Clear();
                         return;
                     }
+              
                     else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4)
                     {
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
+                    Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
+                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
                         Clear();
                         return;
                     }
