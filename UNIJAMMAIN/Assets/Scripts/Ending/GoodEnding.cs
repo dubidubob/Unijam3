@@ -19,6 +19,7 @@ public class GoodEnding : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Sequence());
+        Managers.Sound.Play("/Sounds/BGM/Game_End_Holy_BGM", Define.Sound.BGM);
     }
 
     private IEnumerator Sequence()
@@ -43,7 +44,9 @@ public class GoodEnding : MonoBehaviour
         yield return new WaitForSeconds(2f);
         egg.transform.DOMove(new Vector3(0, -2f, 0), 1f);
         yield return new WaitForSeconds(1.5f);
+        Managers.Sound.Play("/Sounds/SFX/Egg_Crack_SFX");
         egg.GetComponent<SpriteRenderer>().sprite = fry;
+
         egg.transform.localScale = Vector3.one * 0.1f;
         yield return new WaitForSeconds(2f);
         erun.DOFade(1f, 1.5f);

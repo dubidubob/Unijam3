@@ -49,12 +49,14 @@ public class RangedEnemy : MonoBehaviour
         dyingSequence.Append(transform.DOScale(Vector3.one * 0.8f, 0.2f).SetEase(Ease.OutBack));
         dyingSequence.Append(transform.DOScale(Vector3.one * 1.7f, 0.5f).SetEase(Ease.InBack));
         dyingSequence.Play();
+        Managers.Sound.Play("Sounds/SFX/Range_Monster_Death_SFX");
 
         // 페이드 아웃 트윈 시작
         fadeTween = spriteRenderer.DOFade(0f, 0.7f)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
+
                 isDying = true;
                 SetDead(false);
             });

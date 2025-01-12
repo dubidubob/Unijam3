@@ -94,6 +94,8 @@ public class SpawnController : MonoBehaviour
         if (health <= 0 && !isMaster)
         {
             Pause();
+            //애니메이션으로 죽어야함.
+            Managers.Sound.Play("/Sounds/SFX/Game_Over_Man_Falling");
             Managers.UI.ShowPopUpUI<GameOver>();
 
             return;

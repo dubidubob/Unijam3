@@ -58,6 +58,74 @@ public class GameManager
             }
             ComboInc();
             go.GetComponent<MovingEnemy>().SetDead();
+
+            if (key == "A")
+            {
+                switch (UnityEngine.Random.Range(0, 2))
+                {
+                    case 0:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/AKey_Action_SFX_1");
+                            break;
+                        }
+                    case 1:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/AKey_Action_SFX_1");
+                            break;
+                        }
+                }
+
+            }
+            else if (key == "D")
+            {
+                switch (UnityEngine.Random.Range(0, 2))
+                {
+                    case 0:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/DKey_Action_SFX_1");
+                            break;
+                        }
+                    case 1:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/DKey_Action_SFX_1");
+                            break;
+                        }
+                }
+            }
+            else if (key == "W")
+            {
+                switch (UnityEngine.Random.Range(0, 2))
+                {
+                    case 0:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/WKey_Action_SFX_1");
+                            break;
+                        }
+                    case 1:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/WKey_Action_SFX_1");
+                            break;
+                        }
+                }
+            }
+            else if (key == "S")
+            {
+                switch (UnityEngine.Random.Range(0, 2))
+                {
+                    case 0:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/SKey_Action_SFX_1");
+                            break;
+                        }
+                    case 1:
+                        {
+                            Managers.Sound.Play("Sounds/SFX/SKey_Action_SFX_1");
+                            break;
+                        }
+                }
+            }
+           
+
             return true;
         }
 

@@ -38,7 +38,6 @@ public class GameOver : UI_Popup
 
         while (elapsedTime < duration)
         {
-            Debug.Log("몇번실행?");
             // alpha 값이 0에서 1로 점진적으로 변하도록 설정
             blackPanel.color = new Color(0, 0, 0, Mathf.Lerp(0, 1f, elapsedTime / duration));
             elapsedTime += Time.deltaTime;  // 경과 시간 증가
@@ -59,6 +58,7 @@ public class GameOver : UI_Popup
             yield return null;  // 다음 프레임까지 대기
         }
         goodSleepMan.DOFade(1f, 2f);
+        Managers.Sound.Play("/Sounds/SFX/Crowd_Noise_SFX");
         elapsedTime = 0f;
         while (elapsedTime < 2f)
         {
