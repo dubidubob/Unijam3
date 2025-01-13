@@ -70,7 +70,7 @@ public class SpawnController : MonoBehaviour
     private float currentSpeed;        
 
     private bool isPaused = false;
-
+    private bool NotDead = true;
     private void Awake()
     {
         movingEnemySpawner = GetComponent<MovingEnemySpawner>();
@@ -94,15 +94,17 @@ public class SpawnController : MonoBehaviour
 
     private void CheckDie(int health)
     {
-        if (health <= 0 && !isMaster)
+        if (health <= 0 && !isMaster &&NotDead)
         {
             Pause();
             StopAllCoroutines();
             //애니메이션으로 죽어야함.
-            Managers.Sound.Play("/Sounds/SFX/Game_Over_Man_Falling");
             player.SetActive(false);
             Resume();
             balladang.SetActive(true);
+            Managers.Sound.Play("Sounds/SFX/GameOver_Man_Falling");
+            Managers.Sound.Stop(Managers.Sound._audioSources[(int)Define.Sound.BGM]);
+            NotDead = false;
             StartCoroutine(Delay());
 
             return;

@@ -36,6 +36,7 @@ public class GameOver : UI_Popup
     private IEnumerator GoingBlack()
     {
         yield return new WaitForSecondsRealtime(duration);
+        Managers.Sound.Play("Sounds/SFX/Crowd_Noise_SFX");
         goodSleepMan.DOFade(1f, 2f).SetUpdate(true);
         yield return new WaitForSecondsRealtime(2f);
         WhyAmI.DOFade(1f, 4f).SetUpdate(true);

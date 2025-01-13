@@ -218,6 +218,12 @@ public class GameManager
         {
             IncHealth();
         }
+        Debug.Log(Combo); 
+        if(Combo%10==0)
+        {
+            Debug.Log("콤보 진입");
+            Managers.Sound.Play("Sounds/SFX/Combo_SFX");
+        }
     }
 
     public void DecHealth()

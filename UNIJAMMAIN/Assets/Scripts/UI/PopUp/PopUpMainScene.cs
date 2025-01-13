@@ -70,6 +70,8 @@ public class PopUpMainScene : UI_Popup
             Managers.Sound._audioSources[2].volume = 0.4f;
            
         }
+        gameOptionClicked = false;
+        gameStartClicked = false;
     }
     
     void BGMClicked(PointerEventData eventData)
@@ -188,7 +190,7 @@ public class PopUpMainScene : UI_Popup
     void GameStartClicked(PointerEventData eventData)
     {
         Managers.Sound.Play("Sounds/SFX/Main_Button_SFX");
-        if (gameStartClicked == false)
+        if (gameStartClicked == false&&gameOptionClicked==false)
         {
             
             UpText.text = "";
@@ -204,7 +206,7 @@ public class PopUpMainScene : UI_Popup
         }
         else
         {
-            //아무것도안함.
+            
                 
          };
 
@@ -256,6 +258,8 @@ public class PopUpMainScene : UI_Popup
             DownText.text = "나가기";
             gameStartClicked = false;
             Option.SetActive(false);
+            gameOptionClicked = false;
         }
+        else Application.Quit();
     }
 }

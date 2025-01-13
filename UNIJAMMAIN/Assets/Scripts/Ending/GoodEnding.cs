@@ -32,6 +32,7 @@ public class GoodEnding : MonoBehaviour
         ByeUI.SetActive(false);
         bg.SetActive(true);
         Camera.main.DOOrthoSize(3.5f, 4f);
+        Managers.Sound.Play("Sounds/SFX/Game_End_Holy_BGM");
         yield return new WaitForSeconds(4f);
         Camera.main.transform.DOMoveY(1f, 2f);
         yield return new WaitForSeconds(2f);
