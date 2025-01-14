@@ -3,18 +3,27 @@ using UnityEngine;
 using System.Collections.Generic;
 public class InputManager
 {
+    public void Clear()
+    {
+        KeyAction = null;
+        MouseAction = null;
+        KeyArrowcodeAction = null;
+        SettingpopAction = null;
+        KeyBoardChecking = null;
+    }
+
     public Action KeyAction = null;
     public Action<Define.MouseEvent> MouseAction = null;
     public Action<GamePlayDefine.RangedAttackType> KeyArrowcodeAction = null;
     public Action SettingpopAction = null;
-    public List<KeyCode> keysToCheck = new List<KeyCode> {
+    public Action<KeyCode> KeyBoardChecking = null;
+
+    public readonly List<KeyCode> keysToCheck = new List<KeyCode> {
                 KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D,
                 };
-    public List<KeyCode> keysToCheckArrow = new List<KeyCode> {
+    public readonly List<KeyCode> keysToCheckArrow = new List<KeyCode> {
                  KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow
                 };
-
-    public Action<KeyCode> KeyBoardChecking = null;
     public void OnUpdate()
     {
         //if (EventSystem.current.IsPointerOverGameObject())
@@ -38,7 +47,7 @@ public class InputManager
                     if(Managers.Tracker.keyPressCounts[key.ToString()]<4&&Input.GetKeyDown(key)) // WASD
                     {
                      Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
-                    KeyBoardChecking.Invoke(key);
+                    KeyBoardChecking?.Invoke(key);
                         Debug.Log(key.ToString());
                         Managers.Game.ReceiveKey(key.ToString());
                          Debug.Log($"{key.ToString()}의 KeyPressCounts : {Managers.Tracker.keyPressCounts[key.ToString()]}");
@@ -51,8 +60,7 @@ public class InputManager
                     if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow)&& Managers.Tracker.keyPressCounts["LeftUp"] < 4) // 왼쪽위
                     {
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
-                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
-                        Clear();
+                    KeyArrowcodeAction?.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                     switch (UnityEngine.Random.Range(0, 2))
                     {
                         case 0:
@@ -85,36 +93,31 @@ public class InputManager
                                     break;
                                 }
                         }
-                        KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
-                        Clear();
+                        KeyArrowcodeAction?.Invoke(GamePlayDefine.RangedAttackType.LeftUp);
                         return;
                     }
                     else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["LeftDown"] < 4) // 왼쪽아래
                     {
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
-                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
-                        Clear();
+                    KeyArrowcodeAction?.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
                         return;
                     }
                     else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow) && Managers.Tracker.keyPressCounts["LeftDown"] < 4)
                     {
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
-                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
-                        Clear();
+                    KeyArrowcodeAction?.Invoke(GamePlayDefine.RangedAttackType.LeftDown);
                         return;
                     }
                     else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow) && Managers.Tracker.keyPressCounts["RightUp"] < 4) //오른쪽위
                     {
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
-                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
-                        Clear();
+                    KeyArrowcodeAction?.Invoke(GamePlayDefine.RangedAttackType.RightUp);
                         return;
                     }
                     else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow) && Managers.Tracker.keyPressCounts["RightUp"] < 4)
                     {
                     Managers.Sound.Play("Sounds/SFX/Key_Input_SFX");
-                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightUp);
-                        Clear();
+                    KeyArrowcodeAction?.Invoke(GamePlayDefine.RangedAttackType.RightUp);
                         return;
                     }
                     else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4) // 오른쪽 아래
@@ -134,8 +137,7 @@ public class InputManager
                             }
                     }
                     
-                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
-                        Clear();
+                    KeyArrowcodeAction?.Invoke(GamePlayDefine.RangedAttackType.RightDown);
                         return;
                     }
               
@@ -156,18 +158,10 @@ public class InputManager
                                 break;
                             }
                     }
-                    KeyArrowcodeAction.Invoke(GamePlayDefine.RangedAttackType.RightDown);
-                        Clear();
+                    KeyArrowcodeAction?.Invoke(GamePlayDefine.RangedAttackType.RightDown);
                         return;
                     }
                 }
             }
         }
-
-    public void Clear()
-    {
-        MouseAction = null;
-        KeyAction = null;
-    }
-
 }

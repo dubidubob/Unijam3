@@ -12,7 +12,7 @@ public class MainUIs : MonoBehaviour
     [SerializeField] private List<Sprite> Bgs;
     [SerializeField] private Image bgPlace;
     private int MaxHealth;
-    void Start()
+    void Awake()
     {
         Managers.Game.ComboContinue -= UpdateCombo;
         Managers.Game.ComboContinue += UpdateCombo;
@@ -24,6 +24,20 @@ public class MainUIs : MonoBehaviour
         MaxHealth = Managers.Game.MaxHealth;
 
         ChangeBg(Managers.Game.GetPhase());
+    }
+
+    private void HealthDec(int health)
+    {
+        healthSilder.value = (float)health / (float)MaxHealth;
+
+        if (healthSilder.value == 0)
+        {
+            healthSilder.fillRect.gameObject.SetActive(false);
+        }
+        else
+        {
+            healthSilder.fillRect.gameObject.SetActive(true);
+        }
     }
 
     private void UpdateCombo(int combo)
@@ -71,20 +85,6 @@ public class MainUIs : MonoBehaviour
             fadeOut: true
         ).SetEase(Ease.OutQuad)
         .OnComplete(()=> { Combobangsa.gameObject.SetActive(false); });
-    }
-
-    private void HealthDec(int health)
-    {
-        healthSilder.value = (float)health / (float)MaxHealth;
-
-        if (healthSilder.value == 0)
-        {
-            healthSilder.fillRect.gameObject.SetActive(false);
-        }
-        else
-        {
-            healthSilder.fillRect.gameObject.SetActive(true);
-        }
     }
 
     private void ChangeBg(int phase)

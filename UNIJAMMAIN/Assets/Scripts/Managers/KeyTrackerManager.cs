@@ -37,7 +37,6 @@ public class KeyTrackerManager
         };
         KeyArrowMissed = null;
         KeyFree = null;
-        maxPressCount = 4;
     }
     // WASD �� �߸� ������ �� ������ ����
     public void MissedKeyPress(string key)

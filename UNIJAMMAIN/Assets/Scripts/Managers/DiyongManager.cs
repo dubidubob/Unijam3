@@ -29,7 +29,7 @@ public class DiyongManager : MonoBehaviour
     private float upScaleAmount = 0.2f;
 
     public Sprite[] StackSprite;
-    private void Start()
+    private void Awake()
     {
 
         Managers.Input.KeyBoardChecking -= PressButtonArrow;
