@@ -192,9 +192,9 @@ public class GameManager
             return true;
         }
 
-        DecHealth();
         Managers.Tracker.MissedKeyPress(key);
         MissedKeyUpdate.Invoke(key);
+        DecHealth();
         return false;
     }
 

@@ -23,7 +23,6 @@ public class DiyongManager : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite nonActionSprite;
 
-    private GameObject ActionGo;
     private Sprite actionSprite;
     private float originalScale = 0.25f;
     private float upScaleAmount = 0.2f;
@@ -128,11 +127,6 @@ public class DiyongManager : MonoBehaviour
         }
     }
 
-    public void KeyGoOriginal(string key)
-    {
-
-    }
-
     public void MissedKeyPressedArrow(string key)
     {
         GameObject gogo;
@@ -173,20 +167,6 @@ public class DiyongManager : MonoBehaviour
     private void OnDestroy()
     {
         spriteRenderer = null;
-    }
-    private void Update()
-    {
-        /*
-        W.go.GetComponentInChildren<SpriteRenderer>(true).sprite = StackSprite[Managers.Tracker.keyPressCounts["W"]];
-        A.go.GetComponentInChildren<SpriteRenderer>(true).sprite = StackSprite[Managers.Tracker.keyPressCounts["A"]];
-        S.go.GetComponentInChildren<SpriteRenderer>(true).sprite = StackSprite[Managers.Tracker.keyPressCounts["S"]];
-        D.go.GetComponentInChildren<SpriteRenderer>(true).sprite = StackSprite[Managers.Tracker.keyPressCounts["D"]];
-        LeftDown.go.GetComponentInChildren<SpriteRenderer>(true).sprite = StackSprite[Managers.Tracker.keyPressCounts["LeftDown"]];
-        LeftUp.go.GetComponentInChildren<SpriteRenderer>(true).sprite = StackSprite[Managers.Tracker.keyPressCounts["LeftUp"]];
-        RightDown.go.GetComponentInChildren<SpriteRenderer>(true).sprite = StackSprite[Managers.Tracker.keyPressCounts["RightDown"]];
-        RightUp.go.GetComponentInChildren<SpriteRenderer>(true).sprite = StackSprite[Managers.Tracker.keyPressCounts["RightUp"]];
-        */
-
     }
     public void text()
     {
