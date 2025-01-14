@@ -13,6 +13,8 @@ public class SpawnController : MonoBehaviour
     [SerializeField] GameObject balladang;
     [SerializeField] GameObject player;
     [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject MainUI;
+    [SerializeField] GameObject mouse;
     #region PhaseClasses
     public class PhaseMoving
     {
@@ -102,6 +104,8 @@ public class SpawnController : MonoBehaviour
             StopAllCoroutines();
             //애니메이션으로 죽어야함.
             player.SetActive(false);
+            MainUI.SetActive(false);
+            mouse.SetActive(false);
             Resume();
             balladang.SetActive(true);
             Managers.Sound.Play("Sounds/SFX/GameOver_Man_Falling");

@@ -223,7 +223,7 @@ public class GameManager
         if(Combo%10==0)
         {
             Debug.Log("콤보 진입");
-            Managers.Sound.Play("Sounds/SFX/Combo_SFX");
+            Managers.Sound.Play("SFX/Combo_Breathe_SFX");
         }
     }
 

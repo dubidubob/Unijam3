@@ -43,7 +43,12 @@ public class RangedEnemyActivater : MonoBehaviour
                 if (enemy.go != null)
                 {
                     RangedEnemy rangedEnemy = enemy.go.GetComponent<RangedEnemy>();
-                    if (rangedEnemy != null) { rangedEnemy.SetDead(); }
+                    if (rangedEnemy != null) { rangedEnemy.SetDead(); Debug.Log("대체 왜?"); }
+                    else 
+                    {
+                        isExist = true;
+                        break;
+                    }
                     switch (attackType)
                     {
                         case RangedAttackType.LeftUp:
@@ -63,15 +68,19 @@ public class RangedEnemyActivater : MonoBehaviour
                     isExist = true;
                     break;
                 }
-                else { Debug.LogWarning("Missing 어쩌고 에러"); }
+                else 
+                { 
+                    Debug.LogWarning("Missing 어쩌고 에러");
+                    isExist = false;
+                }
             }
         }
 
         if (!isExist && Managers.Game.GetPhase() > 1) 
         {
             Managers.Game.DecHealth();
-            Diyong.MissedKeyPressedArrow(attackType.ToString());
             Managers.Tracker.MissedKeyPress(attackType.ToString());
+            Diyong.MissedKeyPressedArrow(attackType.ToString());
         }
     }
 

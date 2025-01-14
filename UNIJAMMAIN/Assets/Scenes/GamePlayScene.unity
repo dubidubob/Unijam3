@@ -1511,6 +1511,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiFill: {fileID: 835060358}
   BackGround: {fileID: 1185622468}
+--- !u!1 &918410833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6480025286892867436, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+  m_PrefabInstance: {fileID: 2449970627332625068}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &921985009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1990,6 +1995,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185622466}
   m_CullTransparentMesh: 1
+--- !u!1 &1262188838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1436434505110661744, guid: e6a17384556c1914daf7d3e244889f48, type: 3}
+  m_PrefabInstance: {fileID: 806074482}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1306184820 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3126495442516263805, guid: e6a17384556c1914daf7d3e244889f48, type: 3}
@@ -3873,6 +3883,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6462492472040488534, guid: 3c5d7b44b2c5de040be19b380ad328f8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3971,6 +3985,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8260906042846695941, guid: 6de25e5c837d6bd40a170afbef2cdd16, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4064,6 +4082,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6100649851035285527, guid: a2ba642e2f3dca44b82e55f34a4886a2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4149,6 +4171,8 @@ MonoBehaviour:
   balladang: {fileID: 2146892796}
   player: {fileID: 1796204202}
   pausePanel: {fileID: 1306184820}
+  MainUI: {fileID: 1262188838}
+  mouse: {fileID: 918410833}
 --- !u!114 &5032662942808797822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4255,6 +4279,10 @@ PrefabInstance:
     - target: {fileID: 6949966988189933118, guid: 61edec766409e814c80d910e85922c44, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949966988189933118, guid: 61edec766409e814c80d910e85922c44, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

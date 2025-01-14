@@ -19,8 +19,6 @@ public class GoodEnding : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Sequence());
-        //Assets/Resources
-        Managers.Sound.Play("/Sounds/BGM/Game_End_Holy_BGM.wav", Define.Sound.BGM);
     }
 
     private IEnumerator Sequence()
@@ -32,7 +30,7 @@ public class GoodEnding : MonoBehaviour
         ByeUI.SetActive(false);
         bg.SetActive(true);
         Camera.main.DOOrthoSize(3.5f, 4f);
-        Managers.Sound.Play("Sounds/SFX/Game_End_Holy_BGM");
+        Managers.Sound.Play("SFX/Game_End_Holy_BGM");
         yield return new WaitForSeconds(4f);
         Camera.main.transform.DOMoveY(1f, 2f);
         yield return new WaitForSeconds(2f);
@@ -46,7 +44,7 @@ public class GoodEnding : MonoBehaviour
         yield return new WaitForSeconds(2f);
         egg.transform.DOMove(new Vector3(0, -2f, 0), 1f);
         yield return new WaitForSeconds(1.5f);
-        Managers.Sound.Play("/Sounds/SFX/Egg_Crack_SFX");
+        Managers.Sound.Play("SFX/Egg_Crack_SFX_Loud");
         egg.GetComponent<SpriteRenderer>().sprite = fry;
 
         egg.transform.localScale = Vector3.one * 0.1f;
