@@ -40,25 +40,30 @@ public class RangedEnemyActivater : MonoBehaviour
         {
             if (enemy.attackType == attackType)
             {
-                RangedEnemy rangedEnemy = enemy.go.GetComponent<RangedEnemy>();
-                if (rangedEnemy != null) { rangedEnemy.SetDead(); }
-                switch (attackType)
+                if (enemy.go != null)
                 {
-                    case RangedAttackType.LeftUp:
-                        spriteRenderer.sprite = LU;
-                        break;
-                    case RangedAttackType.LeftDown:
-                        spriteRenderer.sprite = LD; ;
-                        break;
-                    case RangedAttackType.RightUp:
-                        spriteRenderer.sprite = RU;
-                        break;
-                    case RangedAttackType.RightDown:
-                        spriteRenderer.sprite = RD;
-                        break;
-                } Managers.Sound.Play("Range_Monster_Death_SFX");
-                isExist = true;
-                break;
+                    RangedEnemy rangedEnemy = enemy.go.GetComponent<RangedEnemy>();
+                    if (rangedEnemy != null) { rangedEnemy.SetDead(); }
+                    switch (attackType)
+                    {
+                        case RangedAttackType.LeftUp:
+                            spriteRenderer.sprite = LU;
+                            break;
+                        case RangedAttackType.LeftDown:
+                            spriteRenderer.sprite = LD; ;
+                            break;
+                        case RangedAttackType.RightUp:
+                            spriteRenderer.sprite = RU;
+                            break;
+                        case RangedAttackType.RightDown:
+                            spriteRenderer.sprite = RD;
+                            break;
+                    }
+                    Managers.Sound.Play("Range_Monster_Death_SFX");
+                    isExist = true;
+                    break;
+                }
+                else { Debug.LogWarning("Missing 어쩌고 에러"); }
             }
         }
 

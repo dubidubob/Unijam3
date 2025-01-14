@@ -17,6 +17,7 @@ public class GameManager
 
     public void Clear()
     {
+        attacks = new Dictionary<string, Queue<GameObject>>();
         playerTransform = null;
         currentPhase = 0;
         ComboContinue = null;
@@ -77,7 +78,7 @@ public class GameManager
                         break;
                     }
             }
-                    if (go == null)
+            if (go == null)
             {
                 Debug.LogError("큰일난오류?");
                 return false;
