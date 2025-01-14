@@ -12,10 +12,10 @@ public class KeyTrackerManager
         { "A", 0 },
         { "S", 0 },
         { "D", 0 },
-        { "LeftUp",0 },
-        { "LeftDown",0 },
-        { "RightUp", 0 },
-        { "RightDown",0 }
+        { "LeftUp",1 },
+        { "LeftDown",1 },
+        { "RightUp", 1 },
+        { "RightDown",1 }
     };
     public Action<string> KeyArrowMissed = null;
     public Action<string> KeyFree = null;
@@ -24,16 +24,15 @@ public class KeyTrackerManager
 
     public void Clear()
     {
-        keyPressCounts = new Dictionary<string, int>
-    {
+        keyPressCounts = new Dictionary<string, int>{
             { "W", 0 },
-        { "A", 0 },
-        { "S", 0 },
-        { "D", 0 },
-        { "LeftUp",0 },
-        { "LeftDown",0 },
-        { "RightUp", 0 },
-        { "RightDown",0 }
+            { "A", 0 },
+            { "S", 0 },
+            { "D", 0 },
+            { "LeftUp",1 },
+            { "LeftDown",1 },
+            { "RightUp", 1 },
+            { "RightDown",1 }
         };
         KeyArrowMissed = null;
         KeyFree = null;

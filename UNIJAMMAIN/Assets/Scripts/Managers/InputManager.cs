@@ -26,10 +26,6 @@ public class InputManager
                 };
     public void OnUpdate()
     {
-        //if (EventSystem.current.IsPointerOverGameObject())
-        //{
-        //    return;
-        //}
         if (Input.anyKey)
         {
             if (Input.GetKeyDown(KeyCode.Escape))

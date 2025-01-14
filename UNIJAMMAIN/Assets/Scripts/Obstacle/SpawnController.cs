@@ -12,6 +12,7 @@ public class SpawnController : MonoBehaviour
     [SerializeField] GameObject black;
     [SerializeField] GameObject balladang;
     [SerializeField] GameObject player;
+    [SerializeField] GameObject pausePanel;
     #region PhaseClasses
     public class PhaseMoving
     {
@@ -55,7 +56,6 @@ public class SpawnController : MonoBehaviour
     public PhaseRanged phase22 = new PhaseRanged(29.5f, 3f, 2.2f, 0.1f, 0.1f);
     public PhaseRanged phase3 = new PhaseRanged(50f, 2.2f, 2.7f, 0.1f, 0.1f);
 
-    public float initialInterval = 1.5f;
 
     private MovingEnemySpawner movingEnemySpawner;
     private RangedEnemyActivater rangedEnemyActivater;
@@ -63,7 +63,8 @@ public class SpawnController : MonoBehaviour
 
     private float currentMovingInterval;
     private float currentRangedInterval;
-    
+
+    private float initialInterval = 1.5f;
     private float movingTimeElapsed = 0f;
     private float rangedTimeElapsed = 0f;
 
@@ -89,6 +90,7 @@ public class SpawnController : MonoBehaviour
         currentRangedInterval = initialInterval;
 
         currentSpeed = phase1.movingDefaultSpeed;
+        pausePanel.SetActive(false);
         StartCoroutine(PhaseRoutine());
     }
 
@@ -120,9 +122,15 @@ public class SpawnController : MonoBehaviour
     private void ControlTime()
     {
         if (isPaused)
+        {
+            pausePanel.SetActive(false);
             Resume();
+        }
         else
+        {
+            pausePanel.SetActive(true);
             Pause();
+        }
     }
 
     private void Pause()
@@ -253,20 +261,6 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    private float UpdateCurrentRange(float timeToTargetData, float defaultData, float targetData)
-    {
-        if (rangedTimeElapsed < timeToTargetData)
-        {
-            rangedTimeElapsed += currentRangedInterval;
-
-            float t = Mathf.Clamp01(rangedTimeElapsed / timeToTargetData);
-            return Mathf.Lerp(defaultData, targetData, t);
-        }
-
-        return targetData;
-    }
-
-
     private float UpdateCurrentMoving(float timeToTargetData, float defaultData, float targetData)
     {
         if (movingTimeElapsed < timeToTargetData)
@@ -295,32 +289,4 @@ public class SpawnController : MonoBehaviour
     {
         mouseEnemyActivater.ActivateRandomPanel();
     }
-
-
-    //private void Clear()
-    //{
-    //    StopAllCoroutines(); //corountine clear
-    //    Managers.Pool.Clear(); //moving enemy clear
-    //    foreach (Transform child in this.transform)
-    //    { 
-    //        child.gameObject.SetActive(false);
-    //    }
-    //}
-
-    //public void InitAgain()
-    //{
-    //    Resume();
-
-    //    movingTimeElapsed = 0f;    // �ӵ��� �����ϴ� �� ���� ���� �ð�
-    //    rangedTimeElapsed = 0f;
-
-    //    currentMovingInterval = initialInterval;
-    //    currentRangedInterval = initialInterval;
-    //    currentMouseInterval = initialInterval*0.25f;
-
-    //    currentSpeed = phase1.movingDefaultSpeed;
-    //    currentLifetime = phase2.rangedDefaultLifetime;
-    //    StartCoroutine(PhaseRoutine());
-    //}
-
 }
