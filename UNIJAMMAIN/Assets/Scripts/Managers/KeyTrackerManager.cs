@@ -12,10 +12,10 @@ public class KeyTrackerManager
         { "A", 0 },
         { "S", 0 },
         { "D", 0 },
-        { "LeftUp",1 },
-        { "LeftDown",1 },
-        { "RightUp", 1 },
-        { "RightDown",1 }
+        { "LeftUp", 0 },
+        { "LeftDown",0 },
+        { "RightUp", 0 },
+        { "RightDown", 0 }
     };
     public Action<string> KeyArrowMissed = null;
     public Action<string> KeyFree = null;
@@ -29,10 +29,10 @@ public class KeyTrackerManager
             { "A", 0 },
             { "S", 0 },
             { "D", 0 },
-            { "LeftUp",1 },
-            { "LeftDown",1 },
-            { "RightUp", 1 },
-            { "RightDown",1 }
+            { "LeftUp", 0 },
+            { "LeftDown",0 },
+            { "RightUp", 0 },
+            { "RightDown",0 }
         };
         KeyArrowMissed = null;
         KeyFree = null;
