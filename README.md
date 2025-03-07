@@ -1,19 +1,20 @@
-<게임 소개>
+<h3><게임 소개></h3>
 10가지 키를 쓰는 리듬게임입니다.
 
-<게임 방법>
+<h3><게임 방법></h3>
 총 3가지의 리듬 채보 기믹이 있습니다.
 
 - 키보드 w, a, s, d을 눌러야 하는 채보
 - 키보드 상하좌우 방향키 중 두 가지를 조합해서 눌러야 하는 채보
 - 마우스 왼쪽, 오른쪽을 눌러야 하는 채보
 
-💥노래에 따라 화면에 나타나는 몬스터 채보를 특정 키로 없애보세요!
-플레이 영상 : https://youtu.be/zEJNQdqwO8o?si=pX5RDWx8bf0JfZIS
-플레이 할 수 있는 링크 : https://dibodubob.itch.io/the-monk-is
+💥노래에 따라 화면에 나타나는 몬스터 채보를 특정 키로 없애보세요!<br>
+[플레이 영상](https://youtu.be/zEJNQdqwO8o?si=pX5RDWx8bf0JfZIS)<br>
+[플레이 할 수 있는 링크](https://dibodubob.itch.io/the-monk-is)
 
-<프로젝트 정보>
-Unijam(: Unidev 게임잼) 수상작
-사용 엔진 : Unity 2D
-개발 기간 : 3일
+
+<h3><프로젝트 정보></h3>
+Unijam(: Unidev 게임잼) 수상작<br>
+사용 엔진 : Unity 2D<br>
+개발 기간 : 3일<br>
 인력 : 기획1, 그래픽2, 프로그래머2
