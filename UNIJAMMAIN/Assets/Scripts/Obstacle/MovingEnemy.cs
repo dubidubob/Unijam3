@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
 {
-    [SerializeField] private GamePlayDefine.MovingAttackType enemyType = GamePlayDefine.MovingAttackType.D;
+    [SerializeField] private GamePlayDefine.WASDType enemyType = GamePlayDefine.WASDType.D;
     [SerializeField] private float colliderDebuf = 0.8f;
 
     private float currentSpeed = 0f;

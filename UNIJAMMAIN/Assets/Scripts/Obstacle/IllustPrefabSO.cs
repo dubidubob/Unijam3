@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static EnemyTypeSO;
+using static MonsterTypeSO;
 using static IllustController;
 
 [CreateAssetMenu(fileName = "IllustPrefabSO", menuName = "SO/IllustPrefabSO")]
