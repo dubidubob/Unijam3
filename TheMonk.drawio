@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="28.0.7">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2427" dy="764" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1432" dy="289" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -102,8 +102,8 @@
         <mxCell id="eRDrsS0399DTs5JLJluZ-64" value="플레이어 점수 관리&lt;br&gt;Death도 관리&lt;br&gt;Reload" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="eRDrsS0399DTs5JLJluZ-61">
           <mxGeometry y="78" width="160" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="eRDrsS0399DTs5JLJluZ-68" value="&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 255);&quot;&gt;?? 기존 외부 싱글톤 덩어리,&lt;br&gt;Pooling 자체적으로 구현 + ui base 도 활용 중.&lt;br&gt;싹 밀고 UI 다시 적용해야할지&lt;br&gt;=&amp;gt; 개발 기간을 위한 &lt;br&gt;선택과 집중?&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 255);&quot;&gt;=&amp;gt; 이해되면 그냥 쓰세요.&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="-760" y="580" width="160" height="180" as="geometry" />
+        <mxCell id="eRDrsS0399DTs5JLJluZ-68" value="&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 255);&quot;&gt;?? 기존 외부 싱글톤 덩어리,&lt;br&gt;Pooling 자체적으로 구현 + ui base 도 활용 중.&lt;br&gt;싹 밀고 UI 다시 적용해야할지&lt;br&gt;=&amp;gt; 개발 기간을 위한 &lt;br&gt;선택과 집중?&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 255);&quot;&gt;=&amp;gt; 이해되면 그냥 쓰세요.&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 255);&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(0, 0, 255);&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;b&gt;activate spawner 같은 거니까 하나만 정해서 써라&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;b&gt;info 내가 인게임에서 가공해서 쓰는 애들&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;b&gt;data 실제 파일에서 가져오는 애들&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;color: light-dark(rgb(0, 0, 255), rgb(205, 205, 255)); font-weight: bold;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-760" y="580" width="280" height="180" as="geometry" />
         </mxCell>
         <mxCell id="eRDrsS0399DTs5JLJluZ-74" value="&lt;b&gt;&lt;font&gt;&lt;font style=&quot;color: rgb(0, 0, 255);&quot;&gt;???&lt;br&gt;한 스테이지 당 &lt;br&gt;예상 효과음 20개 + 배경음 2분 분량 정도. 캐싱 하고 있는 게 맞나.&lt;br&gt;&lt;br&gt;테스트 해보기. 수치.&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="-680" y="250" width="195" height="30" as="geometry" />
