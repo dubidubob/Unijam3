@@ -21,7 +21,9 @@ public class EnemyTypeSO : ScriptableObject
         foreach (EnemyData enemy in enemies)
         {
             if (enemy.AttackType == attack)
+            {
                 go = enemy;
+            }
         }
 
         return go;

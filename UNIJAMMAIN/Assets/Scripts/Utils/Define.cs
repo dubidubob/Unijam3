@@ -84,4 +84,10 @@ public class Define
         SFX,
         MaxCount
     }
+    public enum MonsterType
+    { 
+        WASD,
+        Knockback,
+        MaxCount
+    }
 }

@@ -129,7 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
-  colliderDebuf: 0.8
 --- !u!114 &8029619383760703731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +185,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2720163792543638372}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 11c41219eca6ab24e9bbd918dd871c2f, type: 2}
   m_CullingMode: 0
