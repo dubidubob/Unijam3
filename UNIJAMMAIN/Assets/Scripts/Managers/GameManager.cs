@@ -46,8 +46,7 @@ public class GameManager
     public void GameStart()
     {
         currentState = GameState.Battle;
-        Debug.Log("코드실행완료");
-        playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재위치받기
+        playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재 위치받기
         Health = MaxHealth;
         Time.timeScale = 1f;
     }

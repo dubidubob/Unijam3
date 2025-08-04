@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2565772992911521819}
   - component: {fileID: 4604328772217960578}
   m_Layer: 5
-  m_Name: TouchCanvas
+  m_Name: MouseTouchCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
