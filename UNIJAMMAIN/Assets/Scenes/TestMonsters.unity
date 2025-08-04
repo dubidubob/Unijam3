@@ -924,6 +924,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2145075092063725261, guid: e6a17384556c1914daf7d3e244889f48, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2286107066617546007, guid: e6a17384556c1914daf7d3e244889f48, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3773,7 +3777,12 @@ MonoBehaviour:
   LD: {fileID: 21300000, guid: 1fdf46ee592052c438ac47e43604c0d2, type: 3}
   RU: {fileID: 21300000, guid: 837f906bb497f634b91a1555ba55b953, type: 3}
   RD: {fileID: 21300000, guid: 655ab9241e1d10049b87a378d26a9791, type: 3}
+  activatedEnemies: []
   Diyong: {fileID: 1358877081}
+  xMin: 0
+  xMax: 0
+  yMin: 0
+  yMax: 0
 --- !u!1 &5032662942808797819
 GameObject:
   m_ObjectHideFlags: 0
@@ -3807,6 +3816,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypeSO: {fileID: 11400000, guid: 1d1844feaf0c26144983d8a02bd24731, type: 2}
+  enemyType: 0
+  movingEnemy: {fileID: 0}
+  poolable: {fileID: 0}
 --- !u!114 &5032662942808797821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3829,9 +3841,17 @@ MonoBehaviour:
   pausePanel: {fileID: 1306184820}
   MainUI: {fileID: 1262188838}
   mouse: {fileID: 918410833}
+  movingEnemySpawner: {fileID: 0}
+  rangedEnemyActivater: {fileID: 0}
+  mouseEnemyActivater: {fileID: 0}
   startTime: 0.12
   currentSpawnInterval: 1
   movingDuration: 1
+  currentRangedInterval: 1
+  movingTimeElapsed: 0
+  rangedTimeElapsed: 0
+  isPaused: 0
+  NotDead: 1
 --- !u!114 &5032662942808797822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3846,6 +3866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftOne: {fileID: 174722299}
   RightOne: {fileID: 1570621515}
+  Panels: []
 --- !u!1 &5378476862777140587 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 569968093618212416, guid: 61edec766409e814c80d910e85922c44, type: 3}

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseEnemyActivater : MonoBehaviour
+public class MouseEnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject LeftOne;
     [SerializeField] GameObject RightOne;

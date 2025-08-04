@@ -1,12 +1,53 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MovingEnemySpawner))]
-[RequireComponent(typeof(RangedEnemyActivater))]
-[RequireComponent(typeof(MouseEnemyActivater))]
+[RequireComponent(typeof(WASDMonsterSpawner))]
+[RequireComponent(typeof(RangedEnemySpawner))]
+[RequireComponent(typeof(MouseEnemySpawner))]
 
 public class SpawnController : MonoBehaviour
 {
+    private Dictionary<Define.MonsterType, ISpawnable> _spawnerMap;
+
+    private void Awake()
+    {
+        InitSpawnableDic();
+
+        movingEnemySpawner = GetComponent<WASDMonsterSpawner>();
+        rangedEnemySpawner = GetComponent<RangedEnemySpawner>();
+        mouseEnemySpawner = GetComponent<MouseEnemySpawner>();
+
+        Managers.Input.SettingpopAction -= ControlTime;
+        Managers.Input.SettingpopAction += ControlTime;
+        Managers.Game.HealthUpdate -= CheckDie;
+        Managers.Game.HealthUpdate += CheckDie;
+    }
+
+    private void InitSpawnableDic()
+    {
+        ISpawnable[] spawnables = GetComponents<ISpawnable>();
+        foreach (var s in spawnables)
+        {
+            _spawnerMap[s.MonsterType] = s;
+        }
+    }
+
+    public void SpawnMonsterInPhase(IReadOnlyList<MonsterData> monsterDatas)
+    {
+        foreach (var m in monsterDatas)
+        {
+            if (_spawnerMap.TryGetValue(m.monsterType, out var spawner))
+            {
+                spawner.Spawn(m);
+            }
+            else 
+            {
+                Debug.LogWarning($"No spawner for {m.monsterType}");
+            }
+        }
+    }
+
     public IllustController illustController;
     [SerializeField] bool isMaster = true;
     [SerializeField] bool DiagonalRandom = true;
@@ -17,11 +58,15 @@ public class SpawnController : MonoBehaviour
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject MainUI;
     [SerializeField] GameObject mouse;
+
+    private WASDMonsterSpawner movingEnemySpawner;
+    private RangedEnemySpawner rangedEnemySpawner;
+    private MouseEnemySpawner mouseEnemySpawner;
+    
     #region PhaseClasses
-    public class PhaseMoving
+    public class PhaseMoving // 
     {
-        //gimic1
-        public float phaseDuration;
+        public float duration;
 
         public float movingDefaultSpeed;
         public float movingTargetSpeed;
@@ -29,7 +74,7 @@ public class SpawnController : MonoBehaviour
 
         public PhaseMoving(float phaseDuration, float movingDefaultSpeed, float movingTargetSpeed, float movingIntervalDecRate)
         {
-            this.phaseDuration = phaseDuration;
+            this.duration = phaseDuration;
             this.movingDefaultSpeed = movingDefaultSpeed;
             this.movingTargetSpeed = movingTargetSpeed;
             this.movingIntervalDecRate = movingIntervalDecRate;
@@ -44,7 +89,7 @@ public class SpawnController : MonoBehaviour
         public PhaseRanged(float phaseDuration, float movingDefaultSpeed, float movingTargetSpeed, float movingIntervalDecRate, float rangedIntervalDecRate)
             : base(phaseDuration, movingDefaultSpeed, movingTargetSpeed, movingIntervalDecRate) 
         {
-            this.phaseDuration = phaseDuration;
+            this.duration = phaseDuration;
 
             this.movingDefaultSpeed = movingDefaultSpeed;
             this.movingTargetSpeed = movingTargetSpeed;
@@ -61,10 +106,6 @@ public class SpawnController : MonoBehaviour
     //public PhaseRanged phase3 = new PhaseRanged(50f, 2.2f, 2.7f, 0.1f, 0.1f);
 
 
-    private MovingEnemySpawner movingEnemySpawner;
-    private RangedEnemyActivater rangedEnemyActivater;
-    private MouseEnemyActivater mouseEnemyActivater;
-
     [SerializeField] private float startTime = 0.12f;
     [SerializeField] private float currentSpawnInterval = 1f;
     [SerializeField] private float movingDuration = 1f;
@@ -75,17 +116,6 @@ public class SpawnController : MonoBehaviour
 
     private bool isPaused = false;
     private bool NotDead = true;
-    private void Awake()
-    {
-        movingEnemySpawner = GetComponent<MovingEnemySpawner>();
-        rangedEnemyActivater = GetComponent<RangedEnemyActivater>();
-        mouseEnemyActivater = GetComponent<MouseEnemyActivater>();
-
-        Managers.Input.SettingpopAction -= ControlTime;
-        Managers.Input.SettingpopAction += ControlTime;
-        Managers.Game.HealthUpdate -= CheckDie;
-        Managers.Game.HealthUpdate += CheckDie;
-    }
 
     private void Start()
     {
@@ -210,12 +240,12 @@ public class SpawnController : MonoBehaviour
             StartCoroutine(RunRanged((PhaseRanged)phase));
         }
 
-        yield return new WaitForSeconds(phase.phaseDuration);
+        yield return new WaitForSeconds(phase.duration);
     }
 
     private IEnumerator RunTouch(PhaseRanged phase) 
     {
-        float remainingTime = phase.phaseDuration;
+        float remainingTime = phase.duration;
 
         while (remainingTime > 0)
         {
@@ -228,12 +258,12 @@ public class SpawnController : MonoBehaviour
 
     private IEnumerator RunRanged(PhaseRanged phase) 
     {
-        float remainingTime = phase.phaseDuration;
+        float remainingTime = phase.duration;
         bool isDecIntervalChecked = false;
 
         while (remainingTime > 0)
         {
-            if (remainingTime < phase.phaseDuration * 0.5 && !isDecIntervalChecked) 
+            if (remainingTime < phase.duration * 0.5 && !isDecIntervalChecked) 
             {
                 currentRangedInterval -= phase.rangedIntervalDecRate;
                 isDecIntervalChecked = true;
@@ -263,14 +293,14 @@ public class SpawnController : MonoBehaviour
 
     private IEnumerator RunMoving(PhaseMoving phase)
     {
-        float remainingTime = phase.phaseDuration;
+        float remainingTime = phase.duration;
         yield return new WaitForSeconds(0.12f);
         while (remainingTime > 0)
         {
             yield return new WaitForSeconds(currentSpawnInterval);
             
             SpawnMovingEnemy(movingDuration);
-            Debug.Log($"생성! {phase.phaseDuration - remainingTime}");
+            Debug.Log($"생성! {phase.duration - remainingTime}");
             remainingTime -= currentSpawnInterval;
         }
     }
@@ -296,11 +326,11 @@ public class SpawnController : MonoBehaviour
 
     private void GetRangedEnemy()
     {
-        rangedEnemyActivater.ActivateEnemy();
+        rangedEnemySpawner.ActivateEnemy();
     }
 
     private void GetMouseEnemy()
     {
-        mouseEnemyActivater.ActivateRandomPanel();
+        mouseEnemySpawner.ActivateRandomPanel();
     }
 }

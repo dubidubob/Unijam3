@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
 
-public class RangedEnemyActivater : MonoBehaviour
+public class RangedEnemySpawner : MonoBehaviour
 {
     [System.Serializable]
     private struct RangedEnemyInfo
