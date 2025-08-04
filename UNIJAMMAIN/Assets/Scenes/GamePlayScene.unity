@@ -4538,14 +4538,14 @@ MonoBehaviour:
   illustController: {fileID: 413534883}
   isMaster: 0
   DiagonalRandom: 0
-  isDiagonal: 0
+  isDiagonal: 1
   black: {fileID: 167589405}
   balladang: {fileID: 2146892796}
   player: {fileID: 1796204202}
   pausePanel: {fileID: 1306184820}
   MainUI: {fileID: 1262188838}
   mouse: {fileID: 918410833}
-  startTime: 0.12
+  startTime: 0.22
   currentSpawnInterval: 0.89
   movingDuration: 0.89
 --- !u!114 &5032662942808797822

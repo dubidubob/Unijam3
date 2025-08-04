@@ -1,7 +1,5 @@
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static GamePlayDefine;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
 [RequireComponent(typeof(RangedEnemyActivater))]
