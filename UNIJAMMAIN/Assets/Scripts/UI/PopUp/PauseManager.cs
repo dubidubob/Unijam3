@@ -7,7 +7,7 @@ public class PauseManager
     private bool isPaused = false;
     public void Init()
     {
-        pausePanel.SetActive(false);
+        pausePanel?.SetActive(false);
 
         Managers.Input.SettingpopAction -= ControlTime;
         Managers.Input.SettingpopAction += ControlTime;
@@ -16,12 +16,12 @@ public class PauseManager
     {
         if (isPaused)
         {
-            pausePanel.SetActive(false);
+            pausePanel?.SetActive(false);
             Resume();
         }
         else
         {
-            pausePanel.SetActive(true);
+            pausePanel?.SetActive(true);
             Pause();
         }
     }

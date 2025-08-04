@@ -4,22 +4,10 @@ using static GamePlayDefine;
 public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 {
     [SerializeField] EnemyTypeSO enemyTypeSO;
-    private MovingAttackType enemyType;
     private MovingEnemy movingEnemy;
     private Poolable poolable;
 
-    public Define.MonsterType MonsterType => throw new System.NotImplementedException();
-
-    // Deprecated
-    public void InitiateRandomNode(float movingDuration)
-    {
-        var data = new MonsterData
-        {
-            monsterType = Define.MonsterType.WASD,
-            moveToHolderDuration = movingDuration
-        };
-        Spawn(data);
-    }
+    Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
     public void Spawn(MonsterData data)
     {

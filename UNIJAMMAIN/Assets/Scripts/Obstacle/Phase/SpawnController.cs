@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(WASDMonsterSpawner))]
@@ -17,7 +18,12 @@ public class SpawnController : MonoBehaviour
 
     private void InitSpawnableDic()
     {
-        ISpawnable[] spawnables = GetComponents<ISpawnable>();
+        //var spawnables = GetComponents<Component>()
+        //               .OfType<ISpawnable>()
+        //               .ToArray();
+
+        var spawnables = GetComponents<ISpawnable>();
+        _spawnerMap = new Dictionary<Define.MonsterType, ISpawnable>();
         foreach (var s in spawnables)
         {
             _spawnerMap[s.MonsterType] = s;
@@ -26,11 +32,12 @@ public class SpawnController : MonoBehaviour
 
     public void SpawnMonsterInPhase(IReadOnlyList<MonsterData> monsterDatas)
     {
+        StopMonsterInPhase();
         foreach (var m in monsterDatas)
         {
             if (_spawnerMap.TryGetValue(m.monsterType, out var spawner))
             {
-                Spawn(spawner, m);
+                StartCoroutine(Spawn(spawner, m));
             }
             else 
             {
@@ -44,7 +51,7 @@ public class SpawnController : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(monsterData.GetSpawnDuration());
+            yield return new WaitForSeconds(monsterData.spawnDuration);
             spawner.Spawn(monsterData);
         }
     }

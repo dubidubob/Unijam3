@@ -1,21 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Phase를 순서대로 재생시키는 클래스
 /// </summary>
+[RequireComponent(typeof(SpawnController))]
 public class PhaseManager : MonoBehaviour
 {
     [SerializeField] IllustController illustController;
-    [SerializeField] PhaseInfo phase;
+    [SerializeField] ChapterSO chapter;
     SpawnController spawnController;
 
     private void Start()
     {
+        spawnController = GetComponent<SpawnController>();
         StartCoroutine(RunPhase());
     }
     
+    // TODO : 중간중간 컷씬
     private IEnumerator ShowCutScene()
     {
         Managers.Pause.Pause();
@@ -47,11 +49,11 @@ public class PhaseManager : MonoBehaviour
     }
     private IEnumerator RunPhase()
     {
-        for (int i = 0; i < phases.Length; i++)
+        for (int i = 0; i < chapter.Phases.Count; i++)
         {
-            yield return new WaitForSeconds(phases[i].GetStartTime());
-            spawnController.SpawnMonsterInPhase(phases[i].MonsterDatas);
-            yield return new WaitForSeconds(phases[i].GetDuration());
+            yield return new WaitForSeconds(chapter.Phases[i].startDelay);
+            spawnController.SpawnMonsterInPhase(chapter.Phases[i].MonsterDatas);
+            yield return new WaitForSeconds(chapter.Phases[i].duration);
         }
         EndPhase();
     }
