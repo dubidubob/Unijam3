@@ -7,22 +7,57 @@ using UnityEngine;
 /// </summary>
 public class PhaseManager : MonoBehaviour
 {
-    [SerializeField] PhaseInfo[] phases;
+    [SerializeField] IllustController illustController;
+    [SerializeField] PhaseInfo phase;
     SpawnController spawnController;
 
     private void Start()
     {
-        StartCoroutine(TurnOnPhase());
+        StartCoroutine(RunPhase());
     }
-
-    private IEnumerator TurnOnPhase()
+    
+    private IEnumerator ShowCutScene()
     {
-        float targetTurnNextPhaseTime;
+        Managers.Pause.Pause();
+        if (illustController != null)
+        {
+            Managers.UI.ShowPopUpUI<S1_PopUp>();
+            yield return new WaitForSecondsRealtime(6f);
+            yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//¼ýÀÚ ³ª¿È
+        }
+        Managers.Pause.Resume();
+
+        //Pause();
+        //if (i == 4)
+        //{
+        //    Managers.Scene.LoadScene("GoodEnding");
+        //    break;
+        //}
+        //else if (i == 1)
+        //{
+        //    Managers.UI.ShowPopUpUI<S2_PopUp>();
+        //    yield return new WaitForSecondsRealtime(8f);
+        //}
+        //else if (i == 3)
+        //{
+        //    Managers.UI.ShowPopUpUI<S3_PopUp>();
+        //    yield return new WaitForSecondsRealtime(8f);
+        //}
+        //Resume();
+    }
+    private IEnumerator RunPhase()
+    {
         for (int i = 0; i < phases.Length; i++)
         {
-            targetTurnNextPhaseTime = phases[i].GetDuration();
+            yield return new WaitForSeconds(phases[i].GetStartTime());
             spawnController.SpawnMonsterInPhase(phases[i].MonsterDatas);
-            yield return new WaitForSeconds(targetTurnNextPhaseTime);
+            yield return new WaitForSeconds(phases[i].GetDuration());
         }
+        EndPhase();
+    }
+
+    private void EndPhase()
+    {
+        spawnController.StopMonsterInPhase();
     }
 }

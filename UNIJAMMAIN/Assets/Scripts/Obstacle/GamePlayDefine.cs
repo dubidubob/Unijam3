@@ -12,7 +12,7 @@ public class GamePlayDefine
         S,
         MaxCnt
     }
-    public enum RangedAttackType
+    public enum DiagonalType
     {
         LeftUp,
         LeftDown,

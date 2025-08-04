@@ -87,7 +87,9 @@ public class Define
     public enum MonsterType
     { 
         WASD,
+        Diagonal,
         Knockback,
+        MouseClick,
         MaxCount
     }
 }

@@ -223,7 +223,7 @@ public class DiyongManager : MonoBehaviour
         if(nonActionSprite != null)
             spriteRenderer.sprite = nonActionSprite;
     }
-    void PressButtonKeyBoard(GamePlayDefine.RangedAttackType attackType)
+    void PressButtonKeyBoard(GamePlayDefine.DiagonalType attackType)
     {
         GameObject gogo;
         string key = attackType.ToString();
