@@ -3,7 +3,7 @@
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
 {
-    [SerializeField] private GamePlayDefine.MovingAttackType enemyType = GamePlayDefine.MovingAttackType.D;
+    [SerializeField] private GamePlayDefine.WASDType enemyType = GamePlayDefine.WASDType.D;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private float startPosScale = 4.0f;
     [SerializeField] private float endPosScale = 2.8f;    
@@ -77,7 +77,7 @@ public class MovingEnemy : MonoBehaviour
     {
         if (collision.tag == "detectArea")
         {
-            Managers.Game.AddAttackableEnemy(enemyType.ToString(), this.gameObject);
+            Managers.Game.AddAttackableEnemy(enemyType, this.gameObject);
         }
         else if (collision.tag == "dangerLine")
         {

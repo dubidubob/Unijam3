@@ -16,8 +16,8 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     {
         InitialDict();
 
-        Managers.Input.KeyArrowcodeAction -= DeActivateEnemy;
-        Managers.Input.KeyArrowcodeAction += DeActivateEnemy;
+        Managers.Input.KeyArrowcodeAction -= DeactivateDiagonal;
+        Managers.Input.KeyArrowcodeAction += DeactivateDiagonal;
 
         InvestScreenSize();
     }
@@ -54,7 +54,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         activatedDiagonalIdx.Add(mIdx);
     }
 
-    private void DeActivateEnemy(DiagonalType attackType)
+    private void DeactivateDiagonal(DiagonalType attackType)
     {
         if (activatedDiagonalIdx.Contains((int)attackType))
         {

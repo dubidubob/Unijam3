@@ -11,7 +11,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
     public void Spawn(MonsterData data)
     {
-        MovingAttackType enemyType = (MovingAttackType)Random.Range(0, (int)MovingAttackType.MaxCnt);
+        WASDType enemyType = (WASDType)Random.Range(0, (int)WASDType.MaxCnt);
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
 
         poolable = Managers.Pool.Pop(enemy.go);

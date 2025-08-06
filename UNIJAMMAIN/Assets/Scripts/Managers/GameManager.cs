@@ -15,10 +15,10 @@ public class GameManager
     public readonly int MaxHealth = 10;
     private const int IncHealthUnit = 10;
 
-    private Dictionary<string, Queue<GameObject>> attacks = new Dictionary<string, Queue<GameObject>>();
+    private Dictionary<GamePlayDefine.WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
     public void Clear()
     {
-        attacks = new Dictionary<string, Queue<GameObject>>();
+        attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
         playerTransform = null;
         currentPhase = 0;
         ComboContinue = null;
@@ -57,9 +57,8 @@ public class GameManager
     }
 
 
-    public bool ReceiveKey(string key)
+    public bool ReceiveKey(GamePlayDefine.WASDType key)
     {
-        Debug.Log($"key pressed : {key}");
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
         {
             GameObject go = attacks[key].Peek();            
@@ -79,7 +78,7 @@ public class GameManager
         return false;
     }
 
-    public void AddAttackableEnemy(string key, GameObject go)
+    public void AddAttackableEnemy(GamePlayDefine.WASDType key, GameObject go)
     {
         if (!attacks.ContainsKey(key))
         {
