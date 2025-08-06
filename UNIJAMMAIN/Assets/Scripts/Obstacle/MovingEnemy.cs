@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
@@ -15,6 +14,7 @@ public class MovingEnemy : MonoBehaviour
     private void OnEnable()
     {
         playerPos = Managers.Game.playerTransform.position;
+        knockback = new KnockbackPattern();
     }
     
     public bool CheckCanDead()
@@ -50,7 +50,6 @@ public class MovingEnemy : MonoBehaviour
     }
     public void SetKnockback()
     {
-        knockback = new KnockbackPattern();
         knockback.OnKnockback(true);
     }
 
@@ -67,9 +66,10 @@ public class MovingEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Ented 실행!");
         if (collision.tag == "detectArea")
         {
-            Managers.Game.AddAttackableEnemy(enemyType.ToString(), this.gameObject); 
+            Managers.Game.AddAttackableEnemy(enemyType.ToString(), this.gameObject);
         }
         else if (collision.tag == "Player")
         {
