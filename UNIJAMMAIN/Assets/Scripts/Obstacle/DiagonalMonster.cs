@@ -2,8 +2,12 @@ using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class RangedEnemy : MonoBehaviour
+public class DiagonalMonster : MonoBehaviour
 {
+    [SerializeField]
+    private GamePlayDefine.DiagonalType diagonalT;
+    public GamePlayDefine.DiagonalType DiagonalT => diagonalT;
+
     private float lifeDuration;
 
     private SpriteRenderer spriteRenderer;
@@ -44,7 +48,6 @@ public class RangedEnemy : MonoBehaviour
 
     private void DyingAnim()
     {
-        // ũ�� ��ȭ ������ ����
         Sequence dyingSequence = DOTween.Sequence();
         dyingSequence.Append(transform.DOScale(Vector3.one * 0.05f, 0.1f).SetEase(Ease.OutBack));
         dyingSequence.Append(transform.DOLocalMove(new Vector3(0, 0, 0), 0.08f));
@@ -54,7 +57,6 @@ public class RangedEnemy : MonoBehaviour
             SetDead(false);
         });
 
-        // ������ ����
         dyingSequence.Play();
     }
 
@@ -78,7 +80,6 @@ public class RangedEnemy : MonoBehaviour
 
     private void OnDisable()
     {
-        // Ʈ�� ����
         colorTween?.Kill();
         fadeTween?.Kill();
     }

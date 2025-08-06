@@ -6,20 +6,34 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 {
     public Define.MonsterType MonsterType => Define.MonsterType.Diagonal;
     [SerializeField] float boundaryOffset = 1f;
-    [SerializeField] Dictionary<DiagonalType, GameObject> allDiagonal;
+
+    private Dictionary<DiagonalType, GameObject> diagonalDict;
+
     private List<int> activatedDiagonalIdx = new List<int>();
 
     private void Awake()
     {
-        if (allDiagonal == null)
-        {
-            Debug.LogWarning("Place LU, LD, RU, RD in Inspector");
-        }
+        InitialDict();
 
         Managers.Input.KeyArrowcodeAction -= DeActivateEnemy;
         Managers.Input.KeyArrowcodeAction += DeActivateEnemy;
 
         InvestScreenSize();
+    }
+
+    private void InitialDict()
+    {
+        DiagonalMonster[] dm = GetComponentsInChildren<DiagonalMonster>(true);
+        diagonalDict = new Dictionary<DiagonalType, GameObject>();
+
+        if (dm.Length == 0)
+        {
+            Debug.LogWarning("Place LU, LD, RU, RD in Inspector");
+        }
+        foreach (var m in dm)
+        {
+            diagonalDict[m.DiagonalT] = m.gameObject;
+        }
     }
 
     public void Spawn(MonsterData data)
@@ -32,11 +46,11 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         int idx;
         do
         {
-            idx = Random.Range(0, allDiagonal.Count);
+            idx = UnityEngine.Random.Range(0, diagonalDict.Count);
         }
         while (!activatedDiagonalIdx.Contains(idx));
 
-        Debug.Assert(allDiagonal.Count <= idx, "Exceeded Num of Diagonal");
+        Debug.Assert(diagonalDict.Count <= idx, "Exceeded Num of Diagonal");
 
         PosAndActivateNode((DiagonalType)idx);
         activatedDiagonalIdx.Add(idx);
@@ -47,7 +61,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         if (activatedDiagonalIdx.Contains((int)attackType))
         {
             activatedDiagonalIdx.Remove((int)attackType);
-            allDiagonal[attackType].GetComponent<RangedEnemy>().SetDead();
+            diagonalDict[attackType].GetComponent<DiagonalMonster>().SetDead();
         }
         else
         {
@@ -77,27 +91,27 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         switch (type)
         {
             case DiagonalType.LeftUp:
-                randX = Random.Range(xMin + boundaryOffset, -boundaryOffset);
-                randY = Random.Range(boundaryOffset, yMax - boundaryOffset);
+                randX = UnityEngine.Random.Range(xMin + boundaryOffset, -boundaryOffset);
+                randY = UnityEngine.Random.Range(boundaryOffset, yMax - boundaryOffset);
                 break;
 
             case DiagonalType.LeftDown:
-                randX = Random.Range(xMin + boundaryOffset, -boundaryOffset);
-                randY = Random.Range(yMin + boundaryOffset, -boundaryOffset);
+                randX = UnityEngine.Random.Range(xMin + boundaryOffset, -boundaryOffset);
+                randY = UnityEngine.Random.Range(yMin + boundaryOffset, -boundaryOffset);
                 break;
 
             case DiagonalType.RightUp:
-                randX = Random.Range(boundaryOffset, xMax - boundaryOffset);
-                randY = Random.Range(boundaryOffset, yMax - boundaryOffset);
+                randX = UnityEngine.Random.Range(boundaryOffset, xMax - boundaryOffset);
+                randY = UnityEngine.Random.Range(boundaryOffset, yMax - boundaryOffset);
                 break;
 
             case DiagonalType.RightDown:
-                randX = Random.Range(boundaryOffset, xMax - boundaryOffset);
-                randY = Random.Range(yMin + boundaryOffset, -boundaryOffset);
+                randX = UnityEngine.Random.Range(boundaryOffset, xMax - boundaryOffset);
+                randY = UnityEngine.Random.Range(yMin + boundaryOffset, -boundaryOffset);
                 break;
         }
 
-        allDiagonal[type].transform.position = new Vector3(randX, randY, 0f);
-        allDiagonal[type].SetActive(true);
+        diagonalDict[type].transform.position = new Vector3(randX, randY, 0f);
+        diagonalDict[type].SetActive(true);
     }
 }

@@ -3459,6 +3459,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4439190211051416529, guid: 3c5d7b44b2c5de040be19b380ad328f8, type: 3}
+      propertyPath: diagonalT
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4482403761854148136, guid: 3c5d7b44b2c5de040be19b380ad328f8, type: 3}
       propertyPath: m_Name
       value: RDFarEnemy Variant
@@ -3568,6 +3572,10 @@ PrefabInstance:
     - target: {fileID: 1531068387913515643, guid: 6de25e5c837d6bd40a170afbef2cdd16, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626057940459243394, guid: 6de25e5c837d6bd40a170afbef2cdd16, type: 3}
+      propertyPath: diagonalT
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8260906042846695941, guid: 6de25e5c837d6bd40a170afbef2cdd16, type: 3}
       propertyPath: m_Sprite
@@ -3840,6 +3848,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 228239655036912366, guid: 61edec766409e814c80d910e85922c44, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 308346442823961529, guid: 61edec766409e814c80d910e85922c44, type: 3}
+      propertyPath: diagonalT
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 569968093618212416, guid: 61edec766409e814c80d910e85922c44, type: 3}

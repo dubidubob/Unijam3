@@ -94,8 +94,6 @@ public class MainUIs : MonoBehaviour
 
         if (phase > 0 && bgPlace!=null)
             bgPlace.sprite = Bgs[phase - 1];
-        else
-            Debug.LogWarning($"phase index out {phase}");
     }
 }
 
