@@ -68,9 +68,9 @@ public class GameManager
             {
                 go.GetComponent<MovingEnemy>().SetDead();
                 attacks[key].Dequeue();
-                ComboInc();
-                return true;
             }
+            ComboInc();
+            return true;
         }
 
         //Managers.Tracker.MissedKeyPress(key);

@@ -34,6 +34,7 @@ public class SpawnController : MonoBehaviour
         StopMonsterInPhase();
         foreach (var m in monsterDatas)
         {
+            if (!m.isIn) continue;
             if (_spawnerMap.TryGetValue(m.monsterType, out var spawner))
             {
                 StartCoroutine(Spawn(spawner, m));
@@ -41,6 +42,10 @@ public class SpawnController : MonoBehaviour
             else 
             {
                 Debug.LogWarning($"No spawner for {m.monsterType}");
+                if (m.monsterType == Define.MonsterType.Knockback)
+                {
+                    StartCoroutine(Spawn(_spawnerMap[Define.MonsterType.WASD], m));
+                }
             }
         }
     }

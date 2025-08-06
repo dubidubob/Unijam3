@@ -4,6 +4,7 @@
 public class MovingEnemy : MonoBehaviour
 {
     [SerializeField] private GamePlayDefine.MovingAttackType enemyType = GamePlayDefine.MovingAttackType.D;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private float startPosScale = 4.0f;
     [SerializeField] private float endPosScale = 2.8f;    
     private Vector3 playerPos = Vector3.zero;
@@ -48,9 +49,17 @@ public class MovingEnemy : MonoBehaviour
 
         intervalBetweenNext = distance / (float)numInRow;
     }
-    public void SetKnockback()
+    public void SetKnockback(bool isTrue)
     {
-        knockback.OnKnockback(true);
+        if (isTrue)
+        {
+            spriteRenderer.color = Color.gray;
+        }
+        else 
+        {
+            spriteRenderer.color = Color.white;
+        }
+        knockback.OnKnockback(isTrue);
     }
 
     private void Update()

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
 
@@ -20,6 +19,13 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
         movingEnemy = poolable.gameObject.GetComponent<MovingEnemy>();
         movingEnemy.SetSpeed(data.moveToHolderDuration, data.numInRow);
-        movingEnemy.SetKnockback();
+        if (data.monsterType == Define.MonsterType.Knockback)
+        {
+            movingEnemy.SetKnockback(true);
+        }
+        else 
+        {
+            movingEnemy.SetKnockback(false);
+        }
     }
 }
