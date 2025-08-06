@@ -9,10 +9,11 @@ using UnityEngine;
 public class SpawnController : MonoBehaviour
 {
     private Dictionary<Define.MonsterType, ISpawnable> _spawnerMap;
-    
+    private Camera _mainCamera;
     private void Awake()
     {
         InitSpawnableDic();
+        _mainCamera = Camera.main;
     }
 
     private void InitSpawnableDic()
@@ -48,11 +49,7 @@ public class SpawnController : MonoBehaviour
                 else if (m.monsterType == Define.MonsterType.CameraFlip)
                 {
                     // MainCamera를 찾아서 반전을 시킨다.
-                    // TODO : Camera main 라이브러리를 만들 것.
-                    Camera camera = Camera.main;
-                    var tr = camera.transform;
-                    var s = tr.localScale;
-                    tr.localScale = new Vector3(-s.x, s.y, s.z);
+                    SetCameraFlip(true);
                 }
                 else 
                 {
@@ -74,6 +71,17 @@ public class SpawnController : MonoBehaviour
 
     public void StopMonsterInPhase()
     {
+        SetCameraFlip(false);
         StopAllCoroutines();
+    }
+
+    bool hadFliped = false;
+    public void SetCameraFlip(bool willFlip)
+    {
+        if (_mainCamera == null || hadFliped == willFlip) { return; }
+
+        Vector3 currentScale = _mainCamera.transform.localScale;
+        _mainCamera.transform.localScale = new Vector3(-currentScale.x, currentScale.y, currentScale.z);
+        hadFliped = willFlip;
     }
 }
