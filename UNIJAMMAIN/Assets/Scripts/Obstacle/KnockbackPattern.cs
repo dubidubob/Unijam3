@@ -10,7 +10,7 @@ public class KnockbackPattern
     public bool CheckKnockback()
     {
         if (!isEnabled) return false;
-        if(--hp == 0) return false;
+        if(--hp <= 0) return false;
 
         return true;
     }

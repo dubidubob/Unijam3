@@ -16,23 +16,27 @@ public class MovingEnemy : MonoBehaviour
     {
         playerPos = Managers.Game.playerTransform.position;
     }
-    public void SetDead()
+    
+    public bool CheckCanDead()
     {
         if (knockback.CheckKnockback())
         {
-            // monster의 방향 + 노말시키기
-            Vector3 tmp = (playerPos - transform.position).normalized * intervalBetweenNext;
-            transform.position -= tmp;
-            Debug.Log("이동 완료");
-            return;
+            ExecuteKnockback();
+            return false;
         }
-        Poolable poolable = GetComponent<Poolable>();
-        Managers.Pool.Push(poolable);
+        return true;
     }
 
-    public bool CheckCanDead()
+    private void ExecuteKnockback()
     {
-        return knockback.CheckKnockback();
+        Vector3 tmp = (playerPos - transform.position).normalized * intervalBetweenNext;
+        transform.position -= tmp;
+    }
+
+    public void SetDead()
+    {
+        Poolable poolable = GetComponent<Poolable>();
+        Managers.Pool.Push(poolable);
     }
 
     public void SetSpeed(float movingDuration, int numInRow)
