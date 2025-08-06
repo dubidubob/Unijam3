@@ -66,15 +66,17 @@ public class MovingEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Ented 실행!");
         if (collision.tag == "detectArea")
         {
             Managers.Game.AddAttackableEnemy(enemyType.ToString(), this.gameObject);
         }
-        else if (collision.tag == "Player")
+        else if (collision.tag == "dangerLine")
         {
             Managers.Game.DecHealth();
-            SetDead();
+            if (CheckCanDead())
+            {
+                SetDead();
+            }
         }
     }
 }
