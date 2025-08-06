@@ -10,6 +10,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     private Dictionary<DiagonalType, GameObject> diagonalDict;
 
     private List<int> activatedDiagonalIdx = new List<int>();
+    private List<int> deactivatedDiagonalIdx = new List<int>();
 
     private void Awake()
     {
@@ -30,9 +31,11 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         {
             Debug.LogWarning("Place LU, LD, RU, RD in Inspector");
         }
+        int i = 0;
         foreach (var m in dm)
         {
             diagonalDict[m.DiagonalT] = m.gameObject;
+            deactivatedDiagonalIdx.Add(i++);
         }
     }
 
@@ -43,17 +46,12 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     public void ActivateEnemy()
     {
-        int idx;
-        do
-        {
-            idx = UnityEngine.Random.Range(0, diagonalDict.Count);
-        }
-        while (!activatedDiagonalIdx.Contains(idx));
+        int idx = Random.Range(0, deactivatedDiagonalIdx.Count);
+        int mIdx = deactivatedDiagonalIdx[idx];
+        deactivatedDiagonalIdx.Remove(mIdx);
 
-        Debug.Assert(diagonalDict.Count <= idx, "Exceeded Num of Diagonal");
-
-        PosAndActivateNode((DiagonalType)idx);
-        activatedDiagonalIdx.Add(idx);
+        PosAndActivateNode((DiagonalType)mIdx);
+        activatedDiagonalIdx.Add(mIdx);
     }
 
     private void DeActivateEnemy(DiagonalType attackType)
@@ -61,6 +59,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         if (activatedDiagonalIdx.Contains((int)attackType))
         {
             activatedDiagonalIdx.Remove((int)attackType);
+            deactivatedDiagonalIdx.Add((int)attackType);
             diagonalDict[attackType].GetComponent<DiagonalMonster>().SetDead();
         }
         else
