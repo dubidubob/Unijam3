@@ -40,11 +40,23 @@ public class SpawnController : MonoBehaviour
                 StartCoroutine(Spawn(spawner, m));
             }
             else 
-            {
-                Debug.LogWarning($"No spawner for {m.monsterType}");
+            {                
                 if (m.monsterType == Define.MonsterType.Knockback)
                 {
                     StartCoroutine(Spawn(_spawnerMap[Define.MonsterType.WASD], m));
+                }
+                else if (m.monsterType == Define.MonsterType.CameraFlip)
+                {
+                    // MainCamera를 찾아서 반전을 시킨다.
+                    // TODO : Camera main 라이브러리를 만들 것.
+                    Camera camera = Camera.main;
+                    var tr = camera.transform;
+                    var s = tr.localScale;
+                    tr.localScale = new Vector3(-s.x, s.y, s.z);
+                }
+                else 
+                {
+                    Debug.LogWarning($"No spawner for {m.monsterType}");
                 }
             }
         }

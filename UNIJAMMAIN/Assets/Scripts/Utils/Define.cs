@@ -82,6 +82,7 @@ public class Define
         Diagonal,
         Knockback,
         MouseClick,
+        CameraFlip,
         MaxCount
     }
 }
