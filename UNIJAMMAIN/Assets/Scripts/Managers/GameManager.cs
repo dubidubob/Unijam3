@@ -15,6 +15,7 @@ public class GameManager
     public readonly int MaxHealth = 10;
     private const int IncHealthUnit = 10;
 
+    private Dictionary<string, Queue<GameObject>> attacks = new Dictionary<string, Queue<GameObject>>();
     public void Clear()
     {
         attacks = new Dictionary<string, Queue<GameObject>>();
@@ -55,144 +56,25 @@ public class GameManager
         return playerTransform;
     }
 
-    private Dictionary<string, Queue<GameObject>> attacks = new Dictionary<string, Queue<GameObject>>();
 
     public bool ReceiveKey(string key)
     {
         Debug.Log($"key pressed : {key}");
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
         {
-            GameObject go = attacks[key].Dequeue();
-
-            switch (UnityEngine.Random.Range(0, 2))
+            GameObject go = attacks[key].Peek();            
+            MovingEnemy wasd = go.GetComponent<MovingEnemy>();
+            if (wasd.CheckCanDead())
             {
-                case 0:
-                    {
-                        Managers.Sound.Play("Sounds/SFX/WASD_Glass_Broken_SFX_2");
-                        break;
-                    }
-                case 1:
-                    {
-                        Managers.Sound.Play("Sounds/SFX/WASD_Glass_Broken_SFX_1");
-                        break;
-                    }
+                go.GetComponent<MovingEnemy>().SetDead();
+                attacks[key].Dequeue();
+                ComboInc();
+                return true;
             }
-            if (go == null)
-            {
-                Debug.LogError("큰일난오류?");
-                return false;
-            }
-            ComboInc();
-            go.GetComponent<MovingEnemy>().SetDead();
-
-            if (key == "A")
-            {
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/AKey_Action_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/AKey_Action_SFX_1");
-                            break;
-                        }
-                }
-
-            }
-            else if (key == "D")
-            {
-                switch (UnityEngine.Random.Range(0, 4))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/DKey_Action_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/DKey_Action_SFX_1");
-                            break;
-                        }
-                    case 2:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/DKey_TR_BL_Action_SFX_1");
-                            break;
-                        }
-
-                }
-            }
-            else if (key == "W")
-            {
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/WKey_Action_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/WKey_Action_SFX_1");
-                            break;
-                        }
-
-                }
-
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_2");
-                            break;
-                        }
-
-                }
-                }
-            else if (key == "S")
-            {
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/SKey_Action_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/SKey_Action_SFX_1");
-                            break;
-                        }
-                }
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_2");
-                            break;
-                        }
-
-                }
-            }
-           
-
-            return true;
         }
 
         Managers.Tracker.MissedKeyPress(key);
-        MissedKeyUpdate.Invoke(key);
+        MissedKeyUpdate?.Invoke(key);
         DecHealth();
         return false;
     }
@@ -221,7 +103,6 @@ public class GameManager
         Debug.Log(Combo); 
         if(Combo%10==0)
         {
-            Debug.Log("콤보 진입");
             Managers.Sound.Play("SFX/Combo_Breathe_SFX");
         }
     }

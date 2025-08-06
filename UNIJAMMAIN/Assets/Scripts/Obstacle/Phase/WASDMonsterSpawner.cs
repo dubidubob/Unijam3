@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
 
@@ -18,6 +19,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         poolable.gameObject.transform.position = new Vector3(enemy.pos.x, enemy.pos.y, 0);
 
         movingEnemy = poolable.gameObject.GetComponent<MovingEnemy>();
-        movingEnemy.SetSpeed(data.moveToHolderDuration);
+        movingEnemy.SetSpeed(data.moveToHolderDuration, data.numInRow);
+        movingEnemy.SetKnockback();
     }
 }

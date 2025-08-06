@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(WASDMonsterSpawner))]
@@ -51,8 +50,8 @@ public class SpawnController : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(monsterData.spawnDuration);
             spawner.Spawn(monsterData);
+            yield return new WaitForSeconds(monsterData.spawnDuration);
         }
     }
 

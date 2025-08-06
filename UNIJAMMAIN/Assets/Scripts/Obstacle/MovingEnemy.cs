@@ -1,3 +1,4 @@
+Ôªøusing Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Poolable))]
@@ -5,36 +6,50 @@ public class MovingEnemy : MonoBehaviour
 {
     [SerializeField] private GamePlayDefine.MovingAttackType enemyType = GamePlayDefine.MovingAttackType.D;
     [SerializeField] private float startPosScale = 4.0f;
-    [SerializeField] private float endPosScale = 2.8f;
-    private float speed = 1f;
+    [SerializeField] private float endPosScale = 2.8f;    
     private Vector3 playerPos = Vector3.zero;
-    private float duration;
-
-    // «ˆ¿Á ≥ª Ω√¿€ ¿ßƒ°ø°º≠ targetpos±Ó¡ˆ 1√  ∞…∑¡æﬂ«—¥Ÿ∏È, speed∞° ∏Ó¿ÃæÓæﬂ «œ≥™?
-    private void Calculate()
-    {
-        float distance = startPosScale - endPosScale;
-        // ø¯«œ¥¬ Ω√∞£(duration)ø° µµ¬¯«œ∑¡∏È speed = distance / duration
-        duration = 1f;
-        speed = distance / duration;
-    }
+    private float speed;
+    private float intervalBetweenNext;
+    private KnockbackPattern knockback;
 
     private void OnEnable()
     {
-        Calculate();
+        playerPos = Managers.Game.playerTransform.position;
     }
-
     public void SetDead()
     {
+        if (knockback.CheckKnockback())
+        {
+            // monsterÏùò Î∞©Ìñ• + ÎÖ∏ÎßêÏãúÌÇ§Í∏∞
+            Vector3 tmp = (playerPos - transform.position).normalized * intervalBetweenNext;
+            transform.position -= tmp;
+            Debug.Log("Ïù¥Îèô ÏôÑÎ£å");
+            return;
+        }
         Poolable poolable = GetComponent<Poolable>();
         Managers.Pool.Push(poolable);
     }
 
-    public void SetSpeed(float movingDuration)
+    public bool CheckCanDead()
     {
-        duration = movingDuration;
+        return knockback.CheckKnockback();
     }
-   
+
+    public void SetSpeed(float movingDuration, int numInRow)
+    {
+        float spawnInterval = movingDuration;
+
+        float distance = startPosScale - endPosScale;
+        speed = distance / spawnInterval;
+
+        intervalBetweenNext = distance / (float)numInRow;
+    }
+    public void SetKnockback()
+    {
+        knockback = new KnockbackPattern();
+        knockback.OnKnockback(true);
+    }
+
     private void Update()
     {
         Move();
@@ -45,6 +60,7 @@ public class MovingEnemy : MonoBehaviour
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "detectArea")

@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88a7b8007bad7a43abe76cf9a9d3d0f, type: 3}
-  m_Name: Chapter
+  m_Name: Chapter 1
   m_EditorClassIdentifier: 
   phases:
   - duration: 40
     startDelay: 0.12
     monsterDatas:
     - monsterType: 0
-      spawnDuration: 1
+      numInRow: 1
+      spawnDuration: 10
       moveToHolderDuration: 1
       speedUpRate: 1
