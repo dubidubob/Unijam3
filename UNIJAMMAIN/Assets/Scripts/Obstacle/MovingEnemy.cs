@@ -5,11 +5,8 @@ public class MovingEnemy : MonoBehaviour
 {
     [SerializeField] private GamePlayDefine.WASDType enemyType = GamePlayDefine.WASDType.D;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private float startPosScale = 4.0f;
-    [SerializeField] private float endPosScale = 2.8f;    
     private Vector3 playerPos = Vector3.zero;
-    private float speed;
-    private float intervalBetweenNext;
+    private float speed, intervalBetweenNext;
     private KnockbackPattern knockback;
 
     private void OnEnable()
@@ -40,11 +37,9 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetSpeed(float movingDuration, int numInRow)
+    public void SetSpeed(float distance, float movingDuration, int numInRow)
     {
         float spawnInterval = movingDuration;
-
-        float distance = startPosScale - endPosScale;
         speed = distance / spawnInterval;
 
         intervalBetweenNext = distance / (float)numInRow;

@@ -16,11 +16,11 @@ MonoBehaviour:
   - duration: 10
     startDelay: 0.12
     monsterDatas:
-    - isIn: 0
+    - isIn: 1
       monsterType: 0
       numInRow: 1
-      spawnDuration: 3
-      moveToHolderDuration: 1
+      spawnDuration: 2
+      moveToHolderDuration: 2
       speedUpRate: 1
     - isIn: 0
       monsterType: 2
@@ -40,27 +40,9 @@ MonoBehaviour:
       spawnDuration: 1
       moveToHolderDuration: 1
       speedUpRate: 1
-    - isIn: 1
+    - isIn: 0
       monsterType: 4
       numInRow: 1
       spawnDuration: 1
       moveToHolderDuration: 1
       speedUpRate: 1
-  - duration: 5
-    startDelay: 0.12
-    monsterDatas:
-    - isIn: 1
-      monsterType: 4
-      numInRow: 0
-      spawnDuration: 0
-      moveToHolderDuration: 0
-      speedUpRate: 0
-  - duration: 5
-    startDelay: 0.12
-    monsterDatas:
-    - isIn: 1
-      monsterType: 4
-      numInRow: 0
-      spawnDuration: 0
-      moveToHolderDuration: 0
-      speedUpRate: 0

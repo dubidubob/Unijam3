@@ -1,24 +1,56 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
+
+[Serializable]
+public struct WASDPosition
+{
+    public WASDType WASDType;
+    public GameObject spawnPos;
+    public GameObject targetPos;
+}
 
 public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 {
     [SerializeField] EnemyTypeSO enemyTypeSO;
+    [SerializeField] WASDPosition[] positions;
+    private Dictionary<WASDType, Vector3> _spawnPosition;
+    private Dictionary<WASDType, Vector3> _targetPosition;
     private MovingEnemy movingEnemy;
     private Poolable poolable;
 
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
+    private void Start()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        _spawnPosition = new Dictionary<WASDType, Vector3>();
+        _targetPosition = new Dictionary<WASDType, Vector3>();
+
+        foreach (var p in positions)
+        {
+            _spawnPosition[p.WASDType] = p.spawnPos.transform.position;
+            _targetPosition[p.WASDType] = p.targetPos.transform.position;
+        }
+    }
+
     public void Spawn(MonsterData data)
     {
-        WASDType enemyType = (WASDType)Random.Range(0, (int)WASDType.MaxCnt);
+        WASDType enemyType = (WASDType)UnityEngine.Random.Range(0, (int)WASDType.MaxCnt);
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
 
         poolable = Managers.Pool.Pop(enemy.go);
-        poolable.gameObject.transform.position = new Vector3(enemy.pos.x, enemy.pos.y, 0);
+        poolable.gameObject.transform.position = _spawnPosition[enemyType];
 
         movingEnemy = poolable.gameObject.GetComponent<MovingEnemy>();
-        movingEnemy.SetSpeed(data.moveToHolderDuration, data.numInRow);
+
+        float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
+        movingEnemy.SetSpeed(distance, data.moveToHolderDuration, data.numInRow);
         if (data.monsterType == Define.MonsterType.Knockback)
         {
             movingEnemy.SetKnockback(true);

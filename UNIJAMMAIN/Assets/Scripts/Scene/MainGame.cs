@@ -1,9 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-
 public class MainGame : BaseScene   // MainGame Ŭ������ BaseScene Ŭ������ ����� ������� ���� ���� �� �ʿ��� �ʱ�ȭ �۾��� �����ϴ� Ŭ����
 {
 
@@ -20,7 +14,7 @@ public class MainGame : BaseScene   // MainGame Ŭ������ BaseScene �
    
     }
 
-    private void Start()
+    private void Awake()
     {
         Init();
 

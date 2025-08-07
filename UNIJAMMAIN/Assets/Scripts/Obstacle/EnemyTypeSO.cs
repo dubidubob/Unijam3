@@ -9,7 +9,6 @@ public class EnemyTypeSO : ScriptableObject
     { 
         public GamePlayDefine.WASDType AttackType;
         public GameObject go;
-        public Vector3 pos;
     }
 
     [SerializeField] private List<EnemyData> enemies;
