@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(WASDMonsterSpawner))]
 public class QA : MonoBehaviour
 {
+    [SerializeField] GameObject QAPanel;
+
     PhaseManager phaseManager;
     WASDMonsterSpawner WASDMonsterSpawner;
 
@@ -28,6 +30,18 @@ public class QA : MonoBehaviour
     {
         phaseManager = GetComponent<PhaseManager>();
         WASDMonsterSpawner = GetComponent<WASDMonsterSpawner>();
+        
+        QAPanel.SetActive(isPopup);
+
+        Managers.Input.SettingpopAction -= QAPanelPopup;
+        Managers.Input.SettingpopAction += QAPanelPopup;
+    }
+
+    bool isPopup = false;
+    private void QAPanelPopup()
+    {
+        isPopup = !isPopup;
+        QAPanel.SetActive(isPopup);
     }
 
     private void Start()

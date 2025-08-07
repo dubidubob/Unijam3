@@ -1956,6 +1956,7 @@ GameObject:
   - component: {fileID: 949417007}
   - component: {fileID: 949417006}
   - component: {fileID: 949417005}
+  - component: {fileID: 949417009}
   m_Layer: 5
   m_Name: QACanvas
   m_TagString: Untagged
@@ -2046,6 +2047,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &949417009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949417004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904590e6b72bfe74880f9912664fa644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &991770897
 GameObject:
   m_ObjectHideFlags: 0
@@ -2935,7 +2948,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC52C \uB9AC\uB85C\uB4DC"
+  m_text: "\uC804\uBD80 \uCD08\uAE30\uD654 "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d308668d5ed7333468788723913af9ce, type: 2}
   m_sharedMaterial: {fileID: 3050264137573562459, guid: d308668d5ed7333468788723913af9ce, type: 2}
@@ -5800,6 +5813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96bf5ad9be0ce8f45a2cbc11b82b4e1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  QAPanel: {fileID: 575701118}
 --- !u!1001 &5570071771724819243
 PrefabInstance:
   m_ObjectHideFlags: 0
