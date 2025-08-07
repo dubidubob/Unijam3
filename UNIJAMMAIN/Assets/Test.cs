@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         Managers.Init();
     }
