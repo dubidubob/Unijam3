@@ -18,10 +18,6 @@ public class SpawnController : MonoBehaviour
 
     private void InitSpawnableDic()
     {
-        //var spawnables = GetComponents<Component>()
-        //               .OfType<ISpawnable>()
-        //               .ToArray();
-
         var spawnables = GetComponents<ISpawnable>();
         _spawnerMap = new Dictionary<Define.MonsterType, ISpawnable>();
         foreach (var s in spawnables)
