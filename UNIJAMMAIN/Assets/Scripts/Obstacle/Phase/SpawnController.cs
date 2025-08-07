@@ -29,6 +29,7 @@ public class SpawnController : MonoBehaviour
     public void SpawnMonsterInPhase(IReadOnlyList<MonsterData> monsterDatas)
     {
         StopMonsterInPhase();
+        
         foreach (var m in monsterDatas)
         {
             if (!m.isIn) continue;
@@ -54,10 +55,8 @@ public class SpawnController : MonoBehaviour
             }
         }
     }
-
     private IEnumerator Spawn(ISpawnable spawner, MonsterData monsterData)
     {
-
         while (true)
         {
             spawner.Spawn(monsterData);

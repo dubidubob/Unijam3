@@ -91,7 +91,6 @@ public class MovingEnemy : MonoBehaviour
     private void PerspectiveResize(float _elapsedTime)
     {
         float t = _elapsedTime / movingDuration;
-        Debug.Log(t);
         t = Mathf.Clamp01(t); // 0~1로 고정 확인
 
         if (enemyType == GamePlayDefine.WASDType.W) // 작아졌다 커지기

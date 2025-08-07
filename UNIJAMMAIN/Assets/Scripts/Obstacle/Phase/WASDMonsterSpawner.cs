@@ -16,7 +16,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 {
     [SerializeField] EnemyTypeSO enemyTypeSO;
     [SerializeField] WASDPosition[] positions;
-    [SerializeField] Vector2 sizeDiffRate;
+    [SerializeField] Vector2 sizeDiffRate = new Vector2 (0.8f, 1.2f);
     private Dictionary<WASDType, Vector3> _spawnPosition;
     private Dictionary<WASDType, Vector3> _targetPosition;
     private MovingEnemy movingEnemy;
@@ -44,14 +44,16 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
+    int maxCnt = 2;
+    int[] idx = { 0, 1, 2, 3 };
     public void Spawn(MonsterData data)
     {
-        int cnt = UnityEngine.Random.Range(1, 3);
+        int cnt = UnityEngine.Random.Range(1, maxCnt+1);
         // int cnt = 1;
         for (int i = 0; i < cnt; i++)
         {
             // WASDType enemyType = (WASDType)UnityEngine.Random.Range(0, (int)WASDType.MaxCnt);
-            WASDType enemyType = (WASDType)UnityEngine.Random.Range(2, (int)WASDType.MaxCnt);
+            WASDType enemyType = (WASDType)idx[UnityEngine.Random.Range(0, idx.Length)];
 
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
 
@@ -71,5 +73,12 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
                 movingEnemy.SetKnockback(false);
             }
         }
+    }
+
+    public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)
+    { 
+        this.sizeDiffRate = sizeDiffRate;
+        this.maxCnt = maxCnt;
+        this.idx = idx;
     }
 }

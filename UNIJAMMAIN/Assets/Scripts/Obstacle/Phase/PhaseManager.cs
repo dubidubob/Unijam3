@@ -10,11 +10,15 @@ public class PhaseManager : MonoBehaviour
     [SerializeField] IllustController illustController;
     [SerializeField] ChapterSO chapter;
     SpawnController spawnController;
-
+    bool isQA = true;
     private void Start()
     {
         spawnController = GetComponent<SpawnController>();
-        StartCoroutine(RunPhase());
+        if (!isQA)
+        {
+            StartCoroutine(RunPhase());
+        }
+        
     }
     
     // TODO : Áß°£Áß°£ ÄÆ¾À
@@ -58,6 +62,25 @@ public class PhaseManager : MonoBehaviour
         EndPhase();
     }
 
+    float qa_startDelay, qa_phaseDuration;
+    MonsterData[] monsters = new MonsterData[1];
+    private IEnumerator RunQAPhase()
+    {
+        yield return new WaitForSeconds(qa_startDelay);
+        spawnController.SpawnMonsterInPhase(monsters);
+        yield return new WaitForSeconds(qa_phaseDuration);
+        EndPhase();
+    }
+
+    public void QAPhaseVariance(float startDelay, float phaseDuration, MonsterData monster)
+    {
+        qa_startDelay = startDelay;
+        qa_phaseDuration = phaseDuration;
+        monsters[0] = monster;
+
+        StopAllCoroutines();
+        StartCoroutine(RunQAPhase());
+    }
     private void EndPhase()
     {
         spawnController.StopMonsterInPhase();
