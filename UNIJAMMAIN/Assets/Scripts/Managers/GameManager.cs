@@ -62,14 +62,14 @@ public class GameManager
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
         {
             GameObject go = attacks[key].Peek();
-            if (go == null) return false;
 
             MovingEnemy wasd = go.GetComponent<MovingEnemy>();
-            if (wasd.CheckCanDead())
-            {
-                go.GetComponent<MovingEnemy>().SetDead();
-                attacks[key].Dequeue();
-            }
+
+            attacks[key].Dequeue();
+            go.GetComponent<MovingEnemy>().SetDead();
+            //if (wasd.CheckCanDead())
+            //{
+            //}
             ComboInc();
             return true;
         }
