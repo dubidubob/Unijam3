@@ -34,14 +34,23 @@ MonoBehaviour:
       spawnDuration: 1
       moveToHolderDuration: 1
       speedUpRate: 1
-    - isIn: 0
-      monsterType: 3
+  - duration: 1000
+    startDelay: 0.12
+    monsterDatas:
+    - isIn: 1
+      monsterType: 0
       numInRow: 1
-      spawnDuration: 1
+      spawnDuration: 2
+      moveToHolderDuration: 2
+      speedUpRate: 1
+    - isIn: 0
+      monsterType: 2
+      numInRow: 1
+      spawnDuration: 3
       moveToHolderDuration: 1
       speedUpRate: 1
     - isIn: 0
-      monsterType: 4
+      monsterType: 1
       numInRow: 1
       spawnDuration: 1
       moveToHolderDuration: 1
