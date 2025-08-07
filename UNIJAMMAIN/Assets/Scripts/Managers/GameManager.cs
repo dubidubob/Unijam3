@@ -14,8 +14,8 @@ public class GameManager
     private int Health = 0;
     public readonly int MaxHealth = 10;
     private const int IncHealthUnit = 10;
-
-    private Dictionary<GamePlayDefine.WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
+    // TODO : 이러지 말기
+    public Dictionary<GamePlayDefine.WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
     public void Clear()
     {
         attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
@@ -94,7 +94,6 @@ public class GameManager
         Combo++;
         if (ComboContinue != null)
         {
-            Debug.Log("Invoke ComboContinue");
             ComboContinue.Invoke(Combo);
         }
         if (Combo > 0 && Combo % IncHealthUnit == 0)

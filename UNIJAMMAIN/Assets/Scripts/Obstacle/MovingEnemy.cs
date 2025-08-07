@@ -117,11 +117,12 @@ public class MovingEnemy : MonoBehaviour
         }
         else if (collision.tag == "dangerLine")
         {
+            Managers.Game.attacks[enemyType].Dequeue();
+            SetDead();
             Managers.Game.DecHealth();
-            if (CheckCanDead())
-            {
-                SetDead();
-            }
+            //if (CheckCanDead())
+            //{
+            //}
         }
     }
 }
