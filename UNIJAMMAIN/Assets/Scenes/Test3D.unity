@@ -2601,6 +2601,7 @@ MonoBehaviour:
   - WASDType: 3
     spawnPos: {fileID: 1238372588}
     targetPos: {fileID: 1861274462}
+  sizeDiffRate: {x: 0.25, y: 2}
 --- !u!1001 &5570071771724819243
 PrefabInstance:
   m_ObjectHideFlags: 0

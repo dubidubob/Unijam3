@@ -15,6 +15,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 {
     [SerializeField] EnemyTypeSO enemyTypeSO;
     [SerializeField] WASDPosition[] positions;
+    [SerializeField] Vector2 sizeDiffRate;
     private Dictionary<WASDType, Vector3> _spawnPosition;
     private Dictionary<WASDType, Vector3> _targetPosition;
     private MovingEnemy movingEnemy;
@@ -41,7 +42,8 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
     public void Spawn(MonsterData data)
     {
-        WASDType enemyType = (WASDType)UnityEngine.Random.Range(0, (int)WASDType.MaxCnt);
+        // WASDType enemyType = (WASDType)UnityEngine.Random.Range(0, (int)WASDType.MaxCnt);
+        WASDType enemyType = (WASDType)2;
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
 
         poolable = Managers.Pool.Pop(enemy.go);
@@ -50,7 +52,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         movingEnemy = poolable.gameObject.GetComponent<MovingEnemy>();
 
         float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
-        movingEnemy.SetSpeed(distance, data.moveToHolderDuration, data.numInRow);
+        movingEnemy.SetVariance(distance, data.moveToHolderDuration, data.numInRow, sizeDiffRate);
         if (data.monsterType == Define.MonsterType.Knockback)
         {
             movingEnemy.SetKnockback(true);

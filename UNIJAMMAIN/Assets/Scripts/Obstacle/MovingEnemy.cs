@@ -9,12 +9,27 @@ public class MovingEnemy : MonoBehaviour
     private float speed, intervalBetweenNext, movingDuration;
     private float _elapsedTime;
     private KnockbackPattern knockback;
-
+    private SpriteRenderer monsterImg;
+    private Vector3 origin;
+    private bool isResizeable = false;
+    private Vector2 sizeDiffRate;
     private void OnEnable()
     {
         _elapsedTime = 0f;
         playerPos = Managers.Game.playerTransform.position;
         knockback = new KnockbackPattern();
+        monsterImg = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        if (monsterImg != null)
+        {
+            origin = monsterImg.transform.localScale;
+        }
+
+        if(enemyType == GamePlayDefine.WASDType.W || enemyType == GamePlayDefine.WASDType.S)
+            isResizeable = true;
     }
 
     public bool CheckCanDead()
@@ -39,8 +54,9 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetSpeed(float distance, float movingDuration, int numInRow)
+    public void SetVariance(float distance, float movingDuration, int numInRow, Vector2 sizeDiffRate)
     {
+        this.sizeDiffRate = sizeDiffRate;
         this.movingDuration = movingDuration;
         speed = distance / this.movingDuration;
 
@@ -61,7 +77,7 @@ public class MovingEnemy : MonoBehaviour
 
     private void Update()
     {
-        while (_elapsedTime <= movingDuration)
+        if (_elapsedTime <= movingDuration && isResizeable)
         {
             PerspectiveResize(_elapsedTime);
             _elapsedTime += Time.deltaTime;
@@ -71,18 +87,17 @@ public class MovingEnemy : MonoBehaviour
 
     private void PerspectiveResize(float _elapsedTime)
     {
-        float t = _elapsedTime / movingDuration; // 0에서 1 사이의 값
-        t = Mathf.Clamp01(t); // 혹시 몰라서 0~1로 고정
+        float t = _elapsedTime / movingDuration;
+        Debug.Log(t);
+        t = Mathf.Clamp01(t); // 0~1로 고정 확인
 
         if (enemyType == GamePlayDefine.WASDType.W) // 작아졌다 커지기
         {
-            // 처음엔 작고 → 점점 커짐 (0.5 → 1.0)
-            transform.localScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one, t);
+            monsterImg.transform.localScale = Vector3.Lerp(origin * sizeDiffRate.x, origin, t);
         }
-        else if (enemyType == GamePlayDefine.WASDType.D) // 커졌다 작아지기
+        else if (enemyType == GamePlayDefine.WASDType.S) // 커졌다 작아지기
         {
-            // 처음엔 크고 → 점점 작아짐 (1.5 → 1.0)
-            transform.localScale = Vector3.Lerp(Vector3.one * 1.5f, Vector3.one, t);
+            monsterImg.transform.localScale = Vector3.Lerp(origin * sizeDiffRate.y, origin, t);
         }
     }
 
