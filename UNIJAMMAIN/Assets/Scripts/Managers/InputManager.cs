@@ -23,13 +23,14 @@ public class InputManager
         {KeyCode.A, WASDType.A},
         {KeyCode.D, WASDType.D},
     };
-    public readonly List<KeyCode> keysToCheckArrow = new List<KeyCode> 
+    public readonly List<KeyCode> keysToCheckArrow = new List<KeyCode>
     {
-        KeyCode.LeftArrow, 
-        KeyCode.RightArrow, 
-        KeyCode.UpArrow, 
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow,
+        KeyCode.UpArrow,
         KeyCode.DownArrow
     };
+
     public void OnUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
