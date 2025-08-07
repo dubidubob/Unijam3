@@ -368,6 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 460754921}
   - component: {fileID: 460754922}
+  - component: {fileID: 460754923}
   m_Layer: 0
   m_Name: Img
   m_TagString: Untagged
@@ -431,7 +432,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 93
-  m_Sprite: {fileID: 21300000, guid: e6ab363b6e988a84fbe7b72d8ac099fd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 716ac17215eadb541b006e8768e71d9c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -442,6 +443,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &460754923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460754920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd7f4becf0536be4d888a63f43506936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionImgs:
+  - wasdType: 2
+    sprite: {fileID: 21300000, guid: eda5a8a7eb9b9ce4c8e90b262f0cb3e7, type: 3}
+  - wasdType: 0
+    sprite: {fileID: 21300000, guid: e6ab363b6e988a84fbe7b72d8ac099fd, type: 3}
+  - wasdType: 1
+    sprite: {fileID: 21300000, guid: d3ce47d7cb63583429f36cdbeda20da8, type: 3}
+  - wasdType: 3
+    sprite: {fileID: 21300000, guid: fe5c4aa43c499254bb2283b1e56fc548, type: 3}
 --- !u!1 &572656399
 GameObject:
   m_ObjectHideFlags: 0
