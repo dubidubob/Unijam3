@@ -44,13 +44,13 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
-    int maxCnt = 2;
+    int maxCnt = 1;
     int[] idx = { 0, 1, 2, 3 };
     public void Spawn(MonsterData data)
     {
         int cnt = UnityEngine.Random.Range(1, maxCnt);
         // int cnt = 1;
-        for (int i = 0; i <= cnt; i++)
+        for (int i = 0; i < cnt; i++)
         {
             // WASDType enemyType = (WASDType)UnityEngine.Random.Range(0, (int)WASDType.MaxCnt);
             WASDType enemyType = (WASDType)idx[UnityEngine.Random.Range(0, idx.Length)];

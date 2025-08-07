@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8698399006165672067, guid: ca7b47d22ac5b7846b335da1305eb222, type: 3}
       propertyPath: m_Name
-      value: WASD_p Variant
+      value: A
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

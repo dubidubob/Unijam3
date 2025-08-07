@@ -40,7 +40,7 @@ public class QA : MonoBehaviour
     private Vector2 sizeDiffRate = new Vector2(0.8f, 1.2f);
     private List<int> idxList = new List<int> { 0, 1, 2, 3 };
     private int[] idx => idxList.ToArray();
-    private int maxCnt = 3;
+    private int maxCnt = 1;
 
     private void Awake()
     {
