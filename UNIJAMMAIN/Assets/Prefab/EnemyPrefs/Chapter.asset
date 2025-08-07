@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chapter
   m_EditorClassIdentifier: 
   phases:
-  - duration: 10
+  - duration: 20
     startDelay: 0.12
     monsterDatas:
     - isIn: 1

@@ -42,24 +42,29 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
     public void Spawn(MonsterData data)
     {
-        // WASDType enemyType = (WASDType)UnityEngine.Random.Range(0, (int)WASDType.MaxCnt);
-        WASDType enemyType = (WASDType)2;
-        EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
-
-        poolable = Managers.Pool.Pop(enemy.go);
-        poolable.gameObject.transform.position = _spawnPosition[enemyType];
-
-        movingEnemy = poolable.gameObject.GetComponent<MovingEnemy>();
-
-        float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
-        movingEnemy.SetVariance(distance, data.moveToHolderDuration, data.numInRow, sizeDiffRate);
-        if (data.monsterType == Define.MonsterType.Knockback)
+        // int cnt = 2;
+        int cnt = UnityEngine.Random.Range(2, (int)WASDType.MaxCnt);
+        for (int i = 0; i < cnt; i++)
         {
-            movingEnemy.SetKnockback(true);
-        }
-        else 
-        {
-            movingEnemy.SetKnockback(false);
+            WASDType enemyType = (WASDType)UnityEngine.Random.Range(0, (int)WASDType.MaxCnt);
+            //WASDType enemyType = (WASDType)(2 + i);
+            EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
+
+            poolable = Managers.Pool.Pop(enemy.go);
+            poolable.gameObject.transform.position = _spawnPosition[enemyType];
+
+            movingEnemy = poolable.gameObject.GetComponent<MovingEnemy>();
+
+            float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
+            movingEnemy.SetVariance(distance, data.moveToHolderDuration, data.numInRow, sizeDiffRate, _spawnPosition[enemyType]);
+            if (data.monsterType == Define.MonsterType.Knockback)
+            {
+                movingEnemy.SetKnockback(true);
+            }
+            else
+            {
+                movingEnemy.SetKnockback(false);
+            }
         }
     }
 }

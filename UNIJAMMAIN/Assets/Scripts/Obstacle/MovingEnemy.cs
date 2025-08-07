@@ -13,6 +13,9 @@ public class MovingEnemy : MonoBehaviour
     private Vector3 origin;
     private bool isResizeable = false;
     private Vector2 sizeDiffRate;
+
+    private float instantDist;
+    private float instantMovingDuration;
     private void OnEnable()
     {
         _elapsedTime = 0f;
@@ -54,12 +57,14 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetVariance(float distance, float movingDuration, int numInRow, Vector2 sizeDiffRate)
+    public void SetVariance(float distance, float movingDuration, int numInRow, Vector2 sizeDiffRate, Vector3 spawnPos)
     {
         this.sizeDiffRate = sizeDiffRate;
         this.movingDuration = movingDuration;
         speed = distance / this.movingDuration;
 
+        instantDist = Vector3.Distance(spawnPos, playerPos);
+        instantMovingDuration = instantDist / speed;
         intervalBetweenNext = distance / (float)numInRow;
     }
     public void SetKnockback(bool isTrue)
@@ -77,7 +82,7 @@ public class MovingEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (_elapsedTime <= movingDuration && isResizeable)
+        if (_elapsedTime <= instantMovingDuration && isResizeable)
         {
             PerspectiveResize(_elapsedTime);
             _elapsedTime += Time.deltaTime;
@@ -87,7 +92,7 @@ public class MovingEnemy : MonoBehaviour
 
     private void PerspectiveResize(float _elapsedTime)
     {
-        float t = _elapsedTime / movingDuration;
+        float t = _elapsedTime / instantMovingDuration;
         Debug.Log(t);
         t = Mathf.Clamp01(t); // 0~1로 고정 확인
 
