@@ -4,7 +4,6 @@ public class PauseManager
 {
     // TODO : PausePanel UI 관리 어떻게 할 것인가?
     [SerializeField] GameObject pausePanel;
-    private bool isPaused = false;
     public void Init()
     {
         pausePanel?.SetActive(false);
@@ -12,9 +11,9 @@ public class PauseManager
         Managers.Input.SettingpopAction -= ControlTime;
         Managers.Input.SettingpopAction += ControlTime;
     }
-    private void ControlTime()
+    private void ControlTime(bool isStop)
     {
-        if (isPaused)
+        if (!isStop)
         {
             pausePanel?.SetActive(false);
             Resume();
@@ -29,12 +28,10 @@ public class PauseManager
     public void Pause()
     {
         Time.timeScale = 0f;
-        isPaused = true;
     }
 
     public void Resume()
     {
         Time.timeScale = 1f;
-        isPaused = false;
     }
 }

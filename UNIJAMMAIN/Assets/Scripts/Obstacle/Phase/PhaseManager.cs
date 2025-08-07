@@ -77,7 +77,10 @@ public class PhaseManager : MonoBehaviour
         qa_startDelay = startDelay;
         qa_phaseDuration = phaseDuration;
         monsters[0] = monster;
+    }
 
+    public void Play()
+    {
         StopAllCoroutines();
         StartCoroutine(RunQAPhase());
     }

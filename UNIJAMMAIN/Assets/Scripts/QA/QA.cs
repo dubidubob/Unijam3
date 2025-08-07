@@ -46,8 +46,6 @@ public class QA : MonoBehaviour
     {
         phaseManager = GetComponent<PhaseManager>();
         WASDMonsterSpawner = GetComponent<WASDMonsterSpawner>();
-        
-        QAPanel.SetActive(isPopup);
 
         Managers.Input.SettingpopAction -= QAPanelPopup;
         Managers.Input.SettingpopAction += QAPanelPopup;
@@ -81,16 +79,13 @@ public class QA : MonoBehaviour
         }
     }
 
-    bool isPopup = false;
-    private void QAPanelPopup()
+    private void QAPanelPopup(bool isStop)
     {
-        isPopup = !isPopup;
-        QAPanel.SetActive(isPopup);
-    }
-
-    private void Start()
-    {
-        ApplySettings();
+        QAPanel.SetActive(isStop);
+        if (!isStop)
+        {
+            phaseManager.Play();
+        }
     }
 
     public void ReloadScene() { ReloadScene(); }

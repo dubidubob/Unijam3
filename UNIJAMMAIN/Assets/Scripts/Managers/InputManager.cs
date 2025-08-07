@@ -14,7 +14,7 @@ public class InputManager
     public Action<WASDType> KeyBoardChecking = null;
     public Action<DiagonalType> KeyArrowcodeAction = null;
     public Action<MouseType> MouseAction = null;
-    public Action SettingpopAction = null;
+    public Action<bool> SettingpopAction = null;
 
     private readonly Dictionary<KeyCode, WASDType> keysToCheck = new()
     {
@@ -31,11 +31,22 @@ public class InputManager
         KeyCode.DownArrow
     };
 
+    bool isStoped = false;
+    private void HandleStop()
+    {
+        isStoped = !isStoped;
+        SettingpopAction?.Invoke(isStoped);
+    }
+    public void Init()
+    {
+        HandleStop();
+    }
+
     public void OnUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SettingpopAction?.Invoke();
+            HandleStop();
             return;
         }
 
