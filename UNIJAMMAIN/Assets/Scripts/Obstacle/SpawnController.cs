@@ -1,5 +1,7 @@
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static GamePlayDefine;
 
 [RequireComponent(typeof(MovingEnemySpawner))]
 [RequireComponent(typeof(RangedEnemyActivater))]
@@ -9,6 +11,8 @@ public class SpawnController : MonoBehaviour
 {
     public IllustController illustController;
     [SerializeField] bool isMaster = true;
+    [SerializeField] bool DiagonalRandom = true;
+    [SerializeField] bool isDiagonal = false;
     [SerializeField] GameObject black;
     [SerializeField] GameObject balladang;
     [SerializeField] GameObject player;
@@ -52,25 +56,24 @@ public class SpawnController : MonoBehaviour
         }
     }
     #endregion
-
-    public PhaseMoving phase1 = new PhaseMoving(40f, 2f, 2.5f, 0.1f);
+    
+    //public PhaseMoving phase1 = new PhaseMoving(40f, 2f, 2.5f, 0.1f);
     public PhaseRanged phase2 = new PhaseRanged(40.5f, 2f, 3f, 0.1f, 0.1f);
-    public PhaseRanged phase22 = new PhaseRanged(29.5f, 3f, 2.2f, 0.1f, 0.1f);
-    public PhaseRanged phase3 = new PhaseRanged(50f, 2.2f, 2.7f, 0.1f, 0.1f);
+    //public PhaseRanged phase22 = new PhaseRanged(29.5f, 3f, 2.2f, 0.1f, 0.1f);
+    //public PhaseRanged phase3 = new PhaseRanged(50f, 2.2f, 2.7f, 0.1f, 0.1f);
 
 
     private MovingEnemySpawner movingEnemySpawner;
     private RangedEnemyActivater rangedEnemyActivater;
     private MouseEnemyActivater mouseEnemyActivater;
 
-    private float currentMovingInterval;
-    private float currentRangedInterval;
+    [SerializeField] private float startTime = 0.12f;
+    [SerializeField] private float currentSpawnInterval = 1f;
+    [SerializeField] private float movingDuration = 1f;
+    private float currentRangedInterval = 1.0f;
 
-    private float initialInterval = 1.5f;
     private float movingTimeElapsed = 0f;
-    private float rangedTimeElapsed = 0f;
-
-    private float currentSpeed;        
+    private float rangedTimeElapsed = 0f;        
 
     private bool isPaused = false;
     private bool NotDead = true;
@@ -88,10 +91,7 @@ public class SpawnController : MonoBehaviour
 
     private void Start()
     {
-        currentMovingInterval = initialInterval;
-        currentRangedInterval = initialInterval;
-
-        currentSpeed = phase1.movingDefaultSpeed;
+        // movingDuration = phase2.movingDefaultSpeed;
         pausePanel.SetActive(false);
         StartCoroutine(PhaseRoutine());
     }
@@ -152,20 +152,20 @@ public class SpawnController : MonoBehaviour
 
     private IEnumerator PhaseRoutine()
     {
-        PhaseMoving[] phases = { phase1, phase2, phase22, phase3 };
+        PhaseMoving[] phases = { phase2/*, phase2, phase22, phase3*/ };
 
         for(int i = 1; i<=phases.Length; i++)
         {
             if (i == 1)
             {
-                Pause();
-                if (illustController != null)
-                {
-                    Managers.UI.ShowPopUpUI<S1_PopUp>();
-                    yield return new WaitForSecondsRealtime(6f);
-                    yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//숫자 나옴
-                }
-                Resume();
+                //Pause();
+                //if (illustController != null)
+                //{
+                //    Managers.UI.ShowPopUpUI<S1_PopUp>();
+                //    yield return new WaitForSecondsRealtime(6f);
+                //    yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//숫자 나옴
+                //}
+                //Resume();
             }
             Debug.LogWarning($"phase {i} start!");
 
@@ -179,34 +179,38 @@ public class SpawnController : MonoBehaviour
 
             Debug.LogWarning($"phase {i} end!");
             
-            Pause();
-            if (i == 4)
-            {
-                Managers.Scene.LoadScene("GoodEnding");
-                break;
-            }
-            else if (i == 1)
-            {
-                Managers.UI.ShowPopUpUI<S2_PopUp>();
-                yield return new WaitForSecondsRealtime(8f);
-            }
-            else if (i == 3)
-            {
-                Managers.UI.ShowPopUpUI<S3_PopUp>();
-                yield return new WaitForSecondsRealtime(8f);
-            }
-            Resume();
+            //Pause();
+            //if (i == 4)
+            //{
+            //    Managers.Scene.LoadScene("GoodEnding");
+            //    break;
+            //}
+            //else if (i == 1)
+            //{
+            //    Managers.UI.ShowPopUpUI<S2_PopUp>();
+            //    yield return new WaitForSecondsRealtime(8f);
+            //}
+            //else if (i == 3)
+            //{
+            //    Managers.UI.ShowPopUpUI<S3_PopUp>();
+            //    yield return new WaitForSecondsRealtime(8f);
+            //}
+            //Resume();
         }
     }
 
     private IEnumerator RunPhase(PhaseMoving phase, int phaseNum)
     {
-        if (phaseNum >= 4)//phase 4
-            StartCoroutine(RunTouch((PhaseRanged)phase));
-        if (phaseNum >= 2)//phase 2, 3, 4
+        //if (phaseNum >= 4)//phase 4
+        //    StartCoroutine(RunTouch((PhaseRanged)phase));
+        //if (phaseNum >= 2)//phase 2, 3, 4
+        //    StartCoroutine(RunRanged((PhaseRanged)phase));
+        //if (phaseNum >= 1)//phase 1, 2, 3, 4
+        StartCoroutine(RunMoving((PhaseMoving)phase));
+        if (isDiagonal)
+        {
             StartCoroutine(RunRanged((PhaseRanged)phase));
-        if (phaseNum >= 1)//phase 1, 2, 3, 4
-            StartCoroutine(RunMoving((PhaseMoving)phase));
+        }
 
         yield return new WaitForSeconds(phase.phaseDuration);
     }
@@ -239,37 +243,45 @@ public class SpawnController : MonoBehaviour
 
             yield return new WaitForSeconds(currentRangedInterval);
             GetRangedEnemy();
-
             remainingTime -= currentRangedInterval;
+            if (DiagonalRandom)
+            {
+                int step = Random.Range(8, 31);  // 31은 exclusive → 8..30
+                currentRangedInterval = step * 0.1f;
+            }
+            else
+            {
+                //if (currentRangedInterval == currentSpawnInterval * 1.5f)
+                //{
+                //    currentRangedInterval = currentSpawnInterval * 2.5f;
+                //}
+                //else 
+                //{
+                    currentRangedInterval = currentSpawnInterval * 1.5f;
+                //}
+            }
         }
     }
 
     private IEnumerator RunMoving(PhaseMoving phase)
     {
         float remainingTime = phase.phaseDuration;
-        bool isDecIntervalChecked = false;
-
+        yield return new WaitForSeconds(0.12f);
         while (remainingTime > 0)
         {
-            if (remainingTime < phase.phaseDuration * 0.5 && !isDecIntervalChecked) //phase �ð��� ���� �������� ������ �ش�.
-            {
-                currentMovingInterval -= phase.movingIntervalDecRate;
-                isDecIntervalChecked = true;
-            }
-
-            yield return new WaitForSeconds(currentMovingInterval);
-            currentSpeed = UpdateCurrentMoving(phase.phaseDuration, phase.movingDefaultSpeed, phase.movingTargetSpeed);
-            GetMovingEnemy(currentSpeed);
-
-            remainingTime -= currentMovingInterval;
+            yield return new WaitForSeconds(currentSpawnInterval);
+            
+            SpawnMovingEnemy(movingDuration);
+            Debug.Log($"생성! {phase.phaseDuration - remainingTime}");
+            remainingTime -= currentSpawnInterval;
         }
     }
-
+    
     private float UpdateCurrentMoving(float timeToTargetData, float defaultData, float targetData)
     {
         if (movingTimeElapsed < timeToTargetData)
         {
-            movingTimeElapsed += currentMovingInterval;
+            movingTimeElapsed += currentSpawnInterval;
 
             float t = Mathf.Clamp01(movingTimeElapsed / timeToTargetData);
             return Mathf.Lerp(defaultData, targetData, t);
@@ -279,9 +291,9 @@ public class SpawnController : MonoBehaviour
     }
 
 
-    private void GetMovingEnemy(float currentSpeed)
+    private void SpawnMovingEnemy(float movingDuration)
     {
-        movingEnemySpawner.InitiateRandomNode(currentSpeed);
+        movingEnemySpawner.InitiateRandomNode(movingDuration);
     }
 
     private void GetRangedEnemy()

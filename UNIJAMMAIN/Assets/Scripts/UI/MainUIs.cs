@@ -11,7 +11,9 @@ public class MainUIs : MonoBehaviour
     [SerializeField] private Image Combobangsa;
     [SerializeField] private List<Sprite> Bgs;
     [SerializeField] private Image bgPlace;
+    [SerializeField] private BlurController blurController;
     private int MaxHealth;
+    private float healthValue;
     void Awake()
     {
         Managers.Game.ComboContinue -= UpdateCombo;
@@ -28,6 +30,11 @@ public class MainUIs : MonoBehaviour
 
     private void HealthDec(int health)
     {
+        // 임시로 4단계로 표현
+        healthValue = (float)health / (float)MaxHealth;
+        blurController.SetBlur(healthValue); // 체력값을 비교하여 블러표시
+
+        /* 기존 방식 -> slide value 표시
         healthSilder.value = (float)health / (float)MaxHealth;
 
         if (healthSilder.value == 0)
@@ -38,6 +45,7 @@ public class MainUIs : MonoBehaviour
         {
             healthSilder.fillRect.gameObject.SetActive(true);
         }
+        */
     }
 
     private void UpdateCombo(int combo)
