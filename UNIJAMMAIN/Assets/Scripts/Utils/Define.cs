@@ -75,7 +75,8 @@ public class Define
         GamePlayScene,
         MainTitle,
         S1_1,
-        S1_2
+        S1_2,
+        StageScene
     }
     public enum Sound
     {
