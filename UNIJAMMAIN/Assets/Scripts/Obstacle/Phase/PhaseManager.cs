@@ -10,15 +10,14 @@ public class PhaseManager : MonoBehaviour
     [SerializeField] IllustController illustController;
     [SerializeField] ChapterSO chapter;
     SpawnController spawnController;
-    bool isQA = true;
+    bool isQA = false;
     private void Start()
     {
         spawnController = GetComponent<SpawnController>();
         if (!isQA)
         {
             StartCoroutine(RunPhase());
-        }
-        
+        }   
     }
     
     // TODO : Áß°£Áß°£ ÄÆ¾À
@@ -81,6 +80,7 @@ public class PhaseManager : MonoBehaviour
 
     public void Play()
     {
+        if (!isQA) return;
         StopAllCoroutines();
         StartCoroutine(RunQAPhase());
     }

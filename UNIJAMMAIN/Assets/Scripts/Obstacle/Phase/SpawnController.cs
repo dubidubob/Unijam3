@@ -45,7 +45,6 @@ public class SpawnController : MonoBehaviour
                 }
                 else if (m.monsterType == Define.MonsterType.CameraFlip)
                 {
-                    // MainCamera를 찾아서 반전을 시킨다.
                     SetCameraFlip(true);
                 }
                 else 
@@ -71,6 +70,8 @@ public class SpawnController : MonoBehaviour
     }
 
     bool hadFliped = false;
+    Matrix4x4 originalProj;
+    bool cached = false;
     public void SetCameraFlip(bool willFlip)
     {
         if (_mainCamera == null || hadFliped == willFlip) { return; }

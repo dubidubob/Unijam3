@@ -32,14 +32,10 @@ public class InputManager
     };
 
     bool isStoped = false;
-    private void HandleStop()
+    public void HandleStop()
     {
         isStoped = !isStoped;
         SettingpopAction?.Invoke(isStoped);
-    }
-    public void Init()
-    {
-        HandleStop();
     }
 
     public void OnUpdate()

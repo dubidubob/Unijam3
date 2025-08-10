@@ -65,11 +65,11 @@ public class GameManager
 
             MovingEnemy wasd = go.GetComponent<MovingEnemy>();
 
+            if (!wasd.CheckCanDead())
+                return false;
+
             attacks[key].Dequeue();
-            go.GetComponent<MovingEnemy>().SetDead();
-            //if (wasd.CheckCanDead())
-            //{
-            //}
+            go.GetComponent<MovingEnemy>().SetDead();            
             ComboInc();
             return true;
         }

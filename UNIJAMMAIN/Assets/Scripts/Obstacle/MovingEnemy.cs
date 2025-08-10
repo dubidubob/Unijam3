@@ -120,9 +120,6 @@ public class MovingEnemy : MonoBehaviour
             Managers.Game.attacks[enemyType].Dequeue();
             SetDead();
             Managers.Game.DecHealth();
-            //if (CheckCanDead())
-            //{
-            //}
         }
     }
 }
