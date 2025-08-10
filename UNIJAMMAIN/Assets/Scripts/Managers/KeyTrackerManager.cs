@@ -48,7 +48,7 @@ public class KeyTrackerManager
 
             if (keyPressCounts[key] == maxPressCount )
             {
-                KeyArrowMissed.Invoke(key);
+                KeyArrowMissed?.Invoke(key);
                 StaticCoroutine.StartStaticCoroutine(BlockRealease(key));
                 Debug.Log($"{key} is blocked.");
             }

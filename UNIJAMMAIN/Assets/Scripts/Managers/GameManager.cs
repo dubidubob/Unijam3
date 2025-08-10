@@ -14,10 +14,11 @@ public class GameManager
     private int Health = 0;
     public readonly int MaxHealth = 10;
     private const int IncHealthUnit = 10;
-
+    // TODO : 이러지 말기
+    public Dictionary<GamePlayDefine.WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
     public void Clear()
     {
-        attacks = new Dictionary<string, Queue<GameObject>>();
+        attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
         playerTransform = null;
         currentPhase = 0;
         ComboContinue = null;
@@ -46,8 +47,7 @@ public class GameManager
     public void GameStart()
     {
         currentState = GameState.Battle;
-        Debug.Log("코드실행완료");
-        playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재위치받기
+        playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재 위치받기
         Health = MaxHealth;
         Time.timeScale = 1f;
     }
@@ -56,149 +56,31 @@ public class GameManager
         return playerTransform;
     }
 
-    private Dictionary<string, Queue<GameObject>> attacks = new Dictionary<string, Queue<GameObject>>();
 
-    public bool ReceiveKey(string key)
+    public bool ReceiveKey(GamePlayDefine.WASDType key)
     {
-        Debug.Log($"key pressed : {key}");
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
         {
-            GameObject go = attacks[key].Dequeue();
+            GameObject go = attacks[key].Peek();
 
-            switch (UnityEngine.Random.Range(0, 2))
-            {
-                case 0:
-                    {
-                        Managers.Sound.Play("Sounds/SFX/WASD_Glass_Broken_SFX_2");
-                        break;
-                    }
-                case 1:
-                    {
-                        Managers.Sound.Play("Sounds/SFX/WASD_Glass_Broken_SFX_1");
-                        break;
-                    }
-            }
-            if (go == null)
-            {
-                Debug.LogError("큰일난오류?");
-                return false;
-            }
-            ComboInc();
+            MovingEnemy wasd = go.GetComponent<MovingEnemy>();
+
+            attacks[key].Dequeue();
             go.GetComponent<MovingEnemy>().SetDead();
-
-            if (key == "A")
-            {
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/AKey_Action_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/AKey_Action_SFX_1");
-                            break;
-                        }
-                }
-
-            }
-            else if (key == "D")
-            {
-                switch (UnityEngine.Random.Range(0, 4))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/DKey_Action_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/DKey_Action_SFX_1");
-                            break;
-                        }
-                    case 2:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/DKey_TR_BL_Action_SFX_1");
-                            break;
-                        }
-
-                }
-            }
-            else if (key == "W")
-            {
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/WKey_Action_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/WKey_Action_SFX_1");
-                            break;
-                        }
-
-                }
-
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_2");
-                            break;
-                        }
-
-                }
-                }
-            else if (key == "S")
-            {
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/SKey_Action_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/SKey_Action_SFX_1");
-                            break;
-                        }
-                }
-                switch (UnityEngine.Random.Range(0, 2))
-                {
-                    case 0:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_1");
-                            break;
-                        }
-                    case 1:
-                        {
-                            Managers.Sound.Play("Sounds/SFX/W,SKey_Action_Shout_SFX_2");
-                            break;
-                        }
-
-                }
-            }
-           
-
+            //if (wasd.CheckCanDead())
+            //{
+            //}
+            ComboInc();
             return true;
         }
 
-        Managers.Tracker.MissedKeyPress(key);
-        MissedKeyUpdate.Invoke(key);
+        //Managers.Tracker.MissedKeyPress(key);
+        //MissedKeyUpdate?.Invoke(key);
         DecHealth();
         return false;
     }
 
-    public void AddAttackableEnemy(string key, GameObject go)
+    public void AddAttackableEnemy(GamePlayDefine.WASDType key, GameObject go)
     {
         if (!attacks.ContainsKey(key))
         {
@@ -212,7 +94,6 @@ public class GameManager
         Combo++;
         if (ComboContinue != null)
         {
-            Debug.Log("Invoke ComboContinue");
             ComboContinue.Invoke(Combo);
         }
         if (Combo > 0 && Combo % IncHealthUnit == 0)
@@ -222,7 +103,6 @@ public class GameManager
         Debug.Log(Combo); 
         if(Combo%10==0)
         {
-            Debug.Log("콤보 진입");
             Managers.Sound.Play("SFX/Combo_Breathe_SFX");
         }
     }

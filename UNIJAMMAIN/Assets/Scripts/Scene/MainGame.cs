@@ -1,9 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-
 public class MainGame : BaseScene   // MainGame Ŭ������ BaseScene Ŭ������ ����� ������� ���� ���� �� �ʿ��� �ʱ�ȭ �۾��� �����ϴ� Ŭ����
 {
 
@@ -20,12 +14,12 @@ public class MainGame : BaseScene   // MainGame Ŭ������ BaseScene �
    
     }
 
-    private void Start()
+    private void Awake()
     {
         Init();
 
         // Managers.UI.ShowPopUpUI<S1_PopUp>();
-        // Managers.Sound.Play("Sounds/BGM/Main_Bgm",Define.Sound.BGM);
+        Managers.Sound.Play("Sounds/BGM/Test",Define.Sound.BGM);
         Managers.Game.GameStart();
     }
     public void Option()

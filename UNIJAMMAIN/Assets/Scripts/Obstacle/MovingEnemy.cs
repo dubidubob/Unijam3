@@ -1,27 +1,52 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
 {
-    [SerializeField] private GamePlayDefine.MovingAttackType enemyType = GamePlayDefine.MovingAttackType.D;
-    [SerializeField] private float startPosScale = 4.0f;
-    [SerializeField] private float endPosScale = 2.8f;
-    private float speed = 1f;
+    private GamePlayDefine.WASDType enemyType;
+
     private Vector3 playerPos = Vector3.zero;
-    private float duration;
-
-    // ÇöÀç ³» ½ÃÀÛ À§Ä¡¿¡¼­ targetpos±îÁö 1ÃÊ °É·Á¾ßÇÑ´Ù¸é, speed°¡ ¸îÀÌ¾î¾ß ÇÏ³ª?
-    private void Calculate()
-    {
-        float distance = startPosScale - endPosScale;
-        // ¿øÇÏ´Â ½Ã°£(duration)¿¡ µµÂøÇÏ·Á¸é speed = distance / duration
-        duration = 1f;
-        speed = distance / duration;
-    }
-
+    private float speed, intervalBetweenNext, movingDuration;
+    private float _elapsedTime;
+    private KnockbackPattern knockback;
+    private SpriteRenderer monsterImg;
+    private Vector3 origin;
+    private bool isResizeable = false;
+    private Vector2 sizeDiffRate;
+    
     private void OnEnable()
     {
-        Calculate();
+        _elapsedTime = 0f;
+        playerPos = Managers.Game.playerTransform.position;
+        knockback = new KnockbackPattern();
+        monsterImg = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        if (monsterImg != null)
+        {
+            origin = monsterImg.transform.localScale;
+        }
+
+        if(enemyType == GamePlayDefine.WASDType.W || enemyType == GamePlayDefine.WASDType.S)
+            isResizeable = true;
+    }
+
+    public bool CheckCanDead()
+    {
+        if (knockback.CheckKnockback())
+        {
+            ExecuteKnockback();
+            return false;
+        }
+        return true;
+    }
+
+    private void ExecuteKnockback()
+    {
+        Vector3 tmp = (playerPos - transform.position).normalized * intervalBetweenNext;
+        transform.position -= tmp;
     }
 
     public void SetDead()
@@ -30,14 +55,52 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetSpeed(float movingDuration)
+    public void SetVariance(float distance, float movingDuration, int numInRow, Vector2 sizeDiffRate, GamePlayDefine.WASDType wasdType)
     {
-        duration = movingDuration;
+        enemyType = wasdType;
+        this.sizeDiffRate = sizeDiffRate;
+        this.movingDuration = movingDuration;
+        speed = distance / this.movingDuration;
+
+        intervalBetweenNext = distance / (float)numInRow;
     }
-   
+    public void SetKnockback(bool isTrue)
+    {
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (isTrue)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        else 
+        {
+            spriteRenderer.color = Color.white;
+        }
+        knockback.OnKnockback(isTrue);
+    }
+
     private void Update()
     {
+        if (_elapsedTime <= movingDuration && isResizeable)
+        {
+            PerspectiveResize(_elapsedTime);
+            _elapsedTime += Time.deltaTime;
+        }
         Move();
+    }
+
+    private void PerspectiveResize(float _elapsedTime)
+    {
+        float t = _elapsedTime / movingDuration;
+        t = Mathf.Clamp01(t); // 0~1ë¡œ ê³ ì • í™•ì¸
+
+        if (enemyType == GamePlayDefine.WASDType.W) // ìž‘ì•„ì¡Œë‹¤ ì»¤ì§€ê¸°
+        {
+            monsterImg.transform.localScale = Vector3.Lerp(origin * sizeDiffRate.x, origin, t);
+        }
+        else if (enemyType == GamePlayDefine.WASDType.S) // ì»¤ì¡Œë‹¤ ìž‘ì•„ì§€ê¸°
+        {
+            monsterImg.transform.localScale = Vector3.Lerp(origin * sizeDiffRate.y, origin, t);
+        }
     }
 
     private void Move()
@@ -45,16 +108,21 @@ public class MovingEnemy : MonoBehaviour
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "detectArea")
         {
-            Managers.Game.AddAttackableEnemy(enemyType.ToString(), this.gameObject); 
+            Managers.Game.AddAttackableEnemy(enemyType, this.gameObject);
         }
-        else if (collision.tag == "Player")
+        else if (collision.tag == "dangerLine")
         {
-            Managers.Game.DecHealth();
+            Managers.Game.attacks[enemyType].Dequeue();
             SetDead();
+            Managers.Game.DecHealth();
+            //if (CheckCanDead())
+            //{
+            //}
         }
     }
 }
