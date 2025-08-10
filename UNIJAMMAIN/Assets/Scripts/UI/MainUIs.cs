@@ -32,7 +32,10 @@ public class MainUIs : MonoBehaviour
     {
         // 임시로 4단계로 표현
         healthValue = (float)health / (float)MaxHealth;
-        blurController.SetBlur(healthValue); // 체력값을 비교하여 블러표시
+        if (blurController != null)
+        {
+            blurController.SetBlur(healthValue); // 체력값을 비교하여 블러표시
+        }
 
         /* 기존 방식 -> slide value 표시
         healthSilder.value = (float)health / (float)MaxHealth;
@@ -102,8 +105,6 @@ public class MainUIs : MonoBehaviour
 
         if (phase > 0 && bgPlace!=null)
             bgPlace.sprite = Bgs[phase - 1];
-        else
-            Debug.LogWarning($"phase index out {phase}");
     }
 }
 

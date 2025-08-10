@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GamePlayDefine
 {
-    public enum MovingAttackType //무슨 키로 받을지
+    public enum WASDType //무슨 키로 받을지
     {
         A,
         D,
@@ -12,12 +12,18 @@ public class GamePlayDefine
         S,
         MaxCnt
     }
-    public enum RangedAttackType
+    public enum DiagonalType
     {
         LeftUp,
         LeftDown,
         RightUp,
         RightDown,
+        MaxCnt
+    }
+    public enum MouseType
+    { 
+        Left,
+        Right,
         MaxCnt
     }
 

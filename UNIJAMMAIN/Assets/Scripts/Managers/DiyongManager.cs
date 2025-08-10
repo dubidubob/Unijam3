@@ -30,10 +30,6 @@ public class DiyongManager : MonoBehaviour
     public Sprite[] StackSprite;
     private void Awake()
     {
-
-        Managers.Input.KeyBoardChecking -= PressButtonArrow;
-        Managers.Input.KeyBoardChecking += PressButtonArrow;
-
         Managers.Input.KeyArrowcodeAction -= PressButtonKeyBoard;
         Managers.Input.KeyArrowcodeAction += PressButtonKeyBoard;
 
@@ -172,6 +168,7 @@ public class DiyongManager : MonoBehaviour
     {
         Debug.Log("�׽���������");
     }
+    // TODO 
     void PressButtonArrow(KeyCode attackType) // WASD
     {
         GameObject gogo;
@@ -223,7 +220,7 @@ public class DiyongManager : MonoBehaviour
         if(nonActionSprite != null)
             spriteRenderer.sprite = nonActionSprite;
     }
-    void PressButtonKeyBoard(GamePlayDefine.RangedAttackType attackType)
+    void PressButtonKeyBoard(GamePlayDefine.DiagonalType attackType)
     {
         GameObject gogo;
         string key = attackType.ToString();

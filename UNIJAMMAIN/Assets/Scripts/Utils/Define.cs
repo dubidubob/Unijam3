@@ -33,8 +33,6 @@ public class Define
             maxScore = 0;
         }
     }
-
-
     public enum UseType
     {
         Active,
@@ -61,12 +59,6 @@ public class Define
         PointerDown,
         PointerUP
     }
-    public enum MouseEvent
-    {
-        Press,
-        Click,
-        End
-    }
     public enum Scene
     {
         Unknown,
@@ -88,7 +80,10 @@ public class Define
     public enum MonsterType
     { 
         WASD,
+        Diagonal,
         Knockback,
+        MouseClick,
+        CameraFlip,
         MaxCount
     }
 }

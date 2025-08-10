@@ -14,7 +14,7 @@ public class SettingActivater : MonoBehaviour
         Managers.Input.SettingpopAction -= ShowPanel;
     }
 
-    private void ShowPanel()
+    private void ShowPanel(bool isStop)
     {
         if(panel.activeSelf)
             panel.SetActive(false);
