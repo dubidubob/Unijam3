@@ -70,7 +70,7 @@ public class UI_Manager
         {
             name = typeof(T).Name;
         }
-        GameObject go = Managers.Resource.Instantiate($"UI/PopUP/{name}");
+        GameObject go = Managers.Resource.Instantiate($"UI/PopUp/{name}");
         T popUp = Util.GetOrAddComponent<T>(go);
         _popUpStack.Push(popUp);
         go.transform.SetParent(Root.transform);
@@ -78,7 +78,7 @@ public class UI_Manager
     }
 
     public T ShowPopUpBossPaternChicken<T>(string name = null) where T : UI_Popup
-    {
+    {   
         if (string.IsNullOrEmpty(name))
         {
             name = typeof(T).Name;
