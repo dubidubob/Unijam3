@@ -76,6 +76,18 @@ public class UI_Manager
         go.transform.SetParent(Root.transform);
         return popUp;
     }
+
+    public T ShowPopUpBossPaternChicken<T>(string name = null) where T : UI_Popup
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            name = typeof(T).Name;
+        }
+        GameObject go = Managers.Resource.Instantiate($"EnemyPrefs/Boss/{name}");
+        T popUp = Util.GetOrAddComponent<T>(go);
+        go.transform.SetParent(Root.transform);
+        return popUp;
+    }
     public T ShowSceneUI<T>(string name = null) where T : UI_Scene
     {
         if (string.IsNullOrEmpty(name))
