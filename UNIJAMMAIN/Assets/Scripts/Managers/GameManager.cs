@@ -65,8 +65,8 @@ public class GameManager
 
             MovingEnemy wasd = go.GetComponent<MovingEnemy>();
 
-            if (!wasd.CheckCanDead())
-                return false;
+            //if (!wasd.CheckCanDead())
+            //    return false;
 
             attacks[key].Dequeue();
             go.GetComponent<MovingEnemy>().SetDead();            
@@ -100,7 +100,6 @@ public class GameManager
         {
             IncHealth();
         }
-        Debug.Log(Combo); 
         if(Combo%10==0)
         {
             Managers.Sound.Play("SFX/Combo_Breathe_SFX");
@@ -117,7 +116,6 @@ public class GameManager
             Health--;
         }
         HealthUpdate.Invoke(Health);
-        Debug.Log("Dec Health");
     }
 
     public void IncHealth()
