@@ -44,15 +44,23 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
-    int maxCnt = 1;
+    int maxCnt = 2;
     int[] idx = { 0, 1, 2, 3 };
+    private float _lastSpawnTime = -1f; // 처음에는 -1로 초기화해서 첫 호출 시 분기
+
     public void Spawn(MonsterData data)
     {
+        float now = Time.time;
+        if (_lastSpawnTime >= 0f) // 첫 호출이 아니면 경과 시간 출력
+        {
+            float elapsed = now - _lastSpawnTime;
+            Debug.Log($"[Spawn Delay] {elapsed:F3}초 경과");
+        }
+        _lastSpawnTime = now; // 이번 호출 시각 기록
+
         int cnt = UnityEngine.Random.Range(1, maxCnt);
-        // int cnt = 1;
         for (int i = 0; i < cnt; i++)
         {
-            // WASDType enemyType = (WASDType)UnityEngine.Random.Range(0, (int)WASDType.MaxCnt);
             WASDType enemyType = (WASDType)idx[UnityEngine.Random.Range(0, idx.Length)];
 
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
@@ -64,14 +72,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
             float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
             movingEnemy.SetVariance(distance, data.moveToHolderDuration, data.numInRow, sizeDiffRate, enemyType);
-            if (data.monsterType == Define.MonsterType.Knockback)
-            {
-                movingEnemy.SetKnockback(true);
-            }
-            else
-            {
-                movingEnemy.SetKnockback(false);
-            }
+            movingEnemy.SetKnockback(data.monsterType == Define.MonsterType.Knockback);
         }
     }
 
