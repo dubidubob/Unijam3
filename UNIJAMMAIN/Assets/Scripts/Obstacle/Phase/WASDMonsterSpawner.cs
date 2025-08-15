@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
@@ -40,29 +40,57 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
             _spawnPosition[p.WASDType] = p.spawnPos.transform.position;
             _targetPosition[p.WASDType] = p.targetPos.transform.position;
-            // p.playerPos =
         }
     }
 
-    int maxCnt = 2;
-    int[] idx = { 0, 1, 2, 3 };
-    private float _lastSpawnTime = -1f; // Ã³À½¿¡´Â -1·Î ÃÊ±âÈ­ÇØ¼­ Ã¹ È£Ãâ ½Ã ºĞ±â
+    private double _spawnInterval; // ê¸°ë³¸ ìŠ¤í° ê°„ê²©
+    private double _nextSpawnTime = 0f;   // ë‹¤ìŒ ìŠ¤í° ì˜ˆì • ì‹œê°
+    private bool _isFirstSpawn = true;   // ì²« ìŠ¤í° ì—¬ë¶€
+    private double _lastSpawnTime = -1.0; // ë””ë²„ê·¸ìš©
+    private static double Now => Time.realtimeSinceStartupAsDouble;
 
     public void Spawn(MonsterData data)
     {
-        float now = Time.time;
-        if (_lastSpawnTime >= 0f) // Ã¹ È£ÃâÀÌ ¾Æ´Ï¸é °æ°ú ½Ã°£ Ãâ·Â
-        {
-            float elapsed = now - _lastSpawnTime;
-            // Debug.Log($"[Spawn Delay] {elapsed:F3}ÃÊ °æ°ú");
-        }
-        _lastSpawnTime = now; // ÀÌ¹ø È£Ãâ ½Ã°¢ ±â·Ï
+        double currentTime = Now;
 
-        int cnt = UnityEngine.Random.Range(1, maxCnt);
+        if (_isFirstSpawn)
+        {
+            _spawnInterval = data.spawnDuration;
+            _nextSpawnTime = currentTime;
+            DoSpawn(data, currentTime);
+            _nextSpawnTime += _spawnInterval;
+            _isFirstSpawn = false;
+            return;
+        }
+
+        bool spawnedThisCall = false;
+        while (currentTime >= _nextSpawnTime)
+        {
+            DoSpawn(data, currentTime);
+            _nextSpawnTime += _spawnInterval;
+            spawnedThisCall = true;
+        }
+        // ë””ë²„ê·¸ìš©: ì‹¤ì œ ê²½ê³¼ ì‹œê°„ ì¶œë ¥
+        if (spawnedThisCall && _lastSpawnTime > 0.0)
+        {
+            double actualInterval = currentTime - _lastSpawnTime;
+            double err = actualInterval - _spawnInterval;
+            // Debug.Log($"[Spawn] ëª©í‘œ: {_spawnInterval:F3}s, ì‹¤ì œ: {actualInterval:F3}s, ì˜¤ì°¨: {err:+0.000;-0.000;0.000}s");
+        }
+    }
+
+    int maxCnt = 1;
+    int[] idx = { 3 };//{ 0, 1, 2, 3 };
+    private void DoSpawn(MonsterData data, double currentTime)
+    {
+        _lastSpawnTime = currentTime;
+
+        // int Random.RangeëŠ” ìƒí•œ ë°°ì œì´ë¯€ë¡œ +1 í•´ì„œ í¬í•¨ ë²”ìœ„ ë§ì¶¤
+        int cnt = UnityEngine.Random.Range(1, maxCnt + 1);
+
         for (int i = 0; i < cnt; i++)
         {
             WASDType enemyType = (WASDType)idx[UnityEngine.Random.Range(0, idx.Length)];
-
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
 
             poolable = Managers.Pool.Pop(enemy.go);
@@ -79,7 +107,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)
     { 
         this.sizeDiffRate = sizeDiffRate;
-        this.maxCnt = maxCnt > 4 ? 4 : maxCnt;
+        this.maxCnt = Mathf.Clamp(maxCnt, 1, 4);
         this.idx = idx;
     }
 }
