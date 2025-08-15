@@ -54,7 +54,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         if (_lastSpawnTime >= 0f) // 첫 호출이 아니면 경과 시간 출력
         {
             float elapsed = now - _lastSpawnTime;
-            Debug.Log($"[Spawn Delay] {elapsed:F3}초 경과");
+            // Debug.Log($"[Spawn Delay] {elapsed:F3}초 경과");
         }
         _lastSpawnTime = now; // 이번 호출 시각 기록
 

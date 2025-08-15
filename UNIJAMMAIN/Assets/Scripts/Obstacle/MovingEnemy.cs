@@ -13,10 +13,12 @@ public class MovingEnemy : MonoBehaviour
     private Vector3 origin;
     private bool isResizeable = false;
     private Vector2 sizeDiffRate;
-    
+    private float _enabledTime;
     private void OnEnable()
     {
         _elapsedTime = 0f;
+        // 현재 시각 기록
+        _enabledTime = Time.time;
         playerPos = Managers.Game.playerTransform.position;
         knockback = new KnockbackPattern();
         monsterImg = GetComponentInChildren<SpriteRenderer>();
@@ -78,7 +80,7 @@ public class MovingEnemy : MonoBehaviour
         knockback.OnKnockback(isTrue);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_elapsedTime <= movingDuration && isResizeable)
         {
@@ -108,7 +110,7 @@ public class MovingEnemy : MonoBehaviour
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "detectArea")
@@ -121,5 +123,12 @@ public class MovingEnemy : MonoBehaviour
             SetDead();
             Managers.Game.DecHealth();
         }
+        //else if (collision.tag == "test")
+        //{
+        //    float elapsed = Time.time - _enabledTime;
+        //    // Debug.Log($"{enemyType} 경과 시간: {elapsed:F2}초");
+        //    Managers.Game.attacks[enemyType].Dequeue();
+        //    SetDead();
+        //}
     }
 }

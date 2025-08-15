@@ -20,7 +20,7 @@ MonoBehaviour:
       monsterType: 0
       numInRow: 1
       spawnDuration: 0.7
-      moveToHolderDuration: 2.1
+      moveToHolderDuration: 0.7
       speedUpRate: 1
     - isIn: 0
       monsterType: 2
