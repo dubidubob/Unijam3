@@ -13,6 +13,30 @@ MonoBehaviour:
   m_Name: Chapter
   m_EditorClassIdentifier: 
   phases:
+  - duration: 10
+    startDelay: 0
+    monsterDatas:
+    - isIn: 1
+      monsterType: 0
+      numInRow: 1
+      spawnDuration: 0.7
+      moveToHolderDuration: 1.4
+      speedUpRate: 1
+  - duration: 15
+    startDelay: 0
+    monsterDatas:
+    - isIn: 1
+      monsterType: 0
+      numInRow: 1
+      spawnDuration: 0.7
+      moveToHolderDuration: 1.4
+      speedUpRate: 1
+    - isIn: 1
+      monsterType: 1
+      numInRow: 1
+      spawnDuration: 2.1
+      moveToHolderDuration: 1
+      speedUpRate: 1
   - duration: 1000
     startDelay: 0
     monsterDatas:
@@ -20,38 +44,17 @@ MonoBehaviour:
       monsterType: 0
       numInRow: 1
       spawnDuration: 0.7
-      moveToHolderDuration: 0.7
+      moveToHolderDuration: 1.4
       speedUpRate: 1
-    - isIn: 0
-      monsterType: 2
-      numInRow: 1
-      spawnDuration: 3
-      moveToHolderDuration: 1
-      speedUpRate: 1
-    - isIn: 0
-      monsterType: 1
-      numInRow: 1
-      spawnDuration: 1
-      moveToHolderDuration: 1
-      speedUpRate: 1
-  - duration: 1000
-    startDelay: 0.12
-    monsterDatas:
     - isIn: 1
-      monsterType: 0
-      numInRow: 1
-      spawnDuration: 2
-      moveToHolderDuration: 2
-      speedUpRate: 1
-    - isIn: 0
-      monsterType: 2
-      numInRow: 1
-      spawnDuration: 3
-      moveToHolderDuration: 1
-      speedUpRate: 1
-    - isIn: 0
       monsterType: 1
       numInRow: 1
-      spawnDuration: 1
+      spawnDuration: 4.2
       moveToHolderDuration: 1
+      speedUpRate: 1
+    - isIn: 1
+      monsterType: 2
+      numInRow: 1
+      spawnDuration: 2.8
+      moveToHolderDuration: 1.4
       speedUpRate: 1

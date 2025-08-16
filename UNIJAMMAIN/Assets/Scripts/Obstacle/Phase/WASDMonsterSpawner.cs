@@ -80,7 +80,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     }
 
     int maxCnt = 1;
-    int[] idx = { 3 };//{ 0, 1, 2, 3 };
+    int[] idx = { 0, 1, 2, 3 };
     private void DoSpawn(MonsterData data, double currentTime)
     {
         _lastSpawnTime = currentTime;
@@ -92,11 +92,10 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         {
             WASDType enemyType = (WASDType)idx[UnityEngine.Random.Range(0, idx.Length)];
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
-
-            poolable = Managers.Pool.Pop(enemy.go);
-            poolable.gameObject.transform.position = _spawnPosition[enemyType];
-
-            movingEnemy = poolable.gameObject.GetComponent<MovingEnemy>();
+            GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
+            
+            go.transform.position = _spawnPosition[enemyType];
+            movingEnemy = go.GetComponent<MovingEnemy>();
 
             float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
             movingEnemy.SetVariance(distance, data.moveToHolderDuration, data.numInRow, sizeDiffRate, enemyType);

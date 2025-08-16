@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class SoundManager
 {
@@ -53,6 +50,7 @@ public class SoundManager
             audioSource.pitch = pitch;
             audioSource.clip = audioClip;
             audioSource.loop = true;
+            BGM = audioSource;
             audioSource.Play();
         }
         else
@@ -125,6 +123,12 @@ public class SoundManager
         }
         return audioClip;
     }
+
+    public void StopBGM()
+    {
+        BGM.Stop();
+    }
+
     public void Stop(AudioSource audioSource)
     {
         audioSource.Stop();
