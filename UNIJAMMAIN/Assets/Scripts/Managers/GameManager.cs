@@ -14,6 +14,8 @@ public class GameManager
     private int Health = 0;
     public readonly int MaxHealth = 10;
     private const int IncHealthUnit = 10;
+
+    public int perfect = 0;
     // TODO : 이러지 말기
     public Dictionary<GamePlayDefine.WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
     public void Clear()
@@ -32,21 +34,29 @@ public class GameManager
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함
     public enum GameState
     {
-        CameraMoving,
         Battle,
-        Store,
-        Bless,
+        Stage
+        
+    }
+
+    public enum PlayerState
+    {
+        Normal,
+        GroggyAttack
     }
     public GameState currentState;
+    public PlayerState currentPlayerState;
     //플레이어 죽을 때 실행시킬 함수
     public void PlayerDied()
     {
        
     }
+
     //인게임 데이터 초기화 
     public void GameStart()
     {
         currentState = GameState.Battle;
+        currentPlayerState = PlayerState.Normal;
         playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재 위치받기
         Health = MaxHealth;
         Time.timeScale = 1f;
