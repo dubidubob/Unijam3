@@ -67,7 +67,7 @@ public class GameManager
     }
 
 
-    public bool ReceiveKey(GamePlayDefine.WASDType key)
+    public void ReceiveKey(GamePlayDefine.WASDType key)
     {
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
         {
@@ -75,23 +75,24 @@ public class GameManager
 
             MovingEnemy wasd = go.GetComponent<MovingEnemy>();
 
-            //if (!wasd.CheckCanDead())
-            //    return false;
-
-            attacks[key].Dequeue();
-            go.GetComponent<MovingEnemy>().SetDead();            
-            ComboInc();
-            return true;
+            if (wasd.CheckCanDead())
+            {
+                attacks[key].Dequeue();
+                go.GetComponent<MovingEnemy>().SetDead();
+                ComboInc();
+            }
         }
-
-        //Managers.Tracker.MissedKeyPress(key);
-        //MissedKeyUpdate?.Invoke(key);
-        DecHealth();
-        return false;
+        else
+        {
+            //Managers.Tracker.MissedKeyPress(key);
+            //MissedKeyUpdate?.Invoke(key);
+            DecHealth();
+        }
     }
 
     public void AddAttackableEnemy(GamePlayDefine.WASDType key, GameObject go)
     {
+        if(go.GetComponent<MovingEnemy>().isKnockbacked) return;
         if (!attacks.ContainsKey(key))
         {
             attacks[key] = new Queue<GameObject>();

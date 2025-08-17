@@ -14,13 +14,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MergePhase123.unity
     guid: e133d411e220f384abcee4e2c860cb47
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GamePlayScene.unity
     guid: 4a674d4c19ac0a24894ae7c078b394f8
   - enabled: 0
     path: Assets/Scenes/GoodEnding.unity
     guid: 3cf42e930ce4ac840ab472577279f5ca
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StageScene.unity
     guid: 2ff1573b4e2f0444db9923291c1609e3
+  - enabled: 1
+    path: Assets/Scenes/Test3D.unity
+    guid: 028fd60f6590a0c4bb7c46c76c7da36c
   m_configObjects: {}

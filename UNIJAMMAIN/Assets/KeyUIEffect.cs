@@ -2,30 +2,66 @@ using UnityEngine;
 
 public class KeyUIEffect : MonoBehaviour
 {
+    [SerializeField] bool isWasd = true;
+
     [SerializeField] GamePlayDefine.WASDType type = GamePlayDefine.WASDType.A;
     [SerializeField] Sprite candidate;
+
+    [SerializeField] GamePlayDefine.DiagonalType type2 = GamePlayDefine.DiagonalType.RightUp;
+    
     private Sprite basic;
-    private SpriteRenderer sp;
+    private Color baseColor;
+    private SpriteRenderer[] sp;
     private void Awake()
     {
-        sp = GetComponentInChildren<SpriteRenderer>();
-        basic = sp.sprite;
+        sp = GetComponentsInChildren<SpriteRenderer>();
 
-        Managers.Input.KeyBoardChecking -= TurnUIEffect;
-        Managers.Input.KeyBoardChecking += TurnUIEffect;
+        if (isWasd)
+        {
+            baseColor = sp[0].color;
+            basic = sp[1].sprite;
+
+            Managers.Input.KeyBoardChecking -= TurnUIEffect;
+            Managers.Input.KeyBoardChecking += TurnUIEffect;
+        }
+        else
+        {
+            sp[0].enabled = false;
+
+            Managers.Input.KeyArrowcodeAction -= TurnUIEffect;
+            Managers.Input.KeyArrowcodeAction += TurnUIEffect;
+        }
+    }
+
+    private void TurnUIEffect(GamePlayDefine.DiagonalType t)
+    {
+        if (type2 == t)
+        {
+            sp[0].enabled = true;
+            Invoke("TurnOff", 0.2f);
+        }
     }
 
     private void TurnUIEffect(GamePlayDefine.WASDType t)
     {
         if (type == t)
-        { 
-            sp.sprite = candidate;
+        {
+            sp[0].color = new Color32(0xFF, 0xFB, 0x37, 0xFF);
+            sp[1].sprite = candidate;
             Invoke("TurnOff", 0.2f);
-        }
+        }        
     }
 
     private void TurnOff()
-    { 
-        sp.sprite = basic;
+    {
+        if (isWasd)
+        {
+            sp[0].color = baseColor;
+            sp[1].sprite = basic;
+        }
+        else
+        {
+            sp[0].enabled = false;
+        }
     }
 }

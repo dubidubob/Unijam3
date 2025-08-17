@@ -49,7 +49,7 @@ public class Managers : MonoBehaviour
                 go.AddComponent<Managers>();
             }
 
-            // DontDestroyOnLoad(go);
+            DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
             s_instance._pool.Init();
             s_instance._pause.Init();

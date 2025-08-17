@@ -70,8 +70,7 @@ public class SpawnController : MonoBehaviour
     }
 
     bool hadFliped = false;
-    Matrix4x4 originalProj;
-    bool cached = false;
+    
     public void SetCameraFlip(bool willFlip)
     {
         if (_mainCamera == null || hadFliped == willFlip) { return; }

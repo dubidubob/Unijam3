@@ -1,4 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+
+public class Knockback
+{
+    bool isEnabled;
+    int hp;
+    public void OnKnockback(bool isOn)
+    {
+        isEnabled = isOn;
+        hp = 2;
+    }
+
+    public bool CheckKnockback()
+    {
+        if (!isEnabled) return false;
+        if (--hp <= 0) return false;
+
+        return true;
+    }
+}
 
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
@@ -6,24 +26,27 @@ public class MovingEnemy : MonoBehaviour
     private GamePlayDefine.WASDType enemyType;
 
     private Vector3 playerPos = Vector3.zero;
-    private float speed, intervalBetweenNext, movingDuration;
+    private float speed, movingDuration;
     private float _elapsedTime;
-    private KnockbackPattern knockback;
+    private Knockback knockback;
     private SpriteRenderer monsterImg;
     private Vector3 origin;
     private bool isResizeable = false;
     private Vector2 sizeDiffRate;
-    
+    public bool isKnockbacked=false;
+
+    private float backwardDuration, knockbackDistance;
     private void OnEnable()
     {
         _elapsedTime = 0f;
-        playerPos = Managers.Game.playerTransform.position;
-        knockback = new KnockbackPattern();
+        knockback = new Knockback();
+        isKnockbacked = false;
         monsterImg = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Start()
     {
+        playerPos = Managers.Game.playerTransform.position;
         if (monsterImg != null)
         {
             origin = monsterImg.transform.localScale;
@@ -31,22 +54,6 @@ public class MovingEnemy : MonoBehaviour
 
         if(enemyType == GamePlayDefine.WASDType.W || enemyType == GamePlayDefine.WASDType.S)
             isResizeable = true;
-    }
-
-    public bool CheckCanDead()
-    {
-        if (knockback.CheckKnockback())
-        {
-            ExecuteKnockback();
-            return false;
-        }
-        return true;
-    }
-
-    private void ExecuteKnockback()
-    {
-        Vector3 tmp = (playerPos - transform.position).normalized * intervalBetweenNext;
-        transform.position -= tmp;
     }
 
     public void SetDead()
@@ -60,9 +67,9 @@ public class MovingEnemy : MonoBehaviour
         enemyType = wasdType;
         this.sizeDiffRate = sizeDiffRate;
         this.movingDuration = movingDuration;
+        backwardDuration = movingDuration * 0.125f;
+        knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
-
-        intervalBetweenNext = distance / (float)numInRow;
     }
     public void SetKnockback(bool isTrue)
     {
@@ -78,7 +85,43 @@ public class MovingEnemy : MonoBehaviour
         knockback.OnKnockback(isTrue);
     }
 
-    private void Update()
+    public bool CheckCanDead()
+    {
+        if (knockback.CheckKnockback())
+        {
+            if(this.isActiveAndEnabled) StartCoroutine(ExecuteKnockback());
+            isKnockbacked = true; 
+            return false;
+        }
+        else
+            return true;
+    }
+
+    bool isKnockbackActive = false;
+    IEnumerator ExecuteKnockback()
+    {
+        isKnockbackActive = true;
+        float elapsedTime = 0f;
+        Vector3 knockbackDirection = (transform.position - playerPos).normalized;
+
+        while (elapsedTime < backwardDuration)
+        {
+            // 진행되고 있는 distance에서 movingDuration의 1/4 시간 동안 뒤로 물러나고,
+            float t = elapsedTime / backwardDuration;
+            // 이때 가속도가 붙기
+            float knockbackMovement = Mathf.Lerp(knockbackDistance, 0, (t * t));
+            transform.position += knockbackDirection * knockbackMovement * Time.deltaTime * 2.0f;
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 앞으로 갈 때는 등속도 운동을 해야함.
+        isKnockbackActive = false;
+    }
+
+
+    private void FixedUpdate()
     {
         if (_elapsedTime <= movingDuration && isResizeable)
         {
@@ -86,6 +129,13 @@ public class MovingEnemy : MonoBehaviour
             _elapsedTime += Time.deltaTime;
         }
         Move();
+    }
+
+    private void Move()
+    {
+        if (isKnockbackActive) return;
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
+        transform.position = newPosition;
     }
 
     private void PerspectiveResize(float _elapsedTime)
@@ -102,13 +152,7 @@ public class MovingEnemy : MonoBehaviour
             monsterImg.transform.localScale = Vector3.Lerp(origin * sizeDiffRate.y, origin, t);
         }
     }
-
-    private void Move()
-    {
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
-        transform.position = newPosition;
-    }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "detectArea")
@@ -121,5 +165,12 @@ public class MovingEnemy : MonoBehaviour
             SetDead();
             Managers.Game.DecHealth();
         }
+        //else if (collision.tag == "test")
+        //{
+        //    float elapsed = Time.time - _enabledTime;
+        //    // Debug.Log($"{enemyType} 경과 시간: {elapsed:F2}초");
+        //    Managers.Game.attacks[enemyType].Dequeue();
+        //    SetDead();
+        //}
     }
 }
