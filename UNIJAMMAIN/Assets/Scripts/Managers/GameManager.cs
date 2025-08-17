@@ -12,7 +12,7 @@ public class GameManager
     public Action<string> MissedKeyUpdate = null;
     private int Combo = 0;
     private int Health = 0;
-    public readonly int MaxHealth = 10;
+    public readonly int MaxHealth = 100;
     private const int IncHealthUnit = 10;
 
     public int perfect = 0;
@@ -124,7 +124,7 @@ public class GameManager
         
         if (Health > 0)
         {
-            Health--;
+            Health -= 6;
         }
         HealthUpdate.Invoke(Health);
     }

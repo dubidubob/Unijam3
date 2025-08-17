@@ -45,3 +45,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Bluring
+    uniqueID: 2803303335
+    locked: 0
+  - name: Enemy
+    uniqueID: 3007290161
+    locked: 0
