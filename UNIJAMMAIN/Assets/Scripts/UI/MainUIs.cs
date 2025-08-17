@@ -30,11 +30,13 @@ public class MainUIs : MonoBehaviour
 
     private void HealthDec(int health)
     {
+        // 피해 받는 이미지 
+        blurController.ShowDamageEffect();
         // 임시로 4단계로 표현
-        healthValue = (float)health / (float)MaxHealth;
+        // healthValue = (float)health / (float)MaxHealth;
         if (blurController != null)
         {
-            blurController.SetBlur(healthValue); // 체력값을 비교하여 블러표시
+            blurController.SetBlur(health,MaxHealth); // 체력값을 비교하여 블러표시
         }
 
         if (Managers.Game.currentPlayerState == GameManager.PlayerState.Normal) // 현재 일반 몹과 상호작용 가능한 상태, 데미지를 받는 상태일때.
@@ -42,7 +44,7 @@ public class MainUIs : MonoBehaviour
             // 임시로 4단계로 표현
             healthValue = (float)health / (float)MaxHealth;
             if(blurController!=null)
-                blurController.SetBlur(healthValue); // 체력값을 비교하여 블러표시
+                blurController.SetBlur(health,MaxHealth); // 체력값을 비교하여 블러표시
 
         }
         /* 기존 방식 -> slide value 표시
