@@ -13,13 +13,13 @@ public class MainUIs : MonoBehaviour
     [SerializeField] private Image bgPlace;
     [SerializeField] private BlurController blurController;
     private int MaxHealth;
-    private float healthValue;
+    private float beforeHealth = 10000;
     void Awake()
     {
         Managers.Game.ComboContinue -= UpdateCombo;
         Managers.Game.ComboContinue += UpdateCombo;
-        Managers.Game.HealthUpdate -= HealthDec;
-        Managers.Game.HealthUpdate += HealthDec;
+        Managers.Game.HealthUpdate -= HealthChange;
+        Managers.Game.HealthUpdate += HealthChange;
         Managers.Game.PhaseUpdate -= ChangeBg;
         Managers.Game.PhaseUpdate += ChangeBg;
 
@@ -28,12 +28,9 @@ public class MainUIs : MonoBehaviour
         ChangeBg(Managers.Game.GetPhase());
     }
 
-    private void HealthDec(int health)
+    private void HealthChange(float health)
     {
-        // 피해 받는 이미지 
-        blurController.ShowDamageEffect();
-        // 임시로 4단계로 표현
-        // healthValue = (float)health / (float)MaxHealth;
+ 
         if (blurController != null)
         {
             blurController.SetBlur(health,MaxHealth); // 체력값을 비교하여 블러표시
@@ -41,10 +38,24 @@ public class MainUIs : MonoBehaviour
 
         if (Managers.Game.currentPlayerState == GameManager.PlayerState.Normal) // 현재 일반 몹과 상호작용 가능한 상태, 데미지를 받는 상태일때.
         {
-            // 임시로 4단계로 표현
-            healthValue = (float)health / (float)MaxHealth;
             if(blurController!=null)
                 blurController.SetBlur(health,MaxHealth); // 체력값을 비교하여 블러표시
+
+
+            // 피해 입엇을때 효과와 몬스터 처치시 회복의 효과관련하여 관리 
+
+            if (beforeHealth >= health) // 피해 입음
+            {
+                // 피해 받는 효과
+                blurController.ShowDamageEffect();
+            }
+            else // 몬스터 처치
+            {
+                // 피해 회복 효과 있다면 적용
+            }
+
+            beforeHealth = health;
+
 
         }
         /* 기존 방식 -> slide value 표시
