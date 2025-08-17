@@ -35,6 +35,7 @@ public class InputManager
     public void HandleStop()
     {
         isStoped = !isStoped;
+        Managers.Sound.PauseBGM(isStoped);
         SettingpopAction?.Invoke(isStoped);
     }
 

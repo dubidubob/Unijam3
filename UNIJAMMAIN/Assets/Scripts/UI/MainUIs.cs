@@ -3,6 +3,7 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections.Generic;
+
 public class MainUIs : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI comboTxt;
@@ -44,7 +45,7 @@ public class MainUIs : MonoBehaviour
 
             // 피해 입엇을때 효과와 몬스터 처치시 회복의 효과관련하여 관리 
 
-            if (beforeHealth >= health) // 피해 입음
+            if (beforeHealth >= health && blurController!=null) // 피해 입음
             {
                 // 피해 받는 효과
                 blurController.ShowDamageEffect();
