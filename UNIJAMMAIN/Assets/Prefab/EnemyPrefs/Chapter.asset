@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Chapter
   m_EditorClassIdentifier: 
   phases:
-  - duration: 10
+  - duration: 1000
     startDelay: 0
     monsterDatas:
     - isIn: 1
       monsterType: 0
       numInRow: 1
-      spawnDuration: 0.7
-      moveToHolderDuration: 1.4
+      spawnDuration: 0.714
+      moveToHolderDuration: 1.428
       speedUpRate: 1
   - duration: 15
     startDelay: 0

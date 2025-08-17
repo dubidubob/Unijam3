@@ -35,13 +35,13 @@ public class SpawnController : MonoBehaviour
             if (!m.isIn) continue;
             if (_spawnerMap.TryGetValue(m.monsterType, out var spawner))
             {
-                StartCoroutine(Spawn(spawner, m));
+                spawner.Spawn(m);
             }
             else 
             {                
                 if (m.monsterType == Define.MonsterType.Knockback)
                 {
-                    StartCoroutine(Spawn(_spawnerMap[Define.MonsterType.WASD], m));
+                    spawner.Spawn(m);
                 }
                 else if (m.monsterType == Define.MonsterType.CameraFlip)
                 {
@@ -52,14 +52,6 @@ public class SpawnController : MonoBehaviour
                     Debug.LogWarning($"No spawner for {m.monsterType}");
                 }
             }
-        }
-    }
-    private IEnumerator Spawn(ISpawnable spawner, MonsterData monsterData)
-    {
-        while (true)
-        {
-            spawner.Spawn(monsterData);
-            yield return new WaitForSeconds(monsterData.spawnDuration);
         }
     }
 

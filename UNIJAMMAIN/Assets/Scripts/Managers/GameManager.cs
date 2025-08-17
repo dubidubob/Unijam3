@@ -92,7 +92,7 @@ public class GameManager
 
     public void AddAttackableEnemy(GamePlayDefine.WASDType key, GameObject go)
     {
-        if(go.GetComponent<MovingEnemy>().isKnockbacked) return;
+        if(go.GetComponent<MovingEnemy>().Knockback.IsApplied) return;
         if (!attacks.ContainsKey(key))
         {
             attacks[key] = new Queue<GameObject>();

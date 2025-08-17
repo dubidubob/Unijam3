@@ -17,18 +17,15 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] EnemyTypeSO enemyTypeSO;
     [SerializeField] WASDPosition[] positions;
     [SerializeField] Vector2 sizeDiffRate = new Vector2 (0.8f, 1.2f);
+    [SerializeField] SpriteRenderer sp;
+    
     private Dictionary<WASDType, Vector3> _spawnPosition;
     private Dictionary<WASDType, Vector3> _targetPosition;
+
     private MovingEnemy movingEnemy;
-    private Poolable poolable;
 
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
-
-    private void Start()
-    {
-        Init();
-    }
-
+    private void Start() => Init();
     private void Init()
     {
         _spawnPosition = new Dictionary<WASDType, Vector3>();
@@ -43,62 +40,72 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
-    private double _spawnInterval; // 기본 스폰 간격
-    private double _nextSpawnTime = 0f;   // 다음 스폰 예정 시각
-    private bool _isFirstSpawn = true;   // 첫 스폰 여부
-    private double _lastSpawnTime = -1.0; // 디버그용
-    private static double Now => Time.realtimeSinceStartupAsDouble;
+    
+    private double _intervalSec; // 기본 스폰 간격
+    private double _leadSec; // 이동할 시간
+    private double _startDsp; // 기준선(dsp Time)
+    private int _nextIndex = -1; // 다음 히트 인덱스(0부터 시작). -1은 미초기화.
+    private static double DspNow => AudioSettings.dspTime;
+
+    // 디버그
+    int maxCnt = 1;
+    int[] idx = { 0, 1, 2, 3 };
+    bool isRed = false;
 
     public void Spawn(MonsterData data)
     {
-        double currentTime = Now;
-
-        if (_isFirstSpawn)
+        // interval/lead 설정
+        if (_nextIndex < 0)
         {
-            _spawnInterval = data.spawnDuration;
-            _nextSpawnTime = currentTime;
-            DoSpawn(data, currentTime);
-            _nextSpawnTime += _spawnInterval;
-            _isFirstSpawn = false;
-            return;
+            _intervalSec = data.SpawnDuration;           // 한 박자(또는 스폰) 간격
+            _leadSec = data.MoveToHolderDuration;    // 노트 이동 시간(등장~히트)
+
+            // "바로 스폰"을 원하므로: 지금 스폰하면 _leadSec 뒤에 첫 히트가 오도록 기준선 설정
+            // 첫 히트시각(hit(0)) = _startDsp + 1 * _intervalSec = now + _leadSec
+            // => _startDsp = now + _leadSec - _intervalSec
+            double now = DspNow;
+            _startDsp = now + _leadSec - _intervalSec;
+            _nextIndex = 0;
         }
 
-        bool spawnedThisCall = false;
-        while (currentTime >= _nextSpawnTime)
+        double nowDsp = DspNow;
+
+        // 프레임 드랍 보정: 도달한 히트는 while로 모두 처리
+        while (nowDsp + _leadSec >= HitTime(_nextIndex))
         {
-            DoSpawn(data, currentTime);
-            _nextSpawnTime += _spawnInterval;
-            spawnedThisCall = true;
-        }
-        // 디버그용: 실제 경과 시간 출력
-        if (spawnedThisCall && _lastSpawnTime > 0.0)
-        {
-            double actualInterval = currentTime - _lastSpawnTime;
-            double err = actualInterval - _spawnInterval;
-            // Debug.Log($"[Spawn] 목표: {_spawnInterval:F3}s, 실제: {actualInterval:F3}s, 오차: {err:+0.000;-0.000;0.000}s");
+            double hit = HitTime(_nextIndex);   // 이 시각에 "히트"해야 함
+            DoSpawn(data, hit);                 // 지금 스폰하면 lead 뒤에 딱 맞음
+            _nextIndex++;
         }
     }
 
-    int maxCnt = 1;
-    int[] idx = { 0, 1, 2, 3 };
-    private void DoSpawn(MonsterData data, double currentTime)
+    private double HitTime(int index) => _startDsp + (index + 1) * _intervalSec;
+
+    private void DoSpawn(MonsterData data, double hitDspTime)
     {
-        _lastSpawnTime = currentTime;
+        // 시각 확인용 색상 토글
+        if (sp) { sp.color = isRed ? Color.red : Color.green; isRed = !isRed; }
 
-        // int Random.Range는 상한 배제이므로 +1 해서 포함 범위 맞춤
+        // 1~maxCnt까지 스폰
         int cnt = UnityEngine.Random.Range(1, maxCnt + 1);
-
         for (int i = 0; i < cnt; i++)
         {
             WASDType enemyType = (WASDType)idx[UnityEngine.Random.Range(0, idx.Length)];
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
-            GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
-            
-            go.transform.position = _spawnPosition[enemyType];
-            movingEnemy = go.GetComponent<MovingEnemy>();
 
-            float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
-            movingEnemy.SetVariance(distance, data.moveToHolderDuration, data.numInRow, sizeDiffRate, enemyType);
+            GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
+            Vector3 spawnPos = _spawnPosition[enemyType];
+            Vector3 targetPos = _targetPosition[enemyType];
+
+            // dsp 이동 기반으로 세팅 (히트 시각 & 리드타임 & 궤적)
+            movingEnemy = go.GetComponent<MovingEnemy>();
+            movingEnemy.SetupDspMovement(
+                spawnPos, targetPos,
+                hitDspTime, _leadSec,
+                sizeDiffRate, enemyType
+            );
+
+            // 넉백 모드 적용
             movingEnemy.SetKnockback(data.monsterType == Define.MonsterType.Knockback);
         }
     }

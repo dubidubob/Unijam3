@@ -30,9 +30,8 @@ public class QA : MonoBehaviour
         new MonsterData {
             isIn = true,
             monsterType = Define.MonsterType.WASD,
+            bpm = 84,
             numInRow = 1,
-            spawnDuration = 1f,
-            moveToHolderDuration = 1f,
             speedUpRate = 1f
         };
 
@@ -53,8 +52,8 @@ public class QA : MonoBehaviour
         // 각 InputField 콜백 등록
         startDelayField.onEndEdit.AddListener(SetStartDelay);
         phaseDurationField.onEndEdit.AddListener(SetPhaseDuration);
-        spawnDurationField.onEndEdit.AddListener(SetSpawnDuration);
-        moveToHolderField.onEndEdit.AddListener(SetMoveToHolderDuration);
+        spawnDurationField.onEndEdit.AddListener(SetNumInRow);
+        moveToHolderField.onEndEdit.AddListener(SetSpeedUpRate);
 
         SsizeField.onEndEdit.AddListener(SetSizeS);
         WsizeField.onEndEdit.AddListener(SetSizeW);
@@ -103,14 +102,11 @@ public class QA : MonoBehaviour
     private void SetPhaseDuration(string txt)
         => float.TryParse(txt, out phaseDuration);
 
-    private void SetSpawnDuration(string txt)
-        => float.TryParse(txt, out monsterData.spawnDuration);
-
-    private void SetMoveToHolderDuration(string txt)
-        => float.TryParse(txt, out monsterData.moveToHolderDuration);
+    private void SetNumInRow(string txt)
+        => double.TryParse(txt, out monsterData.numInRow);
 
     private void SetSpeedUpRate(string txt)
-        => float.TryParse(txt, out monsterData.speedUpRate);
+        => double.TryParse(txt, out monsterData.speedUpRate);
 
     private void SetSizeW(string txt)
         => float.TryParse(txt, out sizeDiffRate.x);
