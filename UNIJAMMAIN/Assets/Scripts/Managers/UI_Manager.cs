@@ -78,7 +78,7 @@ public class UI_Manager
     }
 
     public T ShowPopUpBossPaternChicken<T>(string name = null) where T : UI_Popup
-    {   
+    {
         if (string.IsNullOrEmpty(name))
         {
             name = typeof(T).Name;
