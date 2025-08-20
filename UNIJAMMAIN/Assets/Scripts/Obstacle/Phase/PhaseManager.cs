@@ -7,20 +7,78 @@ using UnityEngine;
 [RequireComponent(typeof(SpawnController))]
 public class PhaseManager : MonoBehaviour
 {
-    [SerializeField] IllustController illustController;
     [SerializeField] ChapterSO chapter;
+    [SerializeField] AudioSource music;
+
     SpawnController spawnController;
-    bool isQA = false;
+
+    [SerializeField] double startDelay = 0.2f; // 오디오 파이프라인 워밍업
+    public double DspSongStart { get; private set; }
+
+
     private void Start()
     {
         spawnController = GetComponent<SpawnController>();
         if (!isQA)
         {
-            StartCoroutine(RunPhase());
-        }   
+            SetMusicStartTime();
+            StartCoroutine(RunPhases());
+        }
     }
-    
+
+    // 음악 시작 시간 설정 + 음악 Play
+    private void SetMusicStartTime()
+    {
+        double now = AudioSettings.dspTime;
+        DspSongStart = now + startDelay;
+        music.PlayScheduled(DspSongStart);
+
+        StartCoroutine(RunPhases());
+    }
+
+    private IEnumerator RunPhases()
+    {
+        for (int i = 0; i < chapter.Phases.Count; i++)
+        {
+            var phase = chapter.Phases[i];
+
+            yield return new WaitForSeconds(phase.startDelay);
+            spawnController.SpawnMonsterInPhase(phase.MonsterDatas);
+            yield return new WaitForSeconds(phase.duration);
+        }
+
+        spawnController.StopMonsterInPhase();
+    }
+
+    #region QA
+    float qa_startDelay, qa_phaseDuration;
+    MonsterData[] monsters = new MonsterData[1];
+    private IEnumerator RunQAPhase()
+    {
+        yield return new WaitForSeconds(qa_startDelay);
+        spawnController.SpawnMonsterInPhase(monsters);
+        yield return new WaitForSeconds(qa_phaseDuration);
+        spawnController.StopMonsterInPhase();
+    }
+
+    [SerializeField] bool isQA = false;
+    public void QAPhaseVariance(float startDelay, float phaseDuration, MonsterData monster)
+    {
+        qa_startDelay = startDelay;
+        qa_phaseDuration = phaseDuration;
+        monsters[0] = monster;
+    }
+
+    public void Play()
+    {
+        if (!isQA) return;
+        StopAllCoroutines();
+        StartCoroutine(RunQAPhase());
+    }
+    #endregion
+    #region CutScene
     // TODO : 중간중간 컷씬
+    [SerializeField] IllustController illustController;
     private IEnumerator ShowCutScene()
     {
         Managers.Pause.Pause();
@@ -50,42 +108,5 @@ public class PhaseManager : MonoBehaviour
         //}
         //Resume();
     }
-    private IEnumerator RunPhase()
-    {
-        for (int i = 0; i < chapter.Phases.Count; i++)
-        {
-            yield return new WaitForSeconds(chapter.Phases[i].startDelay);
-            spawnController.SpawnMonsterInPhase(chapter.Phases[i].MonsterDatas);
-            yield return new WaitForSeconds(chapter.Phases[i].duration);
-        }
-        EndPhase();
-    }
-
-    float qa_startDelay, qa_phaseDuration;
-    MonsterData[] monsters = new MonsterData[1];
-    private IEnumerator RunQAPhase()
-    {
-        yield return new WaitForSeconds(qa_startDelay);
-        spawnController.SpawnMonsterInPhase(monsters);
-        yield return new WaitForSeconds(qa_phaseDuration);
-        EndPhase();
-    }
-
-    public void QAPhaseVariance(float startDelay, float phaseDuration, MonsterData monster)
-    {
-        qa_startDelay = startDelay;
-        qa_phaseDuration = phaseDuration;
-        monsters[0] = monster;
-    }
-
-    public void Play()
-    {
-        if (!isQA) return;
-        StopAllCoroutines();
-        StartCoroutine(RunQAPhase());
-    }
-    private void EndPhase()
-    {
-        spawnController.StopMonsterInPhase();
-    }
+    #endregion
 }

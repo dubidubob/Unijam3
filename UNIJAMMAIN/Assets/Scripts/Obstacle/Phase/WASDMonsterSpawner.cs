@@ -57,8 +57,8 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         // interval/lead 설정
         if (_nextIndex < 0)
         {
-            _intervalSec = data.SpawnDuration;           // 한 박자(또는 스폰) 간격
-            _leadSec = data.MoveToHolderDuration;    // 노트 이동 시간(등장~히트)
+            _intervalSec = data.Interval;           // 한 박자(또는 스폰) 간격
+            _leadSec = data.MovingToHolderTime;    // 노트 이동 시간(등장~히트)
 
             // "바로 스폰"을 원하므로: 지금 스폰하면 _leadSec 뒤에 첫 히트가 오도록 기준선 설정
             // 첫 히트시각(hit(0)) = _startDsp + 1 * _intervalSec = now + _leadSec
