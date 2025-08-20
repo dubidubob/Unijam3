@@ -102,7 +102,7 @@ public class DiagonalMonster : MonoBehaviour
 
     int curCnt;
     Vector3 baseScale;
-    Sequence seq; // Àç»ç¿ë
+    Sequence seq; // ï¿½ï¿½ï¿½ï¿½
     void BeatMoving(double t)
     {
         if (curCnt >= scales.Count)
@@ -111,20 +111,20 @@ public class DiagonalMonster : MonoBehaviour
             return;
         }
 
-        // ÀÌ¹Ì ÆÞ½º°¡ ÁøÇà ÁßÀÌ¸é ÀÌ¹ø ºñÆ®´Â ½ºÅµ ¡æ È÷Ä¡·Î °°Àº ÇÁ·¹ÀÓ¿¡ ¿©·¯ ¹ø ¿Íµµ 1È¸¸¸ ¹Ý¿µ
+        // ï¿½Ì¹ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Åµ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Íµï¿½ 1È¸ï¿½ï¿½ ï¿½Ý¿ï¿½
         if (seq != null && seq.IsActive() && seq.IsPlaying()) return;
 
         float beat = (float)IngameData.BeatInterval;
 
         var targetScale = baseScale * scales[curCnt++];
 
-        if (seq != null && seq.IsActive()) seq.Kill(); // ÀÌÀü ÀÜ¿©¹° Á¤¸®
+        if (seq != null && seq.IsActive()) seq.Kill(); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ü¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         seq = DOTween.Sequence().SetLink(gameObject, LinkBehaviour.KillOnDestroy).SetAutoKill(true);
 
-        // ¾Õ 50%: Æ®À© ÁøÇà
+        // ï¿½ï¿½ 50%: Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         seq.Append(transform.DOScale(targetScale * 1.15f, beat * 0.3f).SetEase(Ease.OutCubic));
-        // µÚ 50%: ¿ø·¡ Å©±â À¯Áö(´ë±â)
-        // 1) ¿ø·¡ Å©±â·Î Áï½Ã ½º³ÀÇÏ°í ½¬°í ½ÍÀ¸¸é:
+        // ï¿½ï¿½ 50%: ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½)
+        // 1) ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:
         seq.Append(transform.DOScale(targetScale, beat * 0.2f).SetEase(Ease.OutCubic));
         seq.AppendInterval(beat * 0.25f);
     }
