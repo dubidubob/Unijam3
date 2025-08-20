@@ -8,7 +8,7 @@ public class BeatClock : MonoBehaviour
     private double nextBeatTime;
     private double startTime;
 
-    public static Action OnBeat;
+    public static Action<double> OnBeat;
 
     void Awake()
     {
@@ -32,7 +32,7 @@ public class BeatClock : MonoBehaviour
         // 한 프레임에 여러 박자가 지나갔을 경우 처리
         while (currentTime >= nextBeatTime)
         {
-            OnBeat?.Invoke();
+            OnBeat?.Invoke(nextBeatTime);
             
             nextBeatTime += beatInterval;
         }

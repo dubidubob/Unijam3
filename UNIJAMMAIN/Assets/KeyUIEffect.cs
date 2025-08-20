@@ -34,6 +34,10 @@ public class KeyUIEffect : MonoBehaviour
         }
     }
 
+    private void ChangePos()
+    {
+        
+    }
     private void TurnUIEffect(GamePlayDefine.DiagonalType t)
     {
         if (type2 == t)
