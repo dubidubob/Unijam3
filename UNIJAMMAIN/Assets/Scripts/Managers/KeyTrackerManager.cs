@@ -69,7 +69,7 @@ public class KeyTrackerManager
         }
         keyPressCounts[key] = 0; // ī��Ʈ �ʱ�ȭ
         Debug.Log("BlockCount�� �ʱ�ȭ �Ǿ����ϴ�");
-        KeyFree.Invoke(key);
+        //KeyFree.Invoke(key);
     }
 
     public void ResetKeyPress(string key)

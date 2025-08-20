@@ -13,7 +13,6 @@ public class QA : MonoBehaviour
     [SerializeField] private TMP_InputField startDelayField;
     [SerializeField] private TMP_InputField phaseDurationField;
     [SerializeField] private TMP_InputField spawnDurationField;
-    [SerializeField] private TMP_InputField moveToHolderField;
 
     [Header("WASDMonsterSpawner 설정용 Input Fields")]
     [SerializeField] private TMP_InputField SsizeField;
@@ -32,7 +31,6 @@ public class QA : MonoBehaviour
             monsterType = Define.MonsterType.WASD,
             numInRow = 1,
             spawnDuration = 1f,
-            moveToHolderDuration = 1f,
             speedUpRate = 1f
         };
 
@@ -54,7 +52,6 @@ public class QA : MonoBehaviour
         startDelayField.onEndEdit.AddListener(SetStartDelay);
         phaseDurationField.onEndEdit.AddListener(SetPhaseDuration);
         spawnDurationField.onEndEdit.AddListener(SetSpawnDuration);
-        moveToHolderField.onEndEdit.AddListener(SetMoveToHolderDuration);
 
         SsizeField.onEndEdit.AddListener(SetSizeS);
         WsizeField.onEndEdit.AddListener(SetSizeW);
@@ -105,9 +102,6 @@ public class QA : MonoBehaviour
 
     private void SetSpawnDuration(string txt)
         => float.TryParse(txt, out monsterData.spawnDuration);
-
-    private void SetMoveToHolderDuration(string txt)
-        => float.TryParse(txt, out monsterData.moveToHolderDuration);
 
     private void SetSpeedUpRate(string txt)
         => float.TryParse(txt, out monsterData.speedUpRate);

@@ -11,7 +11,7 @@ public class SoundManager
     public AudioMixerGroup[] audioMixerGroups;
     public AudioSource BGM;
     public AudioSource SFX;
-    
+
 
     public void Init()
     {
@@ -32,7 +32,7 @@ public class SoundManager
             }
         }
         if (audioMixer == null) { Debug.Log("audioMixer is Null"); }
-      
+
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f)
     {
@@ -124,8 +124,14 @@ public class SoundManager
         return audioClip;
     }
 
-    public void StopBGM()
+    public void PauseBGM(bool isStop)
     {
+        if (isStop) BGM.Pause();
+        else BGM.UnPause();
+    }
+
+    public void StopBGM()
+    { 
         BGM.Stop();
     }
 

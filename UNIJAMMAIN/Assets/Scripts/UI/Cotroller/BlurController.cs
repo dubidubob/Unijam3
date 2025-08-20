@@ -19,10 +19,12 @@ public class BlurController : MonoBehaviour
     }
 
     public Image[] blurImages; // Blur1 ~ BlurN (Inspector에 넣어줌)
+    public Image goGrayBackGround;
     public float fadeDuration = 0.5f; // 전환 시간 (초)
 
     private int currentIndex = 0;
     private Coroutine fadeCoroutine;
+    public Image lastBlacking;
 
     /// <summary>
     /// 체력에 따라 Blur 상태 업데이트
@@ -37,7 +39,7 @@ public class BlurController : MonoBehaviour
         float ratio = 1f - (currentHp / maxHp); // hp가 줄수록 ratio ↑
         int newIndex = Mathf.Clamp(Mathf.FloorToInt(ratio * blurImages.Length), 0, blurImages.Length - 1);
 
-        if (newIndex != currentIndex)
+        if (newIndex != currentIndex) // 새로운 이미지로의 변환 
         {
             // 전환 시작
             if (fadeCoroutine != null)
@@ -45,7 +47,19 @@ public class BlurController : MonoBehaviour
 
             fadeCoroutine = StartCoroutine(FadeTransition(currentIndex, newIndex));
             currentIndex = newIndex;
+
+            if (newIndex >= blurImages.Length - 2) // 마지막 2단계부터 새로 추가되는 Layer BackGround.LasBlacking
+            {
+                lastBlacking.DOFade(1f, 0.8f); // 어두워지기
+            }
+            else
+            {
+                lastBlacking.DOFade(0f, 0.8f); // 밝아지기
+            }
+
         }
+        
+        
     }
 
     private IEnumerator FadeTransition(int oldIndex, int newIndex)
@@ -96,10 +110,17 @@ public class BlurController : MonoBehaviour
         damageImage.DOKill();
         cameraTransform.DOKill(); // 이전 흔들림 중단
 
-        // 피해 효과 UI 페이드
+        // 피해 효과 UI 페이드 
         Sequence seq = DOTween.Sequence();
-        seq.Append(damageImage.DOFade(0.6f, 0.1f));
-        seq.Append(damageImage.DOFade(0f, 0.3f));
+        seq.Append(damageImage.DOFade(1f, 0.00000001f));
+        seq.Append(damageImage.DOFade(0f, 0.00000001f));
+
+        // blurImages 개수 기준으로 goGrayBackGround alpha 계산
+        // currentIndex는 SetBlur에서 갱신됨, 0 ~ blurImages.Length-1
+        float targetAlpha = (currentIndex + 1) / (float)blurImages.Length; // 1/6, 2/6, ... 비율
+
+        // 배경 goGrayBackGround 투명도 점점 진해지도록 추가
+        seq.Join(goGrayBackGround.DOFade(targetAlpha, 0.3f)); // damageImage와 동시에 페이드
 
         // 카메라 흔들림 효과 추가
         cameraTransform.DOShakePosition(

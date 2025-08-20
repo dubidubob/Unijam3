@@ -3,8 +3,9 @@ public struct MonsterData
 {
     public bool isIn;
     public Define.MonsterType monsterType;
-    public int numInRow;
     public float spawnDuration;
-    public float moveToHolderDuration;
+    public int numInRow;
     public float speedUpRate;
+
+    public float MovingToHolderTime =>spawnDuration*numInRow;
 }

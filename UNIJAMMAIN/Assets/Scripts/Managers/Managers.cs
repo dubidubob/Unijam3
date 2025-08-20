@@ -25,7 +25,6 @@ public class Managers : MonoBehaviour
     public static KeyTrackerManager Tracker { get { return Instance._key; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PauseManager Pause { get { return Instance._pause; } }
-    
     void Start()
     {
         Init();
@@ -66,5 +65,4 @@ public class Managers : MonoBehaviour
         Tracker.Clear();
         Game.Clear();
     }
-
 }

@@ -7,14 +7,15 @@ public class GameManager
     public Transform playerTransform;
     public int currentPhase { get; private set; } = 0;
     public Action<int> ComboContinue = null;
-    public Action<int> HealthUpdate = null;
+    public Action<float> HealthUpdate = null;
     public Action<int> PhaseUpdate = null;
     public Action<string> MissedKeyUpdate = null;
     private int Combo = 0;
-    private int Health = 0;
+    private float Health = 0;
     public readonly int MaxHealth = 100;
     private const int IncHealthUnit = 10;
 
+    private float healingValue = 2.5f; // 회복하는 양
     public int perfect = 0;
     // TODO : 이러지 말기
     public Dictionary<GamePlayDefine.WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
@@ -102,14 +103,17 @@ public class GameManager
 
     public void ComboInc()
     {
+        Debug.Log($"Combo ! : {Combo}");
         Combo++;
+        IncHealth(healingValue); // 체력회복
         if (ComboContinue != null)
         {
             ComboContinue.Invoke(Combo);
         }
+        // 콤보에 따라 회복하는거
         if (Combo > 0 && Combo % IncHealthUnit == 0)
         {
-            IncHealth();
+            IncHealth(healingValue); //체력 회복
         }
         if(Combo%10==0)
         {
@@ -129,12 +133,12 @@ public class GameManager
         HealthUpdate.Invoke(Health);
     }
 
-    public void IncHealth()
+    public void IncHealth(float healValue = 2.5f)
     {
-        if ((Health <= 0) || (Health > 10))
+        if ((Health <= 0) || (Health > 100))
             return;
 
-        Health++;
+        Health += healValue; // 체력회복 3
         HealthUpdate.Invoke(Health);
         Debug.Log("Inc Health");
     }
