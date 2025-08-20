@@ -46,7 +46,7 @@ public class DiagonalMonster : MonoBehaviour
             });
     }
 
-    private void DyingAnim()
+    private void DyingAnim() // 살아있는 동안의 액션
     {
         Sequence dyingSequence = DOTween.Sequence();
         dyingSequence.Append(transform.DOScale(Vector3.one * 0.05f, 0.1f).SetEase(Ease.OutBack));

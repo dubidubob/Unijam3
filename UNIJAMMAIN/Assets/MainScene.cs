@@ -20,14 +20,14 @@ public class MainScene : UI_Popup
         StoryMode,
         Option,
         Members,
-        End
+        End,
+        StartToClick
     }
 
     private void Start()
     {
         Init();
         PlayBrushFillAnimation();
-        PlayComingAnimation();
     }
     public class DebugUIEvent : MonoBehaviour, IPointerClickHandler
     {
@@ -53,14 +53,29 @@ public class MainScene : UI_Popup
         GetButton((int)Buttons.Option).gameObject.AddUIEvent(OptionClicked);
         GetButton((int)Buttons.Members).gameObject.AddUIEvent(MembersClicked);
         GetButton((int)Buttons.End).gameObject.AddUIEvent(EndClicked);
+        GetButton((int)Buttons.StartToClick).gameObject.AddUIEvent(EnterToStartClicked);
     }
 
+    public void EnterToStartClicked(PointerEventData eventData)
+    {
+        // 누르면 버튼은 파괴
+        GameObject clickedObj = eventData.pointerPress;
+
+        if(clickedObj!=null)
+        {
+            Destroy(clickedObj);
+        }
+        Debug.Log("시작, 입장");
+        PlayComingAnimation();
+
+
+    }
     private void PlayBrushFillAnimation()
     {
         brush.fillAmount = 0f; // 시작은 투명
         brush.DOFillAmount(1f, brushFillDuration)
              .SetEase(Ease.OutCubic); // 자연스럽게 드러나도록
-        brushText.DOFillAmount(1f, brushTextFillDuration)
+        brushText.DOFillAmount(1f, brushTextFillDuration*1.5f)
              .SetEase(Ease.OutCubic); // 자연스럽게 드러나도록
     }
 
