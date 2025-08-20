@@ -98,7 +98,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
             movingEnemy = go.GetComponent<MovingEnemy>();
 
             float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
-            movingEnemy.SetVariance(distance, data.MovingToHolderTime, data.numInRow, sizeDiffRate, enemyType);
+            movingEnemy.SetVariance(distance, data.MovingToHolderTime, data.numInRow, data.speedUpRate, sizeDiffRate, enemyType);
             movingEnemy.SetKnockback(data.monsterType == Define.MonsterType.Knockback);
         }
     }

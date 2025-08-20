@@ -103,7 +103,6 @@ public class GameManager
 
     public void ComboInc()
     {
-        Debug.Log($"Combo ! : {Combo}");
         Combo++;
         IncHealth(healingValue); // 체력회복
         if (ComboContinue != null)

@@ -58,13 +58,12 @@ public class SpawnController : MonoBehaviour
     {
         while (true)
         {
-            spawner.Spawn(monsterData);
             float spawnDuration = monsterData.spawnDuration;
             if (monsterData.monsterType == Define.MonsterType.Diagonal)
-            {
                 spawnDuration *= monsterData.numInRow;
-            }
             yield return new WaitForSeconds(spawnDuration);
+
+            spawner.Spawn(monsterData);
         }
     }
 

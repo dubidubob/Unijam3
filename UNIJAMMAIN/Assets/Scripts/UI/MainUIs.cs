@@ -106,8 +106,8 @@ public class MainUIs : MonoBehaviour
 
     private void ShowComboBangsa()
     {
-        Combobangsa.SetNativeSize();
-        Combobangsa.gameObject.SetActive(true);
+        //Combobangsa.SetNativeSize();
+        //Combobangsa.gameObject.SetActive(true);
 
         //Camera camera = Camera.main;
         //camera.DOShakeRotation(
