@@ -14,7 +14,7 @@ public class KeyUIEffect : MonoBehaviour
     private SpriteRenderer[] sp;
     private void Awake()
     {
-        sp = GetComponentsInChildren<SpriteRenderer>();
+        sp = GetComponentsInChildren<SpriteRenderer>(true);
 
         if (isWasd)
         {

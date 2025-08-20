@@ -14,6 +14,7 @@ public class PlayerActionUI : MonoBehaviour
     private Dictionary<GamePlayDefine.WASDType, Sprite> _actionImgsDic;
     private SpriteRenderer sp;
     private Sprite origin;
+
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();

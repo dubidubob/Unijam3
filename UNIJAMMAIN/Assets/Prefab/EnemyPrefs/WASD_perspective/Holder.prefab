@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 3268240254893733906}
   - component: {fileID: 6735006751661616516}
   m_Layer: 0
-  m_Name: Target
+  m_Name: Holder
   m_TagString: detectArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,8 +199,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b76c0c68e1462f4dbfd66746d5973ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isWasd: 1
   type: 1
   candidate: {fileID: 21300000, guid: cf9855b87924ddc4d84c2b28c4bb30eb, type: 3}
+  type2: 2
 --- !u!212 &3268240254893733906
 SpriteRenderer:
   m_ObjectHideFlags: 0
