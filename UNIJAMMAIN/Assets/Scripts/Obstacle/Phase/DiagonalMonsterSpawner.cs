@@ -47,6 +47,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     public void ActivateEnemy()
     {
         int idx = Random.Range(0, deactivatedDiagonalIdx.Count);
+        if (deactivatedDiagonalIdx.Count == 0) return;
         int mIdx = deactivatedDiagonalIdx[idx];
         deactivatedDiagonalIdx.Remove(mIdx);
 

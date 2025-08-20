@@ -64,7 +64,7 @@ public class SpawnController : MonoBehaviour
             {
                 spawnDuration *= monsterData.numInRow;
             }
-            yield return new WaitForSeconds(monsterData.spawnDuration);
+            yield return new WaitForSeconds(spawnDuration);
         }
     }
 

@@ -645,8 +645,8 @@ GameObject:
   m_Component:
   - component: {fileID: 460754921}
   - component: {fileID: 460754922}
-  - component: {fileID: 460754924}
   - component: {fileID: 460754923}
+  - component: {fileID: 460754924}
   m_Layer: 0
   m_Name: Img
   m_TagString: Untagged
@@ -1198,7 +1198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2145075092063725261, guid: e6a17384556c1914daf7d3e244889f48, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2286107066617546007, guid: e6a17384556c1914daf7d3e244889f48, type: 3}
       propertyPath: m_AnchorMax.x

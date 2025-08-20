@@ -28,5 +28,7 @@ public class BeatClockUI : MonoBehaviour
         // 다시 원래 크기로 돌아오기 (전체 비트의 50% 동안)
         seq.Append(transform.DOScale(baseScale, beatDuration * 0.5f)
             .SetEase(Ease.InOutQuad));
+
+        Debug.Log($"{t}");
     }
 }

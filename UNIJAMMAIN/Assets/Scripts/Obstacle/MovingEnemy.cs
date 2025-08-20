@@ -62,7 +62,7 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetVariance(float distance, float movingDuration, int numInRow, Vector2 sizeDiffRate, GamePlayDefine.WASDType wasdType)
+    public void SetVariance(float distance, float movingDuration, float numInRow, Vector2 sizeDiffRate, GamePlayDefine.WASDType wasdType)
     {
         enemyType = wasdType;
         this.sizeDiffRate = sizeDiffRate;
@@ -161,6 +161,8 @@ public class MovingEnemy : MonoBehaviour
         }
         else if (collision.tag == "dangerLine")
         {
+            if (Managers.Game.attacks[enemyType].Count == 0) return;
+
             Managers.Game.attacks[enemyType].Dequeue();
             SetDead();
             Managers.Game.DecHealth();
