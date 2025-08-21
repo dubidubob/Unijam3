@@ -63,12 +63,12 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetVariance(float distance, float movingDuration, float numInRow, float speedUpRate, Vector2 sizeDiffRate, GamePlayDefine.WASDType wasdType)
+    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, GamePlayDefine.WASDType wasdType)
     {
         enemyType = wasdType;
-        this.speedUpRate = speedUpRate;
+        speedUpRate = monster.speedUpRate;
+        movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
         this.sizeDiffRate = sizeDiffRate;
-        this.movingDuration = movingDuration;
         backwardDuration = movingDuration * 0.125f;
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;

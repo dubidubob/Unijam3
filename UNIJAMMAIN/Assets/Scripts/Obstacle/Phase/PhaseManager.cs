@@ -9,6 +9,7 @@ public class PhaseManager : MonoBehaviour
 {
     [SerializeField] IllustController illustController;
     [SerializeField] ChapterSO chapter;
+
     SpawnController spawnController;
     bool isQA = false;
     private void Start()
@@ -55,6 +56,7 @@ public class PhaseManager : MonoBehaviour
         for (int i = 0; i < chapter.Phases.Count; i++)
         {
             yield return new WaitForSeconds(chapter.Phases[i].startDelay);
+            IngameData.BeatInterval = 60.0/chapter.Phases[i].bpm;
             spawnController.SpawnMonsterInPhase(chapter.Phases[i].MonsterDatas);
             yield return new WaitForSeconds(chapter.Phases[i].duration);
         }

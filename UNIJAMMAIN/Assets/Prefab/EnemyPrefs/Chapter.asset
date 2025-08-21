@@ -13,42 +13,12 @@ MonoBehaviour:
   m_Name: Chapter
   m_EditorClassIdentifier: 
   phases:
-  - duration: 15
+  - duration: 1000
     startDelay: 0
+    bpm: 84
     monsterDatas:
     - isIn: 1
       monsterType: 0
-      spawnDuration: 0.7142857
-      numInRow: 2
       speedUpRate: 1
-  - duration: 15
-    startDelay: 0
-    monsterDatas:
-    - isIn: 1
-      monsterType: 0
-      spawnDuration: 0.7142857
-      numInRow: 2
-      speedUpRate: 1.5
-    - isIn: 0
-      monsterType: 1
-      spawnDuration: 0.7142857
-      numInRow: 5
-      speedUpRate: 1
-  - duration: 15
-    startDelay: 0
-    monsterDatas:
-    - isIn: 1
-      monsterType: 0
-      spawnDuration: 0.714
-      numInRow: 2
-      speedUpRate: 2
-    - isIn: 0
-      monsterType: 1
-      spawnDuration: 0.7142857
-      numInRow: 5
-      speedUpRate: 1
-    - isIn: 0
-      monsterType: 2
-      spawnDuration: 2.142
-      numInRow: 0.666
-      speedUpRate: 1
+      spawnBeat: 1
+      moveBeat: 2

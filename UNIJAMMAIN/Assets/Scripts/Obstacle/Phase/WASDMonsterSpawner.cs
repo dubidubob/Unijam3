@@ -55,7 +55,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
         if (_isFirstSpawn)
         {
-            _spawnInterval = data.spawnDuration;
+            _spawnInterval = IngameData.BeatInterval * data.spawnBeat;
             _nextSpawnTime = currentTime;
             DoSpawn(data, currentTime);
             _nextSpawnTime += _spawnInterval;
@@ -98,7 +98,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
             movingEnemy = go.GetComponent<MovingEnemy>();
 
             float distance = Vector3.Distance(_spawnPosition[enemyType], _targetPosition[enemyType]);
-            movingEnemy.SetVariance(distance, data.MovingToHolderTime, data.numInRow, data.speedUpRate, sizeDiffRate, enemyType);
+            movingEnemy.SetVariance(distance, data, sizeDiffRate, enemyType);
             movingEnemy.SetKnockback(data.monsterType == Define.MonsterType.Knockback);
         }
     }

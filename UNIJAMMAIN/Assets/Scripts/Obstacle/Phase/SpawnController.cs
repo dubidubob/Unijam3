@@ -9,11 +9,9 @@ using UnityEngine;
 public class SpawnController : MonoBehaviour
 {
     private Dictionary<Define.MonsterType, ISpawnable> _spawnerMap;
-    private Camera _mainCamera;
     private void Awake()
     {
         InitSpawnableDic();
-        _mainCamera = Camera.main;
     }
 
     private void InitSpawnableDic()
@@ -43,10 +41,6 @@ public class SpawnController : MonoBehaviour
                 {
                     StartCoroutine(Spawn(_spawnerMap[Define.MonsterType.WASD], m));
                 }
-                else if (m.monsterType == Define.MonsterType.CameraFlip)
-                {
-                    SetCameraFlip(true);
-                }
                 else 
                 {
                     Debug.LogWarning($"No spawner for {m.monsterType}");
@@ -54,13 +48,13 @@ public class SpawnController : MonoBehaviour
             }
         }
     }
+
     private IEnumerator Spawn(ISpawnable spawner, MonsterData monsterData)
     {
         while (true)
         {
-            float spawnDuration = monsterData.spawnDuration;
-            if (monsterData.monsterType == Define.MonsterType.Diagonal)
-                spawnDuration *= monsterData.numInRow;
+            float spawnDuration = (float)IngameData.BeatInterval * monsterData.spawnBeat;
+
             yield return new WaitForSeconds(spawnDuration);
 
             spawner.Spawn(monsterData);
@@ -69,18 +63,6 @@ public class SpawnController : MonoBehaviour
 
     public void StopMonsterInPhase()
     {
-        SetCameraFlip(false);
         StopAllCoroutines();
-    }
-
-    bool hadFliped = false;
-    
-    public void SetCameraFlip(bool willFlip)
-    {
-        if (_mainCamera == null || hadFliped == willFlip) { return; }
-
-        Vector3 currentScale = _mainCamera.transform.localScale;
-        _mainCamera.transform.localScale = new Vector3(-currentScale.x, currentScale.y, currentScale.z);
-        hadFliped = willFlip;
     }
 }
