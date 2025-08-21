@@ -13,6 +13,7 @@ public class ChapterSO : ScriptableObject
         public float duration;
         public float startDelay;
         public float bpm;
+        public bool isFlipAD;
         [SerializeField]
         private List<MonsterData> monsterDatas;
         public IReadOnlyList<MonsterData> MonsterDatas => monsterDatas;
