@@ -15,6 +15,8 @@ public class MainScene : UI_Popup
 
     public Transform leftImage;
     public Transform rightImage;
+
+    public Transform[] buttonsTransform;
     enum Buttons
     {
         StoryMode,
@@ -89,6 +91,19 @@ public class MainScene : UI_Popup
     private void OptionClicked(PointerEventData eventData)
     {
         // 설정 진입 로직
+        int index = 1;
+
+        //buttonsTransform 0,1 위로
+        for(int i = 0; i<1;i++)
+        {
+            DOTween.To(() => buttonsTransform[i].position.y+300, x => buttonsTransform[i].position = new Vector3(x, 0f, 0f), 0f, comeTime);
+        }
+        // -- 2,3 아래로
+        for (int i = 2; i < 3; i++)
+        {
+            DOTween.To(() => buttonsTransform[i].position.y - 300, x => buttonsTransform[i].position = new Vector3(x, 0f, 0f), 0f, comeTime);
+        }
+        // 가운데 이미지 페이드인
     }
 
     private void MembersClicked(PointerEventData eventData)
