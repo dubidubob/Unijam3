@@ -68,10 +68,19 @@ public class GameManager
     }
 
 
+    bool isADReverse = false;
     public void ReceiveKey(GamePlayDefine.WASDType key)
     {
-        if (attacks.ContainsKey(key) && attacks[key].Count > 0)
+        if (isADReverse)
         {
+            if (key == GamePlayDefine.WASDType.A)
+                key = GamePlayDefine.WASDType.D;
+            else if (key == GamePlayDefine.WASDType.D)
+                key = GamePlayDefine.WASDType.A;
+        }
+
+        if (attacks.ContainsKey(key) && attacks[key].Count > 0)
+        { 
             GameObject go = attacks[key].Peek();
 
             MovingEnemy wasd = go.GetComponent<MovingEnemy>();
@@ -91,6 +100,11 @@ public class GameManager
         }
     }
 
+    public void SetADReverse(bool isReverse)
+    { 
+        isADReverse = isReverse;
+    }
+
     public void AddAttackableEnemy(GamePlayDefine.WASDType key, GameObject go)
     {
         if(go.GetComponent<MovingEnemy>().isKnockbacked) return;
@@ -103,7 +117,6 @@ public class GameManager
 
     public void ComboInc()
     {
-        Debug.Log($"Combo ! : {Combo}");
         Combo++;
         IncHealth(healingValue); // 체력회복
         if (ComboContinue != null)

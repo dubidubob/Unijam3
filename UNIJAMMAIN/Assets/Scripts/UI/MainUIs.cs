@@ -106,18 +106,18 @@ public class MainUIs : MonoBehaviour
 
     private void ShowComboBangsa()
     {
-        Combobangsa.SetNativeSize();
-        Combobangsa.gameObject.SetActive(true);
+        //Combobangsa.SetNativeSize();
+        //Combobangsa.gameObject.SetActive(true);
 
-        Camera camera = Camera.main;
-        camera.DOShakeRotation(
-            duration: 1.5f,
-            strength: new Vector3(0, 0, 90f),
-            vibrato: 10,
-            randomness: 15f,
-            fadeOut: true
-        ).SetEase(Ease.OutQuad)
-        .OnComplete(()=> { Combobangsa.gameObject.SetActive(false); });
+        //Camera camera = Camera.main;
+        //camera.DOShakeRotation(
+        //    duration: 1.5f,
+        //    strength: new Vector3(0, 0, 90f),
+        //    vibrato: 10,
+        //    randomness: 15f,
+        //    fadeOut: true
+        //).SetEase(Ease.OutQuad)
+        //.OnComplete(()=> { Combobangsa.gameObject.SetActive(false); });
     }
 
     private void ChangeBg(int phase)

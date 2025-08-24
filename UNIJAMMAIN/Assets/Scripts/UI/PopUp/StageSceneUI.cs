@@ -75,12 +75,14 @@ public class StageSceneUI : UI_Popup
 
     public void StageButton_1_Clicked(PointerEventData eventData)
     {
+        Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
         var btn = GetButton((int)Buttons.StageButton_1);
         ResetAllButtonStates();
         HighlightButton(btn);
     }
     public void StageButton_2_Clicked(PointerEventData eventData)
     {
+        Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
         var btn = GetButton((int)Buttons.StageButton_1);
         ResetAllButtonStates();
         HighlightButton(btn);

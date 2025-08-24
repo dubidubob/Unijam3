@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ public class PhaseManager : MonoBehaviour
 {
     [SerializeField] IllustController illustController;
     [SerializeField] ChapterSO chapter;
+    
+    public static Action<float> ChangeKey;
+
     SpawnController spawnController;
     bool isQA = false;
     private void Start()
@@ -54,9 +58,21 @@ public class PhaseManager : MonoBehaviour
     {
         for (int i = 0; i < chapter.Phases.Count; i++)
         {
-            yield return new WaitForSeconds(chapter.Phases[i].startDelay);
-            spawnController.SpawnMonsterInPhase(chapter.Phases[i].MonsterDatas);
-            yield return new WaitForSeconds(chapter.Phases[i].duration);
+            var phase = chapter.Phases[i];
+            if (phase.isFlipAD)
+            {
+                Managers.Game.SetADReverse(true);
+                ChangeKey?.Invoke(phase.startDelay);
+            }
+            else
+            {
+                Managers.Game.SetADReverse(false);
+                ChangeKey?.Invoke(-1f);
+            }
+            yield return new WaitForSeconds(phase.startDelay);
+            IngameData.BeatInterval = 60.0/ phase.bpm;
+            spawnController.SpawnMonsterInPhase(phase.MonsterDatas);
+            yield return new WaitForSeconds(phase.duration);
         }
         EndPhase();
     }

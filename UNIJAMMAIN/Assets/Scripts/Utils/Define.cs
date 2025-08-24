@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Define
 {
     public class ScoreData
@@ -83,7 +79,6 @@ public class Define
         Diagonal,
         Knockback,
         MouseClick,
-        CameraFlip,
         MaxCount
     }
 }

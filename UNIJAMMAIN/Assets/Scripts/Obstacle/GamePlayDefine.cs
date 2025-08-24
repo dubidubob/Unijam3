@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class GamePlayDefine
 {
     public enum WASDType //무슨 키로 받을지

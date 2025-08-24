@@ -29,8 +29,6 @@ public class QA : MonoBehaviour
         new MonsterData {
             isIn = true,
             monsterType = Define.MonsterType.WASD,
-            numInRow = 1,
-            spawnDuration = 1f,
             speedUpRate = 1f
         };
 
@@ -51,7 +49,6 @@ public class QA : MonoBehaviour
         // 각 InputField 콜백 등록
         startDelayField.onEndEdit.AddListener(SetStartDelay);
         phaseDurationField.onEndEdit.AddListener(SetPhaseDuration);
-        spawnDurationField.onEndEdit.AddListener(SetSpawnDuration);
 
         SsizeField.onEndEdit.AddListener(SetSizeS);
         WsizeField.onEndEdit.AddListener(SetSizeW);
@@ -99,9 +96,6 @@ public class QA : MonoBehaviour
 
     private void SetPhaseDuration(string txt)
         => float.TryParse(txt, out phaseDuration);
-
-    private void SetSpawnDuration(string txt)
-        => float.TryParse(txt, out monsterData.spawnDuration);
 
     private void SetSpeedUpRate(string txt)
         => float.TryParse(txt, out monsterData.speedUpRate);

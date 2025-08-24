@@ -32,7 +32,7 @@ public class BlurController : MonoBehaviour
     public void SetBlur(float currentHp, float maxHp)
     { 
 
-        Debug.Log($"currentHP : {currentHp} - maxHP : {maxHp}");
+        // Debug.Log($"currentHP : {currentHp} - maxHP : {maxHp}");
         if (blurImages.Length == 0) return;
 
         // 몇 번째 Blur인지 계산

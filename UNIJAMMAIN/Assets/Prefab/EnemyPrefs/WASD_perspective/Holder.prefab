@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 8922331487268043823}
   - component: {fileID: 3268240254893733906}
   - component: {fileID: 6735006751661616516}
+  - component: {fileID: 8500606841320155265}
   m_Layer: 0
   m_Name: Holder
   m_TagString: detectArea
@@ -290,3 +291,15 @@ CircleCollider2D:
   m_Offset: {x: 0.5268526, y: 0}
   serializedVersion: 2
   m_Radius: 0.11718917
+--- !u!114 &8500606841320155265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7571554890055676968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa424972b8d46f4984fcde9c8a208ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
