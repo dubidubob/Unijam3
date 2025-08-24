@@ -9,7 +9,6 @@ public class GameManager
     public Action<int> ComboContinue = null;
     public Action<float> HealthUpdate = null;
     public Action<int> PhaseUpdate = null;
-    public Action<string> MissedKeyUpdate = null;
     private int Combo = 0;
     private float Health = 0;
     public readonly int MaxHealth = 100;
@@ -30,7 +29,6 @@ public class GameManager
         ComboContinue = null;
         HealthUpdate = null;
         PhaseUpdate = null;
-        MissedKeyUpdate = null;
         Combo = 0;
         Health = 0;
 }
