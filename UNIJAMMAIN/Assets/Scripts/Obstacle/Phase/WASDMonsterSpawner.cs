@@ -20,8 +20,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private Dictionary<WASDType, Vector3> _spawnPosition;
     private Dictionary<WASDType, Vector3> _targetPosition;
     private MovingEnemy movingEnemy;
-    private Poolable poolable;
-
+    
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
     private void Start()

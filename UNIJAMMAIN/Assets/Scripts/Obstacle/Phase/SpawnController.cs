@@ -50,12 +50,16 @@ public class SpawnController : MonoBehaviour
         }
     }
 
+    private void Spawn(ISpawnable spawner, MonsterData monsterData)
+    { 
+
+    }
+
     private IEnumerator Spawn(ISpawnable spawner, MonsterData monsterData)
     {
+        float spawnDuration = (float)IngameData.BeatInterval * monsterData.spawnBeat;
         while (true)
         {
-            float spawnDuration = (float)IngameData.BeatInterval * monsterData.spawnBeat;
-
             yield return new WaitForSeconds(spawnDuration);
 
             spawner.Spawn(monsterData);
