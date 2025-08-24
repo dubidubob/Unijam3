@@ -1,5 +1,19 @@
 public class GamePlayDefine
 {
+    public enum AllType
+    {
+        A,
+        D,
+        W,
+        S,
+        LeftUp,
+        LeftDown,
+        RightUp,
+        RightDown,
+        Idle,
+        MaxCnt
+
+    }
     public enum WASDType //무슨 키로 받을지
     {
         A,

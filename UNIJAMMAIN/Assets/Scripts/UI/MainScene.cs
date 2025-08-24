@@ -22,12 +22,17 @@ public class MainScene : UI_Popup
     private Material originalMaterial; // 초기값
     private Vector2[] originalPositions; // 원래 위치 저장용
 
+    public CanvasGroup optionPanel;
+    public CanvasGroup memberPanel;
+    private bool isOpen = false;
+
     enum CanClcikState
     {
-       CanAnyThing,
-        IsMoving
+       isOptionClick,
+       isMemberClick,
+       Nothing
     }
-    private CanClcikState currentState = CanClcikState.CanAnyThing;
+    private CanClcikState currentState = CanClcikState.Nothing;
     enum Buttons
     {
         StoryMode,
@@ -111,23 +116,59 @@ public class MainScene : UI_Popup
 
     private void OptionClicked(PointerEventData eventData)
     {
+        int index = 1;
+        if (currentState == CanClcikState.isMemberClick)
+        {
+            ResetButtons();
+            ResetHighlight(index);
+            TogglePanel();
+        }
+        currentState = CanClcikState.isOptionClick;
         SetButtonOpen(1);
-
-        // 가운데 이미지 페이드인
     }
 
     private void MembersClicked(PointerEventData eventData)
     {
+        int index = 2;
+        if(currentState==CanClcikState.isOptionClick)
+        {
+            ResetButtons();
+            ResetHighlight(index);
+            TogglePanel();
+        }
+        currentState = CanClcikState.isMemberClick;
+        SetButtonOpen(index);
         // 제작진 확인 로직
     }
 
     private void EndClicked(PointerEventData eventData)
     {
-        // 게임 종료 로직
+        Application.Quit();// 게임 종료 로직
     }
 
     private void SetButtonOpen(int index)
     {
+        Debug.Log($"현재 상태 열려있는 상태{isOpen} : 현재 상태 : {currentState}");
+        if (isOpen) // 오픈된 상태면 
+        {
+            ResetButtons();
+            ResetHighlight(index);
+
+            if (currentState == CanClcikState.isOptionClick) //옵션창이 열려있는 상태라면
+            {
+                TogglePanel(); // 이미지 페이드인, 여기에서 isOpen조절
+            }
+            else if(currentState ==CanClcikState.isMemberClick)
+            {
+                TogglePanel();
+            }
+
+            return;
+        }
+        TogglePanel(); // 이미지 페이드인, 여기에서 isOpen조절
+
+
+
         //buttonsTransform 위로
         for (int i = 0; i < index+1; i++)
         {
@@ -176,6 +217,51 @@ public class MainScene : UI_Popup
         {
             buttonsTransform[i].DOAnchorPos(originalPositions[i], 1f)
                 .SetEase(Ease.OutCubic);
+        }
+    }
+
+    void TogglePanel()
+    {
+        CanvasGroup panel;
+
+        if(currentState==CanClcikState.isOptionClick)
+        {
+            panel = optionPanel;
+        }
+        else if(currentState == CanClcikState.isMemberClick)
+        {
+            panel = memberPanel;
+        }
+        else
+        {
+            panel = null;
+        }
+
+        if (isOpen)
+        {
+            // Fade Out
+            Debug.Log("FadeOut");
+            panel.DOFade(0f, 0.5f).OnComplete(() =>
+            {
+                panel.interactable = false;
+                panel.blocksRaycasts = false;
+            });
+        }
+        else
+        {
+            // Fade In
+            Debug.Log("FadeIn");
+            panel.DOFade(1f, 0.5f).OnStart(() =>
+            {
+                panel.interactable = true;
+                panel.blocksRaycasts = true;
+            });
+        }
+
+        isOpen = !isOpen;
+        if(!isOpen)
+        {
+            currentState = CanClcikState.Nothing;
         }
     }
 

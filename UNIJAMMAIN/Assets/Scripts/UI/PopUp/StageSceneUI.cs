@@ -15,6 +15,7 @@ public class StageSceneUI : UI_Popup
     private float moveDistance = 1100f;  // 이동 거리
     private float moveDuration = 0.8f;   // 애니메이션 지속 시간
 
+    private int stageIndex = 2;
 
     enum Buttons
     {
@@ -55,6 +56,8 @@ public class StageSceneUI : UI_Popup
         GetButton((int)Buttons.StageButton_7).gameObject.AddUIEvent(StageButton_7_Clicked);
         GetButton((int)Buttons.StageButton_8).gameObject.AddUIEvent(StageButton_8_Clicked);
         */
+
+        
     }
 
 
@@ -146,4 +149,9 @@ public class StageSceneUI : UI_Popup
             text.color = Color.white;
     }
 
+
+    private void Setting()
+    {
+        
+    }
 }

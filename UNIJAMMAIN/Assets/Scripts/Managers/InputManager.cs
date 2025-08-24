@@ -31,6 +31,7 @@ public class InputManager
         KeyCode.DownArrow
     };
 
+
     bool isStoped = false;
     public void HandleStop()
     {
@@ -77,6 +78,9 @@ public class InputManager
                 Managers.Game.ReceiveKey(key.Value);
             }
         }
+
+
+        
     }
 
     private void HandleDiagonalKeys()

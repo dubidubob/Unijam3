@@ -9,13 +9,19 @@ public class BlurController : MonoBehaviour
     public Image damageImage;
     int beforeHealth=1; // 기존의 체력 상태 처음에는 가장 환한게 Default값으로 . 변화시 이거 변화시켜줘야함
     bool isCoolDown;
-      public Transform cameraTransform; // 흔들릴 카메라 Transform
+    public Camera camera; // 흔들릴 카메라 Transform
     public float shakeStrength = 0.2f; // 흔들림 강도
     public float shakeDuration = 0.2f; // 흔들림 지속 시간
 
     private void Start()
     {
         damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
+        /*
+        Debug.Log("테스트용 pitch1.3f");
+        Time.timeScale = 1.3f;
+        Managers.Sound.Play("BGM/84bpm_64_V1", Define.Sound.BGM, 1.3f);
+        */
+        Managers.Game.blur = this;
     }
 
     public Image[] blurImages; // Blur1 ~ BlurN (Inspector에 넣어줌)
@@ -102,18 +108,19 @@ public class BlurController : MonoBehaviour
     }
 
 
-        public void ShowDamageEffect()
+    public void ShowDamageEffect()
         {
+        Debug.Log("피해입음!");
         if (isCoolDown) return;
 
         isCoolDown = true;
         damageImage.DOKill();
-        cameraTransform.DOKill(); // 이전 흔들림 중단
+        camera.transform.DOKill(); // 이전 흔들림 중단
 
         // 피해 효과 UI 페이드 
         Sequence seq = DOTween.Sequence();
-        seq.Append(damageImage.DOFade(1f, 0.00000001f));
-        seq.Append(damageImage.DOFade(0f, 0.00000001f));
+        seq.Append(damageImage.DOFade(1f, 0.15f));
+        seq.Append(damageImage.DOFade(0f, 0.15f));
 
         // blurImages 개수 기준으로 goGrayBackGround alpha 계산
         // currentIndex는 SetBlur에서 갱신됨, 0 ~ blurImages.Length-1
@@ -123,7 +130,7 @@ public class BlurController : MonoBehaviour
         seq.Join(goGrayBackGround.DOFade(targetAlpha, 0.3f)); // damageImage와 동시에 페이드
 
         // 카메라 흔들림 효과 추가
-        cameraTransform.DOShakePosition(
+        camera.transform.DOShakePosition(
             duration: shakeDuration,
             strength: shakeStrength,
             vibrato: 8, // 흔들리는 횟수
@@ -135,4 +142,19 @@ public class BlurController : MonoBehaviour
         seq.OnComplete(() => isCoolDown = false);
         }
 
+
+    public void ComboEffect()
+    {
+        float defaultSize = camera.orthographicSize;
+
+        // 줌인
+        camera.DOOrthoSize(defaultSize * 0.9f, 0.4f)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() =>
+            {
+            // 원래 크기로 복귀
+            camera.DOOrthoSize(defaultSize, 0.4f)
+                    .SetEase(Ease.InOutQuad);
+            });
+    }
 }

@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 3183843636390825604}
   - component: {fileID: 2463497605545597552}
   - component: {fileID: 2379533978177036802}
+  - component: {fileID: 3818664549271940154}
   m_Layer: 0
   m_Name: StageButton_3
   m_TagString: Untagged
@@ -255,6 +256,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &3818664549271940154
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435298824024316395}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &608068751032925249
 GameObject:
   m_ObjectHideFlags: 0

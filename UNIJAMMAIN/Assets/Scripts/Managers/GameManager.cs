@@ -14,6 +14,9 @@ public class GameManager
     private float Health = 0;
     public readonly int MaxHealth = 100;
     private const int IncHealthUnit = 10;
+    public BlurController blur;
+    public Accuracy accuracy;
+   
 
     private float healingValue = 2.5f; // 회복하는 양
     public int perfect = 0;
@@ -61,6 +64,7 @@ public class GameManager
         playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재 위치받기
         Health = MaxHealth;
         Time.timeScale = 1f;
+        Debug.Log("GameStart");
     }
     public Transform GetPlayerTransform()
     {
@@ -130,6 +134,8 @@ public class GameManager
         }
         if(Combo%10==0)
         {
+            blur.ComboEffect();
+            IncHealth(healingValue*3); //체력 회복
             Managers.Sound.Play("SFX/Combo_Breathe_SFX");
         }
     }
@@ -141,7 +147,7 @@ public class GameManager
         
         if (Health > 0)
         {
-            Health -= 6;
+            Health -= 5;
         }
         HealthUpdate.Invoke(Health);
     }
