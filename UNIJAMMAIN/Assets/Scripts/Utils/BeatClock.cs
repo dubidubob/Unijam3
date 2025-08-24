@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class BeatClock : MonoBehaviour
 {
-    private double beatInterval;
-    private double nextBeatTime;
-    private double startTime;
+    private double _startDsp;
+    private double _beatInterval;
+    private bool _running = false;
+    private long _tick;
 
-    public static Action<double> OnBeat;
+    public static Action<double, long> OnBeat;
 
-    private bool isClockStart = false;
     private void Start()
     {
         IngameData.ChangeBpm -= Init;
@@ -17,26 +17,27 @@ public class BeatClock : MonoBehaviour
     }
     private void Init()
     {
-        startTime = AudioSettings.dspTime;
-        beatInterval = IngameData.BeatInterval;
-        nextBeatTime = startTime + beatInterval;
-
-        isClockStart = true;
+        _beatInterval = IngameData.BeatInterval;
+        _startDsp = AudioSettings.dspTime;
+        _tick = 0;
+        _running = true;
     }
 
     void Update()
     {
-        if (isClockStart)
+        if (!_running) return;
+
+        double now = AudioSettings.dspTime;
+
+        // 한 프레임에 여러 박자가 지나갔을 경우 처리
+        while (now >= ScheduledTime(_tick +1))
         {
-            double currentTime = AudioSettings.dspTime;
-
-            // 한 프레임에 여러 박자가 지나갔을 경우 처리
-            while (currentTime >= nextBeatTime)
-            {
-                OnBeat?.Invoke(nextBeatTime);
-
-                nextBeatTime += beatInterval;
-            }
+            _tick += 1;
+            double scheduled = ScheduledTime(_tick);
+            OnBeat?.Invoke(scheduled, _tick);
         }
+        
     }
+    private double ScheduledTime(long tickIndex)
+       => _startDsp + tickIndex * _beatInterval;
 }

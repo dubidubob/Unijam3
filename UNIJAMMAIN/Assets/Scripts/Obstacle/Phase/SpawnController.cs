@@ -10,6 +10,8 @@ using UnityEngine;
 public class SpawnController : MonoBehaviour
 {
     private Dictionary<Define.MonsterType, ISpawnable> _spawnerMap;
+    private List<ISpawnable> _spawnables;
+
     private void Awake()
     {
         InitSpawnableDic();
@@ -19,9 +21,11 @@ public class SpawnController : MonoBehaviour
     {
         var spawnables = GetComponents<ISpawnable>();
         _spawnerMap = new Dictionary<Define.MonsterType, ISpawnable>();
+        _spawnables = new List<ISpawnable>();
         foreach (var s in spawnables)
         {
             _spawnerMap[s.MonsterType] = s;
+            _spawnables.Add(s);
         }
     }
 
@@ -34,13 +38,13 @@ public class SpawnController : MonoBehaviour
             if (!m.isIn) continue;
             if (_spawnerMap.TryGetValue(m.monsterType, out var spawner))
             {
-                StartCoroutine(Spawn(spawner, m));
+                spawner.Spawn(m);
             }
             else 
             {
                 if (m.monsterType == Define.MonsterType.Knockback)
                 {
-                    StartCoroutine(Spawn(_spawnerMap[Define.MonsterType.WASD], m));
+                    _spawnerMap[Define.MonsterType.WASD].Spawn(m);
                 }
                 else
                 {
@@ -50,20 +54,11 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    private IEnumerator Spawn(ISpawnable spawner, MonsterData monsterData)
-    {
-        while (true)
-        {
-            float spawnDuration = (float)IngameData.BeatInterval * monsterData.spawnBeat;
-
-            yield return new WaitForSeconds(spawnDuration);
-
-            spawner.Spawn(monsterData);
-        }
-    }
-
     public void StopMonsterInPhase()
     {
-        StopAllCoroutines();
+        for (int i = 0; i < _spawnables.Count; i++)
+        {
+            _spawnables[i].UnSpawn();
+        }
     }
 }

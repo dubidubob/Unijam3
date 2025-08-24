@@ -20,7 +20,7 @@ public class BeatClockUI : MonoBehaviour
         BeatClock.OnBeat -= BeatMoving;
         BeatClock.OnBeat += BeatMoving;
     }
-    private void BeatMoving(double t)
+    private void BeatMoving(double _, long __)
     {
         Sequence seq = DOTween.Sequence();
 
