@@ -8,8 +8,6 @@ public class BeatClock : MonoBehaviour
     private bool _running = false;
     private long _tick;
 
-    private double nextBeatTime;
-
     public static Action<double, long> OnBeat;
 
     private void Start()

@@ -103,7 +103,7 @@ public class DiagonalMonster : MonoBehaviour
     int curCnt;
     Vector3 baseScale;
     Sequence seq; 
-    void BeatMoving(double t)
+    void BeatMoving(double __, long _)
     {
         if (curCnt >= scales.Count)
         {

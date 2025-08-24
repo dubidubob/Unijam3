@@ -153,7 +153,6 @@ public class GameManager
 
         Health += healValue; // 체력회복 3
         HealthUpdate.Invoke(Health);
-        Debug.Log("Inc Health");
     }
 
     public void IncPhase()

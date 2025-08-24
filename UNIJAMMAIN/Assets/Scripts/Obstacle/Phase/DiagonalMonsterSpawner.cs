@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
@@ -12,6 +13,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     private List<int> activatedDiagonalIdx = new List<int>();
     private List<int> deactivatedDiagonalIdx = new List<int>();
 
+    private bool _spawning = false;
     private void Awake()
     {
         InitialDict();
@@ -41,7 +43,24 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     public void Spawn(MonsterData data)
     {
-        ActivateEnemy();
+        float spawnDuration = (float)IngameData.BeatInterval * data.spawnBeat;
+        _spawning = true;
+        StartCoroutine(DoSpawn(spawnDuration));
+    }
+    public void UnSpawn()
+    {
+        _spawning = false;
+        StopAllCoroutines();
+    }
+
+    private IEnumerator DoSpawn(float spawnDuration)
+    {
+        while (_spawning)
+        {
+            yield return new WaitForSecondsRealtime(spawnDuration);
+            ActivateEnemy();
+        }
+        yield return null;
     }
 
     public void ActivateEnemy()
