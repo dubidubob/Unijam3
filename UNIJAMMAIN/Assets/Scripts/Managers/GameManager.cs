@@ -1,6 +1,19 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static GamePlayDefine;
+
+
+[Serializable]
+public struct RankNode
+{
+    public RankType RankT;
+    public WASDType WASDT;
+    public Vector2? Pos;
+
+    public RankNode(RankType t, WASDType w, Vector2? pos)
+    { RankT = t; WASDT = w; Pos = pos; }
+}
 
 public class GameManager
 {
@@ -9,6 +22,7 @@ public class GameManager
     public Action<int> ComboContinue = null;
     public Action<float> HealthUpdate = null;
     public Action<int> PhaseUpdate = null;
+    public Action<RankNode> RankUpdate = null;
     private int Combo = 0;
     private float Health = 0;
     public readonly int MaxHealth = 100;
@@ -20,15 +34,16 @@ public class GameManager
     private float healingValue = 2.5f; // 회복하는 양
     public int perfect = 0;
     // TODO : 이러지 말기
-    public Dictionary<GamePlayDefine.WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
+    public Dictionary<WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
     public void Clear()
     {
-        attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
+        attacks = new Dictionary<WASDType, Queue<GameObject>>();
         playerTransform = null;
         currentPhase = 0;
         ComboContinue = null;
         HealthUpdate = null;
         PhaseUpdate = null;
+        RankUpdate = null;
         Combo = 0;
         Health = 0;
 }
@@ -48,11 +63,6 @@ public class GameManager
     }
     public GameState currentState;
     public PlayerState currentPlayerState;
-    //플레이어 죽을 때 실행시킬 함수
-    public void PlayerDied()
-    {
-       
-    }
 
     //인게임 데이터 초기화 
     public void GameStart()
@@ -71,14 +81,14 @@ public class GameManager
 
 
     bool isADReverse = false;
-    public void ReceiveKey(GamePlayDefine.WASDType key)
+    public void ReceiveKey(WASDType key)
     {
         if (isADReverse)
         {
-            if (key == GamePlayDefine.WASDType.A)
-                key = GamePlayDefine.WASDType.D;
-            else if (key == GamePlayDefine.WASDType.D)
-                key = GamePlayDefine.WASDType.A;
+            if (key == WASDType.A)
+                key = WASDType.D;
+            else if (key == WASDType.D)
+                key = WASDType.A;
         }
 
         if (attacks.ContainsKey(key) && attacks[key].Count > 0)
@@ -89,6 +99,9 @@ public class GameManager
 
             if (wasd.CheckCanDead())
             {
+                // 현재 enemy position만 담아서, true
+                RankUpdate?.Invoke(
+                    new RankNode( RankType.Success, key, go.transform.position));
                 attacks[key].Dequeue();
                 go.GetComponent<MovingEnemy>().SetDead();
                 ComboInc();
@@ -96,8 +109,8 @@ public class GameManager
         }
         else
         {
-            //Managers.Tracker.MissedKeyPress(key);
-            //MissedKeyUpdate?.Invoke(key);
+            RankUpdate?.Invoke(
+                new RankNode(RankType.Wrong, key, null));
             DecHealth();
         }
     }
@@ -138,11 +151,18 @@ public class GameManager
         }
     }
 
-    public void DecHealth()
+    public void PlayerAttacked()
+    {
+        RankUpdate?.Invoke(
+    new RankNode(RankType.Attacked, WASDType.A, null));
+        DecHealth();
+    }
+
+    private void DecHealth()
     {
         Combo = 0; //무조건 콤보 끊김
         ComboContinue?.Invoke(Combo);
-        
+
         if (Health > 0)
         {
             Health -= 5;

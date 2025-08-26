@@ -77,7 +77,7 @@ public class DiagonalMonster : MonoBehaviour
     {
         if (!isAttackedByPlayer)
         {
-            Managers.Game.DecHealth();
+            Managers.Game.PlayerAttacked();
         }
         else
         {

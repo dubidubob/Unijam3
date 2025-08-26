@@ -18,6 +18,8 @@ public class PhaseManager : MonoBehaviour
     private void Start()
     {
         spawnController = GetComponent<SpawnController>();
+        
+        IngameData.RankInit();
         if (!isQA)
         {
             StartCoroutine(RunPhase());

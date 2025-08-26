@@ -84,7 +84,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         }
         else
         {
-            Managers.Game.DecHealth();
+            Managers.Game.PlayerAttacked();
             Managers.Tracker.MissedKeyPress(attackType.ToString());
         }
     }

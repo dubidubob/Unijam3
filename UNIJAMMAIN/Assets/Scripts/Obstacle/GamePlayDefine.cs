@@ -37,6 +37,13 @@ public class GamePlayDefine
         MaxCnt
     }
 
+    public enum RankType
+    {
+        Success, // 몹 없애기 성공
+        Wrong, // 몹 없는데 키 누름
+        Attacked // 몹이 플레이어 공격함
+    }
+
     public enum IllustType
     { 
         Start,

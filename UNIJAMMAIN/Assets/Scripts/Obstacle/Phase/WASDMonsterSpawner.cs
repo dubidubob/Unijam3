@@ -19,12 +19,24 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] Vector2 sizeDiffRate = new Vector2 (0.8f, 1.2f);
     private Dictionary<WASDType, Vector3> _spawnPosition;
     private Dictionary<WASDType, Vector3> _targetPosition;
+    private Rank _rank;
     
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
+
+    
 
     private void Start()
     {
         Init();
+
+        Managers.Game.RankUpdate -= UpdateRankCnt;
+        Managers.Game.RankUpdate += UpdateRankCnt;
+    }
+
+    private void UpdateRankCnt(RankNode rankNode)
+    {
+        Vector3 target = _targetPosition[rankNode.WASDT];
+        _rank.UpdateRankCnt(rankNode, target);
     }
 
     private void Init()
@@ -68,6 +80,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         while (now >= ScheduledTime(_tick + 1))
         {
             _tick++;
+            IngameData.TotalMobCnt++;
             DoSpawn();
         }
     }
