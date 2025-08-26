@@ -5,26 +5,27 @@ using static GamePlayDefine;
 public class HitJudge
 {
     private float circleDiameter;
-    private float perfectThreshold = 0.8f; //80퍼센트 이상은 죄다 perfect 처리
+    private float perfectThreshold = 0.5f; //TODO : 80퍼센트 이상은 죄다 perfect 처리
     public static Action<RankType> OnRankUpdate;
 
-    public void SetRadius(Vector3 target, Vector3 end)
+    public HitJudge(float diameter)
     {
-        // 풀 지름
-        circleDiameter = Mathf.Abs(Vector3.Distance(target, end)) * 2f;
+        circleDiameter = diameter;
     }
 
-    public bool CalculatePerfect(Vector2? hitPos, Vector3 target)
+    public bool CalculatePerfect(Vector2? hitPos, Vector2 target)
     {
         Debug.Assert(hitPos.HasValue, $"success position target : {target}");
-        
+
         float distanceFromTarget = Vector3.Distance(hitPos.Value, target);
+        
         float ratio = distanceFromTarget / circleDiameter;
+        Debug.Log($"죽은 위치 : {hitPos}, 타켓 위치 : {target}, 비율 : {ratio}");
 
         return ratio <= perfectThreshold;
     }
 
-    public void UpdateRankCnt(RankNode rankNode, Vector3 target)
+    public void UpdateRankCnt(RankNode rankNode, Vector2 target)
     {
 
         switch (rankNode.RankT)

@@ -980,6 +980,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!61 &646499422 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 503195436612494804, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
+  m_PrefabInstance: {fileID: 1237005024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &697686124
 GameObject:
   m_ObjectHideFlags: 0
@@ -4609,20 +4614,21 @@ MonoBehaviour:
   - WASDType: 0
     spawnPos: {fileID: 8698399006180923927}
     targetPos: {fileID: 1237005026}
-    playerPos: {x: 0, y: 0, z: 0}
+    playerPos: {x: 0, y: 0}
   - WASDType: 1
     spawnPos: {fileID: 8698399004633628788}
     targetPos: {fileID: 295339328}
-    playerPos: {x: 0, y: 0, z: 0}
+    playerPos: {x: 0, y: 0}
   - WASDType: 2
     spawnPos: {fileID: 8698399004954164264}
     targetPos: {fileID: 763256971}
-    playerPos: {x: 0, y: 0, z: 0}
+    playerPos: {x: 0, y: 0}
   - WASDType: 3
     spawnPos: {fileID: 8698399004952473705}
     targetPos: {fileID: 1861274462}
-    playerPos: {x: 0, y: 0, z: 0}
+    playerPos: {x: 0, y: 0}
   sizeDiffRate: {x: 0.8, y: 1.25}
+  holder: {fileID: 646499422}
 --- !u!1001 &5570071771724819243
 PrefabInstance:
   m_ObjectHideFlags: 0

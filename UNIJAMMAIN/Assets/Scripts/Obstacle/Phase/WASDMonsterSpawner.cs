@@ -9,7 +9,7 @@ public struct WASDPosition
     public WASDType WASDType;
     public GameObject spawnPos;
     public GameObject targetPos;
-    public Vector3 playerPos;
+    public Vector2 playerPos;
 }
 
 public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
@@ -17,8 +17,10 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] EnemyTypeSO enemyTypeSO;
     [SerializeField] WASDPosition[] positions;
     [SerializeField] Vector2 sizeDiffRate = new Vector2 (0.8f, 1.2f);
-    private Dictionary<WASDType, Vector3> _spawnPosition;
-    private Dictionary<WASDType, Vector3> _targetPosition;
+    [SerializeField] Collider2D holder;
+
+    private Dictionary<WASDType, Vector2> _spawnPosition;
+    private Dictionary<WASDType, Vector2> _targetPosition;
     private HitJudge _rank;
     
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
@@ -27,21 +29,21 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     {
         Init();
 
-        _rank = new HitJudge();
+        _rank = new HitJudge(holder.bounds.size.x);
         Managers.Game.RankUpdate -= UpdateRankCnt;
         Managers.Game.RankUpdate += UpdateRankCnt;
     }
 
     private void UpdateRankCnt(RankNode rankNode)
     {
-        Vector3 target = _targetPosition[rankNode.WASDT];
+        Vector2 target = _targetPosition[rankNode.WASDT];
         _rank.UpdateRankCnt(rankNode, target);
     }
 
     private void Init()
     {
-        _spawnPosition = new Dictionary<WASDType, Vector3>();
-        _targetPosition = new Dictionary<WASDType, Vector3>();
+        _spawnPosition = new Dictionary<WASDType, Vector2>();
+        _targetPosition = new Dictionary<WASDType, Vector2>();
 
         for (int i = 0; i < positions.Length; i++)
         {
