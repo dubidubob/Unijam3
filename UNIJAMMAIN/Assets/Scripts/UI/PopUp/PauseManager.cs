@@ -8,8 +8,8 @@ public class PauseManager
     {
         pausePanel?.SetActive(false);
 
-        Managers.Input.SettingpopAction -= ControlTime;
-        Managers.Input.SettingpopAction += ControlTime;
+        Managers.Input.InputEsc -= ControlTime;
+        Managers.Input.InputEsc += ControlTime;
     }
     private void ControlTime(bool isStop)
     {

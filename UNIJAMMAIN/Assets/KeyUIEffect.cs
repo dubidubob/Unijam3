@@ -22,15 +22,15 @@ public class KeyUIEffect : MonoBehaviour
             basic = sp[1].sprite;
             sp[2].gameObject.SetActive(false);
 
-            Managers.Input.KeyBoardChecking -= TurnUIEffect;
-            Managers.Input.KeyBoardChecking += TurnUIEffect;
+            Managers.Input.InputWasd -= TurnUIEffect;
+            Managers.Input.InputWasd += TurnUIEffect;
         }
         else
         {
             sp[0].enabled = false;
 
-            Managers.Input.KeyArrowcodeAction -= TurnUIEffect;
-            Managers.Input.KeyArrowcodeAction += TurnUIEffect;
+            Managers.Input.InputDiagonal -= TurnUIEffect;
+            Managers.Input.InputDiagonal += TurnUIEffect;
         }
     }
 

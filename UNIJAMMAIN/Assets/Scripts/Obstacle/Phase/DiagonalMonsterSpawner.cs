@@ -18,8 +18,8 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     {
         InitialDict();
 
-        Managers.Input.KeyArrowcodeAction -= DeactivateDiagonal;
-        Managers.Input.KeyArrowcodeAction += DeactivateDiagonal;
+        Managers.Input.InputDiagonal -= DeactivateDiagonal;
+        Managers.Input.InputDiagonal += DeactivateDiagonal;
 
         InvestScreenSize();
     }

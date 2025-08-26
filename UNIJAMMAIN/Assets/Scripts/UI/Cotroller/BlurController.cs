@@ -113,8 +113,7 @@ public class BlurController : MonoBehaviour
 
 
     public void ShowDamageEffect()
-        {
-        Debug.Log("피해입음!");
+    {
         if (isCoolDown) return;
 
         isCoolDown = true;
@@ -144,7 +143,7 @@ public class BlurController : MonoBehaviour
         );
 
         seq.OnComplete(() => isCoolDown = false);
-        }
+    }
 
 
     public void ComboEffect()

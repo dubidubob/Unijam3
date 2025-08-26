@@ -8,8 +8,8 @@ public class SettingActivater : MonoBehaviour
 
     void Start()
     {
-        Managers.Input.SettingpopAction -= ShowPanel;
-        Managers.Input.SettingpopAction += ShowPanel;
+        Managers.Input.InputEsc -= ShowPanel;
+        Managers.Input.InputEsc += ShowPanel;
 
         if (panel == null)
         {
@@ -19,7 +19,7 @@ public class SettingActivater : MonoBehaviour
 
     void OnDestroy()
     {
-        Managers.Input.SettingpopAction -= ShowPanel;
+        Managers.Input.InputEsc -= ShowPanel;
     }
 
     private void ShowPanel(bool isStop)

@@ -26,11 +26,11 @@ public class PlayerActionUI : MonoBehaviour
             _actionImgsDic[a.type] = a.sprite;
         }
 
-        Managers.Input.KeyBoardChecking -= ChangePlayerSprite;
-        Managers.Input.KeyBoardChecking += ChangePlayerSprite;
+        Managers.Input.InputWasd -= ChangePlayerSprite;
+        Managers.Input.InputWasd += ChangePlayerSprite;
 
-        Managers.Input.KeyArrowcodeAction -= ChangePlayerSprite_Arrow;
-        Managers.Input.KeyArrowcodeAction += ChangePlayerSprite_Arrow;
+        Managers.Input.InputDiagonal -= ChangePlayerSprite_Arrow;
+        Managers.Input.InputDiagonal += ChangePlayerSprite_Arrow;
 
 
     }
