@@ -15,6 +15,10 @@ public class BlurController : MonoBehaviour
 
     private void Start()
     {
+        if (camera == null)
+        { 
+            camera = Camera.main;
+        }
         damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
         /*
         Debug.Log("테스트용 pitch1.3f");

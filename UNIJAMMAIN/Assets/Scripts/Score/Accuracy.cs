@@ -18,11 +18,6 @@ public class Accuracy : MonoBehaviour
     [SerializeField] private float moveUpDistance = 50f; // 위로 이동 거리
     [SerializeField] private float duration = 0.8f;       // 텍스트 지속 시간
 
-    void Start()
-    {
-        Managers.Game.accuracy = this;
-    }
-
     public void ShowAccuracy(AccuracyState state)
     {
         // Text 생성

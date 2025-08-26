@@ -19,16 +19,15 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] Vector2 sizeDiffRate = new Vector2 (0.8f, 1.2f);
     private Dictionary<WASDType, Vector3> _spawnPosition;
     private Dictionary<WASDType, Vector3> _targetPosition;
-    private Rank _rank;
+    private HitJudge _rank;
     
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
-
-    
 
     private void Start()
     {
         Init();
 
+        _rank = new HitJudge();
         Managers.Game.RankUpdate -= UpdateRankCnt;
         Managers.Game.RankUpdate += UpdateRankCnt;
     }

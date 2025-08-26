@@ -34,10 +34,6 @@ public class KeyUIEffect : MonoBehaviour
         }
     }
 
-    private void ChangePos()
-    {
-        
-    }
     private void TurnUIEffect(GamePlayDefine.DiagonalType t)
     {
         if (type2 == t)
@@ -54,7 +50,7 @@ public class KeyUIEffect : MonoBehaviour
             // sp[0].color = new Color32(0xFF, 0xFB, 0x37, 0xFF);
             sp[1].sprite = candidate;
             sp[2].gameObject.SetActive(true);
-            Managers.Game.accuracy.ShowAccuracy(Accuracy.AccuracyState.Perfect);
+            
             Invoke("TurnOff", 0.2f);
             
            

@@ -7,11 +7,11 @@ using static GamePlayDefine;
 [Serializable]
 public struct RankNode
 {
-    public RankType RankT;
+    public EvaluateType RankT;
     public WASDType WASDT;
     public Vector2? Pos;
 
-    public RankNode(RankType t, WASDType w, Vector2? pos)
+    public RankNode(EvaluateType t, WASDType w, Vector2? pos)
     { RankT = t; WASDT = w; Pos = pos; }
 }
 
@@ -101,7 +101,7 @@ public class GameManager
             {
                 // 현재 enemy position만 담아서, true
                 RankUpdate?.Invoke(
-                    new RankNode( RankType.Success, key, go.transform.position));
+                    new RankNode( EvaluateType.Success, key, go.transform.position));
                 attacks[key].Dequeue();
                 go.GetComponent<MovingEnemy>().SetDead();
                 ComboInc();
@@ -110,7 +110,7 @@ public class GameManager
         else
         {
             RankUpdate?.Invoke(
-                new RankNode(RankType.Wrong, key, null));
+                new RankNode(EvaluateType.Wrong, key, null));
             DecHealth();
         }
     }
@@ -154,7 +154,7 @@ public class GameManager
     public void PlayerAttacked()
     {
         RankUpdate?.Invoke(
-    new RankNode(RankType.Attacked, WASDType.A, null));
+    new RankNode(EvaluateType.Attacked, WASDType.A, null));
         DecHealth();
     }
 
