@@ -1,6 +1,7 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
 using static GamePlayDefine;
 public class InputManager
 {
@@ -36,6 +37,10 @@ public class InputManager
     public void HandleStop()
     {
         isStoped = !isStoped;
+        if(isStoped)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
         Managers.Sound.PauseBGM(isStoped);
         InputEsc?.Invoke(isStoped);
     }

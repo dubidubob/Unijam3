@@ -4,7 +4,6 @@ using static GamePlayDefine;
 public class AccuracyUI : MonoBehaviour
 {
     [SerializeField] private GameObject textPrefab; // TextMeshProPrefab
-    [SerializeField] private float duration = 0.8f;       // 텍스트 지속 시간
     private TMP_Text txt;
 
     private void Start()

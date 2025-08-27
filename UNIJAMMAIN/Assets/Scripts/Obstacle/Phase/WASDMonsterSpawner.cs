@@ -29,7 +29,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     {
         Init();
 
-        _rank = new HitJudge(holder.bounds.size.x);
+        _rank = new HitJudge(holder.bounds.size.x, holder.bounds.size.y);
         Managers.Game.RankUpdate -= UpdateRankCnt;
         Managers.Game.RankUpdate += UpdateRankCnt;
     }
@@ -57,26 +57,38 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private double _spawnInterval; // 기본 스폰 간격
     private long _tick; // 박자
     private MonsterData _data; 
-    private bool _Spawning = false;
-    private double _startDsp; 
+    private bool _spawning = false;
+    private double _startDsp;
+    private bool _pausedPrev;
     public void Spawn(MonsterData data)
     {
         _data = data;
         _spawnInterval = IngameData.BeatInterval * data.spawnBeat;
         _tick = 0;
          _startDsp = AudioSettings.dspTime;
-        _Spawning = true;
+        _spawning = true;
+
+        _pausedPrev = IngameData.Pause;
     }
 
     public void UnSpawn()
     {
-        _Spawning = false;
+        _spawning = false;
     }
 
     private void Update()
     {
-        if (!_Spawning) return;
-        
+        if (!_spawning) return;
+
+        bool paused = IngameData.Pause;
+
+        if (!paused && _pausedPrev)
+            CatchUp();
+
+        _pausedPrev = paused;
+
+        if (paused) return;
+
         double now = AudioSettings.dspTime;
         while (now >= ScheduledTime(_tick + 1))
         {
@@ -84,6 +96,14 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
             IngameData.TotalMobCnt++;
             DoSpawn();
         }
+    }
+
+    private void CatchUp()
+    {
+        double now = AudioSettings.dspTime;
+
+        // 재개 시점 기준으로 tick 스냅 (즉시 스폰 없음)
+        _tick = (long)System.Math.Floor((now - _startDsp) / _spawnInterval);
     }
 
     private double ScheduledTime(long tickIndex)

@@ -9,6 +9,7 @@ using UnityEngine;
 public class PhaseManager : MonoBehaviour
 {
     [SerializeField] IllustController illustController;
+    [SerializeField] ResultUI Scoreboard;
     [SerializeField] ChapterSO chapter;
     
     public static Action<float> ChangeKey;
@@ -18,12 +19,13 @@ public class PhaseManager : MonoBehaviour
     private void Start()
     {
         spawnController = GetComponent<SpawnController>();
+        Scoreboard.gameObject.SetActive(false);
         
         IngameData.RankInit();
         if (!isQA)
         {
             StartCoroutine(RunPhase());
-        }   
+        }
     }
     
     // TODO : Áß°£Áß°£ ÄÆ¾À
@@ -105,5 +107,9 @@ public class PhaseManager : MonoBehaviour
     private void EndPhase()
     {
         spawnController.StopMonsterInPhase();
+        IngameData.Pause = true;
+
+        Scoreboard.ChangeUI();
+        Scoreboard.gameObject.SetActive(true);
     }
 }

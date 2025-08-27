@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: "EBS\uC8FC\uC2DC\uACBDM SDF"
+  m_Name: "DontUse_EBS\uC8FC\uC2DC\uACBDM SDF"
   m_EditorClassIdentifier: 
   hashCode: -386994027
   material: {fileID: -1885904736645254836}

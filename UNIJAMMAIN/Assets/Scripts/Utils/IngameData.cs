@@ -3,6 +3,7 @@ using System;
 public static class IngameData 
 {
     public static Action ChangeBpm;
+    public static bool Pause { set; get; }
     private static double _beatInterval;
     public static double BeatInterval
     {

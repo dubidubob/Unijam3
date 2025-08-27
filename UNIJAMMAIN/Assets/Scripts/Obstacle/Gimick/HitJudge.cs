@@ -4,23 +4,30 @@ using static GamePlayDefine;
 
 public class HitJudge
 {
-    private float circleDiameter;
-    private float perfectThreshold = 0.5f; //TODO : 80퍼센트 이상은 죄다 perfect 처리
+    private float horizontalDiameter, verticalDiameter;
+    private float perfectThreshold = 0.4f; //TODO : 80퍼센트 이상은 죄다 perfect 처리
     public static Action<RankType> OnRankUpdate;
 
-    public HitJudge(float diameter)
+    public HitJudge(float hori, float verti)
     {
-        circleDiameter = diameter;
+        horizontalDiameter = hori;
+        verticalDiameter = verti;
     }
 
-    public bool CalculatePerfect(Vector2? hitPos, Vector2 target)
+    public bool CalculatePerfect(Vector2? hitPos, Vector2 target, WASDType t)
     {
-        Debug.Assert(hitPos.HasValue, $"success position target : {target}");
+        // Debug.Assert(hitPos.HasValue, $"success position target : {target}");
 
         float distanceFromTarget = Vector3.Distance(hitPos.Value, target);
+
+        float circleDiameter;
+        if (t == WASDType.A || t == WASDType.D)
+            circleDiameter = horizontalDiameter;
+        else
+            circleDiameter = verticalDiameter;
         
         float ratio = distanceFromTarget / circleDiameter;
-        Debug.Log($"죽은 위치 : {hitPos}, 타켓 위치 : {target}, 비율 : {ratio}");
+        // Debug.Log($"죽은 위치 : {hitPos}, 타켓 위치 : {target}, 지름 : {circleDiameter} 비율 : {ratio}");
 
         return ratio <= perfectThreshold;
     }
@@ -39,7 +46,7 @@ public class HitJudge
                 OnRankUpdate?.Invoke(RankType.Miss);
                 break;
             case EvaluateType.Success:
-                if (CalculatePerfect(rankNode.Pos, target))
+                if (CalculatePerfect(rankNode.Pos, target, rankNode.WASDT))
                 {
                     IngameData.PerfectMobCnt++;
                     OnRankUpdate?.Invoke(RankType.Perfect);
