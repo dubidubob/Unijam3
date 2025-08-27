@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chapter
   m_EditorClassIdentifier: 
   phases:
-  - duration: 15
+  - duration: 5
     startDelay: 1
     bpm: 84
     isFlipAD: 0

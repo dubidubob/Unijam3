@@ -15,7 +15,7 @@ public struct RankNode
     { RankT = t; WASDT = w; Pos = pos; }
 }
 
-public class GameManager
+public class GameManager 
 {
     public Transform playerTransform;
     public int currentPhase { get; private set; } = 0;
@@ -72,13 +72,11 @@ public class GameManager
         playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재 위치받기
         Health = MaxHealth;
         Time.timeScale = 1f;
-        Debug.Log("GameStart");
     }
     public Transform GetPlayerTransform()
     {
         return playerTransform;
     }
-
 
     bool isADReverse = false;
     public void ReceiveKey(WASDType key)

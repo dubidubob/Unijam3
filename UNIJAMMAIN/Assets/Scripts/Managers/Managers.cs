@@ -22,7 +22,6 @@ public class Managers : MonoBehaviour
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
-    public static KeyTrackerManager Tracker { get { return Instance._key; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PauseManager Pause { get { return Instance._pause; } }
     void Start()
@@ -61,7 +60,6 @@ public class Managers : MonoBehaviour
         UI.Clear();
         Pool.Clear();
         Sound.Clear();
-        Tracker.Clear();
         Game.Clear();
     }
 }

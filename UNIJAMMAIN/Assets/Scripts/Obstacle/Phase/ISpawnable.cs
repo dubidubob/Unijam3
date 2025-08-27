@@ -4,3 +4,8 @@ public interface ISpawnable
     void Spawn(MonsterData data);
     void UnSpawn();
 }
+
+public interface ISpawnManageable
+{
+    void Deactivate();
+}

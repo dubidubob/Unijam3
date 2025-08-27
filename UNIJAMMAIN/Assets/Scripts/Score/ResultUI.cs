@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 [Serializable]
 struct RankUI {
+    public float cutline;
     public Sprite img;
     public string ment1;
     public string ment2;
@@ -42,17 +43,17 @@ public class ResultUI : MonoBehaviour
     public void ChangeUI()
     {
         float score = CalculateScore();
-        resultScore.text = score.ToString("0.##");
-
-        int idx = score switch
-        {
-            >= 95f => 0, // 최상
-            >= 85f => 1,   // 상
-            >= 70f => 2,   // 중상
-            >= 50f => 3,   // 중
-            _ => 4    // 하
-        };
+        resultScore.text = score.ToString("0.##")+"점";
         
+        int idx;
+
+        if (score >= rankUI[0].cutline) idx = 0; // 최상
+        else if (score >= rankUI[1].cutline) idx = 1; // 상
+        else if (score >= rankUI[2].cutline) idx = 2; // 중상
+        else if (score >= rankUI[3].cutline) idx = 3; // 중
+        else idx = 4; // 하
+
+
         resultImg.sprite = rankUI[idx].img;
         resultImg.SetNativeSize();
         resultTxt.text = rankUI[idx].GetRandomMent();

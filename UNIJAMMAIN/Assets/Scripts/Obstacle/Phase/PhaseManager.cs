@@ -106,6 +106,7 @@ public class PhaseManager : MonoBehaviour
     }
     private void EndPhase()
     {
+        // TODO : ´õ Á¤µ·ÇÏ±â
         spawnController.StopMonsterInPhase();
         IngameData.Pause = true;
 

@@ -125,6 +125,8 @@ public class MovingEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (IngameData.Pause) return;
+
         if (_elapsedTime <= movingDuration && isResizeable)
         {
             PerspectiveResize(_elapsedTime);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
 
-public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
+public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable, ISpawnManageable
 {
     public Define.MonsterType MonsterType => Define.MonsterType.Diagonal;
     [SerializeField] float boundaryOffset = 1f;
@@ -20,8 +20,6 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
         Managers.Input.InputDiagonal -= DeactivateDiagonal;
         Managers.Input.InputDiagonal += DeactivateDiagonal;
-
-        InvestScreenSize();
     }
 
     private void InitialDict()
@@ -70,7 +68,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         int mIdx = deactivatedDiagonalIdx[idx];
         deactivatedDiagonalIdx.Remove(mIdx);
 
-        PosAndActivateNode((DiagonalType)mIdx);
+        diagonalDict[(DiagonalType)mIdx].SetActive(true);
         activatedDiagonalIdx.Add(mIdx);
     }
 
@@ -85,52 +83,12 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         else
         {
             Managers.Game.PlayerAttacked();
-            Managers.Tracker.MissedKeyPress(attackType.ToString());
         }
     }
 
-    float xMin, xMax, yMin, yMax;
-    private void InvestScreenSize()
+    public void Deactivate()
     {
-        Camera cam = Camera.main;
-
-        float halfHeight = cam.orthographicSize;
-        float halfWidth = halfHeight * cam.aspect;
-
-        xMin = -halfWidth;
-        xMax = halfWidth;
-        yMin = -halfHeight;
-        yMax = halfHeight;
-    }
-    private void PosAndActivateNode(DiagonalType type)
-    {
-        float randX = 0f;
-        float randY = 0f;
-
-        switch (type)
-        {
-            case DiagonalType.LeftUp:
-                randX = UnityEngine.Random.Range(xMin + boundaryOffset, -boundaryOffset);
-                randY = UnityEngine.Random.Range(boundaryOffset, yMax - boundaryOffset);
-                break;
-
-            case DiagonalType.LeftDown:
-                randX = UnityEngine.Random.Range(xMin + boundaryOffset, -boundaryOffset);
-                randY = UnityEngine.Random.Range(yMin + boundaryOffset, -boundaryOffset);
-                break;
-
-            case DiagonalType.RightUp:
-                randX = UnityEngine.Random.Range(boundaryOffset, xMax - boundaryOffset);
-                randY = UnityEngine.Random.Range(boundaryOffset, yMax - boundaryOffset);
-                break;
-
-            case DiagonalType.RightDown:
-                randX = UnityEngine.Random.Range(boundaryOffset, xMax - boundaryOffset);
-                randY = UnityEngine.Random.Range(yMin + boundaryOffset, -boundaryOffset);
-                break;
-        }
-
-        diagonalDict[type].transform.position = new Vector3(randX, randY, 0f);
-        diagonalDict[type].SetActive(true);
+        activatedDiagonalIdx = new List<int>();
+        
     }
 }
