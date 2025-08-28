@@ -18,6 +18,7 @@ public class DiagonalMonster : MonoBehaviour
     
     private float _duration;
     private Vector3 _stride;
+    private Sequence jumpSequence;
 
     private void Awake()
     {
@@ -36,12 +37,12 @@ public class DiagonalMonster : MonoBehaviour
 
     private void OnDisable()
     {
-        DOTween.Kill(transform);
+        jumpSequence.Kill();
     }
 
     private void Move()
     {   
-        Sequence jumpSequence = DOTween.Sequence();
+        jumpSequence = DOTween.Sequence();
 
         // 점프와 대기를 번갈아 가며 설정
         for (int i = 0; i < _jumpCnt; i++)
@@ -68,7 +69,7 @@ public class DiagonalMonster : MonoBehaviour
             }
         }
 
-        jumpSequence.OnKill(() => {
+        jumpSequence.OnComplete(() => {
             SetDead(false);
         });
     }
