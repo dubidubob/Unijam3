@@ -12,7 +12,7 @@ public class MainUIs : MonoBehaviour
     [SerializeField] private Image bgPlace;
     [SerializeField] private BlurController blurController;
     private int MaxHealth;
-    private float beforeHealth = 10000;
+    private float beforeHealth = 100;
     void Awake()
     {
         Managers.Game.ComboContinue -= UpdateCombo;
@@ -27,6 +27,7 @@ public class MainUIs : MonoBehaviour
         Combobangsa.SetNativeSize();
 
         ChangeBg(Managers.Game.GetPhase());
+
     }
 
     private void HealthChange(float health)
@@ -45,7 +46,7 @@ public class MainUIs : MonoBehaviour
 
             // 피해 입엇을때 효과와 몬스터 처치시 회복의 효과관련하여 관리 
 
-            if (beforeHealth >= health && blurController!=null) // 피해 입음
+            if (beforeHealth > health && blurController!=null) // 피해 입음
             {
                 // 피해 받는 효과
                 blurController.ShowDamageEffect();
