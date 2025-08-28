@@ -22,10 +22,11 @@ public class DiagonalMonster : MonoBehaviour
 
     private void Awake()
     {
-        IngameData.BeatInterval = 84 / 60;
         _objectRenderer = GetComponent<SpriteRenderer>();
         _originSprite = _objectRenderer.sprite;
         _originPos = transform.position;
+        PauseManager.IsPaused -= PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile;
     }
 
     private void OnEnable()
@@ -38,6 +39,15 @@ public class DiagonalMonster : MonoBehaviour
     private void OnDisable()
     {
         jumpSequence.Kill();
+        PauseManager.IsPaused -= PauseForWhile;
+    }
+
+    private void PauseForWhile(bool isStop)
+    {
+        if (isStop)
+            jumpSequence.Pause();
+        else 
+            jumpSequence.Play();
     }
 
     private void Move()

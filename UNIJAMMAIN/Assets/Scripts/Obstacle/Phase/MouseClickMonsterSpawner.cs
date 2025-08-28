@@ -15,11 +15,14 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
 
         Managers.Input.InputMouse -= DeactivateMouse;
         Managers.Input.InputMouse += DeactivateMouse;
+        PauseManager.IsPaused -= PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile;
     }
 
     private void OnDestroy()
     {
         Managers.Input.InputMouse -= DeactivateMouse;
+        PauseManager.IsPaused -= PauseForWhile;
     }
 
     private void DeactivateMouse(GamePlayDefine.MouseType mouseType)
@@ -75,6 +78,11 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
             Debug.LogWarning("Set Up Phase Duration!");
         }
         _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDuration - threshold;
+    }
+
+    public void PauseForWhile(bool isStop)
+    {
+        _spawning = !isStop;
     }
 }
 

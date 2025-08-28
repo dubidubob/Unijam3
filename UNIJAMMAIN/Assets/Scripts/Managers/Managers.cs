@@ -13,7 +13,6 @@ public class Managers : MonoBehaviour
     PoolManager _pool = new PoolManager();
     SceneManagerEx _scene = new SceneManagerEx();
     SoundManager _sound = new SoundManager();
-    PauseManager _pause = new PauseManager();
 
     public static GameManager Game { get { return Instance._game; } }
     public static UI_Manager UI { get { return Instance._ui; } }
@@ -22,7 +21,6 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
-    public static PauseManager Pause { get { return Instance._pause; } }
     void Start()
     {
         Init();
@@ -52,7 +50,6 @@ public class Managers : MonoBehaviour
 
             s_instance = go.GetComponent<Managers>();
             s_instance._pool.Init();
-            s_instance._pause.Init();
             s_instance._sound.Init();
         }
     }

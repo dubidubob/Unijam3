@@ -20,11 +20,14 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
         Managers.Input.InputDiagonal -= DeactivateDiagonal;
         Managers.Input.InputDiagonal += DeactivateDiagonal;
+        PauseManager.IsPaused -= PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile;
     }
 
     private void OnDestroy()
     {
         Managers.Input.InputDiagonal -= DeactivateDiagonal;
+        PauseManager.IsPaused -= PauseForWhile;
     }
 
     private void InitialDict()
@@ -64,6 +67,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
             yield return new WaitForSecondsRealtime(spawnDuration);
             if (AudioSettings.dspTime >= _lastSpawnTime)
                 yield break;
+            if (_spawning) continue;
             ActivateEnemy();
         }
         yield return null;
@@ -102,5 +106,10 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
             Debug.LogWarning("Set Up Phase Duration!");
         }
         _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDuration - (IngameData.BeatInterval * 8 + threshold);
+    }
+
+    public void PauseForWhile(bool isStop)
+    {
+        _spawning = !isStop;
     }
 }

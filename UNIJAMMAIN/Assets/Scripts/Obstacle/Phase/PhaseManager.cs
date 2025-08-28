@@ -31,14 +31,14 @@ public class PhaseManager : MonoBehaviour
     // TODO : Áß°£Áß°£ ÄÆ¾À
     private IEnumerator ShowCutScene()
     {
-        Managers.Pause.Pause();
+        PauseManager.ControlTime(true);
         if (illustController != null)
         {
             Managers.UI.ShowPopUpUI<S1_PopUp>();
             yield return new WaitForSecondsRealtime(6f);
             yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//¼ýÀÚ ³ª¿È
         }
-        Managers.Pause.Resume();
+        PauseManager.ControlTime(false);
 
         //Pause();
         //if (i == 4)

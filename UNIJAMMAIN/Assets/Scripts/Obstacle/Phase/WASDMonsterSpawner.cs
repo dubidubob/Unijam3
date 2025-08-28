@@ -32,11 +32,14 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         _rank = new HitJudge(holder.bounds.size.x, holder.bounds.size.y);
         Managers.Game.RankUpdate -= UpdateRankCnt;
         Managers.Game.RankUpdate += UpdateRankCnt;
+        PauseManager.IsPaused -= PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile;
     }
 
     private void OnDestroy()
     {
         Managers.Game.RankUpdate -= UpdateRankCnt;
+        PauseManager.IsPaused -= PauseForWhile;
     }
 
     private void UpdateRankCnt(RankNode rankNode)
@@ -64,7 +67,6 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private MonsterData _data; 
     private bool _spawning = false;
     private double _startDsp;
-    private bool _pausedPrev;
     private double _lastSpawnTime;
     public void Spawn(MonsterData data)
     {
@@ -74,8 +76,6 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
          _startDsp = AudioSettings.dspTime;
         SetLastSpawnTime(data.moveBeat);
         _spawning = true;
-
-        _pausedPrev = IngameData.Pause;
     }
 
     public void UnSpawn()
@@ -83,21 +83,30 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         _spawning = false;
     }
 
+    private double CachedTime;
+    private double leftOverTime;
+    public void PauseForWhile(bool isStop)
+    {
+        if (isStop)
+        {
+            _spawning = false;
+            CachedTime = AudioSettings.dspTime;
+            leftOverTime = AudioSettings.dspTime % IngameData.BeatInterval;
+        }
+        
+        else 
+        {
+            double PausedTime = AudioSettings.dspTime - CachedTime;
+            _tick += (int)((PausedTime+ leftOverTime) / IngameData.BeatInterval);
+            _spawning = true;
+        }
+    }
+
     private void Update()
     {
         if (!_spawning) return;
 
-        bool paused = IngameData.Pause;
-
-        if (!paused && _pausedPrev)
-            CatchUp();
-
-        _pausedPrev = paused;
-
-        if (paused) return;
-
         double now = AudioSettings.dspTime;
-
         if (now >= _lastSpawnTime)
         {
             UnSpawn();
@@ -110,14 +119,6 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
             IngameData.TotalMobCnt++;
             DoSpawn();
         }
-    }
-
-    private void CatchUp()
-    {
-        double now = AudioSettings.dspTime;
-
-        // 재개 시점 기준으로 tick 스냅 (즉시 스폰 없음)
-        _tick = (long)System.Math.Floor((now - _startDsp) / _spawnInterval);
     }
 
     private double ScheduledTime(long tickIndex)
@@ -141,16 +142,15 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     }
 
     private float threshold = 1f;
-    public void SetLastSpawnTime(float? moveBeat)
+    public void SetLastSpawnTime(float? moveBeat=1)
     {
         if (IngameData.PhaseDuration == 0)
-        {
             Debug.LogWarning("Set Up Phase Duration!");
-        }
-        if (moveBeat == null) moveBeat =1;
+        
         _lastSpawnTime = _startDsp + IngameData.PhaseDuration - (IngameData.BeatInterval * (float)moveBeat+ threshold);
     }
 
+    #region Variable
     private void VariableSetting(MovingEnemy movingEnemy, WASDType type)
     {
         float distance = Vector3.Distance(_spawnPosition[type], _targetPosition[type]);
@@ -159,9 +159,11 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     }
 
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)
-    { 
+    {
         this.sizeDiffRate = sizeDiffRate;
         this._maxCnt = Mathf.Clamp(maxCnt, 1, 4);
         this._idx = idx;
     }
+    #endregion
 }
+

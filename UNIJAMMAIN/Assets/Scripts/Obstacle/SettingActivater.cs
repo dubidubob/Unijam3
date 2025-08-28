@@ -8,8 +8,8 @@ public class SettingActivater : MonoBehaviour
 
     void Start()
     {
-        Managers.Input.InputEsc -= ShowPanel;
-        Managers.Input.InputEsc += ShowPanel;
+        PauseManager.IsPaused -= ShowPanel;
+        PauseManager.IsPaused += ShowPanel;
 
         if (panel == null)
         {
@@ -19,7 +19,7 @@ public class SettingActivater : MonoBehaviour
 
     void OnDestroy()
     {
-        Managers.Input.InputEsc -= ShowPanel;
+        PauseManager.IsPaused -= ShowPanel;
     }
 
     private void ShowPanel(bool isStop)
