@@ -167,8 +167,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 94
-  m_fontSizeBase: 94
+  m_fontSize: 72
+  m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2126,6 +2126,7 @@ MonoBehaviour:
   - {fileID: 2369132953779187150}
   optionPanel: {fileID: 6751760132189646940}
   memberPanel: {fileID: 2301663870639267065}
+  toStartText: {fileID: 2017242296217434883}
 --- !u!114 &8198784162413686288
 MonoBehaviour:
   m_ObjectHideFlags: 0
