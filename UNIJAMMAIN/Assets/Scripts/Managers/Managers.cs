@@ -45,13 +45,21 @@ public class Managers : MonoBehaviour
                 go = new GameObject { name = "@Manager" };
                 go.AddComponent<Managers>();
             }
-            DontDestroyOnLoad(go);
+            if (Application.isPlaying)
+            {
+                DontDestroyOnLoad(go);
+            }
 
             s_instance = go.GetComponent<Managers>();
             s_instance._pool.Init();
             s_instance._pause.Init();
             s_instance._sound.Init();
         }
+    }
+
+    void OnDestroy()
+    {
+        Clear();
     }
 
     public static void Clear()
