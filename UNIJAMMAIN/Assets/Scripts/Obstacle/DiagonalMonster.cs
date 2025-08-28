@@ -1,129 +1,111 @@
 using DG.Tweening;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class DiagonalMonster : MonoBehaviour
 {
-    [SerializeField] List<float> scales = new List<float>();
-    [SerializeField]
-    private GamePlayDefine.DiagonalType diagonalT;
+    [SerializeField] GamePlayDefine.DiagonalType diagonalT;
+    [SerializeField] Transform targetPos;
+    [SerializeField] Sprite outline;
     public GamePlayDefine.DiagonalType DiagonalT => diagonalT;
+    
+    private bool _isDying = false;
+    private int _jumpCnt = 4;
 
-    private float lifeDuration;
-
-    private SpriteRenderer spriteRenderer;
-    private bool isDying = false;
-
-    private Tween colorTween;
-    private Tween fadeTween;
+    private Vector3 _originPos;
+    private Sprite _originSprite;
+    private SpriteRenderer _objectRenderer; // 페이드 아웃을 적용할 객체의 렌더러
+    
+    private float _duration;
+    private Vector3 _stride;
+    private Sequence jumpSequence;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        lifeDuration = 3f;
+        IngameData.BeatInterval = 84 / 60;
+        _objectRenderer = GetComponent<SpriteRenderer>();
+        _originSprite = _objectRenderer.sprite;
+        _originPos = transform.position;
     }
 
     private void OnEnable()
     {
-        Init();
-
-        baseScale = transform.localScale;
-        curCnt = 0;
-
-        BeatClock.OnBeat -= BeatMoving;
-        BeatClock.OnBeat += BeatMoving;
+        _duration = (float)IngameData.BeatInterval;
+        _stride = (targetPos.position - _originPos) / _jumpCnt;
+        Move();
     }
 
-    private void Init()
+    private void OnDisable()
     {
-        isDying = false;
-
-        spriteRenderer.color = Color.white;
-        transform.localScale = Vector3.one * 0.37f;
-
-        colorTween?.Kill();
-        fadeTween?.Kill();
-
-        colorTween = spriteRenderer
-            .DOColor(Color.red, lifeDuration)
-            .SetEase(Ease.Linear)
-            .OnComplete(() =>
-            {
-                DyingAnim();
-            });
+        jumpSequence.Kill();
     }
 
+    private void Move()
+    {   
+        jumpSequence = DOTween.Sequence();
 
-
-    private void DyingAnim()
-    {
-        BeatClock.OnBeat -= BeatMoving;
-        if (seq != null && seq.IsActive()) seq.Kill();
-
-        Sequence dyingSequence = DOTween.Sequence();
-        dyingSequence.Append(transform.DOScale(Vector3.one * 0.05f, 0.1f).SetEase(Ease.OutBack));
-        dyingSequence.Append(transform.DOLocalMove(new Vector3(0, 0, 0), 0.08f));
-        dyingSequence.OnComplete(() =>
+        // 점프와 대기를 번갈아 가며 설정
+        for (int i = 0; i < _jumpCnt; i++)
         {
-            isDying = true;
+            Vector3 target = _originPos + _stride * (i + 1);
+            jumpSequence.Append(transform.DOJump(
+                target,   // 목표 지점
+                0.5f,        // 점프 높이
+                1,           // 점프 횟수 (한 번만 점프)
+                _duration
+            ));
+
+            // 쉬는 시간 (1박자)
+            if (i < _jumpCnt - 1) // 마지막 점프는 대기 필요 없음
+            {
+                jumpSequence.AppendInterval(_duration);
+            }
+            else
+            {
+                jumpSequence.AppendCallback(() =>
+                {
+                    DoFade();
+                });
+            }
+        }
+
+        jumpSequence.OnComplete(() => {
             SetDead(false);
         });
+    }
 
-        dyingSequence.Play();
+    private void DoFade()
+    {
+        _isDying = true;
+        _objectRenderer.sprite = outline;
+        float delay = 0.2f;
+        Invoke("ChangeToOriginal", delay);
+        _objectRenderer.material.DOFade(0, _duration- delay).SetDelay(delay); // 마지막 점프 구간에서 페이드 아웃
+    }
+
+    private void ChangeToOriginal()
+    {
+        _objectRenderer.sprite = _originSprite;
     }
 
     public void SetDead(bool isAttackedByPlayer = true)
     {
         if (!isAttackedByPlayer)
         {
-            Managers.Game.DecHealth();
+            Managers.Game.PlayerAttacked();
+            DoFade();
         }
         else
         {
-            if (isDying) //player attacked, but late, this not count
+            if (_isDying) //player attacked, but late, this not count
                 return;
 
             Managers.Game.ComboInc();
         }
 
-        isDying = false;
-        this.gameObject.SetActive(false);
-    }
-
-    private void OnDisable()
-    {
-        transform.DOKill();
-        transform.localScale = baseScale;
-        colorTween?.Kill();
-        fadeTween?.Kill();
-    }
-
-
-    int curCnt;
-    Vector3 baseScale;
-    Sequence seq; 
-    void BeatMoving(double __, long _)
-    {
-        if (curCnt >= scales.Count)
-        {
-            BeatClock.OnBeat -= BeatMoving;
-            return;
-        }
-
-        if (seq != null && seq.IsActive() && seq.IsPlaying()) return;
-
-        float beat = (float)IngameData.BeatInterval;
-
-        var targetScale = baseScale * scales[curCnt++];
-
-        if (seq != null && seq.IsActive()) seq.Kill(); 
-        seq = DOTween.Sequence().SetLink(gameObject, LinkBehaviour.KillOnDestroy).SetAutoKill(true);
-
-        
-        seq.Append(transform.DOScale(targetScale * 1.15f, beat * 0.3f).SetEase(Ease.OutCubic));
-        
-        seq.Append(transform.DOScale(targetScale, beat * 0.2f).SetEase(Ease.OutCubic));
-        seq.AppendInterval(beat * 0.25f);
+        _isDying = false;
+        gameObject.SetActive(false);
+        transform.position = _originPos;
+        _objectRenderer.color = new Color(_objectRenderer.color.r, _objectRenderer.color.g, _objectRenderer.color.b, 1);        
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -116,10 +115,15 @@ public class PoolManager
 
     public void Clear()
     {
-        foreach (Transform child in _root)
+        if (_root == null)
         {
-            GameObject.Destroy(child.gameObject);
+            Debug.LogWarning("root 삭제되면 안됨!");
         }
+       else
+            foreach (Transform child in _root)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
         _pool.Clear();
     }
 }

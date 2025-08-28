@@ -17,7 +17,7 @@ public class MainTitle : BaseScene
     {
         Init();
         Managers.UI.ShowPopUpUI<MainScene>();
-        
+        Managers.Sound.Play("BGM/100bpm_76_V1", Define.Sound.BGM);
         //Managers.UI.ShowPopUpUI<GameOver>();
 
     }

@@ -1,5 +1,19 @@
 public class GamePlayDefine
 {
+    public enum AllType
+    {
+        A,
+        D,
+        W,
+        S,
+        LeftUp,
+        LeftDown,
+        RightUp,
+        RightDown,
+        Idle,
+        MaxCnt
+
+    }
     public enum WASDType //무슨 키로 받을지
     {
         A,
@@ -21,6 +35,20 @@ public class GamePlayDefine
         Left,
         Right,
         MaxCnt
+    }
+
+    public enum EvaluateType
+    {
+        Success, // 몹 없애기 성공
+        Wrong, // 몹 없는데 키 누름
+        Attacked // 몹이 플레이어 공격함
+    }
+
+    public enum RankType
+    { 
+        Miss,
+        Good,
+        Perfect,
     }
 
     public enum IllustType

@@ -1,20 +1,20 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 using static GamePlayDefine;
 public class InputManager
 {
     public void Clear()
     {
-        MouseAction = null;
-        KeyArrowcodeAction = null;
-        SettingpopAction = null;
-        KeyBoardChecking = null;
+        InputMouse = null;
+        InputDiagonal = null;
+        InputEsc = null;
+        InputWasd = null;
     }
-    public Action<WASDType> KeyBoardChecking = null;
-    public Action<DiagonalType> KeyArrowcodeAction = null;
-    public Action<MouseType> MouseAction = null;
-    public Action<bool> SettingpopAction = null;
+    public Action<WASDType> InputWasd = null;
+    public Action<DiagonalType> InputDiagonal = null;
+    public Action<MouseType> InputMouse = null;
+    public Action<bool> InputEsc = null;
 
     private readonly Dictionary<KeyCode, WASDType> keysToCheck = new()
     {
@@ -31,12 +31,18 @@ public class InputManager
         KeyCode.DownArrow
     };
 
+
     bool isStoped = false;
     public void HandleStop()
     {
         isStoped = !isStoped;
+        IngameData.Pause = isStoped;
+        if (isStoped)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
         Managers.Sound.PauseBGM(isStoped);
-        SettingpopAction?.Invoke(isStoped);
+        InputEsc?.Invoke(isStoped);
     }
 
     public void OnUpdate()
@@ -48,6 +54,7 @@ public class InputManager
         }
 
         if (Time.timeScale == 0f) return;
+        if (IngameData.Pause) return;
 
         HandleMovementKeys();
         HandleDiagonalKeys();
@@ -58,11 +65,11 @@ public class InputManager
     {
         if (Input.GetMouseButtonDown(0))
         {
-            MouseAction?.Invoke(MouseType.Left);
+            InputMouse?.Invoke(MouseType.Left);
         }
         if (Input.GetMouseButtonDown(1))
         {
-            MouseAction?.Invoke(MouseType.Right);
+            InputMouse?.Invoke(MouseType.Right);
         }
     }
 
@@ -70,56 +77,58 @@ public class InputManager
     {
         foreach (var key in keysToCheck) // WASD
         {
-            if (Managers.Tracker.keyPressCounts[key.Key.ToString()] < 4
-                && Input.GetKeyDown(key.Key))
+            if (Input.GetKeyDown(key.Key))
             {
-                KeyBoardChecking?.Invoke(key.Value);
+                InputWasd?.Invoke(key.Value);
                 Managers.Game.ReceiveKey(key.Value);
             }
         }
+
+
+        
     }
 
     private void HandleDiagonalKeys()
     {
-        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow) && Managers.Tracker.keyPressCounts["LeftUp"] < 4)
+        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.UpArrow))
         {
-            KeyArrowcodeAction?.Invoke(GamePlayDefine.DiagonalType.LeftUp);
+            InputDiagonal?.Invoke(GamePlayDefine.DiagonalType.LeftUp);
             return;
         }
 
-        else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow) && Managers.Tracker.keyPressCounts["LeftUp"] < 4)
+        else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            KeyArrowcodeAction?.Invoke(GamePlayDefine.DiagonalType.LeftUp);
+            InputDiagonal?.Invoke(GamePlayDefine.DiagonalType.LeftUp);
             return;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["LeftDown"] < 4) // 왼쪽아래
+        else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.DownArrow))
         {
-            KeyArrowcodeAction?.Invoke(GamePlayDefine.DiagonalType.LeftDown);
+            InputDiagonal?.Invoke(GamePlayDefine.DiagonalType.LeftDown);
             return;
         }
-        else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow) && Managers.Tracker.keyPressCounts["LeftDown"] < 4)
+        else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            KeyArrowcodeAction?.Invoke(GamePlayDefine.DiagonalType.LeftDown);
+            InputDiagonal?.Invoke(GamePlayDefine.DiagonalType.LeftDown);
             return;
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow) && Managers.Tracker.keyPressCounts["RightUp"] < 4) //오른쪽위
+        else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.UpArrow))
         {
-            KeyArrowcodeAction?.Invoke(GamePlayDefine.DiagonalType.RightUp);
+            InputDiagonal?.Invoke(GamePlayDefine.DiagonalType.RightUp);
             return;
         }
-        else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow) && Managers.Tracker.keyPressCounts["RightUp"] < 4)
+        else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow))
         {
-            KeyArrowcodeAction?.Invoke(GamePlayDefine.DiagonalType.RightUp);
+            InputDiagonal?.Invoke(GamePlayDefine.DiagonalType.RightUp);
             return;
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4) // 오른쪽 아래
+        else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.DownArrow))
         {
-            KeyArrowcodeAction?.Invoke(GamePlayDefine.DiagonalType.RightDown);
+            InputDiagonal?.Invoke(GamePlayDefine.DiagonalType.RightDown);
             return;
         }
-        else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow) && Managers.Tracker.keyPressCounts["RightDown"] < 4)
+        else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow))
         {
-            KeyArrowcodeAction?.Invoke(GamePlayDefine.DiagonalType.RightDown);
+            InputDiagonal?.Invoke(GamePlayDefine.DiagonalType.RightDown);
             return;
         }
     }

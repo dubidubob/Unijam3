@@ -6,7 +6,6 @@ using static GamePlayDefine;
 public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 {
     public Define.MonsterType MonsterType => Define.MonsterType.Diagonal;
-    [SerializeField] float boundaryOffset = 1f;
 
     private Dictionary<DiagonalType, GameObject> diagonalDict;
 
@@ -14,14 +13,18 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     private List<int> deactivatedDiagonalIdx = new List<int>();
 
     private bool _spawning = false;
+    private double _lastSpawnTime;
     private void Awake()
     {
         InitialDict();
 
-        Managers.Input.KeyArrowcodeAction -= DeactivateDiagonal;
-        Managers.Input.KeyArrowcodeAction += DeactivateDiagonal;
+        Managers.Input.InputDiagonal -= DeactivateDiagonal;
+        Managers.Input.InputDiagonal += DeactivateDiagonal;
+    }
 
-        InvestScreenSize();
+    private void OnDestroy()
+    {
+        Managers.Input.InputDiagonal -= DeactivateDiagonal;
     }
 
     private void InitialDict()
@@ -44,6 +47,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     public void Spawn(MonsterData data)
     {
         float spawnDuration = (float)IngameData.BeatInterval * data.spawnBeat;
+        SetLastSpawnTime(); 
         _spawning = true;
         StartCoroutine(DoSpawn(spawnDuration));
     }
@@ -58,6 +62,8 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         while (_spawning)
         {
             yield return new WaitForSecondsRealtime(spawnDuration);
+            if (AudioSettings.dspTime >= _lastSpawnTime)
+                yield break;
             ActivateEnemy();
         }
         yield return null;
@@ -70,7 +76,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         int mIdx = deactivatedDiagonalIdx[idx];
         deactivatedDiagonalIdx.Remove(mIdx);
 
-        PosAndActivateNode((DiagonalType)mIdx);
+        diagonalDict[(DiagonalType)mIdx].SetActive(true);
         activatedDiagonalIdx.Add(mIdx);
     }
 
@@ -84,53 +90,17 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         }
         else
         {
-            Managers.Game.DecHealth();
-            Managers.Tracker.MissedKeyPress(attackType.ToString());
+            Managers.Game.PlayerAttacked();
         }
     }
 
-    float xMin, xMax, yMin, yMax;
-    private void InvestScreenSize()
+    private float threshold = 2f;
+    public void SetLastSpawnTime(float? _=null)
     {
-        Camera cam = Camera.main;
-
-        float halfHeight = cam.orthographicSize;
-        float halfWidth = halfHeight * cam.aspect;
-
-        xMin = -halfWidth;
-        xMax = halfWidth;
-        yMin = -halfHeight;
-        yMax = halfHeight;
-    }
-    private void PosAndActivateNode(DiagonalType type)
-    {
-        float randX = 0f;
-        float randY = 0f;
-
-        switch (type)
+        if (IngameData.PhaseDuration == 0)
         {
-            case DiagonalType.LeftUp:
-                randX = UnityEngine.Random.Range(xMin + boundaryOffset, -boundaryOffset);
-                randY = UnityEngine.Random.Range(boundaryOffset, yMax - boundaryOffset);
-                break;
-
-            case DiagonalType.LeftDown:
-                randX = UnityEngine.Random.Range(xMin + boundaryOffset, -boundaryOffset);
-                randY = UnityEngine.Random.Range(yMin + boundaryOffset, -boundaryOffset);
-                break;
-
-            case DiagonalType.RightUp:
-                randX = UnityEngine.Random.Range(boundaryOffset, xMax - boundaryOffset);
-                randY = UnityEngine.Random.Range(boundaryOffset, yMax - boundaryOffset);
-                break;
-
-            case DiagonalType.RightDown:
-                randX = UnityEngine.Random.Range(boundaryOffset, xMax - boundaryOffset);
-                randY = UnityEngine.Random.Range(yMin + boundaryOffset, -boundaryOffset);
-                break;
+            Debug.LogWarning("Set Up Phase Duration!");
         }
-
-        diagonalDict[type].transform.position = new Vector3(randX, randY, 0f);
-        diagonalDict[type].SetActive(true);
+        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDuration - (IngameData.BeatInterval * 8 + threshold);
     }
 }

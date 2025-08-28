@@ -7,14 +7,19 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] GameObject RightOne;
 
     public Define.MonsterType MonsterType => Define.MonsterType.MouseClick;
-
+    private double _lastSpawnTime;
     private void Awake()
     {
         LeftOne.SetActive(false);
         RightOne.SetActive(false);
 
-        Managers.Input.MouseAction -= DeactivateMouse;
-        Managers.Input.MouseAction += DeactivateMouse;
+        Managers.Input.InputMouse -= DeactivateMouse;
+        Managers.Input.InputMouse += DeactivateMouse;
+    }
+
+    private void OnDestroy()
+    {
+        Managers.Input.InputMouse -= DeactivateMouse;
     }
 
     private void DeactivateMouse(GamePlayDefine.MouseType mouseType)
@@ -28,6 +33,7 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     public void Spawn(MonsterData data)
     {
         float spawnDuration = (float)IngameData.BeatInterval * data.spawnBeat;
+        SetLastSpawnTime();
         _spawning = true;
         StartCoroutine(DoSpawn(spawnDuration));
     }
@@ -43,6 +49,9 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
         var wait = new WaitForSecondsRealtime(spawnDuration);
         while (_spawning)
         {
+            if (AudioSettings.dspTime > _lastSpawnTime)
+                break;
+
             yield return wait;
             ActivateEnemy();
         }
@@ -56,6 +65,16 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
 
         if (!first.activeSelf) first.SetActive(true);
         else if (!second.activeSelf) second.SetActive(true);
+    }
+
+    private float threshold = 2f;
+    public void SetLastSpawnTime(float? _=null)
+    {
+        if (IngameData.PhaseDuration == 0)
+        {
+            Debug.LogWarning("Set Up Phase Duration!");
+        }
+        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDuration - threshold;
     }
 }
 

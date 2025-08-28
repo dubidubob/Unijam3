@@ -9,7 +9,7 @@ public struct WASDPosition
     public WASDType WASDType;
     public GameObject spawnPos;
     public GameObject targetPos;
-    public Vector3 playerPos;
+    public Vector2 playerPos;
 }
 
 public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
@@ -17,20 +17,38 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] EnemyTypeSO enemyTypeSO;
     [SerializeField] WASDPosition[] positions;
     [SerializeField] Vector2 sizeDiffRate = new Vector2 (0.8f, 1.2f);
-    private Dictionary<WASDType, Vector3> _spawnPosition;
-    private Dictionary<WASDType, Vector3> _targetPosition;
+    [SerializeField] Collider2D holder;
+
+    private Dictionary<WASDType, Vector2> _spawnPosition;
+    private Dictionary<WASDType, Vector2> _targetPosition;
+    private HitJudge _rank;
     
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
     private void Start()
     {
         Init();
+
+        _rank = new HitJudge(holder.bounds.size.x, holder.bounds.size.y);
+        Managers.Game.RankUpdate -= UpdateRankCnt;
+        Managers.Game.RankUpdate += UpdateRankCnt;
+    }
+
+    private void OnDestroy()
+    {
+        Managers.Game.RankUpdate -= UpdateRankCnt;
+    }
+
+    private void UpdateRankCnt(RankNode rankNode)
+    {
+        Vector2 target = _targetPosition[rankNode.WASDT];
+        _rank.UpdateRankCnt(rankNode, target);
     }
 
     private void Init()
     {
-        _spawnPosition = new Dictionary<WASDType, Vector3>();
-        _targetPosition = new Dictionary<WASDType, Vector3>();
+        _spawnPosition = new Dictionary<WASDType, Vector2>();
+        _targetPosition = new Dictionary<WASDType, Vector2>();
 
         for (int i = 0; i < positions.Length; i++)
         {
@@ -44,32 +62,62 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private double _spawnInterval; // 기본 스폰 간격
     private long _tick; // 박자
     private MonsterData _data; 
-    private bool _Spawning = false;
-    private double _startDsp; 
+    private bool _spawning = false;
+    private double _startDsp;
+    private bool _pausedPrev;
+    private double _lastSpawnTime;
     public void Spawn(MonsterData data)
     {
         _data = data;
         _spawnInterval = IngameData.BeatInterval * data.spawnBeat;
         _tick = 0;
          _startDsp = AudioSettings.dspTime;
-        _Spawning = true;
+        SetLastSpawnTime(data.moveBeat);
+        _spawning = true;
+
+        _pausedPrev = IngameData.Pause;
     }
 
     public void UnSpawn()
     {
-        _Spawning = false;
+        _spawning = false;
     }
 
     private void Update()
     {
-        if (!_Spawning) return;
-        
+        if (!_spawning) return;
+
+        bool paused = IngameData.Pause;
+
+        if (!paused && _pausedPrev)
+            CatchUp();
+
+        _pausedPrev = paused;
+
+        if (paused) return;
+
         double now = AudioSettings.dspTime;
+
+        if (now >= _lastSpawnTime)
+        {
+            UnSpawn();
+            return;
+        } 
+
         while (now >= ScheduledTime(_tick + 1))
         {
             _tick++;
+            IngameData.TotalMobCnt++;
             DoSpawn();
         }
+    }
+
+    private void CatchUp()
+    {
+        double now = AudioSettings.dspTime;
+
+        // 재개 시점 기준으로 tick 스냅 (즉시 스폰 없음)
+        _tick = (long)System.Math.Floor((now - _startDsp) / _spawnInterval);
     }
 
     private double ScheduledTime(long tickIndex)
@@ -90,6 +138,17 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
             VariableSetting(go.GetComponent<MovingEnemy>(), enemyType);
         }
+    }
+
+    private float threshold = 1f;
+    public void SetLastSpawnTime(float? moveBeat)
+    {
+        if (IngameData.PhaseDuration == 0)
+        {
+            Debug.LogWarning("Set Up Phase Duration!");
+        }
+        if (moveBeat == null) moveBeat =1;
+        _lastSpawnTime = _startDsp + IngameData.PhaseDuration - (IngameData.BeatInterval * (float)moveBeat+ threshold);
     }
 
     private void VariableSetting(MovingEnemy movingEnemy, WASDType type)

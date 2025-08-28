@@ -22,22 +22,24 @@ public class KeyUIEffect : MonoBehaviour
             basic = sp[1].sprite;
             sp[2].gameObject.SetActive(false);
 
-            Managers.Input.KeyBoardChecking -= TurnUIEffect;
-            Managers.Input.KeyBoardChecking += TurnUIEffect;
+            Managers.Input.InputWasd -= TurnUIEffect;
+            Managers.Input.InputWasd += TurnUIEffect;
         }
         else
         {
             sp[0].enabled = false;
 
-            Managers.Input.KeyArrowcodeAction -= TurnUIEffect;
-            Managers.Input.KeyArrowcodeAction += TurnUIEffect;
+            Managers.Input.InputDiagonal -= TurnUIEffect;
+            Managers.Input.InputDiagonal += TurnUIEffect;
         }
     }
 
-    private void ChangePos()
+    private void OnDestroy()
     {
-        
+        Managers.Input.InputWasd -= TurnUIEffect;
+        Managers.Input.InputDiagonal -= TurnUIEffect;
     }
+
     private void TurnUIEffect(GamePlayDefine.DiagonalType t)
     {
         if (type2 == t)
@@ -54,7 +56,10 @@ public class KeyUIEffect : MonoBehaviour
             // sp[0].color = new Color32(0xFF, 0xFB, 0x37, 0xFF);
             sp[1].sprite = candidate;
             sp[2].gameObject.SetActive(true);
+            
             Invoke("TurnOff", 0.2f);
+            
+           
         }        
     }
 

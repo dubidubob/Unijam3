@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2925237512326695255, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
+      propertyPath: outline
+      value: 
+      objectReference: {fileID: 21300000, guid: 22eec51a94654c949bde364a0c0df621, type: 3}
+    - target: {fileID: 2925237512326695255, guid: 949fcdf98b3a19141b1f0cc64b19b902, type: 3}
       propertyPath: diagonalT
       value: 2
       objectReference: {fileID: 0}

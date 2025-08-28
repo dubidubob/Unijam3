@@ -43,8 +43,8 @@ public class QA : MonoBehaviour
         phaseManager = GetComponent<PhaseManager>();
         WASDMonsterSpawner = GetComponent<WASDMonsterSpawner>();
 
-        Managers.Input.SettingpopAction -= QAPanelPopup;
-        Managers.Input.SettingpopAction += QAPanelPopup;
+        Managers.Input.InputEsc -= QAPanelPopup;
+        Managers.Input.InputEsc += QAPanelPopup;
 
         // 각 InputField 콜백 등록
         startDelayField.onEndEdit.AddListener(SetStartDelay);
@@ -71,6 +71,11 @@ public class QA : MonoBehaviour
                 }
             });
         }
+    }
+
+    private void OnDestroy()
+    {
+        Managers.Input.InputEsc -= QAPanelPopup;
     }
 
     private void QAPanelPopup(bool isStop)

@@ -125,6 +125,8 @@ public class MovingEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (IngameData.Pause) return;
+
         if (_elapsedTime <= movingDuration && isResizeable)
         {
             PerspectiveResize(_elapsedTime);
@@ -167,7 +169,7 @@ public class MovingEnemy : MonoBehaviour
 
             Managers.Game.attacks[enemyType].Dequeue();
             SetDead();
-            Managers.Game.DecHealth();
+            Managers.Game.PlayerAttacked();
         }
         //else if (collision.tag == "test")
         //{

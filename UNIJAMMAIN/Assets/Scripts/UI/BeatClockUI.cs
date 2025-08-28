@@ -12,6 +12,12 @@ public class BeatClockUI : MonoBehaviour
         IngameData.ChangeBpm += Init;
     }
 
+    private void OnDestroy()
+    {
+        IngameData.ChangeBpm -= Init;
+        BeatClock.OnBeat -= BeatMoving;
+    }
+
     private void Init()
     {
         baseScale = transform.localScale;

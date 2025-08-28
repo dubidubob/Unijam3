@@ -57,4 +57,30 @@ public class Util
         return null;
     }
 
+    public static GamePlayDefine.AllType WASDTypeChange(GamePlayDefine.WASDType type)
+    {
+        GamePlayDefine.AllType allType = type switch
+        {
+            GamePlayDefine.WASDType.W => GamePlayDefine.AllType.W,
+            GamePlayDefine.WASDType.A => GamePlayDefine.AllType.A,
+            GamePlayDefine.WASDType.S => GamePlayDefine.AllType.S,
+            GamePlayDefine.WASDType.D => GamePlayDefine.AllType.D,
+            _ => GamePlayDefine.AllType.Idle
+        };
+        return allType;
+    }
+
+    public static GamePlayDefine.AllType DiagonalTypeChange(GamePlayDefine.DiagonalType type)
+    {
+        GamePlayDefine.AllType allType = type switch
+        {
+            GamePlayDefine.DiagonalType.LeftDown => GamePlayDefine.AllType.LeftDown,
+            GamePlayDefine.DiagonalType.LeftUp => GamePlayDefine.AllType.LeftUp,
+            GamePlayDefine.DiagonalType.RightDown => GamePlayDefine.AllType.RightDown,
+            GamePlayDefine.DiagonalType.RightUp => GamePlayDefine.AllType.RightUp,
+            _ => GamePlayDefine.AllType.Idle
+        };
+        return allType;
+    }
+
 }

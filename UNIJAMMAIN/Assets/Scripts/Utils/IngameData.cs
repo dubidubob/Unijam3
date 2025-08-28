@@ -3,6 +3,7 @@ using System;
 public static class IngameData 
 {
     public static Action ChangeBpm;
+    public static bool Pause { set; get; }
     private static double _beatInterval;
     public static double BeatInterval
     {
@@ -15,5 +16,19 @@ public static class IngameData
                 ChangeBpm?.Invoke();
             }
         }
+    }
+    public static float PhaseDuration { set; get; }
+    public static int TotalMobCnt { set; get; }
+    public static int PerfectMobCnt { set; get; }
+    public static int GoodMobCnt { set; get; }
+    public static int WrongInputCnt { set; get; }
+    public static int AttackedMobCnt { set; get; }
+    public static void RankInit()
+    {
+        TotalMobCnt = 0;
+        PerfectMobCnt = 0;
+        GoodMobCnt = 0;
+        WrongInputCnt = 0;
+        AttackedMobCnt = 0;
     }
 }
