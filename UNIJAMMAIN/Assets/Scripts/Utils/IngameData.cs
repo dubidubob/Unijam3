@@ -17,7 +17,7 @@ public static class IngameData
             }
         }
     }
-
+    public static float PhaseDuration { set; get; }
     public static int TotalMobCnt { set; get; }
     public static int PerfectMobCnt { set; get; }
     public static int GoodMobCnt { set; get; }

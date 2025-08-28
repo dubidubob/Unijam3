@@ -75,6 +75,7 @@ public class PhaseManager : MonoBehaviour
             }
             yield return new WaitForSeconds(phase.startDelay);
             IngameData.BeatInterval = 60.0/ phase.bpm;
+            IngameData.PhaseDuration = phase.duration;
             spawnController.SpawnMonsterInPhase(phase.MonsterDatas);
             yield return new WaitForSeconds(phase.duration);
         }

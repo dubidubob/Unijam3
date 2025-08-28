@@ -65,12 +65,14 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private bool _spawning = false;
     private double _startDsp;
     private bool _pausedPrev;
+    private double _lastSpawnTime;
     public void Spawn(MonsterData data)
     {
         _data = data;
         _spawnInterval = IngameData.BeatInterval * data.spawnBeat;
         _tick = 0;
          _startDsp = AudioSettings.dspTime;
+        SetLastSpawnTime(data.moveBeat);
         _spawning = true;
 
         _pausedPrev = IngameData.Pause;
@@ -95,6 +97,13 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         if (paused) return;
 
         double now = AudioSettings.dspTime;
+
+        if (now >= _lastSpawnTime)
+        {
+            UnSpawn();
+            return;
+        } 
+
         while (now >= ScheduledTime(_tick + 1))
         {
             _tick++;
@@ -129,6 +138,17 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
             VariableSetting(go.GetComponent<MovingEnemy>(), enemyType);
         }
+    }
+
+    private float threshold = 1f;
+    public void SetLastSpawnTime(float? moveBeat)
+    {
+        if (IngameData.PhaseDuration == 0)
+        {
+            Debug.LogWarning("Set Up Phase Duration!");
+        }
+        if (moveBeat == null) moveBeat =1;
+        _lastSpawnTime = _startDsp + IngameData.PhaseDuration - (IngameData.BeatInterval * (float)moveBeat+ threshold);
     }
 
     private void VariableSetting(MovingEnemy movingEnemy, WASDType type)

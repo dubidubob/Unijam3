@@ -11,6 +11,7 @@ public class PauseManager
         Managers.Input.InputEsc -= ControlTime;
         Managers.Input.InputEsc += ControlTime;
     }
+
     private void ControlTime(bool isStop)
     {
         if (!isStop)
