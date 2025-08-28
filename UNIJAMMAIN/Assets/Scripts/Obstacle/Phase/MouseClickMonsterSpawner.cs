@@ -55,8 +55,8 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
             if (AudioSettings.dspTime > _lastSpawnTime)
                 break;
 
-            yield return wait;
             ActivateEnemy();
+            yield return wait;
         }
         yield return null;
     }

@@ -62,13 +62,14 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     private IEnumerator DoSpawn(float spawnDuration)
     {
+        yield return new WaitForSeconds((float)IngameData.BeatInterval*0.5f);
         while (_spawning)
         {
-            yield return new WaitForSecondsRealtime(spawnDuration);
             if (AudioSettings.dspTime >= _lastSpawnTime)
                 yield break;
             if (_spawning) continue;
             ActivateEnemy();
+            yield return new WaitForSecondsRealtime(spawnDuration);
         }
         yield return null;
     }
