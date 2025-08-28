@@ -40,37 +40,23 @@ public class ResultUI : MonoBehaviour
         SceneManager.LoadScene("StageScene");
     }
 
-    public void ChangeUI()
+    public void ChangeUI(float score)
     {
-        float score = CalculateScore();
+        // TODO : 이거 UI 따리에 있으면 안 됨...
         resultScore.text = score.ToString("0.##")+"점";
         
         int idx;
+        Define.Rank rank;
 
-        if (score >= rankUI[0].cutline) idx = 0; // 최상
-        else if (score >= rankUI[1].cutline) idx = 1; // 상
-        else if (score >= rankUI[2].cutline) idx = 2; // 중상
-        else if (score >= rankUI[3].cutline) idx = 3; // 중
-        else idx = 4; // 하
+        if (score >= rankUI[0].cutline) { idx = 0; rank = Define.Rank.Perfect; }  // 최상
+        else if (score >= rankUI[1].cutline) { idx = 1; rank = Define.Rank.Good; } // 상
+        else if (score >= rankUI[2].cutline) { idx = 2; rank = Define.Rank.NormalGood; } // 중상
+        else if (score >= rankUI[3].cutline) { idx = 3; rank = Define.Rank.Normal; } // 중
+        else { idx = 4; rank = Define.Rank.Bad; }// 하
 
-
+        IngameData.ChapterRank = rank;
         resultImg.sprite = rankUI[idx].img;
         resultImg.SetNativeSize();
         resultTxt.text = rankUI[idx].GetRandomMent();
-    }
-
-    private float perfectWeight = 1.0f;
-    private float goodWeight = 0.5f;
-    private float CalculateScore()
-    {
-        float perfectCnt = IngameData.PerfectMobCnt;
-        float goodCnt = IngameData.GoodMobCnt;
-        float rate = (perfectCnt * perfectWeight + goodCnt * goodWeight);
-
-        float totalCnt = IngameData.TotalMobCnt;
-        float missedInput = IngameData.WrongInputCnt;
-        float total = totalCnt + missedInput;
-        
-        return (rate / total) * 100f;
     }
 }
