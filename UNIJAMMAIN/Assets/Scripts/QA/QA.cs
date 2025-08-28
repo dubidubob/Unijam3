@@ -73,6 +73,11 @@ public class QA : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Managers.Input.InputEsc -= QAPanelPopup;
+    }
+
     private void QAPanelPopup(bool isStop)
     {
         QAPanel.SetActive(isStop);

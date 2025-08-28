@@ -31,8 +31,12 @@ public class PlayerActionUI : MonoBehaviour
 
         Managers.Input.InputDiagonal -= ChangePlayerSprite_Arrow;
         Managers.Input.InputDiagonal += ChangePlayerSprite_Arrow;
+    }
 
-
+    private void OnDestroy()
+    {
+        Managers.Input.InputWasd -= ChangePlayerSprite;
+        Managers.Input.InputDiagonal -= ChangePlayerSprite_Arrow;
     }
 
     private void ChangePlayerSprite(GamePlayDefine.WASDType type)

@@ -34,6 +34,11 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         Managers.Game.RankUpdate += UpdateRankCnt;
     }
 
+    private void OnDestroy()
+    {
+        Managers.Game.RankUpdate -= UpdateRankCnt;
+    }
+
     private void UpdateRankCnt(RankNode rankNode)
     {
         Vector2 target = _targetPosition[rankNode.WASDT];

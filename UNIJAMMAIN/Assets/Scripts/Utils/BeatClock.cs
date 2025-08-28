@@ -17,6 +17,11 @@ public class BeatClock : MonoBehaviour
         IngameData.ChangeBpm += Init;
     }
 
+    private void OnDestroy()
+    {
+        IngameData.ChangeBpm -= Init;
+    }
+
     private void Init()
     {
         _beatInterval = IngameData.BeatInterval;

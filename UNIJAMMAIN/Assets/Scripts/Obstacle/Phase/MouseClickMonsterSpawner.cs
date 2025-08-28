@@ -17,6 +17,11 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
         Managers.Input.InputMouse += DeactivateMouse;
     }
 
+    private void OnDestroy()
+    {
+        Managers.Input.InputMouse -= DeactivateMouse;
+    }
+
     private void DeactivateMouse(GamePlayDefine.MouseType mouseType)
     { 
         GameObject deactivateGo = mouseType == GamePlayDefine.MouseType.Left? LeftOne : RightOne;

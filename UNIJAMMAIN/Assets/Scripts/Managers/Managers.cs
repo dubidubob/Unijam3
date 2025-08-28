@@ -12,7 +12,6 @@ public class Managers : MonoBehaviour
     InputManager _input = new InputManager();
     PoolManager _pool = new PoolManager();
     SceneManagerEx _scene = new SceneManagerEx();
-    KeyTrackerManager _key = new KeyTrackerManager();
     SoundManager _sound = new SoundManager();
     PauseManager _pause = new PauseManager();
 
@@ -47,6 +46,7 @@ public class Managers : MonoBehaviour
                 go.AddComponent<Managers>();
             }
             DontDestroyOnLoad(go);
+
             s_instance = go.GetComponent<Managers>();
             s_instance._pool.Init();
             s_instance._pause.Init();

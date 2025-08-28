@@ -18,6 +18,10 @@ public class KeyChangeEffect : MonoBehaviour
         PhaseManager.ChangeKey -= ChangeMotion;
         PhaseManager.ChangeKey += ChangeMotion;
     }
+    private void OnDestroy()
+    {
+        PhaseManager.ChangeKey -= ChangeMotion;
+    }
     private void ChangeMotion(float startDelay)
     {
         if (startDelay < 0)

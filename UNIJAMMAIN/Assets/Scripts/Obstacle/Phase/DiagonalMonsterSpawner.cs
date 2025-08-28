@@ -22,6 +22,11 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable, ISpawnManageabl
         Managers.Input.InputDiagonal += DeactivateDiagonal;
     }
 
+    private void OnDestroy()
+    {
+        Managers.Input.InputDiagonal -= DeactivateDiagonal;
+    }
+
     private void InitialDict()
     {
         DiagonalMonster[] dm = GetComponentsInChildren<DiagonalMonster>(true);
