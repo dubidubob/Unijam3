@@ -812,7 +812,7 @@ Transform:
   m_GameObject: {fileID: 460754920}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.09, z: 0}
+  m_LocalPosition: {x: 0, y: 0.34, z: 0}
   m_LocalScale: {x: 0.82, y: 0.82, z: 0.82}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -859,7 +859,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 93
-  m_Sprite: {fileID: 21300000, guid: 716ac17215eadb541b006e8768e71d9c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b53337d5dfd4bb34c9195ead83c01225, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -884,21 +884,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImgs:
   - type: 2
-    sprite: {fileID: 21300000, guid: eda5a8a7eb9b9ce4c8e90b262f0cb3e7, type: 3}
+    sprite: {fileID: 21300000, guid: b2cfffa038051e144a6c2a471f373dd4, type: 3}
   - type: 0
-    sprite: {fileID: 21300000, guid: e6ab363b6e988a84fbe7b72d8ac099fd, type: 3}
+    sprite: {fileID: 21300000, guid: 7d333efb43fb91e4a839ce1eb1d345f0, type: 3}
   - type: 3
-    sprite: {fileID: 21300000, guid: d3ce47d7cb63583429f36cdbeda20da8, type: 3}
+    sprite: {fileID: 21300000, guid: f5b02189ca4da6343b7a8f1aaf76bf3b, type: 3}
   - type: 1
-    sprite: {fileID: 21300000, guid: fe5c4aa43c499254bb2283b1e56fc548, type: 3}
+    sprite: {fileID: 21300000, guid: 1699dbd53dbf82849b8a0e35ed650f61, type: 3}
   - type: 4
-    sprite: {fileID: 21300000, guid: 35a7856bd3e858940b73632b19319806, type: 3}
+    sprite: {fileID: 21300000, guid: 1a1b741f17e9d7e4e8d14eda05efdbbd, type: 3}
   - type: 5
-    sprite: {fileID: 21300000, guid: 1fdf46ee592052c438ac47e43604c0d2, type: 3}
+    sprite: {fileID: 21300000, guid: 4367091a6ccefcd4aa483276b409d12f, type: 3}
   - type: 6
-    sprite: {fileID: 21300000, guid: 837f906bb497f634b91a1555ba55b953, type: 3}
+    sprite: {fileID: 21300000, guid: f9f586d2d58fa274b8e6f6332638755c, type: 3}
   - type: 7
-    sprite: {fileID: 21300000, guid: 655ab9241e1d10049b87a378d26a9791, type: 3}
+    sprite: {fileID: 21300000, guid: 0e193bfca889c754d99525ae1a5321e6, type: 3}
 --- !u!114 &460754924
 MonoBehaviour:
   m_ObjectHideFlags: 0
