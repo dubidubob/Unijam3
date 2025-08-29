@@ -13,23 +13,13 @@ MonoBehaviour:
   m_Name: Chapter
   m_EditorClassIdentifier: 
   phases:
-  - duration: 15
+  - duration: 16
     startDelay: 1
     bpm: 84
     isFlipAD: 0
     monsterDatas:
     - isIn: 1
-      monsterType: 0
+      monsterType: 1
       speedUpRate: 1
-      spawnBeat: 1
-      moveBeat: 2
-  - duration: 15
-    startDelay: 1
-    bpm: 84
-    isFlipAD: 0
-    monsterDatas:
-    - isIn: 1
-      monsterType: 0
-      speedUpRate: 2
-      spawnBeat: 1
+      spawnBeat: 8
       moveBeat: 2

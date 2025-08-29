@@ -6,8 +6,7 @@ public class HitJudge
 {
     private float horizontalDiameter, verticalDiameter;
     private float perfectThreshold = 0.4f; //TODO : 80퍼센트 이상은 죄다 perfect 처리
-    public static Action<RankType> OnRankUpdate;
-
+    
     public HitJudge(float hori, float verti)
     {
         horizontalDiameter = hori;
@@ -38,24 +37,16 @@ public class HitJudge
         switch (rankNode.RankT)
         {
             case EvaluateType.Attacked:
-                IngameData.AttackedMobCnt++;
-                OnRankUpdate?.Invoke(RankType.Miss);
+                IngameData.IncAttacked();
                 break;
             case EvaluateType.Wrong: 
-                IngameData.WrongInputCnt++;
-                OnRankUpdate?.Invoke(RankType.Miss);
+                IngameData.IncWrong();
                 break;
             case EvaluateType.Success:
                 if (CalculatePerfect(rankNode.Pos, target, rankNode.WASDT))
-                {
-                    IngameData.PerfectMobCnt++;
-                    OnRankUpdate?.Invoke(RankType.Perfect);
-                }
+                    IngameData.IncPerfect();
                 else
-                {
-                    IngameData.GoodMobCnt++;
-                    OnRankUpdate?.Invoke(RankType.Good);
-                }
+                    IngameData.IncGood();
                 break;
         }
     }
