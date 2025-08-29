@@ -125,6 +125,8 @@ public class BlurController : MonoBehaviour
         seq.Append(damageImage.DOFade(1f, 0.15f));
         seq.Append(damageImage.DOFade(0f, 0.15f));
 
+        PlayRandomHurtSound();
+
         // blurImages 개수 기준으로 goGrayBackGround alpha 계산
         // currentIndex는 SetBlur에서 갱신됨, 0 ~ blurImages.Length-1
         float targetAlpha = (currentIndex + 1) / (float)blurImages.Length; // 1/6, 2/6, ... 비율
@@ -160,4 +162,22 @@ public class BlurController : MonoBehaviour
                     .SetEase(Ease.InOutQuad);
             });
     }
+
+    #region tool
+
+    private void PlayRandomHurtSound()
+    {
+        // 0 또는 1을 무작위로 선택
+        int randomIndex = Random.Range(0, 2);
+
+        if (randomIndex == 0)
+        {
+            Managers.Sound.Play("SFX/Damaged/Hurt1_V1");
+        }
+        else
+        {
+            Managers.Sound.Play("SFX/Damaged/Hurt2_V1");
+        }
+    }
+    #endregion
 }
