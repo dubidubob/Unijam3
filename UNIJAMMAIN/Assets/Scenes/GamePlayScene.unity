@@ -935,7 +935,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 572656401}
-  - component: {fileID: 572656400}
   - component: {fileID: 572656402}
   m_Layer: 0
   m_Name: '@Scene'
@@ -944,18 +943,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &572656400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572656399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc2bead57fd9ea348b3381c46291170e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &572656401
 Transform:
   m_ObjectHideFlags: 0
@@ -980,7 +967,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 572656399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f90430fc819614f8098e357aaa0c60, type: 3}
+  m_Script: {fileID: 11500000, guid: dc2bead57fd9ea348b3381c46291170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &605990577
@@ -5693,7 +5680,7 @@ PrefabInstance:
     - target: {fileID: 3609104432789045550, guid: 527436b8e6153264698d33c1c20a001d, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 9fbd18de97b83cb48848cb1073ff3838, type: 2}
+      objectReference: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
     - target: {fileID: 3609104432789045550, guid: 527436b8e6153264698d33c1c20a001d, type: 3}
       propertyPath: m_fontColor.b
       value: 0
@@ -5709,10 +5696,14 @@ PrefabInstance:
     - target: {fileID: 3609104432789045550, guid: 527436b8e6153264698d33c1c20a001d, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -1885904736645254836, guid: 9fbd18de97b83cb48848cb1073ff3838, type: 2}
+      objectReference: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
     - target: {fileID: 3609104432789045550, guid: 527436b8e6153264698d33c1c20a001d, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 3609104432789045550, guid: 527436b8e6153264698d33c1c20a001d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4441383260328794746, guid: 527436b8e6153264698d33c1c20a001d, type: 3}
       propertyPath: m_Pivot.x

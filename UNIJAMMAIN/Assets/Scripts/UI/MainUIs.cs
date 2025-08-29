@@ -19,8 +19,6 @@ public class MainUIs : MonoBehaviour
         Managers.Game.ComboContinue += UpdateCombo;
         Managers.Game.HealthUpdate -= HealthChange;
         Managers.Game.HealthUpdate += HealthChange;
-        Managers.Game.PhaseUpdate -= ChangeBg;
-        Managers.Game.PhaseUpdate += ChangeBg;
 
         MaxHealth = Managers.Game.MaxHealth;
         
@@ -34,7 +32,7 @@ public class MainUIs : MonoBehaviour
     {
         Managers.Game.ComboContinue -= UpdateCombo;
         Managers.Game.HealthUpdate -= HealthChange;
-        Managers.Game.PhaseUpdate -= ChangeBg;
+        transform.DOKill();
     }
 
     private void HealthChange(float health)
@@ -72,6 +70,7 @@ public class MainUIs : MonoBehaviour
         if (combo > 0 && combo % 10 == 0)
         {
             Combobangsa.gameObject.SetActive(true);
+            Invoke("Deactivate", 0.3f);
         }
 
         comboTxt.text = combo.ToString();
@@ -80,6 +79,11 @@ public class MainUIs : MonoBehaviour
             .OnComplete(() =>
                 comboTxt.transform.DOScale(Vector3.one, 0.1f)
             );
+    }
+
+    private void Deactivate()
+    {
+        Combobangsa.gameObject.SetActive(false);
     }
 
     private void ChangeBg(int phase)

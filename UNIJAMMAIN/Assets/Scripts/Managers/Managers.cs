@@ -21,7 +21,7 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
-    void Start()
+    void Awake()
     {
         Init();
     }
@@ -50,15 +50,14 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
             s_instance._pool.Init();
             s_instance._sound.Init();
+            s_instance._game.Init();
         }
     }
 
-    private void OnApplicationQuit() => Clear(true);
-
-    public static void Clear(bool quitting = false)
+    public static void Clear()
     {
         Input.Clear();
-        Pool.Clear(quitting);
+        Pool.Clear();
         Sound.Clear();
         Scene.Clear();
         UI.Clear();

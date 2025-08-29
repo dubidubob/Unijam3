@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
 
+
 public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 {
+    enum RankState
+    {
+        Spawned,
+        Success,
+        Fail
+    };
+
     public Define.MonsterType MonsterType => Define.MonsterType.Diagonal;
 
     private Dictionary<DiagonalType, GameObject> diagonalDict;
@@ -14,7 +22,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     private bool _spawning = false;
     private double _lastSpawnTime;
-    private void Awake()
+    private void OnEnable()
     {
         InitialDict();
 
@@ -24,10 +32,20 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         PauseManager.IsPaused += PauseForWhile;
     }
 
-    private void OnDestroy()
+    private void UpdateRankCnt(RankState state)
     {
-        Managers.Input.InputDiagonal -= DeactivateDiagonal;
-        PauseManager.IsPaused -= PauseForWhile;
+        switch (state)
+        { 
+            case RankState.Success:
+                IngameData.IncPerfect();
+                break;
+            case RankState.Fail:
+                IngameData.IncAttacked();
+                break;
+            case RankState.Spawned:
+                IngameData.TotalMobCnt++;
+                break;
+        }
     }
 
     private void InitialDict()
@@ -67,7 +85,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         {
             if (AudioSettings.dspTime >= _lastSpawnTime)
                 yield break;
-            if (_spawning) continue;
+            if (!_spawning) continue;
             ActivateEnemy();
             yield return new WaitForSecondsRealtime(spawnDuration);
         }
@@ -76,6 +94,8 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     public void ActivateEnemy()
     {
+        UpdateRankCnt(RankState.Spawned);
+
         int idx = Random.Range(0, deactivatedDiagonalIdx.Count);
         if (deactivatedDiagonalIdx.Count == 0) return;
         int mIdx = deactivatedDiagonalIdx[idx];
@@ -91,6 +111,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         {
             activatedDiagonalIdx.Remove((int)attackType);
             deactivatedDiagonalIdx.Add((int)attackType);
+            UpdateRankCnt(RankState.Success);
             diagonalDict[attackType].GetComponent<DiagonalMonster>().SetDead();
         }
         else

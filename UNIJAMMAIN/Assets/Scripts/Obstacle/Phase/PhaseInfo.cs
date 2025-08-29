@@ -22,4 +22,5 @@ public class ChapterSO : ScriptableObject
     [SerializeField]
     private List<PhaseInfo> phases;
     public IReadOnlyList<PhaseInfo> Phases => phases;
+    public string MusicPath;
 }
