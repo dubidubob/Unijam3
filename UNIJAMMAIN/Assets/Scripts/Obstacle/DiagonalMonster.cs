@@ -38,7 +38,7 @@ public class DiagonalMonster : MonoBehaviour
 
     private void OnDisable()
     {
-        jumpSequence.Kill();
+        transform.DOKill();
         PauseManager.IsPaused -= PauseForWhile;
     }
 

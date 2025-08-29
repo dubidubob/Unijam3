@@ -19,8 +19,6 @@ public class MainUIs : MonoBehaviour
         Managers.Game.ComboContinue += UpdateCombo;
         Managers.Game.HealthUpdate -= HealthChange;
         Managers.Game.HealthUpdate += HealthChange;
-        Managers.Game.PhaseUpdate -= ChangeBg;
-        Managers.Game.PhaseUpdate += ChangeBg;
 
         MaxHealth = Managers.Game.MaxHealth;
         
@@ -34,7 +32,7 @@ public class MainUIs : MonoBehaviour
     {
         Managers.Game.ComboContinue -= UpdateCombo;
         Managers.Game.HealthUpdate -= HealthChange;
-        Managers.Game.PhaseUpdate -= ChangeBg;
+        transform.DOKill();
     }
 
     private void HealthChange(float health)

@@ -22,6 +22,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private Dictionary<WASDType, Vector2> _spawnPosition;
     private Dictionary<WASDType, Vector2> _targetPosition;
     private HitJudge _rank;
+    private Vector3 _playerPos;
     
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
@@ -30,6 +31,8 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         Init();
 
         _rank = new HitJudge(holder.bounds.size.x, holder.bounds.size.y);
+        _playerPos = GameObject.FindWithTag("Player").transform.position;
+
         Managers.Game.RankUpdate -= UpdateRankCnt;
         Managers.Game.RankUpdate += UpdateRankCnt;
         PauseManager.IsPaused -= PauseForWhile;
@@ -154,7 +157,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private void VariableSetting(MovingEnemy movingEnemy, WASDType type)
     {
         float distance = Vector3.Distance(_spawnPosition[type], _targetPosition[type]);
-        movingEnemy.SetVariance(distance, _data, sizeDiffRate, type);
+        movingEnemy.SetVariance(distance, _data, sizeDiffRate, _playerPos, type);
         movingEnemy.SetKnockback(_data.monsterType == Define.MonsterType.Knockback);
     }
 

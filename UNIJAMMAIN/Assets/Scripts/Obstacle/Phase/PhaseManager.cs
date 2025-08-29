@@ -14,6 +14,7 @@ public class PhaseManager : MonoBehaviour
     [SerializeField] ChapterSO[] chapters;
     
     public static Action<float> ChangeKey;
+    private int ChapterIdx;
 
     SpawnController spawnController;
     bool isQA = false;
@@ -23,18 +24,20 @@ public class PhaseManager : MonoBehaviour
         Scoreboard.gameObject.SetActive(false);
         
         IngameData.RankInit();
+
+        ChapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
         if (!isQA)
         {
+            Managers.Sound.Play(chapters[ChapterIdx].MusicPath, Define.Sound.BGM);
             StartCoroutine(RunPhase());
         }
     }
     
     private IEnumerator RunPhase()
     {
-        int idx = Mathf.Min(IngameData.ChapterIdx, chapters.Count()-1);
-        for (int i = 0; i < chapters[idx].Phases.Count; i++)
+        for (int i = 0; i < chapters[ChapterIdx].Phases.Count; i++)
         {
-            var phase = chapters[idx].Phases[i];
+            var phase = chapters[ChapterIdx].Phases[i];
             if (phase.isFlipAD)
             {
                 Managers.Game.SetADReverse(true);

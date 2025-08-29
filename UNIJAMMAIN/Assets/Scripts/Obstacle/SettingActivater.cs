@@ -31,6 +31,8 @@ public class SettingActivater : MonoBehaviour
     {
         Managers.Sound.StopBGM();
         Scene currentScene = SceneManager.GetActiveScene();
+
+        Managers.Clear();
         SceneManager.LoadScene(currentScene.name);
     }
 }

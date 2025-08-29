@@ -72,6 +72,10 @@ public class BlurController : MonoBehaviour
         
     }
 
+    private void OnDestroy()
+    {
+        transform.DOKill();
+    }
     private IEnumerator FadeTransition(int oldIndex, int newIndex)
     {
         float time = 0f;

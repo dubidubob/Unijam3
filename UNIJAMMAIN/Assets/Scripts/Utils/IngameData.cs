@@ -14,11 +14,8 @@ public static class IngameData
         get => _beatInterval;
         set
         {
-            if (Math.Abs(_beatInterval - value) > 1e-6)
-            {
-                _beatInterval = value;
-                ChangeBpm?.Invoke();
-            }
+            _beatInterval = value;
+            ChangeBpm?.Invoke();
         }
     }
 

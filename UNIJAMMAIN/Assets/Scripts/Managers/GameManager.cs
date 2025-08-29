@@ -17,12 +17,13 @@ public struct RankNode
 
 public class GameManager 
 {
-    public Transform playerTransform;
-    public int currentPhase { get; private set; } = 0;
     public Action<int> ComboContinue = null;
     public Action<float> HealthUpdate = null;
-    public Action<int> PhaseUpdate = null;
+
     public Action<RankNode> RankUpdate = null;
+
+    public int currentPhase { get; private set; } = 0;
+
     private int Combo = 0;
     private float Health = 0;
     public readonly int MaxHealth = 100;
@@ -38,11 +39,9 @@ public class GameManager
     public void Clear()
     {
         attacks = new Dictionary<WASDType, Queue<GameObject>>();
-        playerTransform = null;
         currentPhase = 0;
         ComboContinue = null;
         HealthUpdate = null;
-        PhaseUpdate = null;
         RankUpdate = null;
         Combo = 0;
         Health = 0;
@@ -65,17 +64,12 @@ public class GameManager
     public PlayerState currentPlayerState;
 
     //인게임 데이터 초기화 
-    public void GameStart()
+    public void Init()
     {
         currentState = GameState.Battle;
         currentPlayerState = PlayerState.Normal;
-        playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재 위치받기
         Health = MaxHealth;
         Time.timeScale = 1f;
-    }
-    public Transform GetPlayerTransform()
-    {
-        return playerTransform;
     }
 
     bool isADReverse = false;
@@ -180,7 +174,6 @@ public class GameManager
     public void IncPhase()
     {
         currentPhase++;
-        PhaseUpdate?.Invoke(currentPhase);
     }
 
     public int GetPhase()

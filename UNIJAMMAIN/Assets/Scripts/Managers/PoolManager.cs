@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PoolManager
@@ -44,20 +45,20 @@ public class PoolManager
 
         public Poolable Pop(Transform parent)
         {
-            Poolable poolable;
-            if (_poolStack.Count > 0)
+            Poolable poolable=null;
+            while (_poolStack.Count > 0)
             {
-                poolable = _poolStack.Pop();
+                var cand = _poolStack.Pop();
+                if (cand) { poolable = cand; break; }     // 살아있으면 채택
+                                                   // 죽었으면 버리고 다음으로
             }
-            else
-            {
-                poolable = Create();
-            }
+            if (poolable==null) poolable = Create();
+
+            
+            if (parent != null) poolable.transform.SetParent(parent, false);
+            else poolable.transform.SetParent(Managers.Scene.CurrentScene.transform, false);
+
             poolable.gameObject.SetActive(true);
-            if (parent == null) //Dont Destroy on load ���� �뵵
-            {
-                poolable.transform.parent = Managers.Scene.CurrentScene.transform;
-            }
             poolable.transform.parent = parent;
 
             return poolable;

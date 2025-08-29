@@ -46,7 +46,6 @@ public class MovingEnemy : MonoBehaviour
 
     private void Start()
     {
-        playerPos = Managers.Game.playerTransform.position;
         if (monsterImg != null)
         {
             origin = monsterImg.transform.localScale;
@@ -62,8 +61,9 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, GamePlayDefine.WASDType wasdType)
+    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType)
     {
+        this.playerPos = playerPos;
         enemyType = wasdType;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
         this.sizeDiffRate = sizeDiffRate;
