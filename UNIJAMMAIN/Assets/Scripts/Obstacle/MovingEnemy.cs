@@ -33,7 +33,6 @@ public class MovingEnemy : MonoBehaviour
     private Vector3 origin;
     private bool isResizeable = false;
     private Vector2 sizeDiffRate;
-    private float speedUpRate;
     public bool isKnockbacked=false;
 
     private float backwardDuration, knockbackDistance;
@@ -66,7 +65,6 @@ public class MovingEnemy : MonoBehaviour
     public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, GamePlayDefine.WASDType wasdType)
     {
         enemyType = wasdType;
-        speedUpRate = monster.speedUpRate;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
         this.sizeDiffRate = sizeDiffRate;
         backwardDuration = movingDuration * 0.125f;
@@ -116,7 +114,7 @@ public class MovingEnemy : MonoBehaviour
             float t = elapsedTime / backwardDuration;
             // 이때 가속도가 붙기
             float knockbackMovement = Mathf.Lerp(knockbackDistance, 0, (t * t));
-            transform.position += knockbackDirection * knockbackMovement * Time.deltaTime * speedUpRate * 2.0f;
+            transform.position += knockbackDirection * knockbackMovement * Time.deltaTime * 2.0f;
             
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -141,7 +139,7 @@ public class MovingEnemy : MonoBehaviour
     private void Move()
     {
         if (isKnockbackActive) return;
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime * speedUpRate);
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
 

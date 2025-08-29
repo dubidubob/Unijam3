@@ -11,7 +11,7 @@ public class MainGame : BaseScene   // MainGame Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BaseScene Å
    
     }
 
-    private void Awake()
+    private void Start()
     {
         Init();
 

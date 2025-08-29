@@ -33,7 +33,6 @@ public class Managers : MonoBehaviour
 
     public static void Init()
     {
-
         if (s_instance == null)
         {
             GameObject go = GameObject.Find("@Manager");
@@ -54,17 +53,15 @@ public class Managers : MonoBehaviour
         }
     }
 
-    void OnDestroy()
-    {
-        Clear();
-    }
+    private void OnApplicationQuit() => Clear(true);
 
-    public static void Clear()
+    public static void Clear(bool quitting = false)
     {
         Input.Clear();
-        UI.Clear();
-        Pool.Clear();
+        Pool.Clear(quitting);
         Sound.Clear();
+        Scene.Clear();
+        UI.Clear();
         Game.Clear();
     }
 }

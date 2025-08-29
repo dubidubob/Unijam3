@@ -71,7 +71,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     public void Spawn(MonsterData data)
     {
         _data = data;
-        _spawnInterval = IngameData.BeatInterval * data.spawnBeat;
+        _spawnInterval = (IngameData.BeatInterval * data.spawnBeat)/data.speedUpRate;
         _tick = 0;
          _startDsp = AudioSettings.dspTime;
         SetLastSpawnTime(data.moveBeat);
@@ -91,13 +91,13 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         {
             _spawning = false;
             CachedTime = AudioSettings.dspTime;
-            leftOverTime = AudioSettings.dspTime % IngameData.BeatInterval;
+            leftOverTime = AudioSettings.dspTime % _spawnInterval;
         }
         
         else 
         {
             double PausedTime = AudioSettings.dspTime - CachedTime;
-            _tick += (int)((PausedTime+ leftOverTime) / IngameData.BeatInterval);
+            _tick += (int)((PausedTime+ leftOverTime) / _spawnInterval);
             _spawning = true;
         }
     }

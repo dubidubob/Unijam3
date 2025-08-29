@@ -28,6 +28,7 @@ public static class IngameData
     public static int AttackedMobCnt { set; get; }
     public static void RankInit()
     {
+        Pause = false;
         TotalMobCnt = 0;
         PerfectMobCnt = 0;
         GoodMobCnt = 0;
