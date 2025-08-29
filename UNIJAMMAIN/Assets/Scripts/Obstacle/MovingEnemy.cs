@@ -108,6 +108,10 @@ public class MovingEnemy : MonoBehaviour
 
         while (elapsedTime < backwardDuration)
         {
+            while (IngameData.Pause)
+            {
+                yield return null; // 일시 정지 상태에서 기다림
+            }
             // 진행되고 있는 distance에서 movingDuration의 1/4 시간 동안 뒤로 물러나고,
             float t = elapsedTime / backwardDuration;
             // 이때 가속도가 붙기
@@ -121,7 +125,6 @@ public class MovingEnemy : MonoBehaviour
         // 앞으로 갈 때는 등속도 운동을 해야함.
         isKnockbackActive = false;
     }
-
 
     private void FixedUpdate()
     {
@@ -171,12 +174,5 @@ public class MovingEnemy : MonoBehaviour
             SetDead();
             Managers.Game.PlayerAttacked();
         }
-        //else if (collision.tag == "test")
-        //{
-        //    float elapsed = Time.time - _enabledTime;
-        //    // Debug.Log($"{enemyType} 경과 시간: {elapsed:F2}초");
-        //    Managers.Game.attacks[enemyType].Dequeue();
-        //    SetDead();
-        //}
     }
 }

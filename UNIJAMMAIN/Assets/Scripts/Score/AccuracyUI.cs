@@ -14,6 +14,11 @@ public class AccuracyUI : MonoBehaviour
         HitJudge.OnRankUpdate += UpdateAccuracyUI;
     }
 
+    private void OnDestroy()
+    {
+        HitJudge.OnRankUpdate -= UpdateAccuracyUI;
+    }
+
     private void UpdateAccuracyUI(RankType rank)
     {
         switch (rank) 

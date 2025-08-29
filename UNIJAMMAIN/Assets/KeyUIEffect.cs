@@ -34,6 +34,12 @@ public class KeyUIEffect : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Managers.Input.InputWasd -= TurnUIEffect;
+        Managers.Input.InputDiagonal -= TurnUIEffect;
+    }
+
     private void TurnUIEffect(GamePlayDefine.DiagonalType t)
     {
         if (type2 == t)

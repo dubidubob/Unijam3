@@ -1,37 +1,21 @@
+using System;
 using UnityEngine;
 
 public class PauseManager 
 {
-    // TODO : PausePanel UI 관리 어떻게 할 것인가?
-    [SerializeField] GameObject pausePanel;
-    public void Init()
+    public static Action<bool> IsPaused;
+    public static void ControlTime(bool isStop)
     {
-        pausePanel?.SetActive(false);
-
-        Managers.Input.InputEsc -= ControlTime;
-        Managers.Input.InputEsc += ControlTime;
-    }
-    private void ControlTime(bool isStop)
-    {
+        Managers.Sound.PauseBGM(isStop);
+        IngameData.Pause = isStop;
+        IsPaused?.Invoke(isStop);
         if (!isStop)
         {
-            pausePanel?.SetActive(false);
-            Resume();
+            Time.timeScale = 1f;
         }
         else
         {
-            pausePanel?.SetActive(true);
-            Pause();
+            Time.timeScale = 0f;
         }
-    }
-
-    public void Pause()
-    {
-        Time.timeScale = 0f;
-    }
-
-    public void Resume()
-    {
-        Time.timeScale = 1f;
     }
 }

@@ -141,11 +141,14 @@ public class SoundManager
     }
     public void Clear()
     {
-        foreach (AudioSource audioSource in _audioSources)
-        {
-            audioSource.clip = null;
-            audioSource.Stop();
-        }
+        if (_audioSources == null)
+            Debug.LogWarning("audiosource null µÇ¸é ¾È µÊ");
+        else
+            foreach (AudioSource audioSource in _audioSources)
+            {
+                audioSource.clip = null;
+                audioSource.Stop();
+            }
         _audioClips.Clear();
     }
     public void Audiorate(int volume)

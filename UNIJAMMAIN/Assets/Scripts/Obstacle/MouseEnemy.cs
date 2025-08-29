@@ -25,10 +25,14 @@ public class MouseEnemy : MonoBehaviour
         image = GetComponent<Image>();
         // 초기 색상 설정: 원하는 RGB 색상에 알파 1로 설정 (예: 흰색)
         image.color = new Color(1f, 0f, 0f, 1f);
+     
     }
 
     private void OnEnable()
     {
+        PauseManager.IsPaused -= PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile;
+
         currentBlinkDuration = initialBlinkDuration;
         StartBlinking();
     }
@@ -60,7 +64,6 @@ public class MouseEnemy : MonoBehaviour
         {
             Managers.Sound.Play("SFX/Mouse_Monster_Death_SFX");
             StopBlinking();
-            Debug.Log($"왼쪽 {dir}");
             Managers.Game.ComboInc();
             gameObject.SetActive(false);
         }
@@ -69,7 +72,6 @@ public class MouseEnemy : MonoBehaviour
         {
             Managers.Sound.Play("SFX/Mouse_Monster_Death_SFX");
             StopBlinking();
-            Debug.Log($"오른쪽 {dir}");
             Managers.Game.ComboInc();
             gameObject.SetActive(false);
         }
@@ -88,6 +90,15 @@ public class MouseEnemy : MonoBehaviour
 
     private void OnDisable()
     {
+        PauseManager.IsPaused -= PauseForWhile;
         StopBlinking(); // 오브젝트 비활성화 시 블링킹 중단
+    }
+
+    private void PauseForWhile(bool isStop)
+    {
+        if (isStop)
+            blinkTweener.Pause();
+        else
+            blinkTweener.Play();
     }
 }

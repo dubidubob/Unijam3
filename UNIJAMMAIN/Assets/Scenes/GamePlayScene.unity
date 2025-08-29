@@ -5103,7 +5103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   illustController: {fileID: 0}
   Scoreboard: {fileID: 1483870323}
-  chapter: {fileID: 11400000, guid: 78695e940ce1d5545a3efd7e5e764ca8, type: 2}
+  chapters:
+  - {fileID: 11400000, guid: 78695e940ce1d5545a3efd7e5e764ca8, type: 2}
 --- !u!114 &5032662942808797821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5142,7 +5143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7a65f8f9217df448ba3f3454dde6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundaryOffset: 1
 --- !u!114 &5032662942808797824
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,9 +12,7 @@ public class Managers : MonoBehaviour
     InputManager _input = new InputManager();
     PoolManager _pool = new PoolManager();
     SceneManagerEx _scene = new SceneManagerEx();
-    KeyTrackerManager _key = new KeyTrackerManager();
     SoundManager _sound = new SoundManager();
-    PauseManager _pause = new PauseManager();
 
     public static GameManager Game { get { return Instance._game; } }
     public static UI_Manager UI { get { return Instance._ui; } }
@@ -23,7 +21,6 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
-    public static PauseManager Pause { get { return Instance._pause; } }
     void Start()
     {
         Init();
@@ -46,12 +43,20 @@ public class Managers : MonoBehaviour
                 go = new GameObject { name = "@Manager" };
                 go.AddComponent<Managers>();
             }
-            DontDestroyOnLoad(go);
+            if (Application.isPlaying)
+            {
+                DontDestroyOnLoad(go);
+            }
+
             s_instance = go.GetComponent<Managers>();
             s_instance._pool.Init();
-            s_instance._pause.Init();
             s_instance._sound.Init();
         }
+    }
+
+    void OnDestroy()
+    {
+        Clear();
     }
 
     public static void Clear()

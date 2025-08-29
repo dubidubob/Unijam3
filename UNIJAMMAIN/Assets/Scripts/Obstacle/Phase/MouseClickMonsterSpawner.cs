@@ -7,7 +7,7 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] GameObject RightOne;
 
     public Define.MonsterType MonsterType => Define.MonsterType.MouseClick;
-
+    private double _lastSpawnTime;
     private void Awake()
     {
         LeftOne.SetActive(false);
@@ -15,6 +15,14 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
 
         Managers.Input.InputMouse -= DeactivateMouse;
         Managers.Input.InputMouse += DeactivateMouse;
+        PauseManager.IsPaused -= PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile;
+    }
+
+    private void OnDestroy()
+    {
+        Managers.Input.InputMouse -= DeactivateMouse;
+        PauseManager.IsPaused -= PauseForWhile;
     }
 
     private void DeactivateMouse(GamePlayDefine.MouseType mouseType)
@@ -28,6 +36,7 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     public void Spawn(MonsterData data)
     {
         float spawnDuration = (float)IngameData.BeatInterval * data.spawnBeat;
+        SetLastSpawnTime();
         _spawning = true;
         StartCoroutine(DoSpawn(spawnDuration));
     }
@@ -43,8 +52,11 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
         var wait = new WaitForSecondsRealtime(spawnDuration);
         while (_spawning)
         {
-            yield return wait;
+            if (AudioSettings.dspTime > _lastSpawnTime)
+                break;
+
             ActivateEnemy();
+            yield return wait;
         }
         yield return null;
     }
@@ -56,6 +68,21 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
 
         if (!first.activeSelf) first.SetActive(true);
         else if (!second.activeSelf) second.SetActive(true);
+    }
+
+    private float threshold = 2f;
+    public void SetLastSpawnTime(float? _=null)
+    {
+        if (IngameData.PhaseDuration == 0)
+        {
+            Debug.LogWarning("Set Up Phase Duration!");
+        }
+        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDuration - threshold;
+    }
+
+    public void PauseForWhile(bool isStop)
+    {
+        _spawning = !isStop;
     }
 }
 

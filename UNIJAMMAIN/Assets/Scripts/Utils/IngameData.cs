@@ -17,7 +17,10 @@ public static class IngameData
             }
         }
     }
-
+    public static int ChapterIdx { set; get; }
+    private static Define.Rank _chapterRank = Define.Rank.Unknown;
+    public static Define.Rank ChapterRank { set { _chapterRank = value; } get => _chapterRank; }
+    public static float PhaseDuration { set; get; }
     public static int TotalMobCnt { set; get; }
     public static int PerfectMobCnt { set; get; }
     public static int GoodMobCnt { set; get; }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -10,7 +11,7 @@ public class PhaseManager : MonoBehaviour
 {
     [SerializeField] IllustController illustController;
     [SerializeField] ResultUI Scoreboard;
-    [SerializeField] ChapterSO chapter;
+    [SerializeField] ChapterSO[] chapters;
     
     public static Action<float> ChangeKey;
 
@@ -28,41 +29,12 @@ public class PhaseManager : MonoBehaviour
         }
     }
     
-    // TODO : Áß°£Áß°£ ÄÆ¾À
-    private IEnumerator ShowCutScene()
-    {
-        Managers.Pause.Pause();
-        if (illustController != null)
-        {
-            Managers.UI.ShowPopUpUI<S1_PopUp>();
-            yield return new WaitForSecondsRealtime(6f);
-            yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//¼ýÀÚ ³ª¿È
-        }
-        Managers.Pause.Resume();
-
-        //Pause();
-        //if (i == 4)
-        //{
-        //    Managers.Scene.LoadScene("GoodEnding");
-        //    break;
-        //}
-        //else if (i == 1)
-        //{
-        //    Managers.UI.ShowPopUpUI<S2_PopUp>();
-        //    yield return new WaitForSecondsRealtime(8f);
-        //}
-        //else if (i == 3)
-        //{
-        //    Managers.UI.ShowPopUpUI<S3_PopUp>();
-        //    yield return new WaitForSecondsRealtime(8f);
-        //}
-        //Resume();
-    }
     private IEnumerator RunPhase()
     {
-        for (int i = 0; i < chapter.Phases.Count; i++)
+        int idx = Mathf.Min(IngameData.ChapterIdx, chapters.Count()-1);
+        for (int i = 0; i < chapters[idx].Phases.Count; i++)
         {
-            var phase = chapter.Phases[i];
+            var phase = chapters[idx].Phases[i];
             if (phase.isFlipAD)
             {
                 Managers.Game.SetADReverse(true);
@@ -75,6 +47,7 @@ public class PhaseManager : MonoBehaviour
             }
             yield return new WaitForSeconds(phase.startDelay);
             IngameData.BeatInterval = 60.0/ phase.bpm;
+            IngameData.PhaseDuration = phase.duration;
             spawnController.SpawnMonsterInPhase(phase.MonsterDatas);
             yield return new WaitForSeconds(phase.duration);
         }
@@ -110,7 +83,22 @@ public class PhaseManager : MonoBehaviour
         spawnController.StopMonsterInPhase();
         IngameData.Pause = true;
 
-        Scoreboard.ChangeUI();
+        Scoreboard.ChangeUI(CalculateScore());
         Scoreboard.gameObject.SetActive(true);
+    }
+
+    private float perfectWeight = 1.0f;
+    private float goodWeight = 0.5f;
+    private float CalculateScore()
+    {
+        float perfectCnt = IngameData.PerfectMobCnt;
+        float goodCnt = IngameData.GoodMobCnt;
+        float rate = (perfectCnt * perfectWeight + goodCnt * goodWeight);
+
+        float totalCnt = IngameData.TotalMobCnt;
+        float missedInput = IngameData.WrongInputCnt;
+        float total = totalCnt + missedInput;
+
+        return (rate / total) * 100f;
     }
 }

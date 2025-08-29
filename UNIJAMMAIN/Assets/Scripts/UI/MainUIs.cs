@@ -30,6 +30,13 @@ public class MainUIs : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        Managers.Game.ComboContinue -= UpdateCombo;
+        Managers.Game.HealthUpdate -= HealthChange;
+        Managers.Game.PhaseUpdate -= ChangeBg;
+    }
+
     private void HealthChange(float health)
     {
  
