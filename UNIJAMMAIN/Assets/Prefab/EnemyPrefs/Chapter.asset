@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phases:
   - duration: 16
-    startDelay: 1
+    startDelay: 5
     bpm: 84
     isFlipAD: 0
     monsterDatas:
