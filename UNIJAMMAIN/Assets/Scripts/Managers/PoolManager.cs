@@ -113,16 +113,10 @@ public class PoolManager
         return _pool[name].Original;
     }
 
-    public void Clear(bool isQuitting)
+    public void Clear()
     {
-        if (isQuitting || !Application.isPlaying) return;
-
         if (!_root) // 이미 파괴됨(또는 아직 생성 전)
         {
-            // 필요하면 개발 중에만 경고
-#if UNITY_EDITOR
-            Debug.LogWarning("root 삭제되면 안됨!");
-#endif
             return;
         }
 
@@ -131,5 +125,6 @@ public class PoolManager
             GameObject.Destroy(child.gameObject);
         }
         _pool.Clear();
+        Object.Destroy(_root.gameObject);
     }
 }

@@ -165,7 +165,7 @@ public class GameManager
         {
             Health -= 5;
         }
-        HealthUpdate.Invoke(Health);
+        HealthUpdate?.Invoke(Health);
     }
 
     public void IncHealth(float healValue = 2.5f)
@@ -174,7 +174,7 @@ public class GameManager
             return;
 
         Health += healValue; // 체력회복 3
-        HealthUpdate.Invoke(Health);
+        HealthUpdate?.Invoke(Health);
     }
 
     public void IncPhase()

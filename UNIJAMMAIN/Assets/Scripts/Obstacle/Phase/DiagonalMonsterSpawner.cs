@@ -22,7 +22,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     private bool _spawning = false;
     private double _lastSpawnTime;
-    private void Awake()
+    private void OnEnable()
     {
         InitialDict();
 
@@ -32,7 +32,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         PauseManager.IsPaused += PauseForWhile;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         Managers.Input.InputDiagonal -= DeactivateDiagonal;
         PauseManager.IsPaused -= PauseForWhile;

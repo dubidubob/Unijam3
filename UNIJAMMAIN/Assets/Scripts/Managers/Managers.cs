@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Managers : MonoBehaviour
 {
@@ -53,12 +54,10 @@ public class Managers : MonoBehaviour
         }
     }
 
-    private void OnApplicationQuit() => Clear(true);
-
-    public static void Clear(bool quitting = false)
+    public static void Clear()
     {
         Input.Clear();
-        Pool.Clear(quitting);
+        Pool.Clear();
         Sound.Clear();
         Scene.Clear();
         UI.Clear();
