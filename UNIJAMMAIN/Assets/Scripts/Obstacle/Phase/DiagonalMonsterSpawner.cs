@@ -32,12 +32,6 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         PauseManager.IsPaused += PauseForWhile;
     }
 
-    private void OnDisable()
-    {
-        Managers.Input.InputDiagonal -= DeactivateDiagonal;
-        PauseManager.IsPaused -= PauseForWhile;
-    }
-
     private void UpdateRankCnt(RankState state)
     {
         switch (state)

@@ -19,7 +19,7 @@ MonoBehaviour:
     isFlipAD: 0
     monsterDatas:
     - isIn: 1
-      monsterType: 1
+      monsterType: 0
       speedUpRate: 1
-      spawnBeat: 8
+      spawnBeat: 1
       moveBeat: 2
