@@ -113,17 +113,23 @@ public class PoolManager
         return _pool[name].Original;
     }
 
-    public void Clear()
+    public void Clear(bool isQuitting)
     {
-        if (_root == null)
+        if (isQuitting || !Application.isPlaying) return;
+
+        if (!_root) // 이미 파괴됨(또는 아직 생성 전)
         {
+            // 필요하면 개발 중에만 경고
+#if UNITY_EDITOR
             Debug.LogWarning("root 삭제되면 안됨!");
+#endif
+            return;
         }
-       else
-            foreach (Transform child in _root)
-            {
-                GameObject.Destroy(child.gameObject);
-            }
+
+        foreach (Transform child in _root)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
         _pool.Clear();
     }
 }

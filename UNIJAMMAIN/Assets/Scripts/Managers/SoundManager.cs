@@ -4,8 +4,8 @@ using UnityEngine.Audio;
 
 public class SoundManager
 {
-    public AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
-    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+    public AudioSource[] _audioSources;
+    Dictionary<string, AudioClip> _audioClips;
     [SerializeField]
     public AudioMixer audioMixer;
     public AudioMixerGroup[] audioMixerGroups;
@@ -22,6 +22,8 @@ public class SoundManager
             root = new GameObject { name = "@Sound" };
             Object.DontDestroyOnLoad(root);
 
+            _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
+            _audioClips = new Dictionary<string, AudioClip>();
             string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
             for (int i = 0; i < soundNames.Length - 1; i++)
             {
@@ -31,8 +33,6 @@ public class SoundManager
                 go.transform.parent = root.transform;
             }
         }
-        if (audioMixer == null) { Debug.Log("audioMixer is Null"); }
-
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f)
     {
@@ -42,6 +42,8 @@ public class SoundManager
         }
         if (type == Define.Sound.BGM)
         {
+            if (_audioSources!=null)
+                Init();
             AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
             if (audioSource.isPlaying)
             {
@@ -141,15 +143,14 @@ public class SoundManager
     }
     public void Clear()
     {
-        if (_audioSources == null)
-            Debug.LogWarning("audiosource null µÇ¸é ¾È µÊ");
-        else
+        if (_audioSources != null)
             foreach (AudioSource audioSource in _audioSources)
             {
                 audioSource.clip = null;
                 audioSource.Stop();
             }
-        _audioClips.Clear();
+        if(_audioClips!=null)
+            _audioClips.Clear();
     }
     public void Audiorate(int volume)
     {
