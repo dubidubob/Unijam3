@@ -1,23 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine.Rendering.LookDev;
 
 public class Tutorial_PopUp : UI_Popup
 {
     public TMP_Text text;
     public string[] textInContent; // 여러 텍스트를 저장할 배열
+    public string[] textInContent2;
     public GameObject contents;
 
     public float appearSpeed = 2f;
-    public float disappearDelay = 3f;
+    public float disappearDelay = 2f;
     public float disappearSpeed = 2f;
     public float startOffset = -100f;
 
     private Vector3 originalPosition;
     private CanvasGroup canvasGroup;
-
+   
     public override void Init()
     {
         base.Init();
@@ -33,19 +33,28 @@ public class Tutorial_PopUp : UI_Popup
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         // 텍스트 배열의 모든 내용을 순차적으로 표시하는 코루틴 시작
         StartCoroutine(ShowSequenceOfPopups());
     }
 
+    string[] textContent;
     private IEnumerator ShowSequenceOfPopups()
     {
+        textContent = (IngameData.TotalMobCnt == 0) ? textInContent : textInContent2;
+        if (IngameData.TotalMobCnt != 0)
+        {
+            disappearDelay = 1.5f;
+            if(IngameData.PerfectMobCnt == 0)
+                textContent[0] = "생각보다 어렵군";
+        }
+            
         // textInContent 배열의 각 텍스트에 대해 반복
-        for (int i = 0; i < textInContent.Length; i++)
+        for (int i = 0; i < textContent.Length; i++)
         {
             // 현재 팝업의 텍스트 설정
-            text.text = textInContent[i];
+            text.text = textContent[i];
 
             // 팝업이 나타나는 코루틴 실행
             yield return StartCoroutine(SmoothyPopUp(true));

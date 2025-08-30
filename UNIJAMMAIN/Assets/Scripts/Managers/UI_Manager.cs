@@ -109,7 +109,8 @@ public class UI_Manager
         }
         UI_Popup popUP = _popUpStack.Pop();
         Debug.Log($"ClosePopUpUI : {popUP}");
-        Managers.Resource.Destroy(popUP.gameObject);
+        if(popUP.gameObject!=null)
+            Managers.Resource.Destroy(popUP.gameObject);
         popUP = null;
 
         _order--;

@@ -22,6 +22,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     private bool _spawning = false;
     private double _lastSpawnTime;
+    private float _moveBeat;
     private void OnEnable()
     {
         InitialDict();
@@ -70,6 +71,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         float spawnDuration = (float)IngameData.BeatInterval * data.spawnBeat;
         SetLastSpawnTime(); 
         _spawning = true;
+        _moveBeat = data.moveBeat;
         StartCoroutine(DoSpawn(spawnDuration));
     }
     public void UnSpawn()
@@ -101,6 +103,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         int mIdx = deactivatedDiagonalIdx[idx];
         deactivatedDiagonalIdx.Remove(mIdx);
 
+        diagonalDict[(DiagonalType)mIdx].GetComponent<DiagonalMonster>().SetMovebeat(_moveBeat);
         diagonalDict[(DiagonalType)mIdx].SetActive(true);
         activatedDiagonalIdx.Add(mIdx);
     }

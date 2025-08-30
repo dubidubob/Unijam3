@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88a7b8007bad7a43abe76cf9a9d3d0f, type: 3}
+  m_Name: Chapter1
+  m_EditorClassIdentifier: 
+  phases:
+  - duration: 15
+    startDelay: 2
+    bpm: 84
+    isFlipAD: 0
+    monsterDatas:
+    - isIn: 1
+      monsterType: 0
+      speedUpRate: 1
+      spawnBeat: 2
+      moveBeat: 4
+    - isIn: 1
+      monsterType: 2
+      speedUpRate: 1
+      spawnBeat: 4
+      moveBeat: 4
+  - duration: 20
+    startDelay: 3
+    bpm: 84
+    isFlipAD: 1
+    monsterDatas:
+    - isIn: 1
+      monsterType: 0
+      speedUpRate: 1
+      spawnBeat: 1
+      moveBeat: 4
+    - isIn: 1
+      monsterType: 1
+      speedUpRate: 1
+      spawnBeat: 8
+      moveBeat: 1
+  - duration: 20
+    startDelay: 0
+    bpm: 84
+    isFlipAD: 0
+    monsterDatas:
+    - isIn: 1
+      monsterType: 3
+      speedUpRate: 1
+      spawnBeat: 7
+      moveBeat: 4
+    - isIn: 1
+      monsterType: 0
+      speedUpRate: 1
+      spawnBeat: 1
+      moveBeat: 1
+  MusicPath: BGM/84bpm_64_V1

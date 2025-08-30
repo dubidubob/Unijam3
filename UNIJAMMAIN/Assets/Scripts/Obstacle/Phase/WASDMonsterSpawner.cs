@@ -144,7 +144,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
-    private float threshold = 1f;
+    private float threshold = 0f;
     public void SetLastSpawnTime(float? moveBeat=1)
     {
         if (IngameData.PhaseDuration == 0)

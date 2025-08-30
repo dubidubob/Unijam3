@@ -14,11 +14,15 @@ public class PlayerActionUI : MonoBehaviour
     private Dictionary<GamePlayDefine.AllType, Sprite> _actionImgsDic;
     private SpriteRenderer sp;
     private Sprite origin;
+    private Animator animator;
 
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
         origin = sp.sprite;
+
+        animator = GetComponent<Animator>();
+        animator.speed = 0; // 시작 시 정지
 
         _actionImgsDic = new Dictionary<GamePlayDefine.AllType, Sprite>();
         foreach (var a in actionImgs)
@@ -37,6 +41,17 @@ public class PlayerActionUI : MonoBehaviour
     {
         Managers.Input.InputWasd -= ChangePlayerSprite;
         Managers.Input.InputDiagonal -= ChangePlayerSprite_Arrow;
+    }
+
+    public void StartAnimation()
+    {
+        animator.speed = 1;
+        animator.Play("MonkStarting", -1, 0f); // 원하는 stateName 실행
+        Invoke("OnAnimationEnd", 1.7f);
+    }
+    private void OnAnimationEnd()
+    {
+        animator.enabled = false;
     }
 
     private void ChangePlayerSprite(GamePlayDefine.WASDType type)

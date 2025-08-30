@@ -12,9 +12,15 @@ public class Tmp_StageSceneResultUI : MonoBehaviour
         sp = GetComponent<Image>();
         int rank = (int)IngameData.ChapterRank;
         if (rank >= sprites.Length)
+        {
             sp.sprite = null;
+            sp.enabled = false;
+        }
         else
+        {
             sp.sprite = sprites[rank];
+            sp.enabled = true;
+        }        
 
         sp.SetNativeSize();
     }

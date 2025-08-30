@@ -6,6 +6,7 @@ public class StageScene : BaseScene
 {
     private void Start()
     {
+        Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);
         Managers.UI.ShowPopUpUI<StageSceneUI>();
         Init();
     }

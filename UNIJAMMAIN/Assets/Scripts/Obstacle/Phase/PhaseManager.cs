@@ -12,7 +12,10 @@ public class PhaseManager : MonoBehaviour
     [SerializeField] IllustController illustController;
     [SerializeField] ResultUI Scoreboard;
     [SerializeField] ChapterSO[] chapters;
-    
+    // TODO : tmp!
+    [SerializeField] StartMotion st;
+    [SerializeField] PlayerActionUI pa;
+
     public static Action<float> ChangeKey;
     private int ChapterIdx;
 
@@ -48,7 +51,13 @@ public class PhaseManager : MonoBehaviour
                 Managers.Game.SetADReverse(false);
                 ChangeKey?.Invoke(-1f);
             }
+            if(i==0)
+                st.Start123();
+            if (i == 1 && ChapterIdx==0)
+                Managers.UI.ShowPopUpUI<Tutorial_PopUp>();
             yield return new WaitForSeconds(phase.startDelay);
+            if(i==0)
+                pa.StartAnimation();
             IngameData.BeatInterval = 60.0/ phase.bpm;
             IngameData.PhaseDuration = phase.duration;
             spawnController.SpawnMonsterInPhase(phase.MonsterDatas);
@@ -83,6 +92,7 @@ public class PhaseManager : MonoBehaviour
     private void EndPhase()
     {
         // TODO : ´õ Á¤µ·ÇÏ±â
+        Managers.Sound.StopBGM();
         spawnController.StopMonsterInPhase();
         IngameData.Pause = true;
 
