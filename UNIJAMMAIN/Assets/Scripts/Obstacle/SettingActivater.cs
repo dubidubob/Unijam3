@@ -33,6 +33,7 @@ public class SettingActivater : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
 
         Managers.Clear();
-        SceneManager.LoadScene(currentScene.name);
+        SceneManager.LoadScene("StageScene");
+        // SceneManager.LoadScene(currentScene.name);
     }
 }

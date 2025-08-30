@@ -26,7 +26,7 @@ MonoBehaviour:
     - isIn: 1
       monsterType: 2
       speedUpRate: 1
-      spawnBeat: 4
+      spawnBeat: 2
       moveBeat: 4
   - duration: 20
     startDelay: 3
