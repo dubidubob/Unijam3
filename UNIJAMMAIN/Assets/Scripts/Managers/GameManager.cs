@@ -25,7 +25,7 @@ public class GameManager
     public int currentPhase { get; private set; } = 0;
 
     private int Combo = 0;
-    private float Health = 0;
+    private float Health = 100;
     public readonly int MaxHealth = 100;
     private const int IncHealthUnit = 10;
     public BlurController blur;
@@ -44,7 +44,7 @@ public class GameManager
         HealthUpdate = null;
         RankUpdate = null;
         Combo = 0;
-        Health = 0;
+        Health = 100;
 }
 
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함

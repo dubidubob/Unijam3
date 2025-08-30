@@ -47,7 +47,6 @@ public class AccuracyUI : MonoBehaviour
         // Generates a random integer from 0 (inclusive) to 4 (exclusive), so the result is 0, 1, 2, or 3.
         int random = Random.Range(0, 4);
 
-        Debug.Log("소리가 들리는가?");
         switch (random)
         {
             case 0:

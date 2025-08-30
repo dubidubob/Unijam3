@@ -7,7 +7,7 @@ using DG.Tweening;
 public class BlurController : MonoBehaviour
 {
     public Image damageImage;
-    int beforeHealth=1; // 기존의 체력 상태 처음에는 가장 환한게 Default값으로 . 변화시 이거 변화시켜줘야함
+    int beforeHealth=100; // 기존의 체력 상태 처음에는 가장 환한게 Default값으로 . 변화시 이거 변화시켜줘야함
     bool isCoolDown;
     public Camera camera; // 흔들릴 카메라 Transform
     public float shakeStrength = 0.2f; // 흔들림 강도
