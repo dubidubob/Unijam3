@@ -6,10 +6,11 @@ using UnityEngine;
 /// <summary>
 /// Phase를 순서대로 재생시키는 클래스
 /// </summary>
+[Serializable]
 struct StartMotionUIs
 {
-    public StartCountUI st;
-    public PlayerActionUI pa;
+    public StartCountUI startCountUI;
+    public PlayerActionUI playerActionUI;
 }
 
 [RequireComponent(typeof(SpawnController))]
@@ -68,8 +69,9 @@ public class PhaseController : MonoBehaviour
 
             if (i == 0)
             {
-                startMotions.st.Start123();
-                startMotions.pa.StartMonkAnimAfter123Count();
+                durationSec += 1.7f + 4 * (float)IngameData.BeatInterval;
+                startMotions.startCountUI.Start123();
+                startMotions.playerActionUI.StartMonkAnimAfter123Count();
             }
 
             yield return new WaitForSeconds(durationSec);
@@ -100,7 +102,7 @@ public class PhaseController : MonoBehaviour
     {
         UI_Popup go = Managers.UI.ShowPopUpUI<Tutorial_PopUp>();
         var tuto = go.GetComponent<Tutorial_PopUp>();
-        tuto.StartTutorial(tutorialEvent.tutorialText);
+        tuto.StartTutorial(tutorialEvent.Steps);
     }
 
     private void EndChapter()

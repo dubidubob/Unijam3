@@ -5,9 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public abstract class GameEvent
 {
-    public float durationBeat;
-    public float startDelayBeat;
-    public float bpm;
+    [Min(0f)] public float durationBeat;
+    [Min(0f)] public float startDelayBeat;
+    [Min(1f)] public float bpm;
 }
 
 // 리듬 게임 페이즈를 위한 이벤트
@@ -23,5 +23,24 @@ public class PhaseEvent : GameEvent
 [System.Serializable]
 public class TutorialEvent : GameEvent
 {
-    public string[] tutorialText;
+    [SerializeField] private TextInfo[] steps;
+    public IReadOnlyList<TextInfo> Steps => steps;
+    public void RecalculateDuration()
+    {
+        durationBeat = 0f;
+        float sum = 0f;
+        if (steps != null)
+        {
+            for (int i = 0; i < steps.Length; i++)
+                sum += Mathf.Max(0f, steps[i].delayBeat);
+        }
+        startDelayBeat = sum;
+    }
+}
+
+[System.Serializable]
+public struct TextInfo
+{
+    public string textContents;
+    public float delayBeat;
 }

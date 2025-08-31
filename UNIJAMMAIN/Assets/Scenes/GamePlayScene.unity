@@ -5208,7 +5208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2769898147421067717}
-  - component: {fileID: 5032662942808797820}
+  - component: {fileID: 5032662942808797825}
   - component: {fileID: 5032662942808797824}
   - component: {fileID: 5032662942808797823}
   - component: {fileID: 5032662942808797822}
@@ -5220,25 +5220,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5032662942808797820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5032662942808797819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f66fc1edeb428f848bed445757506b45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  illustController: {fileID: 0}
-  Scoreboard: {fileID: 1483870323}
-  chapters:
-  - {fileID: 11400000, guid: 78695e940ce1d5545a3efd7e5e764ca8, type: 2}
-  - {fileID: 11400000, guid: 6e285dcab7264cd499c9e463c89a4f91, type: 2}
-  st: {fileID: 1997952375}
-  pa: {fileID: 460754923}
 --- !u!114 &5032662942808797821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5309,6 +5290,24 @@ MonoBehaviour:
     playerPos: {x: 0, y: 0}
   sizeDiffRate: {x: 0.8, y: 1.25}
   holder: {fileID: 646499422}
+--- !u!114 &5032662942808797825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5032662942808797819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738542a5a5f67e54a8b0c65ce227e5b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scoreboard: {fileID: 1483870323}
+  chapters:
+  - {fileID: 11400000, guid: 78695e940ce1d5545a3efd7e5e764ca8, type: 2}
+  startMotions:
+    startCountUI: {fileID: 1997952375}
+    playerActionUI: {fileID: 460754923}
 --- !u!1001 &5570071771724819243
 PrefabInstance:
   m_ObjectHideFlags: 0

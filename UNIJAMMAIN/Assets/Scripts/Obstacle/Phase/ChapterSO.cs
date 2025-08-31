@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -13,4 +12,13 @@ public class ChapterSO : ScriptableObject
     private List<GameEvent> phases = new();
     public IReadOnlyList<GameEvent> Phases => phases;
     public string MusicPath;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (phases == null) return;
+        foreach (var e in phases)
+            if (e is TutorialEvent te) te.RecalculateDuration();
+    }
+#endif
 }

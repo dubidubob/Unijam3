@@ -12,5 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88a7b8007bad7a43abe76cf9a9d3d0f, type: 3}
   m_Name: Chapter0
   m_EditorClassIdentifier: 
-  phases: []
+  phases:
+  - rid: 8714838720201883652
+  - rid: 8714838720201883653
   MusicPath: "BGM/0\uB9C9100bpm"
+  references:
+    version: 2
+    RefIds:
+    - rid: 8714838720201883652
+      type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
+      data:
+        durationBeat: 0
+        startDelayBeat: 16
+        bpm: 100
+        steps:
+        - textContents: "\uC138\uC0C1\uC740 \uC774\uB807\uAC8C \uC0DD\uACBC\uAD6C\uB098."
+          delayBeat: 4
+        - textContents: "(\uC801\uC774 \uB124 \uC55E\uC5D0 \uB3C4\uCC29\uD588\uC744
+            \uB54C WASD \uD0A4\uB97C \uB20C\uB7EC \uBC29\uC5B4\uD574!)"
+          delayBeat: 8
+        - textContents: "\uADF8\uB7FC, \uAC00\uBCFC\uAE4C?"
+          delayBeat: 4
+    - rid: 8714838720201883653
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        durationBeat: 16
+        startDelayBeat: 0
+        bpm: 100
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          speedUpRate: 1
+          spawnBeat: 4
+          moveBeat: 4

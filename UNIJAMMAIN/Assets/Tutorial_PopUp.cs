@@ -1,6 +1,7 @@
 using System.Collections;
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class Tutorial_PopUp : UI_Popup
 {
@@ -8,7 +9,6 @@ public class Tutorial_PopUp : UI_Popup
     public GameObject contents;
 
     public float appearSpeed = 2f;
-    public float disappearDelay = 2f;
     public float disappearSpeed = 2f;
     public float startOffset = -100f;
 
@@ -30,24 +30,26 @@ public class Tutorial_PopUp : UI_Popup
         }
     }
 
-    public void StartTutorial(string[] textInContent)
+    public void StartTutorial(IReadOnlyList<TextInfo> textInfo)
     {
-        StartCoroutine(ShowSequenceOfPopups(textInContent));
+        StartCoroutine(ShowSequenceOfPopups(textInfo));
     }
 
-    private IEnumerator ShowSequenceOfPopups(string[] textInContent)
+    private IEnumerator ShowSequenceOfPopups(IReadOnlyList<TextInfo> textInfo)
     {
         // textInContent 배열의 각 텍스트에 대해 반복
-        for (int i = 0; i < textInContent.Length; i++)
+        for (int i = 0; i < textInfo.Count; i++)
         {
+            var textInContent = textInfo[i].textContents;
+            float durationSec = (float)IngameData.BeatInterval * textInfo[i].delayBeat;
             // 현재 팝업의 텍스트 설정
-            text.text = textInContent[i];
+            text.text = textInContent;
 
             // 팝업이 나타나는 코루틴 실행
             yield return StartCoroutine(SmoothyPopUp(true));
 
             // 지정된 시간만큼 대기
-            yield return new WaitForSeconds(disappearDelay);
+            yield return new WaitForSeconds(durationSec);
 
             // 팝업이 사라지는 코루틴 실행
             yield return StartCoroutine(SmoothyPopUp(false));
