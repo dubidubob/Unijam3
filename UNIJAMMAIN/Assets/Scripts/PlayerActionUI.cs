@@ -52,7 +52,7 @@ public class PlayerActionUI : MonoBehaviour
 
     public void StartMonkAnimAfter123Count()
     {
-        float duration = (float)IngameData.BeatInterval * 4;
+        float duration = (float)IngameData.BeatInterval * 5;
         Invoke("StartAnimation", duration);
     }
 

@@ -68,16 +68,18 @@ public class PhaseController : MonoBehaviour
             }
 
             if (i == 0)
-            {
-                durationSec += 1.7f + 4 * (float)IngameData.BeatInterval;
-                startMotions.startCountUI.Start123();
-                startMotions.playerActionUI.StartMonkAnimAfter123Count();
-            }
-
+                StartMotion();
+            
             yield return new WaitForSeconds(durationSec);
         }
 
         EndChapter();
+    }
+
+    private void StartMotion()
+    {
+        startMotions.startCountUI.Start123();
+        startMotions.playerActionUI.StartMonkAnimAfter123Count();
     }
 
     private void HandleFlipKeyEvent(PhaseEvent phaseEvent, float delaySec)
