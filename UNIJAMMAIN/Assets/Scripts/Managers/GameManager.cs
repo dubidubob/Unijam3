@@ -30,6 +30,7 @@ public class GameManager
     private const int IncHealthUnit = 10;
     public BlurController blur;
     public Accuracy accuracy;
+    public PlayerActionUI actionUI;
    
 
     private float healingValue = 2.5f; // 회복하는 양
@@ -51,14 +52,16 @@ public class GameManager
     public enum GameState
     {
         Battle,
-        Stage
+        Stage,
+        Die
         
     }
 
     public enum PlayerState
     {
         Normal,
-        GroggyAttack
+        GroggyAttack,
+        Die
     }
     public GameState currentState;
     public PlayerState currentPlayerState;
@@ -75,6 +78,11 @@ public class GameManager
     bool isADReverse = false;
     public void ReceiveKey(WASDType key)
     {
+        if(currentPlayerState==PlayerState.Die) // 사망시 키 받지않기
+        {
+            return;
+        }
+
         if (isADReverse)
         {
             if (key == WASDType.A)
@@ -159,7 +167,12 @@ public class GameManager
         {
             Health -= 5;
         }
+        
         HealthUpdate?.Invoke(Health);
+        if(Health<=0) // 게임오버
+        {
+            GameOver();
+        }
     }
 
     public void IncHealth(float healValue = 2.5f)
@@ -179,5 +192,12 @@ public class GameManager
     public int GetPhase()
     {
         return currentPhase;
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("사망!");
+        currentPlayerState = PlayerState.Die;
+        actionUI.GameOverAnimation();
     }
 }
