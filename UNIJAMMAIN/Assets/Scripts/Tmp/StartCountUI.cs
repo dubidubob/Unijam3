@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartMotion : MonoBehaviour
+public class StartCountUI : MonoBehaviour
 {
     [SerializeField] List<Sprite> sprites = new List<Sprite>();
 

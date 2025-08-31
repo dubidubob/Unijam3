@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PhaseManager))]
+[RequireComponent(typeof(PhaseController))]
 [RequireComponent(typeof(WASDMonsterSpawner))]
 public class QA : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class QA : MonoBehaviour
     [SerializeField] private TMP_InputField maxCountField;
     [SerializeField] private Toggle[] keys = new Toggle[4];
 
-    PhaseManager phaseManager;
+    PhaseController phaseManager;
     WASDMonsterSpawner WASDMonsterSpawner;
 
     // phase Manager, 변경 버튼 누르면
@@ -40,7 +40,7 @@ public class QA : MonoBehaviour
 
     private void Awake()
     {
-        phaseManager = GetComponent<PhaseManager>();
+        phaseManager = GetComponent<PhaseController>();
         WASDMonsterSpawner = GetComponent<WASDMonsterSpawner>();
 
         PauseManager.IsPaused -= QAPanelPopup;
