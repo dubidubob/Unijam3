@@ -1,0 +1,27 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+// 모든 게임 이벤트를 위한 인터페이스 또는 추상 클래스
+[System.Serializable]
+public abstract class GameEvent
+{
+    public float durationBeat;
+    public float startDelayBeat;
+    public float bpm;
+}
+
+// 리듬 게임 페이즈를 위한 이벤트
+[System.Serializable]
+public class PhaseEvent : GameEvent
+{
+    public bool isFlipAD;
+    [SerializeField] private List<MonsterData> monsterDatas;
+    public IReadOnlyList<MonsterData> MonsterDatas => monsterDatas;
+}
+
+// 튜토리얼 또는 스토리 섹션을 위한 이벤트
+[System.Serializable]
+public class TutorialEvent : GameEvent
+{
+    public string[] tutorialText;
+}

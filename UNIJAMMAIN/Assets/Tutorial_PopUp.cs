@@ -5,8 +5,6 @@ using TMPro;
 public class Tutorial_PopUp : UI_Popup
 {
     public TMP_Text text;
-    public string[] textInContent; // 여러 텍스트를 저장할 배열
-    public string[] textInContent2;
     public GameObject contents;
 
     public float appearSpeed = 2f;
@@ -32,28 +30,18 @@ public class Tutorial_PopUp : UI_Popup
         }
     }
 
-    private void OnEnable()
+    public void StartTutorial(string[] textInContent)
     {
-        // 텍스트 배열의 모든 내용을 순차적으로 표시하는 코루틴 시작
-        StartCoroutine(ShowSequenceOfPopups());
+        StartCoroutine(ShowSequenceOfPopups(textInContent));
     }
 
-    string[] textContent;
-    private IEnumerator ShowSequenceOfPopups()
+    private IEnumerator ShowSequenceOfPopups(string[] textInContent)
     {
-        textContent = (IngameData.TotalMobCnt == 0) ? textInContent : textInContent2;
-        if (IngameData.TotalMobCnt != 0)
-        {
-            disappearDelay = 1.5f;
-            if(IngameData.PerfectMobCnt == 0)
-                textContent[0] = "생각보다 어렵군";
-        }
-            
         // textInContent 배열의 각 텍스트에 대해 반복
-        for (int i = 0; i < textContent.Length; i++)
+        for (int i = 0; i < textInContent.Length; i++)
         {
             // 현재 팝업의 텍스트 설정
-            text.text = textContent[i];
+            text.text = textInContent[i];
 
             // 팝업이 나타나는 코루틴 실행
             yield return StartCoroutine(SmoothyPopUp(true));
