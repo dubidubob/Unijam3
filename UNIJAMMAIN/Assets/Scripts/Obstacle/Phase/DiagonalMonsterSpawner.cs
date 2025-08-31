@@ -126,11 +126,11 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     private float threshold = 2f;
     public void SetLastSpawnTime(float? _=null)
     {
-        if (IngameData.PhaseDuration == 0)
+        if (IngameData.PhaseDurationSec == 0)
         {
             Debug.LogWarning("Set Up Phase Duration!");
         }
-        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDuration - (IngameData.BeatInterval * 8 + threshold);
+        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDurationSec - (IngameData.BeatInterval * 8 + threshold);
     }
 
     public void PauseForWhile(bool isStop)

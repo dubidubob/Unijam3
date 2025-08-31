@@ -41,10 +41,15 @@ public class PhaseManager : MonoBehaviour
         for (int i = 0; i < chapters[ChapterIdx].Phases.Count; i++)
         {
             var phase = chapters[ChapterIdx].Phases[i];
+            IngameData.BeatInterval = 60.0 / phase.bpm;
+            IngameData.PhaseDurationSec = phase.durationBeat * (float)IngameData.BeatInterval;
+            float _durationSec = IngameData.PhaseDurationSec;
+            float _startDelaySec = phase.startDelayBeat * (float)IngameData.BeatInterval;
+
             if (phase.isFlipAD)
             {
                 Managers.Game.SetADReverse(true);
-                ChangeKey?.Invoke(phase.startDelay);
+                ChangeKey?.Invoke(_startDelaySec);
             }
             else
             {
@@ -55,13 +60,12 @@ public class PhaseManager : MonoBehaviour
                 st.Start123();
             if (i == 1 && ChapterIdx==0)
                 Managers.UI.ShowPopUpUI<Tutorial_PopUp>();
-            yield return new WaitForSeconds(phase.startDelay);
+            yield return new WaitForSeconds(_startDelaySec);
             if(i==0)
                 pa.StartAnimation();
-            IngameData.BeatInterval = 60.0/ phase.bpm;
-            IngameData.PhaseDuration = phase.duration;
+            
             spawnController.SpawnMonsterInPhase(phase.MonsterDatas);
-            yield return new WaitForSeconds(phase.duration);
+            yield return new WaitForSeconds(_durationSec);
         }
         EndPhase();
     }

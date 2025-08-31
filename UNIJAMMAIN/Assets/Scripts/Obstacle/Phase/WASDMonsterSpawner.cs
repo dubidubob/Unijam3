@@ -147,10 +147,10 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private float threshold = 0f;
     public void SetLastSpawnTime(float? moveBeat=1)
     {
-        if (IngameData.PhaseDuration == 0)
+        if (IngameData.PhaseDurationSec == 0)
             Debug.LogWarning("Set Up Phase Duration!");
         
-        _lastSpawnTime = _startDsp + IngameData.PhaseDuration - (IngameData.BeatInterval * (float)moveBeat+ threshold);
+        _lastSpawnTime = _startDsp + IngameData.PhaseDurationSec - (IngameData.BeatInterval * (float)moveBeat+ threshold);
     }
 
     #region Variable

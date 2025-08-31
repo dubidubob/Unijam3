@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Chapter0
   m_EditorClassIdentifier: 
   phases:
-  - duration: 8
-    startDelay: 8
+  - durationBeat: 5
+    startDelayBeat: 2
     bpm: 100
     isFlipAD: 0
     monsterDatas:
@@ -23,8 +23,8 @@ MonoBehaviour:
       speedUpRate: 1
       spawnBeat: 4
       moveBeat: 4
-  - duration: 25
-    startDelay: 8
+  - durationBeat: 0
+    startDelayBeat: 0
     bpm: 100
     isFlipAD: 0
     monsterDatas:
@@ -38,8 +38,8 @@ MonoBehaviour:
       speedUpRate: 1
       spawnBeat: 2
       moveBeat: 4
-  - duration: 45
-    startDelay: 0
+  - durationBeat: 0
+    startDelayBeat: 0
     bpm: 100
     isFlipAD: 0
     monsterDatas:

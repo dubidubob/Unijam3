@@ -73,11 +73,11 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     private float threshold = 2f;
     public void SetLastSpawnTime(float? _=null)
     {
-        if (IngameData.PhaseDuration == 0)
+        if (IngameData.PhaseDurationSec == 0)
         {
             Debug.LogWarning("Set Up Phase Duration!");
         }
-        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDuration - threshold;
+        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDurationSec - threshold;
     }
 
     public void PauseForWhile(bool isStop)

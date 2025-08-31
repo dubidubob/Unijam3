@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Rendering.LookDev;
 
 public class Tutorial_PopUp : UI_Popup
 {

@@ -28,7 +28,7 @@ public static class IngameData
         get => _chapterRank; 
     }
 
-    public static float PhaseDuration { set; get; }
+    public static float PhaseDurationSec { set; get; }
     public static int TotalMobCnt { set; get; }
 
     public static int PerfectMobCnt { get; private set; }

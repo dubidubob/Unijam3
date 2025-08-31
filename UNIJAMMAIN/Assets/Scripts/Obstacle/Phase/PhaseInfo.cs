@@ -10,8 +10,8 @@ public class ChapterSO : ScriptableObject
     [System.Serializable]
     public struct PhaseInfo
     {
-        public float duration;
-        public float startDelay;
+        public float durationBeat;
+        public float startDelayBeat;
         public float bpm;
         public bool isFlipAD;
         [SerializeField]
