@@ -52,17 +52,12 @@ public class PlayerActionUI : MonoBehaviour
 
     public void StartMonkAnimAfter123Count()
     {
-        float duration = (float)IngameData.BeatInterval * 5;
-        Invoke("StartAnimation", duration);
-    }
-
-    private void StartAnimation()
-    {
         animator.speed = 0.6f;
         animator.Play("Start", -1, 0f); // 원하는 stateName 실행
         this.transform.position = new Vector2(-0.2f, 0.7f);
-        Invoke("OnAnimationEnd", 1.7f); 
+        Invoke("OnAnimationEnd", 1.7f);
     }
+
     private void OnAnimationEnd()
     {
         animator.speed = 0.2f;

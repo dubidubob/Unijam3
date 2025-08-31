@@ -11,13 +11,14 @@ public class BeatClockUI : MonoBehaviour
     private void Awake()
     {
         baseScale = transform.localScale;
+        IngameData.ChangeBpm -= Init;
         IngameData.ChangeBpm += Init;
     }
 
     private void OnDestroy()
     {
-        IngameData.ChangeBpm -= Init;
         BeatClock.OnBeat -= BeatMoving;
+        IngameData.ChangeBpm -= Init;
 
         seq?.Kill();
         transform.DOKill();
@@ -41,7 +42,6 @@ public class BeatClockUI : MonoBehaviour
 
     private void BeatMoving(double _, long __)
     {
-
         // 현재 크기 -> 1.2배 커지기 (전체 비트의 50% 동안)
         transform.DOScale(baseScale * 1.2f, 0.001f).SetEase(Ease.OutCubic)
             .OnComplete(() =>

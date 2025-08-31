@@ -2786,11 +2786,11 @@ MonoBehaviour:
     img: {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}
     ment1: "\uC18D\uC138\uC758 \uAC83\uC744<br>\uC644\uBCBD\uD788 \uBB3C\uB9AC\uCCE4\uAD70."
     ment2: "\uD0C1\uC6D4\uD55C \uACBD\uC9C0\uB2E4."
-  - cutline: 80
+  - cutline: 85
     img: {fileID: 21300000, guid: aac5fb2afe854534baf6119a9a1ad416, type: 3}
     ment1: "\uC18D\uC138\uC758 \uAC83\uC774<br>\uB450\uB824\uC6CC \uD558\uACA0\uAD70."
     ment2: "\uD750\uB984\uC744 \uC9C0\uBC30\uD588\uAD70. "
-  - cutline: 75
+  - cutline: 70
     img: {fileID: 21300000, guid: cedaf74bf935284428048f27fd600839, type: 3}
     ment1: "\uC218\uD589\uC758 \uAE38\uC774 \uBCF4\uC774\uB294\uAD70."
     ment2: "\uD638\uD761\uC774 \uAE68\uC5B4\uB098\uACE0 \uC788\uAD70."

@@ -45,7 +45,7 @@ public class DiagonalMonster : MonoBehaviour
     //TODO : tmp!
     public void SetMovebeat(float moveBeat)
     {
-        _moveBeat = moveBeat;
+        _moveBeat = (moveBeat/2);
     }
 
     private void PauseForWhile(bool isStop)

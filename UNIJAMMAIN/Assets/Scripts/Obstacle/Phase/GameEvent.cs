@@ -1,16 +1,17 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
-// ¸ğµç °ÔÀÓ ÀÌº¥Æ®¸¦ À§ÇÑ ÀÎÅÍÆäÀÌ½º ¶Ç´Â Ãß»ó Å¬·¡½º
+// ëª¨ë“  ê²Œì„ ì´ë²¤íŠ¸ë¥¼ ìœ„í•œ ì¸í„°í˜ì´ìŠ¤ ë˜ëŠ” ì¶”ìƒ í´ë˜ìŠ¤
 [System.Serializable]
 public abstract class GameEvent
 {
+    public bool isIn;
     [Min(0f)] public float durationBeat;
     [Min(0f)] public float startDelayBeat;
     [Min(1f)] public float bpm;
 }
 
-// ¸®µë °ÔÀÓ ÆäÀÌÁî¸¦ À§ÇÑ ÀÌº¥Æ®
+// ë¦¬ë“¬ ê²Œì„ í˜ì´ì¦ˆë¥¼ ìœ„í•œ ì´ë²¤íŠ¸
 [System.Serializable]
 public class PhaseEvent : GameEvent
 {
@@ -19,10 +20,11 @@ public class PhaseEvent : GameEvent
     public IReadOnlyList<MonsterData> MonsterDatas => monsterDatas;
 }
 
-// Æ©Åä¸®¾ó ¶Ç´Â ½ºÅä¸® ¼½¼ÇÀ» À§ÇÑ ÀÌº¥Æ®
+// íŠœí† ë¦¬ì–¼ ë˜ëŠ” ìŠ¤í† ë¦¬ ì„¹ì…˜ì„ ìœ„í•œ ì´ë²¤íŠ¸
 [System.Serializable]
 public class TutorialEvent : GameEvent
 {
+    [Header("ì„ íƒì§€ëŠ” ì²«ë²ˆì§¸ ì¸ë±ìŠ¤ ë‚´ìš©ì´ ì„±ê³µ, ë‘ë²ˆì§¸ ì¸ë±ìŠ¤ ë‚´ìš©ì´ ì‹¤íŒ¨")]
     [SerializeField] private TextInfo[] steps;
     public IReadOnlyList<TextInfo> Steps => steps;
     public void RecalculateDuration()
@@ -41,6 +43,7 @@ public class TutorialEvent : GameEvent
 [System.Serializable]
 public struct TextInfo
 {
-    public string textContents;
+    public string[] textContents;
+    public int monsterCutline;
     public float delayBeat;
 }

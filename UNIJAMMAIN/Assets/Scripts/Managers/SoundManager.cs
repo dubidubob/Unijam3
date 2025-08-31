@@ -128,6 +128,8 @@ public class SoundManager
 
     public void PauseBGM(bool isStop)
     {
+        if (BGM == null) return;
+
         if (isStop) BGM.Pause();
         else BGM.UnPause();
     }

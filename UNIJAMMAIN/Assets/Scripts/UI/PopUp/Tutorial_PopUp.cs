@@ -1,5 +1,6 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class Tutorial_PopUp : UI_Popup
 
     private Vector3 originalPosition;
     private CanvasGroup canvasGroup;
-   
+
     public override void Init()
     {
         base.Init();
@@ -31,54 +32,56 @@ public class Tutorial_PopUp : UI_Popup
         Managers.UI.SetCanvas(this.gameObject);
     }
 
-    public void StartTutorial(IReadOnlyList<TextInfo> textInfo)
+    public void StartTutorial(IReadOnlyList<TextInfo> textInfo, int? lastMonsterHitCnt)
     {
-        StartCoroutine(ShowSequenceOfPopups(textInfo));
+        StartCoroutine(ShowSequenceOfPopups(textInfo, lastMonsterHitCnt));
     }
 
-    private IEnumerator ShowSequenceOfPopups(IReadOnlyList<TextInfo> textInfo)
+    private IEnumerator ShowSequenceOfPopups(IReadOnlyList<TextInfo> textInfo, int? lastMonsterHitCnt=0)
     {
-        // textInContent ¹è¿­ÀÇ °¢ ÅØ½ºÆ®¿¡ ´ëÇØ ¹İº¹
+        // textInContent ë°°ì—´ì˜ ê° í…ìŠ¤íŠ¸ì— ëŒ€í•´ ë°˜ë³µ
         for (int i = 0; i < textInfo.Count; i++)
         {
-            var textInContent = textInfo[i].textContents;
-            float durationSec = (float)IngameData.BeatInterval * textInfo[i].delayBeat;
-            // ÇöÀç ÆË¾÷ÀÇ ÅØ½ºÆ® ¼³Á¤
-            text.text = textInContent;
+            var textInContent = textInfo[i].textContents;            
 
-            // ÆË¾÷ÀÌ ³ªÅ¸³ª´Â ÄÚ·çÆ¾ ½ÇÇà
+            float durationSec = (float)IngameData.BeatInterval * (textInfo[i].delayBeat-1);
+            appearSpeed = (float)IngameData.BeatInterval * 0.5f;
+            disappearSpeed = (float)IngameData.BeatInterval * 0.5f;
+
+            // í˜„ì¬ íŒì—…ì˜ í…ìŠ¤íŠ¸ ì„¤ì •
+            int curMonsterHitCnt = IngameData.PerfectMobCnt + IngameData.GoodMobCnt;
+            bool isFail = (curMonsterHitCnt - lastMonsterHitCnt) < textInfo[i].monsterCutline;
+            text.text = isFail ? textInfo[i].textContents.Last() : textInfo[i].textContents.First();
+            
+            // íŒì—… ë‚˜íƒ€ë‚¬ë‹¤ ì‚¬ë¼ì§
             yield return StartCoroutine(SmoothyPopUp(true));
-
-            // ÁöÁ¤µÈ ½Ã°£¸¸Å­ ´ë±â
             yield return new WaitForSeconds(durationSec);
-
-            // ÆË¾÷ÀÌ »ç¶óÁö´Â ÄÚ·çÆ¾ ½ÇÇà
             yield return StartCoroutine(SmoothyPopUp(false));
         }
 
-        // ¸ğµç ÆË¾÷ Ç¥½Ã°¡ ³¡³ª¸é GameObject ºñÈ°¼ºÈ­
+        // ëª¨ë“  íŒì—… í‘œì‹œê°€ ëë‚˜ë©´ GameObject ë¹„í™œì„±í™”
         this.gameObject.SetActive(false);
     }
 
     /// <summary>
-    /// ÆË¾÷À» ºÎµå·´°Ô ³ªÅ¸³»°Å³ª »ç¶óÁö°Ô ÇÏ´Â ÄÚ·çÆ¾
+    /// íŒì—…ì„ ë¶€ë“œëŸ½ê²Œ ë‚˜íƒ€ë‚´ê±°ë‚˜ ì‚¬ë¼ì§€ê²Œ í•˜ëŠ” ì½”ë£¨í‹´
     /// </summary>
-    /// <param name="isAppearing">true¸é ³ªÅ¸³ª°í, false¸é »ç¶óÁı´Ï´Ù.</param>
+    /// <param name="isAppearing">trueë©´ ë‚˜íƒ€ë‚˜ê³ , falseë©´ ì‚¬ë¼ì§‘ë‹ˆë‹¤.</param>
     private IEnumerator SmoothyPopUp(bool isAppearing)
     {
-        float timer = 0f;
-
         if (isAppearing)
         {
-            // ³ªÅ¸³ª´Â ¾Ö´Ï¸ŞÀÌ¼Ç
+            float timer = 0f;
+            // ë‚˜íƒ€ë‚˜ëŠ” ì• ë‹ˆë©”ì´ì…˜
             contents.transform.localPosition = originalPosition + new Vector3(0, startOffset, 0);
             canvasGroup.alpha = 0f;
 
             while (timer < 1f)
             {
-                timer += Time.deltaTime * appearSpeed;
+                timer += Time.deltaTime / appearSpeed;
+                float k = Mathf.Clamp01(timer);
                 contents.transform.localPosition = Vector3.Lerp(originalPosition + new Vector3(0, startOffset, 0), originalPosition, timer);
-                canvasGroup.alpha = Mathf.Lerp(0f, 1f, timer);
+                canvasGroup.alpha = Mathf.Lerp(0f, 1f, k);
                 yield return null;
             }
             contents.transform.localPosition = originalPosition;
@@ -86,12 +89,14 @@ public class Tutorial_PopUp : UI_Popup
         }
         else // isAppearing == false
         {
-            // »ç¶óÁö´Â ¾Ö´Ï¸ŞÀÌ¼Ç
+            // ì‚¬ë¼ì§€ëŠ” ì• ë‹ˆë©”ì´ì…˜
+            float timer = 0f;
             while (timer < 1f)
             {
-                timer += Time.deltaTime * disappearSpeed;
+                timer += Time.deltaTime / disappearSpeed;
+                float k = Mathf.Clamp01(timer);
                 contents.transform.localPosition = Vector3.Lerp(originalPosition, originalPosition + new Vector3(0, startOffset, 0), timer);
-                canvasGroup.alpha = Mathf.Lerp(1f, 0f, timer);
+                canvasGroup.alpha = Mathf.Lerp(1f, 0f, k);
                 yield return null;
             }
             contents.transform.localPosition = originalPosition + new Vector3(0, startOffset, 0);

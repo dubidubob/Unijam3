@@ -69,7 +69,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     public void Spawn(MonsterData data)
     {
         float spawnDuration = (float)IngameData.BeatInterval * data.spawnBeat;
-        SetLastSpawnTime(); 
+        SetLastSpawnTime(data.moveBeat); 
         _spawning = true;
         _moveBeat = data.moveBeat;
         StartCoroutine(DoSpawn(spawnDuration));
@@ -85,7 +85,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         yield return new WaitForSeconds((float)IngameData.BeatInterval*0.5f);
         while (_spawning)
         {
-            if (AudioSettings.dspTime >= _lastSpawnTime)
+            if (AudioSettings.dspTime > _lastSpawnTime)
                 yield break;
             if (!_spawning) continue;
             ActivateEnemy();
@@ -123,14 +123,15 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
-    private float threshold = 2f;
-    public void SetLastSpawnTime(float? _=null)
+    float threshold = 0.4f;
+    public void SetLastSpawnTime(float? moveBeat = 8)
     {
         if (IngameData.PhaseDurationSec == 0)
         {
             Debug.LogWarning("Set Up Phase Duration!");
         }
-        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDurationSec - (IngameData.BeatInterval * 8 + threshold);
+        float _moveBeat = 4 * (float)moveBeat; // 4번 뛰는데, 한 번 뛸 때마다 moveBeat 박자만큼 걸림
+        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDurationSec - (IngameData.BeatInterval * _moveBeat) + threshold;
     }
 
     public void PauseForWhile(bool isStop)

@@ -7,16 +7,18 @@ public static class IngameData
     public static Action<RankType> OnRankUpdate;
 
     public static bool Pause { set; get; }
-
-    private static double _beatInterval;
-    public static double BeatInterval
+    private static double beatInterval;
+    public static double BeatInterval 
     {
-        get => _beatInterval;
         set
         {
-            _beatInterval = value;
+            beatInterval = value;
             ChangeBpm?.Invoke();
         }
+        get
+        {
+            return beatInterval;
+        } 
     }
 
     public static int ChapterIdx { set; get; }
