@@ -10,6 +10,7 @@ public class BeatClockUI : MonoBehaviour
 
     private void Awake()
     {
+        baseScale = transform.localScale;
         IngameData.ChangeBpm += Init;
     }
 
@@ -27,8 +28,6 @@ public class BeatClockUI : MonoBehaviour
         seq?.Kill();
         transform.DOKill();
 
-
-        baseScale = transform.localScale;
         beatDuration = (float)IngameData.BeatInterval;
 
         seq = DOTween.Sequence()
