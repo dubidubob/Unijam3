@@ -15,7 +15,7 @@ public class PlayerActionUI : MonoBehaviour
     private SpriteRenderer sp;
     private Sprite origin;
     private Animator animator;
-
+    private bool isActioning = false;
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
@@ -51,17 +51,43 @@ public class PlayerActionUI : MonoBehaviour
     }
     private void OnAnimationEnd()
     {
-        animator.enabled = false;
+        animator.Play("NormalPosing", -1, 0f);
     }
 
+    private void NormalPosing()
+    {
+        // _isActioning이 아닐 때만 노말 포징을 재생합니다.
+        if (animator != null && !isActioning)
+        {
+            animator.Play("NormalPosing", -1, 0f);
+        }
+    }
+
+    private void StopNormalPosing()
+    {
+        //  액션이 시작될 때 상태를 변경하고 애니메이터를 정지시킵니다.
+        isActioning = true;
+        if (animator != null)
+        {
+            animator.speed = 0;
+        }
+    }
     private void ChangePlayerSprite(GamePlayDefine.WASDType type)
     {
+        StopNormalPosing();
+        // 애니메이터 비활성화
+        animator.enabled = false;
+
         sp.sprite = _actionImgsDic[Util.WASDTypeChange(type)];
         Invoke("Recover", 0.4f);
     }
 
     private void ChangePlayerSprite_Arrow(GamePlayDefine.DiagonalType type)
     {
+        StopNormalPosing();
+        // 애니메이터 비활성화
+        animator.enabled = false;
+
         sp.sprite = _actionImgsDic[Util.DiagonalTypeChange(type)];
         Invoke("Recover", 0.4f);
     }
@@ -69,7 +95,23 @@ public class PlayerActionUI : MonoBehaviour
     private void Recover()
     {
         sp.sprite = origin;
+        isActioning = false;
+        animator.enabled = true;
+        if (animator != null)
+        {
+            animator.speed = 1; //  애니메이터 속도를 다시 1로 되돌립니다.
+        }
+        NormalPosing();
     }
+        
+    public void GameOverAnimation()
+    {
+        isActioning = true;
+        animator.enabled = true;
+
+        animator.Play("Die");
+    }
+
 
     #region Sound
 
