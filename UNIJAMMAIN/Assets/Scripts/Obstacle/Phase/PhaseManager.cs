@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -10,9 +11,13 @@ public class PhaseManager : MonoBehaviour
 {
     [SerializeField] IllustController illustController;
     [SerializeField] ResultUI Scoreboard;
-    [SerializeField] ChapterSO chapter;
-    
+    [SerializeField] ChapterSO[] chapters;
+    // TODO : tmp!
+    [SerializeField] StartMotion st;
+    [SerializeField] PlayerActionUI pa;
+
     public static Action<float> ChangeKey;
+    private int ChapterIdx;
 
     SpawnController spawnController;
     bool isQA = false;
@@ -22,62 +27,45 @@ public class PhaseManager : MonoBehaviour
         Scoreboard.gameObject.SetActive(false);
         
         IngameData.RankInit();
+
+        ChapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
         if (!isQA)
         {
+            Managers.Sound.Play(chapters[ChapterIdx].MusicPath, Define.Sound.BGM);
             StartCoroutine(RunPhase());
         }
     }
     
-    // TODO : Áß°£Áß°£ ÄÆ¾À
-    private IEnumerator ShowCutScene()
-    {
-        Managers.Pause.Pause();
-        if (illustController != null)
-        {
-            Managers.UI.ShowPopUpUI<S1_PopUp>();
-            yield return new WaitForSecondsRealtime(6f);
-            yield return illustController.ShowIllust(GamePlayDefine.IllustType.Num);//¼ýÀÚ ³ª¿È
-        }
-        Managers.Pause.Resume();
-
-        //Pause();
-        //if (i == 4)
-        //{
-        //    Managers.Scene.LoadScene("GoodEnding");
-        //    break;
-        //}
-        //else if (i == 1)
-        //{
-        //    Managers.UI.ShowPopUpUI<S2_PopUp>();
-        //    yield return new WaitForSecondsRealtime(8f);
-        //}
-        //else if (i == 3)
-        //{
-        //    Managers.UI.ShowPopUpUI<S3_PopUp>();
-        //    yield return new WaitForSecondsRealtime(8f);
-        //}
-        //Resume();
-    }
     private IEnumerator RunPhase()
     {
-        for (int i = 0; i < chapter.Phases.Count; i++)
+        for (int i = 0; i < chapters[ChapterIdx].Phases.Count; i++)
         {
-            var phase = chapter.Phases[i];
+            var phase = chapters[ChapterIdx].Phases[i];
+            IngameData.BeatInterval = 60.0 / phase.bpm;
+            IngameData.PhaseDurationSec = phase.durationBeat * (float)IngameData.BeatInterval;
+            float _durationSec = IngameData.PhaseDurationSec;
+            float _startDelaySec = phase.startDelayBeat * (float)IngameData.BeatInterval;
+
             if (phase.isFlipAD)
             {
                 Managers.Game.SetADReverse(true);
-                ChangeKey?.Invoke(phase.startDelay);
+                ChangeKey?.Invoke(_startDelaySec);
             }
             else
             {
                 Managers.Game.SetADReverse(false);
                 ChangeKey?.Invoke(-1f);
             }
-            yield return new WaitForSeconds(phase.startDelay);
-            IngameData.BeatInterval = 60.0/ phase.bpm;
-            IngameData.PhaseDuration = phase.duration;
+            if(i==0)
+                st.Start123();
+            if (i == 1 && ChapterIdx==0)
+                Managers.UI.ShowPopUpUI<Tutorial_PopUp>();
+            yield return new WaitForSeconds(_startDelaySec);
+            if(i==0)
+                pa.StartAnimation();
+            
             spawnController.SpawnMonsterInPhase(phase.MonsterDatas);
-            yield return new WaitForSeconds(phase.duration);
+            yield return new WaitForSeconds(_durationSec);
         }
         EndPhase();
     }
@@ -108,10 +96,26 @@ public class PhaseManager : MonoBehaviour
     private void EndPhase()
     {
         // TODO : ´õ Á¤µ·ÇÏ±â
+        Managers.Sound.StopBGM();
         spawnController.StopMonsterInPhase();
         IngameData.Pause = true;
 
-        Scoreboard.ChangeUI();
+        Scoreboard.ChangeUI(CalculateScore());
         Scoreboard.gameObject.SetActive(true);
+    }
+
+    private float perfectWeight = 1.0f;
+    private float goodWeight = 0.5f;
+    private float CalculateScore()
+    {
+        float perfectCnt = IngameData.PerfectMobCnt;
+        float goodCnt = IngameData.GoodMobCnt;
+        float rate = (perfectCnt * perfectWeight + goodCnt * goodWeight);
+
+        float totalCnt = IngameData.TotalMobCnt;
+        float missedInput = IngameData.WrongInputCnt;
+        float total = totalCnt + missedInput;
+
+        return (rate / total) * 100f;
     }
 }

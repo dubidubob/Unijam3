@@ -10,8 +10,8 @@ public class ChapterSO : ScriptableObject
     [System.Serializable]
     public struct PhaseInfo
     {
-        public float duration;
-        public float startDelay;
+        public float durationBeat;
+        public float startDelayBeat;
         public float bpm;
         public bool isFlipAD;
         [SerializeField]
@@ -22,4 +22,5 @@ public class ChapterSO : ScriptableObject
     [SerializeField]
     private List<PhaseInfo> phases;
     public IReadOnlyList<PhaseInfo> Phases => phases;
+    public string MusicPath;
 }

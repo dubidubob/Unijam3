@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
 
+
 public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 {
+    enum RankState
+    {
+        Spawned,
+        Success,
+        Fail
+    };
+
     public Define.MonsterType MonsterType => Define.MonsterType.Diagonal;
 
     private Dictionary<DiagonalType, GameObject> diagonalDict;
@@ -14,17 +22,31 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     private bool _spawning = false;
     private double _lastSpawnTime;
-    private void Awake()
+    private float _moveBeat;
+    private void OnEnable()
     {
         InitialDict();
 
         Managers.Input.InputDiagonal -= DeactivateDiagonal;
         Managers.Input.InputDiagonal += DeactivateDiagonal;
+        PauseManager.IsPaused -= PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile;
     }
 
-    private void OnDestroy()
+    private void UpdateRankCnt(RankState state)
     {
-        Managers.Input.InputDiagonal -= DeactivateDiagonal;
+        switch (state)
+        { 
+            case RankState.Success:
+                IngameData.IncPerfect();
+                break;
+            case RankState.Fail:
+                IngameData.IncAttacked();
+                break;
+            case RankState.Spawned:
+                IngameData.TotalMobCnt++;
+                break;
+        }
     }
 
     private void InitialDict()
@@ -49,6 +71,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         float spawnDuration = (float)IngameData.BeatInterval * data.spawnBeat;
         SetLastSpawnTime(); 
         _spawning = true;
+        _moveBeat = data.moveBeat;
         StartCoroutine(DoSpawn(spawnDuration));
     }
     public void UnSpawn()
@@ -59,23 +82,28 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     private IEnumerator DoSpawn(float spawnDuration)
     {
+        yield return new WaitForSeconds((float)IngameData.BeatInterval*0.5f);
         while (_spawning)
         {
-            yield return new WaitForSecondsRealtime(spawnDuration);
             if (AudioSettings.dspTime >= _lastSpawnTime)
                 yield break;
+            if (!_spawning) continue;
             ActivateEnemy();
+            yield return new WaitForSecondsRealtime(spawnDuration);
         }
         yield return null;
     }
 
     public void ActivateEnemy()
     {
+        UpdateRankCnt(RankState.Spawned);
+
         int idx = Random.Range(0, deactivatedDiagonalIdx.Count);
         if (deactivatedDiagonalIdx.Count == 0) return;
         int mIdx = deactivatedDiagonalIdx[idx];
         deactivatedDiagonalIdx.Remove(mIdx);
 
+        diagonalDict[(DiagonalType)mIdx].GetComponent<DiagonalMonster>().SetMovebeat(_moveBeat);
         diagonalDict[(DiagonalType)mIdx].SetActive(true);
         activatedDiagonalIdx.Add(mIdx);
     }
@@ -86,6 +114,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         {
             activatedDiagonalIdx.Remove((int)attackType);
             deactivatedDiagonalIdx.Add((int)attackType);
+            UpdateRankCnt(RankState.Success);
             diagonalDict[attackType].GetComponent<DiagonalMonster>().SetDead();
         }
         else
@@ -97,10 +126,15 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     private float threshold = 2f;
     public void SetLastSpawnTime(float? _=null)
     {
-        if (IngameData.PhaseDuration == 0)
+        if (IngameData.PhaseDurationSec == 0)
         {
             Debug.LogWarning("Set Up Phase Duration!");
         }
-        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDuration - (IngameData.BeatInterval * 8 + threshold);
+        _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDurationSec - (IngameData.BeatInterval * 8 + threshold);
+    }
+
+    public void PauseForWhile(bool isStop)
+    {
+        _spawning = !isStop;
     }
 }

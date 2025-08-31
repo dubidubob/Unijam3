@@ -14,11 +14,15 @@ public class PlayerActionUI : MonoBehaviour
     private Dictionary<GamePlayDefine.AllType, Sprite> _actionImgsDic;
     private SpriteRenderer sp;
     private Sprite origin;
+    private Animator animator;
 
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
         origin = sp.sprite;
+
+        animator = GetComponent<Animator>();
+        animator.speed = 0; // 시작 시 정지
 
         _actionImgsDic = new Dictionary<GamePlayDefine.AllType, Sprite>();
         foreach (var a in actionImgs)
@@ -39,6 +43,17 @@ public class PlayerActionUI : MonoBehaviour
         Managers.Input.InputDiagonal -= ChangePlayerSprite_Arrow;
     }
 
+    public void StartAnimation()
+    {
+        animator.speed = 1;
+        animator.Play("MonkStarting", -1, 0f); // 원하는 stateName 실행
+        Invoke("OnAnimationEnd", 1.7f);
+    }
+    private void OnAnimationEnd()
+    {
+        animator.enabled = false;
+    }
+
     private void ChangePlayerSprite(GamePlayDefine.WASDType type)
     {
         sp.sprite = _actionImgsDic[Util.WASDTypeChange(type)];
@@ -55,5 +70,29 @@ public class PlayerActionUI : MonoBehaviour
     {
         sp.sprite = origin;
     }
-    
+
+    #region Sound
+
+    private void SetAttackSound()
+    {
+        // Generates a random integer from 0 (inclusive) to 4 (exclusive), so the result is 0, 1, 2, or 3.
+        int random = UnityEngine.Random.Range(0, 4);
+
+        switch (random)
+        {
+            case 0:
+                Managers.Sound.Play("SFX/Accuracy/Perfect1_V1", Define.Sound.SFX);
+                break;
+            case 1:
+                Managers.Sound.Play("SFX/Accuracy/Perfect2_V1", Define.Sound.SFX);
+                break;
+            case 2:
+                Managers.Sound.Play("SFX/Accuracy/Perfect3_V1", Define.Sound.SFX);
+                break;
+            case 3:
+                Managers.Sound.Play("SFX/Accuracy/Perfect4_V1", Define.Sound.SFX);
+                break;
+        }
+    }
+    #endregion
 }

@@ -54,7 +54,6 @@ public class GoodEnding : MonoBehaviour
 
     public void OnClickGohome()
     {
-        Managers.Clear();
         Managers.Scene.LoadScene("MainTitle");
     }
 }

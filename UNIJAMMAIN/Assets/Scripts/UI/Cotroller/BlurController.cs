@@ -7,7 +7,7 @@ using DG.Tweening;
 public class BlurController : MonoBehaviour
 {
     public Image damageImage;
-    int beforeHealth=1; // 기존의 체력 상태 처음에는 가장 환한게 Default값으로 . 변화시 이거 변화시켜줘야함
+    int beforeHealth=100; // 기존의 체력 상태 처음에는 가장 환한게 Default값으로 . 변화시 이거 변화시켜줘야함
     bool isCoolDown;
     public Camera camera; // 흔들릴 카메라 Transform
     public float shakeStrength = 0.2f; // 흔들림 강도
@@ -72,6 +72,10 @@ public class BlurController : MonoBehaviour
         
     }
 
+    private void OnDestroy()
+    {
+        transform.DOKill();
+    }
     private IEnumerator FadeTransition(int oldIndex, int newIndex)
     {
         float time = 0f;
@@ -125,6 +129,8 @@ public class BlurController : MonoBehaviour
         seq.Append(damageImage.DOFade(1f, 0.15f));
         seq.Append(damageImage.DOFade(0f, 0.15f));
 
+        PlayRandomHurtSound();
+
         // blurImages 개수 기준으로 goGrayBackGround alpha 계산
         // currentIndex는 SetBlur에서 갱신됨, 0 ~ blurImages.Length-1
         float targetAlpha = (currentIndex + 1) / (float)blurImages.Length; // 1/6, 2/6, ... 비율
@@ -160,4 +166,22 @@ public class BlurController : MonoBehaviour
                     .SetEase(Ease.InOutQuad);
             });
     }
+
+    #region tool
+
+    private void PlayRandomHurtSound()
+    {
+        // 0 또는 1을 무작위로 선택
+        int randomIndex = Random.Range(0, 2);
+
+        if (randomIndex == 0)
+        {
+            Managers.Sound.Play("SFX/Damaged/Hurt1_V1");
+        }
+        else
+        {
+            Managers.Sound.Play("SFX/Damaged/Hurt2_V1");
+        }
+    }
+    #endregion
 }

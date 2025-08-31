@@ -8,13 +8,11 @@ public class InputManager
     {
         InputMouse = null;
         InputDiagonal = null;
-        InputEsc = null;
         InputWasd = null;
     }
     public Action<WASDType> InputWasd = null;
     public Action<DiagonalType> InputDiagonal = null;
     public Action<MouseType> InputMouse = null;
-    public Action<bool> InputEsc = null;
 
     private readonly Dictionary<KeyCode, WASDType> keysToCheck = new()
     {
@@ -36,13 +34,7 @@ public class InputManager
     public void HandleStop()
     {
         isStoped = !isStoped;
-        IngameData.Pause = isStoped;
-        if (isStoped)
-            Time.timeScale = 0;
-        else
-            Time.timeScale = 1;
-        Managers.Sound.PauseBGM(isStoped);
-        InputEsc?.Invoke(isStoped);
+        PauseManager.ControlTime(isStoped);
     }
 
     public void OnUpdate()
@@ -83,9 +75,6 @@ public class InputManager
                 Managers.Game.ReceiveKey(key.Value);
             }
         }
-
-
-        
     }
 
     private void HandleDiagonalKeys()

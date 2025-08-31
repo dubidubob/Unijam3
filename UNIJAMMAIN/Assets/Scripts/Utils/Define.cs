@@ -81,4 +81,14 @@ public class Define
         MouseClick,
         MaxCount
     }
+
+    public enum Rank
+    {        
+        Bad,
+        Normal,
+        NormalGood,
+        Good,
+        Perfect,
+        Unknown,
+    }
 }

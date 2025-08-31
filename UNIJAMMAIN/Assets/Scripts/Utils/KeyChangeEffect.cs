@@ -21,6 +21,7 @@ public class KeyChangeEffect : MonoBehaviour
     private void OnDestroy()
     {
         PhaseManager.ChangeKey -= ChangeMotion;
+        transform.DOKill();
     }
     private void ChangeMotion(float startDelay)
     {

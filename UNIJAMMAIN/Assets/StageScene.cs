@@ -6,12 +6,12 @@ public class StageScene : BaseScene
 {
     private void Start()
     {
+        Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);
         Managers.UI.ShowPopUpUI<StageSceneUI>();
         Init();
     }
     public override void Clear()
     {
-        throw new System.NotImplementedException();
     }
 
     protected override void Init()

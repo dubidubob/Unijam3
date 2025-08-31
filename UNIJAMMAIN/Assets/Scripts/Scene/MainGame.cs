@@ -15,9 +15,10 @@ public class MainGame : BaseScene   // MainGame Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BaseScene Å
     {
         Init();
 
-        // Managers.UI.ShowPopUpUI<S1_PopUp>();
-        Managers.Sound.Play("BGM/84bpm_64_V1", Define.Sound.BGM);
-        
-        Managers.Game.GameStart();
+        Managers.Init();
+        if (IngameData.ChapterIdx == 0)
+        {
+            Managers.UI.ShowPopUpUI<Tutorial_PopUp>();
+        }
     }
 }

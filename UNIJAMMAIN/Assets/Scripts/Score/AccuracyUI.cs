@@ -10,13 +10,13 @@ public class AccuracyUI : MonoBehaviour
     {
         txt = textPrefab.GetComponent<TMP_Text>();
 
-        HitJudge.OnRankUpdate -= UpdateAccuracyUI;
-        HitJudge.OnRankUpdate += UpdateAccuracyUI;
+        IngameData.OnRankUpdate -= UpdateAccuracyUI;
+        IngameData.OnRankUpdate += UpdateAccuracyUI;
     }
 
     private void OnDestroy()
     {
-        HitJudge.OnRankUpdate -= UpdateAccuracyUI;
+        IngameData.OnRankUpdate -= UpdateAccuracyUI;
     }
 
     private void UpdateAccuracyUI(RankType rank)
@@ -30,11 +30,44 @@ public class AccuracyUI : MonoBehaviour
             case RankType.Good:
                 txt.text = "Good!";
                 txt.color = Color.white;
+                SetGoodSound();
                 break;
             case RankType.Perfect:
                 txt.text = "Perfect!";
                 txt.color = Color.yellow;
+                SetPerfectSound();
                 break;
         }
     }
+
+    #region Sound
+
+    private void SetPerfectSound()
+    {
+        // Generates a random integer from 0 (inclusive) to 4 (exclusive), so the result is 0, 1, 2, or 3.
+        int random = Random.Range(0, 4);
+
+        switch (random)
+        {
+            case 0:
+                Managers.Sound.Play("SFX/Accuracy/Perfect1_V1", Define.Sound.SFX);
+                break;
+            case 1:
+                Managers.Sound.Play("SFX/Accuracy/Perfect2_V1", Define.Sound.SFX);
+                break;
+            case 2:
+                Managers.Sound.Play("SFX/Accuracy/Perfect3_V1", Define.Sound.SFX);
+                break;
+            case 3:
+                Managers.Sound.Play("SFX/Accuracy/Perfect4_V1", Define.Sound.SFX);
+                break;
+        }
+    }
+
+    private void SetGoodSound()
+    {
+        Managers.Sound.Play("SFX/Accuracy/Good_V1", Define.Sound.SFX);
+    }
+    #endregion
+
 }

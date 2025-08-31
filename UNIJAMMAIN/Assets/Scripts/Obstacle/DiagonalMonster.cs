@@ -18,14 +18,16 @@ public class DiagonalMonster : MonoBehaviour
     
     private float _duration;
     private Vector3 _stride;
+    private float _moveBeat;
     private Sequence jumpSequence;
 
     private void Awake()
     {
-        IngameData.BeatInterval = 84 / 60;
         _objectRenderer = GetComponent<SpriteRenderer>();
         _originSprite = _objectRenderer.sprite;
         _originPos = transform.position;
+        PauseManager.IsPaused -= PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile;
     }
 
     private void OnEnable()
@@ -37,7 +39,21 @@ public class DiagonalMonster : MonoBehaviour
 
     private void OnDisable()
     {
-        jumpSequence.Kill();
+        transform.DOKill();
+        PauseManager.IsPaused -= PauseForWhile;
+    }
+    //TODO : tmp!
+    public void SetMovebeat(float moveBeat)
+    {
+        _moveBeat = moveBeat;
+    }
+
+    private void PauseForWhile(bool isStop)
+    {
+        if (isStop)
+            jumpSequence.Pause();
+        else 
+            jumpSequence.Play();
     }
 
     private void Move()
@@ -52,13 +68,13 @@ public class DiagonalMonster : MonoBehaviour
                 target,   // 목표 지점
                 0.5f,        // 점프 높이
                 1,           // 점프 횟수 (한 번만 점프)
-                _duration
+                _duration* _moveBeat
             ));
 
             // 쉬는 시간 (1박자)
             if (i < _jumpCnt - 1) // 마지막 점프는 대기 필요 없음
             {
-                jumpSequence.AppendInterval(_duration);
+                jumpSequence.AppendInterval(_duration* _moveBeat);
             }
             else
             {
@@ -90,6 +106,7 @@ public class DiagonalMonster : MonoBehaviour
 
     public void SetDead(bool isAttackedByPlayer = true)
     {
+        jumpSequence.Kill();
         if (!isAttackedByPlayer)
         {
             Managers.Game.PlayerAttacked();
@@ -102,7 +119,6 @@ public class DiagonalMonster : MonoBehaviour
 
             Managers.Game.ComboInc();
         }
-
         _isDying = false;
         gameObject.SetActive(false);
         transform.position = _originPos;

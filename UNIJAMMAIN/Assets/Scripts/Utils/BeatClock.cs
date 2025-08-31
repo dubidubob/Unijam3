@@ -32,6 +32,7 @@ public class BeatClock : MonoBehaviour
 
     void Update()
     {
+        if (!_running) return;
         if (IngameData.Pause)
         {
             _running = false;
@@ -44,10 +45,9 @@ public class BeatClock : MonoBehaviour
             CatchUp();
             _wasPaused = false;
         }
-        if (!_running) return;
 
         double now = AudioSettings.dspTime;
-
+        
         // 한 프레임에 여러 박자가 지나갔을 경우 처리
         while (now >= ScheduledTime(_tick +1))
         {
@@ -55,7 +55,6 @@ public class BeatClock : MonoBehaviour
             double scheduled = ScheduledTime(_tick);
             OnBeat?.Invoke(scheduled, _tick);
         }
-        
     }
     private double ScheduledTime(long tickIndex)
        => _startDsp + tickIndex * _beatInterval;
@@ -65,11 +64,7 @@ public class BeatClock : MonoBehaviour
         double now = AudioSettings.dspTime;
 
         // 다음 줄이 핵심: 현재 시간 기준으로 tick을 스냅
-        _tick = (long)System.Math.Floor((now - _startDsp) / _beatInterval);
-
-        // 만약 재개 직후 비트가 즉시 울리는 것도 싫다면, Ceil로 바꿔:
-        // _tick = (long)System.Math.Ceiling((now - _startDsp) / _beatInterval);
-
+        _tick = (long)Math.Floor((now - _startDsp) / _beatInterval);
         _running = true;
     }
 }

@@ -102,6 +102,7 @@ public class StageSceneUI : UI_Popup
         }
 
         // 선택된 버튼 업데이트 및 하이라이트
+        IngameData.ChapterIdx = stageIndex-1;
         _selectedButton = button;
         UpdateStageButtons();
 

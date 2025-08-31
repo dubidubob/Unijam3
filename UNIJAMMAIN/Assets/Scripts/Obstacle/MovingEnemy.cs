@@ -33,7 +33,6 @@ public class MovingEnemy : MonoBehaviour
     private Vector3 origin;
     private bool isResizeable = false;
     private Vector2 sizeDiffRate;
-    private float speedUpRate;
     public bool isKnockbacked=false;
 
     private float backwardDuration, knockbackDistance;
@@ -47,7 +46,6 @@ public class MovingEnemy : MonoBehaviour
 
     private void Start()
     {
-        playerPos = Managers.Game.playerTransform.position;
         if (monsterImg != null)
         {
             origin = monsterImg.transform.localScale;
@@ -63,10 +61,10 @@ public class MovingEnemy : MonoBehaviour
         Managers.Pool.Push(poolable);
     }
 
-    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, GamePlayDefine.WASDType wasdType)
+    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType)
     {
+        this.playerPos = playerPos;
         enemyType = wasdType;
-        speedUpRate = monster.speedUpRate;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
         this.sizeDiffRate = sizeDiffRate;
         backwardDuration = movingDuration * 0.125f;
@@ -108,11 +106,15 @@ public class MovingEnemy : MonoBehaviour
 
         while (elapsedTime < backwardDuration)
         {
+            while (IngameData.Pause)
+            {
+                yield return null; // 일시 정지 상태에서 기다림
+            }
             // 진행되고 있는 distance에서 movingDuration의 1/4 시간 동안 뒤로 물러나고,
             float t = elapsedTime / backwardDuration;
             // 이때 가속도가 붙기
             float knockbackMovement = Mathf.Lerp(knockbackDistance, 0, (t * t));
-            transform.position += knockbackDirection * knockbackMovement * Time.deltaTime * speedUpRate * 2.0f;
+            transform.position += knockbackDirection * knockbackMovement * Time.deltaTime * 2.0f;
             
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -121,7 +123,6 @@ public class MovingEnemy : MonoBehaviour
         // 앞으로 갈 때는 등속도 운동을 해야함.
         isKnockbackActive = false;
     }
-
 
     private void FixedUpdate()
     {
@@ -138,7 +139,7 @@ public class MovingEnemy : MonoBehaviour
     private void Move()
     {
         if (isKnockbackActive) return;
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime * speedUpRate);
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
 
@@ -171,12 +172,5 @@ public class MovingEnemy : MonoBehaviour
             SetDead();
             Managers.Game.PlayerAttacked();
         }
-        //else if (collision.tag == "test")
-        //{
-        //    float elapsed = Time.time - _enabledTime;
-        //    // Debug.Log($"{enemyType} 경과 시간: {elapsed:F2}초");
-        //    Managers.Game.attacks[enemyType].Dequeue();
-        //    SetDead();
-        //}
     }
 }

@@ -4,4 +4,5 @@ public interface ISpawnable
     void Spawn(MonsterData data);
     void UnSpawn();
     void SetLastSpawnTime(float? beat);
+    void PauseForWhile(bool isStop);
 }

@@ -17,14 +17,15 @@ public struct RankNode
 
 public class GameManager 
 {
-    public Transform playerTransform;
-    public int currentPhase { get; private set; } = 0;
     public Action<int> ComboContinue = null;
     public Action<float> HealthUpdate = null;
-    public Action<int> PhaseUpdate = null;
+
     public Action<RankNode> RankUpdate = null;
+
+    public int currentPhase { get; private set; } = 0;
+
     private int Combo = 0;
-    private float Health = 0;
+    private float Health = 100;
     public readonly int MaxHealth = 100;
     private const int IncHealthUnit = 10;
     public BlurController blur;
@@ -38,14 +39,12 @@ public class GameManager
     public void Clear()
     {
         attacks = new Dictionary<WASDType, Queue<GameObject>>();
-        playerTransform = null;
         currentPhase = 0;
         ComboContinue = null;
         HealthUpdate = null;
-        PhaseUpdate = null;
         RankUpdate = null;
         Combo = 0;
-        Health = 0;
+        Health = 100;
 }
 
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함
@@ -65,17 +64,12 @@ public class GameManager
     public PlayerState currentPlayerState;
 
     //인게임 데이터 초기화 
-    public void GameStart()
+    public void Init()
     {
         currentState = GameState.Battle;
         currentPlayerState = PlayerState.Normal;
-        playerTransform = GameObject.FindWithTag("Player").transform; // 플레이어의 현재 위치받기
         Health = MaxHealth;
         Time.timeScale = 1f;
-    }
-    public Transform GetPlayerTransform()
-    {
-        return playerTransform;
     }
 
     bool isADReverse = false;
@@ -165,7 +159,7 @@ public class GameManager
         {
             Health -= 5;
         }
-        HealthUpdate.Invoke(Health);
+        HealthUpdate?.Invoke(Health);
     }
 
     public void IncHealth(float healValue = 2.5f)
@@ -174,13 +168,12 @@ public class GameManager
             return;
 
         Health += healValue; // 체력회복 3
-        HealthUpdate.Invoke(Health);
+        HealthUpdate?.Invoke(Health);
     }
 
     public void IncPhase()
     {
         currentPhase++;
-        PhaseUpdate?.Invoke(currentPhase);
     }
 
     public int GetPhase()
