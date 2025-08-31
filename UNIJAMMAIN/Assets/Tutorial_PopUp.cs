@@ -28,6 +28,7 @@ public class Tutorial_PopUp : UI_Popup
         {
             canvasGroup = contents.AddComponent<CanvasGroup>();
         }
+        Managers.UI.SetCanvas(this.gameObject);
     }
 
     public void StartTutorial(IReadOnlyList<TextInfo> textInfo)
