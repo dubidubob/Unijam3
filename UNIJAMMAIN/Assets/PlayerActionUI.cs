@@ -50,7 +50,13 @@ public class PlayerActionUI : MonoBehaviour
         Managers.Input.InputDiagonal -= ChangePlayerSprite_Arrow;
     }
 
-    public void StartAnimation()
+    public void StartMonkAnimAfter123Count()
+    {
+        float duration = (float)IngameData.BeatInterval * 4;
+        Invoke("StartAnimation", duration);
+    }
+
+    private void StartAnimation()
     {
         animator.speed = 0.6f;
         animator.Play("Start", -1, 0f); // 원하는 stateName 실행

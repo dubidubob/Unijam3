@@ -15,12 +15,12 @@ public class KeyChangeEffect : MonoBehaviour
         targetPosition = targetPos.position;
         originPosition = transform.position;
 
-        PhaseManager.ChangeKey -= ChangeMotion;
-        PhaseManager.ChangeKey += ChangeMotion;
+        PhaseController.ChangeKey -= ChangeMotion;
+        PhaseController.ChangeKey += ChangeMotion;
     }
     private void OnDestroy()
     {
-        PhaseManager.ChangeKey -= ChangeMotion;
+        PhaseController.ChangeKey -= ChangeMotion;
         transform.DOKill();
     }
     private void ChangeMotion(float startDelay)
