@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
@@ -8,26 +8,33 @@ using System.Collections.Generic;
 public class StageSceneUI : UI_Popup
 {
     private Button _selectedButton = null;
+    private Button _hoveredButton = null;
 
-    // ÀÌ¹ÌÁö
+    // ì´ë¯¸ì§€
     [SerializeField]
     public Sprite deActive;
     public Sprite clickActive;
     public Sprite nonClickActive;
 
-    // ¸Ê ÀÌµ¿°ü·Ã
-    public RectTransform mapImage;
-    private float moveDistance = 1100f;  // ÀÌµ¿ °Å¸®
-    private float moveDuration = 0.8f;   // ¾Ö´Ï¸ŞÀÌ¼Ç Áö¼Ó ½Ã°£
+    // í…ìŠ¤íŠ¸ ë¨¸í‹°ë¦¬ì–¼
+    [SerializeField]
+    private Material normalTextMaterial; // ì´ ë³€ìˆ˜ë§Œ ì¸ìŠ¤í™í„°ì—ì„œ í• ë‹¹í•˜ë©´ ë©ë‹ˆë‹¤.
+    private Material glowingTextMaterial; // ì½”ë“œì—ì„œ ìë™ìœ¼ë¡œ ìƒì„±í•  ë¨¸í‹°ë¦¬ì–¼
 
-    private int currentStageIndex = 2; // ÇöÀç ½ºÅ×ÀÌÁö ÀÎµ¦½º (ÀÌ °ªÀº °ÔÀÓ »óÅÂ¿¡ µû¶ó º¯°æµÇ¾î¾ß ÇÔ)
+    // ë§µ ì´ë™ê´€ë ¨
+    public RectTransform mapImage;
+    private float moveDistance = 1100f;
+    private float moveDuration = 0.8f;
+
+    private int currentStageIndex = 2;
     private List<Button> stageButtons = new List<Button>();
 
     enum ButtonState
     {
         DeActive,
         ClickActive,
-        NonClickActive
+        NonClickActive,
+        Hover
     }
 
     enum Buttons
@@ -46,6 +53,36 @@ public class StageSceneUI : UI_Popup
         StageButton_9
     }
 
+    private void Awake()
+    {
+        // normalTextMaterialì´ ìˆë‹¤ë©´, ì´ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ë¹›ë‚˜ëŠ” ë¨¸í‹°ë¦¬ì–¼ì„ ìƒì„±í•©ë‹ˆë‹¤.
+        if (normalTextMaterial != null)
+        {
+            // Material(Material source) ìƒì„±ìë¥¼ ì‚¬ìš©í•´ ë³µì‚¬ë³¸ì„ ë§Œë“­ë‹ˆë‹¤.
+            glowingTextMaterial = new Material(normalTextMaterial);
+            SetupGlowMaterial(glowingTextMaterial);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // ì”¬ì´ ì „í™˜ë˜ê±°ë‚˜ ì˜¤ë¸Œì íŠ¸ê°€ íŒŒê´´ë  ë•Œ ë™ì ìœ¼ë¡œ ìƒì„±í•œ ë¨¸í‹°ë¦¬ì–¼ì„ ì •ë¦¬í•©ë‹ˆë‹¤.
+        if (glowingTextMaterial != null)
+        {
+            Destroy(glowingTextMaterial);
+        }
+    }
+
+    // âœ¨ ë¹›ë‚˜ëŠ” ë¨¸í‹°ë¦¬ì–¼ì˜ ì†ì„±ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+    private void SetupGlowMaterial(Material material)
+    {
+        // TextMesh Proì˜ ì–¸ë”ë ˆì´(Underlay) ê¸°ëŠ¥ì„ ê³  ì†ì„±ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+        material.EnableKeyword("UNDERLAY_ON");
+        material.SetColor("_UnderlayColor", new Color(1f, 1f, 0.8f, 1f)); // ë…¸ë€ë¹›ì´ ë„ëŠ” í°ìƒ‰
+        material.SetFloat("_UnderlaySoftness", 0.5f);
+        material.SetFloat("_UnderlayDilate", 0.3f);
+    }
+
     private void Start()
     {
         Init();
@@ -61,7 +98,6 @@ public class StageSceneUI : UI_Popup
         GetButton((int)Buttons.DownButton).gameObject.AddUIEvent(DownButtonClicked);
         GetButton((int)Buttons.StartButton).gameObject.AddUIEvent(StartButtonClicked);
 
-        // ½ºÅ×ÀÌÁö ¹öÆ°µéÀ» ¸®½ºÆ®¿¡ Ãß°¡ÇÏ°í ÀÌº¥Æ® µî·Ï
         for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_9; i++)
         {
             var button = GetButton(i);
@@ -69,9 +105,40 @@ public class StageSceneUI : UI_Popup
             {
                 stageButtons.Add(button);
                 int stageIndex = i - (int)Buttons.StageButton_1 + 1;
+
                 button.gameObject.AddUIEvent((eventData) => StageButtonClicked(button, stageIndex));
+                AddPointerEvent(button, (eventData) => OnPointerEnter(button), EventTriggerType.PointerEnter);
+                AddPointerEvent(button, (eventData) => OnPointerExit(button), EventTriggerType.PointerExit);
             }
         }
+    }
+
+    public void OnPointerEnter(Button button)
+    {
+        if (_selectedButton == button || !button.interactable) return;
+        _hoveredButton = button;
+        SetButtonState(button, ButtonState.Hover);
+    }
+
+    public void OnPointerExit(Button button)
+    {
+        if (_hoveredButton == button)
+        {
+            _hoveredButton = null;
+            UpdateStageButtons();
+        }
+    }
+
+    private void AddPointerEvent(Button button, System.Action<PointerEventData> action, EventTriggerType eventType)
+    {
+        var trigger = button.gameObject.GetComponent<EventTrigger>();
+        if (trigger == null)
+        {
+            trigger = button.gameObject.AddComponent<EventTrigger>();
+        }
+        var entry = new EventTrigger.Entry { eventID = eventType };
+        entry.callback.AddListener((eventData) => action((PointerEventData)eventData));
+        trigger.triggers.Add(entry);
     }
 
     public void UpButtonClicked(PointerEventData eventData)
@@ -90,54 +157,59 @@ public class StageSceneUI : UI_Popup
 
     public void StartButtonClicked(PointerEventData eventData)
     {
-        //ÀÎµ¦½º¿¡ µû¶ó ½ºÅ×ÀÌÁö ÀÌµ¿ÇÏ±â Ãß°¡ ¿ä¸Á
-        Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+        if (_selectedButton != null)
+        {
+            Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+        }
+        else
+        {
+            Debug.Log("Please select a stage.");
+        }
     }
+
     public void StageButtonClicked(Button button, int stageIndex)
     {
         if (stageIndex > currentStageIndex)
         {
-            // ¾ÆÁ÷ µµ´ŞÇÏÁö ¾ÊÀº ½ºÅ×ÀÌÁö´Â Å¬¸¯ ¹«½Ã
             return;
         }
 
-        // ¼±ÅÃµÈ ¹öÆ° ¾÷µ¥ÀÌÆ® ¹× ÇÏÀÌ¶óÀÌÆ®
-        IngameData.ChapterIdx = stageIndex-1;
+        IngameData.ChapterIdx = stageIndex - 1;
         _selectedButton = button;
+        _hoveredButton = null;
         UpdateStageButtons();
 
-        // °ÔÀÓ ¾À ·Îµå (¿¹½Ã)
-        if (stageIndex <= currentStageIndex)
-        {
-            Debug.Log($"Loading Stage {stageIndex}...");
-        }
+        Debug.Log($"Selected Stage: {stageIndex}");
     }
 
     private void UpdateStageButtons()
     {
+        if (_selectedButton == null)
+        {
+            if (currentStageIndex > 0 && currentStageIndex <= stageButtons.Count)
+            {
+                _selectedButton = stageButtons[currentStageIndex - 1];
+            }
+        }
+
         for (int i = 0; i < stageButtons.Count; i++)
         {
             var button = stageButtons[i];
             int stageIndex = i + 1;
 
-            // ÇöÀç ½ºÅ×ÀÌÁö ÀÎµ¦½º¸¦ ±âÁØÀ¸·Î ¸ğµç ¹öÆ° »óÅÂ ÃÊ±âÈ­
             if (stageIndex < currentStageIndex)
             {
-                // Å¬¸®¾îÇÑ ½ºÅ×ÀÌÁö
                 SetButtonState(button, ButtonState.NonClickActive);
             }
             else if (stageIndex == currentStageIndex)
             {
-                // ÇöÀç µµ´ŞÇÑ ½ºÅ×ÀÌÁö
                 SetButtonState(button, ButtonState.NonClickActive);
             }
             else
             {
-                // ¾ÆÁ÷ µµ´ŞÇÏÁö ¾ÊÀº ½ºÅ×ÀÌÁö
                 SetButtonState(button, ButtonState.DeActive);
             }
 
-            // ¸¸¾à ÇöÀç ¼±ÅÃµÈ ¹öÆ°ÀÌ ÀÖ´Ù¸é, ÇØ´ç ¹öÆ°¸¸ ClickActive »óÅÂ·Î ¿À¹ö¶óÀÌµå
             if (_selectedButton != null && _selectedButton == button)
             {
                 SetButtonState(button, ButtonState.ClickActive);
@@ -148,21 +220,43 @@ public class StageSceneUI : UI_Popup
     private void SetButtonState(Button button, ButtonState state)
     {
         Image buttonImage = button.GetComponent<Image>();
-        if (buttonImage == null) return;
+        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+
+        if (buttonImage == null || buttonText == null) return;
 
         switch (state)
         {
             case ButtonState.DeActive:
                 buttonImage.sprite = deActive;
                 button.interactable = false;
+                buttonText.color = new Color32(194, 194, 194, 255);
+                buttonText.fontSharedMaterial = normalTextMaterial;
                 break;
             case ButtonState.ClickActive:
                 buttonImage.sprite = clickActive;
                 button.interactable = true;
+                buttonText.color = Color.white;
+                // âœ¨ glowingTextMaterialì´ ìƒì„±ë˜ì—ˆë‹¤ë©´ ì ìš©í•©ë‹ˆë‹¤.
+                if (glowingTextMaterial != null)
+                {
+                    buttonText.fontSharedMaterial = glowingTextMaterial;
+                }
+                else
+                {
+                    Debug.LogWarning("Glowing material is not set up. Make sure normalTextMaterial is assigned in the Inspector.");
+                }
                 break;
             case ButtonState.NonClickActive:
                 buttonImage.sprite = nonClickActive;
                 button.interactable = true;
+                buttonText.color = new Color32(194, 194, 194, 255);
+                buttonText.fontSharedMaterial = normalTextMaterial;
+                break;
+            case ButtonState.Hover:
+                if (button != _selectedButton)
+                {
+                    buttonText.color = Color.white;
+                }
                 break;
         }
     }
