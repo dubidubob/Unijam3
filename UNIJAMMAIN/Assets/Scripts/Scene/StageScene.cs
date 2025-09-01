@@ -17,6 +17,6 @@ public class StageScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        
+        Managers.Init();
     }
 }

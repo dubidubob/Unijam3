@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static GamePlayDefine;
 
 
@@ -63,15 +64,23 @@ public class GameManager
         GroggyAttack,
         Die
     }
-    public GameState currentState;
+    public GameState CurrentState { get; set; }
     public PlayerState currentPlayerState;
 
     //인게임 데이터 초기화 
     public void Init()
     {
-        currentState = GameState.Battle;
-        currentPlayerState = PlayerState.Normal;
-        Health = MaxHealth;
+        if (SceneManager.GetActiveScene().name == "GamePlayScene")
+        {
+            CurrentState = GameState.Battle;
+            currentPlayerState = PlayerState.Normal;
+            Health = MaxHealth;
+        }
+        else
+        {
+            CurrentState = GameState.Stage;
+        }
+            
         Time.timeScale = 1f;
     }
 
