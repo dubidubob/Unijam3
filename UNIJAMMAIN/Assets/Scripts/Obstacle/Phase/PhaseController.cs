@@ -22,6 +22,7 @@ public class PhaseController : MonoBehaviour
     [SerializeField] StartMotionUIs startMotions;
 
     public static Action<float> ChangeKey;
+    public static Action<bool> TutorialStoped;
     private int _chapterIdx;
     private int _lastMonsterHitCnt = 0;
 
@@ -64,9 +65,13 @@ public class PhaseController : MonoBehaviour
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
+                if (i == 0)
+                    TutorialStoped?.Invoke(true);
                 // TutorialEvent에 특화된 로직 실행
                 HandleTutorialEvent(tutorialEvent);
                 yield return new WaitForSeconds(delaySec);
+                if (i == 0)
+                    TutorialStoped?.Invoke(false);
             }
 
             if (i == 0)
