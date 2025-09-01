@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -19,7 +20,7 @@ public class DiagonalMonster : MonoBehaviour
     private float _duration;
     private Vector3 _stride;
     private float _moveBeat;
-    private Sequence jumpSequence;
+    private DG.Tweening.Sequence jumpSequence;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class DiagonalMonster : MonoBehaviour
     {
         _duration = (float)IngameData.BeatInterval;
         _stride = (targetPos.position - _originPos) / _jumpCnt;
+        
         Move();
     }
 
@@ -41,6 +43,12 @@ public class DiagonalMonster : MonoBehaviour
     {
         transform.DOKill();
         PauseManager.IsPaused -= PauseForWhile;
+
+        var child = GetComponentInChildren<TutorialDiagonalKeyUI>();
+        if (child != null)
+        {
+            child.OnDisableCalledByParent();  // 자식의 OnDisableCalledByParent() 직접 호출
+        }
     }
     //TODO : tmp!
     public void SetMovebeat(float moveBeat)
