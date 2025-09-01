@@ -94,11 +94,18 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         yield return null;
     }
 
+    int spawnedDiagonalMobCnt = 0;
     public void ActivateEnemy()
     {
         UpdateRankCnt(RankState.Spawned);
 
         int idx = Random.Range(0, deactivatedDiagonalIdx.Count);
+        if (IngameData.ChapterIdx == 0 && spawnedDiagonalMobCnt<2)
+        { 
+            idx = (spawnedDiagonalMobCnt == 0) ? (int)DiagonalType.RightUp : (int)DiagonalType.LeftDown;
+            spawnedDiagonalMobCnt++;
+        }
+
         if (deactivatedDiagonalIdx.Count == 0) return;
         int mIdx = deactivatedDiagonalIdx[idx];
         deactivatedDiagonalIdx.Remove(mIdx);
