@@ -42,16 +42,6 @@ public class InGameOption_PopUp : UI_Popup
         Init();
     }
 
-    private void Update()
-    {
-        // 팝업이 활성화된 상태에서만 ESC 키 입력을 감지합니다.
-        // ESC 키를 누르면 '계속하기' 버튼과 동일한 동작을 수행합니다.
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ContinuesButtonClicked(null);
-        }
-    }
-
     // BGM 버튼 클릭 시 호출
     public void BGMButtonClicked(PointerEventData eventData)
     {

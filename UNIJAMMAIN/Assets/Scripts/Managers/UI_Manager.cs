@@ -23,6 +23,11 @@ public class UI_Manager
         }
     }
 
+    public UI_Popup PeekUITop()
+    { 
+        return _popUpStack.Peek();
+    }
+
     public void SetCanvas(GameObject go, bool sort = true)
     {
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);

@@ -39,5 +39,10 @@ public class SettingActivater : MonoBehaviour
             // 게임이 멈췄을 때만 InGameOption_PopUp UI를 엽니다.
             Managers.UI.ShowPopUpUI<InGameOption_PopUp>();
         }
+        else
+        {
+            // 만약 이 팝업 위에 더 올라갈 팝업이 없다면 아래 코드 쓰고, 아니라면 UI_Manager의 PeekUITop 함수 사용해도 좋음
+            Managers.UI.ClosePopUpUI();
+        }
     }
 }
