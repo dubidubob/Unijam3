@@ -46,12 +46,14 @@ public class PhaseController : MonoBehaviour
     
     private IEnumerator RunChapter()
     {
-        Managers.Sound.ChangeBGMPitch(1.2f);
-        Time.timeScale = 1.2f;
+       
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];
             if (!gameEvent.isIn) continue;
+
+            SetTimeScale(gameEvent.timeScale); // 배속에따라 배속 설정
+            
 
             // 공통 데이터 설정
             float beatInterval = 60.0f / gameEvent.bpm;
@@ -141,6 +143,15 @@ public class PhaseController : MonoBehaviour
 
         return (rate / total) * 100f;
     }
+
+    #region Tool
+
+    private void SetTimeScale(float time)
+    {
+        Managers.Sound.ChangeBGMPitch(time);
+        Time.timeScale = time;
+    }
+    #endregion
 
     #region QA
     float qa_startDelay, qa_phaseDuration;
