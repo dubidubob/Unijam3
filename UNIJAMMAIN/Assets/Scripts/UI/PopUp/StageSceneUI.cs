@@ -99,6 +99,7 @@ public class StageSceneUI : UI_Popup
     {
         Init();
         UpdateStageButtons();
+        Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);    
     }
 
     public override void Init()

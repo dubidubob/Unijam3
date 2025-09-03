@@ -37,12 +37,17 @@ public class PhaseController : MonoBehaviour
         PauseManager.ControlTime(false);
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
+        Debug.Log(_chapterIdx);
         Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
+        Debug.Log(chapters[_chapterIdx].MusicPath);
+
         StartCoroutine(RunChapter());
     }
     
     private IEnumerator RunChapter()
     {
+        Managers.Sound.ChangeBGMPitch(1.2f);
+        Time.timeScale = 1.2f;
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];

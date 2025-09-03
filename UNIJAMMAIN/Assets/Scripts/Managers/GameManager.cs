@@ -18,12 +18,15 @@ public struct RankNode
 
 public class GameManager 
 {
+    public int GameStage = 0;
+
     public Action<int> ComboContinue = null;
     public Action<float> HealthUpdate = null;
 
     public Action<RankNode> RankUpdate = null;
 
     public int currentPhase { get; private set; } = 0;
+    
 
     private int Combo = 0;
     private float Health = 100;

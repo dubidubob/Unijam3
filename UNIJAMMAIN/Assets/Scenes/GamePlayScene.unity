@@ -5857,6 +5857,9 @@ MonoBehaviour:
   Scoreboard: {fileID: 1483870323}
   chapters:
   - {fileID: 11400000, guid: 78695e940ce1d5545a3efd7e5e764ca8, type: 2}
+  - {fileID: 11400000, guid: 6e285dcab7264cd499c9e463c89a4f91, type: 2}
+  - {fileID: 11400000, guid: aefbff3a4136a7f4192480fda9815699, type: 2}
+  - {fileID: 11400000, guid: f79b0244702436f4ebf04ef16cb5abdf, type: 2}
   startMotions:
     startCountUI: {fileID: 1997952375}
     playerActionUI: {fileID: 460754923}
