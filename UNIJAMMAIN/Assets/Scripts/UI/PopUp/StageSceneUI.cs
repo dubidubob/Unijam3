@@ -120,17 +120,19 @@ public class StageSceneUI : UI_Popup
         // 각 버튼의 클릭 이벤트 및 마우스 오버/이탈 이벤트 연결
         if (upButton != null)
         {
-            upButton.gameObject.AddUIEvent(UpButtonClicked);
-            AddPointerEvent(upButton, (eventData) => OnPointerEnter(upButton), EventTriggerType.PointerEnter);
-            AddPointerEvent(upButton, (eventData) => OnPointerExit(upButton), EventTriggerType.PointerExit);
+            //upButton.gameObject.AddUIEvent(UpButtonClicked);
+            //AddPointerEvent(upButton, (eventData) => OnPointerEnter(upButton), EventTriggerType.PointerEnter);
+            //AddPointerEvent(upButton, (eventData) => OnPointerExit(upButton), EventTriggerType.PointerExit);
         }
+        // 맵 이동 임시로 막아놨음. - 예준
 
         if (downButton != null)
         {
-            downButton.gameObject.AddUIEvent(DownButtonClicked);
-            AddPointerEvent(downButton, (eventData) => OnPointerEnter(downButton), EventTriggerType.PointerEnter);
-            AddPointerEvent(downButton, (eventData) => OnPointerExit(downButton), EventTriggerType.PointerExit);
+            //downButton.gameObject.AddUIEvent(DownButtonClicked);
+            //AddPointerEvent(downButton, (eventData) => OnPointerEnter(downButton), EventTriggerType.PointerEnter);
+            //AddPointerEvent(downButton, (eventData) => OnPointerExit(downButton), EventTriggerType.PointerExit);
         }
+        // 맵 이동 임시로 막아놨음. - 예준
 
         if (startButton != null)
         {
@@ -282,14 +284,15 @@ public class StageSceneUI : UI_Popup
                 button.interactable = true;
                 buttonText.color = Color.white;
                 // ✨ glowingTextMaterial이 생성되었다면 적용합니다.
-                if (glowingTextMaterial != null)
-                {
-                    buttonText.fontSharedMaterial = glowingTextMaterial;
-                }
-                else
-                {
-                    Debug.LogWarning("Glowing material is not set up. Make sure normalTextMaterial is assigned in the Inspector.");
-                }
+                //if (glowingTextMaterial != null)
+                //{
+                //    buttonText.fontSharedMaterial = glowingTextMaterial;
+                //}
+                //else
+                //{
+                //    Debug.LogWarning("Glowing material is not set up. Make sure normalTextMaterial is assigned in the Inspector.");
+                //}
+                // Glow 효과 너무 세서 우선 아예 뺏음 - 예준
                 break;
             case ButtonState.NonClickActive:
                 buttonImage.sprite = nonClickActive;
