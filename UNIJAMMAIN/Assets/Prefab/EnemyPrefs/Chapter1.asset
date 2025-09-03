@@ -26,7 +26,8 @@ MonoBehaviour:
         isIn: 1
         durationBeat: 32
         startDelayBeat: 0
-        bpm: 126
+        bpm: 84
+        timeScale: 1
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -40,7 +41,8 @@ MonoBehaviour:
         isIn: 1
         durationBeat: 64
         startDelayBeat: 0
-        bpm: 126
+        bpm: 84
+        timeScale: 1.2
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -59,7 +61,8 @@ MonoBehaviour:
         isIn: 1
         durationBeat: 32
         startDelayBeat: 0
-        bpm: 126
+        bpm: 84
+        timeScale: 1.25
         isFlipAD: 0
         monsterDatas:
         - isIn: 1

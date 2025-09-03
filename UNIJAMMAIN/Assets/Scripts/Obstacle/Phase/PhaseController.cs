@@ -141,6 +141,8 @@ public class PhaseController : MonoBehaviour
         float missedInput = IngameData.WrongInputCnt;
         float total = totalCnt + missedInput;
 
+        SetStageIndex(_chapterIdx);
+
         return (rate / total) * 100f;
     }
 
@@ -150,6 +152,11 @@ public class PhaseController : MonoBehaviour
     {
         Managers.Sound.ChangeBGMPitch(time);
         Time.timeScale = time;
+    }
+
+    private void SetStageIndex(int index)
+    {
+        Managers.Game.GameStage = Mathf.Max(Managers.Game.GameStage,index+1);
     }
     #endregion
 
