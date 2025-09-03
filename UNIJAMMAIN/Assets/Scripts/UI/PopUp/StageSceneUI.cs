@@ -27,6 +27,7 @@ public class StageSceneUI : UI_Popup
     private float moveDistance = 1100f;
     private float moveDuration = 0.8f;
 
+    public int SettingTestStage = 0; 
     private int currentStageIndex = 2;
     private List<Button> stageButtons = new List<Button>();
 
@@ -67,6 +68,8 @@ public class StageSceneUI : UI_Popup
 
     private void Awake()
     {
+        // 임시 테스트용 스테이지 설정
+        Managers.Game.GameStage = SettingTestStage;
         // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
         if (normalTextMaterial != null)
         {
@@ -74,6 +77,7 @@ public class StageSceneUI : UI_Popup
             glowingTextMaterial = new Material(normalTextMaterial);
             SetupGlowMaterial(glowingTextMaterial);
         }
+        currentStageIndex = Managers.Game.GameStage + 1;
     }
 
     private void OnDestroy()
