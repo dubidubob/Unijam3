@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class StageSceneUI : UI_Popup
 {
@@ -42,6 +43,7 @@ public class StageSceneUI : UI_Popup
         UpButton,
         DownButton,
         StartButton,
+        ToMain,
         StageButton_1,
         StageButton_2,
         StageButton_3,
@@ -51,6 +53,16 @@ public class StageSceneUI : UI_Popup
         StageButton_7,
         StageButton_8,
         StageButton_9
+    }
+
+    private void Update()
+    {
+        // ESC버튼
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //ToMain으로의 버튼
+            ToMainButtonClicked(null);
+        }
     }
 
     private void Awake()
@@ -94,9 +106,33 @@ public class StageSceneUI : UI_Popup
         base.Init();
         Bind<Button>(typeof(Buttons));
 
-        GetButton((int)Buttons.UpButton).gameObject.AddUIEvent(UpButtonClicked);
-        GetButton((int)Buttons.DownButton).gameObject.AddUIEvent(DownButtonClicked);
-        GetButton((int)Buttons.StartButton).gameObject.AddUIEvent(StartButtonClicked);
+        // Up, Down, Start 버튼의 참조 가져오기
+        var upButton = GetButton((int)Buttons.UpButton);
+        var downButton = GetButton((int)Buttons.DownButton);
+        var startButton = GetButton((int)Buttons.StartButton);
+        GetButton((int)Buttons.ToMain).gameObject.AddUIEvent(ToMainButtonClicked);
+
+        // 각 버튼의 클릭 이벤트 및 마우스 오버/이탈 이벤트 연결
+        if (upButton != null)
+        {
+            upButton.gameObject.AddUIEvent(UpButtonClicked);
+            AddPointerEvent(upButton, (eventData) => OnPointerEnter(upButton), EventTriggerType.PointerEnter);
+            AddPointerEvent(upButton, (eventData) => OnPointerExit(upButton), EventTriggerType.PointerExit);
+        }
+
+        if (downButton != null)
+        {
+            downButton.gameObject.AddUIEvent(DownButtonClicked);
+            AddPointerEvent(downButton, (eventData) => OnPointerEnter(downButton), EventTriggerType.PointerEnter);
+            AddPointerEvent(downButton, (eventData) => OnPointerExit(downButton), EventTriggerType.PointerExit);
+        }
+
+        if (startButton != null)
+        {
+            startButton.gameObject.AddUIEvent(StartButtonClicked);
+            AddPointerEvent(startButton, (eventData) => OnPointerEnter(startButton), EventTriggerType.PointerEnter);
+            AddPointerEvent(startButton, (eventData) => OnPointerExit(startButton), EventTriggerType.PointerExit);
+        }
 
         for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_9; i++)
         {
@@ -153,6 +189,10 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill();
         Vector2 targetPos = mapImage.anchoredPosition + new Vector2(0, moveDistance);
         mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(Ease.OutCubic);
+    }
+    public void ToMainButtonClicked(PointerEventData eventData)
+    {
+        SceneManager.LoadScene("MainTitle");
     }
 
     public void StartButtonClicked(PointerEventData eventData)

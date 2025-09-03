@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class BlurController : MonoBehaviour
 {
@@ -30,6 +33,9 @@ public class BlurController : MonoBehaviour
 
     public Image[] blurImages; // Blur1 ~ BlurN (Inspector에 넣어줌)
     public Image goGrayBackGround;
+    public Image gameOverBlack;
+    public TMP_Text gameOverText;
+    public TMP_Text gameOverDownText;
     public float fadeDuration = 0.5f; // 전환 시간 (초)
 
     private int currentIndex = 0;
@@ -151,8 +157,56 @@ public class BlurController : MonoBehaviour
         seq.OnComplete(() => isCoolDown = false);
     }
 
+    public void GameOverBlurEffect()
+    {
+        // InCirc 천천히 어두워지다가 갑자기 어두워지기
+        gameOverBlack.DOFade(1 / 255f * 248f, 1f)
+            .SetEase(Ease.InCirc)
+            .SetUpdate(UpdateType.Normal, true);
+        gameOverText.DOFade(1 / 255f * 248f, 1f)
+            .SetEase(Ease.InCirc)
+            .SetUpdate(UpdateType.Normal, true);
+        gameOverDownText.DOFade(1 / 255f * 248f, 1f )
+            .SetEase(Ease.InCirc)
+            .SetUpdate(UpdateType.Normal, true);
+        
+        if(Managers.Game.currentPlayerState==GameManager.PlayerState.Die)
+        {
+            StartCoroutine(WaitForGameOver());
+        }
+        
+    }
 
-    public void ComboEffect()
+    private IEnumerator WaitForGameOver()
+    {
+        // 애니메이션이 끝날 때까지 기다립니다.
+        yield return new WaitForSecondsRealtime(1.0f);
+
+        
+        // 게임 상태가 '사망'일 때만 클릭 이벤트를 처리합니다.
+        if (Managers.Game.currentPlayerState == GameManager.PlayerState.Die)
+        {
+            // 화면에 클릭 가능한 EventTrigger 컴포넌트를 추가합니다.
+            var eventTrigger = gameOverBlack.gameObject.GetOrAddComponent<EventTrigger>();
+
+            // 클릭 이벤트를 정의합니다.
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((eventData) =>
+            {
+                // 클릭 시 스테이지 씬으로 이동
+                SceneManager.LoadScene("StageScene");
+                Time.timeScale = 1f; // 타임스케일 원상 복구
+            });
+
+            // EventTrigger에 이벤트를 추가합니다.
+            eventTrigger.triggers.Add(entry);
+            Debug.Log("진입");
+        }
+
+
+    }
+        public void ComboEffect()
     {
         float defaultSize = camera.orthographicSize;
 

@@ -47,6 +47,8 @@ public class GameManager
         RankUpdate = null;
         Combo = 0;
         Health = 100;
+        currentPlayerState = PlayerState.Normal;
+        CurrentState = GameState.Stage;
 }
 
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함
@@ -208,5 +210,8 @@ public class GameManager
         Debug.Log("사망!");
         currentPlayerState = PlayerState.Die;
         actionUI.GameOverAnimation();
+        blur.GameOverBlurEffect();
+        Time.timeScale = 0;
+        
     }
 }
