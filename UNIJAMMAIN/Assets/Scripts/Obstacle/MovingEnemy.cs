@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class Knockback
 {
@@ -34,6 +35,7 @@ public class MovingEnemy : MonoBehaviour
     private bool isResizeable = false;
     private Vector2 sizeDiffRate;
     public bool isKnockbacked=false;
+    private Coroutine _hidingCoroutine;
 
     private float backwardDuration, knockbackDistance;
     private void OnEnable()
@@ -85,6 +87,48 @@ public class MovingEnemy : MonoBehaviour
         knockback.OnKnockback(isTrue);
     }
 
+    public void SetHiding(bool isTrue)
+    {
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (isTrue)
+        {
+            spriteRenderer.color = Color.white;
+            // 숨기기 코루틴 시작
+            if (_hidingCoroutine == null)
+            {
+                _hidingCoroutine = StartCoroutine(HidingAnimation(spriteRenderer));
+            }
+
+        }
+        else
+        {
+            spriteRenderer.color = Color.black;
+            // 숨기기 코루틴 중지
+            if (_hidingCoroutine != null)
+            {
+                StopCoroutine(_hidingCoroutine);
+                _hidingCoroutine = null;
+            }
+            // 몬스터를 완전히 보이게 함
+            spriteRenderer.color = Color.white;
+
+        }
+       
+    }
+    private IEnumerator HidingAnimation(SpriteRenderer _spriteRenderer)
+    {
+        // 무한 루프를 통해 반복적으로 깜빡임
+        while (true)
+        {
+            // 서서히 투명하게 변함 (0.7초 동안)
+            _spriteRenderer.DOFade(0f, movingDuration/3f);
+            yield return new WaitForSeconds(movingDuration/2.4f);
+
+            // 서서히 원래대로 돌아옴 (0.7초 동안)
+            _spriteRenderer.DOFade(1f, movingDuration/3f);
+            yield return new WaitForSeconds(movingDuration/2f);
+        }
+    }
     public bool CheckCanDead()
     {
         if (knockback.CheckKnockback())

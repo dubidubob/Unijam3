@@ -159,6 +159,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         float distance = Vector3.Distance(_spawnPosition[type], _targetPosition[type]);
         movingEnemy.SetVariance(distance, _data, sizeDiffRate, _playerPos, type);
         movingEnemy.SetKnockback(_data.monsterType == Define.MonsterType.Knockback);
+        movingEnemy.SetHiding(_data.monsterType == Define.MonsterType.WASDHiding);
     }
 
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)
