@@ -1,10 +1,10 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Phase∏¶ º¯º≠¥Î∑Œ ¿Áª˝Ω√≈∞¥¬ ≈¨∑°Ω∫
+/// PhaseÎ•º ÏàúÏÑúÎåÄÎ°ú Ïû¨ÏÉùÏãúÌÇ§Îäî ÌÅ¥ÎûòÏä§
 /// </summary>
 [Serializable]
 struct StartMotionUIs
@@ -22,10 +22,11 @@ public class PhaseController : MonoBehaviour
     [SerializeField] StartMotionUIs startMotions;
 
     public static Action<float> ChangeKey;
-    private int ChapterIdx;
+    public static Action<bool> TutorialStoped;
+    private int _chapterIdx;
+    private int _lastMonsterHitCnt = 0;
 
     SpawnController spawnController;
-    bool isQA = false;
     private void Start()
     {
         spawnController = GetComponent<SpawnController>();
@@ -33,50 +34,62 @@ public class PhaseController : MonoBehaviour
         
         IngameData.RankInit();
 
-        ChapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
-        if (!isQA)
-        {
-            Managers.Sound.Play(chapters[ChapterIdx].MusicPath, Define.Sound.BGM);
-            StartCoroutine(RunChapter());
-        }
+        PauseManager.ControlTime(false);
+
+        _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
+        Debug.Log(_chapterIdx);
+        Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
+        Debug.Log(chapters[_chapterIdx].MusicPath);
+
+        StartCoroutine(RunChapter());
     }
     
     private IEnumerator RunChapter()
     {
-        for (int i = 0; i < chapters[ChapterIdx].Phases.Count; i++)
+       
+        for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
-            var gameEvent = chapters[ChapterIdx].Phases[i];
+            var gameEvent = chapters[_chapterIdx].Phases[i];
+            if (!gameEvent.isIn) continue;
 
-            // ∞¯≈Î µ•¿Ã≈Õ º≥¡§
-            IngameData.BeatInterval = 60.0 / gameEvent.bpm;
-            float delaySec = gameEvent.startDelayBeat * (float)IngameData.BeatInterval;
-            float durationSec = gameEvent.durationBeat * (float)IngameData.BeatInterval;
+            SetTimeScale(gameEvent.timeScale); // Î∞∞ÏÜçÏóêÎî∞Îùº Î∞∞ÏÜç ÏÑ§Ï†ï
+            
+
+            // Í≥µÌÜµ Îç∞Ïù¥ÌÑ∞ ÏÑ§Ï†ï
+            float beatInterval = 60.0f / gameEvent.bpm;
+            float delaySec = gameEvent.startDelayBeat * beatInterval;
+            float durationSec = gameEvent.durationBeat * beatInterval;
+
             IngameData.PhaseDurationSec = durationSec;
+            IngameData.BeatInterval = beatInterval;
 
             if (gameEvent is PhaseEvent phaseEvent)
             {
-                // PhaseEventø° ∆Ø»≠µ» ∑Œ¡˜ Ω««‡
+                // PhaseEventÏóê ÌäπÌôîÎêú Î°úÏßÅ Ïã§Ìñâ
                 HandleFlipKeyEvent(phaseEvent, delaySec);
                 yield return new WaitForSeconds(delaySec);
                 SpawnMonsters(phaseEvent);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
-                // TutorialEventø° ∆Ø»≠µ» ∑Œ¡˜ Ω««‡
+                if (i == 0)
+                    TutorialStoped?.Invoke(true);
+                // TutorialEventÏóê ÌäπÌôîÎêú Î°úÏßÅ Ïã§Ìñâ
                 HandleTutorialEvent(tutorialEvent);
                 yield return new WaitForSeconds(delaySec);
+                if (i == 0)
+                    TutorialStoped?.Invoke(false);
             }
 
             if (i == 0)
             {
-                durationSec += 1.7f + 4 * (float)IngameData.BeatInterval;
-                startMotions.startCountUI.Start123();
+                yield return StartCoroutine(startMotions.startCountUI.Play123Coroutine());
                 startMotions.playerActionUI.StartMonkAnimAfter123Count();
             }
-
             yield return new WaitForSeconds(durationSec);
         }
 
+        yield return new WaitForSeconds((float)IngameData.BeatInterval*2);
         EndChapter();
     }
 
@@ -94,23 +107,23 @@ public class PhaseController : MonoBehaviour
         }
     }
     private void SpawnMonsters(PhaseEvent phaseEvent)
-    {
+    {        
         spawnController.SpawnMonsterInPhase(phaseEvent.MonsterDatas);
     }
-
+    
     private void HandleTutorialEvent(TutorialEvent tutorialEvent)
     {
         UI_Popup go = Managers.UI.ShowPopUpUI<Tutorial_PopUp>();
         var tuto = go.GetComponent<Tutorial_PopUp>();
-        tuto.StartTutorial(tutorialEvent.Steps);
+        tuto.StartTutorial(tutorialEvent.Steps, _lastMonsterHitCnt);
+        _lastMonsterHitCnt = IngameData.PerfectMobCnt + IngameData.GoodMobCnt;
     }
 
     private void EndChapter()
     {
-        // TODO : ¥ı ¡§µ∑«œ±‚
-        Managers.Sound.StopBGM();
         spawnController.StopMonsterInPhase();
-        IngameData.Pause = true;
+        Managers.Sound.PauseBGM(false);
+        IngameData.Pause = false;
 
         Scoreboard.ChangeUI(CalculateScore());
         Scoreboard.gameObject.SetActive(true);
@@ -128,15 +141,30 @@ public class PhaseController : MonoBehaviour
         float missedInput = IngameData.WrongInputCnt;
         float total = totalCnt + missedInput;
 
+        SetStageIndex(_chapterIdx);
+
         return (rate / total) * 100f;
     }
+
+    #region Tool
+
+    private void SetTimeScale(float time)
+    {
+        Managers.Sound.ChangeBGMPitch(time);
+        Time.timeScale = time;
+    }
+
+    private void SetStageIndex(int index)
+    {
+        Managers.Game.GameStage = Mathf.Max(Managers.Game.GameStage,index+1);
+    }
+    #endregion
 
     #region QA
     float qa_startDelay, qa_phaseDuration;
     MonsterData[] monsters = new MonsterData[1];
     public void Play()
     {
-        if (!isQA) return;
         StopAllCoroutines();
         StartCoroutine(RunQAPhase());
     }

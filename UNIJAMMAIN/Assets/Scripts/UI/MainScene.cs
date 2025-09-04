@@ -99,6 +99,7 @@ public class MainScene : UI_Popup
 
     private void PlayComingAnimation()
     {
+        Managers.Sound.Play("SFX/UI/SettingCredit_V2", Define.Sound.SFX);
         DOTween.To(() => -10f, x => leftImage.transform.position = new Vector3(x, 0f, 0f), 0f, comeTime);
         DOTween.To(() => 10f, x => rightImage.transform.position = new Vector3(x, 0f, 0f), 0f, comeTime);
     }
@@ -143,6 +144,7 @@ public class MainScene : UI_Popup
 
     private void StoryModeClicked(PointerEventData eventData)
     {
+        Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
         Managers.Scene.LoadScene(Define.Scene.StageScene);
     }
 
@@ -185,6 +187,8 @@ public class MainScene : UI_Popup
 
     private void SetButtonOpen(int index)
     {
+        Managers.Sound.Play("SFX/UI/SettingCredit_V2", Define.Sound.SFX);
+
         //buttonsTransform À§·Î
         for (int i = 0; i < index + 1; i++)
         {

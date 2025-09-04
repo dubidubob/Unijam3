@@ -1,33 +1,42 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class StageSceneUI : UI_Popup
 {
     private Button _selectedButton = null;
+    private Button _hoveredButton = null;
 
-    // ÀÌ¹ÌÁö
+    // ì´ë¯¸ì§€
     [SerializeField]
     public Sprite deActive;
     public Sprite clickActive;
     public Sprite nonClickActive;
 
-    // ¸Ê ÀÌµ¿°ü·Ã
-    public RectTransform mapImage;
-    private float moveDistance = 1100f;  // ÀÌµ¿ °Å¸®
-    private float moveDuration = 0.8f;   // ¾Ö´Ï¸ŞÀÌ¼Ç Áö¼Ó ½Ã°£
+    // í…ìŠ¤íŠ¸ ë¨¸í‹°ë¦¬ì–¼
+    [SerializeField]
+    private Material normalTextMaterial; // ì´ ë³€ìˆ˜ë§Œ ì¸ìŠ¤í™í„°ì—ì„œ í• ë‹¹í•˜ë©´ ë©ë‹ˆë‹¤.
+    private Material glowingTextMaterial; // ì½”ë“œì—ì„œ ìë™ìœ¼ë¡œ ìƒì„±í•  ë¨¸í‹°ë¦¬ì–¼
 
-    private int currentStageIndex = 2; // ÇöÀç ½ºÅ×ÀÌÁö ÀÎµ¦½º (ÀÌ °ªÀº °ÔÀÓ »óÅÂ¿¡ µû¶ó º¯°æµÇ¾î¾ß ÇÔ)
+    // ë§µ ì´ë™ê´€ë ¨
+    public RectTransform mapImage;
+    private float moveDistance = 1100f;
+    private float moveDuration = 0.8f;
+
+    private int currentStageIndex = 2;
     private List<Button> stageButtons = new List<Button>();
 
+    public TMP_Text startButtonText;
     enum ButtonState
     {
         DeActive,
         ClickActive,
-        NonClickActive
+        NonClickActive,
+        Hover
     }
 
     enum Buttons
@@ -35,6 +44,7 @@ public class StageSceneUI : UI_Popup
         UpButton,
         DownButton,
         StartButton,
+        ToMain,
         StageButton_1,
         StageButton_2,
         StageButton_3,
@@ -46,10 +56,53 @@ public class StageSceneUI : UI_Popup
         StageButton_9
     }
 
+    private void Update()
+    {
+        // ESCë²„íŠ¼
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //ToMainìœ¼ë¡œì˜ ë²„íŠ¼
+            ToMainButtonClicked(null);
+        }
+    }
+
+    private void Awake()
+    {
+        // normalTextMaterialì´ ìˆë‹¤ë©´, ì´ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ë¹›ë‚˜ëŠ” ë¨¸í‹°ë¦¬ì–¼ì„ ìƒì„±í•©ë‹ˆë‹¤.
+        if (normalTextMaterial != null)
+        {
+            // Material(Material source) ìƒì„±ìë¥¼ ì‚¬ìš©í•´ ë³µì‚¬ë³¸ì„ ë§Œë“­ë‹ˆë‹¤.
+            glowingTextMaterial = new Material(normalTextMaterial);
+            SetupGlowMaterial(glowingTextMaterial);
+        }
+        Managers.Game.GameStage = currentStageIndex;
+        currentStageIndex = Managers.Game.GameStage + 1;
+    }
+
+    private void OnDestroy()
+    {
+        // ì”¬ì´ ì „í™˜ë˜ê±°ë‚˜ ì˜¤ë¸Œì íŠ¸ê°€ íŒŒê´´ë  ë•Œ ë™ì ìœ¼ë¡œ ìƒì„±í•œ ë¨¸í‹°ë¦¬ì–¼ì„ ì •ë¦¬í•©ë‹ˆë‹¤.
+        if (glowingTextMaterial != null)
+        {
+            Destroy(glowingTextMaterial);
+        }
+    }
+
+    // âœ¨ ë¹›ë‚˜ëŠ” ë¨¸í‹°ë¦¬ì–¼ì˜ ì†ì„±ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+    private void SetupGlowMaterial(Material material)
+    {
+        // TextMesh Proì˜ ì–¸ë”ë ˆì´(Underlay) ê¸°ëŠ¥ì„ ê³  ì†ì„±ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+        material.EnableKeyword("UNDERLAY_ON");
+        material.SetColor("_UnderlayColor", new Color(1f, 1f, 0.8f, 1f)); // ë…¸ë€ë¹›ì´ ë„ëŠ” í°ìƒ‰
+        material.SetFloat("_UnderlaySoftness", 0.5f);
+        material.SetFloat("_UnderlayDilate", 0.3f);
+    }
+
     private void Start()
     {
         Init();
         UpdateStageButtons();
+        Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);
     }
 
     public override void Init()
@@ -57,11 +110,36 @@ public class StageSceneUI : UI_Popup
         base.Init();
         Bind<Button>(typeof(Buttons));
 
-        GetButton((int)Buttons.UpButton).gameObject.AddUIEvent(UpButtonClicked);
-        GetButton((int)Buttons.DownButton).gameObject.AddUIEvent(DownButtonClicked);
-        GetButton((int)Buttons.StartButton).gameObject.AddUIEvent(StartButtonClicked);
+        // Up, Down, Start ë²„íŠ¼ì˜ ì°¸ì¡° ê°€ì ¸ì˜¤ê¸°
+        var upButton = GetButton((int)Buttons.UpButton);
+        var downButton = GetButton((int)Buttons.DownButton);
+        var startButton = GetButton((int)Buttons.StartButton);
+        GetButton((int)Buttons.ToMain).gameObject.AddUIEvent(ToMainButtonClicked);
 
-        // ½ºÅ×ÀÌÁö ¹öÆ°µéÀ» ¸®½ºÆ®¿¡ Ãß°¡ÇÏ°í ÀÌº¥Æ® µî·Ï
+        // ê° ë²„íŠ¼ì˜ í´ë¦­ ì´ë²¤íŠ¸ ë° ë§ˆìš°ìŠ¤ ì˜¤ë²„/ì´íƒˆ ì´ë²¤íŠ¸ ì—°ê²°
+        if (upButton != null)
+        {
+            //upButton.gameObject.AddUIEvent(UpButtonClicked);
+            //AddPointerEvent(upButton, (eventData) => OnPointerEnter(upButton), EventTriggerType.PointerEnter);
+            //AddPointerEvent(upButton, (eventData) => OnPointerExit(upButton), EventTriggerType.PointerExit);
+        }
+        // ë§µ ì´ë™ ì„ì‹œë¡œ ë§‰ì•„ë†¨ìŒ. - ì˜ˆì¤€
+
+        if (downButton != null)
+        {
+            //downButton.gameObject.AddUIEvent(DownButtonClicked);
+            //AddPointerEvent(downButton, (eventData) => OnPointerEnter(downButton), EventTriggerType.PointerEnter);
+            //AddPointerEvent(downButton, (eventData) => OnPointerExit(downButton), EventTriggerType.PointerExit);
+        }
+        // ë§µ ì´ë™ ì„ì‹œë¡œ ë§‰ì•„ë†¨ìŒ. - ì˜ˆì¤€
+
+        if (startButton != null)
+        {
+            startButton.gameObject.AddUIEvent(StartButtonClicked);
+            AddPointerEvent(startButton, (eventData) => OnPointerEnter(startButton), EventTriggerType.PointerEnter);
+            AddPointerEvent(startButton, (eventData) => OnPointerExit(startButton), EventTriggerType.PointerExit);
+        }
+
         for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_9; i++)
         {
             var button = GetButton(i);
@@ -69,9 +147,40 @@ public class StageSceneUI : UI_Popup
             {
                 stageButtons.Add(button);
                 int stageIndex = i - (int)Buttons.StageButton_1 + 1;
+
                 button.gameObject.AddUIEvent((eventData) => StageButtonClicked(button, stageIndex));
+                AddPointerEvent(button, (eventData) => OnPointerEnter(button), EventTriggerType.PointerEnter);
+                AddPointerEvent(button, (eventData) => OnPointerExit(button), EventTriggerType.PointerExit);
             }
         }
+    }
+
+    public void OnPointerEnter(Button button)
+    {
+        if (_selectedButton == button || !button.interactable) return;
+        _hoveredButton = button;
+        SetButtonState(button, ButtonState.Hover);
+    }
+
+    public void OnPointerExit(Button button)
+    {
+        if (_hoveredButton == button)
+        {
+            _hoveredButton = null;
+            UpdateStageButtons();
+        }
+    }
+
+    private void AddPointerEvent(Button button, System.Action<PointerEventData> action, EventTriggerType eventType)
+    {
+        var trigger = button.gameObject.GetComponent<EventTrigger>();
+        if (trigger == null)
+        {
+            trigger = button.gameObject.AddComponent<EventTrigger>();
+        }
+        var entry = new EventTrigger.Entry { eventID = eventType };
+        entry.callback.AddListener((eventData) => action((PointerEventData)eventData));
+        trigger.triggers.Add(entry);
     }
 
     public void UpButtonClicked(PointerEventData eventData)
@@ -87,57 +196,68 @@ public class StageSceneUI : UI_Popup
         Vector2 targetPos = mapImage.anchoredPosition + new Vector2(0, moveDistance);
         mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(Ease.OutCubic);
     }
+    public void ToMainButtonClicked(PointerEventData eventData)
+    {
+        SceneManager.LoadScene("MainTitle");
+    }
 
     public void StartButtonClicked(PointerEventData eventData)
     {
-        //ÀÎµ¦½º¿¡ µû¶ó ½ºÅ×ÀÌÁö ÀÌµ¿ÇÏ±â Ãß°¡ ¿ä¸Á
-        Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+        if (_selectedButton != null)
+        {
+            Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+        }
+        else
+        {
+            Debug.Log("Please select a stage.");
+        }
     }
+
     public void StageButtonClicked(Button button, int stageIndex)
     {
         if (stageIndex > currentStageIndex)
         {
-            // ¾ÆÁ÷ µµ´ŞÇÏÁö ¾ÊÀº ½ºÅ×ÀÌÁö´Â Å¬¸¯ ¹«½Ã
             return;
         }
 
-        // ¼±ÅÃµÈ ¹öÆ° ¾÷µ¥ÀÌÆ® ¹× ÇÏÀÌ¶óÀÌÆ®
-        IngameData.ChapterIdx = stageIndex-1;
+        StartButtonAnimation();
+
+        IngameData.ChapterIdx = stageIndex - 1;
         _selectedButton = button;
+        _hoveredButton = null;
         UpdateStageButtons();
 
-        // °ÔÀÓ ¾À ·Îµå (¿¹½Ã)
-        if (stageIndex <= currentStageIndex)
-        {
-            Debug.Log($"Loading Stage {stageIndex}...");
-        }
+        Debug.Log($"Selected Stage: {stageIndex}");
     }
 
     private void UpdateStageButtons()
     {
+        if (_selectedButton == null)
+        {
+            if (currentStageIndex > 0 && currentStageIndex <= stageButtons.Count)
+            {
+                _selectedButton = stageButtons[currentStageIndex - 1];
+            }
+        }
+
         for (int i = 0; i < stageButtons.Count; i++)
         {
             var button = stageButtons[i];
             int stageIndex = i + 1;
 
-            // ÇöÀç ½ºÅ×ÀÌÁö ÀÎµ¦½º¸¦ ±âÁØÀ¸·Î ¸ğµç ¹öÆ° »óÅÂ ÃÊ±âÈ­
             if (stageIndex < currentStageIndex)
             {
-                // Å¬¸®¾îÇÑ ½ºÅ×ÀÌÁö
                 SetButtonState(button, ButtonState.NonClickActive);
             }
             else if (stageIndex == currentStageIndex)
             {
-                // ÇöÀç µµ´ŞÇÑ ½ºÅ×ÀÌÁö
                 SetButtonState(button, ButtonState.NonClickActive);
             }
             else
             {
-                // ¾ÆÁ÷ µµ´ŞÇÏÁö ¾ÊÀº ½ºÅ×ÀÌÁö
                 SetButtonState(button, ButtonState.DeActive);
             }
 
-            // ¸¸¾à ÇöÀç ¼±ÅÃµÈ ¹öÆ°ÀÌ ÀÖ´Ù¸é, ÇØ´ç ¹öÆ°¸¸ ClickActive »óÅÂ·Î ¿À¹ö¶óÀÌµå
             if (_selectedButton != null && _selectedButton == button)
             {
                 SetButtonState(button, ButtonState.ClickActive);
@@ -148,22 +268,72 @@ public class StageSceneUI : UI_Popup
     private void SetButtonState(Button button, ButtonState state)
     {
         Image buttonImage = button.GetComponent<Image>();
-        if (buttonImage == null) return;
+        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+
+        if (buttonImage == null || buttonText == null) return;
 
         switch (state)
         {
             case ButtonState.DeActive:
                 buttonImage.sprite = deActive;
                 button.interactable = false;
+                buttonText.color = new Color32(194, 194, 194, 255);
+                buttonText.fontSharedMaterial = normalTextMaterial;
                 break;
             case ButtonState.ClickActive:
                 buttonImage.sprite = clickActive;
                 button.interactable = true;
+                buttonText.color = Color.white;
+                // âœ¨ glowingTextMaterialì´ ìƒì„±ë˜ì—ˆë‹¤ë©´ ì ìš©í•©ë‹ˆë‹¤.
+                //if (glowingTextMaterial != null)
+                //{
+                //    buttonText.fontSharedMaterial = glowingTextMaterial;
+                //}
+                //else
+                //{
+                //    Debug.LogWarning("Glowing material is not set up. Make sure normalTextMaterial is assigned in the Inspector.");
+                //}
+                // Glow íš¨ê³¼ ë„ˆë¬´ ì„¸ì„œ ìš°ì„  ì•„ì˜ˆ ëºìŒ - ì˜ˆì¤€
                 break;
             case ButtonState.NonClickActive:
                 buttonImage.sprite = nonClickActive;
                 button.interactable = true;
+                buttonText.color = new Color32(194, 194, 194, 255);
+                buttonText.fontSharedMaterial = normalTextMaterial;
+                break;
+            case ButtonState.Hover:
+                if (button != _selectedButton)
+                {
+                    buttonText.color = Color.white;
+                }
                 break;
         }
+    }
+
+    private void StartButtonAnimation()
+    {
+        // ë²„íŠ¼ ì°¾ê¸°
+        var startButton = GetButton((int)Buttons.StartButton);
+        if (startButton == null) return;
+
+        var startButtonImage = startButton.GetComponent<Image>();
+        if (startButtonImage == null) return;
+
+        var startButtonText = startButton.GetComponentInChildren<TMP_Text>();
+        if (startButtonText == null) return;
+
+        // Set initial state
+        startButtonImage.type = Image.Type.Filled;
+        startButtonImage.fillAmount = 0f;
+        startButtonImage.fillOrigin = (int)Image.Origin360.Top; // Or any origin you prefer
+
+        startButtonText.alpha = 0f;
+
+        // Animate the fill amount from 0 to 1
+        startButtonImage.DOFillAmount(1f, 0.3f) // ì• ë‹ˆë©”ì´ì…˜ ì§€ì†ì‹œê°„ 0.5ì´ˆ
+            .SetEase(Ease.OutCubic);
+
+
+        startButtonText.DOFade(1.0f, 0.5f); // Fade in the text over 0.5 seconds
     }
 }

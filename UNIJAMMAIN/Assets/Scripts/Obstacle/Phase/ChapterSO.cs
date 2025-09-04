@@ -13,6 +13,8 @@ public class ChapterSO : ScriptableObject
     public IReadOnlyList<GameEvent> Phases => phases;
     public string MusicPath;
 
+   
+
 #if UNITY_EDITOR
     private void OnValidate()
     {

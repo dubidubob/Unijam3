@@ -10,13 +10,19 @@ public class BeatClockUI : MonoBehaviour
 
     private void Awake()
     {
+        baseScale = transform.localScale;
+        IngameData.ChangeBpm -= Init;
         IngameData.ChangeBpm += Init;
+
+        PhaseController.TutorialStoped -= Stop;
+        PhaseController.TutorialStoped += Stop;
     }
 
     private void OnDestroy()
     {
-        IngameData.ChangeBpm -= Init;
         BeatClock.OnBeat -= BeatMoving;
+        IngameData.ChangeBpm -= Init;
+        PhaseController.TutorialStoped -= Stop;
 
         seq?.Kill();
         transform.DOKill();
@@ -27,8 +33,6 @@ public class BeatClockUI : MonoBehaviour
         seq?.Kill();
         transform.DOKill();
 
-
-        baseScale = transform.localScale;
         beatDuration = (float)IngameData.BeatInterval;
 
         seq = DOTween.Sequence()
@@ -40,9 +44,15 @@ public class BeatClockUI : MonoBehaviour
         BeatClock.OnBeat += BeatMoving;
     }
 
+    private void Stop(bool isStoped)
+    {
+        if(isStoped)
+            BeatClock.OnBeat -= BeatMoving;
+        else
+            BeatClock.OnBeat += BeatMoving;
+    }
     private void BeatMoving(double _, long __)
     {
-
         // 현재 크기 -> 1.2배 커지기 (전체 비트의 50% 동안)
         transform.DOScale(baseScale * 1.2f, 0.001f).SetEase(Ease.OutCubic)
             .OnComplete(() =>

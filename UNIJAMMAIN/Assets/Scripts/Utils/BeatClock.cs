@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public class BeatClock : MonoBehaviour
@@ -56,6 +56,7 @@ public class BeatClock : MonoBehaviour
             OnBeat?.Invoke(scheduled, _tick);
         }
     }
+
     private double ScheduledTime(long tickIndex)
        => _startDsp + tickIndex * _beatInterval;
 

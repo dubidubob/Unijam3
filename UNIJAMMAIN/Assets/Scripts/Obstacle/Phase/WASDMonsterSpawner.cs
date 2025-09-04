@@ -110,13 +110,13 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         if (!_spawning) return;
 
         double now = AudioSettings.dspTime;
-        if (now >= _lastSpawnTime)
+        if (now > _lastSpawnTime)
         {
             UnSpawn();
             return;
         } 
 
-        while (now >= ScheduledTime(_tick + 1))
+        while (now >= ScheduledTime(_tick))
         {
             _tick++;
             IngameData.TotalMobCnt++;
@@ -126,7 +126,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
     private double ScheduledTime(long tickIndex)
     => _startDsp + tickIndex * _spawnInterval;
-
+    
     int _maxCnt = 1;
     int[] _idx = { 0, 1, 2, 3 };
     private void DoSpawn()
@@ -144,13 +144,13 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
-    private float threshold = 0f;
+    float threshold = 0.1f;
     public void SetLastSpawnTime(float? moveBeat=1)
     {
         if (IngameData.PhaseDurationSec == 0)
             Debug.LogWarning("Set Up Phase Duration!");
         
-        _lastSpawnTime = _startDsp + IngameData.PhaseDurationSec - (IngameData.BeatInterval * (float)moveBeat+ threshold);
+        _lastSpawnTime = _startDsp + IngameData.PhaseDurationSec - (IngameData.BeatInterval * (float)moveBeat) + threshold;
     }
 
     #region Variable
@@ -159,6 +159,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         float distance = Vector3.Distance(_spawnPosition[type], _targetPosition[type]);
         movingEnemy.SetVariance(distance, _data, sizeDiffRate, _playerPos, type);
         movingEnemy.SetKnockback(_data.monsterType == Define.MonsterType.Knockback);
+        movingEnemy.SetHiding(_data.monsterType == Define.MonsterType.WASDHiding);
     }
 
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)

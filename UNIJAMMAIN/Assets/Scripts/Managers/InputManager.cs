@@ -39,9 +39,10 @@ public class InputManager
 
     public void OnUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            HandleStop();
+            if(Managers.Game.CurrentState == GameManager.GameState.Battle)
+                HandleStop();
             return;
         }
 

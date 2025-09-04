@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static GamePlayDefine;
 
 
@@ -17,12 +18,15 @@ public struct RankNode
 
 public class GameManager 
 {
+    public int GameStage = 0;
+
     public Action<int> ComboContinue = null;
     public Action<float> HealthUpdate = null;
 
     public Action<RankNode> RankUpdate = null;
 
     public int currentPhase { get; private set; } = 0;
+    
 
     private int Combo = 0;
     private float Health = 100;
@@ -30,6 +34,7 @@ public class GameManager
     private const int IncHealthUnit = 10;
     public BlurController blur;
     public Accuracy accuracy;
+    public PlayerActionUI actionUI;
    
 
     private float healingValue = 2.5f; // 회복하는 양
@@ -45,36 +50,53 @@ public class GameManager
         RankUpdate = null;
         Combo = 0;
         Health = 100;
+        currentPlayerState = PlayerState.Normal;
+        CurrentState = GameState.Stage;
 }
 
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함
     public enum GameState
     {
         Battle,
-        Stage
+        Stage,
+        Die
         
     }
 
     public enum PlayerState
     {
         Normal,
-        GroggyAttack
+        GroggyAttack,
+        Die
     }
-    public GameState currentState;
+    public GameState CurrentState { get; set; }
     public PlayerState currentPlayerState;
 
     //인게임 데이터 초기화 
     public void Init()
     {
-        currentState = GameState.Battle;
-        currentPlayerState = PlayerState.Normal;
-        Health = MaxHealth;
+        if (SceneManager.GetActiveScene().name == "GamePlayScene")
+        {
+            CurrentState = GameState.Battle;
+            currentPlayerState = PlayerState.Normal;
+            Health = MaxHealth;
+        }
+        else
+        {
+            CurrentState = GameState.Stage;
+        }
+            
         Time.timeScale = 1f;
     }
 
     bool isADReverse = false;
     public void ReceiveKey(WASDType key)
     {
+        if(currentPlayerState==PlayerState.Die) // 사망시 키 받지않기
+        {
+            return;
+        }
+
         if (isADReverse)
         {
             if (key == WASDType.A)
@@ -159,7 +181,12 @@ public class GameManager
         {
             Health -= 5;
         }
+        
         HealthUpdate?.Invoke(Health);
+        if(Health<=0) // 게임오버
+        {
+            GameOver();
+        }
     }
 
     public void IncHealth(float healValue = 2.5f)
@@ -179,5 +206,15 @@ public class GameManager
     public int GetPhase()
     {
         return currentPhase;
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("사망!");
+        currentPlayerState = PlayerState.Die;
+        actionUI.GameOverAnimation();
+        blur.GameOverBlurEffect();
+        Time.timeScale = 0;
+        
     }
 }

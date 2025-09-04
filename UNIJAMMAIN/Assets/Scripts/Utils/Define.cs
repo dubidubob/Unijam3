@@ -79,6 +79,9 @@ public class Define
         Diagonal,
         Knockback,
         MouseClick,
+        WASDHiding,
+        WASDDash,
+        WASDFIFO,
         MaxCount
     }
 
