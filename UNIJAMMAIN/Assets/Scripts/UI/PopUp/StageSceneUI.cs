@@ -27,10 +27,10 @@ public class StageSceneUI : UI_Popup
     private float moveDistance = 1100f;
     private float moveDuration = 0.8f;
 
-    public int SettingTestStage = 0; 
     private int currentStageIndex = 2;
     private List<Button> stageButtons = new List<Button>();
 
+    public TMP_Text startButtonText;
     enum ButtonState
     {
         DeActive,
@@ -68,8 +68,6 @@ public class StageSceneUI : UI_Popup
 
     private void Awake()
     {
-        // 임시 테스트용 스테이지 설정
-        Managers.Game.GameStage = SettingTestStage;
         // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
         if (normalTextMaterial != null)
         {
@@ -103,7 +101,7 @@ public class StageSceneUI : UI_Popup
     {
         Init();
         UpdateStageButtons();
-        Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);    
+        Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);
     }
 
     public override void Init()
@@ -221,6 +219,8 @@ public class StageSceneUI : UI_Popup
             return;
         }
 
+        StartButtonAnimation();
+
         IngameData.ChapterIdx = stageIndex - 1;
         _selectedButton = button;
         _hoveredButton = null;
@@ -307,5 +307,32 @@ public class StageSceneUI : UI_Popup
                 }
                 break;
         }
+    }
+
+    private void StartButtonAnimation()
+    {
+        // 버튼 찾기
+        var startButton = GetButton((int)Buttons.StartButton);
+        if (startButton == null) return;
+
+        var startButtonImage = startButton.GetComponent<Image>();
+        if (startButtonImage == null) return;
+
+        var startButtonText = startButton.GetComponentInChildren<TMP_Text>();
+        if (startButtonText == null) return;
+
+        // Set initial state
+        startButtonImage.type = Image.Type.Filled;
+        startButtonImage.fillAmount = 0f;
+        startButtonImage.fillOrigin = (int)Image.Origin360.Top; // Or any origin you prefer
+
+        startButtonText.alpha = 0f;
+
+        // Animate the fill amount from 0 to 1
+        startButtonImage.DOFillAmount(1f, 0.3f) // 애니메이션 지속시간 0.5초
+            .SetEase(Ease.OutCubic);
+
+
+        startButtonText.DOFade(1.0f, 0.5f); // Fade in the text over 0.5 seconds
     }
 }
