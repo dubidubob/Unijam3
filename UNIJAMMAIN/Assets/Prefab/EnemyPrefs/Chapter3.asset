@@ -13,49 +13,12 @@ MonoBehaviour:
   m_Name: Chapter3
   m_EditorClassIdentifier: 
   phases:
-  - duration: 15
-    startDelay: 2
-    bpm: 84
-    isFlipAD: 0
-    monsterDatas:
-    - isIn: 1
-      monsterType: 0
-      speedUpRate: 1
-      spawnBeat: 2
-      moveBeat: 4
-    - isIn: 1
-      monsterType: 2
-      speedUpRate: 1
-      spawnBeat: 2
-      moveBeat: 4
-  - duration: 20
-    startDelay: 3
-    bpm: 84
-    isFlipAD: 1
-    monsterDatas:
-    - isIn: 1
-      monsterType: 0
-      speedUpRate: 1
-      spawnBeat: 1
-      moveBeat: 4
-    - isIn: 1
-      monsterType: 1
-      speedUpRate: 1
-      spawnBeat: 8
-      moveBeat: 1
-  - duration: 20
-    startDelay: 0
-    bpm: 84
-    isFlipAD: 0
-    monsterDatas:
-    - isIn: 1
-      monsterType: 3
-      speedUpRate: 1
-      spawnBeat: 7
-      moveBeat: 4
-    - isIn: 1
-      monsterType: 0
-      speedUpRate: 1
-      spawnBeat: 1
-      moveBeat: 1
-  MusicPath: BGM/84bpm_64_V1
+  - rid: -2
+  - rid: -2
+  - rid: -2
+  MusicPath: BGM/Chapter3_V1
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
