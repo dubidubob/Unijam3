@@ -8,6 +8,7 @@ public class Tutorial_PopUp : UI_Popup
 {
     public TMP_Text text;
     public GameObject contents;
+    public GameObject keyBoardGuide;
 
     public float appearSpeed = 2f;
     public float disappearSpeed = 2f;
@@ -25,11 +26,12 @@ public class Tutorial_PopUp : UI_Popup
     {
         originalPosition = contents.transform.localPosition;
         canvasGroup = contents.GetComponent<CanvasGroup>();
+        keyBoardGuide.SetActive(false);
         if (canvasGroup == null)
         {
             canvasGroup = contents.AddComponent<CanvasGroup>();
         }
-        Managers.UI.SetCanvas(this.gameObject);
+        Managers.UI.SetCanvasMost(this.gameObject);
     }
 
     public void StartTutorial(IReadOnlyList<TextInfo> textInfo, int? lastMonsterHitCnt)
@@ -39,6 +41,7 @@ public class Tutorial_PopUp : UI_Popup
 
     private IEnumerator ShowSequenceOfPopups(IReadOnlyList<TextInfo> textInfo, int? lastMonsterHitCnt=0)
     {
+        SetClear();
         // textInContent 배열의 각 텍스트에 대해 반복
         for (int i = 0; i < textInfo.Count; i++)
         {
@@ -76,6 +79,8 @@ public class Tutorial_PopUp : UI_Popup
             contents.transform.localPosition = originalPosition + new Vector3(0, startOffset, 0);
             canvasGroup.alpha = 0f;
 
+            KeyBoardGuideOn(); // test. 임시 KeyBoardGuide
+
             while (timer < 1f)
             {
                 timer += Time.deltaTime / appearSpeed;
@@ -101,6 +106,19 @@ public class Tutorial_PopUp : UI_Popup
             }
             contents.transform.localPosition = originalPosition + new Vector3(0, startOffset, 0);
             canvasGroup.alpha = 0f;
+        }
+    }
+
+    private void SetClear()
+    {
+        keyBoardGuide.SetActive(false);
+    }
+
+    private void KeyBoardGuideOn()
+    {
+        if (text.text == "(너를 잠식하려는 혼령이 보이는 순간, 바로 대각선 방향키를 통해 공격해!)")
+        {
+            keyBoardGuide.SetActive(true);
         }
     }
 }

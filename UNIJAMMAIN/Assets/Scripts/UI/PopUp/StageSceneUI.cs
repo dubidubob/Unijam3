@@ -75,8 +75,7 @@ public class StageSceneUI : UI_Popup
             glowingTextMaterial = new Material(normalTextMaterial);
             SetupGlowMaterial(glowingTextMaterial);
         }
-        Managers.Game.GameStage = currentStageIndex;
-        currentStageIndex = Managers.Game.GameStage + 1;
+        currentStageIndex = Managers.Game.GameStage+1;
     }
 
     private void OnDestroy()

@@ -23,7 +23,9 @@ MonoBehaviour:
   - rid: 7460641668082171907
   - rid: 7460641668082171908
   - rid: 7460641668082171910
-  MusicPath: BGM/1StageChangebpm_V1
+  MusicPath: BGM/Chapter1_V1
+  backGroundSprite: {fileID: 21300000, guid: c1c29fc23cb312d42980869ac03d64ee, type: 3}
+  backGroundGraySprite: {fileID: 21300000, guid: ba7bf52925914b54a91246d97d0f38da, type: 3}
   references:
     version: 2
     RefIds:
@@ -42,11 +44,13 @@ MonoBehaviour:
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
+          hiding: 0
         - isIn: 1
           monsterType: 1
           speedUpRate: 1
-          spawnBeat: 8
+          spawnBeat: 4
           moveBeat: 2
+          hiding: 0
     - rid: 7460641668082171905
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -62,11 +66,13 @@ MonoBehaviour:
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
+          hiding: 0
         - isIn: 1
           monsterType: 1
           speedUpRate: 1
-          spawnBeat: 8
+          spawnBeat: 4
           moveBeat: 2
+          hiding: 0
     - rid: 7460641668082171906
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -82,11 +88,13 @@ MonoBehaviour:
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
+          hiding: 0
         - isIn: 1
           monsterType: 1
           speedUpRate: 1
-          spawnBeat: 8
+          spawnBeat: 4
           moveBeat: 2
+          hiding: 0
     - rid: 7460641668082171907
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -102,11 +110,13 @@ MonoBehaviour:
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
+          hiding: 0
         - isIn: 1
           monsterType: 1
           speedUpRate: 1
-          spawnBeat: 8
-          moveBeat: 2
+          spawnBeat: 4
+          moveBeat: 1
+          hiding: 0
     - rid: 7460641668082171908
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -122,11 +132,13 @@ MonoBehaviour:
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
+          hiding: 0
         - isIn: 1
           monsterType: 1
           speedUpRate: 1
-          spawnBeat: 8
+          spawnBeat: 4
           moveBeat: 2
+          hiding: 0
     - rid: 7460641668082171909
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -162,11 +174,13 @@ MonoBehaviour:
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
+          hiding: 0
         - isIn: 1
           monsterType: 1
           speedUpRate: 1
           spawnBeat: 8
           moveBeat: 2
+          hiding: 0
     - rid: 8480390322059476995
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -182,11 +196,13 @@ MonoBehaviour:
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
+          hiding: 0
         - isIn: 1
           monsterType: 1
           speedUpRate: 1
-          spawnBeat: 8
+          spawnBeat: 4
           moveBeat: 2
+          hiding: 0
     - rid: 8480390322059476996
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -202,8 +218,10 @@ MonoBehaviour:
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
+          hiding: 0
         - isIn: 1
           monsterType: 1
           speedUpRate: 1
-          spawnBeat: 8
-          moveBeat: 2
+          spawnBeat: 4
+          moveBeat: 1
+          hiding: 0

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Phase를 순서대로 재생시키는 클래스
@@ -16,6 +17,8 @@ struct StartMotionUIs
 [RequireComponent(typeof(SpawnController))]
 public class PhaseController : MonoBehaviour
 {
+    [SerializeField] Image backGround;
+    [SerializeField] Image backGroundGray;
     [SerializeField] ResultUI Scoreboard;
     [SerializeField] ChapterSO[] chapters;
     // TODO : tmp!
@@ -46,7 +49,7 @@ public class PhaseController : MonoBehaviour
     
     private IEnumerator RunChapter()
     {
-       
+        SetStageBackGround(); // 배경설정
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];
@@ -158,6 +161,11 @@ public class PhaseController : MonoBehaviour
     {
         Managers.Game.GameStage = Mathf.Max(Managers.Game.GameStage,index+1);
     }
+    private void SetStageBackGround()
+    {
+        backGround.overrideSprite = chapters[_chapterIdx].backGroundSprite;
+        backGroundGray.overrideSprite = chapters[_chapterIdx].backGroundGraySprite;
+    }
     #endregion
 
     #region QA
@@ -182,5 +190,7 @@ public class PhaseController : MonoBehaviour
         qa_phaseDuration = phaseDuration;
         monsters[0] = monster;
     }
+
+    
     #endregion
 }
