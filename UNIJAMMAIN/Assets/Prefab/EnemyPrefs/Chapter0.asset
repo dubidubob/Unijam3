@@ -21,6 +21,8 @@ MonoBehaviour:
   - rid: 8714838720201883657
   - rid: 8714838720201883658
   MusicPath: BGM/Chapter0_V1
+  backGroundSprite: {fileID: 21300000, guid: 6a2e136db8c31784593c5ba61b8123e9, type: 3}
+  backGroundGraySprite: {fileID: 21300000, guid: cbc1fd4055f8af34c9ce1b601fd7d43a, type: 3}
   references:
     version: 2
     RefIds:

@@ -121,8 +121,8 @@ public class MovingEnemy : MonoBehaviour
         while (true)
         {
             // 서서히 투명하게 변함 (0.7초 동안)
-            _spriteRenderer.DOFade(0f, movingDuration/3f);
-            yield return new WaitForSeconds(movingDuration/2.4f);
+            _spriteRenderer.DOFade(0f, movingDuration/3f); // 몇초에 걸쳐서 투명화 되는지?
+            yield return new WaitForSeconds(movingDuration/2.4f); // 몇초에 걸쳐서 
 
             // 서서히 원래대로 돌아옴 (0.7초 동안)
             _spriteRenderer.DOFade(1f, movingDuration/3f);
