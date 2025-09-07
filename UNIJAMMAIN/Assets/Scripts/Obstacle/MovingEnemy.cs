@@ -41,6 +41,7 @@ public class MovingEnemy : MonoBehaviour
     private float movingDistanceTmp;
 
     private float backwardDuration, knockbackDistance;
+    private SpriteRenderer spriteRenderer;
     private void OnEnable()
     {
         _elapsedTime = 0f;
@@ -63,6 +64,7 @@ public class MovingEnemy : MonoBehaviour
     public void SetDead()
     {
         KillingDO();
+        StopCoroutine(HidingAnimation(spriteRenderer));
         Poolable poolable = GetComponent<Poolable>();
         Managers.Pool.Push(poolable);
     }
@@ -123,7 +125,7 @@ public class MovingEnemy : MonoBehaviour
     }
         public void SetHiding(bool isTrue)
         {
-        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isTrue)
         {
             spriteRenderer.color = Color.white;
