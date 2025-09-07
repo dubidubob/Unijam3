@@ -27,7 +27,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 42
-        startDelayBeat: 0
+        startDelayBeat: 4
         bpm: 100
         timeScale: 1
         isFlipAD: 0
@@ -58,10 +58,10 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 32
+        durationBeat: 42
         startDelayBeat: 1
         bpm: 100
-        timeScale: 4
+        timeScale: 1
         isFlipAD: 0
         monsterDatas:
         - isIn: 1

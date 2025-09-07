@@ -38,6 +38,8 @@ public class MovingEnemy : MonoBehaviour
     public bool isKnockbacked=false;
     private Coroutine _hidingCoroutine;
 
+    private float movingDistanceTmp;
+
     private float backwardDuration, knockbackDistance;
     private void OnEnable()
     {
@@ -72,6 +74,7 @@ public class MovingEnemy : MonoBehaviour
 
     public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType)
     {
+        movingDistanceTmp = distance;
         this.playerPos = playerPos;
         enemyType = wasdType;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
@@ -99,7 +102,9 @@ public class MovingEnemy : MonoBehaviour
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isTrue)
         {
-            transform.DOMove(playerPos, movingDuration).SetEase(Ease.InQuint).SetId("Speeding");
+            Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+
+            transform.DOMove(targetPos, movingDuration).SetEase(Ease.InQuint).SetId("Speeding");
             spriteRenderer.color = Color.yellow;
         }
 
@@ -110,13 +115,14 @@ public class MovingEnemy : MonoBehaviour
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isTrue)
         {
-            transform.DOMove(playerPos, movingDuration).SetEase(Ease.InOutCirc).SetId("FIFO");
+            Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+            transform.DOMove(targetPos, movingDuration).SetEase(Ease.InOutCirc).SetId("FIFO");
             spriteRenderer.color = Color.white;
         }
 
     }
         public void SetHiding(bool isTrue)
-    {
+        {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isTrue)
         {
@@ -130,16 +136,7 @@ public class MovingEnemy : MonoBehaviour
         }
         else
         {
-            spriteRenderer.color = Color.black;
-            // 숨기기 코루틴 중지
-            if (_hidingCoroutine != null)
-            {
-                StopCoroutine(_hidingCoroutine);
-                _hidingCoroutine = null;
-            }
-            // 몬스터를 완전히 보이게 함
-            spriteRenderer.color = Color.white;
-
+           
         }
        
     }
@@ -244,5 +241,27 @@ public class MovingEnemy : MonoBehaviour
             SetDead();
             Managers.Game.PlayerAttacked();
         }
+    }
+
+    private Vector3 CalculateNormalVector()
+    {
+        if(enemyType==GamePlayDefine.WASDType.A)
+        {
+            return Vector3.right;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.D)
+        {
+            return Vector3.left;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.W)
+        {
+            return Vector3.down;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.S)
+        {
+            return Vector3.up;
+        }
+        Debug.Log("CalculateVector실패");
+        return Vector3.forward;
     }
 }
