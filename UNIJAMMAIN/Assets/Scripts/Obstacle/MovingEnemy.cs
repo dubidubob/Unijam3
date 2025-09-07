@@ -6,6 +6,7 @@ public class Knockback
 {
     bool isEnabled;
     int hp;
+
     public void OnKnockback(bool isOn)
     {
         isEnabled = isOn;
@@ -59,8 +60,14 @@ public class MovingEnemy : MonoBehaviour
 
     public void SetDead()
     {
+        KillingDO();
         Poolable poolable = GetComponent<Poolable>();
         Managers.Pool.Push(poolable);
+    }
+    private void KillingDO()
+    {
+        DOTween.Kill(transform, "FIFO");
+        DOTween.Kill(transform, "Speeding");
     }
 
     public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType)
@@ -82,12 +89,33 @@ public class MovingEnemy : MonoBehaviour
         }
         else 
         {
-            spriteRenderer.color = Color.white;
+
         }
         knockback.OnKnockback(isTrue);
     }
 
-    public void SetHiding(bool isTrue)
+    public void SetSpeeding(bool isTrue)
+    {
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (isTrue)
+        {
+            transform.DOMove(playerPos, movingDuration).SetEase(Ease.InQuint).SetId("Speeding");
+            spriteRenderer.color = Color.yellow;
+        }
+
+    }
+
+    public void SetFIFO(bool isTrue)
+    {
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (isTrue)
+        {
+            transform.DOMove(playerPos, movingDuration).SetEase(Ease.InOutCirc).SetId("FIFO");
+            spriteRenderer.color = Color.white;
+        }
+
+    }
+        public void SetHiding(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isTrue)
