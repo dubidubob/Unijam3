@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Chapter2
   m_EditorClassIdentifier: 
   phases:
+  - rid: 8813260913744019458
   - rid: 8813260909700448256
   - rid: 8813260909700448258
   - rid: 8813260909700448279
@@ -50,7 +51,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 28
+        durationBeat: 20
         startDelayBeat: 0
         bpm: 100
         timeScale: 1
@@ -264,7 +265,8 @@ MonoBehaviour:
         timeScale: 1
         steps:
         - textContents:
-          - 
+          - "\uC548\uAC1C\uAC00 \uC790\uC6B1\uD558\uB2E4.. \uC801\uC744 \uB193\uCE58\uC9C0
+            \uB9D0\uC790!"
           monsterCutline: 0
           delayBeat: 8
     - rid: 8813260909700448272
@@ -329,3 +331,20 @@ MonoBehaviour:
           spawnBeat: 8
           moveBeat: 2
           hiding: 0
+    - rid: 8813260913744019458
+      type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 0
+        startDelayBeat: 8
+        bpm: 100
+        timeScale: 1
+        steps:
+        - textContents:
+          - "\uC5EC\uAE30\uC5D0\uB3C4 \uADC0\uCC2E\uAC8C \uB530\uB77C\uBD99\uB294\uAD70."
+          monsterCutline: 0
+          delayBeat: 4
+        - textContents:
+          - "\uC7A0\uAE50, \uD6E8\uC52C \uBE60\uB974\uAC8C \uB2EC\uB824\uC624\uB294\uB370..?"
+          monsterCutline: 0
+          delayBeat: 4
