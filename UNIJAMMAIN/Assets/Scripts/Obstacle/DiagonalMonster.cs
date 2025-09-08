@@ -22,6 +22,9 @@ public class DiagonalMonster : MonoBehaviour
     private float _moveBeat;
     private DG.Tweening.Sequence jumpSequence;
 
+    private int attackValue = 20;
+    private int healingValue = 2;
+
     private void Awake()
     {
         _objectRenderer = GetComponent<SpriteRenderer>();
@@ -118,7 +121,7 @@ public class DiagonalMonster : MonoBehaviour
         Managers.Sound.Play("SFX/Enemy/DiagonalSuccess_V2", Define.Sound.SFX,1f,0.2f);
         if (!isAttackedByPlayer)
         {
-            Managers.Game.PlayerAttacked();
+            Managers.Game.PlayerAttacked(attackValue);
             DoFade();
         }
         else
@@ -126,7 +129,7 @@ public class DiagonalMonster : MonoBehaviour
             if (_isDying) //player attacked, but late, this not count
                 return;
 
-            Managers.Game.ComboInc();
+            Managers.Game.ComboInc(healingValue);
         }
         _isDying = false;
         gameObject.SetActive(false);

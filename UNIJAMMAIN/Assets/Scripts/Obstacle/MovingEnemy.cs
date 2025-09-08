@@ -39,6 +39,7 @@ public class MovingEnemy : MonoBehaviour
     private Coroutine _hidingCoroutine;
 
     private float movingDistanceTmp;
+    private int attackValue = 1;
 
     private float backwardDuration, knockbackDistance;
     private SpriteRenderer spriteRenderer;
@@ -241,7 +242,7 @@ public class MovingEnemy : MonoBehaviour
 
             Managers.Game.attacks[enemyType].Dequeue();
             SetDead();
-            Managers.Game.PlayerAttacked();
+            Managers.Game.PlayerAttacked(attackValue);
         }
     }
 
