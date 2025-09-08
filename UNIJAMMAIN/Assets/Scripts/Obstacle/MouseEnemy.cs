@@ -20,6 +20,8 @@ public class MouseEnemy : MonoBehaviour
 
     private float currentBlinkDuration;
 
+    private int healingValue = 4;
+
     private void Awake()
     {
         image = GetComponent<Image>();
@@ -64,7 +66,7 @@ public class MouseEnemy : MonoBehaviour
         {
             Managers.Sound.Play("SFX/Mouse_Monster_Death_SFX");
             StopBlinking();
-            Managers.Game.ComboInc();
+            Managers.Game.ComboInc(healingValue);
             gameObject.SetActive(false);
         }
 
@@ -72,7 +74,7 @@ public class MouseEnemy : MonoBehaviour
         {
             Managers.Sound.Play("SFX/Mouse_Monster_Death_SFX");
             StopBlinking();
-            Managers.Game.ComboInc();
+            Managers.Game.ComboInc(healingValue);
             gameObject.SetActive(false);
         }
     }

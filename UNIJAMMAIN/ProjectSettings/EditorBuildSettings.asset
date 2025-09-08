@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Test3D.unity
     guid: 028fd60f6590a0c4bb7c46c76c7da36c
+  - enabled: 1
+    path: Assets/Scenes/StoryScene.unity
+    guid: 525f170154bd2954ca0ffc215f62eb54
   m_configObjects: {}

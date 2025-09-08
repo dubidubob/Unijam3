@@ -23,6 +23,8 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     private bool _spawning = false;
     private double _lastSpawnTime;
     private float _moveBeat;
+
+    private int attackValue = 20;
     private void OnEnable()
     {
         InitialDict();
@@ -126,7 +128,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         }
         else
         {
-            Managers.Game.PlayerAttacked();
+            Managers.Game.PlayerAttacked(attackValue);
         }
     }
 

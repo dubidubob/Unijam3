@@ -5,7 +5,8 @@ public enum DialogueCharacter
 {
     HideDialog,
     None,      
-    Player
+    Player,
+    Master
 }
 
 [System.Serializable]
