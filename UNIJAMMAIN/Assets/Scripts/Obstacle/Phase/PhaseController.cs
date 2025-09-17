@@ -44,7 +44,9 @@ public class PhaseController : MonoBehaviour
         Debug.Log(_chapterIdx);
         Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
         Debug.Log(chapters[_chapterIdx].MusicPath);
-        areaBaseInLine.color = chapters[_chapterIdx].colorPalette;
+        Color tmpColor = chapters[_chapterIdx].colorPalette;
+        tmpColor.a = 0.7f;
+        areaBaseInLine.color = tmpColor;
 
         StartCoroutine(RunChapter());
     }
