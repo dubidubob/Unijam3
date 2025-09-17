@@ -4,9 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StoryDialog : UI_Popup
 {
+    public string musicPath;
+    public Sprite backGroundImage;
+    private int stageIndex;
+
     public Text[] TestTexts;
     public Image[] StandingImage;
     public GameObject TextPanel;
@@ -37,6 +42,9 @@ public class StoryDialog : UI_Popup
         panelRect = TextPanel.GetComponent<RectTransform>();
         originalPanelPos = panelRect.anchoredPosition;
         contents.SetActive(true);
+
+        Managers.Sound.Play(musicPath, Define.Sound.BGM);
+        StartCoroutine(FirstInAnimation());
     }
 
     private void OnEnable()
@@ -51,6 +59,7 @@ public class StoryDialog : UI_Popup
 
         for (int idx = 0; idx < scenes.Count; idx++)
         {
+            Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1");
 
             DialogueScene scene = scenes[idx];
 
@@ -93,9 +102,9 @@ public class StoryDialog : UI_Popup
                 if (scene.showLeftCharacter)
                 {
 
-                    StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : cd[charIdx].CharacterImage;
+                    StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : cd[charIdx].CharacterImage; 
                     StandingImage[0].gameObject.SetActive(true);
-                    StandingImage[0].SetNativeSize();
+                    //StandingImage[0].SetNativeSize(); // 원본크기로 하지 않고 원래 크기로 설정. 만약 바꾼다면 이부분 바꾸도록.
 
                     if (scene.XFlip)
                     {
@@ -140,7 +149,7 @@ public class StoryDialog : UI_Popup
 
                     StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : cd[charIdx].CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
-                    StandingImage[1].SetNativeSize();
+                    //StandingImage[1].SetNativeSize();
                     if (scene.XFlip)
                     {
                         RightCharacter.instance.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 180, 0);
@@ -341,7 +350,46 @@ public class StoryDialog : UI_Popup
             continue;
         }
 
+        // DiaLogue끝
+        StartCoroutine(LastOutAnimation());
 
 
     }
+
+
+    private void SceneMoving()
+    {
+        Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+    }
+
+    #region Enimation
+
+    IEnumerator FirstInAnimation()
+    {
+        CanvasGroup canvasGroup;
+        canvasGroup = contents.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
+        yield return new WaitForSecondsRealtime(0.4f);
+        // 1초에 걸쳐 alpha 1로 변경
+        canvasGroup.DOFade(1f, 0.6f).SetUpdate(true);
+    }
+
+    IEnumerator LastOutAnimation()
+    {
+        CanvasGroup canvasGroup;
+        canvasGroup = contents.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 1;
+        yield return new WaitForSecondsRealtime(0.4f);
+        // 1초에 걸쳐 alpha 1로 변경
+        canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
+
+        yield return new WaitForSecondsRealtime(0.6f);
+        SceneMoving();
+        
+    }
+    #endregion
+
+    #region Tool
+
+    #endregion
 }

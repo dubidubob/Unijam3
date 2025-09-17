@@ -160,6 +160,8 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         movingEnemy.SetVariance(distance, _data, sizeDiffRate, _playerPos, type);
         movingEnemy.SetKnockback(_data.monsterType == Define.MonsterType.Knockback);
         movingEnemy.SetHiding(_data.monsterType == Define.MonsterType.WASDHiding);
+        movingEnemy.SetSpeeding(_data.monsterType == Define.MonsterType.WASDDash);
+        movingEnemy.SetFIFO(_data.monsterType == Define.MonsterType.WASDFIFO);
     }
 
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)

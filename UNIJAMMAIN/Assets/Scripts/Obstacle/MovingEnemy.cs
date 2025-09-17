@@ -6,6 +6,7 @@ public class Knockback
 {
     bool isEnabled;
     int hp;
+
     public void OnKnockback(bool isOn)
     {
         isEnabled = isOn;
@@ -37,7 +38,11 @@ public class MovingEnemy : MonoBehaviour
     public bool isKnockbacked=false;
     private Coroutine _hidingCoroutine;
 
+    private float movingDistanceTmp;
+    private int attackValue = 1;
+
     private float backwardDuration, knockbackDistance;
+    private SpriteRenderer spriteRenderer;
     private void OnEnable()
     {
         _elapsedTime = 0f;
@@ -59,12 +64,20 @@ public class MovingEnemy : MonoBehaviour
 
     public void SetDead()
     {
+        KillingDO();
+        StopCoroutine(HidingAnimation(spriteRenderer));
         Poolable poolable = GetComponent<Poolable>();
         Managers.Pool.Push(poolable);
+    }
+    private void KillingDO()
+    {
+        DOTween.Kill(transform, "FIFO");
+        DOTween.Kill(transform, "Speeding");
     }
 
     public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType)
     {
+        movingDistanceTmp = distance;
         this.playerPos = playerPos;
         enemyType = wasdType;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
@@ -82,14 +95,38 @@ public class MovingEnemy : MonoBehaviour
         }
         else 
         {
-            spriteRenderer.color = Color.white;
+
         }
         knockback.OnKnockback(isTrue);
     }
 
-    public void SetHiding(bool isTrue)
+    public void SetSpeeding(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (isTrue)
+        {
+            Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+
+            transform.DOMove(targetPos, movingDuration).SetEase(Ease.InQuint).SetId("Speeding");
+            spriteRenderer.color = Color.yellow;
+        }
+
+    }
+
+    public void SetFIFO(bool isTrue)
+    {
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (isTrue)
+        {
+            Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+            transform.DOMove(targetPos, movingDuration).SetEase(Ease.InOutCirc).SetId("FIFO");
+            spriteRenderer.color = Color.white;
+        }
+
+    }
+    public void SetHiding(bool isTrue)
+        {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isTrue)
         {
             spriteRenderer.color = Color.white;
@@ -102,32 +139,28 @@ public class MovingEnemy : MonoBehaviour
         }
         else
         {
-            spriteRenderer.color = Color.black;
-            // 숨기기 코루틴 중지
-            if (_hidingCoroutine != null)
-            {
-                StopCoroutine(_hidingCoroutine);
-                _hidingCoroutine = null;
-            }
-            // 몬스터를 완전히 보이게 함
-            spriteRenderer.color = Color.white;
-
+           
         }
        
     }
+
+
     private IEnumerator HidingAnimation(SpriteRenderer _spriteRenderer)
     {
-        // 무한 루프를 통해 반복적으로 깜빡임
-        while (true)
-        {
-            // 서서히 투명하게 변함 (0.7초 동안)
-            _spriteRenderer.DOFade(0f, movingDuration/3f); // 몇초에 걸쳐서 투명화 되는지?
-            yield return new WaitForSeconds(movingDuration/2.4f); // 몇초에 걸쳐서 
+        yield return new WaitForSeconds(movingDuration * 0.1f);
 
-            // 서서히 원래대로 돌아옴 (0.7초 동안)
-            _spriteRenderer.DOFade(1f, movingDuration/3f);
-            yield return new WaitForSeconds(movingDuration/2f);
-        }
+        // 2. 서서히 투명하게 변함 (movingDuration의 30% 시간 동안)
+        float fadeOutDuration = movingDuration * 0.3f;
+        _spriteRenderer.DOFade(0f, fadeOutDuration);
+        yield return new WaitForSeconds(fadeOutDuration);
+
+        // 3. 완전히 투명한 상태로 중간 지점 통과 (movingDuration의 20% 시간 동안)
+        yield return new WaitForSeconds(movingDuration * 0.2f);
+
+        // 4. 도착 직전에 서서히 원래대로 돌아옴 (movingDuration의 30% 시간 동안)
+        float fadeInDuration = movingDuration * 0.3f;
+        _spriteRenderer.DOFade(1f, fadeInDuration);
+        yield return new WaitForSeconds(fadeInDuration);
     }
     public bool CheckCanDead()
     {
@@ -214,7 +247,29 @@ public class MovingEnemy : MonoBehaviour
 
             Managers.Game.attacks[enemyType].Dequeue();
             SetDead();
-            Managers.Game.PlayerAttacked();
+            Managers.Game.PlayerAttacked(attackValue);
         }
+    }
+
+    private Vector3 CalculateNormalVector()
+    {
+        if(enemyType==GamePlayDefine.WASDType.A)
+        {
+            return Vector3.right;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.D)
+        {
+            return Vector3.left;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.W)
+        {
+            return Vector3.down;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.S)
+        {
+            return Vector3.up;
+        }
+        Debug.Log("CalculateVector실패");
+        return Vector3.forward;
     }
 }

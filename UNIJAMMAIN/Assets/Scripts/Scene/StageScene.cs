@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StageScene : BaseScene
 {
+    public bool Test;
     private void Start()
     {
         Managers.Sound.Play("BGM/MainScene_V1", Define.Sound.BGM);
@@ -17,6 +18,7 @@ public class StageScene : BaseScene
     protected override void Init()
     {
         base.Init();
+        if(Test) { Managers.Game.GameStage = 8; }
         Managers.Game.Init();
     }
 }

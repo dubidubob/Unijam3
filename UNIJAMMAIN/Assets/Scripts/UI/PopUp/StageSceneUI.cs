@@ -102,6 +102,8 @@ public class StageSceneUI : UI_Popup
         Init();
         UpdateStageButtons();
         Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);
+
+        Managers.Game.GameStage = 7;
     }
 
     public override void Init()
@@ -118,19 +120,19 @@ public class StageSceneUI : UI_Popup
         // 각 버튼의 클릭 이벤트 및 마우스 오버/이탈 이벤트 연결
         if (upButton != null)
         {
-            //upButton.gameObject.AddUIEvent(UpButtonClicked);
-            //AddPointerEvent(upButton, (eventData) => OnPointerEnter(upButton), EventTriggerType.PointerEnter);
-            //AddPointerEvent(upButton, (eventData) => OnPointerExit(upButton), EventTriggerType.PointerExit);
+            upButton.gameObject.AddUIEvent(UpButtonClicked);
+            AddPointerEvent(upButton, (eventData) => OnPointerEnter(upButton), EventTriggerType.PointerEnter);
+            AddPointerEvent(upButton, (eventData) => OnPointerExit(upButton), EventTriggerType.PointerExit);
         }
-        // 맵 이동 임시로 막아놨음. - 예준
+  
 
         if (downButton != null)
         {
-            //downButton.gameObject.AddUIEvent(DownButtonClicked);
-            //AddPointerEvent(downButton, (eventData) => OnPointerEnter(downButton), EventTriggerType.PointerEnter);
-            //AddPointerEvent(downButton, (eventData) => OnPointerExit(downButton), EventTriggerType.PointerExit);
+            downButton.gameObject.AddUIEvent(DownButtonClicked);
+            AddPointerEvent(downButton, (eventData) => OnPointerEnter(downButton), EventTriggerType.PointerEnter);
+            AddPointerEvent(downButton, (eventData) => OnPointerExit(downButton), EventTriggerType.PointerExit);
         }
-        // 맵 이동 임시로 막아놨음. - 예준
+   
 
         if (startButton != null)
         {
@@ -204,7 +206,7 @@ public class StageSceneUI : UI_Popup
     {
         if (_selectedButton != null)
         {
-            Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+            Managers.Scene.LoadScene(Define.Scene.StoryScene);
         }
         else
         {
