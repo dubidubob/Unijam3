@@ -41,18 +41,34 @@ public class BlurController : MonoBehaviour
     private Coroutine fadeCoroutine;
     public Image lastBlacking;
 
+    public int[] hpBoundaryWeight = new int[7];
+
     /// <summary>
     /// 체력에 따라 Blur 상태 업데이트
     /// </summary>
-    public void SetBlur(float currentHp, float maxHp)
+    public void SetBlur (float currentHp, float maxHp)
     { 
 
         // Debug.Log($"currentHP : {currentHp} - maxHP : {maxHp}");
         if (blurImages.Length == 0) return;
 
         // 몇 번째 Blur인지 계산
-        float ratio = 1f - (currentHp / maxHp); // hp가 줄수록 ratio ↑
-        int newIndex = Mathf.Clamp(Mathf.FloorToInt(ratio * blurImages.Length), 0, blurImages.Length - 1);
+        float lostHp = maxHp - currentHp;
+        float cumulativeHpBoundary = 0f;
+        int newIndex=0;
+        for (int i = 0; i < hpBoundaryWeight.Length; i++)
+        {
+            cumulativeHpBoundary += hpBoundaryWeight[i];
+            if (lostHp < cumulativeHpBoundary)
+            {
+                newIndex = i;
+                break; // 현재 체력에 해당하는 구간을 찾았으므로 루프 종료
+            }
+            // 만약 잃은 체력이 모든 가중치 합보다 크거나 같다면 마지막 인덱스로 설정됩니다.
+            newIndex = i;
+        }
+        // 안전을 위해 Clamp 처리 (가중치 설정 오류 방지)
+        newIndex = Mathf.Clamp(newIndex, 0, blurImages.Length - 1);
 
         if (newIndex != currentIndex) // 새로운 이미지로의 변환 
         {
