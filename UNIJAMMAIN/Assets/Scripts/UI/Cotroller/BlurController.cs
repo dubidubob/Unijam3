@@ -105,6 +105,7 @@ public class BlurController : MonoBehaviour
         Image newImg = blurImages[newIndex];
 
         // 시작 알파값
+
         float oldStartAlpha = oldImg.color.a;
         float newStartAlpha = newImg.color.a;
 
