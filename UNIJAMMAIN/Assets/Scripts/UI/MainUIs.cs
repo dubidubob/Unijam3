@@ -67,15 +67,18 @@ public class MainUIs : MonoBehaviour
 
     private void UpdateCombo(int combo)
     {
+        float dx = 0f; // 콤보 달성시 추가로 더해질 effect
         if (combo > 0 && combo % 10 == 0)
         {
             Combobangsa.gameObject.SetActive(true);
             Invoke("Deactivate", 0.3f);
+            dx = 0.5f;
         }
+        
 
         comboTxt.text = combo.ToString();
         comboTxt.transform
-            .DOScale(Vector3.one * 1.2f, 0.2f)
+            .DOScale(Vector3.one * (1.2f+dx), 0.2f)
             .OnComplete(() =>
                 comboTxt.transform.DOScale(Vector3.one, 0.1f)
             );

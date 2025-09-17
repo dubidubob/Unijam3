@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using static GamePlayDefine;
+using DG.Tweening;
 public class AccuracyUI : MonoBehaviour
 {
     [SerializeField] private GameObject textPrefab; // TextMeshProPrefab
@@ -9,7 +10,7 @@ public class AccuracyUI : MonoBehaviour
     private void Start()
     {
         txt = textPrefab.GetComponent<TMP_Text>();
-
+        
         IngameData.OnRankUpdate -= UpdateAccuracyUI;
         IngameData.OnRankUpdate += UpdateAccuracyUI;
     }
@@ -60,6 +61,13 @@ public class AccuracyUI : MonoBehaviour
         {
             Debug.LogError("Invalid hex color code: " + hexCode);
         }
+
+        // rank 강조 효과 추가
+        txt.transform
+           .DOScale(Vector3.one * (1.2f), 0.2f)
+           .OnComplete(() =>
+               txt.transform.DOScale(Vector3.one, 0.1f)
+           );
     }
 
     #region Sound
