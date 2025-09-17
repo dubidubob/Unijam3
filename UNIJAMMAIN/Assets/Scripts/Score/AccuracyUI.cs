@@ -21,22 +21,44 @@ public class AccuracyUI : MonoBehaviour
 
     private void UpdateAccuracyUI(RankType rank)
     {
+        string hexCode;
+        Color newColor;
         switch (rank) 
         {
             case RankType.Miss:
                 txt.text = "MISS!";
-                txt.color = Color.red;
+
+                hexCode = "#9C8994";
+
                 break;
             case RankType.Good:
                 txt.text = "Good!";
-                txt.color = Color.white;
+ 
+                hexCode = "#AFE26E";
+
                 SetGoodSound();
                 break;
             case RankType.Perfect:
                 txt.text = "Perfect!";
-                txt.color = Color.yellow;
+                hexCode = "#FFD98C";
                 SetPerfectSound();
                 break;
+            default:
+                hexCode = "#FFFFFF"; // 기본값으로 흰색을 할당
+                Debug.LogWarning("정의되지 않은 RankType이 들어왔습니다: " + rank);
+                break;
+        }
+
+        // ColorUtility를 사용하여 문자열을 Color 타입으로 변환합니다.
+
+        if (ColorUtility.TryParseHtmlString(hexCode, out newColor))
+        {
+            // 변환에 성공했다면 이미지의 색상으로 적용합니다.
+            txt.color = newColor;
+        }
+        else
+        {
+            Debug.LogError("Invalid hex color code: " + hexCode);
         }
     }
 
