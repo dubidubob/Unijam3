@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88a7b8007bad7a43abe76cf9a9d3d0f, type: 3}
-  m_Name: Chapter4
+  m_Name: Chapter5
   m_EditorClassIdentifier: 
   phases:
   - rid: 8480390413592559616
@@ -19,7 +19,7 @@ MonoBehaviour:
   MusicPath: BGM/Chapter3_V1
   backGroundSprite: {fileID: 21300000, guid: 9235249a8a73763489470035cdd9469b, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 287ee5b64068a4c4a8bb75ede71cd485, type: 3}
-  colorPalette: {r: 0.60784316, g: 0.36862746, b: 0.33333334, a: 0}
+  colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0}
   references:
     version: 2
     RefIds:

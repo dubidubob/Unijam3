@@ -31,6 +31,7 @@ MonoBehaviour:
   MusicPath: BGM/Chapter1_V1
   backGroundSprite: {fileID: 21300000, guid: c1c29fc23cb312d42980869ac03d64ee, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: ba7bf52925914b54a91246d97d0f38da, type: 3}
+  colorPalette: {r: 0.6627451, g: 0.69803923, b: 0.34901962, a: 0}
   references:
     version: 2
     RefIds:

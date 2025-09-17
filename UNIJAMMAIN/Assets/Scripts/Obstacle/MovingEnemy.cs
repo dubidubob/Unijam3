@@ -124,7 +124,7 @@ public class MovingEnemy : MonoBehaviour
         }
 
     }
-        public void SetHiding(bool isTrue)
+    public void SetHiding(bool isTrue)
         {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isTrue)
@@ -143,19 +143,24 @@ public class MovingEnemy : MonoBehaviour
         }
        
     }
+
+
     private IEnumerator HidingAnimation(SpriteRenderer _spriteRenderer)
     {
-        // 무한 루프를 통해 반복적으로 깜빡임
-        while (true)
-        {
-            // 서서히 투명하게 변함 (0.7초 동안)
-            _spriteRenderer.DOFade(0f, movingDuration/3f); // 몇초에 걸쳐서 투명화 되는지?
-            yield return new WaitForSeconds(movingDuration/2.4f); // 몇초에 걸쳐서 
+        yield return new WaitForSeconds(movingDuration * 0.1f);
 
-            // 서서히 원래대로 돌아옴 (0.7초 동안)
-            _spriteRenderer.DOFade(1f, movingDuration/3f);
-            yield return new WaitForSeconds(movingDuration/2f);
-        }
+        // 2. 서서히 투명하게 변함 (movingDuration의 30% 시간 동안)
+        float fadeOutDuration = movingDuration * 0.3f;
+        _spriteRenderer.DOFade(0f, fadeOutDuration);
+        yield return new WaitForSeconds(fadeOutDuration);
+
+        // 3. 완전히 투명한 상태로 중간 지점 통과 (movingDuration의 20% 시간 동안)
+        yield return new WaitForSeconds(movingDuration * 0.2f);
+
+        // 4. 도착 직전에 서서히 원래대로 돌아옴 (movingDuration의 30% 시간 동안)
+        float fadeInDuration = movingDuration * 0.3f;
+        _spriteRenderer.DOFade(1f, fadeInDuration);
+        yield return new WaitForSeconds(fadeInDuration);
     }
     public bool CheckCanDead()
     {

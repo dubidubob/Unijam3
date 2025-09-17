@@ -15,6 +15,7 @@
         public string MusicPath;
         public Sprite backGroundSprite;
         public Sprite backGroundGraySprite;
+        public Color colorPalette;
 
 
 

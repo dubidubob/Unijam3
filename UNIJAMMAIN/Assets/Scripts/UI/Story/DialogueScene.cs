@@ -27,13 +27,7 @@ public class DialogueScene
     public bool isSurprized;
     public bool leftSDAnim;
     public bool rightSDAnim;
-    public bool isTimeGoing;
-    public bool isTomatoSoupGo;
-    public bool isShopingGo;
-    public bool isEndDialogue;
-    public bool isGivingMoney;
     public bool isEnding;
-    public int givingMoneyAmount;
     public bool XFlip;
     
     public float goingTimeAmount;

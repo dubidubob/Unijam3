@@ -23,6 +23,7 @@ public class PhaseController : MonoBehaviour
     [SerializeField] ChapterSO[] chapters;
     // TODO : tmp!
     [SerializeField] StartMotionUIs startMotions;
+    [SerializeField] SpriteRenderer areaBaseInLine;
 
     public static Action<float> ChangeKey;
     public static Action<bool> TutorialStoped;
@@ -43,6 +44,7 @@ public class PhaseController : MonoBehaviour
         Debug.Log(_chapterIdx);
         Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
         Debug.Log(chapters[_chapterIdx].MusicPath);
+        areaBaseInLine.color = chapters[_chapterIdx].colorPalette;
 
         StartCoroutine(RunChapter());
     }

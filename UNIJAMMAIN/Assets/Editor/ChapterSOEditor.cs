@@ -11,6 +11,7 @@ public class ChapterSOEditor : Editor
     SerializedProperty phases;
     SerializedProperty backGroundSprite; // Sprite 타입 필드
     SerializedProperty backGroundGraySprite; // Sprite 타입 필드
+    SerializedProperty colorPalette;
 
     void OnEnable()
     {
@@ -18,6 +19,7 @@ public class ChapterSOEditor : Editor
         phases = serializedObject.FindProperty("phases");
         backGroundSprite = serializedObject.FindProperty("backGroundSprite"); // 필드 이름과 일치하도록 수정
         backGroundGraySprite = serializedObject.FindProperty("backGroundGraySprite"); // 필드 이름과 일치하도록 수정
+        colorPalette = serializedObject.FindProperty("colorPalette");
     }
 
     public override void OnInspectorGUI()
@@ -28,6 +30,7 @@ public class ChapterSOEditor : Editor
         EditorGUILayout.PropertyField(phases, true);
         EditorGUILayout.PropertyField(backGroundSprite); // 인스펙터에 Sprite 필드 표시
         EditorGUILayout.PropertyField(backGroundGraySprite); // 인스펙터에 Sprite 필드 표시
+        EditorGUILayout.PropertyField(colorPalette);
 
         EditorGUILayout.Space(8);
         using (new EditorGUILayout.HorizontalScope())

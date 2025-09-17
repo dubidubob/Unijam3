@@ -1269,10 +1269,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoryPrefabs:
-  - {fileID: 2630843551951615991, guid: 35959e07c7b7d5a4f8e9b63bccbbfe77, type: 3}
-  - {fileID: 2630843551951615991, guid: 35959e07c7b7d5a4f8e9b63bccbbfe77, type: 3}
-  - {fileID: 2630843551951615991, guid: 35959e07c7b7d5a4f8e9b63bccbbfe77, type: 3}
-  - {fileID: 2630843551951615991, guid: 35959e07c7b7d5a4f8e9b63bccbbfe77, type: 3}
+  - {fileID: 2630843551951615991, guid: 9d2c61e662aa54f44a851d2f813c12d8, type: 3}
+  - {fileID: 2630843551951615991, guid: 14865b4b0c7393344809af044d6ebe5f, type: 3}
+  - {fileID: 2630843551951615991, guid: cbfd8c3a3c227ad428e704402e631ef4, type: 3}
+  - {fileID: 2630843551951615991, guid: 28a4cb7ced01608479b6c23cb8734fd7, type: 3}
   - {fileID: 2630843551951615991, guid: 35959e07c7b7d5a4f8e9b63bccbbfe77, type: 3}
   BackGround: {fileID: 928231783}
 --- !u!4 &1531425654

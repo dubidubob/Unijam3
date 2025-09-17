@@ -102,6 +102,8 @@ public class StageSceneUI : UI_Popup
         Init();
         UpdateStageButtons();
         Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);
+
+        Managers.Game.GameStage = 7;
     }
 
     public override void Init()
