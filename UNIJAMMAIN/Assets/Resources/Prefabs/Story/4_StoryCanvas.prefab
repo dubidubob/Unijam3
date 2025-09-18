@@ -401,8 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abb08d98b7729d49a18635cc686401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPath: BGM/MainScene_V1
-  backGroundImage: {fileID: 21300000, guid: 6a2e136db8c31784593c5ba61b8123e9, type: 3}
+  musicPath: BGM/Chapter4_V1
+  backGroundImage: {fileID: 21300000, guid: 9235249a8a73763489470035cdd9469b, type: 3}
   TestTexts:
   - {fileID: 587098028343102862}
   - {fileID: 587098028343102862}
@@ -435,13 +435,7 @@ MonoBehaviour:
     isSurprized: 0
     leftSDAnim: 0
     rightSDAnim: 0
-    isTimeGoing: 0
-    isTomatoSoupGo: 0
-    isShopingGo: 0
-    isEndDialogue: 0
-    isGivingMoney: 0
     isEnding: 0
-    givingMoneyAmount: 0
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
@@ -458,13 +452,7 @@ MonoBehaviour:
     isSurprized: 0
     leftSDAnim: 0
     rightSDAnim: 0
-    isTimeGoing: 0
-    isTomatoSoupGo: 0
-    isShopingGo: 0
-    isEndDialogue: 0
-    isGivingMoney: 0
     isEnding: 0
-    givingMoneyAmount: 0
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
@@ -481,13 +469,7 @@ MonoBehaviour:
     isSurprized: 0
     leftSDAnim: 0
     rightSDAnim: 0
-    isTimeGoing: 0
-    isTomatoSoupGo: 0
-    isShopingGo: 0
-    isEndDialogue: 0
-    isGivingMoney: 0
     isEnding: 0
-    givingMoneyAmount: 0
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
@@ -504,13 +486,7 @@ MonoBehaviour:
     isSurprized: 0
     leftSDAnim: 0
     rightSDAnim: 0
-    isTimeGoing: 0
-    isTomatoSoupGo: 0
-    isShopingGo: 0
-    isEndDialogue: 0
-    isGivingMoney: 0
     isEnding: 0
-    givingMoneyAmount: 0
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
