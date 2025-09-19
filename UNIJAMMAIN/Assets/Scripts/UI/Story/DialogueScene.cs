@@ -20,7 +20,7 @@ public enum DialogueCharacter
 public class DialogueScene
 {
     [Header("대사 주인공 선택 (None은 배경대사)")]
-    public DialogueCharacter speakingCharacter;
+    public CharacterData speakingCharacterData;
     public bool isFirstAppearance;
     [TextArea]
     public string text;

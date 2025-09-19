@@ -67,23 +67,12 @@ public class StoryDialog : UI_Popup
 
             yield return new WaitForSecondsRealtime(scene.preDelay);
 
-            // ======================
-            // 0. Hide Dialog 처리
-            // ======================
-            if (scene.speakingCharacter == DialogueCharacter.HideDialog)
-            {
-                TextPanel.SetActive(false);
-                if (StandingImage != null)
-                {
-                    foreach (var standing in StandingImage)
-                        standing.gameObject.SetActive(false);
-                }
-            }
+            
 
             // ======================
             // 1. 캐릭터 None 처리
             // ======================
-            if (scene.speakingCharacter == DialogueCharacter.None)
+            if (scene.speakingCharacterData == null)
             {
                 // 캐릭터 이미지 모두 OFF
                 StandingImage[0].gameObject.SetActive(false);
@@ -98,13 +87,12 @@ public class StoryDialog : UI_Popup
                 // 2. 일반 캐릭터 처리
                 // ======================
                 // 캐릭터 인덱스 None 제외
-                int charIdx = (int)scene.speakingCharacter - 2;
-
+              
                 // 왼쪽 캐릭터 처리
                 if (scene.showLeftCharacter)
                 {
 
-                    StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : cd[charIdx].CharacterImage; 
+                    StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[0].gameObject.SetActive(true);
                     //StandingImage[0].SetNativeSize(); // 원본크기로 하지 않고 원래 크기로 설정. 만약 바꾼다면 이부분 바꾸도록.
 
@@ -149,7 +137,7 @@ public class StoryDialog : UI_Popup
                 if (scene.showRightCharacter)
                 {
 
-                    StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : cd[charIdx].CharacterImage;
+                    StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
                     //StandingImage[1].SetNativeSize();
                     if (scene.XFlip)
