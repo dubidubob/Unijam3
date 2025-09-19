@@ -17,6 +17,8 @@ struct StartMotionUIs
 [RequireComponent(typeof(SpawnController))]
 public class PhaseController : MonoBehaviour
 {
+    [SerializeField] private MonsterDatabaseSO monsterDatabase;
+
     [SerializeField] Image backGround;
     [SerializeField] Image backGroundGray;
     [SerializeField] ResultUI Scoreboard;
@@ -24,6 +26,7 @@ public class PhaseController : MonoBehaviour
     // TODO : tmp!
     [SerializeField] StartMotionUIs startMotions;
     [SerializeField] SpriteRenderer areaBaseInLine;
+   
 
     public static Action<float> ChangeKey;
     public static Action<bool> TutorialStoped;
@@ -35,7 +38,9 @@ public class PhaseController : MonoBehaviour
     {
         spawnController = GetComponent<SpawnController>();
         Scoreboard.gameObject.SetActive(false);
+        monsterDatabase.Init();
         
+
         IngameData.RankInit();
 
         PauseManager.ControlTime(false);

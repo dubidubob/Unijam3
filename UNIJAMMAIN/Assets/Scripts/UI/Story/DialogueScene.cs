@@ -32,6 +32,5 @@ public class DialogueScene
     
     public float goingTimeAmount;
     public KeyCode requiredKey;
-    public KeyCode skipKey;
     
 }

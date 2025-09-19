@@ -85,13 +85,17 @@ public class MovingEnemy : MonoBehaviour
         backwardDuration = movingDuration * 0.125f;
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
+
+        
+        
     }
     public void SetKnockback(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.Knockback);
         if (isTrue)
         {
-            spriteRenderer.color = Color.red;
+            spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.Knockback);
         }
         else 
         {
@@ -103,6 +107,8 @@ public class MovingEnemy : MonoBehaviour
     public void SetSpeeding(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDDash);
+        spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDDash);
         if (isTrue)
         {
             Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
@@ -116,6 +122,8 @@ public class MovingEnemy : MonoBehaviour
     public void SetFIFO(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDFIFO);
+        spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDFIFO);
         if (isTrue)
         {
             Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
@@ -127,6 +135,8 @@ public class MovingEnemy : MonoBehaviour
     public void SetHiding(bool isTrue)
         {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDHiding);
+        spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDHiding);
         if (isTrue)
         {
             spriteRenderer.color = Color.white;

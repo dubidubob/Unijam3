@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3a65dfd68119c4ba3475eea38968aa, type: 3}
+  m_Name: WASD
+  m_EditorClassIdentifier: 
+  monsters:
+  - monsterType: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: 268e023b0b1188448976daa569b41478, type: 3}
+  - monsterType: 2
+    color: {r: 0, g: 0, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: cdf3ffc4c2f5d0742b0058d1e2ff6e88, type: 3}
+  - monsterType: 4
+    color: {r: 0, g: 0, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: 1c3cf5d337809da4c81ea016c24b304e, type: 3}
+  - monsterType: 5
+    color: {r: 0, g: 0, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: 02b8d3e9065df4e4595b89418a2ba766, type: 3}
+  - monsterType: 6
+    color: {r: 0, g: 0, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: 268e023b0b1188448976daa569b41478, type: 3}
