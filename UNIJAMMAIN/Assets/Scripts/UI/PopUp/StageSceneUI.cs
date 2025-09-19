@@ -23,6 +23,10 @@ public class StageSceneUI : UI_Popup
     private Material glowingTextMaterial; // 코드에서 자동으로 생성할 머티리얼
 
     // 맵 이동관련
+    private int currentPageLevel = 0;
+    private bool isAnimating = false;
+    public Ease moveEase = Ease.OutCubic; // 이동 애니메이션의 Ease 효과
+    public float rotateDuration = 1f; // 회전에 걸리는 시간
     public RectTransform mapImage;
     private float moveDistance = 1100f;
     private float moveDuration = 0.8f;
@@ -31,6 +35,20 @@ public class StageSceneUI : UI_Popup
     private List<Button> stageButtons = new List<Button>();
 
     public TMP_Text startButtonText;
+   
+
+    [Header("Stage Data Inputs")]
+    public List<StageUIData> stageDataList;
+    [Header("Text Objects")]
+    public TMP_Text stageMainText;
+    public TMP_Text stageMainSubText;
+    public TMP_Text stageExplain;
+    public TMP_Text stageLevelText;
+
+
+    
+
+
     enum ButtonState
     {
         DeActive,
@@ -103,6 +121,7 @@ public class StageSceneUI : UI_Popup
         UpdateStageButtons();
         Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);
 
+        // 서울게임타운용
         Managers.Game.GameStage = 7;
     }
 
@@ -186,16 +205,53 @@ public class StageSceneUI : UI_Popup
 
     public void UpButtonClicked(PointerEventData eventData)
     {
-        mapImage.DOKill();
-        Vector2 targetPos = mapImage.anchoredPosition - new Vector2(0, moveDistance);
-        mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(Ease.OutCubic);
+
+        if (isAnimating) return; // 애니메이션 중에는 입력을 무시
+
+        switch (currentPageLevel)
+        {
+            case 0:
+                // [Level 0 -> 1] : y좌표 -200으로 이동
+                MoveTo(yPos: -200f);
+                currentPageLevel = 1;
+                break;
+
+            case 1:
+                // [Level 1 -> 2] : z축 180도 회전, y좌표 750으로 이동
+                RotateAndMoveTo(zRot: 180f, yPos: 750f);
+                currentPageLevel = 2;
+                break;
+
+            case 2:
+                // Level 2가 마지막 레벨이므로 아무 동작 안 함
+                Debug.Log("Already at the top level.");
+                break;
+        }
     }
 
     public void DownButtonClicked(PointerEventData eventData)
     {
-        mapImage.DOKill();
-        Vector2 targetPos = mapImage.anchoredPosition + new Vector2(0, moveDistance);
-        mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(Ease.OutCubic);
+        if (isAnimating) return; // 애니메이션 중에는 입력을 무시
+
+        switch (currentPageLevel)
+        {
+            case 0:
+                // Level 0이 최하단 레벨이므로 아무 동작 안 함
+                Debug.Log("Already at the bottom level.");
+                break;
+
+            case 1:
+                // [Level 1 -> 0] : y좌표 750으로 이동
+                MoveTo(yPos: 750f);
+                currentPageLevel = 0;
+                break;
+
+            case 2:
+                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -200으로 이동
+                RotateAndMoveTo(zRot: 0f, yPos: -200f);
+                currentPageLevel = 1;
+                break;
+        }
     }
     public void ToMainButtonClicked(PointerEventData eventData)
     {
@@ -227,7 +283,7 @@ public class StageSceneUI : UI_Popup
         _selectedButton = button;
         _hoveredButton = null;
         UpdateStageButtons();
-
+        TextSetting(IngameData.ChapterIdx);
         Debug.Log($"Selected Stage: {stageIndex}");
     }
 
@@ -337,4 +393,40 @@ public class StageSceneUI : UI_Popup
 
         startButtonText.DOFade(1.0f, 0.5f); // Fade in the text over 0.5 seconds
     }
+
+    private void TextSetting(int index)
+    {
+        stageMainText.text = stageDataList[index].stageMainText;
+        stageMainSubText.text = stageDataList[index].stageMainSubText;
+        stageExplain.text = stageDataList[index].stageExplain;
+        stageLevelText.text = stageDataList[index].levelText;
+
+    }
+    #region Tool
+
+    private void MoveTo(float yPos)
+    {
+        isAnimating = true;
+        mapImage.DOKill(); // 진행 중인 모든 애니메이션을 즉시 중지
+
+        Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
+        mapImage.DOAnchorPos(targetPos, moveDuration)
+                .SetEase(moveEase)
+                .OnComplete(() => isAnimating = false); // 애니메이션 완료 시 플래그 해제
+    }
+
+    private void RotateAndMoveTo(float zRot, float yPos)
+    {
+        isAnimating = true;
+        mapImage.DOKill();
+
+        // 위치 이동과 회전을 동시에 실행
+        Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
+        mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(moveEase);
+
+        mapImage.DORotate(new Vector3(0, 0, zRot), rotateDuration)
+                .SetEase(moveEase)
+                .OnComplete(() => isAnimating = false); // 애니메이션 완료 시 플래그 해제
+    }
+    #endregion
 }

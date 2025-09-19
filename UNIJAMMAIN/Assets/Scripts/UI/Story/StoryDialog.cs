@@ -10,6 +10,7 @@ public class StoryDialog : UI_Popup
 {
     public string musicPath;
     public Sprite backGroundImage;
+    public Image backGround;
     private int stageIndex;
 
     public Text[] TestTexts;
@@ -50,6 +51,7 @@ public class StoryDialog : UI_Popup
     private void OnEnable()
     {
         Time.timeScale = 0f;
+        backGround.sprite = backGroundImage;
         StartCoroutine(TypingCoroutine());
     }
 

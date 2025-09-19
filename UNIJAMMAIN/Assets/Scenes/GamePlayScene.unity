@@ -6240,6 +6240,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aefbff3a4136a7f4192480fda9815699, type: 2}
   - {fileID: 11400000, guid: f79b0244702436f4ebf04ef16cb5abdf, type: 2}
   - {fileID: 11400000, guid: 994ee462123f6c74fb568a841b59c1dc, type: 2}
+  - {fileID: 11400000, guid: 788691d3e6d269c4eaabcfbe0608bb5f, type: 2}
   startMotions:
     startCountUI: {fileID: 1997952375}
     playerActionUI: {fileID: 460754923}
