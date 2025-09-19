@@ -350,7 +350,7 @@ public class StageSceneUI : UI_Popup
                 //{
                 //    Debug.LogWarning("Glowing material is not set up. Make sure normalTextMaterial is assigned in the Inspector.");
                 //}
-                // Glow 효과 너무 세서 우선 아예 뺏음 - 예준
+                // Glow 효과 너무 세서 우선 아예 뻈음 - 예준
                 break;
             case ButtonState.NonClickActive:
                 buttonImage.sprite = nonClickActive;
