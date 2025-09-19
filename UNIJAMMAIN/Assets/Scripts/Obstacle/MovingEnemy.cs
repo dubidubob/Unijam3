@@ -92,10 +92,11 @@ public class MovingEnemy : MonoBehaviour
     public void SetKnockback(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.Knockback);
+      
         if (isTrue)
         {
             spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.Knockback);
+            spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.Knockback);
         }
         else 
         {
@@ -107,14 +108,14 @@ public class MovingEnemy : MonoBehaviour
     public void SetSpeeding(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDDash);
-        spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDDash);
+        
         if (isTrue)
         {
             Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
 
             transform.DOMove(targetPos, movingDuration).SetEase(Ease.InQuint).SetId("Speeding");
-            spriteRenderer.color = Color.yellow;
+            spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDDash);
+            spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDDash);
         }
 
     }
@@ -122,13 +123,13 @@ public class MovingEnemy : MonoBehaviour
     public void SetFIFO(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDFIFO);
-        spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDFIFO);
+        
         if (isTrue)
         {
             Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
             transform.DOMove(targetPos, movingDuration).SetEase(Ease.InOutCirc).SetId("FIFO");
-            spriteRenderer.color = Color.white;
+            spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDFIFO);
+            spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDFIFO);
         }
 
     }
@@ -139,7 +140,8 @@ public class MovingEnemy : MonoBehaviour
         spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDHiding);
         if (isTrue)
         {
-            spriteRenderer.color = Color.white;
+            spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDHiding);
+            spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDHiding);
             // 숨기기 코루틴 시작
             if (_hidingCoroutine == null)
             {
