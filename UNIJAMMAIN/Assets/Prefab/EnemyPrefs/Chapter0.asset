@@ -23,7 +23,7 @@ MonoBehaviour:
   MusicPath: BGM/Chapter0_V1
   backGroundSprite: {fileID: 21300000, guid: 99535dfa15f32c04080f3357e6166718, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: bda6ccf9abdc78b429b3c992b7588a8a, type: 3}
-  colorPalette: {r: 0.7254902, g: 0.6313726, b: 0.43137255, a: 0}
+  colorPalette: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
   references:
     version: 2
     RefIds:
@@ -37,12 +37,13 @@ MonoBehaviour:
         timeScale: 1
         steps:
         - textContents:
-          - "\uC815\uB9D0 \uC138\uC0C1\uC740 \uC545\uB839\uC73C\uB85C \uAC00\uB4DD\uD558\uAD6C\uB098."
+          - "(\uB9D0\uC740 \uADF8\uB807\uAC8C \uD588\uC9C0\uB9CC, \uC2E4\uC804\uC740
+            \uCC98\uC74C\uC778\uB370..)"
           monsterCutline: 0
           delayBeat: 4
         - textContents:
           - "(\uC0AC\uBC29\uC758 \uC801\uC740.. \uADFC\uCC98\uC5D0 \uC624\uBA74 WASD\uB97C
-            \uB20C\uB7EC \uBC29\uC5B4\uD574\uB77C..)"
+            \uB20C\uB7EC \uBB3C\uB9AC\uCCD0\uB77C..)"
           monsterCutline: 0
           delayBeat: 8
         - textContents:
@@ -80,13 +81,12 @@ MonoBehaviour:
           monsterCutline: 2
           delayBeat: 4
         - textContents:
-          - "\uC800.. \uC800.. \uB098\uB97C \uB2EE\uC740 \uC545\uB839\uB4E4\uC740
-            \uB610 \uBB50\uC57C?"
+          - "\uC800.. \uB098\uB97C \uB2EE\uC740 \uC545\uB839\uB4E4\uC740 \uB610 \uBB50\uC57C?"
           monsterCutline: 0
           delayBeat: 4
         - textContents:
-          - "(\uC218\uB828\uC5D0 \uC788\uC5B4 \uAC00\uC7A5 \uD070 \uC2DC\uB828\uC740
-            \uB124 \uC790\uC2E0\uC774 \uB420 \uAC83\uC774\uB2E4..)"
+          - "\uAC00\uC7A5 \uD070 \uC2DC\uB828\uC774 \uB098\uB77C\uB294\uAC8C..  \uC7A0\uAE50,
+            \uC800\uAC74 \uC2A4\uC2B9\uB2D8\uC774 \uBB50\uB77C\uACE0 \uD558\uC168\uC9C0?"
           monsterCutline: 0
           delayBeat: 4
         - textContents:
@@ -96,8 +96,9 @@ MonoBehaviour:
           monsterCutline: 0
           delayBeat: 8
         - textContents:
-          - "\uC624\uB978\uCABD \uC704\uBA74, \uC624\uB978\uCABD\uACFC \uC704 \uBC29\uD5A5\uD0A4\uB97C
-            \uB3D9\uC2DC\uC5D0 \uB204\uB974\uBA74 \uB418\uB294 \uAC74\uAC00?"
+          - "\uADF8\uB7FC \uC624\uB978\uCABD \uC704\uBA74, \uC624\uB978\uCABD\uACFC
+            \uC704 \uBC29\uD5A5\uD0A4\uB97C \uB3D9\uC2DC\uC5D0 \uB204\uB974\uBA74
+            \uB418\uACA0\uB2E4!"
           monsterCutline: 0
           delayBeat: 8
     - rid: 8714838720201883655

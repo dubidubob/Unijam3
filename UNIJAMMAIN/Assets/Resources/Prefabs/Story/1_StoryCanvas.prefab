@@ -432,7 +432,7 @@ MonoBehaviour:
   panelOffset: {x: 0, y: 0}
   contents: {fileID: 3586880080357216618}
   scenes:
-  - speakingCharacter: 2
+  - speakingCharacterData: {fileID: 0}
     isFirstAppearance: 0
     text: "\uD14C\uC2A4\uD2B8\uC911 \uC785\uB2C8\uB2E4."
     overrideSprite: {fileID: 0}
@@ -449,7 +449,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacter: 2
+  - speakingCharacterData: {fileID: 0}
     isFirstAppearance: 0
     text: "\uD14C\uC2A4\uD2B8 \uC911\uC785\uB2C8\uB2E42"
     overrideSprite: {fileID: 0}
@@ -466,7 +466,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacter: 2
+  - speakingCharacterData: {fileID: 0}
     isFirstAppearance: 0
     text: "\uC801\uC774 \uB098\uC624\uBA74 \uCCD0\uC57C\uD558\uB124!!"
     overrideSprite: {fileID: 0}
@@ -483,7 +483,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacter: 2
+  - speakingCharacterData: {fileID: 0}
     isFirstAppearance: 0
     text: "\uC790 \uAC00\uBCF4\uC790!"
     overrideSprite: {fileID: 0}
@@ -1546,7 +1546,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.292695, y: -400}
+  m_AnchoredPosition: {x: -11.292695, y: -408}
   m_SizeDelta: {x: 941.9282, y: 215.7888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8305475372916593186
@@ -1578,7 +1578,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c905fdbaac1505e499daaf3a63d5f9e4, type: 3}
+    m_Font: {fileID: 12800000, guid: 4af639907b749c544972741da7bbc605, type: 3}
     m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
@@ -1589,6 +1589,6 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 1.5
   m_Text: "\uC7A1\uB150\uC744 \uBB3C\uB9AC\uCCD0\uC57C\uD55C\uB2E4. \uAC00\uC7A5
     \uC911\uC694\uD55C \uAC83\uC740 \uBC14\uB85C \uB108\uC758 \uC2E0\uB150\uC774\uB2E4."
