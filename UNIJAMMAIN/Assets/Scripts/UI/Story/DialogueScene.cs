@@ -6,7 +6,14 @@ public enum DialogueCharacter
     HideDialog,
     None,      
     Player,
-    Master
+    Master,
+    CorruptMaster,
+    Boss,
+    Evil,
+    MovingEnemy1,
+    MovingEnemy2,
+    MovingEnemy3,
+    MovingEnemy4
 }
 
 [System.Serializable]

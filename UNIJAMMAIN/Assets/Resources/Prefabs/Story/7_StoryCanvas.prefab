@@ -419,8 +419,16 @@ MonoBehaviour:
   dimmedPanel: {fileID: 7888320304400923585}
   TutorialDialog: {fileID: 0}
   cd:
-  - {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
+  - {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+  - {fileID: 11400000, guid: 50f527adda490a147864aacd1a5bd4b8, type: 2}
   - {fileID: 11400000, guid: 53d167dc5ccadcb4ea71a1b73ba0836f, type: 2}
+  - {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
+  - {fileID: 11400000, guid: 95e705f170270774ea9a1fe2c0a3c95f, type: 2}
+  - {fileID: 11400000, guid: 426628e0bb380eb4e818ad61019cbf41, type: 2}
+  - {fileID: 11400000, guid: cfe7f6e13386b6c46aa35d9ae21e67ea, type: 2}
+  - {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - {fileID: 11400000, guid: 4b5f8c6095ed80642a1fc149c0bfcfe1, type: 2}
   panelOffset: {x: 0, y: 0}
   contents: {fileID: 3586880080357216618}
   scenes:
