@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class StoryDialog : UI_Popup
 {
     public string musicPath;
     public Sprite backGroundImage;
     public Image backGround;
-    private int stageIndex;
 
     public Text[] TestTexts;
     public Image[] StandingImage;
@@ -91,7 +91,7 @@ public class StoryDialog : UI_Popup
                 // 왼쪽 캐릭터 처리
                 if (scene.showLeftCharacter)
                 {
-
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
                     StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[0].gameObject.SetActive(true);
                     //StandingImage[0].SetNativeSize(); // 원본크기로 하지 않고 원래 크기로 설정. 만약 바꾼다면 이부분 바꾸도록.
@@ -136,7 +136,7 @@ public class StoryDialog : UI_Popup
                 // 오른쪽 캐릭터 처리
                 if (scene.showRightCharacter)
                 {
-
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
                     StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
                     //StandingImage[1].SetNativeSize();
