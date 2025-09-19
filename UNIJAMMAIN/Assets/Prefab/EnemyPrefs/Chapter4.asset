@@ -16,7 +16,7 @@ MonoBehaviour:
   - rid: 8480390413592559616
   - rid: 8480390413592559617
   - rid: 8480390413592559618
-  MusicPath: BGM/Chapter3_V1
+  MusicPath: BGM/Chapter4_V1
   backGroundSprite: {fileID: 21300000, guid: 9235249a8a73763489470035cdd9469b, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 287ee5b64068a4c4a8bb75ede71cd485, type: 3}
   colorPalette: {r: 0.60784316, g: 0.36862746, b: 0.33333334, a: 1}
@@ -34,7 +34,7 @@ MonoBehaviour:
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 6
+          monsterType: 3
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
@@ -50,7 +50,7 @@ MonoBehaviour:
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 5
+          monsterType: 3
           speedUpRate: 1
           spawnBeat: 2
           moveBeat: 4

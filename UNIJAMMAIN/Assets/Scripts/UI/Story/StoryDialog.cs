@@ -10,6 +10,7 @@ public class StoryDialog : UI_Popup
 {
     public string musicPath;
     public Sprite backGroundImage;
+    public Image backGround;
     private int stageIndex;
 
     public Text[] TestTexts;
@@ -50,6 +51,7 @@ public class StoryDialog : UI_Popup
     private void OnEnable()
     {
         Time.timeScale = 0f;
+        backGround.sprite = backGroundImage;
         StartCoroutine(TypingCoroutine());
     }
 
@@ -272,6 +274,7 @@ public class StoryDialog : UI_Popup
                 bool panelTurnedOn = false;
                 while (!panelTurnedOn)
                 {
+                
                     // 마우스 아무 버튼 클릭 시
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -316,6 +319,12 @@ public class StoryDialog : UI_Popup
             {
                 while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
                 {
+                    if (Input.GetKeyDown(KeyCode.X))
+                    {
+                        goto LoopEnd;
+                    }
+
+
                     TestTexts[idx].text = full;
                     yield return null;
                 }
@@ -350,6 +359,7 @@ public class StoryDialog : UI_Popup
             continue;
         }
 
+        LoopEnd:
         // DiaLogue끝
         StartCoroutine(LastOutAnimation());
 
