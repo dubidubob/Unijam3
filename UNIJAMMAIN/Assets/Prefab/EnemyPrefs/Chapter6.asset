@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phases:
   - rid: 8480390413592559616
-  - rid: 8480390413592559617
-  - rid: 8480390413592559618
   MusicPath: BGM/Chapter6_TEMP
   backGroundSprite: {fileID: 21300000, guid: a58bba2bf18f5934c896e08b9d4cc890, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 5e73ef6a181b19145b2d248b6beed720, type: 3}
@@ -26,7 +24,7 @@ MonoBehaviour:
     - rid: 8480390413592559616
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
+        isIn: 0
         durationBeat: 42
         startDelayBeat: 4
         bpm: 100
@@ -35,38 +33,6 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          speedUpRate: 1
-          spawnBeat: 1
-          moveBeat: 4
-          hiding: 0
-    - rid: 8480390413592559617
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 42
-        startDelayBeat: 0
-        bpm: 100
-        timeScale: 1
-        isFlipAD: 0
-        monsterDatas:
-        - isIn: 1
-          monsterType: 5
-          speedUpRate: 1
-          spawnBeat: 2
-          moveBeat: 4
-          hiding: 0
-    - rid: 8480390413592559618
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 42
-        startDelayBeat: 1
-        bpm: 100
-        timeScale: 1
-        isFlipAD: 0
-        monsterDatas:
-        - isIn: 1
-          monsterType: 4
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4

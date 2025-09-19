@@ -203,7 +203,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -60.052773, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -410,6 +410,10 @@ MonoBehaviour:
   - {fileID: 587098028343102862}
   - {fileID: 587098028343102862}
   - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
   StandingImage:
   - {fileID: 4050828568703129866}
   - {fileID: 5613997954310720840}
@@ -432,9 +436,10 @@ MonoBehaviour:
   panelOffset: {x: 0, y: 0}
   contents: {fileID: 3586880080357216618}
   scenes:
-  - speakingCharacterData: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
-    text: "\uD14C\uC2A4\uD2B8\uC911 \uC785\uB2C8\uB2E4."
+    text: "\uC808\uC744 \uB098\uC640 \uB9C8\uC8FC\uD55C \uC808\uB9DD\uC801\uC778
+      \uC138\uC0C1."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0
@@ -449,9 +454,28 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
-    text: "\uD14C\uC2A4\uD2B8 \uC911\uC785\uB2C8\uB2E42"
+    text: "\uC138\uC0C1\uC740 \uC815\uB9D0 \uC870\uD654\uB97C \uC783\uC5C8\uACE0,
+      \uBAA8\uB450\uAC00 \uC545\uD55C \uAE30\uC6B4\uB9CC \uD758\uB9AC\uACE0 \uC788\uC5C8\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
+    isFirstAppearance: 0
+    text: "\uACE0\uC791 \uC808\uAC04\uC5D0 \uC228\uC5B4\uC788\uB358 \uC911\uB188\uC774
+      \uBB58 \uC548\uB2E4\uACE0."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0
@@ -466,9 +490,27 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
     isFirstAppearance: 0
-    text: "\uC801\uC774 \uB098\uC624\uBA74 \uCCD0\uC57C\uD558\uB124!!"
+    text: "\uC774\uAC83\uC774 \uBCF8\uB798 \uC138\uC0C1\uC758 \uBAA8\uC2B5\uC774\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 1
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "\uC870\uD654\uAC00 \uAE68\uC9C4 \uC138\uC0C1\uC774\uB77C\uBA74... \uACB0\uAD6D...
+      \uBC14\uB85C\uC7A1\uD790 \uBFD0."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0
@@ -483,15 +525,51 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
-    text: "\uC790 \uAC00\uBCF4\uC790!"
+    text: "\uC138\uC0C1\uC758 \uC774\uCE58\uAC00 \uAC10\uD788 \uB098\uB97C \uC2DC\uD5D8\uD558\uB294\uAD6C\uB098."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0
     postDelay: 0
     showLeftCharacter: 1
     showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
+    isFirstAppearance: 0
+    text: "\uC5B4\uB9AC\uC11D\uAE30\uB294! \uB124 \uC2A4\uC2B9\uACFC \uB611\uAC19\uC740
+      \uC2E4\uC218\uB97C \uC800\uC9C0\uB974\uB294\uAD70. "
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 3705865dc6de2e54e86d8b42c233ba3d, type: 2}
+    isFirstAppearance: 0
+    text: "\uB124\uB188 \uB610\uD55C \uC774 \uC138\uC0C1\uC758 \uC77C\uBD80\uAC00
+      \uB420 \uAC83\uC774\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
     isAnger: 0
     isSurprized: 0
     leftSDAnim: 0
