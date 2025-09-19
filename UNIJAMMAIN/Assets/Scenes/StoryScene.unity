@@ -1274,6 +1274,9 @@ MonoBehaviour:
   - {fileID: 2630843551951615991, guid: cbfd8c3a3c227ad428e704402e631ef4, type: 3}
   - {fileID: 2630843551951615991, guid: 28a4cb7ced01608479b6c23cb8734fd7, type: 3}
   - {fileID: 2630843551951615991, guid: 35959e07c7b7d5a4f8e9b63bccbbfe77, type: 3}
+  - {fileID: 2630843551951615991, guid: 5003512bcf2c4a44da8b8e0da84be855, type: 3}
+  - {fileID: 2630843551951615991, guid: 15f2af25d664c4e4ea673dd47367622e, type: 3}
+  - {fileID: 2630843551951615991, guid: 793d6d7ce781467469977a3ecfabde5e, type: 3}
   BackGround: {fileID: 928231783}
 --- !u!4 &1531425654
 Transform:

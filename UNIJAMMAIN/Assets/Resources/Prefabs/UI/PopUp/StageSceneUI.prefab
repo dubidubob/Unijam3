@@ -676,7 +676,7 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: f42b5f6087645154f8e7fe8f20f2daad, type: 3}
   - {fileID: 21300000, guid: 74e717e624ccf2d449e6544c605f2385, type: 3}
-  - {fileID: 21300000, guid: cedaf74bf935284428048f27fd600839, type: 3}
+  - {fileID: 21300000, guid: 67230f087a2483b4e91b683ed5299f44, type: 3}
   - {fileID: 21300000, guid: aac5fb2afe854534baf6119a9a1ad416, type: 3}
   - {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}
 --- !u!1 &1705685369961674657
@@ -1641,7 +1641,6 @@ MonoBehaviour:
     levelText: "\uB09C\uC774\uB3C4 : \uCD5C\uC0C1\n\n\uD65C\uC57D\uCE58"
   stageMainText: {fileID: 3591954167521034253}
   stageMainSubText: {fileID: 4089383583512907318}
-  stageExplain: {fileID: 0}
   stageLevelText: {fileID: 6073260835081670986}
 --- !u!223 &8565910677778262950
 Canvas:
