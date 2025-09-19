@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsters:
   - monsterType: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    sprite: {fileID: 0}
-  - monsterType: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    sprite: {fileID: 0}
-  - monsterType: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    sprite: {fileID: 0}
-  - monsterType: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    sprite: {fileID: 0}
-  - monsterType: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-    sprite: {fileID: 0}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: 268e023b0b1188448976daa569b41478, type: 3}
+  - monsterType: 2
+    color: {r: 0, g: 0, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: cdf3ffc4c2f5d0742b0058d1e2ff6e88, type: 3}
+  - monsterType: 4
+    color: {r: 0, g: 0, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: 1c3cf5d337809da4c81ea016c24b304e, type: 3}
+  - monsterType: 5
+    color: {r: 0, g: 0, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: 02b8d3e9065df4e4595b89418a2ba766, type: 3}
+  - monsterType: 6
+    color: {r: 0, g: 0, b: 0, a: 1}
+    sprite: {fileID: 21300000, guid: 268e023b0b1188448976daa569b41478, type: 3}
