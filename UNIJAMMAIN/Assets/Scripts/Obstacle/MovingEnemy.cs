@@ -92,9 +92,11 @@ public class MovingEnemy : MonoBehaviour
     public void SetKnockback(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        Debug.Log("SetknockBack 출력");
       
         if (isTrue)
         {
+            Debug.Log("SetknockBack 출력");
             spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.Knockback);
             spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.Knockback);
         }
@@ -136,8 +138,6 @@ public class MovingEnemy : MonoBehaviour
     public void SetHiding(bool isTrue)
         {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDHiding);
-        spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDHiding);
         if (isTrue)
         {
             spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDHiding);
