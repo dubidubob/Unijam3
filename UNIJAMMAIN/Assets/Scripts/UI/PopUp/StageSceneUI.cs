@@ -42,7 +42,6 @@ public class StageSceneUI : UI_Popup
     [Header("Text Objects")]
     public TMP_Text stageMainText;
     public TMP_Text stageMainSubText;
-    public TMP_Text stageExplain;
     public TMP_Text stageLevelText;
 
 
@@ -398,7 +397,6 @@ public class StageSceneUI : UI_Popup
     {
         stageMainText.text = stageDataList[index].stageMainText;
         stageMainSubText.text = stageDataList[index].stageMainSubText;
-        stageExplain.text = stageDataList[index].stageExplain;
         stageLevelText.text = stageDataList[index].levelText;
 
     }
