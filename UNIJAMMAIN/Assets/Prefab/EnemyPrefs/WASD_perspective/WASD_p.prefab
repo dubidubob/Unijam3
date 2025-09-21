@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0aaa2e4356d604eb8525284660ca32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterImg: {fileID: 327336073600436442}
   dyingEffectObject: {fileID: 4313620346954261659}
   isKnockbacked: 0
 --- !u!50 &7625359705296421154
