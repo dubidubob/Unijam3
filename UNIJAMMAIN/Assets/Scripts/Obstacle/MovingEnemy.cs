@@ -45,7 +45,6 @@ public class MovingEnemy : MonoBehaviour
     private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;
-    private SpriteRenderer spriteRenderer;
     private void OnEnable()
     {
         _elapsedTime = 0f;
@@ -163,14 +162,14 @@ public class MovingEnemy : MonoBehaviour
     }
     public void SetHiding(bool isTrue,Define.MonsterType monsterType)
         {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
         if (isTrue)
         {
             SettingSprite(monsterType);
             // 숨기기 코루틴 시작
             if (_hidingCoroutine == null)
             {
-                _hidingCoroutine = StartCoroutine(HidingAnimation(spriteRenderer));
+                _hidingCoroutine = StartCoroutine(HidingAnimation(monsterImg));
             }
 
         }
@@ -201,6 +200,8 @@ public class MovingEnemy : MonoBehaviour
     }
     public bool CheckCanDead()
     {
+        AttackedAnimation();
+
         if (knockback.CheckKnockback())
         {
             if(this.isActiveAndEnabled) StartCoroutine(ExecuteKnockback());
@@ -310,15 +311,25 @@ public class MovingEnemy : MonoBehaviour
         return Vector3.forward;
     }
 
+
+    void AttackedAnimation()
+    {
+        // TODO: 몬스터 타입에 맞는 피격 스프라이트를 가져오도록 수정해야 할 수 있습니다.
+        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.Diagonal);
+        if (attackedSprite != null)
+        {
+            monsterImg.sprite = attackedSprite;
+        }
+    }
+
+
     #region Animation
 
-   
+
 
     private IEnumerator ProcessDeath()
     {
 
-        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.Diagonal); // 일단 기본으로
-        monsterImg.sprite = attackedSprite;
         // 1. 사망 이펙트 애니메이션 준비
         Sprite dyingSprite = Managers.Game.monster.DyingEffectSprite();
         Transform effectTransform = dyingEffectObject.GetComponent<Transform>();
@@ -328,7 +339,7 @@ public class MovingEnemy : MonoBehaviour
 
         // 2. DOTween 애니메이션 실행
         //    체인을 연결하여 순차적으로 실행하고, 이 트윈 자체를 변수에 저장합니다.
-        Tween dyingTween = effectTransform.DOScale(1.5f, 0.04f)
+        Tween dyingTween = effectTransform.DOScale(1.5f, 0.08f)
                                           .OnComplete(() => effectTransform.DOScale(0, 0.06f));
 
         // 3. 위에서 만든 DOTween 애니메이션이 끝날 때까지 기다립니다.
@@ -346,7 +357,6 @@ public class MovingEnemy : MonoBehaviour
 
     private void SettingSprite(Define.MonsterType monsterType)
     {
-       
         monsterImg.sprite = Managers.Game.monster.GetSprite(monsterType);
         orginSprite = monsterImg.sprite;
         monsterImg.color = Managers.Game.monster.GetColor(monsterType);
