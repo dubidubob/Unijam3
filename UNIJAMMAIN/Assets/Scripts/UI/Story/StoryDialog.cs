@@ -195,8 +195,15 @@ public class StoryDialog : UI_Popup
 
             for (int i = 0; i <= len; i++)
             {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Debug.Log("Space & skip");
+                    TestTexts[idx].text = full; // 텍스트를 즉시 전체 문장으로 설정
+                    break;                      // 타이핑 루프 탈출
+                }
+
                 TestTexts[idx].text = full.Typing(i);
-                yield return new WaitForSecondsRealtime(0.025f);
+                yield return new WaitForSecondsRealtime(0.02f);
             }
 
             if (scene.leftSDAnim || scene.rightSDAnim)

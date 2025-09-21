@@ -42,6 +42,8 @@ public class PhaseController : MonoBehaviour
         
 
         IngameData.RankInit();
+        Managers.Game.GameStart();
+        
 
         PauseManager.ControlTime(false);
 

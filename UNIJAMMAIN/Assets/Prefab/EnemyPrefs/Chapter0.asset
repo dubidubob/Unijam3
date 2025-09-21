@@ -37,8 +37,8 @@ MonoBehaviour:
         timeScale: 1
         steps:
         - textContents:
-          - "(\uB9D0\uC740 \uADF8\uB807\uAC8C \uD588\uC9C0\uB9CC, \uC2E4\uC804\uC740
-            \uCC98\uC74C\uC778\uB370..)"
+          - "(\uB9D0\uC740 \uADF8\uB807\uAC8C \uD588\uC9C0\uB9CC, \uC2E4\uC740 \uD55C
+            \uBC88\uB3C4 \uB300\uC801\uD574\uBCF8 \uC801\uC774 \uC5C6\uB2E4.)"
           monsterCutline: 0
           delayBeat: 4
         - textContents:
@@ -47,7 +47,8 @@ MonoBehaviour:
           monsterCutline: 0
           delayBeat: 8
         - textContents:
-          - "\uC2A4\uC2B9\uB2D8 \uB9D0\uC500\uC744 \uB530\uB77C.. \uD55C \uBC88 \uD574\uBCF4\uC790!"
+          - "\uC2A4\uC2B9\uB2D8 \uB9D0\uC500\uC744 \uB530\uB77C.. \uADF8\uB798 \uD55C
+            \uBC88 \uD574\uBCF4\uC790!"
           monsterCutline: 0
           delayBeat: 4
     - rid: 8714838720201883653
@@ -81,7 +82,7 @@ MonoBehaviour:
           monsterCutline: 2
           delayBeat: 4
         - textContents:
-          - "\uC800.. \uB098\uB97C \uB2EE\uC740 \uC545\uB839\uB4E4\uC740 \uB610 \uBB50\uC57C?"
+          - "\uC800.. \uB098\uB97C \uB2EE\uC740 \uC545\uB839\uB4E4\uC740.. \uC124\uB9C8.."
           monsterCutline: 0
           delayBeat: 4
         - textContents:

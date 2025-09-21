@@ -1597,14 +1597,14 @@ MonoBehaviour:
   mapImage: {fileID: 5353428060422201689}
   startButtonText: {fileID: 5527089971464411152}
   stageDataList:
-  - stageMainText: "0. \uC808\uC55E   "
+  - stageMainText: "0. \uC808 \uC55E   "
     stageMainSubText: "\uC218\uB828\uC758 \uC2DC\uC791.\L\uC2A4\uC2B9\uB2D8\uAED8\uC11C\uB294
       \uD56D\uC0C1\L\uC2DC\uC791\uC774 \uACE7 \uBC18\uC774\uB77C \uD558\uC168\uC9C0."
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uD558\n\n\uD65C\uC57D\uCE58"
   - stageMainText: "1. \uAE4A\uC740 \uC232"
-    stageMainSubText: "\uC870\uD654\uB97C \uC783\uC740 \uC138\uC0C1,\L\uB4DC\uB514\uC5B4
-      \uB9C8\uC8FC\uD55C\uB2E4."
+    stageMainSubText: "\uC870\uD654\uB97C \uC783\uC740 \uC138\uC0C1,\L\uB0B4 \uB300\uC801\uC744
+      \uAC10\uD788 \uC2DC\uC791\uD558\uB9AC."
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uD558\n\n\uD65C\uC57D\uCE58"
   - stageMainText: "2. \uD3ED\uD3EC"
@@ -1613,8 +1613,8 @@ MonoBehaviour:
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uC911\n\n\uD65C\uC57D\uCE58"
   - stageMainText: "3. \uC0B0 \uC815\uC0C1"
-    stageMainSubText: "\uB9C8\uC74C\uC744 \uB2E4\uC7A1\uACE0 \uC624\uB978 \uC0B0
-      \uC815\uC0C1.\L\uC5B4\uC9F8\uC11C \uB2F9\uC2E0\uC774 \uADF8\uB807\uAC8C..."
+    stageMainSubText: "\uC6B4\uBA85\uCC98\uB7FC \uC774\uB04C\uB9B0 \uC0B0 \uC815\uC0C1.\L...\uB098\uB97C
+      \uAE30\uB2E4\uB9AC\uACE0 \uC788\uC5C8\uB2E4."
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uC911\uC0C1\n\n\uD65C\uC57D\uCE58"
   - stageMainText: "4. \uD558\uB298\uBC30"
@@ -3098,8 +3098,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 427.48132, y: -72}
-  m_SizeDelta: {x: 534.1227, y: 748.35}
+  m_AnchoredPosition: {x: 397.70996, y: -72}
+  m_SizeDelta: {x: 474.58, y: 748.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7113455870402028873
 CanvasRenderer:
@@ -3460,7 +3460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB09C\uC774\uB3C4: \uD558\n\n\uD65C\uC57D\uCE58"
+  m_text: "\uB09C\uC774\uB3C4 : \uD558\n\n\uD65C\uC57D\uCE58"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53027ca2874e0804f9c8022a8fc6e514, type: 2}
   m_sharedMaterial: {fileID: -7793487522434086522, guid: 53027ca2874e0804f9c8022a8fc6e514, type: 2}

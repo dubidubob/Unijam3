@@ -12,19 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3a65dfd68119c4ba3475eea38968aa, type: 3}
   m_Name: WASD
   m_EditorClassIdentifier: 
+  dyingEffectSprite: {fileID: 21300000, guid: b796957494ff1ea43beaa30a65578d9c, type: 3}
   monsters:
   - monsterType: 0
     color: {r: 1, g: 1, b: 1, a: 1}
     sprite: {fileID: 21300000, guid: 76affc7d52279f34eaa48e9c8b2b36dc, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
   - monsterType: 2
     color: {r: 1, g: 1, b: 1, a: 1}
     sprite: {fileID: 21300000, guid: 905165c0ada52fc498da642af70b9af4, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
   - monsterType: 4
     color: {r: 1, g: 1, b: 1, a: 1}
     sprite: {fileID: 21300000, guid: 76affc7d52279f34eaa48e9c8b2b36dc, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
   - monsterType: 5
     color: {r: 1, g: 1, b: 1, a: 1}
     sprite: {fileID: 21300000, guid: 16e324ba8e7924f4a904716827e3972d, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
   - monsterType: 6
     color: {r: 1, g: 1, b: 1, a: 1}
     sprite: {fileID: 21300000, guid: f0f5d35cf87e9e644815d0cdf430835c, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}

@@ -30,6 +30,7 @@ public class StartCountUI : MonoBehaviour
     private void Start123()
     {
         if (cnt != 0) return;
+ 
         running = true;
     }
 
@@ -42,6 +43,8 @@ public class StartCountUI : MonoBehaviour
             running = false;
             this.enabled = false;
             this.gameObject.SetActive(false);
+            // State °ü¸®
+            Managers.Game.currentPlayerState = GameManager.PlayerState.Normal;
             return;
         }
 
