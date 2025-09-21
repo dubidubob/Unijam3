@@ -32,12 +32,15 @@ public class MovingEnemy : MonoBehaviour
     private float _elapsedTime;
     private Knockback knockback;
     private SpriteRenderer monsterImg;
+    public GameObject dyingEffectObject;
     private Vector3 origin;
     private bool isResizeable = false;
     private Vector2 sizeDiffRate;
     public bool isKnockbacked=false;
     private Coroutine _hidingCoroutine;
-
+    private Define.MonsterType MonsterType;
+   
+    
     private float movingDistanceTmp;
     private int attackValue = 1;
 
@@ -63,11 +66,12 @@ public class MovingEnemy : MonoBehaviour
     }
 
     public void SetDead()
-    {
+    {   
+        DyingAnimation();
         KillingDO();
         StopCoroutine(HidingAnimation(spriteRenderer));
-        Poolable poolable = GetComponent<Poolable>();
-        Managers.Pool.Push(poolable);
+        StartCoroutine(WaitForDyingAnimation());
+       
     }
     private void KillingDO()
     {
@@ -75,8 +79,9 @@ public class MovingEnemy : MonoBehaviour
         DOTween.Kill(transform, "Speeding");
     }
 
-    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType)
+    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType,Define.MonsterType monsterType)
     {
+        MonsterType = monsterType;
         movingDistanceTmp = distance;
         this.playerPos = playerPos;
         enemyType = wasdType;
@@ -92,13 +97,13 @@ public class MovingEnemy : MonoBehaviour
     public void SetKnockback(bool isTrue)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        Debug.Log("SetknockBack 출력");
+
       
         if (isTrue)
         {
             Debug.Log("SetknockBack 출력");
-            spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.Knockback);
-            spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.Knockback);
+            spriteRenderer.color = Managers.Game.monster.GetColor(Define.MonsterType.Knockback);
+            spriteRenderer.sprite = Managers.Game.monster.GetSprite(Define.MonsterType.Knockback);
         }
         else 
         {
@@ -116,8 +121,8 @@ public class MovingEnemy : MonoBehaviour
             Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
 
             transform.DOMove(targetPos, movingDuration).SetEase(Ease.InQuint).SetId("Speeding");
-            spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDDash);
-            spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDDash);
+            spriteRenderer.sprite = Managers.Game.monster.GetSprite(Define.MonsterType.WASDDash);
+            spriteRenderer.color = Managers.Game.monster.GetColor(Define.MonsterType.WASDDash);
         }
 
     }
@@ -130,8 +135,8 @@ public class MovingEnemy : MonoBehaviour
         {
             Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
             transform.DOMove(targetPos, movingDuration).SetEase(Ease.InOutCirc).SetId("FIFO");
-            spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDFIFO);
-            spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDFIFO);
+            spriteRenderer.sprite = Managers.Game.monster.GetSprite(Define.MonsterType.WASDFIFO);
+            spriteRenderer.color = Managers.Game.monster.GetColor(Define.MonsterType.WASDFIFO);
         }
 
     }
@@ -140,8 +145,8 @@ public class MovingEnemy : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isTrue)
         {
-            spriteRenderer.sprite = MonsterDatabaseSO.GetSprite(Define.MonsterType.WASDHiding);
-            spriteRenderer.color = MonsterDatabaseSO.GetColor(Define.MonsterType.WASDHiding);
+            spriteRenderer.sprite = Managers.Game.monster.GetSprite(Define.MonsterType.WASDHiding);
+            spriteRenderer.color = Managers.Game.monster.GetColor(Define.MonsterType.WASDHiding);
             // 숨기기 코루틴 시작
             if (_hidingCoroutine == null)
             {
@@ -176,6 +181,8 @@ public class MovingEnemy : MonoBehaviour
     }
     public bool CheckCanDead()
     {
+        // 피격받는 모션 재생
+        StartCoroutine(AttackedAnimation());
         if (knockback.CheckKnockback())
         {
             if(this.isActiveAndEnabled) StartCoroutine(ExecuteKnockback());
@@ -284,4 +291,34 @@ public class MovingEnemy : MonoBehaviour
         Debug.Log("CalculateVector실패");
         return Vector3.forward;
     }
+
+    #region Animation
+
+    IEnumerator AttackedAnimation()
+    {
+        Sprite tmp = monsterImg.sprite;
+        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(MonsterType);
+        monsterImg.sprite = attackedSprite;
+
+        yield return new WaitForSeconds(0.4f);
+        monsterImg.sprite = tmp;
+
+    }
+
+    void DyingAnimation()
+    {
+        Sprite dyingSprite = Managers.Game.monster.DyingEffectSprite();
+        Transform transformTmp = dyingEffectObject.GetComponent<Transform>();
+        dyingEffectObject.GetComponent<SpriteRenderer>().sprite = dyingSprite;
+        //transform scale 0->1로 변경후 0으로 감소
+        transformTmp.DOScale(1, 0.2f).OnComplete(() => transformTmp.DOScale(0, 0.2f));
+    }
+
+    IEnumerator WaitForDyingAnimation()
+    {
+        yield return new WaitForSeconds(0.4f);
+        Poolable poolable = GetComponent<Poolable>();
+        Managers.Pool.Push(poolable);
+    }
+    #endregion
 }

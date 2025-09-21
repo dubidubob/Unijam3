@@ -35,7 +35,7 @@ public class GameManager
     public BlurController blur;
     public Accuracy accuracy;
     public PlayerActionUI actionUI;
-   
+    public MonsterDatabaseSO monster;
 
     
     public int perfect = 0;
@@ -67,6 +67,7 @@ public class GameManager
     {
         Normal,
         GroggyAttack,
+        Ready,
         Die
     }
     public GameState CurrentState { get; set; }
@@ -191,6 +192,7 @@ public class GameManager
     /// <param name="value"></param>
     private void DecHealth(int value)
     {
+        if(currentPlayerState== PlayerState.Ready) { return; } // Ready상태면 무시
         Combo = 0; //무조건 콤보 끊김
         ComboContinue?.Invoke(Combo);
 
@@ -233,5 +235,12 @@ public class GameManager
         blur.GameOverBlurEffect();
         Time.timeScale = 0;
         
+    }
+    /// <summary>
+    /// 인게임 창에 들어갔을때 호출. Scene을 호출하자마자 설정.
+    /// </summary>
+    public void GameStart()
+    {
+        currentPlayerState = PlayerState.Ready; // normal로 바꿔주는건 StartCountUI에서 담당하자.
     }
 }

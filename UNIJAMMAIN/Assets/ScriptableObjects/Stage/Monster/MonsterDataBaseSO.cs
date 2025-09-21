@@ -10,10 +10,12 @@ public class MonsterDatabaseSO : ScriptableObject
         public Define.MonsterType monsterType;
         public Color color;
         public Sprite sprite;
+        public Sprite attackedSprite;
     }
 
+    public Sprite dyingEffectSprite;
     public List<MonsterData> monsters;
-
+    
     // ====== 정적 접근용 ======
     private static Dictionary<Define.MonsterType, MonsterData> _dict;
 
@@ -28,10 +30,10 @@ public class MonsterDatabaseSO : ScriptableObject
             if (!_dict.ContainsKey(m.monsterType))
                 _dict.Add(m.monsterType, m);
         }
+        Managers.Game.monster = this;
     }
-
-    // 정적 함수로 바로 접근 가능
-    public static Sprite GetSprite(Define.MonsterType type)
+    
+    public Sprite GetSprite(Define.MonsterType type)
     {
         if (_dict != null && _dict.TryGetValue(type, out var data))
             return data.sprite;
@@ -40,11 +42,27 @@ public class MonsterDatabaseSO : ScriptableObject
         return null;
     }
 
-    public static Color GetColor(Define.MonsterType type)
+    public Color GetColor(Define.MonsterType type)
     {
         if (_dict != null && _dict.TryGetValue(type, out var data))
             return data.color;
 
         return Color.white;
+    }
+
+    public Sprite GetAttackedSprite(Define.MonsterType type)
+    {
+        if (_dict != null && _dict.TryGetValue(type, out var data))
+            return data.attackedSprite;
+
+        Debug.LogWarning($"[MonsterDatabaseSO] {type}에 해당하는 Sprite가 없습니다.");
+        return null;
+
+    }
+
+    public Sprite DyingEffectSprite()
+    {
+
+        return dyingEffectSprite;
     }
 }
