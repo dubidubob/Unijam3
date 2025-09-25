@@ -75,7 +75,7 @@ public class MovingEnemy : MonoBehaviour
         {
             origin = monsterImg.transform.localScale;
         }
-
+        GarbageClean();
         if(enemyType == GamePlayDefine.WASDType.W || enemyType == GamePlayDefine.WASDType.S)
             isResizeable = true;
     }
@@ -312,10 +312,11 @@ public class MovingEnemy : MonoBehaviour
     }
 
 
-    void AttackedAnimation()
+    void AttackedAnimation()    
     {
         // TODO: 몬스터 타입에 맞는 피격 스프라이트를 가져오도록 수정해야 할 수 있습니다.
-        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.Diagonal);
+        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.WASDDash);
+        orginSprite = monsterImg.sprite;
         if (attackedSprite != null)
         {
             monsterImg.sprite = attackedSprite;
@@ -329,18 +330,18 @@ public class MovingEnemy : MonoBehaviour
 
     private IEnumerator ProcessDeath()
     {
-
         // 1. 사망 이펙트 애니메이션 준비
         Sprite dyingSprite = Managers.Game.monster.DyingEffectSprite();
         Transform effectTransform = dyingEffectObject.GetComponent<Transform>();
         SpriteRenderer effectRenderer = dyingEffectObject.GetComponent<SpriteRenderer>();
+        
 
         effectRenderer.sprite = dyingSprite;
 
         // 2. DOTween 애니메이션 실행
         //    체인을 연결하여 순차적으로 실행하고, 이 트윈 자체를 변수에 저장합니다.
-        Tween dyingTween = effectTransform.DOScale(1.5f, 0.08f)
-                                          .OnComplete(() => effectTransform.DOScale(0, 0.06f));
+        Tween dyingTween = effectTransform.DOScale(1.5f, 0.1f)
+                                          .OnComplete(() => effectTransform.DOScale(0, 0.1f));
 
         // 3. 위에서 만든 DOTween 애니메이션이 끝날 때까지 기다립니다.
         //    WaitForSeconds(0.9f) 같은 고정된 시간이 아니라 실제 애니메이션 길이에 맞춰 기다립니다.
@@ -348,13 +349,18 @@ public class MovingEnemy : MonoBehaviour
 
         // 4. 애니메이션이 끝나면 오브젝트를 풀에 반납합니다.
         //    스프라이트 원상복구 등은 OnEnable에서 처리하므로 여기선 필요 없습니다.
+        monsterImg.sprite = orginSprite;
         Poolable poolable = GetComponent<Poolable>();
         Managers.Pool.Push(poolable);
     }
     #endregion
 
     #region Tool
-
+    IEnumerator GarbageClean()
+    {
+        yield return new WaitForSeconds(15f);
+        SetDead();
+    }
     private void SettingSprite(Define.MonsterType monsterType)
     {
         monsterImg.sprite = Managers.Game.monster.GetSprite(monsterType);

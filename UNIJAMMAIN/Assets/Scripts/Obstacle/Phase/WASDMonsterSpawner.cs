@@ -71,14 +71,19 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private bool _spawning = false;
     private double _startDsp;
     private double _lastSpawnTime;
+    private string _spawnPointString;
+    private int _count=0;
     public void Spawn(MonsterData data)
     {
         _data = data;
         _spawnInterval = (IngameData.BeatInterval * data.spawnBeat)/data.speedUpRate;
         _tick = 0;
+        _count = 0;
          _startDsp = AudioSettings.dspTime;
         SetLastSpawnTime(data.moveBeat);
         _spawning = true;
+        _spawnPointString = data.WASD_Pattern;
+       
     }
 
     public void UnSpawn()
@@ -135,13 +140,26 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
         for (int i = 0; i < cnt; i++)
         {
-            WASDType enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
+            WASDType enemyType;
+            if (_count < _spawnPointString.Length)// 출력가능하다면
+            {
+                enemyType = SettingWASD_Type(_spawnPointString[_count]);
+                _count++;
+            }
+            else
+            {
+
+                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
+            }
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
             GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
             go.transform.position = _spawnPosition[enemyType];
 
             VariableSetting(go.GetComponent<MovingEnemy>(), enemyType);
+
+       
         }
+        
     }
 
     float threshold = 0.1f;
@@ -165,6 +183,29 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         this.sizeDiffRate = sizeDiffRate;
         this._maxCnt = Mathf.Clamp(maxCnt, 1, 4);
         this._idx = idx;
+    }
+
+    private WASDType SettingWASD_Type(char type)
+    {
+        if (type == 'A')
+        {
+            return WASDType.A;
+        }
+        else if (type =='W')
+        {
+            return WASDType.W;
+        }
+        else if(type=='S')
+        {
+            return WASDType.S;
+        }
+        else if(type=='D')
+        {
+            return WASDType.D;
+        }
+
+        Debug.LogWarning("String타입이 W,A,S,D 문자 값 중 하나여야 합니다.");
+        return WASDType.S;
     }
     #endregion
 }
