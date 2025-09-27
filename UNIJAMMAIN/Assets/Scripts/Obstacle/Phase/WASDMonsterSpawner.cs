@@ -151,6 +151,10 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
                 enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
             }
+            if(enemyType == WASDType.MaxCnt)
+            {
+                continue;
+            }
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
             GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
             go.transform.position = _spawnPosition[enemyType];
@@ -202,6 +206,10 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         else if(type=='D')
         {
             return WASDType.D;
+        }
+        else if(type=='_')
+        {
+            return WASDType.MaxCnt;
         }
 
         Debug.LogWarning("String타입이 W,A,S,D 문자 값 중 하나여야 합니다.");

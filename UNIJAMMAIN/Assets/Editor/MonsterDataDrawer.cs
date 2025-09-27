@@ -36,8 +36,13 @@ public class MonsterDataDrawer : PropertyDrawer
         // monsterType enum의 현재 선택된 값을 가져옵니다.
         Define.MonsterType selectedType = (Define.MonsterType)monsterTypeProp.enumValueIndex;
 
-        // 만약 선택된 타입이 Boss라면, bossName 필드를 그립니다.
-        if (selectedType == Define.MonsterType.WASD)
+        // 만약 선택된 타입에 따라, 필드를 그립니다.
+        if (selectedType == Define.MonsterType.WASD
+            || selectedType == Define.MonsterType.WASDDash
+            || selectedType == Define.MonsterType.WASDFIFO
+            || selectedType == Define.MonsterType.WASDHiding
+            || selectedType == Define.MonsterType.Knockback
+            )
         {
             var bossNameProp = property.FindPropertyRelative("WASD_Pattern");
             Rect bossNameRect = new Rect(position.x, currentY, position.width, singleLineHeight);
