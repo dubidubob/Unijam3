@@ -207,13 +207,11 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         {
             return WASDType.D;
         }
-        else if(type=='_')
+        else
         {
             return WASDType.MaxCnt;
         }
 
-        Debug.LogWarning("String타입이 W,A,S,D 문자 값 중 하나여야 합니다.");
-        return WASDType.S;
     }
     #endregion
 }
