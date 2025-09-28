@@ -72,7 +72,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private bool _spawning = false;
     private double _startDsp;
     private double _lastSpawnTime;
-    private string _spawnPointString;
+    private string _spawnPointString = null;
     private int _count=0;
     public void Spawn(MonsterData data)
     {
@@ -142,8 +142,9 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         for (int i = 0; i < cnt; i++)
         {
             WASDType enemyType = WASDType.None;
-            if (Managers.Game.CurrentState == GameManager.GameState.Battle)
+            if (Managers.Game.CurrentState == GameManager.GameState.Battle&&_spawnPointString!=null)
             {
+                
                 if (_count < _spawnPointString.Length)// 출력가능하다면
                 {
                     enemyType = SettingWASD_Type(_spawnPointString[_count]);
