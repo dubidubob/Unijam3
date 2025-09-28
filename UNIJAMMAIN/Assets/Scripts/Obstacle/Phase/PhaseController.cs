@@ -42,6 +42,7 @@ public class PhaseController : MonoBehaviour
         
 
         IngameData.RankInit();
+        Managers.Game.monster = monsterDatabase;
         Managers.Game.GameStart();
         
 

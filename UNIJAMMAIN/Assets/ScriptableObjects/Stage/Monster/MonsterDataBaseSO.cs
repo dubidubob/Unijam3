@@ -22,6 +22,7 @@ public class MonsterDatabaseSO : ScriptableObject
     // 초기화 함수 (한 번만 실행)
     public void Init()
     {
+
         if (_dict != null) return;
 
         _dict = new Dictionary<Define.MonsterType, MonsterData>();
@@ -30,11 +31,12 @@ public class MonsterDatabaseSO : ScriptableObject
             if (!_dict.ContainsKey(m.monsterType))
                 _dict.Add(m.monsterType, m);
         }
-        Managers.Game.monster = this;
+        
     }
     
     public Sprite GetSprite(Define.MonsterType type)
     {
+        Debug.Log(_dict);
         if (_dict != null && _dict.TryGetValue(type, out var data))
             return data.sprite;
 

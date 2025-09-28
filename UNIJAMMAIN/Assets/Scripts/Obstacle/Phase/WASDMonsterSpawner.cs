@@ -71,14 +71,19 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private bool _spawning = false;
     private double _startDsp;
     private double _lastSpawnTime;
+    private string _spawnPointString;
+    private int _count=0;
     public void Spawn(MonsterData data)
     {
         _data = data;
         _spawnInterval = (IngameData.BeatInterval * data.spawnBeat)/data.speedUpRate;
         _tick = 0;
+        _count = 0;
          _startDsp = AudioSettings.dspTime;
         SetLastSpawnTime(data.moveBeat);
         _spawning = true;
+        _spawnPointString = data.WASD_Pattern;
+       
     }
 
     public void UnSpawn()
@@ -135,13 +140,34 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
         for (int i = 0; i < cnt; i++)
         {
-            WASDType enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
+            WASDType enemyType;
+            if (_count < _spawnPointString.Length)// 출력가능하다면
+            {
+                enemyType = SettingWASD_Type(_spawnPointString[_count]);
+                if(enemyType == WASDType.Random) // 랜덤이라면
+                {
+                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length-1)]; //enemyType랜덤으로
+                }
+                _count++;
+            }
+            else
+            {
+
+                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
+            }
+            if(enemyType == WASDType.None) // 출력하지 않기
+            {
+                continue;
+            }
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
             GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
             go.transform.position = _spawnPosition[enemyType];
 
             VariableSetting(go.GetComponent<MovingEnemy>(), enemyType);
+
+       
         }
+        
     }
 
     float threshold = 0.1f;
@@ -158,10 +184,6 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     {
         float distance = Vector3.Distance(_spawnPosition[type], _targetPosition[type]);
         movingEnemy.SetVariance(distance, _data, sizeDiffRate, _playerPos, type,_data.monsterType);
-        movingEnemy.SetKnockback(_data.monsterType == Define.MonsterType.Knockback);
-        movingEnemy.SetHiding(_data.monsterType == Define.MonsterType.WASDHiding);
-        movingEnemy.SetSpeeding(_data.monsterType == Define.MonsterType.WASDDash);
-        movingEnemy.SetFIFO(_data.monsterType == Define.MonsterType.WASDFIFO);
     }
 
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)
@@ -169,6 +191,32 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         this.sizeDiffRate = sizeDiffRate;
         this._maxCnt = Mathf.Clamp(maxCnt, 1, 4);
         this._idx = idx;
+    }
+
+    private WASDType SettingWASD_Type(char type)
+    {
+        if (type == 'A')
+        {
+            return WASDType.A;
+        }
+        else if (type =='W')
+        {
+            return WASDType.W;
+        }
+        else if(type=='S')
+        {
+            return WASDType.S;
+        }
+        else if(type=='D')
+        {
+            return WASDType.D;
+        }
+        else if(type=='R')
+        {
+            return WASDType.Random;
+        }
+
+        return WASDType.None;
     }
     #endregion
 }
