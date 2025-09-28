@@ -144,6 +144,10 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
             if (_count < _spawnPointString.Length)// 출력가능하다면
             {
                 enemyType = SettingWASD_Type(_spawnPointString[_count]);
+                if(enemyType == WASDType.Random) // 랜덤이라면
+                {
+                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length-1)]; //enemyType랜덤으로
+                }
                 _count++;
             }
             else
@@ -151,7 +155,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
                 enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
             }
-            if(enemyType == WASDType.MaxCnt)
+            if(enemyType == WASDType.None) // 출력하지 않기
             {
                 continue;
             }
@@ -207,11 +211,12 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         {
             return WASDType.D;
         }
-        else
+        else if(type=='R')
         {
-            return WASDType.MaxCnt;
+            return WASDType.Random;
         }
 
+        return WASDType.None;
     }
     #endregion
 }

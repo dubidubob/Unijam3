@@ -20,7 +20,8 @@ public class GamePlayDefine
         D,
         W,
         S,
-        MaxCnt
+        None,
+        Random
     }
     public enum DiagonalType
     {
