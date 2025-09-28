@@ -679,6 +679,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 67230f087a2483b4e91b683ed5299f44, type: 3}
   - {fileID: 21300000, guid: aac5fb2afe854534baf6119a9a1ad416, type: 3}
   - {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}
+  - {fileID: 21300000, guid: 62f08656d047e284190639ad8b08b505, type: 3}
 --- !u!1 &1705685369961674657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1639,6 +1640,7 @@ MonoBehaviour:
       \uC545\uC5F0\uC758 \uC885\uC9C0\uBD80\uB97C \uCC0D\uB294\uB2E4."
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uCD5C\uC0C1\n\n\uD65C\uC57D\uCE58"
+  stageSceneResultUI: {fileID: 2474771292265306423}
   stageMainText: {fileID: 3591954167521034253}
   stageMainSubText: {fileID: 4089383583512907318}
   stageLevelText: {fileID: 6073260835081670986}
