@@ -39,11 +39,12 @@ public class StageSceneUI : UI_Popup
 
     [Header("Stage Data Inputs")]
     public List<StageUIData> stageDataList;
+    public Tmp_StageSceneResultUI stageSceneResultUI;
     [Header("Text Objects")]
     public TMP_Text stageMainText;
     public TMP_Text stageMainSubText;
     public TMP_Text stageLevelText;
-
+    
 
     
 
@@ -283,7 +284,7 @@ public class StageSceneUI : UI_Popup
         _hoveredButton = null;
         UpdateStageButtons();
         TextSetting(IngameData.ChapterIdx);
-        Debug.Log($"Selected Stage: {stageIndex}");
+        stageSceneResultUI.LoadClickedStageData(IngameData.ChapterIdx);
     }
 
     private void UpdateStageButtons()

@@ -29,6 +29,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private void Start()
     {
         Init();
+        _spawnPointString = null;
 
         _rank = new HitJudge(holder.bounds.size.x, holder.bounds.size.y);
         _playerPos = GameObject.FindWithTag("Player").transform.position;
@@ -137,28 +138,32 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private void DoSpawn()
     {
         int cnt = UnityEngine.Random.Range(1, _maxCnt + 1);
-
+       
         for (int i = 0; i < cnt; i++)
         {
-            WASDType enemyType;
-            if (_count < _spawnPointString.Length)// 출력가능하다면
+            WASDType enemyType = WASDType.None;
+            if (Managers.Game.CurrentState == GameManager.GameState.Battle)
             {
-                enemyType = SettingWASD_Type(_spawnPointString[_count]);
-                if(enemyType == WASDType.Random) // 랜덤이라면
+                if (_count < _spawnPointString.Length)// 출력가능하다면
                 {
-                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length-1)]; //enemyType랜덤으로
+                    enemyType = SettingWASD_Type(_spawnPointString[_count]);
+                    if (enemyType == WASDType.Random) // 랜덤이라면
+                    {
+                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length - 1)]; //enemyType랜덤으로
+                    }
+                    _count++;
                 }
-                _count++;
+                else
+                {
+                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length - 1)]; //enemyType랜덤으로.
+                }
             }
             else
             {
+                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length-1)]; //enemyType랜덤으로.
+            }
 
-                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
-            }
-            if(enemyType == WASDType.None) // 출력하지 않기
-            {
-                continue;
-            }
+            
             EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
             GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
             go.transform.position = _spawnPosition[enemyType];

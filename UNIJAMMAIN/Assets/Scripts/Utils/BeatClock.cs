@@ -22,8 +22,11 @@ public class BeatClock : MonoBehaviour
     // --- 새로 추가된 변수 (타이밍 앵커) ---
     private double _lastBpmChangeDspTime; // 마지막으로 BPM이 변경된 시점의 dspTime
     private long _lastBpmChangeTick;      // 마지막으로 BPM이 변경된 시점의 tick
+    
 
     public static Action<double, long> OnBeat;
+    // --- phase와 연동 --- //
+    [SerializeField] PhaseController phase;
 
     private void Start()
     {
@@ -104,6 +107,7 @@ public class BeatClock : MonoBehaviour
             _tick++;
             double scheduled = ScheduledTime(_tick);
             OnBeat?.Invoke(scheduled, _tick);
+            phase.SetStageTimerGo();
         }
     }
 

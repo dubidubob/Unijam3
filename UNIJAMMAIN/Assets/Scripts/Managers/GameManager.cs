@@ -59,6 +59,7 @@ public class GameManager
     {
         Battle,
         Stage,
+        Tutorial,
         Die
         
     }

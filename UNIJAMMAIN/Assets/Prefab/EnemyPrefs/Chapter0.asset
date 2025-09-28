@@ -63,6 +63,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
+          WASD_Pattern: '  '
           speedUpRate: 1
           spawnBeat: 4
           moveBeat: 4
@@ -114,6 +115,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 1
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 8
           moveBeat: 2
@@ -149,12 +151,14 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 2
           moveBeat: 4
           hiding: 0
         - isIn: 1
           monsterType: 1
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 8
           moveBeat: 2
@@ -171,12 +175,14 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
           hiding: 0
         - isIn: 1
           monsterType: 1
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 8
           moveBeat: 2
