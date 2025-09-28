@@ -39,7 +39,6 @@ public class InGameOption_PopUp : UI_Popup
 
     private void Start()
     {
-        
         Init();
     }
 
@@ -62,11 +61,14 @@ public class InGameOption_PopUp : UI_Popup
     {
         // 팝업을 닫고, 게임 시간을 재개한 후, 현재 씬을 다시 로드합니다.
         Time.timeScale = 1;
-        ClosePopUPUI();
+        main.isPopUp = false;
+        
         PauseManager.ControlTime(false);
         Managers.Sound.StopBGM();
         Managers.Clear();
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        ClosePopUPUI();
     }
 
     // Out (게임 종료/메인 화면) 버튼 클릭 시 호출
@@ -74,22 +76,24 @@ public class InGameOption_PopUp : UI_Popup
     {
         // 팝업을 닫고, 게임 시간을 재개한 후, 'StageScene'으로 이동합니다.
         main.isPopUp = false;
-        ClosePopUPUI();
+       
         PauseManager.ControlTime(false);
         Managers.Sound.StopBGM();
         Managers.Clear();
         SceneManager.LoadScene("StageScene");
-
+        ClosePopUPUI();
     }
 
     // Continues (계속하기) 버튼 클릭 시 호출
     public void ContinuesButtonClicked(PointerEventData eventData=null)
     {
         // PauseManager를 호출하여 게임 시간을 재개합니다.
-        PauseManager.ControlTime(false);
+       
+        main.isPopUp = false;
         // 팝업 UI를 닫습니다.
         ClosePopUPUI();
-     
+        PauseManager.ControlTime(false);
+
     }
     public void GetMainUI(MainGame mainGame)
     {

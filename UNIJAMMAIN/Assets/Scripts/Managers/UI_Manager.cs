@@ -80,6 +80,7 @@ public class UI_Manager
         T popUp = Util.GetOrAddComponent<T>(go);
         _popUpStack.Push(popUp);
         go.transform.SetParent(Root.transform);
+        Debug.Log("PopUp");
         return popUp;
     }
 

@@ -29,18 +29,14 @@ public class MainGame : BaseScene   // MainGame Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BaseScene Å
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log($"--- ESCAPE KEY PRESSED! --- (isPopUp was: {isPopUp})");
-
             if (isPopUp)
             {
-                Debug.Log("isPopUp is TRUE. Attempting to close popup.");
                 optionPopUp.ContinuesButtonClicked();
                 isPopUp = false;
             }
             else
             {
-                Debug.Log("isPopUp is FALSE. Attempting to open popup.");
-                optionPopUp =Managers.UI.ShowPopUpUI<InGameOption_PopUp>();
+                optionPopUp = Managers.UI.ShowPopUpUI<InGameOption_PopUp>();
                 optionPopUp.GetMainUI(this);
                 isPopUp = true;
             }
