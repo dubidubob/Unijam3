@@ -64,7 +64,8 @@ public class Define
         MainTitle,
         S1_1,
         S1_2,
-        StageScene
+        StageScene,
+        StoryScene
     }
     public enum Sound
     {

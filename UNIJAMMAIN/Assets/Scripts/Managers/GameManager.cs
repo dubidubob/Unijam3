@@ -30,14 +30,14 @@ public class GameManager
 
     private int Combo = 0;
     private float Health = 100;
-    public readonly int MaxHealth = 100;
+    public readonly int MaxHealth = 130;
     private const int IncHealthUnit = 10;
     public BlurController blur;
     public Accuracy accuracy;
     public PlayerActionUI actionUI;
-   
+    public MonsterDatabaseSO monster;
 
-    private float healingValue = 2.5f; // 회복하는 양
+    
     public int perfect = 0;
     // TODO : 이러지 말기
     public Dictionary<WASDType, Queue<GameObject>> attacks = new Dictionary<GamePlayDefine.WASDType, Queue<GameObject>>();
@@ -59,6 +59,7 @@ public class GameManager
     {
         Battle,
         Stage,
+        Tutorial,
         Die
         
     }
@@ -67,6 +68,7 @@ public class GameManager
     {
         Normal,
         GroggyAttack,
+        Ready,
         Die
     }
     public GameState CurrentState { get; set; }
@@ -125,7 +127,7 @@ public class GameManager
         {
             RankUpdate?.Invoke(
                 new RankNode(EvaluateType.Wrong, key, null));
-            DecHealth();
+            DecHealth(10);
         }
     }
 
@@ -144,7 +146,7 @@ public class GameManager
         attacks[key].Enqueue(go);
     }
 
-    public void ComboInc()
+    public void ComboInc(int healingValue=1)
     {
         Combo++;
         IncHealth(healingValue); // 체력회복
@@ -157,29 +159,47 @@ public class GameManager
         {
             IncHealth(healingValue); //체력 회복
         }
+        
         if(Combo%10==0)
         {
+            int _healtmp=5;
+            if (Combo%20==0)
+            {
+                _healtmp = 7;
+                if(Combo%30==0)
+                {
+                    _healtmp = 10;
+                }
+            }
+            IncHealth(_healtmp); //체력 회복
             blur.ComboEffect();
-            IncHealth(healingValue*3); //체력 회복
+           
             Managers.Sound.Play("SFX/Combo_Breathe_SFX");
         }
     }
-
-    public void PlayerAttacked()
+    /// <summary>
+    /// 피해를 입히는 정도
+    /// </summary>
+    /// <param name="value"></param>
+    public void PlayerAttacked(int attackValue)
     {
         RankUpdate?.Invoke(
-    new RankNode(EvaluateType.Attacked, WASDType.A, null));
-        DecHealth();
+        new RankNode(EvaluateType.Attacked, WASDType.A, null));
+        DecHealth(attackValue);
     }
-
-    private void DecHealth()
+    /// <summary>
+    /// value값은 체력이 감소되는 양
+    /// </summary>
+    /// <param name="value"></param>
+    private void DecHealth(int value)
     {
+        if(currentPlayerState== PlayerState.Ready) { return; } // Ready상태면 무시
         Combo = 0; //무조건 콤보 끊김
         ComboContinue?.Invoke(Combo);
 
         if (Health > 0)
         {
-            Health -= 5;
+            Health -= value;
         }
         
         HealthUpdate?.Invoke(Health);
@@ -189,12 +209,12 @@ public class GameManager
         }
     }
 
-    public void IncHealth(float healValue = 2.5f)
+    public void IncHealth(float healValue = 1f)
     {
         if ((Health <= 0) || (Health > 100))
             return;
 
-        Health += healValue; // 체력회복 3
+        Health += healValue; 
         HealthUpdate?.Invoke(Health);
     }
 
@@ -216,5 +236,12 @@ public class GameManager
         blur.GameOverBlurEffect();
         Time.timeScale = 0;
         
+    }
+    /// <summary>
+    /// 인게임 창에 들어갔을때 호출. Scene을 호출하자마자 설정.
+    /// </summary>
+    public void GameStart()
+    {
+        currentPlayerState = PlayerState.Ready; // normal로 바꿔주는건 StartCountUI에서 담당하자.
     }
 }

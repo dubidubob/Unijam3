@@ -31,7 +31,8 @@ public class UI_Manager
     public void SetCanvas(GameObject go, bool sort = true)
     {
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        //canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        //canvas.renderMode = RenderMode.Screen
+        //Overlay;
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         canvas.worldCamera = Camera.main;
         canvas.overrideSorting = true;
@@ -47,7 +48,7 @@ public class UI_Manager
         }
     }
     
-    public void SetCanvasMost(GameObject go) // 캔버스 SortOrder을 가장 위로 올려주는 함수
+    public void SetCanvasMost(GameObject go,int sortingOrder= 30000) // 캔버스 SortOrder을 가장 위로 올려주는 함수
     {
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
         //canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -56,7 +57,7 @@ public class UI_Manager
         canvas.overrideSorting = true;
 
  
-        canvas.sortingOrder = 2000;
+        canvas.sortingOrder = sortingOrder;
     }
 
     public T ShowAnyUI<T>(string name = null) where T : UI_Base
@@ -79,6 +80,7 @@ public class UI_Manager
         T popUp = Util.GetOrAddComponent<T>(go);
         _popUpStack.Push(popUp);
         go.transform.SetParent(Root.transform);
+        Debug.Log("PopUp");
         return popUp;
     }
 

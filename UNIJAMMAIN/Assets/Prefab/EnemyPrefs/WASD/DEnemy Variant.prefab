@@ -80,6 +80,10 @@ PrefabInstance:
       propertyPath: enemyType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8246489728359504820, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
+      propertyPath: dyingEffectObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8996736874769778764, guid: 9c5257fb22930f149b22529eafc5d4ad, type: 3}
       propertyPath: m_Sprite
       value: 

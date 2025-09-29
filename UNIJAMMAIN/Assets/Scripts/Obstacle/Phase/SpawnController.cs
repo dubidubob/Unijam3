@@ -44,11 +44,18 @@ public class SpawnController : MonoBehaviour
                 {
                     _spawnerMap[Define.MonsterType.WASD].Spawn(m);
                 }
-                else if(m.monsterType ==Define.MonsterType.WASDHiding)
+                else if (m.monsterType == Define.MonsterType.WASDHiding)
                 {
                     _spawnerMap[Define.MonsterType.WASD].Spawn(m);
                 }
-
+                else if (m.monsterType == Define.MonsterType.WASDDash)
+                {
+                    _spawnerMap[Define.MonsterType.WASD].Spawn(m);
+                }
+                else if (m.monsterType == Define.MonsterType.WASDFIFO)
+                {
+                    _spawnerMap[Define.MonsterType.WASD].Spawn(m);
+                }
                 else
                 {
                     Debug.LogWarning($"No spawner for {m.monsterType}");

@@ -17,25 +17,36 @@ struct StartMotionUIs
 [RequireComponent(typeof(SpawnController))]
 public class PhaseController : MonoBehaviour
 {
+    [SerializeField] private MonsterDatabaseSO monsterDatabase;
+
     [SerializeField] Image backGround;
     [SerializeField] Image backGroundGray;
     [SerializeField] ResultUI Scoreboard;
     [SerializeField] ChapterSO[] chapters;
     // TODO : tmp!
     [SerializeField] StartMotionUIs startMotions;
+    [SerializeField] SpriteRenderer areaBaseInLine;
+    [SerializeField] Image gaugeImage;
+   
 
     public static Action<float> ChangeKey;
     public static Action<bool> TutorialStoped;
     private int _chapterIdx;
     private int _lastMonsterHitCnt = 0;
-
+    public float _totalBeat = 0;
+    private float _beatCount=0;
     SpawnController spawnController;
     private void Start()
     {
         spawnController = GetComponent<SpawnController>();
         Scoreboard.gameObject.SetActive(false);
+        monsterDatabase.Init();
         
+
         IngameData.RankInit();
+        Managers.Game.monster = monsterDatabase;
+        Managers.Game.GameStart();
+        
 
         PauseManager.ControlTime(false);
 
@@ -43,7 +54,11 @@ public class PhaseController : MonoBehaviour
         Debug.Log(_chapterIdx);
         Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
         Debug.Log(chapters[_chapterIdx].MusicPath);
+        Color tmpColor = chapters[_chapterIdx].colorPalette;
+        tmpColor.a = 0.7f;
+        areaBaseInLine.color = tmpColor;
 
+        SetStageTimerInitialize();
         StartCoroutine(RunChapter());
     }
     
@@ -69,6 +84,7 @@ public class PhaseController : MonoBehaviour
             if (gameEvent is PhaseEvent phaseEvent)
             {
                 // PhaseEvent에 특화된 로직 실행
+                Managers.Game.CurrentState = GameManager.GameState.Battle;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
                 yield return new WaitForSeconds(delaySec);
                 SpawnMonsters(phaseEvent);
@@ -78,6 +94,7 @@ public class PhaseController : MonoBehaviour
                 if (i == 0)
                     TutorialStoped?.Invoke(true);
                 // TutorialEvent에 특화된 로직 실행
+                Managers.Game.CurrentState = GameManager.GameState.Tutorial;
                 HandleTutorialEvent(tutorialEvent);
                 yield return new WaitForSeconds(delaySec);
                 if (i == 0)
@@ -149,7 +166,7 @@ public class PhaseController : MonoBehaviour
         return (rate / total) * 100f;
     }
 
-    #region Tool
+    #region Setting
 
     private void SetTimeScale(float time)
     {
@@ -165,6 +182,31 @@ public class PhaseController : MonoBehaviour
     {
         backGround.overrideSprite = chapters[_chapterIdx].backGroundSprite;
         backGroundGray.overrideSprite = chapters[_chapterIdx].backGroundGraySprite;
+    }
+
+    private void SetStageTimerInitialize()
+    {
+        for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
+        {
+            _totalBeat += chapters[_chapterIdx].Phases[i].durationBeat;
+            _totalBeat += chapters[_chapterIdx].Phases[i].startDelayBeat;
+        }
+    }
+    public void SetStageTimerGo()
+    {
+        _beatCount++;
+
+        // --- 여기에 아래 코드를 추가하세요 ---
+
+        // 1. _beatCount와 totalCount를 float으로 변환하여 진행 비율(0.0 ~ 1.0)을 계산합니다.
+        // (float)을 붙이지 않으면 정수 나눗셈이 되어 결과가 0 또는 1만 나오게 됩니다.
+        float progress = (float)_beatCount / _totalBeat;
+
+        // 2. 1에서 진행 비율을 빼서 값을 뒤집어 줍니다. (1.0 -> 0.0)
+        gaugeImage.fillAmount = 1.0f - progress;
+
+        // (옵션) _beatCount가 totalCount를 넘어가지 않도록 값을 보정해줄 수 있습니다.
+        gaugeImage.fillAmount = Mathf.Clamp01(gaugeImage.fillAmount);
     }
     #endregion
 

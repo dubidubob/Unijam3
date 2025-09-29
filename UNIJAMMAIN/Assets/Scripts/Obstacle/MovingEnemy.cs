@@ -6,6 +6,7 @@ public class Knockback
 {
     bool isEnabled;
     int hp;
+
     public void OnKnockback(bool isOn)
     {
         isEnabled = isOn;
@@ -30,20 +31,44 @@ public class MovingEnemy : MonoBehaviour
     private float speed, movingDuration;
     private float _elapsedTime;
     private Knockback knockback;
-    private SpriteRenderer monsterImg;
+    public SpriteRenderer monsterImg;
+    public GameObject dyingEffectObject;
     private Vector3 origin;
     private bool isResizeable = false;
     private Vector2 sizeDiffRate;
     public bool isKnockbacked=false;
     private Coroutine _hidingCoroutine;
+   
+    
+    private float movingDistanceTmp;
+    private int attackValue = 1;
+    private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;
+    private bool isDead = false;
     private void OnEnable()
     {
         _elapsedTime = 0f;
         knockback = new Knockback();
         isKnockbacked = false;
-        monsterImg = GetComponentInChildren<SpriteRenderer>();
+        isDead = false;
+
+        // ================== 추가된 초기화 코드 ==================
+        // 몬스터 스프라이트의 알파값(투명도)을 원래대로 되돌립니다.
+        // Hiding 등으로 투명해진 상태로 풀에 반납되었을 수 있기 때문입니다.
+        if (monsterImg != null)
+        {
+            Color originalColor = monsterImg.color;
+            monsterImg.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
+        }
+
+        // 사망 이펙트 오브젝트의 크기를 0으로 확실하게 초기화합니다.
+        // 이것이 "몹이 등장할 때 이펙트가 커져있는 문제"의 핵심 해결책입니다.
+        if (dyingEffectObject != null)
+        {
+            dyingEffectObject.transform.localScale = Vector3.zero;
+        }
+        // =======================================================
     }
 
     private void Start()
@@ -52,19 +77,33 @@ public class MovingEnemy : MonoBehaviour
         {
             origin = monsterImg.transform.localScale;
         }
-
+        GarbageClean();
         if(enemyType == GamePlayDefine.WASDType.W || enemyType == GamePlayDefine.WASDType.S)
             isResizeable = true;
     }
 
     public void SetDead()
     {
-        Poolable poolable = GetComponent<Poolable>();
-        Managers.Pool.Push(poolable);
+        // 진행 중이던 다른 모든 트윈과 코루틴을 확실히 중지시킵니다.
+        KillingDO();
+        if (_hidingCoroutine != null)
+        {
+            StopCoroutine(_hidingCoroutine);
+            _hidingCoroutine = null;
+        }
+
+        // 사망 처리 코루틴을 시작합니다.
+        StartCoroutine(ProcessDeath());
+    }
+    private void KillingDO()
+    {
+        DOTween.Kill(transform, "FIFO");
+        DOTween.Kill(transform, "Speeding");
     }
 
-    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType)
+    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType,Define.MonsterType monsterType)
     {
+        movingDistanceTmp = distance;
         this.playerPos = playerPos;
         enemyType = wasdType;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
@@ -72,65 +111,99 @@ public class MovingEnemy : MonoBehaviour
         backwardDuration = movingDuration * 0.125f;
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
+
+        SetKnockback(monsterType == Define.MonsterType.Knockback,monsterType);
+        SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);
+        SetSpeeding(monsterType == Define.MonsterType.WASDDash, monsterType);
+        SetFIFO(monsterType == Define.MonsterType.WASDFIFO, monsterType);
+
+
     }
-    public void SetKnockback(bool isTrue)
+    public void SetKnockback(bool isTrue,Define.MonsterType monsterType)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+      
         if (isTrue)
         {
-            spriteRenderer.color = Color.red;
+            Debug.Log("SetknockBack 출력");
+            SettingSprite(monsterType);
         }
         else 
         {
-            spriteRenderer.color = Color.white;
+
         }
         knockback.OnKnockback(isTrue);
     }
 
-    public void SetHiding(bool isTrue)
+    public void SetSpeeding(bool isTrue,Define.MonsterType monsterType)
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        
         if (isTrue)
         {
-            spriteRenderer.color = Color.white;
+            Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+
+            transform.DOMove(targetPos, movingDuration).SetEase(Ease.InQuint).SetId("Speeding");
+            SettingSprite(monsterType);
+        }
+
+    }
+
+    public void SetFIFO(bool isTrue,Define.MonsterType monsterType)
+    {
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        
+        if (isTrue)
+        {
+            Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+            transform.DOMove(targetPos, movingDuration).SetEase(Ease.InOutCirc).SetId("FIFO");
+            SettingSprite(monsterType);
+        }
+
+    }
+    public void SetHiding(bool isTrue,Define.MonsterType monsterType)
+        {
+
+        if (isTrue)
+        {
+            SettingSprite(monsterType);
             // 숨기기 코루틴 시작
             if (_hidingCoroutine == null)
             {
-                _hidingCoroutine = StartCoroutine(HidingAnimation(spriteRenderer));
+                _hidingCoroutine = StartCoroutine(HidingAnimation(monsterImg));
             }
 
         }
         else
         {
-            spriteRenderer.color = Color.black;
-            // 숨기기 코루틴 중지
-            if (_hidingCoroutine != null)
-            {
-                StopCoroutine(_hidingCoroutine);
-                _hidingCoroutine = null;
-            }
-            // 몬스터를 완전히 보이게 함
-            spriteRenderer.color = Color.white;
-
+           
         }
        
     }
+
+
     private IEnumerator HidingAnimation(SpriteRenderer _spriteRenderer)
     {
-        // 무한 루프를 통해 반복적으로 깜빡임
-        while (true)
-        {
-            // 서서히 투명하게 변함 (0.7초 동안)
-            _spriteRenderer.DOFade(0f, movingDuration/3f); // 몇초에 걸쳐서 투명화 되는지?
-            yield return new WaitForSeconds(movingDuration/2.4f); // 몇초에 걸쳐서 
+        yield return new WaitForSeconds(movingDuration * 0.1f);
 
-            // 서서히 원래대로 돌아옴 (0.7초 동안)
-            _spriteRenderer.DOFade(1f, movingDuration/3f);
-            yield return new WaitForSeconds(movingDuration/2f);
-        }
+        // 2. 서서히 투명하게 변함 (movingDuration의 30% 시간 동안)
+        float fadeOutDuration = movingDuration * 0.3f;
+        _spriteRenderer.DOFade(0f, fadeOutDuration);
+        yield return new WaitForSeconds(fadeOutDuration);
+
+        // 3. 완전히 투명한 상태로 중간 지점 통과 (movingDuration의 20% 시간 동안)
+        yield return new WaitForSeconds(movingDuration * 0.2f);
+
+        // 4. 도착 직전에 서서히 원래대로 돌아옴 (movingDuration의 30% 시간 동안)
+        float fadeInDuration = movingDuration * 0.3f;
+        _spriteRenderer.DOFade(1f, fadeInDuration);
+        yield return new WaitForSeconds(fadeInDuration);
     }
     public bool CheckCanDead()
     {
+        AttackedAnimation();
+
         if (knockback.CheckKnockback())
         {
             if(this.isActiveAndEnabled) StartCoroutine(ExecuteKnockback());
@@ -183,6 +256,7 @@ public class MovingEnemy : MonoBehaviour
     private void Move()
     {
         if (isKnockbackActive) return;
+        if (isDead) return;
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
@@ -214,7 +288,89 @@ public class MovingEnemy : MonoBehaviour
 
             Managers.Game.attacks[enemyType].Dequeue();
             SetDead();
-            Managers.Game.PlayerAttacked();
+            Managers.Game.PlayerAttacked(attackValue);
         }
     }
+
+    private Vector3 CalculateNormalVector()
+    {
+        if(enemyType==GamePlayDefine.WASDType.A)
+        {
+            return Vector3.right;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.D)
+        {
+            return Vector3.left;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.W)
+        {
+            return Vector3.down;
+        }
+        else if(enemyType==GamePlayDefine.WASDType.S)
+        {
+            return Vector3.up;
+        }
+        Debug.Log("CalculateVector실패");
+        return Vector3.forward;
+    }
+
+
+    void AttackedAnimation()    
+    {
+        // TODO: 몬스터 타입에 맞는 피격 스프라이트를 가져오도록 수정해야 할 수 있습니다.
+        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.WASDDash);
+        orginSprite = monsterImg.sprite;
+        if (attackedSprite != null)
+        {
+            monsterImg.sprite = attackedSprite;
+        }
+    }
+
+
+    #region Animation
+
+
+
+    private IEnumerator ProcessDeath()
+    {
+        // 1. 사망 이펙트 애니메이션 준비
+        Sprite dyingSprite = Managers.Game.monster.DyingEffectSprite();
+        Transform effectTransform = dyingEffectObject.GetComponent<Transform>();
+        SpriteRenderer effectRenderer = dyingEffectObject.GetComponent<SpriteRenderer>();
+        isDead = true;
+
+        effectRenderer.sprite = dyingSprite;
+
+        // 2. DOTween 애니메이션 실행
+        //    체인을 연결하여 순차적으로 실행하고, 이 트윈 자체를 변수에 저장합니다.
+        Tween dyingTween = effectTransform.DOScale(1.5f, 0.1f)
+                                          .OnComplete(() => effectTransform.DOScale(0, 0.1f));
+
+        // 3. 위에서 만든 DOTween 애니메이션이 끝날 때까지 기다립니다.
+        //    WaitForSeconds(0.9f) 같은 고정된 시간이 아니라 실제 애니메이션 길이에 맞춰 기다립니다.
+        yield return dyingTween.WaitForCompletion();
+
+        // 4. 애니메이션이 끝나면 오브젝트를 풀에 반납합니다.
+        //    스프라이트 원상복구 등은 OnEnable에서 처리하므로 여기선 필요 없습니다.
+        monsterImg.sprite = orginSprite;
+        Poolable poolable = GetComponent<Poolable>();
+        Managers.Pool.Push(poolable);
+    }
+    #endregion
+
+    #region Tool
+    IEnumerator GarbageClean()
+    {
+        yield return new WaitForSeconds(15f);
+        SetDead();
+    }
+    private void SettingSprite(Define.MonsterType monsterType)
+    {
+        monsterImg.sprite = Managers.Game.monster.GetSprite(monsterType);
+        orginSprite = monsterImg.sprite;
+        monsterImg.color = Managers.Game.monster.GetColor(monsterType);
+        Debug.Log(monsterImg.sprite);
+    }
+    #endregion
+
 }

@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88a7b8007bad7a43abe76cf9a9d3d0f, type: 3}
+  m_Name: Chapter7
+  m_EditorClassIdentifier: 
+  phases:
+  - rid: 8480390730276143104
+  - rid: 8480390888626323456
+  MusicPath: BGM/Chapter0_V1
+  backGroundSprite: {fileID: 21300000, guid: 2252cadf993bd7543be64dc9ce651355, type: 3}
+  backGroundGraySprite: {fileID: 21300000, guid: f2ac13e5d85087042ab5046a092bbb7a, type: 3}
+  colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8480390730276143104
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 100
+        startDelayBeat: 0
+        bpm: 100
+        timeScale: 1
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          WASD_Pattern: (AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 4
+          hiding: 0
+        - isIn: 0
+          monsterType: 1
+          WASD_Pattern: 
+          speedUpRate: 1
+          spawnBeat: 8
+          moveBeat: 0.5
+          hiding: 0
+    - rid: 8480390888626323456
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 30
+        startDelayBeat: 0
+        bpm: 100
+        timeScale: 1
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          WASD_Pattern: (AW)(WD)(DS)(AW)(AWD)
+          speedUpRate: 1
+          spawnBeat: 2
+          moveBeat: 4
+          hiding: 0

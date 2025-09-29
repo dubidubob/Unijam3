@@ -4,9 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class StoryDialog : UI_Popup
 {
+    public string musicPath;
+    public Sprite backGroundImage;
+    public Image backGround;
+
     public Text[] TestTexts;
     public Image[] StandingImage;
     public GameObject TextPanel;
@@ -37,11 +43,15 @@ public class StoryDialog : UI_Popup
         panelRect = TextPanel.GetComponent<RectTransform>();
         originalPanelPos = panelRect.anchoredPosition;
         contents.SetActive(true);
+
+        Managers.Sound.Play(musicPath, Define.Sound.BGM);
+        StartCoroutine(FirstInAnimation());
     }
 
     private void OnEnable()
     {
         Time.timeScale = 0f;
+        backGround.sprite = backGroundImage;
         StartCoroutine(TypingCoroutine());
     }
 
@@ -51,28 +61,18 @@ public class StoryDialog : UI_Popup
 
         for (int idx = 0; idx < scenes.Count; idx++)
         {
+            Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1");
 
             DialogueScene scene = scenes[idx];
 
             yield return new WaitForSecondsRealtime(scene.preDelay);
 
-            // ======================
-            // 0. Hide Dialog 처리
-            // ======================
-            if (scene.speakingCharacter == DialogueCharacter.HideDialog)
-            {
-                TextPanel.SetActive(false);
-                if (StandingImage != null)
-                {
-                    foreach (var standing in StandingImage)
-                        standing.gameObject.SetActive(false);
-                }
-            }
+            
 
             // ======================
             // 1. 캐릭터 None 처리
             // ======================
-            if (scene.speakingCharacter == DialogueCharacter.None)
+            if (scene.speakingCharacterData == null)
             {
                 // 캐릭터 이미지 모두 OFF
                 StandingImage[0].gameObject.SetActive(false);
@@ -87,15 +87,14 @@ public class StoryDialog : UI_Popup
                 // 2. 일반 캐릭터 처리
                 // ======================
                 // 캐릭터 인덱스 None 제외
-                int charIdx = (int)scene.speakingCharacter - 2;
-
+              
                 // 왼쪽 캐릭터 처리
                 if (scene.showLeftCharacter)
                 {
-
-                    StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : cd[charIdx].CharacterImage;
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
+                    StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[0].gameObject.SetActive(true);
-                    StandingImage[0].SetNativeSize();
+                    //StandingImage[0].SetNativeSize(); // 원본크기로 하지 않고 원래 크기로 설정. 만약 바꾼다면 이부분 바꾸도록.
 
                     if (scene.XFlip)
                     {
@@ -137,10 +136,10 @@ public class StoryDialog : UI_Popup
                 // 오른쪽 캐릭터 처리
                 if (scene.showRightCharacter)
                 {
-
-                    StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : cd[charIdx].CharacterImage;
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
+                    StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
-                    StandingImage[1].SetNativeSize();
+                    //StandingImage[1].SetNativeSize();
                     if (scene.XFlip)
                     {
                         RightCharacter.instance.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 180, 0);
@@ -196,8 +195,15 @@ public class StoryDialog : UI_Popup
 
             for (int i = 0; i <= len; i++)
             {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Debug.Log("Space & skip");
+                    TestTexts[idx].text = full; // 텍스트를 즉시 전체 문장으로 설정
+                    break;                      // 타이핑 루프 탈출
+                }
+
                 TestTexts[idx].text = full.Typing(i);
-                yield return new WaitForSecondsRealtime(0.025f);
+                yield return new WaitForSecondsRealtime(0.02f);
             }
 
             if (scene.leftSDAnim || scene.rightSDAnim)
@@ -263,6 +269,7 @@ public class StoryDialog : UI_Popup
                 bool panelTurnedOn = false;
                 while (!panelTurnedOn)
                 {
+                
                     // 마우스 아무 버튼 클릭 시
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -307,6 +314,12 @@ public class StoryDialog : UI_Popup
             {
                 while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
                 {
+                    if (Input.GetKeyDown(KeyCode.X))
+                    {
+                        goto LoopEnd;
+                    }
+
+
                     TestTexts[idx].text = full;
                     yield return null;
                 }
@@ -341,7 +354,47 @@ public class StoryDialog : UI_Popup
             continue;
         }
 
+        LoopEnd:
+        // DiaLogue끝
+        StartCoroutine(LastOutAnimation());
 
 
     }
+
+
+    private void SceneMoving()
+    {
+        Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+    }
+
+    #region Enimation
+
+    IEnumerator FirstInAnimation()
+    {
+        CanvasGroup canvasGroup;
+        canvasGroup = contents.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
+        yield return new WaitForSecondsRealtime(0.4f);
+        // 1초에 걸쳐 alpha 1로 변경
+        canvasGroup.DOFade(1f, 0.6f).SetUpdate(true);
+    }
+
+    IEnumerator LastOutAnimation()
+    {
+        CanvasGroup canvasGroup;
+        canvasGroup = contents.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 1;
+        yield return new WaitForSecondsRealtime(0.4f);
+        // 1초에 걸쳐 alpha 1로 변경
+        canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
+
+        yield return new WaitForSecondsRealtime(0.6f);
+        SceneMoving();
+        
+    }
+    #endregion
+
+    #region Tool
+
+    #endregion
 }

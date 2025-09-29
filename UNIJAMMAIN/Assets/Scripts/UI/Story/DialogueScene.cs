@@ -5,14 +5,22 @@ public enum DialogueCharacter
 {
     HideDialog,
     None,      
-    Player
+    Player,
+    Master,
+    CorruptMaster,
+    Boss,
+    Evil,
+    MovingEnemy1,
+    MovingEnemy2,
+    MovingEnemy3,
+    MovingEnemy4
 }
 
 [System.Serializable]
 public class DialogueScene
 {
     [Header("대사 주인공 선택 (None은 배경대사)")]
-    public DialogueCharacter speakingCharacter;
+    public CharacterData speakingCharacterData;
     public bool isFirstAppearance;
     [TextArea]
     public string text;
@@ -26,13 +34,7 @@ public class DialogueScene
     public bool isSurprized;
     public bool leftSDAnim;
     public bool rightSDAnim;
-    public bool isTimeGoing;
-    public bool isTomatoSoupGo;
-    public bool isShopingGo;
-    public bool isEndDialogue;
-    public bool isGivingMoney;
     public bool isEnding;
-    public int givingMoneyAmount;
     public bool XFlip;
     
     public float goingTimeAmount;
