@@ -15,6 +15,7 @@ public class InGameOption_PopUp : UI_Popup
         Out,
         Continues
     }
+    private MainGame main;
 
     public override void Init()
     {
@@ -32,13 +33,12 @@ public class InGameOption_PopUp : UI_Popup
         GetButton((int)Buttons.Continues).gameObject.AddUIEvent(ContinuesButtonClicked);
 
         // 팝업 UI가 다른 UI 위에 항상 보이도록 캔버스 순서를 설정합니다.
-        Managers.UI.SetCanvasMost(this.gameObject);
+        Managers.UI.SetCanvasMost(this.gameObject,32767);
+        PauseManager.ControlTime(true);
     }
 
     private void Start()
     {
-        // Init() 메서드를 호출하여 초기화 로직을 실행합니다.
-        // Start() 대신 Init()을 오버라이드하여 명확성을 높이는 구조입니다.
         Init();
     }
 
@@ -60,30 +60,43 @@ public class InGameOption_PopUp : UI_Popup
     public void ReStartButtonClicked(PointerEventData eventData)
     {
         // 팝업을 닫고, 게임 시간을 재개한 후, 현재 씬을 다시 로드합니다.
-        Managers.UI.ClosePopUpUI();
+        Time.timeScale = 1;
+        main.isPopUp = false;
+        
         PauseManager.ControlTime(false);
         Managers.Sound.StopBGM();
         Managers.Clear();
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        ClosePopUPUI();
     }
 
     // Out (게임 종료/메인 화면) 버튼 클릭 시 호출
     public void OutButtonClicked(PointerEventData eventData)
     {
         // 팝업을 닫고, 게임 시간을 재개한 후, 'StageScene'으로 이동합니다.
-        Managers.UI.ClosePopUpUI();
+        main.isPopUp = false;
+       
         PauseManager.ControlTime(false);
         Managers.Sound.StopBGM();
         Managers.Clear();
         SceneManager.LoadScene("StageScene");
+        ClosePopUPUI();
     }
 
     // Continues (계속하기) 버튼 클릭 시 호출
-    public void ContinuesButtonClicked(PointerEventData eventData)
+    public void ContinuesButtonClicked(PointerEventData eventData=null)
     {
         // PauseManager를 호출하여 게임 시간을 재개합니다.
-        PauseManager.ControlTime(false);
+       
+        main.isPopUp = false;
         // 팝업 UI를 닫습니다.
-        Managers.UI.ClosePopUpUI();
+        ClosePopUPUI();
+        PauseManager.ControlTime(false);
+
+    }
+    public void GetMainUI(MainGame mainGame)
+    {
+        main = mainGame;
     }
 }

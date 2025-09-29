@@ -46,10 +46,14 @@ public class BeatClockUI : MonoBehaviour
 
     private void Stop(bool isStoped)
     {
-        if(isStoped)
+        if (isStoped)
+        {
             BeatClock.OnBeat -= BeatMoving;
+        }
         else
+        {
             BeatClock.OnBeat += BeatMoving;
+        }
     }
     private void BeatMoving(double _, long __)
     {
