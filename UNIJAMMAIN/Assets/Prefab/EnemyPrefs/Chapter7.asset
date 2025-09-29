@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phases:
   - rid: 8480390730276143104
+  - rid: 8480390888626323456
   MusicPath: BGM/Chapter0_V1
   backGroundSprite: {fileID: 21300000, guid: 2252cadf993bd7543be64dc9ce651355, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: f2ac13e5d85087042ab5046a092bbb7a, type: 3}
@@ -25,7 +26,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 10
+        durationBeat: 100
         startDelayBeat: 0
         bpm: 100
         timeScale: 1
@@ -33,15 +34,32 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: AWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSA
+          WASD_Pattern: (AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)
           speedUpRate: 1
-          spawnBeat: 2
+          spawnBeat: 0.5
           moveBeat: 4
           hiding: 0
-        - isIn: 1
+        - isIn: 0
           monsterType: 1
           WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 8
           moveBeat: 0.5
+          hiding: 0
+    - rid: 8480390888626323456
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 30
+        startDelayBeat: 0
+        bpm: 100
+        timeScale: 1
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          WASD_Pattern: (AW)(WD)(DS)(AW)(AWD)
+          speedUpRate: 1
+          spawnBeat: 2
+          moveBeat: 4
           hiding: 0

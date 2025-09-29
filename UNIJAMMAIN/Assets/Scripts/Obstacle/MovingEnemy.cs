@@ -45,11 +45,13 @@ public class MovingEnemy : MonoBehaviour
     private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;
+    private bool isDead = false;
     private void OnEnable()
     {
         _elapsedTime = 0f;
         knockback = new Knockback();
         isKnockbacked = false;
+        isDead = false;
 
         // ================== 추가된 초기화 코드 ==================
         // 몬스터 스프라이트의 알파값(투명도)을 원래대로 되돌립니다.
@@ -254,6 +256,7 @@ public class MovingEnemy : MonoBehaviour
     private void Move()
     {
         if (isKnockbackActive) return;
+        if (isDead) return;
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
@@ -334,7 +337,7 @@ public class MovingEnemy : MonoBehaviour
         Sprite dyingSprite = Managers.Game.monster.DyingEffectSprite();
         Transform effectTransform = dyingEffectObject.GetComponent<Transform>();
         SpriteRenderer effectRenderer = dyingEffectObject.GetComponent<SpriteRenderer>();
-        
+        isDead = true;
 
         effectRenderer.sprite = dyingSprite;
 

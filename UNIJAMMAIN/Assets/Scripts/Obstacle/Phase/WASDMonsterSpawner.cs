@@ -72,7 +72,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private bool _spawning = false;
     private double _startDsp;
     private double _lastSpawnTime;
-    private string _spawnPointString;
+    private string _spawnPointString = null;
     private int _count=0;
     public void Spawn(MonsterData data)
     {
@@ -142,11 +142,27 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         for (int i = 0; i < cnt; i++)
         {
             WASDType enemyType = WASDType.None;
-            if (Managers.Game.CurrentState == GameManager.GameState.Battle)
+            if (Managers.Game.CurrentState == GameManager.GameState.Battle&&_spawnPointString!=null)
             {
+                
                 if (_count < _spawnPointString.Length)// 출력가능하다면
                 {
                     enemyType = SettingWASD_Type(_spawnPointString[_count]);
+                    if(_spawnPointString[_count]=='(') // 동시출력
+                    {
+                        _count++; 
+                        while (_spawnPointString[_count]!=')')
+                        {
+                            enemyType = SettingWASD_Type(_spawnPointString[_count]);
+                            Debug.Log($"생성 enemy : {enemyType}");
+                            PoolEnemySpawn(enemyType);
+                            _count++; 
+                        }
+                        _count++;
+
+                        return;
+                    }
+
                     if (enemyType == WASDType.Random) // 랜덤이라면
                     {
                         enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length - 1)]; //enemyType랜덤으로
@@ -163,19 +179,23 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
                 enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length-1)]; //enemyType랜덤으로.
             }
 
-            
-            EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
-            GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
-            go.transform.position = _spawnPosition[enemyType];
-
-            VariableSetting(go.GetComponent<MovingEnemy>(), enemyType);
-
+            PoolEnemySpawn(enemyType);
        
         }
         
     }
 
+
     float threshold = 0.1f;
+
+    private void PoolEnemySpawn(WASDType enemyType)
+    {
+        EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
+        GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
+        go.transform.position = _spawnPosition[enemyType];
+
+        VariableSetting(go.GetComponent<MovingEnemy>(), enemyType);
+    }
     public void SetLastSpawnTime(float? moveBeat=1)
     {
         if (IngameData.PhaseDurationSec == 0)
