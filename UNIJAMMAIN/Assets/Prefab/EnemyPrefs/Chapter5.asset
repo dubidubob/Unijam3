@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chapter5
   m_EditorClassIdentifier: 
   phases: []
-  MusicPath: BGM/Chapter6_TEMP
+  MusicPath: BGM/Chapter5_V1
   backGroundSprite: {fileID: 21300000, guid: a58bba2bf18f5934c896e08b9d4cc890, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 5e73ef6a181b19145b2d248b6beed720, type: 3}
   colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
