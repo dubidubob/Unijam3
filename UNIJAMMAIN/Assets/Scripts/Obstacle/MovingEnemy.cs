@@ -38,8 +38,11 @@ public class MovingEnemy : MonoBehaviour
     private Vector2 sizeDiffRate;
     public bool isKnockbacked=false;
     private Coroutine _hidingCoroutine;
-   
-    
+
+    // yejun
+    private Define.MonsterType _monsterType;
+
+
     private float movingDistanceTmp;
     private int attackValue = 1;
     private Sprite orginSprite;
@@ -103,6 +106,9 @@ public class MovingEnemy : MonoBehaviour
 
     public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType,Define.MonsterType monsterType)
     {
+        // yejun
+        this._monsterType = monsterType; // 멤버 변수에 몬스터 타입 저장
+
         movingDistanceTmp = distance;
         this.playerPos = playerPos;
         enemyType = wasdType;
@@ -111,6 +117,8 @@ public class MovingEnemy : MonoBehaviour
         backwardDuration = movingDuration * 0.125f;
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
+
+
 
         SetKnockback(monsterType == Define.MonsterType.Knockback,monsterType);
         SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);
@@ -317,9 +325,14 @@ public class MovingEnemy : MonoBehaviour
 
     void AttackedAnimation()    
     {
+        // yejun
+        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(this._monsterType);
+
+
         // TODO: 몬스터 타입에 맞는 피격 스프라이트를 가져오도록 수정해야 할 수 있습니다.
-        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.WASDDash);
-        orginSprite = monsterImg.sprite;
+        //Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.WASDDash);
+        //orginSprite = monsterImg.sprite;
+
         if (attackedSprite != null)
         {
             monsterImg.sprite = attackedSprite;
