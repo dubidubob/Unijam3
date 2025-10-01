@@ -145,7 +145,7 @@ public class MainScene : UI_Popup
     private void StoryModeClicked(PointerEventData eventData)
     {
         Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
-        Managers.Scene.LoadScene(Define.Scene.StageScene);
+        SceneLoadingManager.Instance.LoadScene("StageScene");
     }
 
     private void EndClicked(PointerEventData eventData)

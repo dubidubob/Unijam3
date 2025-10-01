@@ -17,12 +17,11 @@ public class MainTitle : BaseScene
         Init();
         Managers.UI.ShowPopUpUI<MainScene>();
         Managers.Sound.Play("BGM/MainScene_V1", Define.Sound.BGM);
-        //Managers.UI.ShowPopUpUI<GameOver>();
 
     }
 
     public void IsStart()
     {
-        Managers.Scene.LoadScene(Define.Scene.TitleScene);
+        SceneLoadingManager.Instance.LoadScene("TitleScene");
     }
 }

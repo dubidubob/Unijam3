@@ -255,14 +255,14 @@ public class StageSceneUI : UI_Popup
     }
     public void ToMainButtonClicked(PointerEventData eventData)
     {
-        SceneManager.LoadScene("MainTitle");
+        SceneLoadingManager.Instance.LoadScene("MainTitle");
     }
 
     public void StartButtonClicked(PointerEventData eventData)
     {
         if (_selectedButton != null)
         {
-            Managers.Scene.LoadScene(Define.Scene.StoryScene);
+            SceneLoadingManager.Instance.LoadScene("StoryScene");
         }
         else
         {

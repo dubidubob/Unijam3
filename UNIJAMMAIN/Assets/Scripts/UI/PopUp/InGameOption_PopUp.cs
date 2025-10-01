@@ -80,7 +80,7 @@ public class InGameOption_PopUp : UI_Popup
         PauseManager.ControlTime(false);
         Managers.Sound.StopBGM();
         Managers.Clear();
-        SceneManager.LoadScene("StageScene");
+        SceneLoadingManager.Instance.LoadScene("StageScene");
         ClosePopUPUI();
     }
 

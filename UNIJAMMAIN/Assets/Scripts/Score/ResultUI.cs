@@ -37,7 +37,7 @@ public class ResultUI : MonoBehaviour
     public void OnClick()
     {
         Time.timeScale = 1f;                 // 혹시 일시정지 풀기
-        SceneManager.LoadScene("StageScene");
+        SceneLoadingManager.Instance.LoadScene("StageScene");
     }
 
     public void ChangeUI(float score)
