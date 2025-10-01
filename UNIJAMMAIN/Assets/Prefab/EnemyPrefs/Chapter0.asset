@@ -143,7 +143,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 35
+        durationBeat: 36
         startDelayBeat: 0
         bpm: 100
         timeScale: 1
@@ -151,7 +151,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WASDWASDWASDWASD
+          WASD_Pattern: WASDWASDWASDWASDWASD
           speedUpRate: 1
           spawnBeat: 2
           moveBeat: 4
@@ -167,7 +167,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 33
+        durationBeat: 32
         startDelayBeat: 0
         bpm: 100
         timeScale: 1

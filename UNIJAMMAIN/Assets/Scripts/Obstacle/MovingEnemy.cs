@@ -25,6 +25,7 @@ public class Knockback
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
 {
+
     private GamePlayDefine.WASDType enemyType;
 
     private Vector3 playerPos = Vector3.zero;
@@ -120,6 +121,19 @@ public class MovingEnemy : MonoBehaviour
 
         // yejun
         SettingSprite(monsterType);
+
+        // yejun 몹들의 꼬리부분이 좀 어색해져서, 아래부분은 일단 삭제 
+
+        //if (wasdType == GamePlayDefine.WASDType.A || wasdType == GamePlayDefine.WASDType.S)
+        //{
+        //    // A 또는 S 타입일 경우, 스프라이트를 좌우로 뒤집습니다.
+        //    monsterImg.flipX = true;
+        //}
+        //else
+        //{
+        //    // W 또는 D 타입일 경우, 원래 방향으로 설정합니다.
+        //    monsterImg.flipX = false;
+        //}
 
         SetKnockback(monsterType == Define.MonsterType.Knockback,monsterType);
         SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);

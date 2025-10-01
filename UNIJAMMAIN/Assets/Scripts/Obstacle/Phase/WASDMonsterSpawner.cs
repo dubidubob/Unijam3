@@ -165,18 +165,18 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
                     if (enemyType == WASDType.Random) // 랜덤이라면
                     {
-                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length - 1)]; //enemyType랜덤으로
+                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로
                     }
                     _count++;
                 }
                 else
                 {
-                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length - 1)]; //enemyType랜덤으로.
+                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
                 }
             }
             else
             {
-                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length-1)]; //enemyType랜덤으로.
+                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
             }
 
             PoolEnemySpawn(enemyType);
