@@ -151,7 +151,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WASDWASDWASDWASDWASD
+          WASD_Pattern: WASDWASDWASDWASDD(WASD)
           speedUpRate: 1
           spawnBeat: 2
           moveBeat: 4
@@ -175,7 +175,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WWAASSDDWASDDSAWWASDDSAWWASDDD
+          WASD_Pattern: WWAASSDDWASDDSAWWASDDSAWWASDDD(WASD)
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
