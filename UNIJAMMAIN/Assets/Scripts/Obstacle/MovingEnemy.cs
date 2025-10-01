@@ -118,7 +118,8 @@ public class MovingEnemy : MonoBehaviour
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
 
-
+        // yejun
+        SettingSprite(monsterType);
 
         SetKnockback(monsterType == Define.MonsterType.Knockback,monsterType);
         SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);
