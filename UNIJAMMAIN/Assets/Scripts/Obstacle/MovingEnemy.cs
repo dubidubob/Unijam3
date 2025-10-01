@@ -293,11 +293,24 @@ public class MovingEnemy : MonoBehaviour
         }
         else if (collision.tag == "dangerLine")
         {
-            if (Managers.Game.attacks[enemyType].Count == 0) return;
 
-            Managers.Game.attacks[enemyType].Dequeue();
-            SetDead();
+            // yejun (첫 피격 몬스터 효과음 들리지 않던 문제 해결)
+
+            // [수정] 몬스터가 dangerLine에 닿으면 무조건 플레이어는 공격받고, 해당 몬스터는 죽습니다.
             Managers.Game.PlayerAttacked(attackValue);
+            SetDead();
+            // 그 후에, 공격 가능 리스트에 다른 몬스터가 있었다면 그것도 놓친 것이므로 제거합니다.
+            if (Managers.Game.attacks[enemyType].Count > 0)
+            {
+                Managers.Game.attacks[enemyType].Dequeue();
+            }
+
+
+            //if (Managers.Game.attacks[enemyType].Count == 0) return;
+
+            //Managers.Game.attacks[enemyType].Dequeue();
+            //SetDead();
+            //Managers.Game.PlayerAttacked(attackValue);
         }
     }
 
