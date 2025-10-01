@@ -44,7 +44,7 @@ public class MovingEnemy : MonoBehaviour
 
 
     private float movingDistanceTmp;
-    private int attackValue = 1;
+    private int attackValue = 10;
     private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;
