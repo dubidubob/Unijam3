@@ -182,7 +182,7 @@ MonoBehaviour:
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 0
+          monsterType: 4
           WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1

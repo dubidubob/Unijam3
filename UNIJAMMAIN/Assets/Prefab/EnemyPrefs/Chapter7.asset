@@ -25,7 +25,7 @@ MonoBehaviour:
     - rid: 8480390730276143104
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
+        isIn: 0
         durationBeat: 100
         startDelayBeat: 0
         bpm: 100

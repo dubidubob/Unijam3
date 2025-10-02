@@ -45,6 +45,13 @@ public class SoundManager
             if (_audioSources!=null)
                 Init();
             AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
+
+            // Yejun - Skips if the requested BGM is already playing.
+            if (audioSource.isPlaying && audioSource.clip == audioClip)
+            {
+                return;
+            }
+
             if (audioSource.isPlaying)
             {
                 audioSource.Stop();
