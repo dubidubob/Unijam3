@@ -63,7 +63,7 @@ public class Tutorial_PopUp : UI_Popup
         }
 
         // 모든 팝업 표시가 끝나면 GameObject 비활성화
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     /// <summary>

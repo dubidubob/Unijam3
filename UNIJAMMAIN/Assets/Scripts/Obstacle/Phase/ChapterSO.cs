@@ -18,8 +18,6 @@
         public Sprite backGroundGraySprite;
         public Color colorPalette;
 
-
-
 #if UNITY_EDITOR
     private void OnValidate()
         {

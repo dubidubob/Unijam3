@@ -43,7 +43,7 @@ public class PhaseController : MonoBehaviour
     private bool isMonsterGoStart = false;
     private void Start()
     {
-         IngameData.IsStart = false;
+        IngameData.IsStart = false;
         spawnController = GetComponent<SpawnController>();
         Scoreboard.gameObject.SetActive(false);
         monsterDatabase.Init();
@@ -66,8 +66,7 @@ public class PhaseController : MonoBehaviour
         SetStageTimerInitialize();
         StartCoroutine(RunChapter());
     }
-
-    private void HandleBeatSync(double _, long __)
+    private void HandleBeatSync(long __)
     {
         beatSynced = true;
         BeatClock.OnBeat -= HandleBeatSync; // 한 번만 실행하고 즉시 구독 해지
@@ -206,7 +205,7 @@ public class PhaseController : MonoBehaviour
         }
 
         // 스타트 비트실행
-        if(!isMonsterGoStart)
+        if (!isMonsterGoStart)
         {
             if (_beatCount == chapters[_chapterIdx].StartBeat)
             {
@@ -214,7 +213,7 @@ public class PhaseController : MonoBehaviour
                 StartCoroutine(GoStart());
             }
         }
-        
+
         // 1. _beatCount와 totalCount를 float으로 변환하여 진행 비율(0.0 ~ 1.0)을 계산합니다.
         // (float)을 붙이지 않으면 정수 나눗셈이 되어 결과가 0 또는 1만 나오게 됩니다.
         float progress = (float)_beatCount / _totalBeat;

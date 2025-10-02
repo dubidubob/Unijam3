@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -230,7 +230,6 @@ public class GameManager
 
     private void GameOver()
     {
-        Debug.Log("사망!");
         currentPlayerState = PlayerState.Die;
         actionUI.GameOverAnimation();
         blur.GameOverBlurEffect();

@@ -55,7 +55,7 @@ public class BeatClockUI : MonoBehaviour
             BeatClock.OnBeat += BeatMoving;
         }
     }
-    private void BeatMoving(double _, long __)
+    private void BeatMoving(long __)
     {
         // 현재 크기 -> 1.2배 커지기 (전체 비트의 50% 동안)
         transform.DOScale(baseScale * 1.2f, 0.001f).SetEase(Ease.OutCubic)

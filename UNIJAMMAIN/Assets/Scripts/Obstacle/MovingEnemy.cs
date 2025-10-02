@@ -413,7 +413,7 @@ public class MovingEnemy : MonoBehaviour
         monsterImg.sprite = Managers.Game.monster.GetSprite(monsterType);
         orginSprite = monsterImg.sprite;
         monsterImg.color = Managers.Game.monster.GetColor(monsterType);
-        Debug.Log(monsterImg.sprite);
+        // Debug.Log(monsterImg.sprite);
     }
     #endregion
 
