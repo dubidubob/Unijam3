@@ -44,6 +44,8 @@ public class StageSceneUI : UI_Popup
     public TMP_Text stageMainText;
     public TMP_Text stageMainSubText;
     public TMP_Text stageLevelText;
+
+    [SerializeField] GameObject completedObject;
     
 
     
@@ -171,6 +173,23 @@ public class StageSceneUI : UI_Popup
                 button.gameObject.AddUIEvent((eventData) => StageButtonClicked(button, stageIndex));
                 AddPointerEvent(button, (eventData) => OnPointerEnter(button), EventTriggerType.PointerEnter);
                 AddPointerEvent(button, (eventData) => OnPointerExit(button), EventTriggerType.PointerExit);
+
+                //Completed 설정
+                IngameData.ChapterIdx = stageIndex-1;
+
+
+                if (IngameData.ChapterRank!=Define.Rank.Unknown)
+                {
+                    // 1. Instantiate 시 부모를 바로 지정해주는 것이 더 안정적입니다.
+                    GameObject obj = Instantiate(completedObject, button.gameObject.transform);
+                    RectTransform rect = obj.GetComponent<RectTransform>();
+
+                    // 2. [핵심] .position 대신 .anchoredPosition을 사용합니다.
+                    rect.anchoredPosition = new Vector2(120, 0);
+
+                    // 3. 부모의 스케일 값에 영향을 받지 않도록 1로 초기화합니다.
+                    rect.localScale = Vector3.one;
+                }
             }
         }
     }

@@ -143,11 +143,11 @@ public class SceneLoadingManager : UI_Base
         // 시작 시 문이 열린 상태로 강제 설정
         closingCurve = new AnimationCurve(
             new Keyframe(0.0f, 0.0f),      // 0% 지점에서 시작 (값: 0)
-            new Keyframe(0.5f, 1f),     // 
-            new Keyframe(0.7f, 0.8f),     //
-            new Keyframe(0.8f, 1f),     //
-            new Keyframe(0.9f, 0.9f),     //
-            new Keyframe(1.0f, 1.0f)       // 100% 지점에서 정확한 목표값(1.0)으로 안착
+            new Keyframe(0.7f, 0.9f),     // 
+            new Keyframe(0.8f, 0.95f),     //
+            new Keyframe(0.9f, 0.975f),     //
+            new Keyframe(1f, 1f)    //
+           
         );
         openingCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
         leftRect.anchoredPosition = new Vector2(-openXPosition, leftRect.anchoredPosition.y);
