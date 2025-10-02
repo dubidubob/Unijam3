@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phases:
   - rid: 8813260913744019457
-  - rid: 7460641668082171909
   - rid: 8480390322059476994
   - rid: 8480390322059476995
   - rid: 8480390322059476996
@@ -24,7 +23,7 @@ MonoBehaviour:
   - rid: 7460641668082171907
   - rid: 7460641668082171908
   - rid: 7460641668082171910
-  MusicPath: BGM/Chapter1_V2
+  MusicPath: BGM/Chapter1_V3
   backGroundSprite: {fileID: 21300000, guid: c1c29fc23cb312d42980869ac03d64ee, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: ba7bf52925914b54a91246d97d0f38da, type: 3}
   colorPalette: {r: 0.6627451, g: 0.69803923, b: 0.34901962, a: 0}
@@ -43,7 +42,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: 
+          WASD_Pattern: WASDDSAASD
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -67,7 +66,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: 
+          WASD_Pattern: DSAASDDSAASDSASDSASDSASDSSSSSSSDWAWDSASDWA
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -91,7 +90,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: 
+          WASD_Pattern: WASDDSAWASDSAWASDSAWASDDD
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -100,7 +99,7 @@ MonoBehaviour:
           monsterType: 1
           WASD_Pattern: 
           speedUpRate: 1
-          spawnBeat: 3
+          spawnBeat: 4
           moveBeat: 2
           hiding: 0
     - rid: 7460641668082171907
@@ -115,7 +114,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: 
+          WASD_Pattern: WWAASSDDWWAASSDDWWAASSDDD
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -139,7 +138,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: 
+          WASD_Pattern: WASDWASD(WA)(SD)
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -151,16 +150,6 @@ MonoBehaviour:
           spawnBeat: 4
           moveBeat: 2
           hiding: 0
-    - rid: 7460641668082171909
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 4
-        startDelayBeat: 0
-        bpm: 84
-        timeScale: 1
-        isFlipAD: 0
-        monsterDatas: []
     - rid: 7460641668082171910
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -175,15 +164,15 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 29
+        durationBeat: 33
         startDelayBeat: 0
         bpm: 84
         timeScale: 1
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 4
-          WASD_Pattern: 
+          monsterType: 0
+          WASD_Pattern: WWASDWAASDWASSDWASDDWWAAASSSDDD
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -207,7 +196,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: 
+          WASD_Pattern: DSAASDDSAASDDSAWWASDDSAWW
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
@@ -216,7 +205,7 @@ MonoBehaviour:
           monsterType: 1
           WASD_Pattern: 
           speedUpRate: 1
-          spawnBeat: 4
+          spawnBeat: 6
           moveBeat: 2
           hiding: 0
     - rid: 8480390322059476996
@@ -231,7 +220,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: 
+          WASD_Pattern: WASDDSAWWASDDSAWWASDDSAWW
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
@@ -241,7 +230,7 @@ MonoBehaviour:
           WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 6
-          moveBeat: 1
+          moveBeat: 2
           hiding: 0
     - rid: 8813260913744019457
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
