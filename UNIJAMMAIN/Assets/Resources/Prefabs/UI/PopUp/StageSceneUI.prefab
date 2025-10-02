@@ -749,12 +749,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
+  - {fileID: 21300000, guid: 62f08656d047e284190639ad8b08b505, type: 3}
   - {fileID: 21300000, guid: f42b5f6087645154f8e7fe8f20f2daad, type: 3}
   - {fileID: 21300000, guid: 74e717e624ccf2d449e6544c605f2385, type: 3}
   - {fileID: 21300000, guid: 67230f087a2483b4e91b683ed5299f44, type: 3}
   - {fileID: 21300000, guid: aac5fb2afe854534baf6119a9a1ad416, type: 3}
   - {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}
-  - {fileID: 21300000, guid: 62f08656d047e284190639ad8b08b505, type: 3}
 --- !u!1 &1705685369961674657
 GameObject:
   m_ObjectHideFlags: 0

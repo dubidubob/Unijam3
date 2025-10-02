@@ -36,18 +36,11 @@ public class Tmp_StageSceneResultUI : MonoBehaviour
         Define.Rank rank = IngameData.GetBestRankForChapter(stageIndex);
 
         // 2. 랭크 상태에 따라 스프라이트를 결정합니다.
-        if (rank == Define.Rank.Unknown)
-        {
-            sp.sprite = sprites[sprites.Length - 1];
-        }
-        else
-        {
-            int rankIndex = (int)rank;
+        int rankIndex = (int)rank;
 
-            if (rankIndex >= 0 && rankIndex < sprites.Length)
-            {
-                sp.sprite = sprites[rankIndex];
-            }
+        if (rankIndex >= 0 && rankIndex < sprites.Length)
+        {
+            sp.sprite = sprites[rankIndex];
         }
 
         // 3. 이미지 컴포넌트를 활성화하고, 크기를 원본 스프라이트에 맞춥니다.

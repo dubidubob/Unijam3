@@ -14,9 +14,11 @@ public static class IngameData
     static IngameData()
     {
         _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
+        _bestChapterRanks = new Define.Rank[TOTAL_CHAPTERS];
         for (int i = 0; i < TOTAL_CHAPTERS; i++)
         {
             _chapterRanks[i] = Define.Rank.Unknown;
+            _bestChapterRanks[i] = Define.Rank.Unknown;
         }
         Debug.Log("IngameData이 시작될때 초기화되었습니다.");
     }
@@ -36,11 +38,10 @@ public static class IngameData
 
     public static int ChapterIdx { set; get; }
 
-    private static Define.Rank _chapterRank = Define.Rank.Unknown;
     //저장할 랭크의 개수에 따라 달라짐
     private const int TOTAL_CHAPTERS = 8;
-    public static Define.Rank[] _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
-    public static Define.Rank[] _bestChapterRanks = new Define.Rank[TOTAL_CHAPTERS];
+    public static Define.Rank[] _chapterRanks;
+    public static Define.Rank[] _bestChapterRanks;
 
     // ChapterRank 프로퍼티는 이제 현재 선택된 ChapterIdx에 해당하는 배열의 값을 다룸
     public static Define.Rank ChapterRank

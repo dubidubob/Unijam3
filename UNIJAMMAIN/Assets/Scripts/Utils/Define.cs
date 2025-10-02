@@ -1,4 +1,4 @@
-public class Define
+﻿public class Define
 {
     public class ScoreData
     {
@@ -87,12 +87,12 @@ public class Define
     }
 
     public enum Rank
-    {        
+    {
+        Unknown,
         Bad,
         Normal,
         NormalGood,
         Good,
         Perfect,
-        Unknown,
     }
 }
