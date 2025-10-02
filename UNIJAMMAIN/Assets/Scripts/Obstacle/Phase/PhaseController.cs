@@ -36,6 +36,8 @@ public class PhaseController : MonoBehaviour
     public float _totalBeat = 0;
     private float _beatCount=0;
     SpawnController spawnController;
+
+    private bool isStart = false;
     private void Start()
     {
         spawnController = GetComponent<SpawnController>();
@@ -52,7 +54,6 @@ public class PhaseController : MonoBehaviour
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
         Debug.Log(_chapterIdx);
-        Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
         Debug.Log(chapters[_chapterIdx].MusicPath);
         Color tmpColor = chapters[_chapterIdx].colorPalette;
         tmpColor.a = 0.7f;
@@ -196,7 +197,10 @@ public class PhaseController : MonoBehaviour
     {
         _beatCount++;
 
-        // --- 여기에 아래 코드를 추가하세요 ---
+        if(isStart==false)
+        {
+            Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
+        }
 
         // 1. _beatCount와 totalCount를 float으로 변환하여 진행 비율(0.0 ~ 1.0)을 계산합니다.
         // (float)을 붙이지 않으면 정수 나눗셈이 되어 결과가 0 또는 1만 나오게 됩니다.
