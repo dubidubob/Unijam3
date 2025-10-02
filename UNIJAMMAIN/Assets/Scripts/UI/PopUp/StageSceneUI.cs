@@ -233,17 +233,20 @@ public class StageSceneUI : UI_Popup
                 // [Level 0 -> 1] : y좌표 -200으로 이동
                 MoveTo(yPos: -200f);
                 currentPageLevel = 1;
+                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX);
                 break;
 
             case 1:
                 // [Level 1 -> 2] : z축 180도 회전, y좌표 750으로 이동
                 RotateAndMoveTo(zRot: 180f, yPos: 750f);
                 currentPageLevel = 2;
+                Managers.Sound.Play("SFX/UI/GoToFinalStage_V1",Define.Sound.SFX);
                 break;
 
             case 2:
                 // Level 2가 마지막 레벨이므로 아무 동작 안 함
                 Debug.Log("Already at the top level.");
+                Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
                 break;
         }
     }
@@ -257,18 +260,21 @@ public class StageSceneUI : UI_Popup
             case 0:
                 // Level 0이 최하단 레벨이므로 아무 동작 안 함
                 Debug.Log("Already at the bottom level.");
+                Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
                 break;
 
             case 1:
                 // [Level 1 -> 0] : y좌표 750으로 이동
                 MoveTo(yPos: 750f);
                 currentPageLevel = 0;
+                Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX);
                 break;
 
             case 2:
                 // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -200으로 이동
                 RotateAndMoveTo(zRot: 0f, yPos: -200f);
                 currentPageLevel = 1;
+                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX);
                 break;
         }
     }
@@ -297,6 +303,7 @@ public class StageSceneUI : UI_Popup
         }
 
         StartButtonAnimation();
+        Managers.Sound.Play("SFX/UI/StageClick_V1", Define.Sound.SFX);
 
         IngameData.ChapterIdx = stageIndex - 1;
         _selectedButton = button;

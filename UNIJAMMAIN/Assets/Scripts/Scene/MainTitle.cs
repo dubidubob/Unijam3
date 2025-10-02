@@ -22,6 +22,7 @@ public class MainTitle : BaseScene
 
     public void IsStart()
     {
+        Managers.Sound.Play("SFX/UI/PressToStart_V1", Define.Sound.SFX);
         SceneLoadingManager.Instance.LoadScene("TitleScene");
     }
 }

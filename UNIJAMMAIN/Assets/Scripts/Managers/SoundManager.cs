@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -13,6 +14,9 @@ public class SoundManager
     public AudioSource SFX;
 
 
+    //--- BGM Fade
+    private float _originalBGMVolume = 1.0f;
+    private Coroutine _fadeCoroutine;
     public void Init()
     {
         GameObject root = GameObject.Find("@Sound");
@@ -21,6 +25,8 @@ public class SoundManager
             audioMixer = Resources.Load<AudioMixer>("Sounds/SoundSetting");
             root = new GameObject { name = "@Sound" };
             Object.DontDestroyOnLoad(root);
+
+         
 
             _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
             _audioClips = new Dictionary<string, AudioClip>();
@@ -59,6 +65,15 @@ public class SoundManager
             audioSource.pitch = pitch;
             audioSource.clip = audioClip;
             audioSource.volume = volume;
+
+            if (_fadeCoroutine != null)
+            {
+                StaticCoroutine.StopStaticCoroutine(_fadeCoroutine);
+                _fadeCoroutine = null;
+            }
+
+            _originalBGMVolume = volume;
+
             audioSource.loop = true;
             BGM = audioSource;
             audioSource.Play();
@@ -83,6 +98,71 @@ public class SoundManager
             BGM.volume = Mathf.Clamp01(volume);
         }
     }
+
+    // --- BGM FadeOut & Restore --- //
+    public void BGMFadeOut(float duration = 1.0f)
+    {
+        // --- 변경된 부분 ---
+        Debug.Log("진입");
+        if (_fadeCoroutine != null)
+        {
+            StaticCoroutine.StopStaticCoroutine(_fadeCoroutine);
+        }
+        _fadeCoroutine = StaticCoroutine.StartStaticCoroutine(FadeOutCoroutine(duration));
+        // ------------------
+    }
+
+    /// <summary>
+    /// BGM 볼륨을 페이드 아웃 이전의 원래 값으로 즉시 복원합니다.
+    /// </summary>
+    public void BGMRestoreVolume()
+    {
+        // --- 변경된 부분 ---
+        if (_fadeCoroutine != null)
+        {
+            StaticCoroutine.StopStaticCoroutine(_fadeCoroutine);
+            _fadeCoroutine = null;
+        }
+        // ------------------
+
+        if (BGM != null)
+        {
+            BGM.volume = _originalBGMVolume;
+        }
+    }
+
+    private IEnumerator FadeOutCoroutine(float duration)
+    {
+        if (BGM == null) yield break;
+
+        float startVolume = BGM.volume;
+
+        // --- 시간 계산 방식 변경 ---
+        // Time.time 대신 실제 시간인 Time.realtimeSinceStartup 사용
+        float startTime = Time.realtimeSinceStartup;
+        float elapsedTime = 0f;
+        // -------------------------
+
+        // --- 루프 조건 및 내부 로직 변경 ---
+        while (elapsedTime < duration)
+        {
+            // Time.deltaTime 대신 startTime을 기준으로 실제 경과 시간을 계산
+            elapsedTime = Time.realtimeSinceStartup - startTime;
+
+            // Lerp(시작값, 목표값, 진행도)를 사용해 볼륨을 부드럽게 조절
+            BGM.volume = Mathf.Lerp(startVolume, 0f, elapsedTime / duration);
+
+            // WaitForSeconds 대신 null을 반환하여 다음 프레임까지 대기
+            // timeScale이 0일 때 WaitForSeconds는 영원히 기다리게 됩니다.
+            yield return null;
+        }
+        // ---------------------------------
+
+        BGM.volume = 0f; // 페이드 아웃 완료 후 볼륨을 확실히 0으로 설정
+        _fadeCoroutine = null; // 코루틴 완료 후 참조 정리
+    }
+
+    //-----//
 
     /// <summary>
     /// Changes the base volume for all Sound Effects.

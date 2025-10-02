@@ -67,10 +67,12 @@ public class SceneLoadingManager : UI_Base
     private IEnumerator LoadSceneAsync(string sceneName)
     {
         // 1. 문 닫기 애니메이션
+        Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
         leftPanel.gameObject.SetActive(true);
         rightPanel.gameObject.SetActive(true);
         yield return AnimatePanels(true); // true = 닫기
 
+        
         // 2. 닫힌 상태에서 잠시 대기
         yield return new WaitForSecondsRealtime(waitDuration);
 

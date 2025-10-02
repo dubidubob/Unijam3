@@ -20,7 +20,7 @@ public class SFX : MonoBehaviour
         // Get the volume for the current step
         float newVolume = _volumeLevels[_currentSFXVolumeStep];
         image.sprite = sprite[_currentSFXVolumeStep];
-        Managers.Sound.Play("Sounds/SFX/Setting_Volume_Button_SFX", Define.Sound.SFX);
+        Managers.Sound.Play("SFX/Setting_Volume_Button_SFX", Define.Sound.SFX);
 
         // Tell the SoundManager to change the BGM volume
         // Assuming you have a static Managers class that holds a reference to SoundManager
