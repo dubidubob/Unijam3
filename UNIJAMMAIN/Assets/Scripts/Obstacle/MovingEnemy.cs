@@ -197,13 +197,7 @@ public class MovingEnemy : MonoBehaviour
             {
                 _hidingCoroutine = StartCoroutine(HidingAnimation(monsterImg));
             }
-
         }
-        else
-        {
-           
-        }
-       
     }
 
 
@@ -319,13 +313,6 @@ public class MovingEnemy : MonoBehaviour
             {
                 Managers.Game.attacks[enemyType].Dequeue();
             }
-
-
-            //if (Managers.Game.attacks[enemyType].Count == 0) return;
-
-            //Managers.Game.attacks[enemyType].Dequeue();
-            //SetDead();
-            //Managers.Game.PlayerAttacked(attackValue);
         }
     }
 
