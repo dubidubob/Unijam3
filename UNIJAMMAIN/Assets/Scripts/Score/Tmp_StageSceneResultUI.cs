@@ -1,9 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class Tmp_StageSceneResultUI : MonoBehaviour
 {
-    [Header("B, n, ng, g, p,None ¼ø")]
+    [Header("B, n, ng, g, p,None ìˆœ")]
     [SerializeField] Sprite[] sprites;
     private Image sp;
 
@@ -26,40 +26,31 @@ public class Tmp_StageSceneResultUI : MonoBehaviour
     }
 
     /// <summary>
-    /// ½ºÅ×ÀÌÁö ¹öÆ°À» Å¬¸¯ÇßÀ» ¶§ È£ÃâµÇ´Â ÇÔ¼öÀÔ´Ï´Ù.
-    /// ¼±ÅÃµÈ ½ºÅ×ÀÌÁöÀÇ ·©Å©¿¡ ¸Â´Â ÀÌ¹ÌÁö¸¦ Ç¥½ÃÇÕ´Ï´Ù.
+    /// ìŠ¤í…Œì´ì§€ ë²„íŠ¼ì„ í´ë¦­í–ˆì„ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤.
+    /// ì„ íƒëœ ìŠ¤í…Œì´ì§€ì˜ ë­í¬ì— ë§ëŠ” ì´ë¯¸ì§€ë¥¼ í‘œì‹œí•©ë‹ˆë‹¤.
     /// </summary>
-    /// <param name="stageIndex">¼±ÅÃµÈ ½ºÅ×ÀÌÁöÀÇ ÀÎµ¦½º</param>
+    /// <param name="stageIndex">ì„ íƒëœ ìŠ¤í…Œì´ì§€ì˜ ì¸ë±ìŠ¤</param>
     public void LoadClickedStageData(int stageIndex)
     {
-        // 1. Àü´Ş¹ŞÀº stageIndex¸¦ »ç¿ëÇØ ÇØ´ç Ã©ÅÍÀÇ ·©Å©¸¦ °¡Á®¿É´Ï´Ù.
-        // IngameData¿¡ ¸¸µé¾îµÎ½Å GetRankForChapter ÇÔ¼ö¸¦ »ç¿ëÇÕ´Ï´Ù.
-        Define.Rank rank = IngameData.GetRankForChapter(stageIndex);
+        // 1. ì „ë‹¬ë°›ì€ stageIndexë¥¼ ì‚¬ìš©í•´ í•´ë‹¹ ì±•í„°ì˜ ë­í¬ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
+        Define.Rank rank = IngameData.GetBestRankForChapter(stageIndex);
 
-        // 2. ·©Å© »óÅÂ¿¡ µû¶ó ½ºÇÁ¶óÀÌÆ®¸¦ °áÁ¤ÇÕ´Ï´Ù.
-
-        // ¸¸¾à ·©Å©°¡ 'Unknown' ÀÌ¶ó¸é (¾ÆÁ÷ ÇÃ·¹ÀÌÇÏÁö ¾Ê¾Æ ·©Å©°¡ ¾ø´Â »óÅÂ)
-        // 'None'¿¡ ÇØ´çÇÏ´Â ½ºÇÁ¶óÀÌÆ®¸¦ Ç¥½ÃÇÕ´Ï´Ù.
-        // 'None' ½ºÇÁ¶óÀÌÆ®´Â ¹è¿­ÀÇ ¸¶Áö¸·(ÀÎµ¦½º 5)¿¡ ÀÖ´Ù°í °¡Á¤ÇÕ´Ï´Ù.
+        // 2. ë­í¬ ìƒíƒœì— ë”°ë¼ ìŠ¤í”„ë¼ì´íŠ¸ë¥¼ ê²°ì •í•©ë‹ˆë‹¤.
         if (rank == Define.Rank.Unknown)
         {
-            // sprites.Length - 1 Àº ¹è¿­ÀÇ ¸¶Áö¸· ÀÎµ¦½º¸¦ °¡¸®Åµ´Ï´Ù.
             sp.sprite = sprites[sprites.Length - 1];
         }
-        else // ·©Å©°¡ ÀÖ´Ù¸é (Bad, Good, Perfect µî)
+        else
         {
-            // ·©Å© enumÀ» Á¤¼ö(int)·Î º¯È¯ÇÏ¿© ¹è¿­ÀÇ ÀÎµ¦½º·Î »ç¿ëÇÕ´Ï´Ù.
-            // (¿¹: Bad = 0, Normal = 1, ...)
             int rankIndex = (int)rank;
 
-            // È¤½Ã ¸ğ¸¦ ¿À·ù¸¦ ¹æÁöÇÏ±â À§ÇØ ÀÎµ¦½º°¡ ¹è¿­ ¹üÀ§ ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
             if (rankIndex >= 0 && rankIndex < sprites.Length)
             {
                 sp.sprite = sprites[rankIndex];
             }
         }
 
-        // 3. ÀÌ¹ÌÁö ÄÄÆ÷³ÍÆ®¸¦ È°¼ºÈ­ÇÏ°í, Å©±â¸¦ ¿øº» ½ºÇÁ¶óÀÌÆ®¿¡ ¸ÂÃä´Ï´Ù.
+        // 3. ì´ë¯¸ì§€ ì»´í¬ë„ŒíŠ¸ë¥¼ í™œì„±í™”í•˜ê³ , í¬ê¸°ë¥¼ ì›ë³¸ ìŠ¤í”„ë¼ì´íŠ¸ì— ë§ì¶¥ë‹ˆë‹¤.
         sp.enabled = true;
         sp.SetNativeSize();
     }
