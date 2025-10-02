@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abb08d98b7729d49a18635cc686401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPath: BGM/Chapter6_V1
+  musicPath: BGM/Chapter6_V2
   backGroundImage: {fileID: 21300000, guid: 69fc3a3f9a9d7784892216b41e70282b, type: 3}
   backGround: {fileID: 3915714648696650980}
   TestTexts:
