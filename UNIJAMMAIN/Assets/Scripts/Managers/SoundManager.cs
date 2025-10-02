@@ -38,6 +38,8 @@ public class SoundManager
                 _audioSources[i].outputAudioMixerGroup = audioMixer.FindMatchingGroups($"{soundNames[i]}")[0];
                 go.transform.parent = root.transform;
             }
+
+            SFX = _audioSources[(int)Define.Sound.SFX];
         }
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f)
@@ -80,10 +82,11 @@ public class SoundManager
         }
         else
         {
-            AudioSource audioSource = _audioSources[(int)Define.Sound.SFX];
-            audioSource.pitch = pitch;
-            audioSource.volume = volume;
-            audioSource.PlayOneShot(audioClip);
+            if (SFX == null) Init();
+
+
+            SFX.pitch = pitch;
+            SFX.PlayOneShot(audioClip, volume);
         }
     }
     /// <summary>
@@ -293,5 +296,13 @@ public class SoundManager
         AudioSource audioSource2 = _audioSources[(int)Define.Sound.SFX];
         audioSource2.pitch = volume;
 
+    }
+
+    public void SettingNewSceneVolume()
+    {
+        /*
+        Managers.Sound.ChangeSFXVolume();
+        Managers.Sound.ChangeBGMVolume()
+        */
     }
 }
