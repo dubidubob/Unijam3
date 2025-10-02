@@ -161,7 +161,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
                             enemyType = SettingWASD_Type(_spawnPointString[_count]);
                             if (enemyType == WASDType.None)
                                 continue;
-                           
+
                             PoolEnemySpawn(enemyType);
                             _count++; 
                         }
@@ -169,10 +169,16 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
                         return;
                     }
-
-                    if (enemyType == WASDType.Random) // 랜덤이라면
+                    enemyType = SettingWASD_Type(_spawnPointString[_count]);
+                    if (enemyType == WASDType.None)
+                        continue;
+                    else if (enemyType == WASDType.Random) // 랜덤이라면
                     {
                         enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로
+                        PoolEnemySpawn(enemyType);
+                    }
+                    else
+                    {
                         PoolEnemySpawn(enemyType);
                     }
                     _count++;
@@ -183,7 +189,6 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
                     enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
                     PoolEnemySpawn(enemyType);
                 }
-
             }
             else
             {
@@ -191,9 +196,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
                 PoolEnemySpawn(enemyType);
             }
         }
-        
     }
-
 
     float threshold = 0.1f;
 
