@@ -39,15 +39,15 @@ public class Tutorial_PopUp : UI_Popup
         StartCoroutine(ShowSequenceOfPopups(textInfo, lastMonsterHitCnt));
     }
 
-    private IEnumerator ShowSequenceOfPopups(IReadOnlyList<TextInfo> textInfo, int? lastMonsterHitCnt=0)
+    private IEnumerator ShowSequenceOfPopups(IReadOnlyList<TextInfo> textInfo, int? lastMonsterHitCnt = 0)
     {
         SetClear();
         // textInContent 배열의 각 텍스트에 대해 반복
         for (int i = 0; i < textInfo.Count; i++)
         {
-            var textInContent = textInfo[i].textContents;            
+            var textInContent = textInfo[i].textContents;
 
-            float durationSec = (float)IngameData.BeatInterval * (textInfo[i].delayBeat-1);
+            float durationSec = (float)IngameData.BeatInterval * (textInfo[i].delayBeat - 1);
             appearSpeed = (float)IngameData.BeatInterval * 0.5f;
             disappearSpeed = (float)IngameData.BeatInterval * 0.5f;
 
@@ -55,7 +55,7 @@ public class Tutorial_PopUp : UI_Popup
             int curMonsterHitCnt = IngameData.PerfectMobCnt + IngameData.GoodMobCnt;
             bool isFail = (curMonsterHitCnt - lastMonsterHitCnt) < textInfo[i].monsterCutline;
             text.text = isFail ? textInfo[i].textContents.Last() : textInfo[i].textContents.First();
-            
+
             // 팝업 나타났다 사라짐
             yield return StartCoroutine(SmoothyPopUp(true));
             yield return new WaitForSeconds(durationSec);
