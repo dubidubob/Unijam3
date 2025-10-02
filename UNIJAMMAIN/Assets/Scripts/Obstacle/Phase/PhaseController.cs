@@ -38,8 +38,6 @@ public class PhaseController : MonoBehaviour
     SpawnController spawnController;
 
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
-
-    private bool isStart = false;
     private bool isMonsterGoStart = false;
     private void Start()
     {
@@ -58,6 +56,7 @@ public class PhaseController : MonoBehaviour
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
         Debug.Log(_chapterIdx);
+        Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
         Debug.Log(chapters[_chapterIdx].MusicPath);
         Color tmpColor = chapters[_chapterIdx].colorPalette;
         tmpColor.a = 0.7f;
@@ -197,12 +196,6 @@ public class PhaseController : MonoBehaviour
     public void SetStageTimerGo()
     {
         _beatCount++;
-
-        if (!isStart)
-        {
-            Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
-            isStart = true;
-        }
 
         // 스타트 비트실행
         if (!isMonsterGoStart)
