@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90d3732284c95248b1045fa4f812067, type: 3}
   m_Name: "\uC2A4\uC2B9\uB2D8.."
   m_EditorClassIdentifier: 
-  CharacterImage: {fileID: 21300000, guid: 9b2919d04ea6a7945a6344f3f5a0e0cc, type: 3}
+  CharacterImage: {fileID: 21300000, guid: 6d10f2c7907e2884698918a0ca1cf64c, type: 3}
   CharacterName: "\uC2A4\uC2B9\uB2D8.."
   CharacterModel: {fileID: 0}
   CryCharacter: {fileID: 0}

@@ -23,7 +23,9 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private Dictionary<WASDType, Vector2> _targetPosition;
     private HitJudge _rank;
     private Vector3 _playerPos;
-    
+
+    private double _pauseStartTime;
+
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
     private void Start()
@@ -96,18 +98,24 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private double leftOverTime;
     public void PauseForWhile(bool isStop)
     {
+        _spawning = !isStop;
+
         if (isStop)
         {
-            _spawning = false;
-            CachedTime = AudioSettings.dspTime;
-            leftOverTime = AudioSettings.dspTime % _spawnInterval;
+            _pauseStartTime = AudioSettings.dspTime;
         }
-        
-        else 
+        else
         {
-            double PausedTime = AudioSettings.dspTime - CachedTime;
-            _tick += (int)((PausedTime+ leftOverTime) / _spawnInterval);
-            _spawning = true;
+            if (_pauseStartTime > 0)
+            {
+                double pausedDuration = AudioSettings.dspTime - _pauseStartTime;
+
+                // 시작 시간과 함께 종료 시간도 Puzse된 시간만큼 뒤로 밀어줍니다.
+                _startDsp += pausedDuration;
+                _lastSpawnTime += pausedDuration; // <-- 이 한 줄을 추가하면 해결됩니다!
+
+                _pauseStartTime = 0; // 초기화
+            }
         }
     }
 
@@ -165,18 +173,18 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
                     if (enemyType == WASDType.Random) // 랜덤이라면
                     {
-                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length - 1)]; //enemyType랜덤으로
+                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로
                     }
                     _count++;
                 }
                 else
                 {
-                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length - 1)]; //enemyType랜덤으로.
+                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
                 }
             }
             else
             {
-                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length-1)]; //enemyType랜덤으로.
+                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
             }
 
             PoolEnemySpawn(enemyType);

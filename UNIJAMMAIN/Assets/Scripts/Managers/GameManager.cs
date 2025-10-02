@@ -127,7 +127,7 @@ public class GameManager
         {
             RankUpdate?.Invoke(
                 new RankNode(EvaluateType.Wrong, key, null));
-            DecHealth(10);
+            DecHealth(7);
         }
     }
 
@@ -162,13 +162,13 @@ public class GameManager
         
         if(Combo%10==0)
         {
-            int _healtmp=5;
+            int _healtmp=7;
             if (Combo%20==0)
             {
-                _healtmp = 7;
+                _healtmp = 9;
                 if(Combo%30==0)
                 {
-                    _healtmp = 10;
+                    _healtmp = 12;
                 }
             }
             IncHealth(_healtmp); //체력 회복
@@ -234,6 +234,9 @@ public class GameManager
         currentPlayerState = PlayerState.Die;
         actionUI.GameOverAnimation();
         blur.GameOverBlurEffect();
+
+        Managers.Sound.BGMFadeOut();
+
         Time.timeScale = 0;
         
     }

@@ -7,7 +7,7 @@ public class StageScene : BaseScene
     public bool Test;
     private void Start()
     {
-        Managers.Sound.Play("BGM/MainScene_V1", Define.Sound.BGM);
+        Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
         Managers.UI.ShowPopUpUI<StageSceneUI>();
         Init();
     }

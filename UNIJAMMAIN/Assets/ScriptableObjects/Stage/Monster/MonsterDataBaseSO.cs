@@ -36,7 +36,6 @@ public class MonsterDatabaseSO : ScriptableObject
     
     public Sprite GetSprite(Define.MonsterType type)
     {
-        Debug.Log(_dict);
         if (_dict != null && _dict.TryGetValue(type, out var data))
             return data.sprite;
 

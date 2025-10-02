@@ -75,6 +75,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         _spawning = true;
         _moveBeat = data.moveBeat;
         StartCoroutine(DoSpawn(spawnDuration));
+
     }
     public void UnSpawn()
     {

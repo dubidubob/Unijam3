@@ -211,7 +211,7 @@ public class BlurController : MonoBehaviour
             entry.callback.AddListener((eventData) =>
             {
                 // 클릭 시 스테이지 씬으로 이동
-                SceneManager.LoadScene("StageScene");
+                SceneLoadingManager.Instance.LoadScene("StageScene");
                 Time.timeScale = 1f; // 타임스케일 원상 복구
             });
 

@@ -20,7 +20,7 @@ MonoBehaviour:
   - rid: 8813261245056811029
   - rid: 8813261245056811030
   - rid: 8813261245056811031
-  MusicPath: BGM/Chapter4_V1
+  MusicPath: BGM/Chapter4_V2
   backGroundSprite: {fileID: 21300000, guid: 9235249a8a73763489470035cdd9469b, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 287ee5b64068a4c4a8bb75ede71cd485, type: 3}
   colorPalette: {r: 0.60784316, g: 0.36862746, b: 0.33333334, a: 1}
@@ -49,12 +49,14 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
         - isIn: 1
           monsterType: 1
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 2
           moveBeat: 2
@@ -71,12 +73,14 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
         - isIn: 1
           monsterType: 1
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 2
@@ -93,18 +97,21 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
         - isIn: 1
           monsterType: 1
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 3
           moveBeat: 1
           hiding: 0
         - isIn: 1
           monsterType: 3
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 8
           moveBeat: 0
@@ -121,18 +128,21 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 5
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 2
           hiding: 0
         - isIn: 1
           monsterType: 1
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 3
           moveBeat: 1
           hiding: 0
         - isIn: 1
           monsterType: 3
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 8
           moveBeat: 0
@@ -159,12 +169,14 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
         - isIn: 1
           monsterType: 1
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 2
           moveBeat: 2

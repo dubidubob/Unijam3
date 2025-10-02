@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phases:
   - rid: 8480390413592559616
-  MusicPath: BGM/Chapter6_TEMP
-  backGroundSprite: {fileID: 21300000, guid: a58bba2bf18f5934c896e08b9d4cc890, type: 3}
-  backGroundGraySprite: {fileID: 21300000, guid: 5e73ef6a181b19145b2d248b6beed720, type: 3}
+  MusicPath: BGM/Chapter6_V2
+  backGroundSprite: {fileID: 21300000, guid: 69fc3a3f9a9d7784892216b41e70282b, type: 3}
+  backGroundGraySprite: {fileID: 21300000, guid: 7d708994ae00951428530f186deeeae4, type: 3}
   colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
   references:
     version: 2
@@ -33,6 +33,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
+          WASD_Pattern: 
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
