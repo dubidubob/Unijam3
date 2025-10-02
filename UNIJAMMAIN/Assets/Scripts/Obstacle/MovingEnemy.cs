@@ -123,7 +123,7 @@ public class MovingEnemy : MonoBehaviour
         type = monsterType;
         SettingSprite(type);
 
-        yejun 몹들의 꼬리부분이 좀 어색해져서, 아래부분은 일단 삭제
+        // yejun 몹들의 꼬리부분이 좀 어색해져서, 아래부분은 일단 삭제
 
         if (wasdType == GamePlayDefine.WASDType.A || wasdType == GamePlayDefine.WASDType.W)
         {
