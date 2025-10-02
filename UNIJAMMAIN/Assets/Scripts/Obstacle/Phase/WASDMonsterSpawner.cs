@@ -98,20 +98,22 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private double leftOverTime;
     public void PauseForWhile(bool isStop)
     {
-        _spawning = !isStop; // 스폰 상태를 isStop에 따라 직접 제어
+        _spawning = !isStop;
 
         if (isStop)
         {
-            // Pause가 시작된 dspTime을 기록
             _pauseStartTime = AudioSettings.dspTime;
         }
         else
         {
-            // Pause가 풀렸을 때, Pause된 시간만큼 스폰 시작 시간을 뒤로 밀어줌
             if (_pauseStartTime > 0)
             {
                 double pausedDuration = AudioSettings.dspTime - _pauseStartTime;
+
+                // 시작 시간과 함께 종료 시간도 Puzse된 시간만큼 뒤로 밀어줍니다.
                 _startDsp += pausedDuration;
+                _lastSpawnTime += pausedDuration; // <-- 이 한 줄을 추가하면 해결됩니다!
+
                 _pauseStartTime = 0; // 초기화
             }
         }
