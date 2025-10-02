@@ -13,60 +13,53 @@ MonoBehaviour:
   m_Name: Chapter7
   m_EditorClassIdentifier: 
   phases:
-  - rid: 9186972762811662340
-  - rid: 9186972762811662338
-  - rid: 9186972762811662339
-  MusicPath: BGM/201Chapter1
+  - rid: 8480390730276143104
+  - rid: 8480390888626323456
+  MusicPath: BGM/Chapter6_V2
   backGroundSprite: {fileID: 21300000, guid: 2252cadf993bd7543be64dc9ce651355, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: f2ac13e5d85087042ab5046a092bbb7a, type: 3}
   colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
   references:
     version: 2
     RefIds:
-    - rid: 9186972762811662338
+    - rid: 8480390730276143104
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
-        durationBeat: 28
+        isIn: 0
+        durationBeat: 100
         startDelayBeat: 0
-        bpm: 113.4
+        bpm: 100
         timeScale: 1
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: DDDDDDDDDDDDDDDDDDDDDDDDDDDD
+          WASD_Pattern: (AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)(AD)
           speedUpRate: 1
-          spawnBeat: 1
-          moveBeat: 1
-          hiding: 0
-    - rid: 9186972762811662339
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 24
-        startDelayBeat: 0
-        bpm: 100.8
-        timeScale: 1
-        isFlipAD: 0
-        monsterDatas:
-        - isIn: 1
-          monsterType: 0
-          WASD_Pattern: DDDDDDDDDDDDDDDDDDDDDDDDDDD
-          speedUpRate: 1
-          spawnBeat: 1
+          spawnBeat: 0.5
           moveBeat: 4
           hiding: 0
-    - rid: 9186972762811662340
-      type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
+        - isIn: 0
+          monsterType: 1
+          WASD_Pattern: 
+          speedUpRate: 1
+          spawnBeat: 8
+          moveBeat: 0.5
+          hiding: 0
+    - rid: 8480390888626323456
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 0
-        startDelayBeat: 4
-        bpm: 113.4
+        durationBeat: 30
+        startDelayBeat: 0
+        bpm: 100
         timeScale: 1
-        steps:
-        - textContents:
-          - dsafs
-          monsterCutline: 0
-          delayBeat: 4
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          WASD_Pattern: (AW)(WD)(DS)(AW)(AWD)
+          speedUpRate: 1
+          spawnBeat: 2
+          moveBeat: 4
+          hiding: 0
