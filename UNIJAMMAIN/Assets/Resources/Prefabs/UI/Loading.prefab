@@ -207,7 +207,7 @@ MonoBehaviour:
   rightPanel: {fileID: 3289448038063919605}
   openXPosition: 1490
   closedXPosition: 480
-  animationDuration: 1
+  animationDuration: 0.7
   waitDuration: 2
 --- !u!223 &5974103906629318076
 Canvas:

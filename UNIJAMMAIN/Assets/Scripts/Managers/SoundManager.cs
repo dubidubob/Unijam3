@@ -64,6 +64,31 @@ public class SoundManager
             audioSource.PlayOneShot(audioClip);
         }
     }
+    /// <summary>
+    /// Changes the volume of the currently playing BGM.
+    /// </summary>
+    /// <param name="volume">The new volume, from 0.0f to 1.0f.</param>
+    public void ChangeBGMVolume(float volume)
+    {
+        if (BGM != null)
+        {
+            // Clamp the value to ensure it's between 0 and 1.
+            BGM.volume = Mathf.Clamp01(volume);
+        }
+    }
+
+    /// <summary>
+    /// Changes the base volume for all Sound Effects.
+    /// </summary>
+    /// <param name="volume">The new volume, from 0.0f to 1.0f.</param>
+    public void ChangeSFXVolume(float volume)
+    {
+        // SFX AudioSource가 초기화되었는지 확인
+        if (SFX != null)
+        {
+            SFX.volume = Mathf.Clamp01(volume);
+        }
+    }
     public void PlayDelayed(AudioClip audioClip, float delay, Define.Sound type = Define.Sound.BGM, float pitch = 1.0f)
     {
         //audioMixer = Managers.Resource.Load<AudioMixer>("AudioMixer/SoundSetting");

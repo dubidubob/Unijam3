@@ -46,12 +46,14 @@ public class MovingEnemy : MonoBehaviour
 
     private float backwardDuration, knockbackDistance;
     private bool isDead = false;
+    Define.MonsterType type;
     private void OnEnable()
     {
         _elapsedTime = 0f;
         knockback = new Knockback();
         isKnockbacked = false;
         isDead = false;
+
 
         // ================== 추가된 초기화 코드 ==================
         // 몬스터 스프라이트의 알파값(투명도)을 원래대로 되돌립니다.
@@ -111,7 +113,8 @@ public class MovingEnemy : MonoBehaviour
         backwardDuration = movingDuration * 0.125f;
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
-
+        type = monsterType;
+        SettingSprite(type);
         SetKnockback(monsterType == Define.MonsterType.Knockback,monsterType);
         SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);
         SetSpeeding(monsterType == Define.MonsterType.WASDDash, monsterType);
@@ -361,8 +364,10 @@ public class MovingEnemy : MonoBehaviour
     #region Tool
     IEnumerator GarbageClean()
     {
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(30f);
+        Debug.Log("GarbageClean");
         SetDead();
+        
     }
     private void SettingSprite(Define.MonsterType monsterType)
     {
