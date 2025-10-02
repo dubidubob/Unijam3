@@ -8,7 +8,8 @@ using UnityEngine;
 public class ChapterSOEditor : Editor
 {
     SerializedProperty musicPath;
-    SerializedProperty phases;
+    SerializedProperty startbeat;
+     SerializedProperty phases;
     SerializedProperty backGroundSprite; // Sprite 타입 필드
     SerializedProperty backGroundGraySprite; // Sprite 타입 필드
     SerializedProperty colorPalette;
@@ -17,6 +18,7 @@ public class ChapterSOEditor : Editor
     {
         musicPath = serializedObject.FindProperty("MusicPath");
         phases = serializedObject.FindProperty("phases");
+        startbeat = serializedObject.FindProperty("StartBeat");
         backGroundSprite = serializedObject.FindProperty("backGroundSprite"); // 필드 이름과 일치하도록 수정
         backGroundGraySprite = serializedObject.FindProperty("backGroundGraySprite"); // 필드 이름과 일치하도록 수정
         colorPalette = serializedObject.FindProperty("colorPalette");
@@ -27,6 +29,7 @@ public class ChapterSOEditor : Editor
         serializedObject.Update();
 
         EditorGUILayout.PropertyField(musicPath);
+        EditorGUILayout.PropertyField(startbeat);
         EditorGUILayout.PropertyField(phases, true);
         EditorGUILayout.PropertyField(backGroundSprite); // 인스펙터에 Sprite 필드 표시
         EditorGUILayout.PropertyField(backGroundGraySprite); // 인스펙터에 Sprite 필드 표시

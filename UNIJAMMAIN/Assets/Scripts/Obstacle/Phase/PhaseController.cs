@@ -40,6 +40,7 @@ public class PhaseController : MonoBehaviour
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
 
     private bool isStart = false;
+    private bool isMonsterGoStart = false;
     private void Start()
     {
          IngameData.IsStart = false;
@@ -73,7 +74,6 @@ public class PhaseController : MonoBehaviour
     }
     private IEnumerator RunChapter()
     {
-       
         SetStageBackGround(); // 배경설정
         IngameData.IsStart = true;
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
@@ -81,10 +81,8 @@ public class PhaseController : MonoBehaviour
             var gameEvent = chapters[_chapterIdx].Phases[i];
             if (!gameEvent.isIn) continue;
 
-            SetTimeScale(gameEvent.timeScale); // 배속에따라 배속 설정
-            
+            SetTimeScale(gameEvent.timeScale);
 
-            // 공통 데이터 설정
             float beatInterval = 60.0f / gameEvent.bpm;
             float delaySec = gameEvent.startDelayBeat * beatInterval;
             float durationSec = gameEvent.durationBeat * beatInterval;
@@ -92,12 +90,10 @@ public class PhaseController : MonoBehaviour
             IngameData.PhaseDurationSec = durationSec;
             IngameData.BeatInterval = beatInterval;
 
-           
 
+            // 2. 그 후에 딜레이와 페이즈 로직을 실행합니다.
             if (gameEvent is PhaseEvent phaseEvent)
             {
-                // PhaseEvent에 특화된 로직 실행
-
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
                 yield return new WaitForSeconds(delaySec);
@@ -107,33 +103,19 @@ public class PhaseController : MonoBehaviour
             {
                 if (i == 0)
                     TutorialStoped?.Invoke(true);
-                // TutorialEvent에 특화된 로직 실행
                 Managers.Game.CurrentState = GameManager.GameState.Tutorial;
                 HandleTutorialEvent(tutorialEvent);
                 yield return new WaitForSeconds(delaySec);
                 if (i == 0)
                     TutorialStoped?.Invoke(false);
             }
-            
-            if (i == 0)
-            {
-                beatSynced = false;
-                BeatClock.OnBeat += HandleBeatSync;
 
-                // 2. 다음 비트가 올 때까지(beatSynced가 true가 될 때까지) 기다립니다.
-                yield return new WaitUntil(() => beatSynced);
-
-                // 3. 비트에 정확히 맞춰진 시점에서 카운트다운을 시작합니다.
-                yield return StartCoroutine(startMotions.startCountUI.Play123Coroutine());
-                startMotions.playerActionUI.StartMonkAnimAfter123Count();
-            }
             yield return new WaitForSeconds(durationSec);
         }
 
-        yield return new WaitForSeconds((float)IngameData.BeatInterval*2);
+        yield return new WaitForSeconds((float)IngameData.BeatInterval * 2);
         EndChapter();
     }
-
     private void HandleFlipKeyEvent(PhaseEvent phaseEvent, float delaySec)
     {
         if (phaseEvent.isFlipAD)
@@ -223,6 +205,16 @@ public class PhaseController : MonoBehaviour
             isStart = true;
         }
 
+        // 스타트 비트실행
+        if(!isMonsterGoStart)
+        {
+            if (_beatCount == chapters[_chapterIdx].StartBeat)
+            {
+                isMonsterGoStart = true;
+                StartCoroutine(GoStart());
+            }
+        }
+        
         // 1. _beatCount와 totalCount를 float으로 변환하여 진행 비율(0.0 ~ 1.0)을 계산합니다.
         // (float)을 붙이지 않으면 정수 나눗셈이 되어 결과가 0 또는 1만 나오게 됩니다.
         float progress = (float)_beatCount / _totalBeat;
@@ -232,6 +224,17 @@ public class PhaseController : MonoBehaviour
 
         // (옵션) _beatCount가 totalCount를 넘어가지 않도록 값을 보정해줄 수 있습니다.
         gaugeImage.fillAmount = Mathf.Clamp01(gaugeImage.fillAmount);
+    }
+
+    public IEnumerator GoStart()
+    {
+        beatSynced = false;
+        BeatClock.OnBeat += HandleBeatSync;
+        yield return new WaitUntil(() => beatSynced);
+
+        yield return StartCoroutine(startMotions.startCountUI.Play123Coroutine());
+        startMotions.playerActionUI.StartMonkAnimAfter123Count();
+
     }
     #endregion
 
