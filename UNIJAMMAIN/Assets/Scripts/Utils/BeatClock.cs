@@ -74,6 +74,8 @@ public class BeatClock : MonoBehaviour
         _beatInterval = IngameData.BeatInterval;
     }
 
+    // 박자가 끊길 때마다 -> 부하가 너무 심하다
+    // Coroutine : 부하 꽤 많음. -> 비동기 => Text가 있을 때마다
     void Update()
     {
         if(!IngameData.IsStart) // 시작하지않았다면

@@ -133,7 +133,6 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         while (now >= ScheduledTime(_tick))
         {
             _tick++;
-            IngameData.TotalMobCnt++;
             DoSpawn();
         }
     }
@@ -198,6 +197,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
     private void PoolEnemySpawn(WASDType enemyType)
     {
+        IngameData.TotalMobCnt++;
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
         GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
         go.transform.position = _spawnPosition[enemyType];
