@@ -9,6 +9,7 @@ public static class IngameData
 
     public static bool Pause { set; get; }
     private static double beatInterval;
+    public static bool IsStart = false;
 
     static IngameData()
     {
@@ -80,7 +81,7 @@ public static class IngameData
     }
 
 
-    public static float PhaseDurationSec { set; get; }
+    public static double PhaseDurationSec { set; get; }
     public static int TotalMobCnt { set; get; }
 
     public static int PerfectMobCnt { get; private set; }

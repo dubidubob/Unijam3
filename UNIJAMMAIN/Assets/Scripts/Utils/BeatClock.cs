@@ -86,6 +86,12 @@ public class BeatClock : MonoBehaviour
     void Update()
     {
  
+        
+        if(!IngameData.IsStart) // 시작하지않았다면
+        {
+            return;
+        }
+        
         if (IngameData.Pause)
         {
             _wasPaused = true;

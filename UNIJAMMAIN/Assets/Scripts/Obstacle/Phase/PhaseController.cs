@@ -37,9 +37,12 @@ public class PhaseController : MonoBehaviour
     private float _beatCount=0;
     SpawnController spawnController;
 
+    private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
+
     private bool isStart = false;
     private void Start()
     {
+         IngameData.IsStart = false;
         spawnController = GetComponent<SpawnController>();
         Scoreboard.gameObject.SetActive(false);
         monsterDatabase.Init();
@@ -62,10 +65,17 @@ public class PhaseController : MonoBehaviour
         SetStageTimerInitialize();
         StartCoroutine(RunChapter());
     }
-    
+
+    private void HandleBeatSync(double _, long __)
+    {
+        beatSynced = true;
+        BeatClock.OnBeat -= HandleBeatSync; // 한 번만 실행하고 즉시 구독 해지
+    }
     private IEnumerator RunChapter()
     {
+       
         SetStageBackGround(); // 배경설정
+        IngameData.IsStart = true;
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];
@@ -82,9 +92,12 @@ public class PhaseController : MonoBehaviour
             IngameData.PhaseDurationSec = durationSec;
             IngameData.BeatInterval = beatInterval;
 
+           
+
             if (gameEvent is PhaseEvent phaseEvent)
             {
                 // PhaseEvent에 특화된 로직 실행
+
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
                 yield return new WaitForSeconds(delaySec);
@@ -101,9 +114,16 @@ public class PhaseController : MonoBehaviour
                 if (i == 0)
                     TutorialStoped?.Invoke(false);
             }
-
+            
             if (i == 0)
             {
+                beatSynced = false;
+                BeatClock.OnBeat += HandleBeatSync;
+
+                // 2. 다음 비트가 올 때까지(beatSynced가 true가 될 때까지) 기다립니다.
+                yield return new WaitUntil(() => beatSynced);
+
+                // 3. 비트에 정확히 맞춰진 시점에서 카운트다운을 시작합니다.
                 yield return StartCoroutine(startMotions.startCountUI.Play123Coroutine());
                 startMotions.playerActionUI.StartMonkAnimAfter123Count();
             }
@@ -197,9 +217,10 @@ public class PhaseController : MonoBehaviour
     {
         _beatCount++;
 
-        if(isStart==false)
+        if (!isStart)
         {
             Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
+            isStart = true;
         }
 
         // 1. _beatCount와 totalCount를 float으로 변환하여 진행 비율(0.0 ~ 1.0)을 계산합니다.
