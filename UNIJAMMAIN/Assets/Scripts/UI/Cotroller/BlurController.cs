@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class BlurController : MonoBehaviour
 {
     public Image damageImage;
     bool isCoolDown;
-    public Camera camera; // Èçµé¸± Ä«¸Ş¶ó Transform
-    public float shakeStrength = 0.2f; // Èçµé¸² °­µµ
-    public float shakeDuration = 0.2f; // Èçµé¸² Áö¼Ó ½Ã°£
+    public Camera camera; // í”ë“¤ë¦´ ì¹´ë©”ë¼ Transform
+    public float shakeStrength = 0.2f; // í”ë“¤ë¦¼ ê°•ë„
+    public float shakeDuration = 0.2f; // í”ë“¤ë¦¼ ì§€ì† ì‹œê°„
 
     private void Start()
     {
@@ -21,21 +19,21 @@ public class BlurController : MonoBehaviour
         { 
             camera = Camera.main;
         }
-        damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // ÃÊ±â ¾ËÆÄ 0
+        damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // ì´ˆê¸° ì•ŒíŒŒ 0
         /*
-        Debug.Log("Å×½ºÆ®¿ë pitch1.3f");
+        Debug.Log("í…ŒìŠ¤íŠ¸ìš© pitch1.3f");
         Time.timeScale = 1.3f;
         Managers.Sound.Play("BGM/84bpm_64_V1", Define.Sound.BGM, 1.3f);
         */
         Managers.Game.blur = this;
     }
 
-    public Image[] blurImages; // Blur1 ~ BlurN (Inspector¿¡ ³Ö¾îÁÜ)
+    public Image[] blurImages; // Blur1 ~ BlurN (Inspectorì— ë„£ì–´ì¤Œ)
     public Image goGrayBackGround;
     public Image gameOverBlack;
     public TMP_Text gameOverText;
     public TMP_Text gameOverDownText;
-    public float fadeDuration = 0.5f; // ÀüÈ¯ ½Ã°£ (ÃÊ)
+    public float fadeDuration = 0.5f; // ì „í™˜ ì‹œê°„ (ì´ˆ)
 
     private int currentIndex = 0;
     private Coroutine fadeCoroutine;
@@ -44,7 +42,7 @@ public class BlurController : MonoBehaviour
     public int[] hpBoundaryWeight = new int[7];
 
     /// <summary>
-    /// Ã¼·Â¿¡ µû¶ó Blur »óÅÂ ¾÷µ¥ÀÌÆ®
+    /// ì²´ë ¥ì— ë”°ë¼ Blur ìƒíƒœ ì—…ë°ì´íŠ¸
     /// </summary>
     public void SetBlur (float currentHp, float maxHp)
     { 
@@ -52,7 +50,7 @@ public class BlurController : MonoBehaviour
         // Debug.Log($"currentHP : {currentHp} - maxHP : {maxHp}");
         if (blurImages.Length == 0) return;
 
-        // ¸î ¹øÂ° BlurÀÎÁö °è»ê
+        // ëª‡ ë²ˆì§¸ Blurì¸ì§€ ê³„ì‚°
         float lostHp = maxHp - currentHp;
         float cumulativeHpBoundary = 0f;
         int newIndex=0;
@@ -62,30 +60,30 @@ public class BlurController : MonoBehaviour
             if (lostHp < cumulativeHpBoundary)
             {
                 newIndex = i;
-                break; // ÇöÀç Ã¼·Â¿¡ ÇØ´çÇÏ´Â ±¸°£À» Ã£¾ÒÀ¸¹Ç·Î ·çÇÁ Á¾·á
+                break; // í˜„ì¬ ì²´ë ¥ì— í•´ë‹¹í•˜ëŠ” êµ¬ê°„ì„ ì°¾ì•˜ìœ¼ë¯€ë¡œ ë£¨í”„ ì¢…ë£Œ
             }
-            // ¸¸¾à ÀÒÀº Ã¼·ÂÀÌ ¸ğµç °¡ÁßÄ¡ ÇÕº¸´Ù Å©°Å³ª °°´Ù¸é ¸¶Áö¸· ÀÎµ¦½º·Î ¼³Á¤µË´Ï´Ù.
+            // ë§Œì•½ ìƒì€ ì²´ë ¥ì´ ëª¨ë“  ê°€ì¤‘ì¹˜ í•©ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ë‹¤ë©´ ë§ˆì§€ë§‰ ì¸ë±ìŠ¤ë¡œ ì„¤ì •ë©ë‹ˆë‹¤.
             newIndex = i;
         }
-        // ¾ÈÀüÀ» À§ÇØ Clamp Ã³¸® (°¡ÁßÄ¡ ¼³Á¤ ¿À·ù ¹æÁö)
+        // ì•ˆì „ì„ ìœ„í•´ Clamp ì²˜ë¦¬ (ê°€ì¤‘ì¹˜ ì„¤ì • ì˜¤ë¥˜ ë°©ì§€)
         newIndex = Mathf.Clamp(newIndex, 0, blurImages.Length - 1);
 
-        if (newIndex != currentIndex) // »õ·Î¿î ÀÌ¹ÌÁö·ÎÀÇ º¯È¯ 
+        if (newIndex != currentIndex) // ìƒˆë¡œìš´ ì´ë¯¸ì§€ë¡œì˜ ë³€í™˜ 
         {
-            // ÀüÈ¯ ½ÃÀÛ
+            // ì „í™˜ ì‹œì‘
             if (fadeCoroutine != null)
                 StopCoroutine(fadeCoroutine);
 
             fadeCoroutine = StartCoroutine(FadeTransition(currentIndex, newIndex));
             currentIndex = newIndex;
 
-            if (newIndex >= blurImages.Length - 2) // ¸¶Áö¸· 2´Ü°èºÎÅÍ »õ·Î Ãß°¡µÇ´Â Layer BackGround.LasBlacking
+            if (newIndex >= blurImages.Length - 2) // ë§ˆì§€ë§‰ 2ë‹¨ê³„ë¶€í„° ìƒˆë¡œ ì¶”ê°€ë˜ëŠ” Layer BackGround.LasBlacking
             {
-                lastBlacking.DOFade(1f, 0.8f); // ¾îµÎ¿öÁö±â
+                lastBlacking.DOFade(1f, 0.8f); // ì–´ë‘ì›Œì§€ê¸°
             }
             else
             {
-                lastBlacking.DOFade(0f, 0.8f); // ¹à¾ÆÁö±â
+                lastBlacking.DOFade(0f, 0.8f); // ë°ì•„ì§€ê¸°
             }
 
         }
@@ -104,7 +102,7 @@ public class BlurController : MonoBehaviour
         Image oldImg = blurImages[oldIndex];
         Image newImg = blurImages[newIndex];
 
-        // ½ÃÀÛ ¾ËÆÄ°ª
+        // ì‹œì‘ ì•ŒíŒŒê°’
 
         float oldStartAlpha = oldImg.color.a;
         float newStartAlpha = newImg.color.a;
@@ -114,12 +112,12 @@ public class BlurController : MonoBehaviour
             time += Time.deltaTime;
             float t = time / fadeDuration;
 
-            // old ¡æ Åõ¸í
+            // old â†’ íˆ¬ëª…
             Color c1 = oldImg.color;
             c1.a = Mathf.Lerp(oldStartAlpha, 0f, t);
             oldImg.color = c1;
 
-            // new ¡æ ºÒÅõ¸í
+            // new â†’ ë¶ˆíˆ¬ëª…
             Color c2 = newImg.color;
             c2.a = Mathf.Lerp(newStartAlpha, 1f, t);
             newImg.color = c2;
@@ -127,7 +125,7 @@ public class BlurController : MonoBehaviour
             yield return null;
         }
 
-        // ÃÖÁ¾ º¸Á¤
+        // ìµœì¢… ë³´ì •
         Color endOld = oldImg.color;
         endOld.a = 0f;
         oldImg.color = endOld;
@@ -144,27 +142,27 @@ public class BlurController : MonoBehaviour
 
         isCoolDown = true;
         damageImage.DOKill();
-        camera.transform.DOKill(); // ÀÌÀü Èçµé¸² Áß´Ü
+        camera.transform.DOKill(); // ì´ì „ í”ë“¤ë¦¼ ì¤‘ë‹¨
 
-        // ÇÇÇØ È¿°ú UI ÆäÀÌµå 
+        // í”¼í•´ íš¨ê³¼ UI í˜ì´ë“œ 
         Sequence seq = DOTween.Sequence();
         seq.Append(damageImage.DOFade(1f, 0.15f));
         seq.Append(damageImage.DOFade(0f, 0.15f));
 
         PlayRandomHurtSound();
 
-        // blurImages °³¼ö ±âÁØÀ¸·Î goGrayBackGround alpha °è»ê
-        // currentIndex´Â SetBlur¿¡¼­ °»½ÅµÊ, 0 ~ blurImages.Length-1
-        float targetAlpha = (currentIndex + 1) / (float)blurImages.Length; // 1/6, 2/6, ... ºñÀ²
+        // blurImages ê°œìˆ˜ ê¸°ì¤€ìœ¼ë¡œ goGrayBackGround alpha ê³„ì‚°
+        // currentIndexëŠ” SetBlurì—ì„œ ê°±ì‹ ë¨, 0 ~ blurImages.Length-1
+        float targetAlpha = (currentIndex + 1) / (float)blurImages.Length; // 1/6, 2/6, ... ë¹„ìœ¨
 
-        // ¹è°æ goGrayBackGround Åõ¸íµµ Á¡Á¡ ÁøÇØÁöµµ·Ï Ãß°¡
-        seq.Join(goGrayBackGround.DOFade(targetAlpha, 0.3f)); // damageImage¿Í µ¿½Ã¿¡ ÆäÀÌµå
+        // ë°°ê²½ goGrayBackGround íˆ¬ëª…ë„ ì ì  ì§„í•´ì§€ë„ë¡ ì¶”ê°€
+        seq.Join(goGrayBackGround.DOFade(targetAlpha, 0.3f)); // damageImageì™€ ë™ì‹œì— í˜ì´ë“œ
 
-        // Ä«¸Ş¶ó Èçµé¸² È¿°ú Ãß°¡
+        // ì¹´ë©”ë¼ í”ë“¤ë¦¼ íš¨ê³¼ ì¶”ê°€
         camera.transform.DOShakePosition(
             duration: shakeDuration,
             strength: shakeStrength,
-            vibrato: 8, // Èçµé¸®´Â È½¼ö
+            vibrato: 8, // í”ë“¤ë¦¬ëŠ” íšŸìˆ˜
             randomness: 90,
             snapping: false,
             fadeOut: true
@@ -175,7 +173,7 @@ public class BlurController : MonoBehaviour
 
     public void GameOverBlurEffect()
     {
-        // InCirc ÃµÃµÈ÷ ¾îµÎ¿öÁö´Ù°¡ °©ÀÚ±â ¾îµÎ¿öÁö±â
+        // InCirc ì²œì²œíˆ ì–´ë‘ì›Œì§€ë‹¤ê°€ ê°‘ìê¸° ì–´ë‘ì›Œì§€ê¸°
         gameOverBlack.DOFade(1 / 255f * 248f, 1f)
             .SetEase(Ease.InCirc)
             .SetUpdate(UpdateType.Normal, true);
@@ -185,53 +183,35 @@ public class BlurController : MonoBehaviour
         gameOverDownText.DOFade(1 / 255f * 248f, 1f )
             .SetEase(Ease.InCirc)
             .SetUpdate(UpdateType.Normal, true);
-        
-        if(Managers.Game.currentPlayerState==GameManager.PlayerState.Die)
-        {
-            StartCoroutine(WaitForGameOver());
-        }
-        
     }
 
-    private IEnumerator WaitForGameOver()
+    public void WaitForGameOver()
     {
-        // ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³¯ ¶§±îÁö ±â´Ù¸³´Ï´Ù.
-        yield return new WaitForSecondsRealtime(1.0f);
-
-        
-        // °ÔÀÓ »óÅÂ°¡ '»ç¸Á'ÀÏ ¶§¸¸ Å¬¸¯ ÀÌº¥Æ®¸¦ Ã³¸®ÇÕ´Ï´Ù.
-        if (Managers.Game.currentPlayerState == GameManager.PlayerState.Die)
+        // í´ë¦­ ì´ë²¤íŠ¸ë¥¼ ì •ì˜í•©ë‹ˆë‹¤.
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerClick;
+        entry.callback.AddListener((eventData) =>
         {
-            // È­¸é¿¡ Å¬¸¯ °¡´ÉÇÑ EventTrigger ÄÄÆ÷³ÍÆ®¸¦ Ãß°¡ÇÕ´Ï´Ù.
-            var eventTrigger = gameOverBlack.gameObject.GetOrAddComponent<EventTrigger>();
+            // í´ë¦­ ì‹œ ìŠ¤í…Œì´ì§€ ì”¬ìœ¼ë¡œ ì´ë™
+            SceneLoadingManager.Instance.LoadScene("StageScene");
+            Time.timeScale = 1f; // íƒ€ì„ìŠ¤ì¼€ì¼ ì›ìƒ ë³µêµ¬
+        });
 
-            // Å¬¸¯ ÀÌº¥Æ®¸¦ Á¤ÀÇÇÕ´Ï´Ù.
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.PointerClick;
-            entry.callback.AddListener((eventData) =>
-            {
-                // Å¬¸¯ ½Ã ½ºÅ×ÀÌÁö ¾ÀÀ¸·Î ÀÌµ¿
-                SceneLoadingManager.Instance.LoadScene("StageScene");
-                Time.timeScale = 1f; // Å¸ÀÓ½ºÄÉÀÏ ¿ø»ó º¹±¸
-            });
-
-            // EventTrigger¿¡ ÀÌº¥Æ®¸¦ Ãß°¡ÇÕ´Ï´Ù.
-            eventTrigger.triggers.Add(entry);
-            Debug.Log("ÁøÀÔ");
-        }
-
-
+        // í™”ë©´ì— í´ë¦­ ê°€ëŠ¥í•œ EventTrigger ì»´í¬ë„ŒíŠ¸ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
+        var eventTrigger = gameOverBlack.gameObject.GetOrAddComponent<EventTrigger>();
+        // EventTriggerì— ì´ë²¤íŠ¸ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
+        eventTrigger.triggers.Add(entry);
     }
         public void ComboEffect()
     {
         float defaultSize = camera.orthographicSize;
 
-        // ÁÜÀÎ
+        // ì¤Œì¸
         camera.DOOrthoSize(defaultSize * 0.9f, 0.4f)
             .SetEase(Ease.OutQuad)
             .OnComplete(() =>
             {
-            // ¿ø·¡ Å©±â·Î º¹±Í
+            // ì›ë˜ í¬ê¸°ë¡œ ë³µê·€
             camera.DOOrthoSize(defaultSize, 0.4f)
                     .SetEase(Ease.InOutQuad);
             });
@@ -241,7 +221,7 @@ public class BlurController : MonoBehaviour
 
     private void PlayRandomHurtSound()
     {
-        // 0 ¶Ç´Â 1À» ¹«ÀÛÀ§·Î ¼±ÅÃ
+        // 0 ë˜ëŠ” 1ì„ ë¬´ì‘ìœ„ë¡œ ì„ íƒ
         int randomIndex = Random.Range(0, 2);
 
         if (randomIndex == 0)

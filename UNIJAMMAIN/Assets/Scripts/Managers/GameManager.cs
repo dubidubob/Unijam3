@@ -233,6 +233,7 @@ public class GameManager
         currentPlayerState = PlayerState.Die;
         actionUI.GameOverAnimation();
         blur.GameOverBlurEffect();
+        blur.WaitForGameOver();
 
         Managers.Sound.BGMFadeOut();
 
