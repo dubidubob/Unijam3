@@ -5,37 +5,29 @@ public class BeatClock : MonoBehaviour
 {
     public static class GameSettings
     {
-        // 노트가 보이는 타이밍 조절 (단위: 초)
         public static double VisualOffset = 0.0;
-
-        // 사용자 입력 판정 타이밍 조절 (단위: 초)
         public static double JudgmentOffset = 0.0;
+
+        // ▼▼▼ 카운트다운 타이밍 조절용 오프셋 (단위: 초, 양수값은 '늦게' 시작) ▼▼▼
+        public static double CountdownOffset = 0.00;
     }
 
-    // --- 기존 변수 ---
-    private double _startDsp;       // 노래가 처음 시작된 절대 시간 (고정)
-    private double _beatInterval;   // 현재 비트 간격
+    // --- 외부 접근을 위해 public static으로 일부 변경 ---
+    public static double BeatInterval { get; private set; }
+    public static long CurrentTick { get; private set; }
+    private static double AnchorDspTime;
+    private static long AnchorTick;
+
     private bool _running = false;
     private bool _wasPaused;
-    private long _tick;             // 현재 비트 카운트
-
-    // --- 새로 추가된 변수 (타이밍 앵커) ---
-    private double _lastBpmChangeDspTime; // 마지막으로 BPM이 변경된 시점의 dspTime
-    private long _lastBpmChangeTick;      // 마지막으로 BPM이 변경된 시점의 tick
-    
 
     public static Action<double, long> OnBeat;
-    // --- phase와 연동 --- //
     [SerializeField] PhaseController phase;
 
-    private void Start()
+    private void Awake()
     {
-        // Init() 대신 명확한 이름의 함수를 사용합니다.
         IngameData.ChangeBpm -= HandleBpmChange;
         IngameData.ChangeBpm += HandleBpmChange;
-
-        // 게임 시작 시 최초 한 번만 호출되도록 변경 (예시)
-        // 실제 프로젝트에 맞게 StartClock()을 적절한 시점에 호출해주세요.
         StartClock();
     }
 
@@ -44,48 +36,40 @@ public class BeatClock : MonoBehaviour
         IngameData.ChangeBpm -= HandleBpmChange;
     }
 
-    /// <summary>
-    /// 시계를 맨 처음 시작할 때 호출됩니다.
-    /// </summary>
     public void StartClock()
     {
-        _beatInterval = IngameData.BeatInterval;
-        _startDsp = AudioSettings.dspTime;
-        _tick = 0;
-
-        // 첫 시작 시 앵커를 초기값으로 설정합니다.
-        _lastBpmChangeDspTime = _startDsp;
-        _lastBpmChangeTick = 0;
-
+        BeatInterval = IngameData.BeatInterval;
+        AnchorDspTime = AudioSettings.dspTime;
+        AnchorTick = 0;
+        CurrentTick = 0;
         _running = true;
         _wasPaused = false;
     }
 
-    /// <summary>
-    /// BPM 변경 이벤트가 발생할 때 호출됩니다.
-    /// </summary>
     private void HandleBpmChange()
     {
-        // 최초 시작이 아닌 경우에만 (이미 실행 중일 때) 앵커를 업데이트합니다.
         if (!_running && !_wasPaused) return;
 
         double now = AudioSettings.dspTime;
 
-        // 이전 beatInterval을 기준으로 현재 tick 위치를 정확히 계산
-        long currentTick = _lastBpmChangeTick + (long)Math.Floor((now - _lastBpmChangeDspTime) / _beatInterval);
+        long nextTickBeforeChange = AnchorTick + (long)Math.Ceiling((now - AnchorDspTime) / BeatInterval);
+        double nextScheduledTime = AnchorDspTime + (nextTickBeforeChange - AnchorTick) * BeatInterval;
 
-        // 현재 시점과 tick을 새로운 앵커로 설정
-        _lastBpmChangeDspTime = now;
-        _lastBpmChangeTick = currentTick;
-        _tick = currentTick; // 현재 tick도 업데이트
+        BeatInterval = IngameData.BeatInterval;
+        AnchorDspTime = nextScheduledTime;
+        AnchorTick = nextTickBeforeChange;
 
-        // 새로운 beatInterval로 변경
-        _beatInterval = IngameData.BeatInterval;
+        CatchUp();
+    }
+
+    // --- StartCountUI에서 호출할 수 있도록 public static으로 변경 ---
+    public static double GetScheduledTime(long tickIndex)
+    {
+        return AnchorDspTime + (tickIndex - AnchorTick) * BeatInterval;
     }
 
     void Update()
     {
- 
         if (IngameData.Pause)
         {
             _wasPaused = true;
@@ -98,38 +82,159 @@ public class BeatClock : MonoBehaviour
             _wasPaused = false;
         }
 
+        if (!_running) return;
+
         double now = AudioSettings.dspTime;
 
-        while (now >= ScheduledTime(_tick + 1))
+        while (now >= GetScheduledTime(CurrentTick + 1))
         {
-            _tick++;
-            double scheduled = ScheduledTime(_tick);
-            OnBeat?.Invoke(scheduled, _tick);
+            CurrentTick++;
+            double scheduled = GetScheduledTime(CurrentTick);
+            OnBeat?.Invoke(scheduled, CurrentTick);
             phase.SetStageTimerGo();
         }
     }
 
-    /// <summary>
-    /// 특정 tick의 정확한 예정 시간을 계산합니다. (수정된 핵심 로직)
-    /// </summary>
-    private double ScheduledTime(long tickIndex)
-    {
-        // 마지막 앵커 시점으로부터 얼마나 많은 비트가 지났는지 계산
-        return _lastBpmChangeDspTime + (tickIndex - _lastBpmChangeTick) * _beatInterval;
-    }
-
-    /// <summary>
-    /// 일시정지 후 복귀 시 현재 시간에 맞게 tick을 보정합니다. (수정된 로직)
-    /// </summary>
     private void CatchUp()
     {
         double now = AudioSettings.dspTime;
-
-        // 앵커를 기준으로 현재 tick을 정확히 스냅합니다.
-        _tick = _lastBpmChangeTick + (long)Math.Floor((now - _lastBpmChangeDspTime) / _beatInterval);
+        CurrentTick = AnchorTick + (long)Math.Floor((now - AnchorDspTime) / BeatInterval);
         _running = true;
     }
 }
+
+//using System;
+//using UnityEngine;
+
+//public class BeatClock : MonoBehaviour
+//{
+//    public static class GameSettings
+//    {
+//        // 노트가 보이는 타이밍 조절 (단위: 초)
+//        public static double VisualOffset = 0.0;
+
+//        // 사용자 입력 판정 타이밍 조절 (단위: 초)
+//        public static double JudgmentOffset = 0.0;
+//    }
+
+//    // --- 기존 변수 ---
+//    private double _startDsp;       // 노래가 처음 시작된 절대 시간 (고정)
+//    private double _beatInterval;   // 현재 비트 간격
+//    private bool _running = false;
+//    private bool _wasPaused;
+//    private long _tick;             // 현재 비트 카운트
+
+//    // --- 새로 추가된 변수 (타이밍 앵커) ---
+//    private double _lastBpmChangeDspTime; // 마지막으로 BPM이 변경된 시점의 dspTime
+//    private long _lastBpmChangeTick;      // 마지막으로 BPM이 변경된 시점의 tick
+
+
+//    public static Action<double, long> OnBeat;
+//    // --- phase와 연동 --- //
+//    [SerializeField] PhaseController phase;
+
+//    private void Start()
+//    {
+//        // Init() 대신 명확한 이름의 함수를 사용합니다.
+//        IngameData.ChangeBpm -= HandleBpmChange;
+//        IngameData.ChangeBpm += HandleBpmChange;
+
+//        // 게임 시작 시 최초 한 번만 호출되도록 변경 (예시)
+//        // 실제 프로젝트에 맞게 StartClock()을 적절한 시점에 호출해주세요.
+//        StartClock();
+//    }
+
+//    private void OnDestroy()
+//    {
+//        IngameData.ChangeBpm -= HandleBpmChange;
+//    }
+
+//    /// <summary>
+//    /// 시계를 맨 처음 시작할 때 호출됩니다.
+//    /// </summary>
+//    public void StartClock()
+//    {
+//        _beatInterval = IngameData.BeatInterval;
+//        _startDsp = AudioSettings.dspTime;
+//        _tick = 0;
+
+//        // 첫 시작 시 앵커를 초기값으로 설정합니다.
+//        _lastBpmChangeDspTime = _startDsp;
+//        _lastBpmChangeTick = 0;
+
+//        _running = true;
+//        _wasPaused = false;
+//    }
+
+//    /// <summary>
+//    /// BPM 변경 이벤트가 발생할 때 호출됩니다.
+//    /// </summary>
+//    private void HandleBpmChange()
+//    {
+//        // 최초 시작이 아닌 경우에만 (이미 실행 중일 때) 앵커를 업데이트합니다.
+//        if (!_running && !_wasPaused) return;
+
+//        double now = AudioSettings.dspTime;
+
+//        // 이전 beatInterval을 기준으로 현재 tick 위치를 정확히 계산
+//        long currentTick = _lastBpmChangeTick + (long)Math.Floor((now - _lastBpmChangeDspTime) / _beatInterval);
+
+//        // 현재 시점과 tick을 새로운 앵커로 설정
+//        _lastBpmChangeDspTime = now;
+//        _lastBpmChangeTick = currentTick;
+//        _tick = currentTick; // 현재 tick도 업데이트
+
+//        // 새로운 beatInterval로 변경
+//        _beatInterval = IngameData.BeatInterval;
+//    }
+
+//    void Update()
+//    {
+
+//        if (IngameData.Pause)
+//        {
+//            _wasPaused = true;
+//            return;
+//        }
+
+//        if (_wasPaused)
+//        {
+//            CatchUp();
+//            _wasPaused = false;
+//        }
+
+//        double now = AudioSettings.dspTime;
+
+//        while (now >= ScheduledTime(_tick + 1))
+//        {
+//            _tick++;
+//            double scheduled = ScheduledTime(_tick);
+//            OnBeat?.Invoke(scheduled, _tick);
+//            phase.SetStageTimerGo();
+//        }
+//    }
+
+//    /// <summary>
+//    /// 특정 tick의 정확한 예정 시간을 계산합니다. (수정된 핵심 로직)
+//    /// </summary>
+//    private double ScheduledTime(long tickIndex)
+//    {
+//        // 마지막 앵커 시점으로부터 얼마나 많은 비트가 지났는지 계산
+//        return _lastBpmChangeDspTime + (tickIndex - _lastBpmChangeTick) * _beatInterval;
+//    }
+
+//    /// <summary>
+//    /// 일시정지 후 복귀 시 현재 시간에 맞게 tick을 보정합니다. (수정된 로직)
+//    /// </summary>
+//    private void CatchUp()
+//    {
+//        double now = AudioSettings.dspTime;
+
+//        // 앵커를 기준으로 현재 tick을 정확히 스냅합니다.
+//        _tick = _lastBpmChangeTick + (long)Math.Floor((now - _lastBpmChangeDspTime) / _beatInterval);
+//        _running = true;
+//    }
+//}
 /* 다른 코드 적용해보기
 using System;
 using UnityEngine;
