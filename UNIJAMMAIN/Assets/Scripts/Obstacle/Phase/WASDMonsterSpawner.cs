@@ -23,7 +23,9 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private Dictionary<WASDType, Vector2> _targetPosition;
     private HitJudge _rank;
     private Vector3 _playerPos;
-    
+
+    private double _pauseStartTime;
+
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
     private void Start()
@@ -96,18 +98,22 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private double leftOverTime;
     public void PauseForWhile(bool isStop)
     {
+        _spawning = !isStop; // 스폰 상태를 isStop에 따라 직접 제어
+
         if (isStop)
         {
-            _spawning = false;
-            CachedTime = AudioSettings.dspTime;
-            leftOverTime = AudioSettings.dspTime % _spawnInterval;
+            // Pause가 시작된 dspTime을 기록
+            _pauseStartTime = AudioSettings.dspTime;
         }
-        
-        else 
+        else
         {
-            double PausedTime = AudioSettings.dspTime - CachedTime;
-            _tick += (int)((PausedTime+ leftOverTime) / _spawnInterval);
-            _spawning = true;
+            // Pause가 풀렸을 때, Pause된 시간만큼 스폰 시작 시간을 뒤로 밀어줌
+            if (_pauseStartTime > 0)
+            {
+                double pausedDuration = AudioSettings.dspTime - _pauseStartTime;
+                _startDsp += pausedDuration;
+                _pauseStartTime = 0; // 초기화
+            }
         }
     }
 
