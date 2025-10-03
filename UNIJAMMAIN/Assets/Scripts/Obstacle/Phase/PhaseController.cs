@@ -74,6 +74,7 @@ public class PhaseController : MonoBehaviour
     private IEnumerator RunChapter()
     {
         SetStageBackGround(); // 배경설정
+        IngameData.IsStart = true;
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];

@@ -16,6 +16,7 @@ public class BeatClock : MonoBehaviour
     private long _lastBpmChangeTick;      // 마지막으로 BPM이 변경된 시점의 tick
 
     public static Action<long> OnBeat;
+    public static long CurrentTick { get; private set; }
     // --- phase와 연동 --- //
     [SerializeField] PhaseController phase;
 
