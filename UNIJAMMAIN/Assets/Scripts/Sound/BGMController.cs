@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class BGMController : MonoBehaviour
 {
     // A static variable holds the state across all scenes and instances
-    private static int _currentBGMVolumeStep = 2;
+    private static int _currentBGMVolumeStep = 1;
     public Image image;
     // Define the volume levels. Note that Unity uses 0.0f to 1.0f for volume.
     // Sequence: 25% -> 50% -> 75% -> 100% -> 0%

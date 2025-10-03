@@ -67,7 +67,10 @@ public class SoundManager
             }
             audioSource.pitch = pitch;
             audioSource.clip = audioClip;
-            audioSource.volume = volume;
+
+            //audioSource.volume = volume;
+            audioSource.volume = BGMController.CurrentVolumeBGM * volume;
+            _originalBGMVolume = audioSource.volume;
 
             if (_fadeCoroutine != null)
             {
@@ -87,7 +90,7 @@ public class SoundManager
 
 
             SFX.pitch = pitch;
-            SFX.PlayOneShot(audioClip, volume);
+            SFX.PlayOneShot(audioClip, volume * SFXController.CurrentVolumeSFX);
         }
     }
     /// <summary>
@@ -302,7 +305,7 @@ public class SoundManager
     public void SettingNewSceneVolume()
     {
         Managers.Sound.ChangeBGMVolume(BGMController.CurrentVolumeBGM);
-        Managers.Sound.ChangeBGMVolume(SFXController.CurrentVolumeSFX);
+        Managers.Sound.ChangeSFXVolume(SFXController.CurrentVolumeSFX);
         
         Debug.Log($"SettingNewSceneVolme : {BGMController.CurrentVolumeBGM},{SFXController.CurrentVolumeSFX}");
     }

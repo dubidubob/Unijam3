@@ -18,7 +18,7 @@ public class SFXController : MonoBehaviour
 
     public static float CurrentVolumeSFX
     {
-        // _currentBGMVolumeStep은 private이므로 직접 접근 대신 프로퍼티를 통해
+        // _currentSFXVolumeStep은 private이므로 직접 접근 대신 프로퍼티를 통해
         // 계산된 볼륨 값을 외부에 알려줍니다.
         get
         {
@@ -44,9 +44,9 @@ public class SFXController : MonoBehaviour
         Managers.Sound.Play("SFX/Setting_Volume_Button_SFX", Define.Sound.SFX);
 
         // 4. SoundManager에 새로운 볼륨 값을 적용합니다.
-        Managers.Sound.ChangeBGMVolume(newVolume);
+        Managers.Sound.ChangeSFXVolume(newVolume);
 
-        Debug.Log($"BGM Volume set to: {newVolume * 100}%");
+        Debug.Log($"SFX Volume set to: {newVolume * 100}%");
 
     }
 }
