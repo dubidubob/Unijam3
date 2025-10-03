@@ -364,7 +364,7 @@ public class StoryDialog : UI_Popup
 
     private void SceneMoving()
     {
-        Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+        SceneLoadingManager.Instance.LoadScene("GamePlayScene");
     }
 
     #region Enimation

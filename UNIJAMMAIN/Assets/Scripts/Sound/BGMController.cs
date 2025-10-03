@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BGM : MonoBehaviour
+public class BGMController : MonoBehaviour
 {
     // A static variable holds the state across all scenes and instances
     private static int _currentBGMVolumeStep = 0;
@@ -24,7 +24,7 @@ public class BGM : MonoBehaviour
         {
             // 임시 배열을 만들어 현재 볼륨을 반환합니다.
             // (readonly 멤버는 static 메소드/프로퍼티에서 직접 접근이 안되기 때문)
-            float[] tempLevels = { 0.25f, 0.5f, 0.75f, 1.0f, 0.0f };
+            float[] tempLevels = { 0.0f , 0.25f, 0.5f, 0.75f, 1.0f };
             return tempLevels[_currentBGMVolumeStep];
         }
     }
@@ -34,20 +34,20 @@ public class BGM : MonoBehaviour
     /// </summary>
     public void BGMClicked()
     {
-        // Get the volume for the current step
+        // 1. 다음 단계를 위해 먼저 _currentBGMVolumeStep 값을 1 증가시킵니다.
+        _currentBGMVolumeStep = (_currentBGMVolumeStep + 1) % _volumeLevels.Length;
+
+        // 2. 새롭게 변경된 _currentBGMVolumeStep 값으로 볼륨과 스프라이트를 가져옵니다.
         float newVolume = _volumeLevels[_currentBGMVolumeStep];
         image.sprite = sprite[_currentBGMVolumeStep];
 
+        // 3. 효과음을 재생합니다.
         Managers.Sound.Play("SFX/Setting_Volume_Button_SFX", Define.Sound.SFX);
 
-        // Tell the SoundManager to change the BGM volume
-        // Assuming you have a static Managers class that holds a reference to SoundManager
+        // 4. SoundManager에 새로운 볼륨 값을 적용합니다.
         Managers.Sound.ChangeBGMVolume(newVolume);
 
         Debug.Log($"BGM Volume set to: {newVolume * 100}%");
 
-        // Increment the step for the next click, and loop back to 0 if it goes past the end
-        _currentBGMVolumeStep = (_currentBGMVolumeStep + 1) % _volumeLevels.Length;
-        
     }
 }

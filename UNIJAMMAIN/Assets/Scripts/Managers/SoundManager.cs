@@ -300,7 +300,9 @@ public class SoundManager
 
     public void SettingNewSceneVolume()
     {
+        Managers.Sound.ChangeBGMVolume(BGMController.CurrentVolumeBGM);
+        Managers.Sound.ChangeBGMVolume(SFXController.CurrentVolumeSFX);
         
-        
+        Debug.Log($"SettingNewSceneVolme : {BGMController.CurrentVolumeBGM},{SFXController.CurrentVolumeSFX}");
     }
 }
