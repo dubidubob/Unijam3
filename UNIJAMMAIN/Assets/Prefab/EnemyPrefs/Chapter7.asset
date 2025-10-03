@@ -17,6 +17,7 @@ MonoBehaviour:
   - rid: 9186972766235262976
   - rid: 8480390888626323456
   - rid: 7504153745620205568
+  - rid: 7504153745620205569
   MusicPath: BGM/201Chapter1
   StartBeat: 8
   backGroundSprite: {fileID: 21300000, guid: 2252cadf993bd7543be64dc9ce651355, type: 3}
@@ -29,7 +30,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 50
+        durationBeat: 60
         startDelayBeat: 1
         bpm: 113.4
         timeScale: 1
@@ -39,8 +40,8 @@ MonoBehaviour:
           monsterType: 0
           WASD_Pattern: WASDWASDWASDWASDWASDWASDWASDWASD(WA)(AS)(SD)(DW)(WA)(AS)(SD)(DW)(WA)(AS)(SD)(DW)(WA)(AS)(SD)(DW)
           speedUpRate: 1
-          spawnBeat: 2
-          moveBeat: 4
+          spawnBeat: 1
+          moveBeat: 2
           hiding: 0
         - isIn: 1
           monsterType: 1
@@ -49,11 +50,35 @@ MonoBehaviour:
           spawnBeat: 2
           moveBeat: 3
           hiding: 0
+    - rid: 7504153745620205569
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 40
+        startDelayBeat: 1
+        bpm: 113.4
+        timeScale: 1
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 6
+          WASD_Pattern: (AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)
+          speedUpRate: 1
+          spawnBeat: 1
+          moveBeat: 2
+          hiding: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: (AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)(AWD)
+          speedUpRate: 1
+          spawnBeat: 1
+          moveBeat: 4
+          hiding: 0
     - rid: 8480390888626323456
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 25
+        durationBeat: 10
         startDelayBeat: 0
         bpm: 113.4
         timeScale: 1
@@ -70,7 +95,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 25
+        durationBeat: 10
         startDelayBeat: 8
         bpm: 113.4
         timeScale: 1
@@ -93,7 +118,7 @@ MonoBehaviour:
         timeScale: 1
         steps:
         - textContents:
-          - "\uC774\uACF3\uC5D0 \uAD73\uAC8C \uC11C\uC11C"
-          - "\uCD5C\uD6C4\uC758 \uC77C\uC744 \uB05D\uB9C8\uCE58\uACA0\uB2E4 !!!!"
+          - "\uC774\uACF3\uC5D0 \uAD73\uAC8C \uC11C\uC11C \uCD5C\uD6C4\uB97C \uB9DE\uC774\uD558\uACA0\uB2E4
+            !!!"
           monsterCutline: 0
           delayBeat: 4
