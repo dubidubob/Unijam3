@@ -39,6 +39,7 @@ public class PhaseController : MonoBehaviour
 
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
     private bool isMonsterGoStart = false;
+    private bool isStart = false;
     private void Start()
     {
         IngameData.IsStart = false;
@@ -73,7 +74,6 @@ public class PhaseController : MonoBehaviour
     private IEnumerator RunChapter()
     {
         SetStageBackGround(); // 배경설정
-        IngameData.IsStart = true;
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];
@@ -197,6 +197,10 @@ public class PhaseController : MonoBehaviour
     {
         _beatCount++;
 
+        if(!isStart)
+        {
+            Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
+        }
         // 스타트 비트실행
         if (!isMonsterGoStart)
         {

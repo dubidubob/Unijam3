@@ -40,6 +40,8 @@ public class BeatClock : MonoBehaviour
     {
         _beatInterval = IngameData.BeatInterval;
         _tick = 0;
+        CurrentTick = 0; // 인스턴스 변수 초기화
+
 
         _lastBpmChangeDspTime = AudioSettings.dspTime;
         _lastBpmChangeTick = 0;
@@ -78,10 +80,7 @@ public class BeatClock : MonoBehaviour
     // Coroutine : 부하 꽤 많음. -> 비동기 => Text가 있을 때마다
     void Update()
     {
-        if(!IngameData.IsStart) // 시작하지않았다면
-        {
-            return;
-        }
+       
         
         if (IngameData.Pause)
         {
@@ -101,7 +100,7 @@ public class BeatClock : MonoBehaviour
         while (now + EPS >= ScheduledTime(_tick + 1))
         {
             _tick++;
-
+             CurrentTick = _tick;
             OnBeat?.Invoke(_tick);
             phase.SetStageTimerGo();
         }

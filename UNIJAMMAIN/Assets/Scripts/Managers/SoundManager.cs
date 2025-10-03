@@ -25,6 +25,7 @@ public class SoundManager
         GameObject root = GameObject.Find("@Sound");
         if (root == null)
         {
+            SettingNewSceneVolume();
             audioMixer = Resources.Load<AudioMixer>("Sounds/SoundSetting");
             root = new GameObject { name = "@Sound" };
             Object.DontDestroyOnLoad(root);
@@ -44,7 +45,7 @@ public class SoundManager
 
             SFX = _audioSources[(int)Define.Sound.SFX];
         }
-        SettingNewSceneVolume();
+      
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f)
     {
