@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundManager
 {
@@ -12,6 +13,8 @@ public class SoundManager
     public AudioMixerGroup[] audioMixerGroups;
     public AudioSource BGM;
     public AudioSource SFX;
+
+    private string _currentSceneName = "";
 
 
     //--- BGM Fade
@@ -56,11 +59,23 @@ public class SoundManager
                 Init();
             AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
 
+            string newSceneName = SceneManager.GetActiveScene().name;
+
             // Yejun - Skips if the requested BGM is already playing.
             if (audioSource.isPlaying && audioSource.clip == audioClip)
             {
-                return;
+                bool isSharedBGMPair =
+                (_currentSceneName == "MainTitle" && newSceneName == "StageScene") ||
+                (_currentSceneName == "StageScene" && newSceneName == "MainTitle");
+
+                if (isSharedBGMPair)
+                {
+                    _currentSceneName = newSceneName; // 씬 이름만 현재 씬으로 갱신
+                    return; // BGM을 끄거나 켜지 않고 그대로 둠
+                }
             }
+
+            _currentSceneName = newSceneName;
 
             if (audioSource.isPlaying)
             {
