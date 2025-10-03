@@ -15,6 +15,7 @@ MonoBehaviour:
   phases:
   - rid: 8480390413592559616
   MusicPath: BGM/Chapter6_V2
+  StartBeat: 1
   backGroundSprite: {fileID: 21300000, guid: 69fc3a3f9a9d7784892216b41e70282b, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 7d708994ae00951428530f186deeeae4, type: 3}
   colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
@@ -24,7 +25,7 @@ MonoBehaviour:
     - rid: 8480390413592559616
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 0
+        isIn: 1
         durationBeat: 42
         startDelayBeat: 4
         bpm: 100
@@ -32,8 +33,8 @@ MonoBehaviour:
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 6
-          WASD_Pattern: 
+          monsterType: 0
+          WASD_Pattern: WASDWASDWASD
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4

@@ -95,7 +95,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 10
+        durationBeat: 40
         startDelayBeat: 8
         bpm: 113.4
         timeScale: 1
@@ -103,9 +103,16 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 1
+          moveBeat: 2
+          hiding: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+          speedUpRate: 1
+          spawnBeat: 4
           moveBeat: 2
           hiding: 0
     - rid: 9186972766235262979
@@ -113,12 +120,15 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 0
-        startDelayBeat: 4
+        startDelayBeat: 8
         bpm: 113.4
         timeScale: 1
         steps:
         - textContents:
           - "\uC774\uACF3\uC5D0 \uAD73\uAC8C \uC11C\uC11C \uCD5C\uD6C4\uB97C \uB9DE\uC774\uD558\uACA0\uB2E4
             !!!"
+          monsterCutline: 0
+          delayBeat: 4
+        - textContents: []
           monsterCutline: 0
           delayBeat: 4
