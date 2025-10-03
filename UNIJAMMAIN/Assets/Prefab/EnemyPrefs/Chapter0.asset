@@ -145,7 +145,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 29
-        startDelayBeat: 3
+        startDelayBeat: 2
         bpm: 100
         timeScale: 1
         isFlipAD: 0
