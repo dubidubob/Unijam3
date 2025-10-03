@@ -432,7 +432,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 426628e0bb380eb4e818ad61019cbf41, type: 2}
   - {fileID: 11400000, guid: cfe7f6e13386b6c46aa35d9ae21e67ea, type: 2}
   - {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
-  - {fileID: 11400000, guid: 4b5f8c6095ed80642a1fc149c0bfcfe1, type: 2}
+  - {fileID: 0}
   panelOffset: {x: 0, y: 0}
   contents: {fileID: 3586880080357216618}
   scenes:
