@@ -41,6 +41,7 @@ public class SoundManager
 
             SFX = _audioSources[(int)Define.Sound.SFX];
         }
+        SettingNewSceneVolume();
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f)
     {
