@@ -126,7 +126,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 0
-        startDelayBeat: 6
+        startDelayBeat: 7
         bpm: 100
         timeScale: 1
         steps:
@@ -139,7 +139,7 @@ MonoBehaviour:
           - "\uC800\uAE30 \uB354 \uB9CE\uC740 \uC545\uB839\uB4E4\uC774 \uBAB0\uB824\uC628\uB2E4.
             \uC815\uC2E0\uC744 \uBC14\uC9DD \uCC28\uB824\uC57C \uD574!"
           monsterCutline: 0
-          delayBeat: 3
+          delayBeat: 4
     - rid: 8714838720201883657
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
