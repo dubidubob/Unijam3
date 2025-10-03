@@ -100,6 +100,7 @@ public class SceneLoadingManager : UI_Base
         yield return new WaitForSecondsRealtime(0.1f);
         leftPanel.gameObject.SetActive(false);
         rightPanel.gameObject.SetActive(false);
+        Managers.Sound.SettingNewSceneVolume();
     }
 
     // 실제 패널을 움직이는 애니메이션 코루틴
