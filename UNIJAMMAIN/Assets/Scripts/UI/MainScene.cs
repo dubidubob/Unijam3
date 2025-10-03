@@ -207,14 +207,14 @@ public class MainScene : UI_Popup
         //buttonsTransform 위로
         for (int i = 0; i < index + 1; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(buttonsTransform[i].anchoredPosition.y + 300, 1f) // 1f = 이동 시간
+            buttonsTransform[i].DOAnchorPosY(buttonsTransform[i].anchoredPosition.y + 250, 1f) // 1f = 이동 시간
                  .SetEase(Ease.OutCubic);
         }
 
         //buttonsTransform 아래로
         for (int i = index + 1; i < buttonsTransform.Length; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(buttonsTransform[i].anchoredPosition.y - 300, 1f) // 1f = 이동 시간
+            buttonsTransform[i].DOAnchorPosY(buttonsTransform[i].anchoredPosition.y - 250, 1f) // 1f = 이동 시간
                  .SetEase(Ease.OutCubic);
         }
 
