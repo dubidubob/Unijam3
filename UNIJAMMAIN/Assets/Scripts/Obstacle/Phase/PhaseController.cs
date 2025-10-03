@@ -57,7 +57,7 @@ public class PhaseController : MonoBehaviour
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
         Debug.Log(_chapterIdx);
-        Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
+        
         Debug.Log(chapters[_chapterIdx].MusicPath);
         Color tmpColor = chapters[_chapterIdx].colorPalette;
         tmpColor.a = 0.7f;
@@ -201,6 +201,7 @@ public class PhaseController : MonoBehaviour
         if(!isStart)
         {
             Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
+            isStart = true;
         }
         // 스타트 비트실행
         if (!isMonsterGoStart)
