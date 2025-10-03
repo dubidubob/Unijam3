@@ -45,6 +45,7 @@ public class SoundManager
 
             SFX = _audioSources[(int)Define.Sound.SFX];
             SettingNewSceneVolume();
+           
         }
       
     }

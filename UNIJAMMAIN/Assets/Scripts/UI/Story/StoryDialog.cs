@@ -365,6 +365,7 @@ public class StoryDialog : UI_Popup
     private void SceneMoving()
     {
         SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+        Managers.Sound.BGMFadeOut();
     }
 
     #region Enimation
