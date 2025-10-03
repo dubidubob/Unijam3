@@ -97,8 +97,17 @@ public class SoundManager
             }
 
             _originalBGMVolume = volume;
+            string currentSceneName = SceneManager.GetActiveScene().name;
 
-            audioSource.loop = true;
+            if (currentSceneName == "GamePlayScene")
+            {
+                audioSource.loop = false;
+            }
+            else
+            {
+                audioSource.loop = true;
+            }
+
             BGM = audioSource;
             audioSource.Play();
         }
