@@ -161,7 +161,12 @@ public class PhaseController : MonoBehaviour
 
         float totalCnt = IngameData.TotalMobCnt;
         float missedInput = IngameData.WrongInputCnt;
-        float total = totalCnt + missedInput;
+        //float total = totalCnt + missedInput;
+
+        // miss 자체에 콤보 단절, HP 감소가 있기 때문에, 일단 분모에 missedInput은 뺏음
+        // 넣는다면, playerState가 Ready 상태일 때 누르는 miss 값들은 분모에 들어가지 않게 해야함.
+
+        float total = totalCnt;
 
         SetStageIndex(_chapterIdx);
 
