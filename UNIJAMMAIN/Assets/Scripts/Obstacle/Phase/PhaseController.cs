@@ -81,20 +81,25 @@ public class PhaseController : MonoBehaviour
 
             SetTimeScale(gameEvent.timeScale);
 
+            // beatInterval, IngameData 등은 그대로 설정해줍니다. (UI나 다른 곳에서 쓸 수 있으므로)
             float beatInterval = 60.0f / gameEvent.bpm;
-            float delaySec = gameEvent.startDelayBeat * beatInterval;
-            float durationSec = gameEvent.durationBeat * beatInterval;
-
-            IngameData.PhaseDurationSec = durationSec;
+            IngameData.PhaseDurationSec = gameEvent.durationBeat * beatInterval;
             IngameData.BeatInterval = beatInterval;
 
-
-            // 2. 그 후에 딜레이와 페이즈 로직을 실행합니다.
             if (gameEvent is PhaseEvent phaseEvent)
             {
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
-                HandleFlipKeyEvent(phaseEvent, delaySec);
-                yield return new WaitForSeconds(delaySec);
+                HandleFlipKeyEvent(phaseEvent, gameEvent.startDelayBeat * beatInterval);
+
+                // --- 'delaySec' 대기 수정 ---
+                // 1. 현재 비트를 기록하고, 몇 비트를 기다릴지 계산합니다.
+                long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
+                long startTick_delay = BeatClock.CurrentTick;
+                long endTick_delay = startTick_delay + delayBeats;
+
+                // 2. 목표 비트가 될 때까지 기다립니다.
+                yield return new WaitUntil(() => BeatClock.CurrentTick >= endTick_delay);
+
                 SpawnMonsters(phaseEvent);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
@@ -103,15 +108,29 @@ public class PhaseController : MonoBehaviour
                     TutorialStoped?.Invoke(true);
                 Managers.Game.CurrentState = GameManager.GameState.Tutorial;
                 HandleTutorialEvent(tutorialEvent);
-                yield return new WaitForSeconds(delaySec);
+
+                // --- 튜토리얼의 'delaySec' 대기 수정 ---
+                long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
+                long startTick_delay = BeatClock.CurrentTick;
+                long endTick_delay = startTick_delay + delayBeats;
+                yield return new WaitUntil(() => BeatClock.CurrentTick >= endTick_delay);
+
                 if (i == 0)
                     TutorialStoped?.Invoke(false);
             }
 
-            yield return new WaitForSeconds(durationSec);
+            // --- 'durationSec' 대기 수정 ---
+            long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
+            long startTick_duration = BeatClock.CurrentTick;
+            long endTick_duration = startTick_duration + durationBeats;
+            yield return new WaitUntil(() => BeatClock.CurrentTick >= endTick_duration);
         }
 
-        yield return new WaitForSeconds((float)IngameData.BeatInterval * 2);
+        // --- 마지막 대기 수정 ---
+        long finalStartTick = BeatClock.CurrentTick;
+        long finalEndTick = finalStartTick + 2; // 2비트 만큼 대기
+        yield return new WaitUntil(() => BeatClock.CurrentTick >= finalEndTick);
+
         EndChapter();
     }
     private void HandleFlipKeyEvent(PhaseEvent phaseEvent, float delaySec)

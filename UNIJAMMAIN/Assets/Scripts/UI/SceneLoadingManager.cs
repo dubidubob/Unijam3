@@ -136,6 +136,8 @@ public class SceneLoadingManager : UI_Base
         leftRect.anchoredPosition = new Vector2(-endX, leftRect.anchoredPosition.y);
         rightRect.anchoredPosition = new Vector2(endX, rightRect.anchoredPosition.y);
     }
+    
+
 
     // 패널 초기화 및 시작 위치 설정
     private void InitializePanels()
