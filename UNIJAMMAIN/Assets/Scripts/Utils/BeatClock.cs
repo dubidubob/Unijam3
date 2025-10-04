@@ -103,13 +103,17 @@ public class BeatClock : MonoBehaviour
         }
 
         double now = AudioSettings.dspTime;
-        
+
         // 시작 + (현재 tick+1) * 박자간격
         while (now + EPS >= ScheduledTime(_tick + 1))
         {
             _tick++;
-             CurrentTick = _tick;
+            CurrentTick = _tick;
             OnBeat?.Invoke(_tick);
+
+            // ▼▼▼ 이 코드를 추가해주세요 ▼▼▼
+            Debug.Log($"BeatClock is Ticking! Current Tick: {CurrentTick}");
+
             phase.SetStageTimerGo();
         }
     }
