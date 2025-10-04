@@ -40,6 +40,8 @@ public class PhaseController : MonoBehaviour
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
     private bool isMonsterGoStart = false;
     private bool isStart = false;
+
+    
     private void Start()
     {
         IngameData.IsStart = false;
