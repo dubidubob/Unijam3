@@ -49,7 +49,7 @@ public class MovingEnemy : MonoBehaviour
     private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;
-    private float backwardRate = 0.5f; // 기존 0.125f
+    private float backwardRate = 0.3f; // 기존 0.125f
     private bool isDead = false;
     Define.MonsterType type;
     private void OnEnable()
