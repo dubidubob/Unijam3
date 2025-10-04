@@ -1711,8 +1711,8 @@ MonoBehaviour:
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uC0C1\n\n\uD65C\uC57D\uCE58"
   - stageMainText: "7. \uC9C0\uD558?"
-    stageMainSubText: "\uD63C\uB780\uC758 \uC2DC\uC791\uACFC \uB05D.\L\uC774\uACF3\uC5D0\uC11C,\L\uC9C8\uAE34
-      \uC545\uC5F0\uC758 \uC885\uC9C0\uBD80\uB97C \uCC0D\uB294\uB2E4."
+    stageMainSubText: "\uD63C\uB780\uC758 \uC2DC\uC791\uACFC \uB05D.\L\uC774 \uACB0\uC804\uC758
+      \uC7A5\uC18C\uC5D0\uC11C,\L\uC545\uC5F0\uC758 \uC885\uC9C0\uBD80\uB97C \uCC0D\uB294\uB2E4."
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uCD5C\uC0C1\n\n\uD65C\uC57D\uCE58"
   stageSceneResultUI: {fileID: 2474771292265306423}
