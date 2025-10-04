@@ -38,7 +38,7 @@ public class DiagonalMonster : MonoBehaviour
     {
         _duration = (float)IngameData.BeatInterval;
         _stride = (targetPos.position - _originPos) / _jumpCnt;
-        Managers.Sound.Play("SFX/Enemy/Diagonal_V4", Define.Sound.SFX, 1f, 7f);
+        Managers.Sound.Play("SFX/Enemy/Diagonal_V4", Define.Sound.SFX, 1f, 6f);
         Move();
     }
 
@@ -118,7 +118,7 @@ public class DiagonalMonster : MonoBehaviour
     public void SetDead(bool isAttackedByPlayer = true)
     {
         jumpSequence.Kill();
-        Managers.Sound.Play("SFX/Enemy/DiagonalSuccess_V4", Define.Sound.SFX,1f,3.3f);
+        Managers.Sound.Play("SFX/Enemy/DiagonalSuccess_V4", Define.Sound.SFX,1f,3f);
         if (!isAttackedByPlayer)
         {
             Managers.Game.PlayerAttacked(attackValue);

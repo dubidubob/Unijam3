@@ -12,11 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88a7b8007bad7a43abe76cf9a9d3d0f, type: 3}
   m_Name: Chapter5
   m_EditorClassIdentifier: 
-  phases: []
+  phases:
+  - rid: 9186972792796479488
   MusicPath: BGM/Chapter5_V2
+  StartBeat: 1
   backGroundSprite: {fileID: 21300000, guid: a58bba2bf18f5934c896e08b9d4cc890, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 5e73ef6a181b19145b2d248b6beed720, type: 3}
   colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 9186972792796479488
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 20
+        startDelayBeat: 0
+        bpm: 100
+        timeScale: 1
+        isFlipAD: 0
+        monsterDatas: []
