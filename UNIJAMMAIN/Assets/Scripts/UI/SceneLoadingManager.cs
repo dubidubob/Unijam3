@@ -75,12 +75,13 @@ public class SceneLoadingManager : UI_Base
 
 
         // 2. 닫힌 상태에서 잠시 대기
-        Managers.Clear();
+      
         yield return new WaitForSecondsRealtime(waitDuration);
 
         // 3. 씬 비동기 로드 시작 (문이 닫힌 상태에서 진행)
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         asyncOperation.allowSceneActivation = false;
+        Managers.Clear();
 
         // 씬 로딩이 90% 완료될 때까지 대기
         while (asyncOperation.progress < 0.9f)

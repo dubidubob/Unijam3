@@ -49,6 +49,7 @@ public class MovingEnemy : MonoBehaviour
     private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;
+    private float backwardRate = 0.5f; // 기존 0.125f
     private bool isDead = false;
     Define.MonsterType type;
     private void OnEnable()
@@ -117,7 +118,7 @@ public class MovingEnemy : MonoBehaviour
         enemyType = wasdType;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
         this.sizeDiffRate = sizeDiffRate;
-        backwardDuration = movingDuration * 0.125f;
+        backwardDuration = movingDuration * backwardRate;
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
         type = monsterType;
