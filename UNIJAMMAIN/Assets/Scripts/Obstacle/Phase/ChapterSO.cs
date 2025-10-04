@@ -14,6 +14,7 @@
         public IReadOnlyList<GameEvent> Phases => phases;
         public string MusicPath;
         public int StartBeat;
+    public float DelayPaddingSeconds;
         public Sprite backGroundSprite;
         public Sprite backGroundGraySprite;
         public Color colorPalette;

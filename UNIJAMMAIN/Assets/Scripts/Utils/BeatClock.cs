@@ -16,6 +16,9 @@ public class BeatClock : MonoBehaviour
     private long _lastBpmChangeTick;      // 마지막으로 BPM이 변경된 시점의 tick
 
     public static Action<long> OnBeat;
+    
+
+    private bool isStart = false;
     public static long CurrentTick { get; private set; }
     // --- phase와 연동 --- //
     [SerializeField] PhaseController phase;
@@ -81,8 +84,12 @@ public class BeatClock : MonoBehaviour
     // Coroutine : 부하 꽤 많음. -> 비동기 => Text가 있을 때마다
     void Update()
     {
-       
-        
+
+        if (!isStart)
+        {
+            Managers.Sound.Play(phase.chapters[phase._chapterIdx].MusicPath, Define.Sound.BGM);
+            isStart = true;
+        }
         if (IngameData.Pause)
         {
             _paused = true;

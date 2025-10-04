@@ -22,7 +22,7 @@ public class PhaseController : MonoBehaviour
     [SerializeField] Image backGround;
     [SerializeField] Image backGroundGray;
     [SerializeField] ResultUI Scoreboard;
-    [SerializeField] ChapterSO[] chapters;
+    [SerializeField] public ChapterSO[] chapters;
     // TODO : tmp!
     [SerializeField] StartMotionUIs startMotions;
     [SerializeField] SpriteRenderer areaBaseInLine;
@@ -31,7 +31,7 @@ public class PhaseController : MonoBehaviour
 
     public static Action<float> ChangeKey;
     public static Action<bool> TutorialStoped;
-    private int _chapterIdx;
+    public int _chapterIdx;
     private int _lastMonsterHitCnt = 0;
     public float _totalBeat = 0;
     private float _beatCount=0;
@@ -39,7 +39,7 @@ public class PhaseController : MonoBehaviour
 
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
     private bool isMonsterGoStart = false;
-    private bool isStart = false;
+
 
     
     private void Start()
@@ -205,11 +205,7 @@ public class PhaseController : MonoBehaviour
     {
         _beatCount++;
 
-        if(!isStart)
-        {
-            Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
-            isStart = true;
-        }
+      
         // 스타트 비트실행
         if (!isMonsterGoStart)
         {
