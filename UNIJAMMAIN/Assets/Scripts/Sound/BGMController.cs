@@ -8,7 +8,7 @@ public class BGMController : MonoBehaviour
     public Image image;
     // Define the volume levels. Note that Unity uses 0.0f to 1.0f for volume.
     // Sequence: 25% -> 50% -> 75% -> 100% -> 0%
-    private readonly float[] _volumeLevels = {0.0f,0.25f, 0.5f, 0.75f, 1.0f};
+    private readonly float[] _volumeLevels = {0.0f, 0.25f, 0.5f, 0.75f, 1.0f};
     [SerializeField] private Sprite[] sprite;
 
     private void Awake()
