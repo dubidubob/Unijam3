@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class SFXController : MonoBehaviour
 {
     // A static variable holds the state across all scenes and instances
-    public static int _currentSFXVolumeStep = 2;
+    public static int _currentSFXVolumeStep = 1;
     public Image image;
     // Define the volume levels. Note that Unity uses 0.0f to 1.0f for volume.
     // Sequence: 25% -> 50% -> 75% -> 100% -> 0%
