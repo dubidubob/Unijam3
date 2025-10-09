@@ -22,6 +22,7 @@ MonoBehaviour:
   - rid: 8714838720201883658
   MusicPath: BGM/Chapter0_V2
   StartBeat: 16
+  DelayPaddingSeconds: 0
   backGroundSprite: {fileID: 21300000, guid: 99535dfa15f32c04080f3357e6166718, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: bda6ccf9abdc78b429b3c992b7588a8a, type: 3}
   colorPalette: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
@@ -57,7 +58,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 16
-        startDelayBeat: 8
+        startDelayBeat: 7
         bpm: 100
         timeScale: 1
         isFlipAD: 0
