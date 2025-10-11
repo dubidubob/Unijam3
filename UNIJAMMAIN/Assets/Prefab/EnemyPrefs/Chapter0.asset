@@ -21,6 +21,8 @@ MonoBehaviour:
   - rid: 8714838720201883657
   - rid: 8714838720201883658
   MusicPath: BGM/Chapter0_V2
+  StartBeat: 16
+  DelayPaddingSeconds: 0
   backGroundSprite: {fileID: 21300000, guid: 99535dfa15f32c04080f3357e6166718, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: bda6ccf9abdc78b429b3c992b7588a8a, type: 3}
   colorPalette: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
@@ -56,7 +58,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 16
-        startDelayBeat: 0
+        startDelayBeat: 7
         bpm: 100
         timeScale: 1
         isFlipAD: 0
@@ -125,7 +127,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 0
-        startDelayBeat: 8
+        startDelayBeat: 7
         bpm: 100
         timeScale: 1
         steps:
@@ -133,7 +135,7 @@ MonoBehaviour:
           - "\uC880, \uBB34\uC12D\uAC8C \uC0DD\uACBC\uAD70."
           - "\uC810\uCC28 \uC815\uC2E0\uC744 \uC783\uC744 \uAC83 \uAC19\uAD70."
           monsterCutline: 1
-          delayBeat: 4
+          delayBeat: 3
         - textContents:
           - "\uC800\uAE30 \uB354 \uB9CE\uC740 \uC545\uB839\uB4E4\uC774 \uBAB0\uB824\uC628\uB2E4.
             \uC815\uC2E0\uC744 \uBC14\uC9DD \uCC28\uB824\uC57C \uD574!"
@@ -144,7 +146,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 29
-        startDelayBeat: 4
+        startDelayBeat: 2
         bpm: 100
         timeScale: 1
         isFlipAD: 0
@@ -175,7 +177,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WWAASSDDWASDDSAWWASDDSAWWASDD
+          WASD_Pattern: WWAASSDDWWAASSDDWWAASSDDWASDD
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4

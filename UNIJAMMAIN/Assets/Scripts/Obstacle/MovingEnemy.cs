@@ -49,6 +49,7 @@ public class MovingEnemy : MonoBehaviour
     private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;
+    private float backwardRate = 0.3f; // 기존 0.125f
     private bool isDead = false;
     Define.MonsterType type;
     private void OnEnable()
@@ -117,24 +118,24 @@ public class MovingEnemy : MonoBehaviour
         enemyType = wasdType;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
         this.sizeDiffRate = sizeDiffRate;
-        backwardDuration = movingDuration * 0.125f;
+        backwardDuration = movingDuration * backwardRate;
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
         type = monsterType;
         SettingSprite(type);
 
-        // yejun 몹들의 꼬리부분이 좀 어색해져서, 아래부분은 일단 삭제 
+        // yejun 몹들의 꼬리부분이 좀 어색해져서, 아래부분은 일단 삭제
 
-        //if (wasdType == GamePlayDefine.WASDType.A || wasdType == GamePlayDefine.WASDType.S)
-        //{
-        //    // A 또는 S 타입일 경우, 스프라이트를 좌우로 뒤집습니다.
-        //    monsterImg.flipX = true;
-        //}
-        //else
-        //{
-        //    // W 또는 D 타입일 경우, 원래 방향으로 설정합니다.
-        //    monsterImg.flipX = false;
-        //}
+        if (wasdType == GamePlayDefine.WASDType.A || wasdType == GamePlayDefine.WASDType.W)
+        {
+            // A 또는 W 타입일 경우, 스프라이트를 좌우로 뒤집습니다.
+            monsterImg.flipX = true;
+        }
+        else
+        {
+            // S 또는 D 타입일 경우, 원래 방향으로 설정합니다.
+            monsterImg.flipX = false;
+        }
 
         SetKnockback(monsterType == Define.MonsterType.Knockback,monsterType);
         SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);
@@ -197,13 +198,7 @@ public class MovingEnemy : MonoBehaviour
             {
                 _hidingCoroutine = StartCoroutine(HidingAnimation(monsterImg));
             }
-
         }
-        else
-        {
-           
-        }
-       
     }
 
 
@@ -319,13 +314,6 @@ public class MovingEnemy : MonoBehaviour
             {
                 Managers.Game.attacks[enemyType].Dequeue();
             }
-
-
-            //if (Managers.Game.attacks[enemyType].Count == 0) return;
-
-            //Managers.Game.attacks[enemyType].Dequeue();
-            //SetDead();
-            //Managers.Game.PlayerAttacked(attackValue);
         }
     }
 
@@ -413,7 +401,7 @@ public class MovingEnemy : MonoBehaviour
         monsterImg.sprite = Managers.Game.monster.GetSprite(monsterType);
         orginSprite = monsterImg.sprite;
         monsterImg.color = Managers.Game.monster.GetColor(monsterType);
-        Debug.Log(monsterImg.sprite);
+        // Debug.Log(monsterImg.sprite);
     }
     #endregion
 

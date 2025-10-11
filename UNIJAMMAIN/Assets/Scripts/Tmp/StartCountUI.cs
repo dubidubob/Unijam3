@@ -5,49 +5,32 @@ using UnityEngine;
 public class StartCountUI : MonoBehaviour
 {
     [SerializeField] List<Sprite> sprites = new List<Sprite>();
-
     private SpriteRenderer sp;
-    private bool running = false;
-    void OnEnable()
-    {
-        sp = GetComponent<SpriteRenderer>();
 
-        BeatClock.OnBeat -= Show123Start;
-        BeatClock.OnBeat += Show123Start;
-    }
-
-    private void OnDisable()
-    {
-        BeatClock.OnBeat -= Show123Start;
-    }
+    // OnEnable, OnDisable, Show123Start 함수는 모두 삭제합니다.
 
     public IEnumerator Play123Coroutine()
     {
-        Start123();
-        // 완료 조건: running이 false가 되거나, cnt가 sprites.Count 이상
-        yield return new WaitUntil(() => !running);
-    }
-    private void Start123()
-    {
-        if (cnt != 0) return;
- 
-        running = true;
-    }
+        sp = GetComponent<SpriteRenderer>();
+        // 게임 오브젝트가 비활성화 상태일 수 있으므로 활성화합니다.
+        gameObject.SetActive(true);
 
-    int cnt = 0;
-    private void Show123Start(double _, long __)
-    {
-        if (!running) return;
-        if (sprites.Count <= cnt)
+        // beatInterval을 한 번만 가져옵니다.
+        float beatInterval = (float)IngameData.BeatInterval;
+
+        for (int i = 0; i < sprites.Count; i++)
         {
-            running = false;
-            this.enabled = false;
-            this.gameObject.SetActive(false);
-            // State 관리
-            Managers.Game.currentPlayerState = GameManager.PlayerState.Normal;
-            return;
+            // 1. 해당 순서의 스프라이트를 보여줍니다.
+            sp.sprite = sprites[i];
+
+            // 2. 정확히 한 비트만큼 기다립니다.
+            yield return new WaitForSeconds(beatInterval);
         }
 
-        sp.sprite = sprites[cnt++];
+        // 3. 카운트다운이 끝나면 스스로를 비활성화합니다.
+        gameObject.SetActive(false);
+
+        // (옵션) 게임 상태를 변경하는 로직이 필요하다면 여기에 추가할 수 있습니다.
+        Managers.Game.currentPlayerState = GameManager.PlayerState.Normal;
     }
 }

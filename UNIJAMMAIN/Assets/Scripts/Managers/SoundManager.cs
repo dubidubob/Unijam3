@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundManager
 {
@@ -13,6 +14,8 @@ public class SoundManager
     public AudioSource BGM;
     public AudioSource SFX;
 
+    private string _currentSceneName = "";
+
 
     //--- BGM Fade
     private float _originalBGMVolume = 1.0f;
@@ -22,6 +25,7 @@ public class SoundManager
         GameObject root = GameObject.Find("@Sound");
         if (root == null)
         {
+
             audioMixer = Resources.Load<AudioMixer>("Sounds/SoundSetting");
             root = new GameObject { name = "@Sound" };
             Object.DontDestroyOnLoad(root);
@@ -40,7 +44,10 @@ public class SoundManager
             }
 
             SFX = _audioSources[(int)Define.Sound.SFX];
+            SettingNewSceneVolume();
+           
         }
+      
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f)
     {
@@ -54,11 +61,23 @@ public class SoundManager
                 Init();
             AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
 
+            string newSceneName = SceneManager.GetActiveScene().name;
+
             // Yejun - Skips if the requested BGM is already playing.
             if (audioSource.isPlaying && audioSource.clip == audioClip)
             {
-                return;
+                bool isSharedBGMPair =
+                (_currentSceneName == "MainTitle" && newSceneName == "StageScene") ||
+                (_currentSceneName == "StageScene" && newSceneName == "MainTitle");
+
+                if (isSharedBGMPair)
+                {
+                    _currentSceneName = newSceneName; // 씬 이름만 현재 씬으로 갱신
+                    return; // BGM을 끄거나 켜지 않고 그대로 둠
+                }
             }
+
+            _currentSceneName = newSceneName;
 
             if (audioSource.isPlaying)
             {
@@ -66,7 +85,10 @@ public class SoundManager
             }
             audioSource.pitch = pitch;
             audioSource.clip = audioClip;
-            audioSource.volume = volume;
+
+            //audioSource.volume = volume;
+            audioSource.volume = BGMController.CurrentVolumeBGM * volume;
+            _originalBGMVolume = audioSource.volume;
 
             if (_fadeCoroutine != null)
             {
@@ -75,8 +97,17 @@ public class SoundManager
             }
 
             _originalBGMVolume = volume;
+            string currentSceneName = SceneManager.GetActiveScene().name;
 
-            audioSource.loop = true;
+            if (currentSceneName == "GamePlayScene")
+            {
+                audioSource.loop = false;
+            }
+            else
+            {
+                audioSource.loop = true;
+            }
+
             BGM = audioSource;
             audioSource.Play();
         }
@@ -86,7 +117,7 @@ public class SoundManager
 
 
             SFX.pitch = pitch;
-            SFX.PlayOneShot(audioClip, volume);
+            SFX.PlayOneShot(audioClip, volume * SFXController.CurrentVolumeSFX);
         }
     }
     /// <summary>
@@ -300,9 +331,9 @@ public class SoundManager
 
     public void SettingNewSceneVolume()
     {
-        /*
-        Managers.Sound.ChangeSFXVolume();
-        Managers.Sound.ChangeBGMVolume()
-        */
+        Managers.Sound.ChangeBGMVolume(BGMController.CurrentVolumeBGM);
+        Managers.Sound.ChangeSFXVolume(SFXController.CurrentVolumeSFX);
+        
+        Debug.Log($"SettingNewSceneVolme : {BGMController.CurrentVolumeBGM},{SFXController.CurrentVolumeSFX}");
     }
 }

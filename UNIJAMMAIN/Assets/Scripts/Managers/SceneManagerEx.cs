@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneManagerEx
@@ -13,9 +13,13 @@ public class SceneManagerEx
         SceneManager.LoadScene(GetSceneName(type));
     }
 
-    public void LoadScene(string name) // ÀÌ¸§À¸·Î ¾À ·ÎµåÇÏ±â
+    public void LoadScene(string name) // ì´ë¦„ìœ¼ë¡œ ì”¬ ë¡œë“œí•˜ê¸°
     {
         Managers.Clear();
+
+        System.GC.Collect();
+        System.GC.WaitForPendingFinalizers();
+
         SceneManager.LoadScene(name);
     }
     string GetSceneName(Define.Scene type)

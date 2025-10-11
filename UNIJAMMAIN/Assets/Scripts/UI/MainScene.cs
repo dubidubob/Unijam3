@@ -74,7 +74,7 @@ public class MainScene : UI_Popup
     {
         toStartText.fontMaterial = new Material(toStartText.fontSharedMaterial);
         toStartText.fontMaterial.EnableKeyword("UNDERLAY_ON");
-        toStartText.fontMaterial.SetColor("_UnderlayColor", new Color(1f, 0.8f, 0f, 1f));
+        toStartText.fontMaterial.SetColor("_UnderlayColor", new Color(0f, 0f, 0f, 1f));
         toStartText.fontMaterial.SetFloat("_UnderlaySoftness", 0.5f);
         toStartText.fontMaterial.SetFloat("_UnderlayDilate", 0.3f);
         toStartText.fontMaterial.SetFloat("_UnderlayOffsetX", 0f);
@@ -142,14 +142,29 @@ public class MainScene : UI_Popup
         brushText.DOFillAmount(1f, brushTextFillDuration * 1.5f).SetEase(Ease.OutCubic);
     }
 
+    private void TextGlow(int index)
+    {
+        tmpText[index].fontMaterial = new Material(toStartText.fontSharedMaterial);
+        tmpText[index].fontMaterial.EnableKeyword("UNDERLAY_ON");
+        tmpText[index].fontMaterial.SetColor("_UnderlayColor", Color.white);
+        tmpText[index].fontMaterial.SetFloat("_UnderlaySoftness", 0.4f);
+        tmpText[index].fontMaterial.SetFloat("_UnderlayDilate", 0.15f);
+        tmpText[index].fontMaterial.SetFloat("_UnderlayOffsetX", 0f);
+        tmpText[index].fontMaterial.SetFloat("_UnderlayOffsetY", 0f);
+        tmpText[index].fontMaterial.SetFloat("_OutlineWidth", 0.05f);
+        tmpText[index].fontMaterial.SetColor("_OutlineColor", Color.white);
+    }
+
     private void StoryModeClicked(PointerEventData eventData)
     {
+        TextGlow((int)Buttons.StoryMode);
         Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
         SceneLoadingManager.Instance.LoadScene("StageScene");
     }
 
     private void EndClicked(PointerEventData eventData)
     {
+        TextGlow((int)Buttons.End);
         Application.Quit();
     }
 
@@ -192,14 +207,14 @@ public class MainScene : UI_Popup
         //buttonsTransform 위로
         for (int i = 0; i < index + 1; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(buttonsTransform[i].anchoredPosition.y + 300, 1f) // 1f = 이동 시간
+            buttonsTransform[i].DOAnchorPosY(buttonsTransform[i].anchoredPosition.y + 250, 1f) // 1f = 이동 시간
                  .SetEase(Ease.OutCubic);
         }
 
         //buttonsTransform 아래로
         for (int i = index + 1; i < buttonsTransform.Length; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(buttonsTransform[i].anchoredPosition.y - 300, 1f) // 1f = 이동 시간
+            buttonsTransform[i].DOAnchorPosY(buttonsTransform[i].anchoredPosition.y - 250, 1f) // 1f = 이동 시간
                  .SetEase(Ease.OutCubic);
         }
 
@@ -218,20 +233,6 @@ public class MainScene : UI_Popup
         ResetHighlight(index);
         isOpen = false;
         currentState = CanClcikState.Nothing;
-    }
-
-    private void TextGlow(int index)
-    {
-        tmpText[index].fontMaterial = new Material(tmpText[index].fontSharedMaterial);
-        tmpText[index].fontMaterial.EnableKeyword("UNDERLAY_ON");
-        tmpText[index].fontMaterial.SetColor("_UnderlayColor", new Color(1f, 1f, 0f, 0.8f));
-        tmpText[index].fontMaterial.SetFloat("_UnderlaySoftness", 0.8f);
-        tmpText[index].fontMaterial.SetFloat("_UnderlayDilate", 0.5f);
-        tmpText[index].fontMaterial.SetFloat("_UnderlayOffsetX", 0f);
-        tmpText[index].fontMaterial.SetFloat("_UnderlayOffsetY", 0f);
-
-        tmpText[index].fontMaterial.SetFloat("_OutlineWidth", 0.2f);
-        tmpText[index].fontMaterial.SetColor("_OutlineColor", Color.yellow);
     }
 
     private void ResetHighlight(int index)

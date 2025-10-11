@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using static GamePlayDefine;
 using UnityEngine;
 
@@ -9,15 +9,18 @@ public static class IngameData
 
     public static bool Pause { set; get; }
     private static double beatInterval;
+    public static bool IsStart = false;
 
     static IngameData()
     {
         _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
+        _bestChapterRanks = new Define.Rank[TOTAL_CHAPTERS];
         for (int i = 0; i < TOTAL_CHAPTERS; i++)
         {
             _chapterRanks[i] = Define.Rank.Unknown;
+            _bestChapterRanks[i] = Define.Rank.Unknown;
         }
-        Debug.Log("IngameDataÀÌ ½ÃÀÛµÉ¶§ ÃÊ±âÈ­µÇ¾ú½À´Ï´Ù.");
+        Debug.Log("IngameDataì´ ì‹œì‘ë ë•Œ ì´ˆê¸°í™”ë˜ì—ˆìŠµë‹ˆë‹¤.");
     }
 
     public static double BeatInterval 
@@ -35,38 +38,40 @@ public static class IngameData
 
     public static int ChapterIdx { set; get; }
 
-    private static Define.Rank _chapterRank = Define.Rank.Unknown;
-    //ÀúÀåÇÒ ·©Å©ÀÇ °³¼ö¿¡ µû¶ó ´Ş¶óÁü
+    //ì €ì¥í•  ë­í¬ì˜ ê°œìˆ˜ì— ë”°ë¼ ë‹¬ë¼ì§
     private const int TOTAL_CHAPTERS = 8;
-    public static Define.Rank[] _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
-   
-   
+    public static Define.Rank[] _chapterRanks;
+    public static Define.Rank[] _bestChapterRanks;
 
-    // ChapterRank ÇÁ·ÎÆÛÆ¼´Â ÀÌÁ¦ ÇöÀç ¼±ÅÃµÈ ChapterIdx¿¡ ÇØ´çÇÏ´Â ¹è¿­ÀÇ °ªÀ» ´Ù·ë
+    // ChapterRank í”„ë¡œí¼í‹°ëŠ” ì´ì œ í˜„ì¬ ì„ íƒëœ ChapterIdxì— í•´ë‹¹í•˜ëŠ” ë°°ì—´ì˜ ê°’ì„ ë‹¤ë£¸
     public static Define.Rank ChapterRank
     {
-        // get: ÇöÀç ChapterIdx¿¡ ¸Â´Â ·©Å©¸¦ ¹è¿­¿¡¼­ °¡Á®¿È
+        // get: í˜„ì¬ ChapterIdxì— ë§ëŠ” ë­í¬ë¥¼ ë°°ì—´ì—ì„œ ê°€ì ¸ì˜´
         get
         {
-            // ÀÎµ¦½º ¹üÀ§ Ã¼Å©
+            // ì¸ë±ìŠ¤ ë²”ìœ„ ì²´í¬
             if (ChapterIdx < 0 || ChapterIdx >= TOTAL_CHAPTERS)
             {
                 return Define.Rank.Unknown;
             }
             return _chapterRanks[ChapterIdx];
         }
-        // set: ÇöÀç ChapterIdx¿¡ ¸Â´Â À§Ä¡¿¡ ·©Å©¸¦ ÀúÀåÇÔ
+        // set: í˜„ì¬ ChapterIdxì— ë§ëŠ” ìœ„ì¹˜ì— ë­í¬ë¥¼ ì €ì¥í•¨
         set
         {
-            // ÀÎµ¦½º ¹üÀ§ Ã¼Å© (¾ÈÀü ÀåÄ¡)
+            // ì¸ë±ìŠ¤ ë²”ìœ„ ì²´í¬ (ì•ˆì „ ì¥ì¹˜)
             if (ChapterIdx >= 0 && ChapterIdx < TOTAL_CHAPTERS)
             {
                 _chapterRanks[ChapterIdx] = value;
+                if (_bestChapterRanks[ChapterIdx] < value)
+                {
+                    _bestChapterRanks[ChapterIdx] = value;
+                }
             }
         }
     }
     /// <summary>
-    /// Æ¯Á¤ Ã©ÅÍÀÇ ·©Å© Á÷Á¢ °¡Á®¿À±â
+    /// íŠ¹ì • ì±•í„°ì˜ ë­í¬ ì§ì ‘ ê°€ì ¸ì˜¤ê¸°
     /// </summary>
     /// <param name="chapterIndex"></param>
     /// <returns></returns>
@@ -79,8 +84,16 @@ public static class IngameData
         return _chapterRanks[chapterIndex];
     }
 
+    public static Define.Rank GetBestRankForChapter(int chapterIndex)
+    {
+        if (chapterIndex < 0 || chapterIndex >= TOTAL_CHAPTERS)
+        {
+            return Define.Rank.Unknown;
+        }
+        return _bestChapterRanks[chapterIndex];
+    }
 
-    public static float PhaseDurationSec { set; get; }
+    public static double PhaseDurationSec { set; get; }
     public static int TotalMobCnt { set; get; }
 
     public static int PerfectMobCnt { get; private set; }

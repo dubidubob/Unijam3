@@ -203,7 +203,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -92.74042, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -407,6 +407,13 @@ MonoBehaviour:
   backGround: {fileID: 3915714648696650980}
   TestTexts:
   - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
   StandingImage:
   - {fileID: 4050828568703129866}
   - {fileID: 5613997954310720840}
@@ -425,14 +432,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 426628e0bb380eb4e818ad61019cbf41, type: 2}
   - {fileID: 11400000, guid: cfe7f6e13386b6c46aa35d9ae21e67ea, type: 2}
   - {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
-  - {fileID: 11400000, guid: 4b5f8c6095ed80642a1fc149c0bfcfe1, type: 2}
+  - {fileID: 0}
   panelOffset: {x: 0, y: 0}
   contents: {fileID: 3586880080357216618}
   scenes:
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
-    text: "\uD604\uC7AC \uAC1C\uBC1C \uC911\uC5D0 \uC788\uC2B5\uB2C8\uB2E4. \uD50C\uB808\uC774\uD574
-      \uC8FC\uC154\uC11C \uAC10\uC0AC\uB4DC\uB9BD\uB2C8\uB2E4!"
+    text: "\uCE58\uC5F4\uD55C \uC2F8\uC6C0 \uB05D\uC5D0 \uB4E4\uC5B4\uC120 \uCC9C\uB2F9.
+      \uADF8\uACF3\uC5D0\uB294 \uACE0\uC694\uD55C \uCE68\uBB35\uB9CC\uC774 \uD758\uB800\uB2E4."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0
@@ -440,6 +447,128 @@ MonoBehaviour:
     showLeftCharacter: 1
     showRightCharacter: 0
     isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
+    isFirstAppearance: 0
+    text: "\uC800 \uBA40\uB9AC, \uC790\uBE44\uB85C\uC6B4 \uBAA8\uC2B5\uC758 \uBD80\uCC98\uB2D8\uC774
+      \uC549\uC544 \uACC4\uC168\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "\uBD80\uCC98\uB2D8... \uC81C \uC2A4\uC2B9\uB2D8\uAED8 \uBB34\uC2A8 \uC77C\uC774..
+      \uB3C4\uB300\uCCB4 \uC138\uC0C1\uC5D0 \uC65C \uC774\uB7EC\uD55C \uC77C\uC774
+      \uC788\uB358 \uAC83\uC785\uB2C8\uAE4C."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "\uBD80\uB514... \uC9C4\uC2E4\uC744 \uC54C\uB824\uC8FC\uC2ED\uC2DC\uC624."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
+    isFirstAppearance: 0
+    text: . . .
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "...\uBD80\uCC98\uB2D8?"
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
+    isFirstAppearance: 0
+    text: "...\uC544\uBB34 \uB9D0\uC500\uC774 \uC5C6\uC73C\uC2DC\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "\uC544\uB2C8, \uC800\uAC83\uC740..."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 1
     isSurprized: 0
     leftSDAnim: 0
     rightSDAnim: 0
@@ -852,8 +981,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 720, y: -190}
-  m_SizeDelta: {x: 516, y: 566}
+  m_AnchoredPosition: {x: 701.3163, y: -169.51}
+  m_SizeDelta: {x: 553.3674, y: 606.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2362226654977787945
 CanvasRenderer:
@@ -1148,7 +1277,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6791183905692446785}
-  m_LocalRotation: {x: -0, y: -0, z: 0.0047580004, w: -0.9999887}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1156,7 +1285,7 @@ RectTransform:
   - {fileID: 5268055357457332049}
   - {fileID: 2021895989036286336}
   m_Father: {fileID: 2880116875402160406}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.545}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1418,8 +1547,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.292695, y: -400}
-  m_SizeDelta: {x: 941.9282, y: 215.7888}
+  m_AnchoredPosition: {x: -55.945282, y: -400}
+  m_SizeDelta: {x: 852.623, y: 215.7888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8305475372916593186
 CanvasRenderer:
