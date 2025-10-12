@@ -79,14 +79,16 @@ public class StageSceneUI : UI_Popup
     private void Update()
     {
         // ESC버튼
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // ▼▼▼ 로딩 중이 아닐 때만 ESC 키를 받도록 조건 추가 ▼▼▼
+        if (Input.GetKeyDown(KeyCode.Escape) && !SceneLoadingManager.IsLoading)
         {
             //ToMain으로의 버튼
             ToMainButtonClicked(null);
         }
     }
 
-    private void Awake()
+
+        private void Awake()
     {
         // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
         if (normalTextMaterial != null)
@@ -121,7 +123,13 @@ public class StageSceneUI : UI_Popup
     {
         Init();
         UpdateStageButtons();
-        
+
+        var startButton = GetButton((int)Buttons.StartButton);
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(false);
+        }
+
         // 두 번 호출되므로, (StageScene에서 한 번 이미 호출함) 주석처리함.
         //Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
 
@@ -282,6 +290,9 @@ public class StageSceneUI : UI_Popup
     }
     public void ToMainButtonClicked(PointerEventData eventData)
     {
+        // 여기서도 한 번 더 확인하여 중복 호출을 완벽하게 막습니다.
+        if (SceneLoadingManager.IsLoading) return;
+
         SceneLoadingManager.Instance.LoadScene("MainTitle");
     }
 
@@ -302,6 +313,12 @@ public class StageSceneUI : UI_Popup
         if (stageIndex > currentStageIndex)
         {
             return;
+        }
+
+        var startButton = GetButton((int)Buttons.StartButton);
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(true);
         }
 
         StartButtonAnimation();

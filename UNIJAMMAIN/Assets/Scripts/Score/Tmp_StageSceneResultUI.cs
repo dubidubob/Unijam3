@@ -10,19 +10,20 @@ public class Tmp_StageSceneResultUI : MonoBehaviour
     private void Start()
     {
         sp = GetComponent<Image>();
-        int rank = (int)IngameData.GetRankForChapter(0);
-        if (rank >= sprites.Length)
-        {
-            sp.sprite = null;
-            sp.enabled = false;
-        }
-        else
-        {
-            sp.sprite = sprites[rank];
-            sp.enabled = true;
-        }        
+        sp.enabled = false;
+        //int rank = (int)IngameData.GetRankForChapter(0);
+        //if (rank >= sprites.Length)
+        //{
+        //    sp.sprite = null;
+        //    sp.enabled = false;
+        //}
+        //else
+        //{
+        //    sp.sprite = sprites[rank];
+        //    sp.enabled = true;
+        //}        
 
-        sp.SetNativeSize();
+        //sp.SetNativeSize();
     }
 
     /// <summary>

@@ -9,6 +9,9 @@ public class SceneLoadingManager : UI_Base
     // 싱글톤 인스턴스
     public static SceneLoadingManager Instance { get; private set; }
 
+    // 로딩 중에 ESC 누르면 씬이 엉키는 문제 해결하기 위한 선언
+    public static bool IsLoading { get; private set; } = false;
+
     [SerializeField] private Image leftPanel;
     [SerializeField] private Image rightPanel;
 
@@ -59,6 +62,9 @@ public class SceneLoadingManager : UI_Base
 
     public void LoadScene(string sceneName)
     {
+        // 만약 이미 로딩 중이라면, 또 LoadScene을 실행하지 않고 즉시 종료합니다.
+        if (IsLoading) return;
+
         // 코루틴을 시작하여 비동기 씬 로딩을 실행
         StartCoroutine(LoadSceneAsync(sceneName));
     }
@@ -66,6 +72,9 @@ public class SceneLoadingManager : UI_Base
     // 씬 로딩 시퀀스를 관리하는 메인 코루틴
     private IEnumerator LoadSceneAsync(string sceneName)
     {
+        // 로딩 시작 시 즉시 true로 설정
+        IsLoading = true;
+
         Time.timeScale = 0;
         // 1. 문 닫기 애니메이션
         Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
@@ -107,6 +116,9 @@ public class SceneLoadingManager : UI_Base
         rightPanel.gameObject.SetActive(false);
         Managers.Sound.SettingNewSceneVolume();
         Time.timeScale = 1;
+
+        // 모든 로딩 과정이 완전히 끝나면 false로 설정
+        IsLoading = false;
 
     }
 
