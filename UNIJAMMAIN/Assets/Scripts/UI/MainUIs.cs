@@ -3,6 +3,7 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class MainUIs : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MainUIs : MonoBehaviour
     [SerializeField] private List<Sprite> Bgs;
     [SerializeField] private Image bgPlace;
     [SerializeField] private BlurController blurController;
+    [SerializeField] private SpriteRenderer downDarkEffect;
     private int MaxHealth;
     private float beforeHealth = 100;
     void Awake()
@@ -25,6 +27,7 @@ public class MainUIs : MonoBehaviour
         Combobangsa.SetNativeSize();
 
         ChangeBg(Managers.Game.GetPhase());
+     
 
     }
 
@@ -33,6 +36,34 @@ public class MainUIs : MonoBehaviour
         Managers.Game.ComboContinue -= UpdateCombo;
         Managers.Game.HealthUpdate -= HealthChange;
         transform.DOKill();
+    }
+
+
+    IEnumerator GoDownDarkEffectAnimation()
+    {
+        yield return new WaitForSeconds(3f);
+        float animationDuration = 1.5f;
+        // 1. 시작하기 전에 크기를 0으로 설정
+        downDarkEffect.transform.localScale = Vector3.zero;
+
+        // 2. 활성화 (만약 비활성화 상태였다면)
+        downDarkEffect.gameObject.SetActive(true);
+
+        // 3. 목표 스케일 값 설정 (이 값은 스프라이트의 원래 크기에 따라 조절해야 합니다)
+        // 예시: 원래 크기가 1x1 픽셀짜리 네모라면, 
+        // x: 400, y: 55 로 설정하면 원하는 크기가 됩니다.
+        Vector3 targetScale = new Vector3(400f, 55f, 1f);
+
+        // 4. DOScale을 사용해 애니메이션 실행
+        // 지정한 시간(animationDuration) 동안 targetScale로 부드럽게 변경됩니다.
+        downDarkEffect.transform.DOScale(targetScale, animationDuration)
+                                .SetEase(Ease.OutQuad); // 부드러운 효과 (다양한 Ease 옵션 선택 가능)
+
+        // 코루틴이 즉시 종료되지 않도록 애니메이션이 끝날 때까지 기다립니다.
+        yield return new WaitForSeconds(animationDuration);
+
+        // (선택) 애니메이션이 끝난 후 다른 작업을 여기에 추가할 수 있습니다.
+        Debug.Log("애니메이션 종료!");
     }
 
     private void HealthChange(float health)
@@ -68,6 +99,7 @@ public class MainUIs : MonoBehaviour
     private void UpdateCombo(int combo)
     {
         float dx = 0f; // 콤보 달성시 추가로 더해질 effect
+        
         if (combo > 0 && combo % 10 == 0)
         {
             Combobangsa.gameObject.SetActive(true);
@@ -82,6 +114,7 @@ public class MainUIs : MonoBehaviour
             .OnComplete(() =>
                 comboTxt.transform.DOScale(Vector3.one, 0.1f)
             );
+
     }
 
     private void Deactivate()

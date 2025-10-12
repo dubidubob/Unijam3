@@ -1,13 +1,16 @@
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using System.Collections;
 [RequireComponent(typeof(SpriteRenderer))]
 public class DiagonalMonster : MonoBehaviour
 {
     [SerializeField] GamePlayDefine.DiagonalType diagonalT;
     [SerializeField] Transform targetPos;
     [SerializeField] Sprite outline;
+    [SerializeField] Sprite attackedSprite;
+    [SerializeField] SpriteRenderer MonsterSprite;
+    [SerializeField] SpriteRenderer attackedEffectSpriteRenderer;
     public GamePlayDefine.DiagonalType DiagonalT => diagonalT;
     
     private bool _isDying = false;
@@ -31,7 +34,7 @@ public class DiagonalMonster : MonoBehaviour
         _originSprite = _objectRenderer.sprite;
         _originPos = transform.position;
         PauseManager.IsPaused -= PauseForWhile;
-        PauseManager.IsPaused += PauseForWhile;
+        PauseManager.IsPaused += PauseForWhile; 
     }
 
     private void OnEnable()
@@ -39,6 +42,7 @@ public class DiagonalMonster : MonoBehaviour
         _duration = (float)IngameData.BeatInterval;
         _stride = (targetPos.position - _originPos) / _jumpCnt;
         Managers.Sound.Play("SFX/Enemy/Diagonal_V4", Define.Sound.SFX, 1f, 6f);
+        ChangeToOriginal();
         Move();
     }
 
@@ -118,10 +122,12 @@ public class DiagonalMonster : MonoBehaviour
     public void SetDead(bool isAttackedByPlayer = true)
     {
         jumpSequence.Kill();
-        Managers.Sound.Play("SFX/Enemy/DiagonalSuccess_V4", Define.Sound.SFX,1f,3f);
+        Managers.Sound.Play("SFX/Enemy/DiagonalSuccess_V4", Define.Sound.SFX,1f,2.5f);
+        float waitForSeconds;
         if (!isAttackedByPlayer)
         {
             Managers.Game.PlayerAttacked(attackValue);
+            waitForSeconds = 0f;
             DoFade();
         }
         else
@@ -129,11 +135,29 @@ public class DiagonalMonster : MonoBehaviour
             if (_isDying) //player attacked, but late, this not count
                 return;
 
+            waitForSeconds = 0.22f;
+            MonsterSprite.sprite = attackedSprite;
+            attackedEffectSpriteRenderer.DOFade(1,0);
+              
+
             Managers.Game.ComboInc(healingValue);
         }
+
+        StartCoroutine(PoolOutGo(waitForSeconds));
+        
+              
+    }
+
+    IEnumerator PoolOutGo(float waitforseconds)
+    {
+        yield return new WaitForSeconds(waitforseconds);
+         attackedEffectSpriteRenderer.DOFade(1,0);
         _isDying = false;
         gameObject.SetActive(false);
         transform.position = _originPos;
-        _objectRenderer.color = new Color(_objectRenderer.color.r, _objectRenderer.color.g, _objectRenderer.color.b, 1);        
+        _objectRenderer.color = new Color(_objectRenderer.color.r, _objectRenderer.color.g, _objectRenderer.color.b, 1);
+
     }
+    
+    
 }
