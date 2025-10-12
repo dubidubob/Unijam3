@@ -57,11 +57,13 @@ public class SoundManager
         }
         if (type == Define.Sound.BGM)
         {
-            if (_audioSources!=null)
+            if (_audioSources == null)
                 Init();
             AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
 
             string newSceneName = SceneManager.GetActiveScene().name;
+            Debug.Log($"--- BGM Play 요청 ---");
+            Debug.Log($"이전 씬: '{_currentSceneName}', 현재 씬: '{newSceneName}'");
 
             // Yejun - Skips if the requested BGM is already playing.
             if (audioSource.isPlaying && audioSource.clip == audioClip)
@@ -70,12 +72,19 @@ public class SoundManager
                 (_currentSceneName == "MainTitle" && newSceneName == "StageScene") ||
                 (_currentSceneName == "StageScene" && newSceneName == "MainTitle");
 
+                Debug.Log($"BGM 공유 조건 검사 결과: {isSharedBGMPair}");
+
                 if (isSharedBGMPair)
                 {
+
+                    Debug.Log("===> BGM을 유지합니다.");
+
                     _currentSceneName = newSceneName; // 씬 이름만 현재 씬으로 갱신
                     return; // BGM을 끄거나 켜지 않고 그대로 둠
                 }
             }
+
+            Debug.LogWarning("===> BGM을 처음부터 다시 재생합니다!");
 
             _currentSceneName = newSceneName;
 
@@ -304,6 +313,9 @@ public class SoundManager
         if (_audioSources != null)
             foreach (AudioSource audioSource in _audioSources)
             {
+                if (audioSource == _audioSources[(int)Define.Sound.BGM])
+                    continue;
+
                 audioSource.clip = null;
                 audioSource.Stop();
             }
