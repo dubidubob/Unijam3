@@ -237,7 +237,7 @@ public class StageSceneUI : UI_Popup
                 break;
 
             case 1:
-                // [Level 1 -> 2] : z축 180도 회전, y좌표 750으로 이동
+                // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
                 RotateAndMoveTo(zRot: 180f, yPos: 892f);
                 currentPageLevel = 2;
                 Managers.Sound.Play("SFX/UI/GoToFinalStage_V1",Define.Sound.SFX, 1f, 3f);
@@ -264,7 +264,7 @@ public class StageSceneUI : UI_Popup
                 break;
 
             case 1:
-                // [Level 1 -> 0] : y좌표 750으로 이동
+                // [Level 1 -> 0] : y좌표 892으로 이동
                 MoveTo(yPos: 892f);
                 currentPageLevel = 0;
                 Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 2f);

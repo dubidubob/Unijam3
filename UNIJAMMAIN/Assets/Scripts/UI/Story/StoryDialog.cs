@@ -1,5 +1,5 @@
 using DG.Tweening;
-using KoreanTyper;                                                  // Add KoreanTyper namespace | ³×ÀÓ ½ºÆäÀÌ½º Ãß°¡
+using KoreanTyper;                                                  // Add KoreanTyper namespace | ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ß°ï¿½
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,31 +70,31 @@ public class StoryDialog : UI_Popup
             
 
             // ======================
-            // 1. Ä³¸¯ÅÍ None Ã³¸®
+            // 1. Ä³ï¿½ï¿½ï¿½ï¿½ None Ã³ï¿½ï¿½
             // ======================
             if (scene.speakingCharacterData == null)
             {
-                // Ä³¸¯ÅÍ ÀÌ¹ÌÁö ¸ðµÎ OFF
+                // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ OFF
                 StandingImage[0].gameObject.SetActive(false);
                 StandingImage[1].gameObject.SetActive(false);
-                // ÆÐ³Î ¿ø·¡ À§Ä¡ (panelPositionOffset ¹«½Ã)
+                // ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ (panelPositionOffset ï¿½ï¿½ï¿½ï¿½)
                 if (panelRect != null)
                     panelRect.anchoredPosition = originalPanelPos;
             }
             else
             {
                 // ======================
-                // 2. ÀÏ¹Ý Ä³¸¯ÅÍ Ã³¸®
+                // 2. ï¿½Ï¹ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 // ======================
-                // Ä³¸¯ÅÍ ÀÎµ¦½º None Á¦¿Ü
+                // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ None ï¿½ï¿½ï¿½ï¿½
               
-                // ¿ÞÂÊ Ä³¸¯ÅÍ Ã³¸®
+                // ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 if (scene.showLeftCharacter)
                 {
-                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.CharacterName;
                     StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[0].gameObject.SetActive(true);
-                    //StandingImage[0].SetNativeSize(); // ¿øº»Å©±â·Î ÇÏÁö ¾Ê°í ¿ø·¡ Å©±â·Î ¼³Á¤. ¸¸¾à ¹Ù²Û´Ù¸é ÀÌºÎºÐ ¹Ù²Ùµµ·Ï.
+                    //StandingImage[0].SetNativeSize(); // ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Û´Ù¸ï¿½ ï¿½ÌºÎºï¿½ ï¿½Ù²Ùµï¿½ï¿½ï¿½.
 
                     if (scene.XFlip)
                     {
@@ -118,12 +118,12 @@ public class StoryDialog : UI_Popup
                     }
                     if (scene.isAnger)
                     {
-                        Debug.Log("¿ÞÂÊ»ç¶÷È­³»±â!");
+                        Debug.Log("ï¿½ï¿½ï¿½Ê»ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½!");
                         LeftCharacter.instance.frowningAnim.DORestartById("1");
                     }
                     if (scene.isSurprized)
                     {
-                        Debug.Log("¿ÞÂÊ»ç¶÷³î¶ó±â!");
+                        Debug.Log("ï¿½ï¿½ï¿½Ê»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
                         LeftCharacter.instance.frowningAnim.DORestartById("2");
                     }
                 }
@@ -133,7 +133,7 @@ public class StoryDialog : UI_Popup
                     StandingImage[0].gameObject.SetActive(false);
                 }
 
-                // ¿À¸¥ÂÊ Ä³¸¯ÅÍ Ã³¸®
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 if (scene.showRightCharacter)
                 {
                     TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
@@ -155,7 +155,7 @@ public class StoryDialog : UI_Popup
                     StandingImage[1].gameObject.SetActive(false);
                 }
 
-                // ÆÐ³Î À§Ä¡ (¿ø·¡ À§Ä¡ + ¿ÀÇÁ¼Â)
+                // ï¿½Ð³ï¿½ ï¿½ï¿½Ä¡ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ + ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
                 if (panelRect != null)
                     panelRect.anchoredPosition = originalPanelPos + scene.panelPositionOffset;
 
@@ -176,19 +176,19 @@ public class StoryDialog : UI_Popup
                     {
                         if (scene.isAnger)
                         {
-                            Debug.Log("¿À¸¥ÂÊ»ç¶÷È­³»±â!");
+                            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Ê»ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½!");
                             RightCharacter.instance.frowningAnim.DORestartById("1");
                         }
                         if (scene.isSurprized)
                         {
-                            Debug.Log("¿À¸¥ÂÊ»ç¶÷³î¶ó±â!");
+                            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Ê»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
                             RightCharacter.instance.surprisedAnim.DORestartById("2");
                         }
                     }
                 }
             }
 
-            // ÅØ½ºÆ® Ç¥½Ã (Å¸ÀÌÇÎ È¿°ú)
+            // ï¿½Ø½ï¿½Æ® Ç¥ï¿½ï¿½ (Å¸ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½)
             TestTexts[idx].gameObject.SetActive(true);
             string full = scene.text;
             int len = full.GetTypingLength();
@@ -198,8 +198,8 @@ public class StoryDialog : UI_Popup
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     Debug.Log("Space & skip");
-                    TestTexts[idx].text = full; // ÅØ½ºÆ®¸¦ Áï½Ã ÀüÃ¼ ¹®ÀåÀ¸·Î ¼³Á¤
-                    break;                      // Å¸ÀÌÇÎ ·çÇÁ Å»Ãâ
+                    TestTexts[idx].text = full; // ï¿½Ø½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    break;                      // Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å»ï¿½ï¿½
                 }
 
                 TestTexts[idx].text = full.Typing(i);
@@ -226,7 +226,7 @@ public class StoryDialog : UI_Popup
                     }
                 }
 
-                // ÀÔ·Â¹ÞÀ¸¸é TextPanel ²ô±â
+                // ï¿½Ô·Â¹ï¿½ï¿½ï¿½ï¿½ï¿½ TextPanel ï¿½ï¿½ï¿½ï¿½
                 if (TextPanel != null)
                 {
                     TextPanel.SetActive(false);
@@ -270,7 +270,7 @@ public class StoryDialog : UI_Popup
                 while (!panelTurnedOn)
                 {
                 
-                    // ¸¶¿ì½º ¾Æ¹« ¹öÆ° Å¬¸¯ ½Ã
+                    // ï¿½ï¿½ï¿½ì½º ï¿½Æ¹ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½
                     if (Input.GetMouseButtonDown(0))
                     {
 
@@ -305,7 +305,7 @@ public class StoryDialog : UI_Popup
                     yield return null;
                 }
 
-                // ¹Ù·Î ´ÙÀ½ ´ë»ç·Î!
+                // ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!
                 continue;
             }
 
@@ -355,7 +355,7 @@ public class StoryDialog : UI_Popup
         }
 
         LoopEnd:
-        // DiaLogue³¡
+        // DiaLogueï¿½ï¿½
         StartCoroutine(LastOutAnimation());
 
 
@@ -376,7 +376,7 @@ public class StoryDialog : UI_Popup
         canvasGroup = contents.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0;
         yield return new WaitForSecondsRealtime(0.4f);
-        // 1ÃÊ¿¡ °ÉÃÄ alpha 1·Î º¯°æ
+        // 1ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ alpha 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         canvasGroup.DOFade(1f, 0.6f).SetUpdate(true);
     }
 
@@ -386,7 +386,7 @@ public class StoryDialog : UI_Popup
         canvasGroup = contents.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 1;
         yield return new WaitForSecondsRealtime(0.4f);
-        // 1ÃÊ¿¡ °ÉÃÄ alpha 1·Î º¯°æ
+        // 1ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ alpha 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
 
         yield return new WaitForSecondsRealtime(0.6f);
