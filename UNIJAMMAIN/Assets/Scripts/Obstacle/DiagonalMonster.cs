@@ -39,6 +39,12 @@ public class DiagonalMonster : MonoBehaviour
 
     private void OnEnable()
     {
+
+        // 이전에 남아있을 수 있는 타격 이펙트의 모든 애니메이션을 중지하고,
+        attackedEffectSpriteRenderer.DOKill();
+        // 즉시 투명하게(alpha=0) 만들어 보이지 않게 초기화합니다.
+        attackedEffectSpriteRenderer.color = new Color(1, 1, 1, 0);
+
         _duration = (float)IngameData.BeatInterval;
         _stride = (targetPos.position - _originPos) / _jumpCnt;
         Managers.Sound.Play("SFX/Enemy/Diagonal_V4", Define.Sound.SFX, 1f, 6f);
