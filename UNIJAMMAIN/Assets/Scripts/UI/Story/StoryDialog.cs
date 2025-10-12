@@ -136,7 +136,7 @@ public class StoryDialog : UI_Popup
                 // ������ ĳ���� ó��
                 if (scene.showRightCharacter)
                 {
-                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.CharacterName;
                     StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
                     //StandingImage[1].SetNativeSize();

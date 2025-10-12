@@ -66,7 +66,7 @@ public class SceneLoadingManager : UI_Base
     // 씬 로딩 시퀀스를 관리하는 메인 코루틴
     private IEnumerator LoadSceneAsync(string sceneName)
     {
-      
+        Time.timeScale = 0;
         // 1. 문 닫기 애니메이션
         Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
         leftPanel.gameObject.SetActive(true);
@@ -74,14 +74,14 @@ public class SceneLoadingManager : UI_Base
         yield return AnimatePanels(true); // true = 닫기
 
 
+        Managers.Clear();
         // 2. 닫힌 상태에서 잠시 대기
-      
+
         yield return new WaitForSecondsRealtime(waitDuration);
 
         // 3. 씬 비동기 로드 시작 (문이 닫힌 상태에서 진행)
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         asyncOperation.allowSceneActivation = false;
-       
 
         // 씬 로딩이 90% 완료될 때까지 대기
         while (asyncOperation.progress < 0.9f)
@@ -96,7 +96,7 @@ public class SceneLoadingManager : UI_Base
 
         // 씬이 완전히 활성화되고 첫 프레임을 그릴 시간을 주기 위해 한 프레임 대기
         yield return null;
-        Managers.Clear();
+
 
         // 5. 새로운 씬이 준비되면 문 열기 애니메이션 시작
         yield return AnimatePanels(false); // false = 열기
@@ -106,7 +106,8 @@ public class SceneLoadingManager : UI_Base
         leftPanel.gameObject.SetActive(false);
         rightPanel.gameObject.SetActive(false);
         Managers.Sound.SettingNewSceneVolume();
-      
+        Time.timeScale = 1;
+
     }
 
     // 실제 패널을 움직이는 애니메이션 코루틴
