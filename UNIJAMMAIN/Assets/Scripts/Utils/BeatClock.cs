@@ -112,7 +112,7 @@ public class BeatClock : MonoBehaviour
             OnBeat?.Invoke(_tick);
 
             // ▼▼▼ 이 코드를 추가해주세요 ▼▼▼
-            Debug.Log($"BeatClock is Ticking! Current Tick: {CurrentTick}");
+            Debug.Log($"BeatClock is Ticking! Current Tick: {CurrentTick+1}");
 
             phase.SetStageTimerGo();
         }
