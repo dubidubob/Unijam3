@@ -81,7 +81,7 @@ public class SceneLoadingManager : UI_Base
         // 3. 씬 비동기 로드 시작 (문이 닫힌 상태에서 진행)
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         asyncOperation.allowSceneActivation = false;
-        Managers.Clear();
+       
 
         // 씬 로딩이 90% 완료될 때까지 대기
         while (asyncOperation.progress < 0.9f)
@@ -89,12 +89,14 @@ public class SceneLoadingManager : UI_Base
             yield return null;
         }
 
+       
         // 4. 씬 활성화 (아직 문은 닫혀있음)
         // 이 시점에서 다음 씬의 Awake(), OnEnable() 등이 호출됨
         asyncOperation.allowSceneActivation = true;
 
         // 씬이 완전히 활성화되고 첫 프레임을 그릴 시간을 주기 위해 한 프레임 대기
         yield return null;
+        Managers.Clear();
 
         // 5. 새로운 씬이 준비되면 문 열기 애니메이션 시작
         yield return AnimatePanels(false); // false = 열기
