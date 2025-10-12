@@ -61,7 +61,10 @@ public class StoryDialog : UI_Popup
 
         for (int idx = 0; idx < scenes.Count; idx++)
         {
-            Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1");
+            if (idx > 0)
+            {
+                Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1");
+            }
 
             DialogueScene scene = scenes[idx];
 

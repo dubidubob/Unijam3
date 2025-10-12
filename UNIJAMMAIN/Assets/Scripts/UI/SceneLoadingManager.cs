@@ -12,6 +12,9 @@ public class SceneLoadingManager : UI_Base
     // 로딩 중에 ESC 누르면 씬이 엉키는 문제 해결하기 위한 선언
     public static bool IsLoading { get; private set; } = false;
 
+    // 1. 씬 준비 완료 신호를 기다리기 위한 변수 추가 ▼▼▼
+    private bool isSceneReadyToDisplay = false;
+
     [SerializeField] private Image leftPanel;
     [SerializeField] private Image rightPanel;
 
@@ -75,7 +78,11 @@ public class SceneLoadingManager : UI_Base
         // 로딩 시작 시 즉시 true로 설정
         IsLoading = true;
 
-        Time.timeScale = 0;
+
+        // ▼▼▼ 2. 코루틴 시작 시 준비 상태를 false로 초기화 ▼▼▼
+        isSceneReadyToDisplay = false;
+
+
         // 1. 문 닫기 애니메이션
         Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
         leftPanel.gameObject.SetActive(true);
@@ -85,7 +92,6 @@ public class SceneLoadingManager : UI_Base
 
         Managers.Clear();
         // 2. 닫힌 상태에서 잠시 대기
-
         yield return new WaitForSecondsRealtime(waitDuration);
 
         // 3. 씬 비동기 로드 시작 (문이 닫힌 상태에서 진행)
@@ -98,7 +104,6 @@ public class SceneLoadingManager : UI_Base
             yield return null;
         }
 
-       
         // 4. 씬 활성화 (아직 문은 닫혀있음)
         // 이 시점에서 다음 씬의 Awake(), OnEnable() 등이 호출됨
         asyncOperation.allowSceneActivation = true;
@@ -106,6 +111,13 @@ public class SceneLoadingManager : UI_Base
         // 씬이 완전히 활성화되고 첫 프레임을 그릴 시간을 주기 위해 한 프레임 대기
         yield return null;
 
+        // ▼▼▼ 3. 여기서 바로 문을 열지 않고, 신호를 받을 때까지 무한 대기 ▼▼▼
+        while (!isSceneReadyToDisplay)
+        {
+            yield return null;
+        }
+
+        Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1", Define.Sound.SFX);
 
         // 5. 새로운 씬이 준비되면 문 열기 애니메이션 시작
         yield return AnimatePanels(false); // false = 열기
@@ -115,11 +127,15 @@ public class SceneLoadingManager : UI_Base
         leftPanel.gameObject.SetActive(false);
         rightPanel.gameObject.SetActive(false);
         Managers.Sound.SettingNewSceneVolume();
-        Time.timeScale = 1;
 
         // 모든 로딩 과정이 완전히 끝나면 false로 설정
         IsLoading = false;
 
+    }
+
+    public void NotifySceneReady()
+    {
+        isSceneReadyToDisplay = true;
     }
 
     // 실제 패널을 움직이는 애니메이션 코루틴
@@ -155,6 +171,7 @@ public class SceneLoadingManager : UI_Base
         leftRect.anchoredPosition = new Vector2(-endX, leftRect.anchoredPosition.y);
         rightRect.anchoredPosition = new Vector2(endX, rightRect.anchoredPosition.y);
     }
+
 
     // 패널 초기화 및 시작 위치 설정
     private void InitializePanels()

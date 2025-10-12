@@ -211,10 +211,11 @@ public class GameManager
 
     public void IncHealth(float healValue = 1f)
     {
-        if ((Health <= 0) || (Health > 100))
+        if (Health <= 0 || Health >= MaxHealth)
             return;
 
-        Health += healValue; 
+        Health += healValue;
+        Health = Mathf.Clamp(Health, 0, MaxHealth);
         HealthUpdate?.Invoke(Health);
     }
 
