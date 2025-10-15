@@ -580,7 +580,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: a37dd135c08ea9a49a4d773c63b9d09b, type: 2}
     isFirstAppearance: 0
     text: "\uBC18\uC740 \uCEE4\uB155, \uB124\uB188\uC758 \uC2DC\uC791\uC774 \uACE7
       \uB05D\uC774\uB2E4!"

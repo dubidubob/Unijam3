@@ -39,7 +39,7 @@ public class MainGame : BaseScene
     private void LogCurrentHealth(float currentHealth)
     {
         // 체력이 변경될 때마다 "현재 체력: [값]" 형식으로 로그를 출력합니다.
-        Debug.Log($"현재 체력: {currentHealth}");
+        //Debug.Log($"현재 체력: {currentHealth}");
     }
 
     // ▼▼▼ 4. OnDestroy() 메서드 추가 (메모리 누수 방지) ▼▼▼

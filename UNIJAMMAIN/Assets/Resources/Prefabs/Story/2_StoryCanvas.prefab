@@ -658,7 +658,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 426628e0bb380eb4e818ad61019cbf41, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: ca13114a29a94a447bfb7948fa087582, type: 2}
     isFirstAppearance: 0
     text: "\uADF8 \uB2E8\uB2E8\uD55C \uB208\uBE5B\uC774 \uC808\uB9DD\uC73C\uB85C
       \uBC14\uB00C\uB294 \uAC74 \uD55C\uC21C\uAC04\uC774\uC9C0."
@@ -676,7 +676,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 3705865dc6de2e54e86d8b42c233ba3d, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 958517d2caa0fa24fb7c08e3cdc96c71, type: 2}
     isFirstAppearance: 0
     text: "\uB124 \uB9C8\uC74C\uC774 \uD754\uB4E4\uB9B4\uC218\uB85D, \uC6B0\uB9AC\uC758
       \uADF8\uB9BC\uC790\uB294 \uB354\uC6B1 \uC9D9\uC5B4\uC9C0\uB294 \uBC95\uC774\uB2E4."
