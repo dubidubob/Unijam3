@@ -10,6 +10,7 @@ using TMPro;
 public class StoryDialog : UI_Popup
 {
     private bool inputRequested = false;
+    private bool skipAllRequested = false;
     public string musicPath;
     public Sprite backGroundImage;
     public Image backGround;
@@ -60,6 +61,13 @@ public class StoryDialog : UI_Popup
         {
             inputRequested = true;
         }
+
+        // X키가 눌리면 '전체 스킵' 신호등을 켭니다.
+        if (Input.GetKeyDown(KeyCode.X)) // <<< 이 if문을 추가하세요
+        {
+            skipAllRequested = true;
+        }
+
     }
 
     private void OnEnable()
@@ -72,9 +80,16 @@ public class StoryDialog : UI_Popup
     public IEnumerator TypingCoroutine()
     {
         panelRect.anchoredPosition = originalPanelPos;
+        skipAllRequested = false; // 코루틴 시작 시 초기화
 
         for (int idx = 0; idx < scenes.Count; idx++)
         {
+            // Update가 '전체 스킵' 신호를 켰는지 매 대사 시작 전에 확인합니다.
+            if (skipAllRequested)
+            {
+                goto LoopEnd; // 즉시 대화 루프 탈출
+            }
+
             if (idx > 0)
             {
                 Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1");
@@ -84,7 +99,7 @@ public class StoryDialog : UI_Popup
 
             yield return new WaitForSecondsRealtime(scene.preDelay);
 
-            
+
 
             // ======================
             // 1. ĳ���� None ó��
@@ -104,7 +119,7 @@ public class StoryDialog : UI_Popup
                 // 2. �Ϲ� ĳ���� ó��
                 // ======================
                 // ĳ���� �ε��� None ����
-              
+
                 // ���� ĳ���� ó��
                 if (scene.showLeftCharacter)
                 {
@@ -215,7 +230,7 @@ public class StoryDialog : UI_Popup
             for (int i = 0; i <= len; i++)
             {
                 // Update가 켜놓은 신호등을 발견하면 즉시 스킵
-                if (inputRequested)
+                if (inputRequested || skipAllRequested)
                 {
                     break;
                 }
@@ -232,42 +247,49 @@ public class StoryDialog : UI_Popup
             yield return null;      // 입력이 중복 처리되는 것을 막기 위해 한 프레임 대기
 
             // 새로운 입력이 들어올 때까지 계속 대기
-            while (!inputRequested)
+            while (!inputRequested && !skipAllRequested)
             {
                 yield return null;
             }
 
-
+            // 만약 X키 때문에 루프를 탈출했다면, 즉시 전체 대화 루프를 끝냅니다.
+            if (skipAllRequested)
+            {
+                goto LoopEnd;
+            }
 
 
 
 
             if (scene.leftSDAnim || scene.rightSDAnim)
             {
-                if (scene.requiredKey == KeyCode.None)
-                {
-                    while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
-                    {
-                        TestTexts[idx].text = full;
-                        yield return null;
-                    }
+                //if (scene.requiredKey == KeyCode.None)
+                //{
+                //    while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
+                //    {
+                //        TestTexts[idx].text = full;
+                //        yield return null;
+                //    }
 
-                }
-                else
-                {
-                    while (!Input.GetKeyDown(scene.requiredKey))
-                    {
-                        TestTexts[idx].text = full;
-                        yield return null;
-                    }
-                }
+                //}
+                //else
+                //{
+                //    while (!Input.GetKeyDown(scene.requiredKey))
+                //    {
+                //        TestTexts[idx].text = full;
+                //        yield return null;
+                //    }
+                //}
 
                 // �Է¹����� TextPanel ����
-                if (TextPanel != null)
+                if (idx < scenes.Count - 1)
                 {
-                    TextPanel.SetActive(false);
-                    StandingImage[0].gameObject.SetActive(false);
-                    StandingImage[1].gameObject.SetActive(false);
+                    if (TextPanel != null)
+                    {
+                        TextPanel.SetActive(false);
+                        StandingImage[0].gameObject.SetActive(false);
+                        StandingImage[1].gameObject.SetActive(false);
+                    }
                 }
 
                 if (scene.leftSDAnim)
@@ -302,93 +324,99 @@ public class StoryDialog : UI_Popup
                 yield return new WaitForSecondsRealtime(1.5f);
                 if (scene.leftSDAnim) KongCanvas.SetActive(true);
                 if (scene.rightSDAnim) GretCanvas.SetActive(true);
-                bool panelTurnedOn = false;
-                while (!panelTurnedOn)
-                {
-                
-                    // ���콺 �ƹ� ��ư Ŭ�� ��
-                    if (Input.GetMouseButtonDown(0))
-                    {
+                //bool panelTurnedOn = false;
+                //while (!panelTurnedOn)
+                //{
+
+                //    // ���콺 �ƹ� ��ư Ŭ�� ��
+                //    if (Input.GetMouseButtonDown(0))
+                //    {
 
 
-                        if (KongCanvas != null) KongCanvas.SetActive(false);
-                        if (GretCanvas != null) GretCanvas.SetActive(false);
-                        if (scene.leftSDAnim)
-                        {
-                            foreach (var obj in leftSDAnimSet)
-                                if (obj != null) obj.SetActive(false);
-                            var leftAnim = leftSDCharacter.GetComponent<DOTweenAnimation>();
-                            var leftSR = leftSDCharacter.GetComponent<SpriteRenderer>();
-                            leftAnim.DOPlayBackwards();
-                            leftSR.sortingOrder = -3;
-                        }
-                        if (scene.rightSDAnim)
-                        {
-                            foreach (var obj in rightSDAnimSet)
-                                if (obj != null) obj.SetActive(false);
-                            var rightAnim = rightSDCharacter.GetComponent<DOTweenAnimation>();
-                            var rightSR = rightSDCharacter.GetComponent<SpriteRenderer>();
-                            rightAnim.DOPlayBackwards();
-                            rightSR.sortingOrder = -3;
-                        }
+                //        if (KongCanvas != null) KongCanvas.SetActive(false);
+                //        if (GretCanvas != null) GretCanvas.SetActive(false);
+                //        if (scene.leftSDAnim)
+                //        {
+                //            foreach (var obj in leftSDAnimSet)
+                //                if (obj != null) obj.SetActive(false);
+                //            var leftAnim = leftSDCharacter.GetComponent<DOTweenAnimation>();
+                //            var leftSR = leftSDCharacter.GetComponent<SpriteRenderer>();
+                //            leftAnim.DOPlayBackwards();
+                //            leftSR.sortingOrder = -3;
+                //        }
+                //        if (scene.rightSDAnim)
+                //        {
+                //            foreach (var obj in rightSDAnimSet)
+                //                if (obj != null) obj.SetActive(false);
+                //            var rightAnim = rightSDCharacter.GetComponent<DOTweenAnimation>();
+                //            var rightSR = rightSDCharacter.GetComponent<SpriteRenderer>();
+                //            rightAnim.DOPlayBackwards();
+                //            rightSR.sortingOrder = -3;
+                //        }
 
 
-                        if (TextPanel != null)
-                            TextPanel.SetActive(true);
+                //        if (TextPanel != null)
+                //            TextPanel.SetActive(true);
 
-                        panelTurnedOn = true;
-                    }
-                    yield return null;
-                }
+                //        panelTurnedOn = true;
+                //    }
+                //    yield return null;
+                //}
 
                 // �ٷ� ���� ����!
                 continue;
             }
 
 
-            if (scene.requiredKey == KeyCode.None)
+            //if (scene.requiredKey == KeyCode.None)
+            //{
+            //    while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
+            //    {
+            //        if (Input.GetKeyDown(KeyCode.X))
+            //        {
+            //            goto LoopEnd;
+            //        }
+
+
+            //        TestTexts[idx].text = full;
+            //        yield return null;
+            //    }
+
+            //}
+            //else
+            //{
+            //    while (!Input.GetKeyDown(scene.requiredKey))
+            //    {
+            //        TestTexts[idx].text = full;
+            //        yield return null;
+            //    }
+            //}
+            if (idx < scenes.Count - 1)
             {
-                while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
+                if (TextPanel != null)
                 {
-                    if (Input.GetKeyDown(KeyCode.X))
-                    {
-                        goto LoopEnd;
-                    }
-
-
-                    TestTexts[idx].text = full;
-                    yield return null;
+                    TextPanel.SetActive(false);
+                    StandingImage[0].gameObject.SetActive(false);
+                    StandingImage[1].gameObject.SetActive(false);
                 }
 
-            }
-            else
-            {
-                while (!Input.GetKeyDown(scene.requiredKey))
+                // 시간 조절 관련 코드도 이 안으로 함께 옮기는 것이 안전합니다.
+                Time.timeScale = 1f;
+                float startTime = Time.unscaledTime;
+                float targetDuration = scene.goingTimeAmount;
+                float elapsed = 0f;
+                while (elapsed < targetDuration)
                 {
-                    TestTexts[idx].text = full;
+                    elapsed = Time.unscaledTime - startTime;
                     yield return null;
                 }
-            }
-            if (TextPanel != null)
-            {
-                TextPanel.SetActive(false);
-                StandingImage[0].gameObject.SetActive(false);
-                StandingImage[1].gameObject.SetActive(false);
+                Time.timeScale = 0f;
+                TextPanel.SetActive(true);
             }
 
-            Time.timeScale = 1f;
-            float startTime = Time.unscaledTime;
-            float targetDuration = scene.goingTimeAmount;
-            float elapsed = 0f;
-            while (elapsed < targetDuration)
-            {
-                elapsed = Time.unscaledTime - startTime;
-                yield return null;
-            }
-            Time.timeScale = 0f;
-            TextPanel.SetActive(true);
             continue;
         }
+
 
         LoopEnd:
         // DiaLogue��
