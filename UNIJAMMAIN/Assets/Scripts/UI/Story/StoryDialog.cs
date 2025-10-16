@@ -9,6 +9,7 @@ using TMPro;
 
 public class StoryDialog : UI_Popup
 {
+    private bool inputRequested = false;
     public string musicPath;
     public Sprite backGroundImage;
     public Image backGround;
@@ -38,6 +39,9 @@ public class StoryDialog : UI_Popup
     public GameObject[] rightSDAnimSet;
     public GameObject rightSDCharacter;
     public GameObject GretCanvas;
+
+
+
     private void Awake()
     {
         panelRect = TextPanel.GetComponent<RectTransform>();
@@ -46,6 +50,16 @@ public class StoryDialog : UI_Popup
 
         Managers.Sound.Play(musicPath, Define.Sound.BGM);
         StartCoroutine(FirstInAnimation());
+    }
+
+    private void Update()
+    {
+        // 스페이스바나 엔터키가 눌리면 플래그를 true로 설정
+        // GetKeyDown은 한 프레임만 true이므로 Update에서 확인하는게 가장 정확합니다.
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        {
+            inputRequested = true;
+        }
     }
 
     private void OnEnable()
@@ -196,18 +210,37 @@ public class StoryDialog : UI_Popup
             string full = scene.text;
             int len = full.GetTypingLength();
 
+            inputRequested = false;
+
             for (int i = 0; i <= len; i++)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                // Update가 켜놓은 신호등을 발견하면 즉시 스킵
+                if (inputRequested)
                 {
-                    Debug.Log("Space & skip");
-                    TestTexts[idx].text = full; // �ؽ�Ʈ�� ��� ��ü �������� ����
-                    break;                      // Ÿ���� ���� Ż��
+                    break;
                 }
-
                 TestTexts[idx].text = full.Typing(i);
                 yield return new WaitForSecondsRealtime(0.02f);
+
             }
+
+            // 타이핑이 끝나거나 스킵되면, 항상 전체 텍스트를 확실히 표시
+            TestTexts[idx].text = full;
+
+            // 2. 다음으로 넘어가기 위한 대기
+            inputRequested = false; // 방금 사용한 스킵 입력을 초기화
+            yield return null;      // 입력이 중복 처리되는 것을 막기 위해 한 프레임 대기
+
+            // 새로운 입력이 들어올 때까지 계속 대기
+            while (!inputRequested)
+            {
+                yield return null;
+            }
+
+
+
+
+
 
             if (scene.leftSDAnim || scene.rightSDAnim)
             {

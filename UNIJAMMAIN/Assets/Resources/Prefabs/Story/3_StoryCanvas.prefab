@@ -442,7 +442,7 @@ MonoBehaviour:
   cd:
   - {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
   - {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
-  - {fileID: 11400000, guid: 50f527adda490a147864aacd1a5bd4b8, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 53d167dc5ccadcb4ea71a1b73ba0836f, type: 2}
   - {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
   - {fileID: 11400000, guid: 95e705f170270774ea9a1fe2c0a3c95f, type: 2}
@@ -660,8 +660,8 @@ MonoBehaviour:
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0
     postDelay: 0
-    showLeftCharacter: 0
-    showRightCharacter: 1
+    showLeftCharacter: 1
+    showRightCharacter: 0
     isAnger: 0
     isSurprized: 0
     leftSDAnim: 0
@@ -670,7 +670,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 5ac80b6ff305cb0438abdfeb66ae2891, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uB798. \uB124\uAC00 \uC62C \uC904 \uC54C\uACE0 \uC788\uC5C8\uB2E4.
       \uAE38\uC744 \uC783\uC740 \uC790\uAC00 \uB9C8\uC9C0\uB9C9\uC73C\uB85C \uD5A5\uD558\uB294
@@ -707,7 +707,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 5ac80b6ff305cb0438abdfeb66ae2891, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
     isFirstAppearance: 0
     text: "\uC870\uD654\uC640 \uADE0\uD615\uC774\uB77C\uB294 \uC5B4\uB9AC\uC11D\uC74C\uB9CC
       \uC887\uC544\uC654\uC73C\uB2C8. \uADF8 \uC678\uAE38\uC758 \uB05D\uC5D0\uC11C
@@ -744,7 +744,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 5ac80b6ff305cb0438abdfeb66ae2891, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
     isFirstAppearance: 0
     text: "\uAC00\uC7A5 \uBA3C\uC800 \uAE68\uC838\uC57C \uD560 \uC5B4\uB9AC\uC11D\uC740
       \uAC00\uB974\uCE68\uC774\uC5C8\uC9C0.  \uBCF8\uB798\uB294 \uC57D\uD55C \uCABD\uC774
@@ -763,7 +763,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 5ac80b6ff305cb0438abdfeb66ae2891, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uAC83\uC774\uC57C\uB9D0\uACE0 \uAC00\uC7A5 \uC644\uBCBD\uD55C \uC870\uD654\uB2E4."
     overrideSprite: {fileID: 0}
@@ -798,7 +798,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 5ac80b6ff305cb0438abdfeb66ae2891, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
     isFirstAppearance: 0
     text: "\uBD80\uC870\uD654\uB77C... \uB291\uB300\uAC00 \uC591\uC744 \uC0AC\uB0E5\uD558\uB294
       \uAC83\uC774 \uBD80\uC870\uD654\uB354\uB0D0? \uADF8\uAC83\uC774 \uC790\uC5F0\uC758
@@ -870,7 +870,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 5ac80b6ff305cb0438abdfeb66ae2891, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
     isFirstAppearance: 0
     text: "\uC88B\uB2E4. \uADF8\uB807\uB2E4\uBA74 \uC99D\uBA85\uD574 \uBCF4\uC544\uB77C.
       \uB124\uAC00 \uBBFF\uB294 \uADF8 \uBC18\uB4EF\uD55C \uC870\uD654\uAC00."
@@ -888,7 +888,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 5ac80b6ff305cb0438abdfeb66ae2891, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
     isFirstAppearance: 0
     text: "\uBAA8\uB4E0 \uAC83\uC774 \uC644\uBCBD\uD55C \uC774 '\uC870\uD654' \uC18D\uC5D0\uC11C\uB3C4
       \uAE38\uC744 \uBC1D\uD790 \uC218 \uC788\uB294\uC9C0."
