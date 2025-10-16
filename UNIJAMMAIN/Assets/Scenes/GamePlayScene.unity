@@ -6339,6 +6339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64af8af48ff286543a6dda8fb83734fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tick: 0
   phase: {fileID: 5032662942808797825}
 --- !u!114 &2094054436
 MonoBehaviour:
@@ -7050,6 +7051,7 @@ MonoBehaviour:
   backGround: {fileID: 1698842289}
   backGroundGray: {fileID: 1742512190}
   Scoreboard: {fileID: 1483870323}
+  beatClock: {fileID: 2094054435}
   tutorialPopUp: {fileID: 529075228}
   chapters:
   - {fileID: 11400000, guid: 78695e940ce1d5545a3efd7e5e764ca8, type: 2}
