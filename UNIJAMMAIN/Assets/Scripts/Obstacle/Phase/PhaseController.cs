@@ -22,13 +22,17 @@ public class PhaseController : MonoBehaviour
     [SerializeField] Image backGround;
     [SerializeField] Image backGroundGray;
     [SerializeField] ResultUI Scoreboard;
+    [SerializeField] BeatClock beatClock;
+    [SerializeField] UI_Popup tutorialPopUp;
+    
     [SerializeField] public ChapterSO[] chapters;
     // TODO : tmp!
     [SerializeField] StartMotionUIs startMotions;
     [SerializeField] SpriteRenderer areaBaseInLine;
     [SerializeField] Image gaugeImage;
-   
+    
 
+  
     public static Action<float> ChangeKey;
     public static Action<bool> TutorialStoped;
     public int _chapterIdx;
@@ -127,7 +131,7 @@ public class PhaseController : MonoBehaviour
 
             // 이제 Delay 시간만큼 비트를 누적하고 기다립니다.
             targetTick += delayBeats;
-            yield return new WaitUntil(() => BeatClock.CurrentTick >= targetTick); // WaitForSeconds(delaySec) 대체
+            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(delaySec) 대체
 
             // [기존 로직 복원] Delay가 끝난 직후에 실행되어야 할 로직들을 호출합니다.
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
@@ -144,7 +148,7 @@ public class PhaseController : MonoBehaviour
             // --- 2. Duration 구간 처리 ---
             long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
             targetTick += durationBeats;
-            yield return new WaitUntil(() => BeatClock.CurrentTick >= targetTick); // WaitForSeconds(durationSec) 대체
+            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(durationSec) 대체
 
             // --- 3. 다음 페이즈 준비 ---
             if (i + 1 < chapters[_chapterIdx].Phases.Count)
@@ -162,7 +166,7 @@ public class PhaseController : MonoBehaviour
 
         // 모든 페이즈가 끝난 후, 2비트만큼 여유를 두고 챕터를 종료합니다.
         targetTick += 2;
-        yield return new WaitUntil(() => BeatClock.CurrentTick >= targetTick); // WaitForSeconds(...) 대체
+        yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(...) 대체
 
         EndChapter();
     }
@@ -186,8 +190,8 @@ public class PhaseController : MonoBehaviour
     
     private void HandleTutorialEvent(TutorialEvent tutorialEvent)
     {
-        UI_Popup go = Managers.UI.ShowPopUpUI<Tutorial_PopUp>();
-        var tuto = go.GetComponent<Tutorial_PopUp>();
+        tutorialPopUp.gameObject.SetActive(true);
+        var tuto = tutorialPopUp.GetComponent<Tutorial_PopUp>();
         tuto.StartTutorial(tutorialEvent.Steps, _lastMonsterHitCnt);
         _lastMonsterHitCnt = IngameData.PerfectMobCnt + IngameData.GoodMobCnt;
     }

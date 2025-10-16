@@ -9,7 +9,7 @@ public class BeatClock : MonoBehaviour
     private bool _running = false;
     private bool _paused = false;
     private bool _initialized = false;
-    private long _tick;             // 현재 비트 카운트
+    public long _tick;             // 현재 비트 카운트
 
     // --- 타이밍 앵커 ---
     private double _lastBpmChangeDspTime; // 마지막으로 BPM이 변경된 시점의 dspTime
@@ -19,9 +19,10 @@ public class BeatClock : MonoBehaviour
     
 
     private bool isStart = false;
-    public static long CurrentTick { get; private set; }
     // --- phase와 연동 --- //
     [SerializeField] PhaseController phase;
+
+   
 
     private void Start()
     {
@@ -44,7 +45,6 @@ public class BeatClock : MonoBehaviour
     {
         _beatInterval = IngameData.BeatInterval;
         _tick = 0;
-        CurrentTick = 0; // 인스턴스 변수 초기화
 
 
         _lastBpmChangeDspTime = AudioSettings.dspTime;
@@ -74,7 +74,7 @@ public class BeatClock : MonoBehaviour
         // 현재 시점과 tick을 새로운 앵커로 설정
         _lastBpmChangeDspTime = now;
         _lastBpmChangeTick = currentTick;
-        _tick = currentTick; // 현재 tick도 업데이트
+        _tick = Math.Max(_tick, currentTick);
 
         // 새로운 beatInterval로 변경
         _beatInterval = IngameData.BeatInterval;
@@ -108,11 +108,10 @@ public class BeatClock : MonoBehaviour
         while (now + EPS >= ScheduledTime(_tick + 1))
         {
             _tick++;
-            CurrentTick = _tick;
             OnBeat?.Invoke(_tick);
 
             // ▼▼▼ 이 코드를 추가해주세요 ▼▼▼
-            Debug.Log($"BeatClock is Ticking! Current Tick: {CurrentTick+1}");
+            Debug.Log($"BeatClock is Ticking! Current Tick: {_tick+1},시간 : {now}");
 
             phase.SetStageTimerGo();
         }
@@ -132,10 +131,13 @@ public class BeatClock : MonoBehaviour
     /// </summary>
     private void CatchUp()
     {
+        Debug.Log("CatchUp!");
         double now = AudioSettings.dspTime;
+        long calculatedTick = _lastBpmChangeTick + (long)Math.Floor((now - _lastBpmChangeDspTime) / _beatInterval);
 
-        // 앵커를 기준으로 현재 tick을 정확히 스냅합니다.
-        _tick = _lastBpmChangeTick + (long)Math.Floor((now - _lastBpmChangeDspTime) / _beatInterval);
+        // 계산된 틱이 현재 틱보다 작으면, 현재 틱을 유지
+        _tick = Math.Max(_tick, calculatedTick);
+
         _running = true;
     }
 }
