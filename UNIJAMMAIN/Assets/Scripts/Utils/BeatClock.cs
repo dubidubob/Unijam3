@@ -76,7 +76,7 @@ public class BeatClock : MonoBehaviour
         // 현재 시점과 tick을 새로운 앵커로 설정
         _lastBpmChangeDspTime = now;
         _lastBpmChangeTick = currentTick;
-        _tick = Math.Max(_tick, currentTick);
+       
 
         // 새로운 beatInterval로 변경
         _beatInterval = IngameData.BeatInterval;
