@@ -66,8 +66,8 @@ public class InGameOption_PopUp : UI_Popup
         PauseManager.ControlTime(false);
         Managers.Sound.StopBGM();
         Managers.Clear();
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        SceneLoadingManager.Instance.LoadScene("GamePlayScene");
         ClosePopUPUI();
     }
 

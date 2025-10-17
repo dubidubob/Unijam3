@@ -137,16 +137,12 @@ public class PhaseController : MonoBehaviour
             double scheduledDspForDelay = beatClock.GetScheduledDspTimeForTick(targetTick);
 
             // 대기: scheduledDspForDelay 보다 작으면 계속 대기 (프레임 지연 있어도 dspTime은 흘러감)
-            while (AudioSettings.dspTime - EPS < scheduledDspForDelay)
+            while (AudioSettings.dspTime + EPS < scheduledDspForDelay)
                 yield return null;
 
             // Delay 끝난 직후 처리 (원래 하던 SpawnMonsters 호출을 **정확한 오디오 예정 시점 직후**에 실행)
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                // 디버그 로깅 나중에 빼기!!!!!!!!!
-                Debug.Log($"[Spawn] Phase[{i}] spawn called at dsp:{AudioSettings.dspTime:F6} (scheduled:{scheduledDspForDelay:F6})");
-
-              
                 SpawnMonsters(phaseEventAfterDelay);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
