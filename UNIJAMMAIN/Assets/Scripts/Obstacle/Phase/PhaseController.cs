@@ -100,7 +100,7 @@ public class PhaseController : MonoBehaviour
         // 코루틴 내에서 진행될 이벤트의 목표 틱(Beat)을 관리하는 변수
         long targetTick = 0;
 
-        const double EPS = 0.001; // 약간의 여유시간 (초)
+        const double EPS = 0.002; // 약간의 여유시간 (초)
 
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
@@ -137,7 +137,7 @@ public class PhaseController : MonoBehaviour
             double scheduledDspForDelay = beatClock.GetScheduledDspTimeForTick(targetTick);
 
             // 대기: scheduledDspForDelay 보다 작으면 계속 대기 (프레임 지연 있어도 dspTime은 흘러감)
-            while (AudioSettings.dspTime + EPS < scheduledDspForDelay)
+            while (AudioSettings.dspTime - EPS < scheduledDspForDelay)
                 yield return null;
 
             // Delay 끝난 직후 처리 (원래 하던 SpawnMonsters 호출을 **정확한 오디오 예정 시점 직후**에 실행)
@@ -178,7 +178,7 @@ public class PhaseController : MonoBehaviour
         }
 
         // 모든 페이즈가 끝난 후, 원하는  비트만큼 여유를 두고 챕터를 종료합니다.
-        targetTick+=0; // 그냥 바로 다음 챕터로
+        targetTick+=2; // 그냥 바로 다음 챕터로
         double scheduledDspEndChapter = beatClock.GetScheduledDspTimeForTick(targetTick);
         while (AudioSettings.dspTime + EPS < scheduledDspEndChapter)
             yield return null;
