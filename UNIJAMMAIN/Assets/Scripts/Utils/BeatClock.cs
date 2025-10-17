@@ -61,13 +61,16 @@ public class BeatClock : MonoBehaviour
     /// </summary>
     private void HandleBpmChange()
     {
+        
         if (!_running || _paused) return;
         if (!_initialized)
         {
             StartClock();
             _initialized = true;
         }
-
+        // 새로운 beatInterval로 변경
+        
+        Debug.Log($"BPM이 Change된 Tick : {_tick}");
         double now = AudioSettings.dspTime;
 
         // 이전 beatInterval을 기준으로 현재 tick 위치를 정확히 계산
@@ -76,9 +79,7 @@ public class BeatClock : MonoBehaviour
         // 현재 시점과 tick을 새로운 앵커로 설정
         _lastBpmChangeDspTime = now;
         _lastBpmChangeTick = currentTick;
-       
 
-        // 새로운 beatInterval로 변경
         _beatInterval = IngameData.BeatInterval;
     }
 

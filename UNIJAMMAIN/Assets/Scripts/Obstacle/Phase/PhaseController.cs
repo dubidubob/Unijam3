@@ -143,6 +143,7 @@ public class PhaseController : MonoBehaviour
             // Delay 끝난 직후 처리 (원래 하던 SpawnMonsters 호출을 **정확한 오디오 예정 시점 직후**에 실행)
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
+                Debug.Log($"Monster Spawn tick :{beatClock._tick}");
                 SpawnMonsters(phaseEventAfterDelay);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)

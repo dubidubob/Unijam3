@@ -130,6 +130,7 @@ public class SceneLoadingManager : UI_Base
 
         // 모든 로딩 과정이 완전히 끝나면 false로 설정
         IsLoading = false;
+        StopAllCoroutines();
 
     }
 
