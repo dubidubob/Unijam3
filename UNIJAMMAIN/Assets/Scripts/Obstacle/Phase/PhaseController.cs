@@ -84,7 +84,7 @@ public class PhaseController : MonoBehaviour
         SetStageBackGround();
         IngameData.IsStart = true;
 
-        // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
+        // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정 ---
         if (chapters[_chapterIdx].Phases.Count > 0)
         {
             var firstPhase = chapters[_chapterIdx].Phases[0];
@@ -100,26 +100,27 @@ public class PhaseController : MonoBehaviour
         // 코루틴 내에서 진행될 이벤트의 목표 틱(Beat)을 관리하는 변수
         long targetTick = 0;
 
+        const double EPS = 0.001; // 약간의 여유시간 (초)
+
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];
             if (!gameEvent.isIn) continue;
 
             float durationSec = gameEvent.durationBeat * beatInterval;
-            IngameData.PhaseDurationSec = durationSec;  
+            IngameData.PhaseDurationSec = durationSec;
 
             SetTimeScale(gameEvent.timeScale);
 
             // --- 1. Delay 구간 처리 ---
             long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
 
-            // [기존 로직 복원] Delay가 시작되기 전에 필요한 이벤트들을 먼저 호출합니다.
+            // Delay 시작 전에 필요한 이벤트들을 먼저 호출합니다.
             if (gameEvent is PhaseEvent phaseEvent)
             {
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
-                // HandleFlipKeyEvent가 delay 시간을 필요로 하므로, 비트 기반으로 다시 계산해줍니다.
-                float delaySec = delayBeats * (float)IngameData.BeatInterval;
-                HandleFlipKeyEvent(phaseEvent, delaySec);
+                float delaySecLocal = delayBeats * (float)IngameData.BeatInterval;
+                HandleFlipKeyEvent(phaseEvent, delaySecLocal);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
@@ -129,14 +130,23 @@ public class PhaseController : MonoBehaviour
                 HandleTutorialEvent(tutorialEvent);
             }
 
-            // 이제 Delay 시간만큼 비트를 누적하고 기다립니다.
+            // Delay만큼의 목표 틱을 계산
             targetTick += delayBeats;
-            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(delaySec) 대체
 
-            // [기존 로직 복원] Delay가 끝난 직후에 실행되어야 할 로직들을 호출합니다.
+            // --- 변경: BeatClock의 예정 DSP 시간을 기준으로 기다립니다 ---
+            double scheduledDspForDelay = beatClock.GetScheduledDspTimeForTick(targetTick);
+
+            // 대기: scheduledDspForDelay 보다 작으면 계속 대기 (프레임 지연 있어도 dspTime은 흘러감)
+            while (AudioSettings.dspTime + EPS < scheduledDspForDelay)
+                yield return null;
+
+            // Delay 끝난 직후 처리 (원래 하던 SpawnMonsters 호출을 **정확한 오디오 예정 시점 직후**에 실행)
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                Debug.Log($"<color=cyan>PhaseEvent [{i}] Identified! Attempting to spawn monsters. MonsterData count: {phaseEventAfterDelay.MonsterDatas.Count}</color>");
+                // 디버그 로깅 나중에 빼기!!!!!!!!!
+                Debug.Log($"[Spawn] Phase[{i}] spawn called at dsp:{AudioSettings.dspTime:F6} (scheduled:{scheduledDspForDelay:F6})");
+
+              
                 SpawnMonsters(phaseEventAfterDelay);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
@@ -145,16 +155,19 @@ public class PhaseController : MonoBehaviour
                     TutorialStoped?.Invoke(false);
             }
 
-            // --- 2. Duration 구간 처리 ---
+            // --- Duration 구간 처리 ---
             long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
             targetTick += durationBeats;
-            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(durationSec) 대체
 
-            // --- 3. 다음 페이즈 준비 ---
+            double scheduledDspForEnd = beatClock.GetScheduledDspTimeForTick(targetTick);
+            while (AudioSettings.dspTime + EPS < scheduledDspForEnd)
+                yield return null;
+
+            // --- 다음 페이즈 준비 ---
             if (i + 1 < chapters[_chapterIdx].Phases.Count)
             {
                 var nextPhase = chapters[_chapterIdx].Phases[i + 1];
-                // 다음 페이즈의 BPM으로 BeatClock을 업데이트하도록 신호를 보냅니다.
+                // 다음 페이즈의 BPM으로 BeatClock을 업데이트하도록 신호
                 IngameData.BeatInterval = 60.0 / nextPhase.bpm;
                 beatInterval = 60.0f / nextPhase.bpm;
                 delaySec = nextPhase.startDelayBeat * beatInterval;
@@ -164,9 +177,11 @@ public class PhaseController : MonoBehaviour
             }
         }
 
-        // 모든 페이즈가 끝난 후, 2비트만큼 여유를 두고 챕터를 종료합니다.
-        targetTick += 2;
-        yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(...) 대체
+        // 모든 페이즈가 끝난 후, 원하는  비트만큼 여유를 두고 챕터를 종료합니다.
+        targetTick+=0; // 그냥 바로 다음 챕터로
+        double scheduledDspEndChapter = beatClock.GetScheduledDspTimeForTick(targetTick);
+        while (AudioSettings.dspTime + EPS < scheduledDspEndChapter)
+            yield return null;
 
         EndChapter();
     }
@@ -256,29 +271,13 @@ public class PhaseController : MonoBehaviour
     }
     public void SetStageTimerGo()
     {
-        _beatCount++;
-
-      
-        // 스타트 비트실행
-        if (!isMonsterGoStart)
-        {
-            if (_beatCount == chapters[_chapterIdx].StartBeat)
-            {
-                isMonsterGoStart = true;
-                StartCoroutine(GoStart());
-            }
-        }
-
-        // 1. _beatCount와 totalCount를 float으로 변환하여 진행 비율(0.0 ~ 1.0)을 계산합니다.
-        // (float)을 붙이지 않으면 정수 나눗셈이 되어 결과가 0 또는 1만 나오게 됩니다.
-        float progress = (float)_beatCount / _totalBeat;
-
-        // 2. 1에서 진행 비율을 빼서 값을 뒤집어 줍니다. (1.0 -> 0.0)
-        gaugeImage.fillAmount = 1.0f - progress;
-
-        // (옵션) _beatCount가 totalCount를 넘어가지 않도록 값을 보정해줄 수 있습니다.
-        gaugeImage.fillAmount = Mathf.Clamp01(gaugeImage.fillAmount);
+        // 호환성 유지: BeatClock이 아직 인자로 안 준다면 기존 동작을 하게 함
+        // (이 경우는 단순히 1틱으로 처리)
+        double now = AudioSettings.dspTime;
+        long inferredTick = _lastScheduledTick >= 0 ? _lastScheduledTick + 1 : (_lastScheduledTick = 1);
+        SetStageTimerGoScheduled(inferredTick, now);
     }
+
 
     public IEnumerator GoStart()
     {
@@ -315,6 +314,50 @@ public class PhaseController : MonoBehaviour
         monsters[0] = monster;
     }
 
-    
+
+    // 추가한 필드: scheduled 기반 타이밍 추적용
+    private double _lastScheduledDspTime = double.NaN;
+    private long _lastScheduledTick = -1;
+
+    public void SetStageTimerGoScheduled(long scheduledTick, double scheduledDspTime)
+    {
+        // 1) 몇 틱이 지났는지 계산
+        long deltaTicks;
+        if (_lastScheduledTick >= 0)
+        {
+            deltaTicks = scheduledTick - _lastScheduledTick;
+            if (deltaTicks < 1) deltaTicks = 1; // 최소 1틱은 진행된 것으로 간주
+        }
+        else
+        {
+            // 첫 호출: scheduledTick 자체를 기준으로 삼아 증분을 계산하거나 1로 처리
+            // 만약 scheduledTick==0이라면 1로 올리기
+            deltaTicks = Math.Max(1, scheduledTick);
+        }
+
+        // 2) 업데이트 (가볍게)
+        _beatCount += deltaTicks;
+        _lastScheduledTick = scheduledTick;
+        _lastScheduledDspTime = scheduledDspTime;
+
+        // 3) 기존 SetStageTimerGo의 내부 로직(스타트判定, 게이지 등)을 그대로 적용하되
+        // deltaTicks > 1인 경우에도 적절히 처리하도록 함.
+        // 스타트 비트 실행
+        if (!isMonsterGoStart && _beatCount >= chapters[_chapterIdx].StartBeat)
+        {
+            isMonsterGoStart = true;
+            StartCoroutine(GoStart());
+        }
+
+        // 진행도 계산 (gauge)
+        float progress = (float)_beatCount / _totalBeat;
+        gaugeImage.fillAmount = 1.0f - progress;
+        gaugeImage.fillAmount = Mathf.Clamp01(gaugeImage.fillAmount);
+
+        // (선택) 필요하면 여기서 다른 lightweight 콜백 호출
+        // e.g. ChangeKey?.Invoke(...) 같은 것들이 있다면 아주 가볍게 호출 가능
+    }
+
+
     #endregion
 }

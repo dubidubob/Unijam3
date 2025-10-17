@@ -10,6 +10,8 @@ public class BeatClock : MonoBehaviour
     private bool _paused = false;
     private bool _initialized = false;
     public long _tick;             // 현재 비트 카운트
+    private double _test_BeforeTime;
+    private double _test_BeforeScheduledTime;
 
     // --- 타이밍 앵커 ---
     private double _lastBpmChangeDspTime; // 마지막으로 BPM이 변경된 시점의 dspTime
@@ -99,7 +101,7 @@ public class BeatClock : MonoBehaviour
         if (_paused)
         {
             CatchUp();
-            _paused = false;
+            _paused = false;    
         }
 
         double now = AudioSettings.dspTime;
@@ -110,10 +112,12 @@ public class BeatClock : MonoBehaviour
             _tick++;
             OnBeat?.Invoke(_tick);
 
-            // ▼▼▼ 이 코드를 추가해주세요 ▼▼▼
-            Debug.Log($"BeatClock is Ticking! Current Tick: {_tick+1},시간 : {now}");
+            double scheduled = ScheduledTime(_tick); // 이 tick의 '정확한' dsp 예정시각
 
-            phase.SetStageTimerGo();
+            // (변경) phase에 scheduled tick/time을 직접 전달
+            phase.SetStageTimerGoScheduled(_tick, scheduled);
+
+            _test_BeforeScheduledTime = scheduled; // 디버그용: 예정 시간 기준으로 체크
         }
     }
 
@@ -140,4 +144,11 @@ public class BeatClock : MonoBehaviour
 
         _running = true;
     }
+
+    public double GetScheduledDspTimeForTick(long tick)
+    {
+        // 같은 로직을 재사용: last anchor + (tick - anchorTick) * beatInterval
+        return _lastBpmChangeDspTime + (tick - _lastBpmChangeTick) * _beatInterval;
+    }
+
 }
