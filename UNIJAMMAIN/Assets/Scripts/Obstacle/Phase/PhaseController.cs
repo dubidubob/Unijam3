@@ -22,22 +22,35 @@ public class PhaseController : MonoBehaviour
     [SerializeField] Image backGround;
     [SerializeField] Image backGroundGray;
     [SerializeField] ResultUI Scoreboard;
-    [SerializeField] ChapterSO[] chapters;
+    [SerializeField] BeatClock beatClock;
+    [SerializeField] UI_Popup tutorialPopUp;
+    
+    [SerializeField] public ChapterSO[] chapters;
     // TODO : tmp!
     [SerializeField] StartMotionUIs startMotions;
     [SerializeField] SpriteRenderer areaBaseInLine;
     [SerializeField] Image gaugeImage;
-   
+    
 
+  
     public static Action<float> ChangeKey;
     public static Action<bool> TutorialStoped;
-    private int _chapterIdx;
+    public int _chapterIdx;
     private int _lastMonsterHitCnt = 0;
     public float _totalBeat = 0;
     private float _beatCount=0;
     SpawnController spawnController;
+
+    private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
+    private bool isMonsterGoStart = false;
+
+    float beatInterval;
+    float delaySec;
+    float durationSec;
+    
     private void Start()
     {
+        IngameData.IsStart = false;
         spawnController = GetComponent<SpawnController>();
         Scoreboard.gameObject.SetActive(false);
         monsterDatabase.Init();
@@ -52,7 +65,7 @@ public class PhaseController : MonoBehaviour
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
         Debug.Log(_chapterIdx);
-        Managers.Sound.Play(chapters[_chapterIdx].MusicPath, Define.Sound.BGM);
+        
         Debug.Log(chapters[_chapterIdx].MusicPath);
         Color tmpColor = chapters[_chapterIdx].colorPalette;
         tmpColor.a = 0.7f;
@@ -61,58 +74,102 @@ public class PhaseController : MonoBehaviour
         SetStageTimerInitialize();
         StartCoroutine(RunChapter());
     }
-    
+    private void HandleBeatSync(long __)
+    {
+        beatSynced = true;
+        BeatClock.OnBeat -= HandleBeatSync; // 한 번만 실행하고 즉시 구독 해지
+    }
     private IEnumerator RunChapter()
     {
-        SetStageBackGround(); // 배경설정
+        SetStageBackGround();
+        IngameData.IsStart = true;
+
+        // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
+        if (chapters[_chapterIdx].Phases.Count > 0)
+        {
+            var firstPhase = chapters[_chapterIdx].Phases[0];
+            beatInterval = 60.0f / firstPhase.bpm;
+            delaySec = firstPhase.startDelayBeat * beatInterval;
+            durationSec = firstPhase.durationBeat * beatInterval;
+            IngameData.PhaseDurationSec = durationSec;
+
+            IngameData.BeatInterval = 60.0 / firstPhase.bpm;
+            IngameData.ChangeBpm?.Invoke();
+        }
+
+        // 코루틴 내에서 진행될 이벤트의 목표 틱(Beat)을 관리하는 변수
+        long targetTick = 0;
+
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];
             if (!gameEvent.isIn) continue;
 
-            SetTimeScale(gameEvent.timeScale); // 배속에따라 배속 설정
-            
-
-            // 공통 데이터 설정
-            float beatInterval = 60.0f / gameEvent.bpm;
-            float delaySec = gameEvent.startDelayBeat * beatInterval;
             float durationSec = gameEvent.durationBeat * beatInterval;
+            IngameData.PhaseDurationSec = durationSec;  
 
-            IngameData.PhaseDurationSec = durationSec;
-            IngameData.BeatInterval = beatInterval;
+            SetTimeScale(gameEvent.timeScale);
 
+            // --- 1. Delay 구간 처리 ---
+            long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
+
+            // [기존 로직 복원] Delay가 시작되기 전에 필요한 이벤트들을 먼저 호출합니다.
             if (gameEvent is PhaseEvent phaseEvent)
             {
-                // PhaseEvent에 특화된 로직 실행
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
+                // HandleFlipKeyEvent가 delay 시간을 필요로 하므로, 비트 기반으로 다시 계산해줍니다.
+                float delaySec = delayBeats * (float)IngameData.BeatInterval;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
-                yield return new WaitForSeconds(delaySec);
-                SpawnMonsters(phaseEvent);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
+                Managers.Game.CurrentState = GameManager.GameState.Tutorial;
                 if (i == 0)
                     TutorialStoped?.Invoke(true);
-                // TutorialEvent에 특화된 로직 실행
-                Managers.Game.CurrentState = GameManager.GameState.Tutorial;
                 HandleTutorialEvent(tutorialEvent);
-                yield return new WaitForSeconds(delaySec);
+            }
+
+            // 이제 Delay 시간만큼 비트를 누적하고 기다립니다.
+            targetTick += delayBeats;
+            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(delaySec) 대체
+
+            // [기존 로직 복원] Delay가 끝난 직후에 실행되어야 할 로직들을 호출합니다.
+            if (gameEvent is PhaseEvent phaseEventAfterDelay)
+            {
+                Debug.Log($"<color=cyan>PhaseEvent [{i}] Identified! Attempting to spawn monsters. MonsterData count: {phaseEventAfterDelay.MonsterDatas.Count}</color>");
+                SpawnMonsters(phaseEventAfterDelay);
+            }
+            else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
+            {
                 if (i == 0)
                     TutorialStoped?.Invoke(false);
             }
 
-            if (i == 0)
+            // --- 2. Duration 구간 처리 ---
+            long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
+            targetTick += durationBeats;
+            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(durationSec) 대체
+
+            // --- 3. 다음 페이즈 준비 ---
+            if (i + 1 < chapters[_chapterIdx].Phases.Count)
             {
-                yield return StartCoroutine(startMotions.startCountUI.Play123Coroutine());
-                startMotions.playerActionUI.StartMonkAnimAfter123Count();
+                var nextPhase = chapters[_chapterIdx].Phases[i + 1];
+                // 다음 페이즈의 BPM으로 BeatClock을 업데이트하도록 신호를 보냅니다.
+                IngameData.BeatInterval = 60.0 / nextPhase.bpm;
+                beatInterval = 60.0f / nextPhase.bpm;
+                delaySec = nextPhase.startDelayBeat * beatInterval;
+                durationSec = nextPhase.durationBeat * beatInterval;
+                IngameData.PhaseDurationSec = durationSec;
+                IngameData.ChangeBpm?.Invoke();
             }
-            yield return new WaitForSeconds(durationSec);
         }
 
-        yield return new WaitForSeconds((float)IngameData.BeatInterval*2);
+        // 모든 페이즈가 끝난 후, 2비트만큼 여유를 두고 챕터를 종료합니다.
+        targetTick += 2;
+        yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(...) 대체
+
         EndChapter();
     }
-
     private void HandleFlipKeyEvent(PhaseEvent phaseEvent, float delaySec)
     {
         if (phaseEvent.isFlipAD)
@@ -133,8 +190,8 @@ public class PhaseController : MonoBehaviour
     
     private void HandleTutorialEvent(TutorialEvent tutorialEvent)
     {
-        UI_Popup go = Managers.UI.ShowPopUpUI<Tutorial_PopUp>();
-        var tuto = go.GetComponent<Tutorial_PopUp>();
+        tutorialPopUp.gameObject.SetActive(true);
+        var tuto = tutorialPopUp.GetComponent<Tutorial_PopUp>();
         tuto.StartTutorial(tutorialEvent.Steps, _lastMonsterHitCnt);
         _lastMonsterHitCnt = IngameData.PerfectMobCnt + IngameData.GoodMobCnt;
     }
@@ -159,7 +216,12 @@ public class PhaseController : MonoBehaviour
 
         float totalCnt = IngameData.TotalMobCnt;
         float missedInput = IngameData.WrongInputCnt;
-        float total = totalCnt + missedInput;
+        //float total = totalCnt + missedInput;
+
+        // miss 자체에 콤보 단절, HP 감소가 있기 때문에, 일단 분모에 missedInput은 뺏음
+        // 넣는다면, playerState가 Ready 상태일 때 누르는 miss 값들은 분모에 들어가지 않게 해야함.
+
+        float total = totalCnt;
 
         SetStageIndex(_chapterIdx);
 
@@ -196,7 +258,16 @@ public class PhaseController : MonoBehaviour
     {
         _beatCount++;
 
-        // --- 여기에 아래 코드를 추가하세요 ---
+      
+        // 스타트 비트실행
+        if (!isMonsterGoStart)
+        {
+            if (_beatCount == chapters[_chapterIdx].StartBeat)
+            {
+                isMonsterGoStart = true;
+                StartCoroutine(GoStart());
+            }
+        }
 
         // 1. _beatCount와 totalCount를 float으로 변환하여 진행 비율(0.0 ~ 1.0)을 계산합니다.
         // (float)을 붙이지 않으면 정수 나눗셈이 되어 결과가 0 또는 1만 나오게 됩니다.
@@ -207,6 +278,17 @@ public class PhaseController : MonoBehaviour
 
         // (옵션) _beatCount가 totalCount를 넘어가지 않도록 값을 보정해줄 수 있습니다.
         gaugeImage.fillAmount = Mathf.Clamp01(gaugeImage.fillAmount);
+    }
+
+    public IEnumerator GoStart()
+    {
+        beatSynced = false;
+        BeatClock.OnBeat += HandleBeatSync;
+        yield return new WaitUntil(() => beatSynced);
+
+        yield return StartCoroutine(startMotions.startCountUI.Play123Coroutine());
+        startMotions.playerActionUI.StartMonkAnimAfter123Count();
+
     }
     #endregion
 

@@ -25,6 +25,7 @@ public class Knockback
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
 {
+
     private GamePlayDefine.WASDType enemyType;
 
     private Vector3 playerPos = Vector3.zero;
@@ -38,20 +39,26 @@ public class MovingEnemy : MonoBehaviour
     private Vector2 sizeDiffRate;
     public bool isKnockbacked=false;
     private Coroutine _hidingCoroutine;
-   
-    
+
+    // yejun
+    private Define.MonsterType _monsterType;
+
+
     private float movingDistanceTmp;
-    private int attackValue = 1;
+    private int attackValue = 10;
     private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;
+    private float backwardRate = 0.125f; // 기존 0.125f
     private bool isDead = false;
+    Define.MonsterType type;
     private void OnEnable()
     {
         _elapsedTime = 0f;
         knockback = new Knockback();
         isKnockbacked = false;
         isDead = false;
+
 
         // ================== 추가된 초기화 코드 ==================
         // 몬스터 스프라이트의 알파값(투명도)을 원래대로 되돌립니다.
@@ -103,14 +110,32 @@ public class MovingEnemy : MonoBehaviour
 
     public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType,Define.MonsterType monsterType)
     {
+        // yejun
+        this._monsterType = monsterType; // 멤버 변수에 몬스터 타입 저장
+
         movingDistanceTmp = distance;
         this.playerPos = playerPos;
         enemyType = wasdType;
         movingDuration = (float)IngameData.BeatInterval*monster.moveBeat;
         this.sizeDiffRate = sizeDiffRate;
-        backwardDuration = movingDuration * 0.125f;
+        backwardDuration = movingDuration * backwardRate;
         knockbackDistance = distance * 0.125f;
         speed = distance / this.movingDuration;
+        type = monsterType;
+        SettingSprite(type);
+
+        // yejun 몹들의 꼬리부분이 좀 어색해져서, 아래부분은 일단 삭제
+
+        if (wasdType == GamePlayDefine.WASDType.A || wasdType == GamePlayDefine.WASDType.W)
+        {
+            // A 또는 W 타입일 경우, 스프라이트를 좌우로 뒤집습니다.
+            monsterImg.flipX = true;
+        }
+        else
+        {
+            // S 또는 D 타입일 경우, 원래 방향으로 설정합니다.
+            monsterImg.flipX = false;
+        }
 
         SetKnockback(monsterType == Define.MonsterType.Knockback,monsterType);
         SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);
@@ -173,13 +198,7 @@ public class MovingEnemy : MonoBehaviour
             {
                 _hidingCoroutine = StartCoroutine(HidingAnimation(monsterImg));
             }
-
         }
-        else
-        {
-           
-        }
-       
     }
 
 
@@ -284,11 +303,17 @@ public class MovingEnemy : MonoBehaviour
         }
         else if (collision.tag == "dangerLine")
         {
-            if (Managers.Game.attacks[enemyType].Count == 0) return;
 
-            Managers.Game.attacks[enemyType].Dequeue();
-            SetDead();
+            // yejun (첫 피격 몬스터 효과음 들리지 않던 문제 해결)
+
+            // [수정] 몬스터가 dangerLine에 닿으면 무조건 플레이어는 공격받고, 해당 몬스터는 죽습니다.
             Managers.Game.PlayerAttacked(attackValue);
+            SetDead();
+            // 그 후에, 공격 가능 리스트에 다른 몬스터가 있었다면 그것도 놓친 것이므로 제거합니다.
+            if (Managers.Game.attacks[enemyType].Count > 0)
+            {
+                Managers.Game.attacks[enemyType].Dequeue();
+            }
         }
     }
 
@@ -317,9 +342,14 @@ public class MovingEnemy : MonoBehaviour
 
     void AttackedAnimation()    
     {
+        // yejun
+        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(this._monsterType);
+
+
         // TODO: 몬스터 타입에 맞는 피격 스프라이트를 가져오도록 수정해야 할 수 있습니다.
-        Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.WASDDash);
-        orginSprite = monsterImg.sprite;
+        //Sprite attackedSprite = Managers.Game.monster.GetAttackedSprite(Define.MonsterType.WASDDash);
+        //orginSprite = monsterImg.sprite;
+
         if (attackedSprite != null)
         {
             monsterImg.sprite = attackedSprite;
@@ -361,15 +391,17 @@ public class MovingEnemy : MonoBehaviour
     #region Tool
     IEnumerator GarbageClean()
     {
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(30f);
+        Debug.Log("GarbageClean");
         SetDead();
+        
     }
     private void SettingSprite(Define.MonsterType monsterType)
     {
         monsterImg.sprite = Managers.Game.monster.GetSprite(monsterType);
         orginSprite = monsterImg.sprite;
         monsterImg.color = Managers.Game.monster.GetColor(monsterType);
-        Debug.Log(monsterImg.sprite);
+        // Debug.Log(monsterImg.sprite);
     }
     #endregion
 

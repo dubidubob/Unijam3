@@ -8,6 +8,8 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
 
     public Define.MonsterType MonsterType => Define.MonsterType.MouseClick;
     private double _lastSpawnTime;
+
+    private double _pauseStartTime;
     private void Awake()
     {
         LeftOne.SetActive(false);
@@ -49,17 +51,21 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
 
     private IEnumerator DoSpawn(float spawnDuration)
     {
-        var wait = new WaitForSecondsRealtime(spawnDuration);
+        // Time.timeScale의 영향을 받는 WaitForSeconds를 사용해야 Pause가 제대로 동작합니다.
+        var wait = new WaitForSeconds(spawnDuration);
         while (_spawning)
         {
             if (AudioSettings.dspTime > _lastSpawnTime)
-                break;
+            {
+                UnSpawn();
+                yield break;
+            }
 
             ActivateEnemy();
             yield return wait;
         }
-        yield return null;
     }
+
 
     public void ActivateEnemy()
     {
@@ -83,6 +89,22 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     public void PauseForWhile(bool isStop)
     {
         _spawning = !isStop;
+
+        if (isStop)
+        {
+            // Pause 시작 시간 기록
+            _pauseStartTime = AudioSettings.dspTime;
+        }
+        else
+        {
+            // Pause가 풀렸을 때, Pause된 시간만큼 스폰 종료 시간을 뒤로 밀어줌
+            if (_pauseStartTime > 0)
+            {
+                double pausedDuration = AudioSettings.dspTime - _pauseStartTime;
+                _lastSpawnTime += pausedDuration;
+                _pauseStartTime = 0; // 초기화
+            }
+        }
     }
 }
 

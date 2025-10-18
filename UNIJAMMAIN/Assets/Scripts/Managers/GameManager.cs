@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -127,7 +127,7 @@ public class GameManager
         {
             RankUpdate?.Invoke(
                 new RankNode(EvaluateType.Wrong, key, null));
-            DecHealth(10);
+            DecHealth(7);
         }
     }
 
@@ -162,13 +162,13 @@ public class GameManager
         
         if(Combo%10==0)
         {
-            int _healtmp=5;
+            int _healtmp=7;
             if (Combo%20==0)
             {
-                _healtmp = 7;
+                _healtmp = 9;
                 if(Combo%30==0)
                 {
-                    _healtmp = 10;
+                    _healtmp = 12;
                 }
             }
             IncHealth(_healtmp); //체력 회복
@@ -211,10 +211,11 @@ public class GameManager
 
     public void IncHealth(float healValue = 1f)
     {
-        if ((Health <= 0) || (Health > 100))
+        if (Health <= 0 || Health >= MaxHealth)
             return;
 
-        Health += healValue; 
+        Health += healValue;
+        Health = Mathf.Clamp(Health, 0, MaxHealth);
         HealthUpdate?.Invoke(Health);
     }
 
@@ -230,10 +231,13 @@ public class GameManager
 
     private void GameOver()
     {
-        Debug.Log("사망!");
         currentPlayerState = PlayerState.Die;
         actionUI.GameOverAnimation();
         blur.GameOverBlurEffect();
+        blur.WaitForGameOver();
+
+        Managers.Sound.BGMFadeOut();
+
         Time.timeScale = 0;
         
     }

@@ -25,6 +25,8 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     private float _moveBeat;
 
     private int attackValue = 20;
+
+    private double _pauseStartTime;
     private void OnEnable()
     {
         InitialDict();
@@ -75,6 +77,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         _spawning = true;
         _moveBeat = data.moveBeat;
         StartCoroutine(DoSpawn(spawnDuration));
+
     }
     public void UnSpawn()
     {
@@ -84,16 +87,20 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
     private IEnumerator DoSpawn(float spawnDuration)
     {
-        yield return new WaitForSeconds((float)IngameData.BeatInterval*0.5f);
+        yield return new WaitForSeconds((float)IngameData.BeatInterval * 0.5f);
         while (_spawning)
         {
+            // dspTime이 lastSpawnTime을 넘으면 코루틴 종료
             if (AudioSettings.dspTime > _lastSpawnTime)
+            {
+                UnSpawn(); // 확실하게 스폰을 멈추기 위해 UnSpawn 호출
                 yield break;
-            if (!_spawning) continue;
+            }
+
             ActivateEnemy();
-            yield return new WaitForSecondsRealtime(spawnDuration);
+            // Time.timeScale의 영향을 받는 WaitForSeconds를 사용해야 Pause가 제대로 동작합니다.
+            yield return new WaitForSeconds(spawnDuration);
         }
-        yield return null;
     }
 
     int spawnedDiagonalMobCnt = 0;
@@ -146,5 +153,21 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     public void PauseForWhile(bool isStop)
     {
         _spawning = !isStop;
+
+        if (isStop)
+        {
+            // Pause 시작 시간 기록
+            _pauseStartTime = AudioSettings.dspTime;
+        }
+        else
+        {
+            // Pause가 풀렸을 때, Pause된 시간만큼 스폰 종료 시간을 뒤로 밀어줌
+            if (_pauseStartTime > 0)
+            {
+                double pausedDuration = AudioSettings.dspTime - _pauseStartTime;
+                _lastSpawnTime += pausedDuration;
+                _pauseStartTime = 0; // 초기화
+            }
+        }
     }
 }

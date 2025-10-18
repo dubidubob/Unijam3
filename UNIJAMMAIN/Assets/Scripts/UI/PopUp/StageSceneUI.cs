@@ -44,6 +44,8 @@ public class StageSceneUI : UI_Popup
     public TMP_Text stageMainText;
     public TMP_Text stageMainSubText;
     public TMP_Text stageLevelText;
+
+    [SerializeField] GameObject completedObject;
     
 
     
@@ -77,14 +79,16 @@ public class StageSceneUI : UI_Popup
     private void Update()
     {
         // ESC버튼
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // ▼▼▼ 로딩 중이 아닐 때만 ESC 키를 받도록 조건 추가 ▼▼▼
+        if (Input.GetKeyDown(KeyCode.Escape) && !SceneLoadingManager.IsLoading)
         {
             //ToMain으로의 버튼
             ToMainButtonClicked(null);
         }
     }
 
-    private void Awake()
+
+        private void Awake()
     {
         // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
         if (normalTextMaterial != null)
@@ -119,7 +123,15 @@ public class StageSceneUI : UI_Popup
     {
         Init();
         UpdateStageButtons();
-        Managers.Sound.Play("BGM/StageSelect", Define.Sound.BGM);
+
+        var startButton = GetButton((int)Buttons.StartButton);
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(false);
+        }
+
+        // 두 번 호출되므로, (StageScene에서 한 번 이미 호출함) 주석처리함.
+        //Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
 
         // 서울게임타운용
         Managers.Game.GameStage = 7;
@@ -171,6 +183,23 @@ public class StageSceneUI : UI_Popup
                 button.gameObject.AddUIEvent((eventData) => StageButtonClicked(button, stageIndex));
                 AddPointerEvent(button, (eventData) => OnPointerEnter(button), EventTriggerType.PointerEnter);
                 AddPointerEvent(button, (eventData) => OnPointerExit(button), EventTriggerType.PointerExit);
+
+                //Completed 설정
+                IngameData.ChapterIdx = stageIndex-1;
+
+
+                if (IngameData.ChapterRank!=Define.Rank.Unknown)
+                {
+                    // 1. Instantiate 시 부모를 바로 지정해주는 것이 더 안정적입니다.
+                    GameObject obj = Instantiate(completedObject, button.gameObject.transform);
+                    RectTransform rect = obj.GetComponent<RectTransform>();
+
+                    // 2. [핵심] .position 대신 .anchoredPosition을 사용합니다.
+                    rect.anchoredPosition = new Vector2(120, 0);
+
+                    // 3. 부모의 스케일 값에 영향을 받지 않도록 1로 초기화합니다.
+                    rect.localScale = Vector3.one;
+                }
             }
         }
     }
@@ -211,20 +240,23 @@ public class StageSceneUI : UI_Popup
         switch (currentPageLevel)
         {
             case 0:
-                // [Level 0 -> 1] : y좌표 -200으로 이동
-                MoveTo(yPos: -200f);
+                // [Level 0 -> 1] : y좌표 -295으로 이동
+                MoveTo(yPos: -295f);
                 currentPageLevel = 1;
+                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX);
                 break;
 
             case 1:
-                // [Level 1 -> 2] : z축 180도 회전, y좌표 750으로 이동
-                RotateAndMoveTo(zRot: 180f, yPos: 750f);
+                // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
+                RotateAndMoveTo(zRot: 180f, yPos: 892f);
                 currentPageLevel = 2;
+                Managers.Sound.Play("SFX/UI/GoToFinalStage_V1",Define.Sound.SFX, 1f, 3f);
                 break;
 
             case 2:
                 // Level 2가 마지막 레벨이므로 아무 동작 안 함
                 Debug.Log("Already at the top level.");
+                Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
                 break;
         }
     }
@@ -238,31 +270,37 @@ public class StageSceneUI : UI_Popup
             case 0:
                 // Level 0이 최하단 레벨이므로 아무 동작 안 함
                 Debug.Log("Already at the bottom level.");
+                Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
                 break;
 
             case 1:
-                // [Level 1 -> 0] : y좌표 750으로 이동
-                MoveTo(yPos: 750f);
+                // [Level 1 -> 0] : y좌표 892으로 이동
+                MoveTo(yPos: 892f);
                 currentPageLevel = 0;
+                Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 2f);
                 break;
 
             case 2:
-                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -200으로 이동
-                RotateAndMoveTo(zRot: 0f, yPos: -200f);
+                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로 이동
+                RotateAndMoveTo(zRot: 0f, yPos: -295f);
                 currentPageLevel = 1;
+                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 2f);
                 break;
         }
     }
     public void ToMainButtonClicked(PointerEventData eventData)
     {
-        SceneManager.LoadScene("MainTitle");
+        // 여기서도 한 번 더 확인하여 중복 호출을 완벽하게 막습니다.
+        if (SceneLoadingManager.IsLoading) return;
+
+        SceneLoadingManager.Instance.LoadScene("MainTitle");
     }
 
     public void StartButtonClicked(PointerEventData eventData)
     {
         if (_selectedButton != null)
         {
-            Managers.Scene.LoadScene(Define.Scene.StoryScene);
+            SceneLoadingManager.Instance.LoadScene("StoryScene");
         }
         else
         {
@@ -277,7 +315,14 @@ public class StageSceneUI : UI_Popup
             return;
         }
 
+        var startButton = GetButton((int)Buttons.StartButton);
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(true);
+        }
+
         StartButtonAnimation();
+        Managers.Sound.Play("SFX/UI/StageClick_V1", Define.Sound.SFX);
 
         IngameData.ChapterIdx = stageIndex - 1;
         _selectedButton = button;

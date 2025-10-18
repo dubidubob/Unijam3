@@ -1,5 +1,5 @@
 using DG.Tweening;
-using KoreanTyper;                                                  // Add KoreanTyper namespace | ³×ÀÓ ½ºÆäÀÌ½º Ãß°¡
+using KoreanTyper;                                                  // Add KoreanTyper namespace | ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ß°ï¿½
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +9,8 @@ using TMPro;
 
 public class StoryDialog : UI_Popup
 {
+    private bool inputRequested = false;
+    private bool skipAllRequested = false;
     public string musicPath;
     public Sprite backGroundImage;
     public Image backGround;
@@ -38,6 +40,9 @@ public class StoryDialog : UI_Popup
     public GameObject[] rightSDAnimSet;
     public GameObject rightSDCharacter;
     public GameObject GretCanvas;
+
+
+
     private void Awake()
     {
         panelRect = TextPanel.GetComponent<RectTransform>();
@@ -46,6 +51,23 @@ public class StoryDialog : UI_Popup
 
         Managers.Sound.Play(musicPath, Define.Sound.BGM);
         StartCoroutine(FirstInAnimation());
+    }
+
+    private void Update()
+    {
+        // ìŠ¤í˜ì´ìŠ¤ë°”ë‚˜ ì—”í„°í‚¤ê°€ ëˆŒë¦¬ë©´ í”Œë˜ê·¸ë¥¼ trueë¡œ ì„¤ì •
+        // GetKeyDownì€ í•œ í”„ë ˆì„ë§Œ trueì´ë¯€ë¡œ Updateì—ì„œ í™•ì¸í•˜ëŠ”ê²Œ ê°€ì¥ ì •í™•í•©ë‹ˆë‹¤.
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        {
+            inputRequested = true;
+        }
+
+        // Xí‚¤ê°€ ëˆŒë¦¬ë©´ 'ì „ì²´ ìŠ¤í‚µ' ì‹ í˜¸ë“±ì„ ì¼­ë‹ˆë‹¤.
+        if (Input.GetKeyDown(KeyCode.X)) // <<< ì´ ifë¬¸ì„ ì¶”ê°€í•˜ì„¸ìš”
+        {
+            skipAllRequested = true;
+        }
+
     }
 
     private void OnEnable()
@@ -58,43 +80,53 @@ public class StoryDialog : UI_Popup
     public IEnumerator TypingCoroutine()
     {
         panelRect.anchoredPosition = originalPanelPos;
+        skipAllRequested = false; // ì½”ë£¨í‹´ ì‹œì‘ ì‹œ ì´ˆê¸°í™”
 
         for (int idx = 0; idx < scenes.Count; idx++)
         {
-            Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1");
+            // Updateê°€ 'ì „ì²´ ìŠ¤í‚µ' ì‹ í˜¸ë¥¼ ì¼°ëŠ”ì§€ ë§¤ ëŒ€ì‚¬ ì‹œì‘ ì „ì— í™•ì¸í•©ë‹ˆë‹¤.
+            if (skipAllRequested)
+            {
+                goto LoopEnd; // ì¦‰ì‹œ ëŒ€í™” ë£¨í”„ íƒˆì¶œ
+            }
+
+            if (idx > 0)
+            {
+                Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1");
+            }
 
             DialogueScene scene = scenes[idx];
 
             yield return new WaitForSecondsRealtime(scene.preDelay);
 
-            
+
 
             // ======================
-            // 1. Ä³¸¯ÅÍ None Ã³¸®
+            // 1. Ä³ï¿½ï¿½ï¿½ï¿½ None Ã³ï¿½ï¿½
             // ======================
             if (scene.speakingCharacterData == null)
             {
-                // Ä³¸¯ÅÍ ÀÌ¹ÌÁö ¸ğµÎ OFF
+                // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ OFF
                 StandingImage[0].gameObject.SetActive(false);
                 StandingImage[1].gameObject.SetActive(false);
-                // ÆĞ³Î ¿ø·¡ À§Ä¡ (panelPositionOffset ¹«½Ã)
+                // ï¿½Ğ³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ (panelPositionOffset ï¿½ï¿½ï¿½ï¿½)
                 if (panelRect != null)
                     panelRect.anchoredPosition = originalPanelPos;
             }
             else
             {
                 // ======================
-                // 2. ÀÏ¹İ Ä³¸¯ÅÍ Ã³¸®
+                // 2. ï¿½Ï¹ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 // ======================
-                // Ä³¸¯ÅÍ ÀÎµ¦½º None Á¦¿Ü
-              
-                // ¿ŞÂÊ Ä³¸¯ÅÍ Ã³¸®
+                // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ None ï¿½ï¿½ï¿½ï¿½
+
+                // ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 if (scene.showLeftCharacter)
                 {
-                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.CharacterName;
                     StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[0].gameObject.SetActive(true);
-                    //StandingImage[0].SetNativeSize(); // ¿øº»Å©±â·Î ÇÏÁö ¾Ê°í ¿ø·¡ Å©±â·Î ¼³Á¤. ¸¸¾à ¹Ù²Û´Ù¸é ÀÌºÎºĞ ¹Ù²Ùµµ·Ï.
+                    //StandingImage[0].SetNativeSize(); // ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Û´Ù¸ï¿½ ï¿½ÌºÎºï¿½ ï¿½Ù²Ùµï¿½ï¿½ï¿½.
 
                     if (scene.XFlip)
                     {
@@ -118,12 +150,12 @@ public class StoryDialog : UI_Popup
                     }
                     if (scene.isAnger)
                     {
-                        Debug.Log("¿ŞÂÊ»ç¶÷È­³»±â!");
+                        Debug.Log("ï¿½ï¿½ï¿½Ê»ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½!");
                         LeftCharacter.instance.frowningAnim.DORestartById("1");
                     }
                     if (scene.isSurprized)
                     {
-                        Debug.Log("¿ŞÂÊ»ç¶÷³î¶ó±â!");
+                        Debug.Log("ï¿½ï¿½ï¿½Ê»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
                         LeftCharacter.instance.frowningAnim.DORestartById("2");
                     }
                 }
@@ -133,10 +165,10 @@ public class StoryDialog : UI_Popup
                     StandingImage[0].gameObject.SetActive(false);
                 }
 
-                // ¿À¸¥ÂÊ Ä³¸¯ÅÍ Ã³¸®
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 if (scene.showRightCharacter)
                 {
-                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.name;
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.CharacterName;
                     StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
                     //StandingImage[1].SetNativeSize();
@@ -155,7 +187,7 @@ public class StoryDialog : UI_Popup
                     StandingImage[1].gameObject.SetActive(false);
                 }
 
-                // ÆĞ³Î À§Ä¡ (¿ø·¡ À§Ä¡ + ¿ÀÇÁ¼Â)
+                // ï¿½Ğ³ï¿½ ï¿½ï¿½Ä¡ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ + ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
                 if (panelRect != null)
                     panelRect.anchoredPosition = originalPanelPos + scene.panelPositionOffset;
 
@@ -176,62 +208,88 @@ public class StoryDialog : UI_Popup
                     {
                         if (scene.isAnger)
                         {
-                            Debug.Log("¿À¸¥ÂÊ»ç¶÷È­³»±â!");
+                            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Ê»ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½!");
                             RightCharacter.instance.frowningAnim.DORestartById("1");
                         }
                         if (scene.isSurprized)
                         {
-                            Debug.Log("¿À¸¥ÂÊ»ç¶÷³î¶ó±â!");
+                            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Ê»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
                             RightCharacter.instance.surprisedAnim.DORestartById("2");
                         }
                     }
                 }
             }
 
-            // ÅØ½ºÆ® Ç¥½Ã (Å¸ÀÌÇÎ È¿°ú)
+            // ï¿½Ø½ï¿½Æ® Ç¥ï¿½ï¿½ (Å¸ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½)
             TestTexts[idx].gameObject.SetActive(true);
             string full = scene.text;
             int len = full.GetTypingLength();
 
+            inputRequested = false;
+
             for (int i = 0; i <= len; i++)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                // Updateê°€ ì¼œë†“ì€ ì‹ í˜¸ë“±ì„ ë°œê²¬í•˜ë©´ ì¦‰ì‹œ ìŠ¤í‚µ
+                if (inputRequested || skipAllRequested)
                 {
-                    Debug.Log("Space & skip");
-                    TestTexts[idx].text = full; // ÅØ½ºÆ®¸¦ Áï½Ã ÀüÃ¼ ¹®ÀåÀ¸·Î ¼³Á¤
-                    break;                      // Å¸ÀÌÇÎ ·çÇÁ Å»Ãâ
+                    break;
                 }
-
                 TestTexts[idx].text = full.Typing(i);
                 yield return new WaitForSecondsRealtime(0.02f);
+
             }
+
+            // íƒ€ì´í•‘ì´ ëë‚˜ê±°ë‚˜ ìŠ¤í‚µë˜ë©´, í•­ìƒ ì „ì²´ í…ìŠ¤íŠ¸ë¥¼ í™•ì‹¤íˆ í‘œì‹œ
+            TestTexts[idx].text = full;
+
+            // 2. ë‹¤ìŒìœ¼ë¡œ ë„˜ì–´ê°€ê¸° ìœ„í•œ ëŒ€ê¸°
+            inputRequested = false; // ë°©ê¸ˆ ì‚¬ìš©í•œ ìŠ¤í‚µ ì…ë ¥ì„ ì´ˆê¸°í™”
+            yield return null;      // ì…ë ¥ì´ ì¤‘ë³µ ì²˜ë¦¬ë˜ëŠ” ê²ƒì„ ë§‰ê¸° ìœ„í•´ í•œ í”„ë ˆì„ ëŒ€ê¸°
+
+            // ìƒˆë¡œìš´ ì…ë ¥ì´ ë“¤ì–´ì˜¬ ë•Œê¹Œì§€ ê³„ì† ëŒ€ê¸°
+            while (!inputRequested && !skipAllRequested)
+            {
+                yield return null;
+            }
+
+            // ë§Œì•½ Xí‚¤ ë•Œë¬¸ì— ë£¨í”„ë¥¼ íƒˆì¶œí–ˆë‹¤ë©´, ì¦‰ì‹œ ì „ì²´ ëŒ€í™” ë£¨í”„ë¥¼ ëëƒ…ë‹ˆë‹¤.
+            if (skipAllRequested)
+            {
+                goto LoopEnd;
+            }
+
+
+
 
             if (scene.leftSDAnim || scene.rightSDAnim)
             {
-                if (scene.requiredKey == KeyCode.None)
-                {
-                    while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
-                    {
-                        TestTexts[idx].text = full;
-                        yield return null;
-                    }
+                //if (scene.requiredKey == KeyCode.None)
+                //{
+                //    while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
+                //    {
+                //        TestTexts[idx].text = full;
+                //        yield return null;
+                //    }
 
-                }
-                else
-                {
-                    while (!Input.GetKeyDown(scene.requiredKey))
-                    {
-                        TestTexts[idx].text = full;
-                        yield return null;
-                    }
-                }
+                //}
+                //else
+                //{
+                //    while (!Input.GetKeyDown(scene.requiredKey))
+                //    {
+                //        TestTexts[idx].text = full;
+                //        yield return null;
+                //    }
+                //}
 
-                // ÀÔ·Â¹ŞÀ¸¸é TextPanel ²ô±â
-                if (TextPanel != null)
+                // ï¿½Ô·Â¹ï¿½ï¿½ï¿½ï¿½ï¿½ TextPanel ï¿½ï¿½ï¿½ï¿½
+                if (idx < scenes.Count - 1)
                 {
-                    TextPanel.SetActive(false);
-                    StandingImage[0].gameObject.SetActive(false);
-                    StandingImage[1].gameObject.SetActive(false);
+                    if (TextPanel != null)
+                    {
+                        TextPanel.SetActive(false);
+                        StandingImage[0].gameObject.SetActive(false);
+                        StandingImage[1].gameObject.SetActive(false);
+                    }
                 }
 
                 if (scene.leftSDAnim)
@@ -266,96 +324,102 @@ public class StoryDialog : UI_Popup
                 yield return new WaitForSecondsRealtime(1.5f);
                 if (scene.leftSDAnim) KongCanvas.SetActive(true);
                 if (scene.rightSDAnim) GretCanvas.SetActive(true);
-                bool panelTurnedOn = false;
-                while (!panelTurnedOn)
-                {
-                
-                    // ¸¶¿ì½º ¾Æ¹« ¹öÆ° Å¬¸¯ ½Ã
-                    if (Input.GetMouseButtonDown(0))
-                    {
+                //bool panelTurnedOn = false;
+                //while (!panelTurnedOn)
+                //{
+
+                //    // ï¿½ï¿½ï¿½ì½º ï¿½Æ¹ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½
+                //    if (Input.GetMouseButtonDown(0))
+                //    {
 
 
-                        if (KongCanvas != null) KongCanvas.SetActive(false);
-                        if (GretCanvas != null) GretCanvas.SetActive(false);
-                        if (scene.leftSDAnim)
-                        {
-                            foreach (var obj in leftSDAnimSet)
-                                if (obj != null) obj.SetActive(false);
-                            var leftAnim = leftSDCharacter.GetComponent<DOTweenAnimation>();
-                            var leftSR = leftSDCharacter.GetComponent<SpriteRenderer>();
-                            leftAnim.DOPlayBackwards();
-                            leftSR.sortingOrder = -3;
-                        }
-                        if (scene.rightSDAnim)
-                        {
-                            foreach (var obj in rightSDAnimSet)
-                                if (obj != null) obj.SetActive(false);
-                            var rightAnim = rightSDCharacter.GetComponent<DOTweenAnimation>();
-                            var rightSR = rightSDCharacter.GetComponent<SpriteRenderer>();
-                            rightAnim.DOPlayBackwards();
-                            rightSR.sortingOrder = -3;
-                        }
+                //        if (KongCanvas != null) KongCanvas.SetActive(false);
+                //        if (GretCanvas != null) GretCanvas.SetActive(false);
+                //        if (scene.leftSDAnim)
+                //        {
+                //            foreach (var obj in leftSDAnimSet)
+                //                if (obj != null) obj.SetActive(false);
+                //            var leftAnim = leftSDCharacter.GetComponent<DOTweenAnimation>();
+                //            var leftSR = leftSDCharacter.GetComponent<SpriteRenderer>();
+                //            leftAnim.DOPlayBackwards();
+                //            leftSR.sortingOrder = -3;
+                //        }
+                //        if (scene.rightSDAnim)
+                //        {
+                //            foreach (var obj in rightSDAnimSet)
+                //                if (obj != null) obj.SetActive(false);
+                //            var rightAnim = rightSDCharacter.GetComponent<DOTweenAnimation>();
+                //            var rightSR = rightSDCharacter.GetComponent<SpriteRenderer>();
+                //            rightAnim.DOPlayBackwards();
+                //            rightSR.sortingOrder = -3;
+                //        }
 
 
-                        if (TextPanel != null)
-                            TextPanel.SetActive(true);
+                //        if (TextPanel != null)
+                //            TextPanel.SetActive(true);
 
-                        panelTurnedOn = true;
-                    }
-                    yield return null;
-                }
+                //        panelTurnedOn = true;
+                //    }
+                //    yield return null;
+                //}
 
-                // ¹Ù·Î ´ÙÀ½ ´ë»ç·Î!
+                // ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!
                 continue;
             }
 
 
-            if (scene.requiredKey == KeyCode.None)
+            //if (scene.requiredKey == KeyCode.None)
+            //{
+            //    while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
+            //    {
+            //        if (Input.GetKeyDown(KeyCode.X))
+            //        {
+            //            goto LoopEnd;
+            //        }
+
+
+            //        TestTexts[idx].text = full;
+            //        yield return null;
+            //    }
+
+            //}
+            //else
+            //{
+            //    while (!Input.GetKeyDown(scene.requiredKey))
+            //    {
+            //        TestTexts[idx].text = full;
+            //        yield return null;
+            //    }
+            //}
+            if (idx < scenes.Count - 1)
             {
-                while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
+                if (TextPanel != null)
                 {
-                    if (Input.GetKeyDown(KeyCode.X))
-                    {
-                        goto LoopEnd;
-                    }
-
-
-                    TestTexts[idx].text = full;
-                    yield return null;
+                    TextPanel.SetActive(false);
+                    StandingImage[0].gameObject.SetActive(false);
+                    StandingImage[1].gameObject.SetActive(false);
                 }
 
-            }
-            else
-            {
-                while (!Input.GetKeyDown(scene.requiredKey))
+                // ì‹œê°„ ì¡°ì ˆ ê´€ë ¨ ì½”ë“œë„ ì´ ì•ˆìœ¼ë¡œ í•¨ê»˜ ì˜®ê¸°ëŠ” ê²ƒì´ ì•ˆì „í•©ë‹ˆë‹¤.
+                Time.timeScale = 1f;
+                float startTime = Time.unscaledTime;
+                float targetDuration = scene.goingTimeAmount;
+                float elapsed = 0f;
+                while (elapsed < targetDuration)
                 {
-                    TestTexts[idx].text = full;
+                    elapsed = Time.unscaledTime - startTime;
                     yield return null;
                 }
-            }
-            if (TextPanel != null)
-            {
-                TextPanel.SetActive(false);
-                StandingImage[0].gameObject.SetActive(false);
-                StandingImage[1].gameObject.SetActive(false);
+                Time.timeScale = 0f;
+                TextPanel.SetActive(true);
             }
 
-            Time.timeScale = 1f;
-            float startTime = Time.unscaledTime;
-            float targetDuration = scene.goingTimeAmount;
-            float elapsed = 0f;
-            while (elapsed < targetDuration)
-            {
-                elapsed = Time.unscaledTime - startTime;
-                yield return null;
-            }
-            Time.timeScale = 0f;
-            TextPanel.SetActive(true);
             continue;
         }
 
+
         LoopEnd:
-        // DiaLogue³¡
+        // DiaLogueï¿½ï¿½
         StartCoroutine(LastOutAnimation());
 
 
@@ -364,7 +428,8 @@ public class StoryDialog : UI_Popup
 
     private void SceneMoving()
     {
-        Managers.Scene.LoadScene(Define.Scene.GamePlayScene);
+        SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+        Managers.Sound.BGMFadeOut();
     }
 
     #region Enimation
@@ -375,7 +440,7 @@ public class StoryDialog : UI_Popup
         canvasGroup = contents.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0;
         yield return new WaitForSecondsRealtime(0.4f);
-        // 1ÃÊ¿¡ °ÉÃÄ alpha 1·Î º¯°æ
+        // 1ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ alpha 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         canvasGroup.DOFade(1f, 0.6f).SetUpdate(true);
     }
 
@@ -385,7 +450,7 @@ public class StoryDialog : UI_Popup
         canvasGroup = contents.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 1;
         yield return new WaitForSecondsRealtime(0.4f);
-        // 1ÃÊ¿¡ °ÉÃÄ alpha 1·Î º¯°æ
+        // 1ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ alpha 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
 
         yield return new WaitForSecondsRealtime(0.6f);

@@ -29,17 +29,34 @@ public class SpawnController : MonoBehaviour
 
     public void SpawnMonsterInPhase(IReadOnlyList<MonsterData> monsterDatas)
     {
+        Debug.Log($"<color=yellow>SpawnController: Received spawn request! Monster count in list: {monsterDatas.Count}</color>");
+        if (monsterDatas == null || monsterDatas.Count == 0)
+        {
+            Debug.LogError("SpawnController: MonsterDatas is NULL or EMPTY! Cannot spawn.");
+            return;
+        }
         StopMonsterInPhase();
         
         foreach (var m in monsterDatas)
         {
             if (!m.isIn) continue;
+            Debug.Log($"Processing monster type: {m.monsterType}");
             if (_spawnerMap.TryGetValue(m.monsterType, out var spawner))
             {
                 spawner.Spawn(m);
             }
             else 
             {
+
+                if (!_spawnerMap.ContainsKey(Define.MonsterType.WASD))
+                {
+                    Debug.LogError($"CRITICAL: Trying to use WASD spawner, but it's not registered in the _spawnerMap!");
+                }
+                else
+                {
+                    _spawnerMap[Define.MonsterType.WASD].Spawn(m);
+                }
+
                 if (m.monsterType == Define.MonsterType.Knockback)
                 {
                     _spawnerMap[Define.MonsterType.WASD].Spawn(m);

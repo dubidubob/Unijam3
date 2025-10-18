@@ -9,8 +9,8 @@ public class InGameOption_PopUp : UI_Popup
     // 버튼들을 enum으로 관리하여 가독성과 유지보수성을 높입니다.
     enum Buttons
     {
-        BGM,
-        SFX,
+        BGMUp,
+        SFXUp,
         ReStart,
         Out,
         Continues
@@ -26,8 +26,8 @@ public class InGameOption_PopUp : UI_Popup
         Bind<Button>(typeof(Buttons));
 
         // 각 버튼에 클릭 이벤트를 등록합니다.
-        GetButton((int)Buttons.BGM).gameObject.AddUIEvent(BGMButtonClicked);
-        GetButton((int)Buttons.SFX).gameObject.AddUIEvent(SFXButtonClicked);
+        GetButton((int)Buttons.BGMUp).gameObject.AddUIEvent(BGMButtonClicked);
+        GetButton((int)Buttons.SFXUp).gameObject.AddUIEvent(SFXButtonClicked);
         GetButton((int)Buttons.ReStart).gameObject.AddUIEvent(ReStartButtonClicked);
         GetButton((int)Buttons.Out).gameObject.AddUIEvent(OutButtonClicked);
         GetButton((int)Buttons.Continues).gameObject.AddUIEvent(ContinuesButtonClicked);
@@ -80,7 +80,7 @@ public class InGameOption_PopUp : UI_Popup
         PauseManager.ControlTime(false);
         Managers.Sound.StopBGM();
         Managers.Clear();
-        SceneManager.LoadScene("StageScene");
+        SceneLoadingManager.Instance.LoadScene("StageScene");
         ClosePopUPUI();
     }
 

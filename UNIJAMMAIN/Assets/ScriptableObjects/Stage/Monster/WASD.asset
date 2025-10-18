@@ -15,22 +15,22 @@ MonoBehaviour:
   dyingEffectSprite: {fileID: 21300000, guid: b796957494ff1ea43beaa30a65578d9c, type: 3}
   monsters:
   - monsterType: 0
-    color: {r: 0, g: 0, b: 0, a: 1}
-    sprite: {fileID: 21300000, guid: 76affc7d52279f34eaa48e9c8b2b36dc, type: 3}
-    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: 51fa2d235fb83bc49b730ecfe543fe89, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 7d84970aded513d46a6263e36a3f1e1f, type: 3}
   - monsterType: 2
     color: {r: 1, g: 1, b: 1, a: 1}
-    sprite: {fileID: 21300000, guid: 905165c0ada52fc498da642af70b9af4, type: 3}
-    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
+    sprite: {fileID: 21300000, guid: 4edaed5008dc6a944b9dcbe8ee5cadd7, type: 3}
+    attackedSprite: {fileID: 21300000, guid: da85e0c1abdad9c4bb44bd8659b3c88d, type: 3}
   - monsterType: 4
-    color: {r: 1, g: 0, b: 0, a: 1}
-    sprite: {fileID: 21300000, guid: 16e324ba8e7924f4a904716827e3972d, type: 3}
-    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: 51fa2d235fb83bc49b730ecfe543fe89, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 7d84970aded513d46a6263e36a3f1e1f, type: 3}
   - monsterType: 5
     color: {r: 1, g: 1, b: 1, a: 1}
     sprite: {fileID: 21300000, guid: 16e324ba8e7924f4a904716827e3972d, type: 3}
-    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 29f2ff3607fa55143b08e79a699eb907, type: 3}
   - monsterType: 6
     color: {r: 1, g: 1, b: 1, a: 1}
     sprite: {fileID: 21300000, guid: f0f5d35cf87e9e644815d0cdf430835c, type: 3}
-    attackedSprite: {fileID: 21300000, guid: 44fe8b4ae32a937419baadbf59e7def5, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 504069912f1a3b24c864ceb3e576bbc2, type: 3}

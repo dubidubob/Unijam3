@@ -16,13 +16,13 @@ public class MainTitle : BaseScene
     {
         Init();
         Managers.UI.ShowPopUpUI<MainScene>();
-        Managers.Sound.Play("BGM/MainScene_V1", Define.Sound.BGM);
-        //Managers.UI.ShowPopUpUI<GameOver>();
+        Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
 
     }
 
     public void IsStart()
     {
-        Managers.Scene.LoadScene(Define.Scene.TitleScene);
+        Managers.Sound.Play("SFX/UI/PressToStart_V1", Define.Sound.SFX);
+        SceneLoadingManager.Instance.LoadScene("TitleScene");
     }
 }

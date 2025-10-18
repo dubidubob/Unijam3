@@ -32,10 +32,24 @@ public class StaticCoroutine : MonoBehaviour
     }
 
     /// <summary>
+    /// Stop static coroutine.
+    /// </summary>
+    /// <param name="coroutine">The coroutine to stop.</param>
+    public static void StopStaticCoroutine(Coroutine coroutine)
+    {
+        if (coroutine != null && instance != null)
+        {
+            instance.StopCoroutine(coroutine);
+        }
+    }
+
+
+    /// <summary>
     /// Start static coroutine.
     /// </summary>
     /// <param name="enumerator"></param>
     /// <returns></returns>
+    /// 
     public static Coroutine StartStaticCoroutine(IEnumerator enumerator)
     {
         return instance.StartProcess(enumerator);

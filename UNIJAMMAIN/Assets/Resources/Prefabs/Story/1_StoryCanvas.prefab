@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abb08d98b7729d49a18635cc686401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPath: BGM/Chapter1_V1
+  musicPath: BGM/Chapter1_V3
   backGroundImage: {fileID: 21300000, guid: c1c29fc23cb312d42980869ac03d64ee, type: 3}
   backGround: {fileID: 254214695072831105}
   TestTexts:
@@ -560,7 +560,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 3705865dc6de2e54e86d8b42c233ba3d, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 958517d2caa0fa24fb7c08e3cdc96c71, type: 2}
     isFirstAppearance: 0
     text: "\uB124\uB188 \uB610\uD55C \uC774 \uC138\uC0C1\uC758 \uC77C\uBD80\uAC00
       \uB420 \uAC83\uC774\uB2E4."

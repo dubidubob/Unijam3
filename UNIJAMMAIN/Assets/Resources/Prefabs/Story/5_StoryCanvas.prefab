@@ -203,7 +203,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -134.74066, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -402,10 +402,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abb08d98b7729d49a18635cc686401f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPath: BGM/Chapter4_V1
+  musicPath: BGM/Chapter5_V2
   backGroundImage: {fileID: 21300000, guid: a58bba2bf18f5934c896e08b9d4cc890, type: 3}
   backGround: {fileID: 3915714648696650980}
   TestTexts:
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
   - {fileID: 587098028343102862}
   StandingImage:
   - {fileID: 4050828568703129866}
@@ -431,8 +439,63 @@ MonoBehaviour:
   scenes:
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
-    text: "\uD604\uC7AC \uAC1C\uBC1C \uC911\uC5D0 \uC788\uC2B5\uB2C8\uB2E4. \uD50C\uB808\uC774\uD574
-      \uC8FC\uC154\uC11C \uAC10\uC0AC\uB4DC\uB9BD\uB2C8\uB2E4!"
+    text: "\uB9C8\uCE68\uB0B4 \uB3C4\uCC29\uD55C \uCC9C\uC0C1\uC758 \uBB38\uD131.
+      \uD558\uC9C0\uB9CC \uBB38 \uC55E\uC740 \uC140 \uC218 \uC5C6\uC774 \uB9CE\uC740
+      \uC545\uB839\uB4E4\uC774 \uAC00\uB85C\uB9C9\uACE0 \uC788\uC5C8\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+    isFirstAppearance: 0
+    text: "\uC5EC\uAE30\uAE4C\uC9C0 \uC6A9\uCF00 \uC654\uAD6C\uB098, \uC624\uB9CC\uD55C
+      \uC218\uD589\uC790\uC5EC. \uB124 \uB048\uC9C8\uAE40\uC740 \uCE6D\uCC2C\uD574\uC8FC\uB9C8."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "\uAE38\uC744 \uBE44\uCF1C\uB77C. \uB124\uB188\uB4E4 \uB530\uC704 \uBAA8\uB450
+      \uC0C1\uB300\uD574\uC8FC\uACE0, \uBD80\uCC98\uB2D8\uC744 \uBD48\uC5B4\uC57C\uACA0\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 1
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "\uC2A4\uC2B9\uB2D8\uC744 \uC7A0\uC2DD\uD558\uACE0, \uC138\uC0C1\uC744
+      \uC5B4\uC9C0\uB7FD\uD788\uB294 \uB124\uB188\uB4E4\uC5D0\uAC8C \uBD80\uB514.."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0
@@ -440,6 +503,98 @@ MonoBehaviour:
     showLeftCharacter: 1
     showRightCharacter: 0
     isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+    isFirstAppearance: 0
+    text: "\uB124 \uC2A4\uC2B9? \uADF8\uB294 \uC2A4\uC2A4\uB85C \uADF8 \uAE38\uC744
+      \uD0DD\uD588\uB2E4! \uADF8\uB188\uC758 \uC81C\uC790\uC778 \uB124\uB3C4 \uC548\uD0C0\uAE5D\uAE30
+      \uADF8\uC9C0\uC5C6\uAD6C\uB098."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "...\uC2A4\uC2B9\uB2D8\uC758 \uC9C4\uC2E4\uC774 \uBB34\uC5C7\uC774\uB4E0,
+      \uB0B4\uAC00 \uBAA8\uB450 \uAC00\uC838\uAC00\uC57C \uD560 \uC5C5\uBCF4\uC77C
+      \uBFD0\uC774\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 24cc31d9d80b98d4892faf99519c6150, type: 2}
+    isFirstAppearance: 0
+    text: "\uAC74\uBC29\uC9C4! \uB124\uB188\uC758 \uC6B4\uBA85\uB3C4, \uADF8 \uC5B4\uB9AC\uC11D\uC740
+      \uC2E0\uB150\uB3C4 \uB05D\uC744 \uBCF4\uC5EC\uC8FC\uC9C0."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 1
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: "\uADF8\uB807\uAE30\uC5D0, \uC774 \uBB38\uC744 \uB354\uB7FD\uD788\uB294
+      \uB108\uD76C\uB97C \uB0B4\uAC00 \uC6A9\uC11C\uD560 \uC218 \uC5C6\uAD6C\uB098."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+  - speakingCharacterData: {fileID: 11400000, guid: 24cc31d9d80b98d4892faf99519c6150, type: 2}
+    isFirstAppearance: 0
+    text: "\uB124 \uC544\uB07C\uB294 \uC2A4\uC2B9\uB2D8 \uACC1\uC73C\uB85C \uD6C4\uD68C\uC5C6\uAC8C
+      \uBCF4\uB0B4\uC8FC\uC9C0."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 1
     isSurprized: 0
     leftSDAnim: 0
     rightSDAnim: 0
@@ -1148,7 +1303,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6791183905692446785}
-  m_LocalRotation: {x: -0, y: -0, z: 0.0047580004, w: -0.9999887}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1156,7 +1311,7 @@ RectTransform:
   - {fileID: 5268055357457332049}
   - {fileID: 2021895989036286336}
   m_Father: {fileID: 2880116875402160406}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.545}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1418,8 +1573,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.292695, y: -400}
-  m_SizeDelta: {x: 941.9282, y: 215.7888}
+  m_AnchoredPosition: {x: -86.92807, y: -400}
+  m_SizeDelta: {x: 790.6575, y: 215.7888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8305475372916593186
 CanvasRenderer:
