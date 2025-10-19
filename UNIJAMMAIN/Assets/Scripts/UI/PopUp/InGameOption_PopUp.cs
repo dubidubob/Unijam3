@@ -62,6 +62,7 @@ public class InGameOption_PopUp : UI_Popup
         // 팝업을 닫고, 게임 시간을 재개한 후, 현재 씬을 다시 로드합니다.
         PauseManager.ControlTime(true);
         Managers.Sound.StopBGM();
+        Managers.Clear();
         SceneManager.LoadScene("GamePlayScene");
     }
 

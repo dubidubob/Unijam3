@@ -81,6 +81,7 @@ public class BlurController : MonoBehaviour
     public void ComboEffectOn()
     {
         IsComboEffectOn = true;
+        PlayComboEffect();
     }
     #endregion
 
@@ -319,5 +320,85 @@ public class BlurController : MonoBehaviour
             Managers.Sound.Play("SFX/Damaged/Hurt2_V1");
         }
     }
+    #endregion
+
+
+
+    #region ComboEffect
+
+    // [개선] 이미지를 배열로 관리합니다. 인스펙터에서 원하는 만큼 추가할 수 있습니다.
+    [Header("반짝일 이미지들")]
+    public Image[] shiningImages;
+
+    [Header("사용할 스프라이트들")]
+    public Sprite[] comboShiningSprites;
+
+    private Coroutine _comboAnimationCoroutine;
+
+    [Tooltip("애니메이션의 프레임 간 시간 (초)")]
+    [SerializeField] private float animationFrameDelay = 0.08f;
+
+    public void PlayComboEffect()
+    {
+        if (shiningImages == null || shiningImages.Length == 0 || comboShiningSprites == null || comboShiningSprites.Length == 0)
+        {
+            Debug.LogWarning("콤보 이펙트 설정이 누락되었습니다.");
+            return;
+        }
+
+        // [개선] 배열을 순회하며 모든 이미지를 활성화
+        foreach (Image img in shiningImages)
+        {
+            if (img != null) img.gameObject.SetActive(true);
+        }
+
+        if (_comboAnimationCoroutine != null)
+        {
+            StopCoroutine(_comboAnimationCoroutine);
+        }
+
+        _comboAnimationCoroutine = StartCoroutine(AnimateComboShine());
+    }
+
+    public void StopComboEffect()
+    {
+        if (_comboAnimationCoroutine != null)
+        {
+            StopCoroutine(_comboAnimationCoroutine);
+            _comboAnimationCoroutine = null;
+        }
+
+        // [개선] 배열을 순회하며 모든 이미지를 비활성화
+        if (shiningImages != null)
+        {
+            foreach (Image img in shiningImages)
+            {
+                if (img != null) img.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// [개선]
+    /// 실제 애니메이션을 처리하는 코루틴 (배열 사용)
+    /// </summary>
+    private IEnumerator AnimateComboShine()
+    {
+        while (true)
+        {
+            // [개선] 배열의 모든 이미지를 순회하며 각각 무작위 스프라이트 할당
+            foreach (Image img in shiningImages)
+            {
+                if (img != null)
+                {
+                    int randomIndex = Random.Range(0, comboShiningSprites.Length);
+                    img.sprite = comboShiningSprites[randomIndex];
+                }
+            }
+
+            yield return new WaitForSeconds(animationFrameDelay);
+        }
+    }
+
     #endregion
 }
