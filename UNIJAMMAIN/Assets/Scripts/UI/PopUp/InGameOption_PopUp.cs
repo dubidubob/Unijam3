@@ -60,9 +60,9 @@ public class InGameOption_PopUp : UI_Popup
     public void ReStartButtonClicked(PointerEventData eventData)
     {
         // 팝업을 닫고, 게임 시간을 재개한 후, 현재 씬을 다시 로드합니다.
-       
-
-        SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+        PauseManager.ControlTime(true);
+        Managers.Sound.StopBGM();
+        SceneManager.LoadScene("GamePlayScene");
     }
 
     // Out (게임 종료/메인 화면) 버튼 클릭 시 호출
@@ -71,9 +71,9 @@ public class InGameOption_PopUp : UI_Popup
         // 팝업을 닫고, 게임 시간을 재개한 후, 'StageScene'으로 이동합니다.
         main.isPopUp = false;
        
-        PauseManager.ControlTime(false);
+        PauseManager.ControlTime(true);
         Managers.Sound.StopBGM();
-        Managers.Clear();
+
         SceneLoadingManager.Instance.LoadScene("StageScene");
     }
 

@@ -63,6 +63,7 @@ public class MainGame : BaseScene
 
     private void Awake()
     {
+        PauseManager.ControlTime(false);
         Init();
         Managers.Init();
     }
