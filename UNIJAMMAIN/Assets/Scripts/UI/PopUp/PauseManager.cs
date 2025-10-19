@@ -4,6 +4,10 @@ using UnityEngine;
 public class PauseManager 
 {
     public static Action<bool> IsPaused;
+    /// <summary>
+    /// true ¸é ¸ØÃã, false¸é Àç»ý
+    /// </summary>
+    /// <param name="isStop"></param>
     public static void ControlTime(bool isStop)
     {
         Managers.Sound.PauseBGM(isStop);

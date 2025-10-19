@@ -87,8 +87,7 @@ public class GameManager
         {
             CurrentState = GameState.Stage;
         }
-            
-        Time.timeScale = 1f;
+        PauseManager.ControlTime(false);
     }
 
     bool isADReverse = false;
