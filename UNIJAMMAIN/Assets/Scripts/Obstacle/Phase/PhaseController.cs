@@ -106,7 +106,7 @@ public class PhaseController : MonoBehaviour
             if (!gameEvent.isIn) continue;
 
             float durationSec = gameEvent.durationBeat * beatInterval;
-            IngameData.PhaseDurationSec = durationSec;  
+            IngameData.PhaseDurationSec = durationSec;
 
             SetTimeScale(gameEvent.timeScale);
 
@@ -155,12 +155,16 @@ public class PhaseController : MonoBehaviour
             {
                 var nextPhase = chapters[_chapterIdx].Phases[i + 1];
                 // 다음 페이즈의 BPM으로 BeatClock을 업데이트하도록 신호를 보냅니다.
-                IngameData.BeatInterval = 60.0 / nextPhase.bpm;
-                beatInterval = 60.0f / nextPhase.bpm;
-                delaySec = nextPhase.startDelayBeat * beatInterval;
-                durationSec = nextPhase.durationBeat * beatInterval;
-                IngameData.PhaseDurationSec = durationSec;
-                IngameData.ChangeBpm?.Invoke();
+                if(!(nextPhase.bpm==chapters[_chapterIdx].Phases[i].bpm))
+                {
+                    IngameData.BeatInterval = 60.0 / nextPhase.bpm;
+                    beatInterval = 60.0f / nextPhase.bpm;
+                    delaySec = nextPhase.startDelayBeat * beatInterval;
+                    durationSec = nextPhase.durationBeat * beatInterval;
+                    IngameData.PhaseDurationSec = durationSec;
+                    IngameData.ChangeBpm?.Invoke();
+                }
+             
             }
         }
 
@@ -256,29 +260,13 @@ public class PhaseController : MonoBehaviour
     }
     public void SetStageTimerGo()
     {
-        _beatCount++;
-
-      
-        // 스타트 비트실행
-        if (!isMonsterGoStart)
-        {
-            if (_beatCount == chapters[_chapterIdx].StartBeat)
-            {
-                isMonsterGoStart = true;
-                StartCoroutine(GoStart());
-            }
-        }
-
-        // 1. _beatCount와 totalCount를 float으로 변환하여 진행 비율(0.0 ~ 1.0)을 계산합니다.
-        // (float)을 붙이지 않으면 정수 나눗셈이 되어 결과가 0 또는 1만 나오게 됩니다.
-        float progress = (float)_beatCount / _totalBeat;
-
-        // 2. 1에서 진행 비율을 빼서 값을 뒤집어 줍니다. (1.0 -> 0.0)
-        gaugeImage.fillAmount = 1.0f - progress;
-
-        // (옵션) _beatCount가 totalCount를 넘어가지 않도록 값을 보정해줄 수 있습니다.
-        gaugeImage.fillAmount = Mathf.Clamp01(gaugeImage.fillAmount);
+        // 호환성 유지: BeatClock이 아직 인자로 안 준다면 기존 동작을 하게 함
+        // (이 경우는 단순히 1틱으로 처리)
+        double now = AudioSettings.dspTime;
+        long inferredTick = _lastScheduledTick >= 0 ? _lastScheduledTick + 1 : (_lastScheduledTick = 1);
+        SetStageTimerGoScheduled(inferredTick, now);
     }
+
 
     public IEnumerator GoStart()
     {
@@ -315,6 +303,50 @@ public class PhaseController : MonoBehaviour
         monsters[0] = monster;
     }
 
-    
+
+    // 추가한 필드: scheduled 기반 타이밍 추적용
+    private double _lastScheduledDspTime = double.NaN;
+    private long _lastScheduledTick = -1;
+
+    public void SetStageTimerGoScheduled(long scheduledTick, double scheduledDspTime)
+    {
+        // 1) 몇 틱이 지났는지 계산
+        long deltaTicks;
+        if (_lastScheduledTick >= 0)
+        {
+            deltaTicks = scheduledTick - _lastScheduledTick;
+            if (deltaTicks < 1) deltaTicks = 1; // 최소 1틱은 진행된 것으로 간주
+        }
+        else
+        {
+            // 첫 호출: scheduledTick 자체를 기준으로 삼아 증분을 계산하거나 1로 처리
+            // 만약 scheduledTick==0이라면 1로 올리기
+            deltaTicks = Math.Max(1, scheduledTick);
+        }
+
+        // 2) 업데이트 (가볍게)
+        _beatCount += deltaTicks;
+        _lastScheduledTick = scheduledTick;
+        _lastScheduledDspTime = scheduledDspTime;
+
+        // 3) 기존 SetStageTimerGo의 내부 로직(스타트判定, 게이지 등)을 그대로 적용하되
+        // deltaTicks > 1인 경우에도 적절히 처리하도록 함.
+        // 스타트 비트 실행
+        if (!isMonsterGoStart && _beatCount >= chapters[_chapterIdx].StartBeat)
+        {
+            isMonsterGoStart = true;
+            StartCoroutine(GoStart());
+        }
+
+        // 진행도 계산 (gauge)
+        float progress = (float)_beatCount / _totalBeat;
+        gaugeImage.fillAmount = 1.0f - progress;
+        gaugeImage.fillAmount = Mathf.Clamp01(gaugeImage.fillAmount);
+
+        // (선택) 필요하면 여기서 다른 lightweight 콜백 호출
+        // e.g. ChangeKey?.Invoke(...) 같은 것들이 있다면 아주 가볍게 호출 가능
+    }
+
+
     #endregion
 }
