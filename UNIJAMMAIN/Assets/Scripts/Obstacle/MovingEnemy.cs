@@ -267,7 +267,7 @@ public class MovingEnemy : MonoBehaviour
         if (_elapsedTime <= movingDuration && isResizeable)
         {
             PerspectiveResize(_elapsedTime);
-            _elapsedTime += Time.fixedDeltaTime;
+            _elapsedTime += Time.deltaTime;
         }
         Move();
     }
@@ -276,7 +276,7 @@ public class MovingEnemy : MonoBehaviour
     {
         if (isKnockbackActive) return;
         if (isDead) return;
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.fixedDeltaTime);
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
 

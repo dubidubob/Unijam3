@@ -58,12 +58,7 @@ public class Tutorial_PopUp : UI_Popup
 
             // 팝업 나타났다 사라짐
             yield return StartCoroutine(SmoothyPopUp(true));
-
-            // --- [수정된 부분] ---
-            // WaitForSeconds 대신 새로 만든 코루틴 사용
-            yield return StartCoroutine(WaitForDurationWithPause(durationSec));
-            // --- [수정 끝] ---
-
+            yield return new WaitForSeconds(durationSec);
             yield return StartCoroutine(SmoothyPopUp(false));
         }
 
@@ -124,23 +119,6 @@ public class Tutorial_PopUp : UI_Popup
         if (text.text == "(너를 잠식하려는 혼령이 보이는 순간, 바로 대각선 방향키를 통해 공격해!)")
         {
             keyBoardGuide.SetActive(true);
-        }
-    }
-    private IEnumerator WaitForDurationWithPause(float duration)
-    {
-        float timer = 0f;
-        while (timer < duration)
-        {
-            // --- 일시정지 처리 ---
-            while (IngameData.Pause)
-            {
-                yield return null; // Pause가 풀릴 때까지 대기
-            }
-            // --- 일시정지 처리 끝 ---
-
-            // timeScale이 적용된 시간(deltaTime)만큼 타이머 증가
-            timer += Time.deltaTime;
-            yield return null;
         }
     }
 }
