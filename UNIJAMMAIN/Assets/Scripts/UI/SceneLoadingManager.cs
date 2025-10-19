@@ -90,7 +90,7 @@ public class SceneLoadingManager : UI_Base
         yield return AnimatePanels(true); // true = 닫기
 
 
-        Managers.Clear();
+      
         // 2. 닫힌 상태에서 잠시 대기
         yield return new WaitForSecondsRealtime(waitDuration);
 
@@ -103,6 +103,7 @@ public class SceneLoadingManager : UI_Base
         {
             yield return null;
         }
+        Managers.Clear();
 
         // 4. 씬 활성화 (아직 문은 닫혀있음)
         // 이 시점에서 다음 씬의 Awake(), OnEnable() 등이 호출됨
@@ -116,6 +117,8 @@ public class SceneLoadingManager : UI_Base
         {
             yield return null;
         }
+
+       
 
         Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1", Define.Sound.SFX);
 

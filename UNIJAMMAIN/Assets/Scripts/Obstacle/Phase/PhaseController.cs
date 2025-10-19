@@ -84,7 +84,7 @@ public class PhaseController : MonoBehaviour
         SetStageBackGround();
         IngameData.IsStart = true;
 
-        // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정 ---
+        // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
         if (chapters[_chapterIdx].Phases.Count > 0)
         {
             var firstPhase = chapters[_chapterIdx].Phases[0];
@@ -100,8 +100,6 @@ public class PhaseController : MonoBehaviour
         // 코루틴 내에서 진행될 이벤트의 목표 틱(Beat)을 관리하는 변수
         long targetTick = 0;
 
-        const double EPS = 0.002; // 약간의 여유시간 (초)
-
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];
@@ -115,12 +113,13 @@ public class PhaseController : MonoBehaviour
             // --- 1. Delay 구간 처리 ---
             long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
 
-            // Delay 시작 전에 필요한 이벤트들을 먼저 호출합니다.
+            // [기존 로직 복원] Delay가 시작되기 전에 필요한 이벤트들을 먼저 호출합니다.
             if (gameEvent is PhaseEvent phaseEvent)
             {
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
-                float delaySecLocal = delayBeats * (float)IngameData.BeatInterval;
-                HandleFlipKeyEvent(phaseEvent, delaySecLocal);
+                // HandleFlipKeyEvent가 delay 시간을 필요로 하므로, 비트 기반으로 다시 계산해줍니다.
+                float delaySec = delayBeats * (float)IngameData.BeatInterval;
+                HandleFlipKeyEvent(phaseEvent, delaySec);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
@@ -130,20 +129,14 @@ public class PhaseController : MonoBehaviour
                 HandleTutorialEvent(tutorialEvent);
             }
 
-            // Delay만큼의 목표 틱을 계산
+            // 이제 Delay 시간만큼 비트를 누적하고 기다립니다.
             targetTick += delayBeats;
+            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(delaySec) 대체
 
-            // --- 변경: BeatClock의 예정 DSP 시간을 기준으로 기다립니다 ---
-            double scheduledDspForDelay = beatClock.GetScheduledDspTimeForTick(targetTick);
-
-            // 대기: scheduledDspForDelay 보다 작으면 계속 대기 (프레임 지연 있어도 dspTime은 흘러감)
-            while (AudioSettings.dspTime + EPS < scheduledDspForDelay)
-                yield return null;
-
-            // Delay 끝난 직후 처리 (원래 하던 SpawnMonsters 호출을 **정확한 오디오 예정 시점 직후**에 실행)
+            // [기존 로직 복원] Delay가 끝난 직후에 실행되어야 할 로직들을 호출합니다.
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                Debug.Log($"Monster Spawn tick :{beatClock._tick}");
+                Debug.Log($"<color=cyan>PhaseEvent [{i}] Identified! Attempting to spawn monsters. MonsterData count: {phaseEventAfterDelay.MonsterDatas.Count}</color>");
                 SpawnMonsters(phaseEventAfterDelay);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
@@ -152,33 +145,32 @@ public class PhaseController : MonoBehaviour
                     TutorialStoped?.Invoke(false);
             }
 
-            // --- Duration 구간 처리 ---
+            // --- 2. Duration 구간 처리 ---
             long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
             targetTick += durationBeats;
+            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(durationSec) 대체
 
-            double scheduledDspForEnd = beatClock.GetScheduledDspTimeForTick(targetTick);
-            while (AudioSettings.dspTime + EPS < scheduledDspForEnd)
-                yield return null;
-
-            // --- 다음 페이즈 준비 ---
+            // --- 3. 다음 페이즈 준비 ---
             if (i + 1 < chapters[_chapterIdx].Phases.Count)
             {
                 var nextPhase = chapters[_chapterIdx].Phases[i + 1];
-                // 다음 페이즈의 BPM으로 BeatClock을 업데이트하도록 신호
-                IngameData.BeatInterval = 60.0 / nextPhase.bpm;
-                beatInterval = 60.0f / nextPhase.bpm;
-                delaySec = nextPhase.startDelayBeat * beatInterval;
-                durationSec = nextPhase.durationBeat * beatInterval;
-                IngameData.PhaseDurationSec = durationSec;
-                IngameData.ChangeBpm?.Invoke();
+                // 다음 페이즈의 BPM으로 BeatClock을 업데이트하도록 신호를 보냅니다.
+                if(!(nextPhase.bpm==chapters[_chapterIdx].Phases[i].bpm))
+                {
+                    IngameData.BeatInterval = 60.0 / nextPhase.bpm;
+                    beatInterval = 60.0f / nextPhase.bpm;
+                    delaySec = nextPhase.startDelayBeat * beatInterval;
+                    durationSec = nextPhase.durationBeat * beatInterval;
+                    IngameData.PhaseDurationSec = durationSec;
+                    IngameData.ChangeBpm?.Invoke();
+                }
+             
             }
         }
 
-        // 모든 페이즈가 끝난 후, 원하는  비트만큼 여유를 두고 챕터를 종료합니다.
-        targetTick+=2; // 그냥 바로 다음 챕터로
-        double scheduledDspEndChapter = beatClock.GetScheduledDspTimeForTick(targetTick);
-        while (AudioSettings.dspTime + EPS < scheduledDspEndChapter)
-            yield return null;
+        // 모든 페이즈가 끝난 후, 2비트만큼 여유를 두고 챕터를 종료합니다.
+        targetTick += 2;
+        yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(...) 대체
 
         EndChapter();
     }
