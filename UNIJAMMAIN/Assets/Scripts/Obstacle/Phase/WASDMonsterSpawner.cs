@@ -17,8 +17,10 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] EnemyTypeSO enemyTypeSO;
     [SerializeField] WASDPosition[] positions;
     [SerializeField] Vector2 sizeDiffRate = new Vector2 (0.8f, 1.2f);
+    
     [SerializeField] Collider2D holder;
 
+    public BeatClock beatClock;
     private Dictionary<WASDType, Vector2> _spawnPosition;
     private Dictionary<WASDType, Vector2> _targetPosition;
     private HitJudge _rank;
@@ -82,7 +84,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         _spawnInterval = (IngameData.BeatInterval * data.spawnBeat)/data.speedUpRate;
         _tick = 0;
         _count = 0;
-         _startDsp = AudioSettings.dspTime;
+        _startDsp = beatClock.GetScheduledDspTimeForTick(beatClock._tick);
         SetLastSpawnTime(data.moveBeat);
         _spawning = true;
         _spawnPointString = data.WASD_Pattern;
@@ -119,6 +121,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
+
     private void Update()
     {
         if (!_spawning) return;
@@ -132,6 +135,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
         while (now >= ScheduledTime(_tick))
         {
+            Debug.Log($"몬스터 스폰 시점 teak {beatClock._tick}");
             _tick++;
             DoSpawn();
         }

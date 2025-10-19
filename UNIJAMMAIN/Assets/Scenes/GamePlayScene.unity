@@ -6233,7 +6233,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 32767
+  m_SortingOrder: 32760
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7035,6 +7035,7 @@ MonoBehaviour:
     playerPos: {x: 0, y: 0}
   sizeDiffRate: {x: 0.8, y: 1.25}
   holder: {fileID: 646499422}
+  beatClock: {fileID: 2094054435}
 --- !u!114 &5032662942808797825
 MonoBehaviour:
   m_ObjectHideFlags: 0
