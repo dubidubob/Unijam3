@@ -13,8 +13,80 @@ public class BlurController : MonoBehaviour
     public float shakeStrength = 0.2f; // 흔들림 강도
     public float shakeDuration = 0.2f; // 흔들림 지속 시간
 
+    // --- 콤보 이펙트 관련 --- //
+    private bool IsComboEffectOn = false;
+    public Image rightCombo1;
+    public Image rightCombo2;
+    public Image leftCombo1;
+    public Image leftCombo2;
+    [Header("Scroll Settings")]
+    public float scrollSpeedWeight = 2f; // 초당 이동 속도 (픽셀 단위)
+
+    private float imageHeight;
+
+
+    #region Combo 관련 
+    void Update()
+    {
+        if (IsComboEffectOn)
+        {
+            float move = scrollSpeedWeight * Time.deltaTime*(float)IngameData.GameBpm;
+
+            // 오른쪽 (아래로)
+            MoveImageDown(rightCombo1, move);
+            MoveImageDown(rightCombo2, move);
+            ResetIfOffScreenDown(rightCombo1, rightCombo2);
+            ResetIfOffScreenDown(rightCombo2, rightCombo1);
+
+            // 왼쪽 (위로)
+            MoveImageUp(leftCombo1, move);
+            MoveImageUp(leftCombo2, move);
+            ResetIfOffScreenUp(leftCombo1, leftCombo2);
+            ResetIfOffScreenUp(leftCombo2, leftCombo1);
+        }
+    }
+    // ===== 오른쪽 세트 (아래로 스크롤) =====
+    void MoveImageDown(Image img, float move)
+    {
+        var rt = img.rectTransform;
+        rt.anchoredPosition -= new Vector2(0, move);
+    }
+
+    void ResetIfOffScreenDown(Image current, Image other)
+    {
+        var rt = current.rectTransform;
+        if (rt.anchoredPosition.y <= -imageHeight)
+        {
+            // 아래로 사라지면 위로 재배치
+            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, other.rectTransform.anchoredPosition.y + imageHeight);
+        }
+    }
+
+    // ===== 왼쪽 세트 (위로 스크롤) =====
+    void MoveImageUp(Image img, float move)
+    {
+        var rt = img.rectTransform;
+        rt.anchoredPosition += new Vector2(0, move);
+    }
+
+    void ResetIfOffScreenUp(Image current, Image other)
+    {
+        var rt = current.rectTransform;
+        if (rt.anchoredPosition.y >= imageHeight)
+        {
+            // 위로 사라지면 아래로 재배치
+            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, other.rectTransform.anchoredPosition.y - imageHeight);
+        }
+    }
+    public void ComboEffectOn()
+    {
+        IsComboEffectOn = true;
+    }
+    #endregion
+
     private void Start()
     {
+        ComboEffectOn();
         if (camera == null)
         { 
             camera = Camera.main;
@@ -26,6 +98,20 @@ public class BlurController : MonoBehaviour
         Managers.Sound.Play("BGM/84bpm_64_V1", Define.Sound.BGM, 1.3f);
         */
         Managers.Game.blur = this;
+
+        // 콤보 이펙트 관련 
+
+
+        // 기준 이미지의 높이 측정 (두 세트 모두 같은 높이라고 가정)
+        imageHeight = rightCombo1.rectTransform.rect.height;
+
+        // 초기 배치 - 오른쪽 세트 (위→아래)
+        rightCombo1.rectTransform.anchoredPosition = new Vector2(rightCombo1.rectTransform.anchoredPosition.x, 0);
+        rightCombo2.rectTransform.anchoredPosition = new Vector2(rightCombo2.rectTransform.anchoredPosition.x, imageHeight);
+
+        // 초기 배치 - 왼쪽 세트 (아래→위)
+        leftCombo1.rectTransform.anchoredPosition = new Vector2(leftCombo1.rectTransform.anchoredPosition.x, 0);
+        leftCombo2.rectTransform.anchoredPosition = new Vector2(leftCombo2.rectTransform.anchoredPosition.x, -imageHeight);
     }
 
     public Image[] blurImages; // Blur1 ~ BlurN (Inspector에 넣어줌)

@@ -89,6 +89,7 @@ public class PhaseController : MonoBehaviour
         {
             var firstPhase = chapters[_chapterIdx].Phases[0];
             beatInterval = 60.0f / firstPhase.bpm;
+            IngameData.GameBpm = (int)firstPhase.bpm;
             delaySec = firstPhase.startDelayBeat * beatInterval;
             durationSec = firstPhase.durationBeat * beatInterval;
             IngameData.PhaseDurationSec = durationSec;
@@ -159,6 +160,7 @@ public class PhaseController : MonoBehaviour
                 {
                     IngameData.BeatInterval = 60.0 / nextPhase.bpm;
                     beatInterval = 60.0f / nextPhase.bpm;
+                    IngameData.GameBpm = (int)nextPhase.bpm;
                     delaySec = nextPhase.startDelayBeat * beatInterval;
                     durationSec = nextPhase.durationBeat * beatInterval;
                     IngameData.PhaseDurationSec = durationSec;
