@@ -153,6 +153,7 @@ public class SceneLoadingManager : UI_Base
 
         AnimationCurve curve = isClosing ? closingCurve : openingCurve;
 
+        Managers.Sound.Play("SFX/UI/DoorOpen_V1");
         while (timer < animationDuration)
         {
             timer += Time.unscaledDeltaTime;

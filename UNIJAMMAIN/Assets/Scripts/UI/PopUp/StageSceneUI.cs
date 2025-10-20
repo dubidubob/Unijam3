@@ -298,6 +298,7 @@ public class StageSceneUI : UI_Popup
 
     public void StartButtonClicked(PointerEventData eventData)
     {
+        Managers.Sound.Play("SFX/PressToStart_V1");
         if (_selectedButton != null)
         {
             SceneLoadingManager.Instance.LoadScene("StoryScene");

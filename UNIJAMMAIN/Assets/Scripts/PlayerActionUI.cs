@@ -157,16 +157,16 @@ public class PlayerActionUI : MonoBehaviour
         switch (random)
         {
             case 0:
-                Managers.Sound.Play("SFX/Accuracy/Perfect1_V1", Define.Sound.SFX);
+                Managers.Sound.Play("SFX/Accuracy/Perfect1_V2", Define.Sound.SFX);
                 break;
             case 1:
-                Managers.Sound.Play("SFX/Accuracy/Perfect2_V1", Define.Sound.SFX);
+                Managers.Sound.Play("SFX/Accuracy/Perfect2_V2", Define.Sound.SFX);
                 break;
             case 2:
-                Managers.Sound.Play("SFX/Accuracy/Perfect3_V1", Define.Sound.SFX);
+                Managers.Sound.Play("SFX/Accuracy/Perfect3_V2", Define.Sound.SFX);
                 break;
             case 3:
-                Managers.Sound.Play("SFX/Accuracy/Perfect4_V1", Define.Sound.SFX);
+                Managers.Sound.Play("SFX/Accuracy/Perfect4_V2", Define.Sound.SFX);
                 break;
         }
     }

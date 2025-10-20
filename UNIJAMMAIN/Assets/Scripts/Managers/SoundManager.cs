@@ -13,6 +13,7 @@ public class SoundManager
     public AudioMixerGroup[] audioMixerGroups;
     public AudioSource BGM;
     public AudioSource SFX;
+    public AudioSource SubBGM;
 
     private string _currentSceneName = "";
 
@@ -118,6 +119,71 @@ public class SoundManager
             }
 
             BGM = audioSource;
+            audioSource.Play();
+        }
+        else if(type==Define.Sound.SubBGM)
+        {
+            if (_audioSources == null)
+                Init();
+            AudioSource audioSource = _audioSources[(int)Define.Sound.SubBGM];
+
+            string newSceneName = SceneManager.GetActiveScene().name;
+            Debug.Log($"--- BGM Play 요청 ---");
+            Debug.Log($"이전 씬: '{_currentSceneName}', 현재 씬: '{newSceneName}'");
+
+            // Yejun - Skips if the requested BGM is already playing.
+            if (audioSource.isPlaying && audioSource.clip == audioClip)
+            {
+                bool isSharedBGMPair =
+                (_currentSceneName == "MainTitle" && newSceneName == "StageScene") ||
+                (_currentSceneName == "StageScene" && newSceneName == "MainTitle");
+
+                Debug.Log($"BGM 공유 조건 검사 결과: {isSharedBGMPair}");
+
+                if (isSharedBGMPair)
+                {
+
+                    Debug.Log("===> Option BGM 유지합니다.");
+
+                    _currentSceneName = newSceneName; // 씬 이름만 현재 씬으로 갱신
+                    return; // BGM을 끄거나 켜지 않고 그대로 둠
+                }
+            }
+
+            Debug.LogWarning("===> Option BGM을 처음부터 다시 재생합니다!");
+
+            _currentSceneName = newSceneName;
+
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+            audioSource.pitch = pitch;
+            audioSource.clip = audioClip;
+
+            //audioSource.volume = volume;
+            audioSource.volume = BGMController.CurrentVolumeBGM * volume;
+            _originalBGMVolume = audioSource.volume;
+
+            if (_fadeCoroutine != null)
+            {
+                StaticCoroutine.StopStaticCoroutine(_fadeCoroutine);
+                _fadeCoroutine = null;
+            }
+
+            _originalBGMVolume = volume;
+            string currentSceneName = SceneManager.GetActiveScene().name;
+
+            if (currentSceneName == "GamePlayScene")
+            {
+                audioSource.loop = false;
+            }
+            else
+            {
+                audioSource.loop = true;
+            }
+
+            SubBGM = audioSource;
             audioSource.Play();
         }
         else
@@ -298,6 +364,22 @@ public class SoundManager
         if (isStop) BGM.Pause();
         else BGM.UnPause();
     }
+
+    public void PlayInOptionSoundMusic(bool isPlay)
+    {
+        if(SubBGM==null) { Debug.Log("SubBGM 없음");  }
+        if(isPlay)
+        {
+            Managers.Sound.Play("BGM/ESCPressed_V1", Define.Sound.SubBGM,1,2);
+        }
+        else
+        {
+            SubBGM.Stop();
+        }
+
+    }
+
+
 
     public void StopBGM()
     { 

@@ -72,6 +72,7 @@
         Master,
         BGM,
         SFX,
+        SubBGM,
         MaxCount
     }
     public enum MonsterType

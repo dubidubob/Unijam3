@@ -144,7 +144,7 @@ public class GameManager
         }
         attacks[key].Enqueue(go);
     }
-
+    public bool isComboEffect = false;
     public void ComboInc(int healingValue=1)
     {
         Combo++;
@@ -159,6 +159,15 @@ public class GameManager
             IncHealth(healingValue); //체력 회복
         }
         
+        if(Combo>=10)
+        {
+            if (!isComboEffect)
+            {
+                blur.ComboEffectOn();
+                isComboEffect = true;
+            }
+        }
+        
         if(Combo%10==0)
         {
             int _healtmp=7;
@@ -168,6 +177,7 @@ public class GameManager
                 if(Combo%30==0)
                 {
                     _healtmp = 12;
+                    
                 }
             }
             IncHealth(_healtmp); //체력 회복
@@ -186,6 +196,7 @@ public class GameManager
         new RankNode(EvaluateType.Attacked, WASDType.A, null));
         DecHealth(attackValue);
     }
+    private bool _comboCheck = false;
     /// <summary>
     /// value값은 체력이 감소되는 양
     /// </summary>
@@ -194,6 +205,8 @@ public class GameManager
     {
         if(currentPlayerState== PlayerState.Ready) { return; } // Ready상태면 무시
         Combo = 0; //무조건 콤보 끊김
+        Managers.Game.blur.ComboEffectOff();
+        Managers.Game.isComboEffect = false;
         ComboContinue?.Invoke(Combo);
 
         if (Health > 0)
@@ -236,6 +249,7 @@ public class GameManager
         blur.WaitForGameOver();
 
         Managers.Sound.BGMFadeOut();
+        Managers.Sound.Play("BGM/GameOver_V1");
 
         Time.timeScale = 0;
         

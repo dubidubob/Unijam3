@@ -15,6 +15,7 @@ public class BlurController : MonoBehaviour
 
     // --- 콤보 이펙트 관련 --- //
     private bool IsComboEffectOn = false;
+    public Image comboEffectbase;
     public Image rightCombo1;
     public Image rightCombo2;
     public Image leftCombo1;
@@ -81,13 +82,29 @@ public class BlurController : MonoBehaviour
     public void ComboEffectOn()
     {
         IsComboEffectOn = true;
+        rightCombo1.gameObject.SetActive(true);
+        rightCombo2.gameObject.SetActive(true);
+        leftCombo1.gameObject.SetActive(true);
+        leftCombo2.gameObject.SetActive(true);
+        comboEffectbase.gameObject.SetActive(true);
+
         PlayComboEffect();
+    }
+    public void ComboEffectOff()
+    {
+        IsComboEffectOn = false;
+        rightCombo1.gameObject.SetActive(false);
+        rightCombo2.gameObject.SetActive(false);
+        leftCombo1.gameObject.SetActive(false);
+        leftCombo2.gameObject.SetActive(false);
+        comboEffectbase.gameObject.SetActive(false);
+
+        StopComboEffect();
     }
     #endregion
 
     private void Start()
     {
-        ComboEffectOn();
         if (camera == null)
         { 
             camera = Camera.main;
