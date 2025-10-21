@@ -24,10 +24,10 @@ public class DialogueScene
     public bool isFirstAppearance;
     [TextArea]
     public string text;
-    public Sprite overrideSprite;    
+    public Sprite overrideSprite;
     public Vector2 panelPositionOffset;
-    public float preDelay;            
-    public float postDelay;        
+    public float preDelay;
+    public float postDelay;
     public bool showLeftCharacter;
     public bool showRightCharacter;
     public bool isAnger;
@@ -36,8 +36,10 @@ public class DialogueScene
     public bool rightSDAnim;
     public bool isEnding;
     public bool XFlip;
-    
+
     public float goingTimeAmount;
     public KeyCode requiredKey;
-    
+
+    [Header("캐릭터 Y축 오프셋 (띄우기)")]
+    public float spriteYOffset = 0f;  // 0 = 바닥
 }

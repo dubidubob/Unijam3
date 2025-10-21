@@ -455,6 +455,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uC138\uC0C1\uC740 \uB0B4\uAC00 \uB4E3\uACE0 \uBC30\uC6B4 \uC138\uC0C1\uACFC
@@ -473,6 +474,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: "\uB098\uB294 \uC2A4\uC2B9\uB2D8\uC758 \uAC00\uB974\uCE68\uC744 \uB5A0\uC62C\uB9AC\uAE30
@@ -491,6 +493,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 53d167dc5ccadcb4ea71a1b73ba0836f, type: 2}
     isFirstAppearance: 0
     text: "\uC2DC\uC791\uC774 \uACE7 \uBC18\uC774\uB2E4! \uB124 \uC548\uC5D0 \uC788\uB294
@@ -509,6 +512,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 300
   - speakingCharacterData: {fileID: 11400000, guid: 53d167dc5ccadcb4ea71a1b73ba0836f, type: 2}
     isFirstAppearance: 0
     text: "\uC138\uC0C1\uC5D0\uB294 \uD6E8\uC52C \uB354 \uB9CE\uC740 \uB450\uB824\uC6C0\uB9CC
@@ -527,6 +531,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
     isFirstAppearance: 0
     text: "\uB124 \uC2A4\uC2B9\uCC98\uB7FC \uAC81\uB3C4 \uC5C6\uAC8C \uC138\uC0C1
@@ -545,6 +550,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 100
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "...!! (\uC815\uB9D0 \uC545\uB839\uC774... \uC138\uC0C1\uC744...)"
@@ -562,6 +568,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uB798, \uC2DC\uC791\uC774 \uACE7 \uBC18\uC774\uB2E4! \uC5B4\uB290
@@ -580,6 +587,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: a37dd135c08ea9a49a4d773c63b9d09b, type: 2}
     isFirstAppearance: 0
     text: "\uBC18\uC740 \uCEE4\uB155, \uB124\uB188\uC758 \uC2DC\uC791\uC774 \uACE7
@@ -598,6 +606,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 100
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uB807\uB2E4\uBA74, \uB124\uB188\uC744 \uBCA0\uB294 \uAC83\uC774
@@ -616,6 +625,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   canGoNextStep: 1
   shop: {fileID: 0}
   leftSDAnimSet: []
@@ -711,11 +721,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2880116875402160406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -720, y: -185}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -136.5, y: 843}
   m_SizeDelta: {x: 473, y: 578}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0}
 --- !u!222 &6939289425172188046
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -746,7 +756,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 1b9a7ff53bdb2ad4fa29cd8fe882ba77, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1019,11 +1029,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2880116875402160406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 720, y: -190}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 610, y: 844}
   m_SizeDelta: {x: 516, y: 566}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0}
 --- !u!222 &2362226654977787945
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1054,7 +1064,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: dfeb372c8fc17d042bd560b21b91565b, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

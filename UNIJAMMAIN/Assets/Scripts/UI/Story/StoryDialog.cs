@@ -28,7 +28,11 @@ public class StoryDialog : UI_Popup
 
     private RectTransform panelRect;
     private Vector2 originalPanelPos;
+    private Vector2 originalLeftImagePos;
+    private Vector2 originalRightImagePos;
+
     public List<DialogueScene> scenes;
+
 
     public bool canGoNextStep = true;
     public GameObject shop;
@@ -48,6 +52,9 @@ public class StoryDialog : UI_Popup
         panelRect = TextPanel.GetComponent<RectTransform>();
         originalPanelPos = panelRect.anchoredPosition;
         contents.SetActive(true);
+
+        originalLeftImagePos = StandingImage[0].GetComponent<RectTransform>().anchoredPosition;
+        originalRightImagePos = StandingImage[1].GetComponent<RectTransform>().anchoredPosition;
 
         Managers.Sound.Play(musicPath, Define.Sound.BGM);
         StartCoroutine(FirstInAnimation());
@@ -126,6 +133,9 @@ public class StoryDialog : UI_Popup
                     TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.CharacterName;
                     StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[0].gameObject.SetActive(true);
+
+                    RectTransform imageRect = StandingImage[0].GetComponent<RectTransform>();
+                    imageRect.anchoredPosition = new Vector2(originalLeftImagePos.x, originalLeftImagePos.y + scene.spriteYOffset);
                     //StandingImage[0].SetNativeSize(); // ����ũ��� ���� �ʰ� ���� ũ��� ����. ���� �ٲ۴ٸ� �̺κ� �ٲٵ���.
 
                     if (scene.XFlip)
@@ -171,6 +181,9 @@ public class StoryDialog : UI_Popup
                     TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.CharacterName;
                     StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
+                    RectTransform imageRect = StandingImage[1].GetComponent<RectTransform>();
+                    imageRect.anchoredPosition = new Vector2(originalRightImagePos.x, originalRightImagePos.y + scene.spriteYOffset);
+                    // --- [추가 끝] ---
                     //StandingImage[1].SetNativeSize();
                     if (scene.XFlip)
                     {
