@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -383, y: -245}
+  m_AnchoredPosition: {x: -370, y: -245}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5601827262082133885
@@ -454,6 +454,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: "\uC138\uC0C1\uC740 \uC815\uB9D0 \uC870\uD654\uB97C \uC783\uC5C8\uACE0,
@@ -472,6 +473,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
     isFirstAppearance: 0
     text: "\uACE0\uC791 \uC808\uAC04\uC5D0 \uC228\uC5B4\uC788\uB358 \uC911\uB188\uC774
@@ -490,6 +492,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 50
   - speakingCharacterData: {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
     isFirstAppearance: 0
     text: "\uC774\uAC83\uC774 \uBCF8\uB798 \uC138\uC0C1\uC758 \uBAA8\uC2B5\uC774\uB2E4."
@@ -507,6 +510,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 50
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uC870\uD654\uAC00 \uAE68\uC9C4 \uC138\uC0C1\uC774\uB77C\uBA74... \uACB0\uAD6D...
@@ -525,6 +529,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uC138\uC0C1\uC758 \uC774\uCE58\uAC00 \uAC10\uD788 \uB098\uB97C \uC2DC\uD5D8\uD558\uB294\uAD6C\uB098."
@@ -542,6 +547,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 567592a727b59924d843078022e69635, type: 2}
     isFirstAppearance: 0
     text: "\uC5B4\uB9AC\uC11D\uAE30\uB294! \uB124 \uC2A4\uC2B9\uACFC \uB611\uAC19\uC740
@@ -560,6 +566,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 50
   - speakingCharacterData: {fileID: 11400000, guid: 958517d2caa0fa24fb7c08e3cdc96c71, type: 2}
     isFirstAppearance: 0
     text: "\uB124\uB188 \uB610\uD55C \uC774 \uC138\uC0C1\uC758 \uC77C\uBD80\uAC00
@@ -578,6 +585,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   canGoNextStep: 1
   shop: {fileID: 0}
   leftSDAnimSet: []
@@ -675,7 +683,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -370, y: 1129}
+  m_AnchoredPosition: {x: -360, y: 1129}
   m_SizeDelta: {x: 473, y: 578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6939289425172188046
@@ -1058,7 +1066,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 370, y: 1124}
+  m_AnchoredPosition: {x: 350, y: 1124}
   m_SizeDelta: {x: 516, y: 566}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2362226654977787945
@@ -1354,7 +1362,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6791183905692446785}
-  m_LocalRotation: {x: -0, y: -0, z: 0.0047580004, w: -0.9999887}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1362,7 +1370,7 @@ RectTransform:
   - {fileID: 5268055357457332049}
   - {fileID: 2021895989036286336}
   m_Father: {fileID: 2880116875402160406}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.545}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1624,8 +1632,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.292695, y: -408}
-  m_SizeDelta: {x: 941.9282, y: 215.7888}
+  m_AnchoredPosition: {x: -20, y: -400}
+  m_SizeDelta: {x: 890, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8305475372916593186
 CanvasRenderer:

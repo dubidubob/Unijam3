@@ -13,6 +13,7 @@ public class CustomCursor : MonoBehaviour
 
     void Update()
     {
+        //Cursor.visible = false;
         // 2. 매 프레임마다 마우스 위치를 따라다니도록 설정
         // Input.mousePosition은 스크린 좌표이므로 UI 위치에 바로 대입 가능
         cursorTransform.position = Input.mousePosition;

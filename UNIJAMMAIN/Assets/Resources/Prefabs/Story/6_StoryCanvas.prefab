@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -383, y: -245}
+  m_AnchoredPosition: {x: -370, y: -245}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5601827262082133885
@@ -454,6 +454,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: "\uC800 \uBA40\uB9AC, \uC790\uBE44\uB85C\uC6B4 \uBAA8\uC2B5\uC758 \uBD80\uCC98\uB2D8\uC774
@@ -472,6 +473,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uBD80\uCC98\uB2D8... \uC81C \uC2A4\uC2B9\uB2D8\uAED8 \uBB34\uC2A8 \uC77C\uC774..
@@ -491,6 +493,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uBD80\uB514... \uC9C4\uC2E4\uC744 \uC54C\uB824\uC8FC\uC2ED\uC2DC\uC624."
@@ -508,6 +511,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: . . .
@@ -525,6 +529,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "...\uBD80\uCC98\uB2D8?"
@@ -542,6 +547,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: "...\uC544\uBB34 \uB9D0\uC500\uC774 \uC5C6\uC73C\uC2DC\uB2E4."
@@ -559,6 +565,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uC544\uB2C8, \uC800\uAC83\uC740..."
@@ -576,6 +583,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    spriteYOffset: 0
   canGoNextStep: 1
   shop: {fileID: 0}
   leftSDAnimSet: []
@@ -673,7 +681,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -370, y: 1129}
+  m_AnchoredPosition: {x: -360, y: 1129}
   m_SizeDelta: {x: 473, y: 578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6939289425172188046
@@ -981,7 +989,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 370, y: 1124}
+  m_AnchoredPosition: {x: 350, y: 1124}
   m_SizeDelta: {x: 516, y: 566}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2362226654977787945
@@ -1547,8 +1555,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -55.945282, y: -400}
-  m_SizeDelta: {x: 852.623, y: 215.7888}
+  m_AnchoredPosition: {x: -20, y: -400}
+  m_SizeDelta: {x: 890, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8305475372916593186
 CanvasRenderer:
