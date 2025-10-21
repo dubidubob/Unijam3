@@ -41,15 +41,17 @@ MonoBehaviour:
           - "\uBAA8\uB4E0 \uAC83\uC758 \uC2DC\uC791\uC778 \uC774\uACF3\uC774"
           monsterCutline: 0
           delayBeat: 14
+          characterData: {fileID: 0}
         - textContents:
           - "\uACE7 \uBAA8\uB4E0 \uAC83\uC758 \uB05D\uC774 \uB420 \uAC83\uC774\uB2E4"
           monsterCutline: 0
           delayBeat: 14
+          characterData: {fileID: 0}
     - rid: 9186972795589099541
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 23
+        durationBeat: 24
         startDelayBeat: 2
         bpm: 162
         timeScale: 1

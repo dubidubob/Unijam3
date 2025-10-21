@@ -160,7 +160,7 @@ public class GameManager
             IncHealth(healingValue); //체력 회복
         }
         
-        if(Combo>=10)
+        if(Combo>=30)
         {
             if (!isComboEffect)
             {
