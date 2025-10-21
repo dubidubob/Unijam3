@@ -27,7 +27,7 @@
         {
             IngameData.ChangeBpm -= HandleBpmChange;
             IngameData.ChangeBpm += HandleBpmChange;
-            StartClock();
+            
         }
 
         private void OnDestroy()
@@ -56,6 +56,7 @@
             {
                 StartClock();
                 _initialized = true;
+            
             }
 
             double now = AudioSettings.dspTime;
@@ -73,7 +74,9 @@
             if (!isStart)
             {
                 Managers.Sound.Play(phase.chapters[phase._chapterIdx].MusicPath, Define.Sound.BGM);
-                isStart = true;
+               StartClock();
+               isStart = true;
+            return;
             }
 
             // --- [수정된 일시정지 로직] ---

@@ -10,6 +10,7 @@ public abstract class GameEvent
     [Min(0f)] public float startDelayBeat;
     [Min(1f)] public float bpm;
     [Min(1f)] public float timeScale=1;
+    public float preGenerateBeat;
 }
 
 // 리듬 게임 페이즈를 위한 이벤트

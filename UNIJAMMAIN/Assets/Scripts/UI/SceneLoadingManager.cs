@@ -104,14 +104,13 @@ public class SceneLoadingManager : UI_Base
             yield return null;
         }
         Managers.Clear();
-
         // 4. 씬 활성화 (아직 문은 닫혀있음)
         // 이 시점에서 다음 씬의 Awake(), OnEnable() 등이 호출됨
         asyncOperation.allowSceneActivation = true;
 
         // 씬이 완전히 활성화되고 첫 프레임을 그릴 시간을 주기 위해 한 프레임 대기
         yield return null;
-
+       
         // ▼▼▼ 3. 여기서 바로 문을 열지 않고, 신호를 받을 때까지 무한 대기 ▼▼▼
         while (!isSceneReadyToDisplay)
         {
@@ -133,8 +132,13 @@ public class SceneLoadingManager : UI_Base
 
         // 모든 로딩 과정이 완전히 끝나면 false로 설정
         IsLoading = false;
-        StopAllCoroutines();
 
+    }
+    private IEnumerator GamePlaySceneReLoad()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        Managers.Sound.SettingNewSceneVolume();
+        IsLoading = false;
     }
 
     public void NotifySceneReady()

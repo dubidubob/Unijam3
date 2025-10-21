@@ -45,9 +45,10 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 20
-        startDelayBeat: 4
+        startDelayBeat: 3
         bpm: 100
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -65,6 +66,7 @@ MonoBehaviour:
         startDelayBeat: 4
         bpm: 135
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -82,6 +84,7 @@ MonoBehaviour:
         startDelayBeat: 4
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -99,6 +102,7 @@ MonoBehaviour:
         startDelayBeat: 2
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -116,6 +120,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 135
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -133,6 +138,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 135
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -150,6 +156,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -167,6 +174,7 @@ MonoBehaviour:
         startDelayBeat: 8
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         steps:
         - textContents:
           - "\uC548\uAC1C\uAC00 \uC790\uC6B1\uD574\uC84C\uB2E4..! \uC774\uB54C\uB97C
@@ -181,6 +189,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 100
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -205,6 +214,7 @@ MonoBehaviour:
         startDelayBeat: 8
         bpm: 100
         timeScale: 1
+        preGenerateBeat: 0
         steps:
         - textContents:
           - "\uC5EC\uAE30\uAE4C\uC9C0 \uC815\uB9D0 \uADC0\uCC2E\uAC8C \uB530\uB77C\uBD99\uB294\uAD70."
@@ -222,6 +232,7 @@ MonoBehaviour:
         startDelayBeat: 2
         bpm: 135
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -239,6 +250,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -256,6 +268,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -273,6 +286,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -290,6 +304,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -307,6 +322,7 @@ MonoBehaviour:
         startDelayBeat: 2
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -324,6 +340,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 120
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -341,6 +358,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 135
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1

@@ -149,6 +149,15 @@ public class PhaseController : MonoBehaviour
             // --- 2. Duration 구간 처리 ---
             long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
             targetTick += durationBeats;
+            // 미리 생성 가능하게끔
+            if (i + 1 < chapters[_chapterIdx].Phases.Count)
+            {
+                var next = chapters[_chapterIdx].Phases[i + 1];
+                if (next.bpm == chapters[_chapterIdx].Phases[i].bpm)
+                {
+                    targetTick -= (int)next.preGenerateBeat;
+                }
+            }
             yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(durationSec) 대체
 
             // --- 3. 다음 페이즈 준비 ---

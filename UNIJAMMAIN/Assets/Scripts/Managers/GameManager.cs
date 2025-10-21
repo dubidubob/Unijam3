@@ -77,6 +77,7 @@ public class GameManager
     //인게임 데이터 초기화 
     public void Init()
     {
+        Debug.Log("GameManager Init");
         if (SceneManager.GetActiveScene().name == "GamePlayScene")
         {
             CurrentState = GameState.Battle;
