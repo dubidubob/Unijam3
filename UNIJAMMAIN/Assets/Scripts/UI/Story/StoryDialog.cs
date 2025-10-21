@@ -33,6 +33,8 @@ public class StoryDialog : UI_Popup
 
     public List<DialogueScene> scenes;
 
+    [Header("챕터 연출용")]
+    public Image saturatedBackground; // [유지] 이 변수는 B층(Layer)으로 계속 사용
 
     public bool canGoNextStep = true;
     public GameObject shop;
@@ -269,8 +271,52 @@ public class StoryDialog : UI_Popup
             if (skipAllRequested)
             {
                 goto LoopEnd;
+
             }
 
+            // [배경 전환 연출]
+            if (scene.triggerBackgroundFade && scene.newBackgroundSprite != null)
+            {
+                if (saturatedBackground != null)
+                {
+                    Debug.Log($"[{idx}] 배경 전환 트리거 확인됨. 새 배경: {scene.newBackgroundSprite.name}");
+
+                    // --- [!!! 추가 확인 코드 !!!] ---
+                    Debug.Log($"Fade 시작 전: A층(backGround) 알파 = {backGround.color.a}, B층(saturated) 알파 = {saturatedBackground.color.a}");
+                    Debug.Log($"Fade 시작 전: B층 활성 상태 = {saturatedBackground.gameObject.activeInHierarchy}");
+                    // --- [!!! 추가 끝 !!!] ---
+
+                    // 1. B층 설정
+                    saturatedBackground.sprite = scene.newBackgroundSprite;
+                    saturatedBackground.color = new Color(1, 1, 1, 0); // 시작은 확실히 투명하게
+
+                    // 2. B층 Fade In (완료 로그 추가)
+                    saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true).OnComplete(() => {
+                        Debug.Log("B층 Fade In 완료! (알파값: " + saturatedBackground.color.a + ")");
+                    });
+
+                    // 3. A층 Fade Out (완료 로그 추가)
+                    backGround.DOFade(0f, 2.0f).SetUpdate(true).OnComplete(() => {
+                        Debug.Log("A층 Fade Out 완료! (알파값: " + backGround.color.a + ")");
+                    });
+
+                    // 4. 대기
+                    yield return new WaitForSecondsRealtime(2.0f); // 2초 대기
+                    Debug.Log("2초 대기 완료. 레이어 교체 시도...");
+
+                    // 5. 레이어 교체
+                    backGround.sprite = scene.newBackgroundSprite;
+                    backGround.color = new Color(1, 1, 1, 1);
+                    saturatedBackground.color = new Color(1, 1, 1, 0);
+
+                    Debug.Log("배경 전환 완료!");
+                }
+                else
+                {
+                    Debug.LogError("SaturatedBackground 변수가 Inspector에 연결되지 않았습니다!");
+                }
+            }
+            // --- [연출 끝] ---
 
 
 
@@ -432,9 +478,41 @@ public class StoryDialog : UI_Popup
 
 
         LoopEnd:
-        // DiaLogue��
-        StartCoroutine(LastOutAnimation());
+        Coroutine skipFadeCoroutine = null; // 새 코루틴 참조 저장용 변수
 
+        // --- [!!! 스킵 시 최종 배경 '페이드 코루틴 호출' 코드로 수정 !!!] ---
+        if (skipAllRequested) // X키로 스킵했을 때만 실행
+        {
+            // 건너뛴 씬들 중에 배경 전환이 있었는지 역순으로 찾음
+            Sprite finalBackground = null;
+            for (int i = scenes.Count - 1; i >= 0; i--)
+            {
+                if (scenes[i].triggerBackgroundFade && scenes[i].newBackgroundSprite != null)
+                {
+                    finalBackground = scenes[i].newBackgroundSprite;
+                    break; // 가장 마지막(최종) 배경만 찾으면 됨
+                }
+            }
+
+            // 최종 배경이 발견되었고 현재 배경과 다르다면 새 코루틴 시작
+            if (finalBackground != null && backGround.sprite != finalBackground)
+            {
+                Debug.Log("스킵으로 인한 최종 배경 페이드 코루틴 호출: " + finalBackground.name);
+                skipFadeCoroutine = StartCoroutine(FadeBackgroundAfterSkip(finalBackground));
+            }
+        }
+        // --- [!!! 수정 끝 !!!] ---
+
+        // --- [!!! 새 코루틴 완료 대기 코드 추가 !!!] ---
+        // 만약 스킵 페이드 코루틴이 시작되었다면, 끝날 때까지 기다림
+        if (skipFadeCoroutine != null)
+        {
+            yield return skipFadeCoroutine;
+            Debug.Log("스킵 페이드 코루틴 완료. LastOutAnimation 시작.");
+        }
+        // --- [!!! 추가 끝 !!!] ---
+
+        StartCoroutine(LastOutAnimation());
 
     }
 
@@ -471,6 +549,46 @@ public class StoryDialog : UI_Popup
         
     }
     #endregion
+
+    IEnumerator FadeBackgroundAfterSkip(Sprite finalBackground)
+    {
+        // B층(saturatedBackground)이 연결되어 있고 현재 배경과 다를 때만 실행
+        if (saturatedBackground != null && backGround.sprite != finalBackground)
+        {
+            Debug.Log("스킵 페이드 코루틴 시작: " + finalBackground.name);
+
+            // 1. B층에 최종 배경 설정하고 투명하게
+            saturatedBackground.sprite = finalBackground;
+            saturatedBackground.color = new Color(1, 1, 1, 0);
+
+            // 2. B층 Fade In & A층 Fade Out (동시 시작)
+            //    DOTween 트윈 자체를 변수에 저장
+            Tween fadeB = saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true);
+            Tween fadeA = backGround.DOFade(0f, 2.0f).SetUpdate(true);
+
+            // 3. 두 페이드가 모두 완료될 때까지 기다림 (WaitForSecondsRealtime 대신 사용)
+            yield return fadeB.WaitForCompletion();
+            // yield return fadeA.WaitForCompletion(); // 둘 중 하나만 기다려도 충분
+
+            Debug.Log("스킵 페이드 코루틴: 페이드 완료.");
+
+            // 4. 레이어 교체
+            backGround.sprite = finalBackground;
+            backGround.color = new Color(1, 1, 1, 1);
+            saturatedBackground.color = new Color(1, 1, 1, 0); // B층 다시 숨김
+            Debug.Log("스킵 페이드 코루틴: 레이어 교체 완료.");
+        }
+        else // B층이 없거나 배경이 같으면 즉시 변경 (기존 로직 유지)
+        {
+            if (finalBackground != null && backGround.sprite != finalBackground)
+            {
+                backGround.sprite = finalBackground;
+                backGround.color = new Color(1, 1, 1, 1);
+            }
+            yield return null; // 코루틴은 최소 한 번의 yield가 필요
+        }
+    }
+    // --- [!!! 새 코루틴 함수 끝 !!!] ---
 
     #region Tool
 

@@ -42,4 +42,8 @@ public class DialogueScene
 
     [Header("캐릭터 Y축 오프셋 (띄우기)")]
     public float spriteYOffset = 0f;  // 0 = 바닥
+
+    [Header("배경 전환 연출")]
+    public bool triggerBackgroundFade = false; // 이 대사가 끝나고 배경 전환 발동
+    public Sprite newBackgroundSprite;       // 새로 교체할 배경 이미지
 }
