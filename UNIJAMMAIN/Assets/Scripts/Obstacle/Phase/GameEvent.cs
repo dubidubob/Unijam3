@@ -48,4 +48,5 @@ public struct TextInfo
     public string[] textContents;
     public int monsterCutline;
     public float delayBeat;
+    public CharacterData characterData;
 }

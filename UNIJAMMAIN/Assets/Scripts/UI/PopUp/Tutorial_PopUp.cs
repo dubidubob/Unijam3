@@ -17,6 +17,9 @@ public class Tutorial_PopUp : UI_Popup
     private Vector3 originalPosition;
     private CanvasGroup canvasGroup;
 
+    [SerializeField] private GameObject leftCharacter;
+    [SerializeField] private GameObject rightCharacter;
+
     public override void Init()
     {
         base.Init();

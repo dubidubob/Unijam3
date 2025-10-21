@@ -261,5 +261,6 @@ public class GameManager
     public void GameStart()
     {
         currentPlayerState = PlayerState.Ready; // normal로 바꿔주는건 StartCountUI에서 담당하자.
+        isComboEffect = false;
     }
 }

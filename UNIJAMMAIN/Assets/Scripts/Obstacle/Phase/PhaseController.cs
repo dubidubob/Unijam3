@@ -171,7 +171,7 @@ public class PhaseController : MonoBehaviour
                     beatInterval = 60.0f / nextPhase.bpm;
                     IngameData.GameBpm = (int)nextPhase.bpm;
                     delaySec = nextPhase.startDelayBeat * beatInterval;
-                    durationSec = nextPhase.durationBeat * beatInterval;
+                  
                     IngameData.PhaseDurationSec = durationSec;
                     IngameData.ChangeBpm?.Invoke();
                 }

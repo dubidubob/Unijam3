@@ -135,7 +135,6 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
         while (now >= ScheduledTime(_tick))
         {
-            Debug.Log($"몬스터 스폰 시점 teak {beatClock._tick}");
             _tick++;
             DoSpawn();
         }

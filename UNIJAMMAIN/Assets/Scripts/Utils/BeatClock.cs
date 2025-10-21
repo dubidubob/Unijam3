@@ -54,7 +54,6 @@
             if (!_running || IngameData.Pause) return;
             if (!_initialized)
             {
-                StartClock();
                 _initialized = true;
             
             }
@@ -76,6 +75,7 @@
                 Managers.Sound.Play(phase.chapters[phase._chapterIdx].MusicPath, Define.Sound.BGM);
                StartClock();
                isStart = true;
+            _initialized = true;
             return;
             }
 
