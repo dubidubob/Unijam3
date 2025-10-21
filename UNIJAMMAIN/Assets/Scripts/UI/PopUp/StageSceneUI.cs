@@ -11,6 +11,9 @@ public class StageSceneUI : UI_Popup
     private Button _selectedButton = null;
     private Button _hoveredButton = null;
 
+    private Button upButton;
+    private Button downButton;
+
     // 이미지
     [SerializeField]
     public Sprite deActive;
@@ -123,6 +126,7 @@ public class StageSceneUI : UI_Popup
     {
         Init();
         UpdateStageButtons();
+        UpdateNavigationButtons();
 
         var startButton = GetButton((int)Buttons.StartButton);
         if (startButton != null)
@@ -143,8 +147,8 @@ public class StageSceneUI : UI_Popup
         Bind<Button>(typeof(Buttons));
 
         // Up, Down, Start 버튼의 참조 가져오기
-        var upButton = GetButton((int)Buttons.UpButton);
-        var downButton = GetButton((int)Buttons.DownButton);
+        upButton = GetButton((int)Buttons.UpButton);
+        downButton = GetButton((int)Buttons.DownButton);
         var startButton = GetButton((int)Buttons.StartButton);
         GetButton((int)Buttons.ToMain).gameObject.AddUIEvent(ToMainButtonClicked);
 
@@ -243,7 +247,7 @@ public class StageSceneUI : UI_Popup
                 // [Level 0 -> 1] : y좌표 -295으로 이동
                 MoveTo(yPos: -295f);
                 currentPageLevel = 1;
-                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX);
+                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
 
             case 1:
@@ -277,14 +281,14 @@ public class StageSceneUI : UI_Popup
                 // [Level 1 -> 0] : y좌표 892으로 이동
                 MoveTo(yPos: 892f);
                 currentPageLevel = 0;
-                Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 2f);
+                Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
 
             case 2:
                 // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로 이동
                 RotateAndMoveTo(zRot: 0f, yPos: -295f);
                 currentPageLevel = 1;
-                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 2f);
+                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
         }
     }
@@ -366,6 +370,17 @@ public class StageSceneUI : UI_Popup
                 SetButtonState(button, ButtonState.ClickActive);
             }
         }
+    }
+
+    private void UpdateNavigationButtons()
+    {
+        if (upButton == null || downButton == null) return;
+
+        // Down 버튼: 0 (최하층)이 아닐 때만 활성화
+        downButton.interactable = (currentPageLevel != 0);
+
+        // Up 버튼: 2 (최상층)가 아닐 때만 활성화
+        upButton.interactable = (currentPageLevel != 2);
     }
 
     private void SetButtonState(Button button, ButtonState state)
@@ -457,7 +472,11 @@ public class StageSceneUI : UI_Popup
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
         mapImage.DOAnchorPos(targetPos, moveDuration)
                 .SetEase(moveEase)
-                .OnComplete(() => isAnimating = false); // 애니메이션 완료 시 플래그 해제
+                .OnComplete(() =>
+                {
+                    isAnimating = false;
+                    UpdateNavigationButtons(); // <-- ▼ 여기 추가
+                });
     }
 
     private void RotateAndMoveTo(float zRot, float yPos)
@@ -471,7 +490,11 @@ public class StageSceneUI : UI_Popup
 
         mapImage.DORotate(new Vector3(0, 0, zRot), rotateDuration)
                 .SetEase(moveEase)
-                .OnComplete(() => isAnimating = false); // 애니메이션 완료 시 플래그 해제
+                .OnComplete(() =>
+                {
+                    isAnimating = false;
+                    UpdateNavigationButtons(); // <-- ▼ 여기 추가
+                });
     }
     #endregion
 }
