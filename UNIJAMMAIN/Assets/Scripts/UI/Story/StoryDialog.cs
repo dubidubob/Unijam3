@@ -35,6 +35,7 @@ public class StoryDialog : UI_Popup
 
     [Header("챕터 연출용")]
     public Image saturatedBackground; // [유지] 이 변수는 B층(Layer)으로 계속 사용
+    public Ease backgroundEaseType = Ease.InCubic;
 
     public bool canGoNextStep = true;
     public GameObject shop;
@@ -291,12 +292,12 @@ public class StoryDialog : UI_Popup
                     saturatedBackground.color = new Color(1, 1, 1, 0); // 시작은 확실히 투명하게
 
                     // 2. B층 Fade In (완료 로그 추가)
-                    saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true).OnComplete(() => {
+                    saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType).OnComplete(() => {
                         Debug.Log("B층 Fade In 완료! (알파값: " + saturatedBackground.color.a + ")");
                     });
 
                     // 3. A층 Fade Out (완료 로그 추가)
-                    backGround.DOFade(0f, 2.0f).SetUpdate(true).OnComplete(() => {
+                    backGround.DOFade(0f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType).OnComplete(() => {
                         Debug.Log("A층 Fade Out 완료! (알파값: " + backGround.color.a + ")");
                     });
 
@@ -348,10 +349,15 @@ public class StoryDialog : UI_Popup
                         TextPanel.SetActive(false);
                         StandingImage[0].gameObject.SetActive(false);
                         StandingImage[1].gameObject.SetActive(false);
+
+                        // --- [!!! 이 줄을 추가하세요 !!!] ---
+                        if (TestTexts[idx] != null) // 널 체크 추가
+                            TestTexts[idx].gameObject.SetActive(false);
+                        // --- [!!! 추가 끝 !!!] ---
                     }
                 }
 
-                if (scene.leftSDAnim)
+                    if (scene.leftSDAnim)
                 {
                     var leftAnim = leftSDCharacter.GetComponent<DOTweenAnimation>();
                     var leftSR = leftSDCharacter.GetComponent<SpriteRenderer>();
@@ -466,7 +472,15 @@ public class StoryDialog : UI_Popup
                 float elapsed = 0f;
                 while (elapsed < targetDuration)
                 {
-                    elapsed = Time.unscaledTime - startTime;
+                    // --- [!!! 스킵 체크 추가 !!!] ---
+                    // 딜레이 중에도 X 누르면 즉시 LoopEnd로 점프
+                    if (skipAllRequested)
+                    {
+                        goto LoopEnd;
+                    }
+                    // --- [!!! 추가 끝 !!!] ---
+
+                    elapsed = Time.unscaledTime - startTime;
                     yield return null;
                 }
                 Time.timeScale = 0f;
@@ -478,7 +492,7 @@ public class StoryDialog : UI_Popup
 
 
         LoopEnd:
-        Coroutine skipFadeCoroutine = null; // 새 코루틴 참조 저장용 변수
+        Coroutine skipFadeCoroutine = null;
 
         // --- [!!! 스킵 시 최종 배경 '페이드 코루틴 호출' 코드로 수정 !!!] ---
         if (skipAllRequested) // X키로 스킵했을 때만 실행
@@ -507,8 +521,32 @@ public class StoryDialog : UI_Popup
         // 만약 스킵 페이드 코루틴이 시작되었다면, 끝날 때까지 기다림
         if (skipFadeCoroutine != null)
         {
-            yield return skipFadeCoroutine;
-            Debug.Log("스킵 페이드 코루틴 완료. LastOutAnimation 시작.");
+            // LastOutAnimation()을 직접 호출하는 대신,
+            // "UI 페이드아웃"과 "백그라운드 페이드"를 동시에 진행시킵니다.
+
+            // 1. LastOutAnimation()과 동일한 UI 페이드아웃 로직을 수동으로 시작
+            CanvasGroup canvasGroup = contents.GetComponent<CanvasGroup>();
+            //canvasGroup.alpha = 1;
+            yield return new WaitForSecondsRealtime(0.4f);
+
+            // UI 페이드 아웃 시작 (0.6초)
+            canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
+
+            // 2. 이제 백그라운드 페이드(skipFadeCoroutine, 2초)가 끝날 때까지 기다립니다.
+            //    UI 페이드(총 1.0초)는 이 2초 대기 시간 안에 자연스럽게 완료됩니다.
+            yield return skipFadeCoroutine;
+
+            Debug.Log("스킵 백그라운드/UI 페이드 동시 완료. 씬 이동.");
+
+            // 3. 모든 페이드가 끝났으므로 씬을 이동합니다.
+            SceneMoving();
+        }
+        else
+        {
+            // 스킵은 했지만 백그라운드 연출이 없거나(skipFadeCoroutine == null),
+            // 스킵하지 않고 정상 종료된 경우,
+            // 기존과 동일하게 LastOutAnimation()을 호출합니다. (UI페이드 + 씬 이동)
+            StartCoroutine(LastOutAnimation());
         }
         // --- [!!! 추가 끝 !!!] ---
 
@@ -539,7 +577,7 @@ public class StoryDialog : UI_Popup
     {
         CanvasGroup canvasGroup;
         canvasGroup = contents.GetComponent<CanvasGroup>();
-        canvasGroup.alpha = 1;
+        //canvasGroup.alpha = 1;
         yield return new WaitForSecondsRealtime(0.4f);
         // 1�ʿ� ���� alpha 1�� ����
         canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
@@ -563,8 +601,8 @@ public class StoryDialog : UI_Popup
 
             // 2. B층 Fade In & A층 Fade Out (동시 시작)
             //    DOTween 트윈 자체를 변수에 저장
-            Tween fadeB = saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true);
-            Tween fadeA = backGround.DOFade(0f, 2.0f).SetUpdate(true);
+            Tween fadeB = saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType);
+            Tween fadeA = backGround.DOFade(0f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType);
 
             // 3. 두 페이드가 모두 완료될 때까지 기다림 (WaitForSecondsRealtime 대신 사용)
             yield return fadeB.WaitForCompletion();
