@@ -741,7 +741,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    spriteYOffset: 0
+    spriteYOffset: 40
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
@@ -887,7 +887,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    spriteYOffset: 0
+    spriteYOffset: 40
     triggerBackgroundFade: 1
     newBackgroundSprite: {fileID: 21300000, guid: 2252cadf993bd7543be64dc9ce651355, type: 3}
   saturatedBackground: {fileID: 7228774243720782901}
@@ -1297,8 +1297,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 319.7495, y: 1157.1818}
-  m_SizeDelta: {x: 576.5011, y: 632.3635}
+  m_AnchoredPosition: {x: 320, y: 1160}
+  m_SizeDelta: {x: 577, y: 633}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2362226654977787945
 CanvasRenderer:
