@@ -319,6 +319,22 @@ public class StoryDialog : UI_Popup
                     Debug.Log($"Fade 시작 전: B층 활성 상태 = {saturatedBackground.gameObject.activeInHierarchy}");
                     // --- [!!! 추가 끝 !!!] ---
 
+                    if (currentStoryBackground != null && backGround.sprite != currentStoryBackground)
+                    {
+                        Debug.LogWarning($"Pre-Fade Check: Background sprite mismatch! " +
+                                         $"Expected '{currentStoryBackground.name}', found '{backGround.sprite.name}'. Restoring.");
+                        backGround.sprite = currentStoryBackground;
+                        // 알파값도 페이드아웃 시작 전 상태(불투명=1)로 강제 복구
+                        backGround.color = new Color(1, 1, 1, 1);
+                    }
+                    else if (currentStoryBackground == null) // 비상 상황 체크
+                    {
+                        Debug.LogError("Pre-Fade Check: currentStoryBackground is null!");
+                        // static 변수가 null이면 어쩔 수 없이 기본 이미지라도 설정
+                        backGround.sprite = backGroundImage;
+                        backGround.color = new Color(1, 1, 1, 1);
+                    }
+
                     // 1. B층 설정
                     saturatedBackground.sprite = scene.newBackgroundSprite;
                     saturatedBackground.color = new Color(1, 1, 1, 0); // 시작은 확실히 투명하게
@@ -328,10 +344,10 @@ public class StoryDialog : UI_Popup
                         Debug.Log("B층 Fade In 완료! (알파값: " + saturatedBackground.color.a + ")");
                     });
 
-                    // 3. A층 Fade Out (완료 로그 추가)
-                    backGround.DOFade(0f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType).OnComplete(() => {
-                        Debug.Log("A층 Fade Out 완료! (알파값: " + backGround.color.a + ")");
-                    });
+                    //// 3. A층 Fade Out (완료 로그 추가)
+                    //backGround.DOFade(0f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType).OnComplete(() => {
+                    //    Debug.Log("A층 Fade Out 완료! (알파값: " + backGround.color.a + ")");
+                    //});
 
                     // 4. 대기 (2초 대기 대신, 'fadeB' 트윈이 끝날 때까지 대기)
                     yield return fadeB.WaitForCompletion();
@@ -555,6 +571,15 @@ public class StoryDialog : UI_Popup
             }
         }
 
+        if (currentStoryBackground != null && backGround.sprite != currentStoryBackground)
+        {
+            Debug.LogWarning($"LoopEnd: Background sprite mismatch! " +
+                             $"Expected '{currentStoryBackground.name}', found '{backGround.sprite.name}'. Restoring.");
+            backGround.sprite = currentStoryBackground;
+            // 알파값도 페이드 아웃 시작 전 상태(불투명)로 강제 설정
+            backGround.color = new Color(1, 1, 1, 1);
+        }
+
         // 2. UI 페이드 아웃 **시작** (아직 기다리지 않음)
         CanvasGroup canvasGroup = contents.GetComponent<CanvasGroup>();
         yield return new WaitForSecondsRealtime(0.4f); // 기존 딜레이
@@ -639,10 +664,26 @@ public class StoryDialog : UI_Popup
             saturatedBackground.sprite = finalBackground;
             saturatedBackground.color = new Color(1, 1, 1, 0);
 
+            if (currentStoryBackground != null && backGround.sprite != currentStoryBackground)
+            {
+                Debug.LogWarning($"FadeBackgroundAfterSkip: Background sprite mismatch just before fade! " +
+                                 $"Expected '{currentStoryBackground.name}', found '{backGround.sprite.name}'. Restoring.");
+                backGround.sprite = currentStoryBackground;
+                // 알파값도 혹시 모르니 불투명(1)으로 재설정
+                backGround.color = new Color(1, 1, 1, 1);
+            }
+            else if (currentStoryBackground == null)
+            {
+                Debug.LogError("FadeBackgroundAfterSkip: currentStoryBackground is null!");
+                // 비상: currentStoryBackground가 null이면 기본 이미지라도 설정 (오류 상황)
+                backGround.sprite = backGroundImage;
+                backGround.color = new Color(1, 1, 1, 1);
+            }
+
             // 2. B층 Fade In & A층 Fade Out (동시 시작)
             //    DOTween 트윈 자체를 변수에 저장
             Tween fadeB = saturatedBackground.DOFade(1f, 2.5f).SetUpdate(true).SetEase(backgroundEaseType);
-            Tween fadeA = backGround.DOFade(0f, 2.5f).SetUpdate(true).SetEase(backgroundEaseType);
+            //Tween fadeA = backGround.DOFade(0f, 2.5f).SetUpdate(true).SetEase(backgroundEaseType);
 
             // 3. 두 페이드가 모두 완료될 때까지 기다림 (WaitForSecondsRealtime 대신 사용)
             yield return fadeB.WaitForCompletion();
