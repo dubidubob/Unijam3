@@ -15,6 +15,8 @@ public class StoryDialog : UI_Popup
     public Sprite backGroundImage;
     public Image backGround;
 
+    private static Sprite currentStoryBackground = null;
+
     public Text[] TestTexts;
     public Image[] StandingImage;
     public GameObject TextPanel;
@@ -83,7 +85,7 @@ public class StoryDialog : UI_Popup
     private void OnEnable()
     {
         Time.timeScale = 0f;
-        backGround.sprite = backGroundImage;
+
         StartCoroutine(TypingCoroutine());
     }
 
@@ -91,6 +93,33 @@ public class StoryDialog : UI_Popup
     {
         panelRect.anchoredPosition = originalPanelPos;
         skipAllRequested = false; // 코루틴 시작 시 초기화
+
+        // --- ▼ 여기에 배경 설정 코드를 추가합니다 ▼ ---
+        // 1. 코루틴 시작 시, static에 저장된 배경이 있는지 확인
+        if (currentStoryBackground != null)
+        {
+            backGround.sprite = currentStoryBackground;
+        }
+        else
+        {
+            // 2. static이 null이면(첫 시작) 인스펙터의 기본 이미지 사용
+            backGround.sprite = backGroundImage;
+            currentStoryBackground = backGroundImage; // static에 저장
+        }
+
+        // 3. (중요) 첫 씬이 '즉시 페이드' 트리거를 가졌는지 확인
+        if (scenes.Count > 0 && scenes[0].triggerBackgroundFade && scenes[0].preDelay == 0)
+        {
+            // 첫 씬이 즉시(preDelay=0) 페이드아웃/인 하는 씬이라면,
+            // 기본 배경이 깜박이는 것을 막기 위해 A층(backGround)을 투명하게 시작합니다.
+            backGround.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            // 일반적인 씬은 A층을 불투명하게 시작
+            backGround.color = new Color(1, 1, 1, 1);
+        }
+        // --- ▲ 추가 끝 ▲ ---
 
         for (int idx = 0; idx < scenes.Count; idx++)
         {
@@ -307,6 +336,7 @@ public class StoryDialog : UI_Popup
 
                     // 5. 레이어 교체
                     backGround.sprite = scene.newBackgroundSprite;
+                    currentStoryBackground = scene.newBackgroundSprite;
                     backGround.color = new Color(1, 1, 1, 1);
                     saturatedBackground.color = new Color(1, 1, 1, 0);
 
@@ -538,6 +568,8 @@ public class StoryDialog : UI_Popup
 
             Debug.Log("스킵 백그라운드/UI 페이드 동시 완료. 씬 이동.");
 
+            //currentStoryBackground = null;
+
             // 3. 모든 페이드가 끝났으므로 씬을 이동합니다.
             SceneMoving();
         }
@@ -550,7 +582,7 @@ public class StoryDialog : UI_Popup
         }
         // --- [!!! 추가 끝 !!!] ---
 
-        StartCoroutine(LastOutAnimation());
+        //StartCoroutine(LastOutAnimation());
 
     }
 
@@ -583,6 +615,7 @@ public class StoryDialog : UI_Popup
         canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
 
         yield return new WaitForSecondsRealtime(0.6f);
+        //currentStoryBackground = null;
         SceneMoving();
         
     }
@@ -612,6 +645,7 @@ public class StoryDialog : UI_Popup
 
             // 4. 레이어 교체
             backGround.sprite = finalBackground;
+            currentStoryBackground = finalBackground;
             backGround.color = new Color(1, 1, 1, 1);
             saturatedBackground.color = new Color(1, 1, 1, 0); // B층 다시 숨김
             Debug.Log("스킵 페이드 코루틴: 레이어 교체 완료.");
