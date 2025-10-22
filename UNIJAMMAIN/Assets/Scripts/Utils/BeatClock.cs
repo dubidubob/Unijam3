@@ -27,6 +27,7 @@
         {
             IngameData.ChangeBpm -= HandleBpmChange;
             IngameData.ChangeBpm += HandleBpmChange;
+              Managers.Game.beatClock = this;
             
         }
 
@@ -67,6 +68,7 @@
             _lastBpmChangeTick = currentTick;
             _beatInterval = IngameData.BeatInterval;
         }
+
 
         void Update()
         {
@@ -130,4 +132,9 @@
             // ScheduledTime과 동일한 로직을 사용 (수정 필요 없음)
             return _lastBpmChangeDspTime + (tick - _lastBpmChangeTick) * _beatInterval;
         }
-    }
+
+        public void GetNowTickDebugLog()
+        {
+        Debug.Log($"몬스터 처치 틱 : {_tick}");
+        }
+}

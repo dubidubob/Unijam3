@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
-
-[Serializable]
-public struct WASDPosition
-{
-    public WASDType WASDType;
-    public GameObject spawnPos;
-    public GameObject targetPos;
-    public Vector2 playerPos;
-}
 
 public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 {
     [SerializeField] EnemyTypeSO enemyTypeSO;
     [SerializeField] WASDPosition[] positions;
-    [SerializeField] Vector2 sizeDiffRate = new Vector2 (0.8f, 1.2f);
-    
+    [SerializeField] Vector2 sizeDiffRate = new Vector2(0.8f, 1.2f);
+
     [SerializeField] Collider2D holder;
 
     public BeatClock beatClock;
@@ -26,15 +16,26 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     private HitJudge _rank;
     private Vector3 _playerPos;
 
-    private double _pauseStartTime;
+    // [MOVED] 패턴별 상태 변수들이 WASDPatternInstance로 이동했습니다.
+    // (e.g., _data, _tick, _spawning, _startDsp, _lastSpawnTime, _spawnPointString, _count, _pauseStartTime)
+
+    // [NEW] 현재 활성화된 모든 스폰 패턴(페이지)을 관리하는 리스트
+    private List<WASDPatternInstance> _activePatterns = new List<WASDPatternInstance>();
+    // [NEW] 리스트 순회 중 안전하게 제거하기 위한 목록
+    private List<WASDPatternInstance> _patternsToRemove = new List<WASDPatternInstance>();
+
+    // [MOVED] QA용 변수들은 스포너에 남아있되, 자식 인스턴스가 참조할 수 있도록 getter 제공
+    [SerializeField] private int _maxCnt = 1;
+    [SerializeField] private int[] _idx = { 0, 1, 2, 3 };
+    public int GetMaxCnt() => _maxCnt;
+    public int[] GetIdx() => _idx;
+
 
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
     private void Start()
     {
         Init();
-        _spawnPointString = null;
-
         _rank = new HitJudge(holder.bounds.size.x, holder.bounds.size.y);
         _playerPos = GameObject.FindWithTag("Player").transform.position;
 
@@ -50,217 +51,143 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         PauseManager.IsPaused -= PauseForWhile;
     }
 
-    private void UpdateRankCnt(RankNode rankNode)
-    {
-        Vector2 target = _targetPosition[rankNode.WASDT];
-        _rank.UpdateRankCnt(rankNode, target);
-    }
-
-    private void Init()
+    private void Init() // (기존과 동일)
     {
         _spawnPosition = new Dictionary<WASDType, Vector2>();
         _targetPosition = new Dictionary<WASDType, Vector2>();
-
         for (int i = 0; i < positions.Length; i++)
         {
             var p = positions[i];
-
             _spawnPosition[p.WASDType] = p.spawnPos.transform.position;
             _targetPosition[p.WASDType] = p.targetPos.transform.position;
         }
     }
 
-    private double _spawnInterval; // 기본 스폰 간격
-    private long _tick; // 박자
-    private MonsterData _data; 
-    private bool _spawning = false;
-    private double _startDsp;
-    private double _lastSpawnTime;
-    private string _spawnPointString = null;
-    private int _count=0;
-    public void Spawn(MonsterData data)
+    private void UpdateRankCnt(RankNode rankNode) // (기존과 동일)
     {
-        _data = data;
-        _spawnInterval = (IngameData.BeatInterval * data.spawnBeat)/data.speedUpRate;
-        _tick = 0;
-        _count = 0;
-        _startDsp = beatClock.GetScheduledDspTimeForTick(beatClock._tick);
-        SetLastSpawnTime(data.moveBeat);
-        _spawning = true;
-        _spawnPointString = data.WASD_Pattern;
-       
+        Vector2 target = _targetPosition[rankNode.WASDT];
+        _rank.UpdateRankCnt(rankNode, target);
     }
 
-    public void UnSpawn()
+    /**
+     * [REFACTORED] ISpawnable.Spawn
+     * 새 스폰 패턴 인스턴스를 생성하고 리스트에 추가한 뒤 반환합니다.
+     */
+    public ISpawnable.ISpawnInstance Spawn(MonsterData data)
     {
-        _spawning = false;
+        // 1. 현재 dspTime을 기준으로 새 패턴 인스턴스 생성
+        double startDsp = beatClock.GetScheduledDspTimeForTick(beatClock._tick);
+        WASDPatternInstance newPattern = new WASDPatternInstance(this, data, startDsp);
+
+        // 2. 활성 리스트에 추가
+        _activePatterns.Add(newPattern);
+
+        // 3. 제어 핸들(인스턴스) 반환
+        return newPattern;
     }
 
-    private double CachedTime;
-    private double leftOverTime;
+    /**
+     * [REFACTORED] ISpawnable.UnSpawnAll (기존 UnSpawn)
+     * 모든 활성 패턴을 중지하고 리스트를 비웁니다.
+     */
+    public void UnSpawnAll()
+    {
+        _activePatterns.Clear();
+    }
+
+    /**
+     * [NEW] 특정 패턴 인스턴스가 스스로 중지할 때 호출됩니다.
+     */
+    public void RemovePattern(WASDPatternInstance pattern)
+    {
+        // Update()에서 순회 중 리스트가 변경되는 것을 막기 위해
+        // 제거 목록에 추가했다가 나중에 처리합니다.
+        _patternsToRemove.Add(pattern);
+    }
+
+    /**
+     * [REFACTORED] PauseForWhile
+     * 모든 활성 패턴에 대해 일시정지를 적용합니다.
+     */
     public void PauseForWhile(bool isStop)
     {
-        _spawning = !isStop;
-
-        if (isStop)
+        double dspTime = AudioSettings.dspTime;
+        foreach (var pattern in _activePatterns)
         {
-            _pauseStartTime = AudioSettings.dspTime;
-        }
-        else
-        {
-            if (_pauseStartTime > 0)
-            {
-                double pausedDuration = AudioSettings.dspTime - _pauseStartTime;
-
-                // 시작 시간과 함께 종료 시간도 Puzse된 시간만큼 뒤로 밀어줍니다.
-                _startDsp += pausedDuration;
-                _lastSpawnTime += pausedDuration; // <-- 이 한 줄을 추가하면 해결됩니다!
-
-                _pauseStartTime = 0; // 초기화
-            }
+            pattern.PauseForWhile(isStop, dspTime);
         }
     }
 
-
+    /**
+     * [REFACTORED] Update
+     * 모든 활성 패턴의 Tick()을 호출합니다.
+     */
     private void Update()
     {
-        if (!_spawning) return;
+        if (_activePatterns.Count == 0) return;
 
         double now = AudioSettings.dspTime;
-        if (now > _lastSpawnTime)
-        {
-            UnSpawn();
-            return;
-        } 
 
-        while (now >= ScheduledTime(_tick))
+        // 모든 활성 패턴을 순회하며 Tick 실행
+        // (리스트 순회 중 삭제가 발생할 수 있으므로 역방향 순회 또는 임시 리스트 사용)
+        for (int i = _activePatterns.Count - 1; i >= 0; i--)
         {
-            _tick++;
-            DoSpawn();
+            _activePatterns[i].Tick(now);
+        }
+
+        // 중지 요청된 패턴들(스스로 Stop()을 호출한)을 리스트에서 제거
+        if (_patternsToRemove.Count > 0)
+        {
+            foreach (var pattern in _patternsToRemove)
+            {
+                _activePatterns.Remove(pattern);
+            }
+            _patternsToRemove.Clear();
         }
     }
 
-    private double ScheduledTime(long tickIndex)
-    => _startDsp + tickIndex * _spawnInterval;
-    
-    int _maxCnt = 1;
-    int[] _idx = { 0, 1, 2, 3 };
-    private void DoSpawn()
-    {
-        int cnt = UnityEngine.Random.Range(1, _maxCnt + 1);
-       
-        for (int i = 0; i < cnt; i++)
-        {
-            WASDType enemyType = WASDType.None;
-            if (Managers.Game.CurrentState == GameManager.GameState.Battle&&_spawnPointString!=null)
-            {
-                if (_count < _spawnPointString.Length)// 출력가능하다면
-                {
-                    if(_spawnPointString[_count]=='(') // 동시출력
-                    {
-                        _count++; 
-                        while (_spawnPointString[_count]!=')')
-                        {
-                            enemyType = SettingWASD_Type(_spawnPointString[_count]);
-                            if (enemyType == WASDType.None)
-                                continue;
+    // [MOVED] DoSpawn, SettingWASD_Type 등은 WASDPatternInstance로 이동했습니다.
+    // [MOVED] ScheduledTime, SetLastSpawnTime 등도 WASDPatternInstance로 이동했습니다.
 
-                            PoolEnemySpawn(enemyType);
-                            _count++; 
-                        }
-                        _count++;
 
-                        return;
-                    }
-
-                    enemyType = SettingWASD_Type(_spawnPointString[_count++]);
-                    if (enemyType == WASDType.None)
-                    {
-                        continue;
-                    }    
-                    else if (enemyType == WASDType.Random) // 랜덤이라면
-                    {
-                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로
-                        PoolEnemySpawn(enemyType);
-                    }
-                    else
-                    {
-                        PoolEnemySpawn(enemyType);
-                    }
-                }
-
-                else
-                {
-                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
-                    PoolEnemySpawn(enemyType);
-                }
-            }
-            else
-            {
-                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
-                PoolEnemySpawn(enemyType);
-            }
-        }
-    }
-
-    float threshold = 0.1f;
-
-    private void PoolEnemySpawn(WASDType enemyType)
+    /**
+     * [MODIFIED]
+     * 이제 MonsterData를 인스턴스로부터 전달받습니다.
+     * 이 메서드는 모든 인스턴스가 공유합니다.
+     */
+    public void PoolEnemySpawn(WASDType enemyType, MonsterData data)
     {
         IngameData.TotalMobCnt++;
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
         GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
         go.transform.position = _spawnPosition[enemyType];
 
-        VariableSetting(go.GetComponent<MovingEnemy>(), enemyType);
-    }
-    public void SetLastSpawnTime(float? moveBeat=1)
-    {
-        if (IngameData.PhaseDurationSec == 0)
-            Debug.LogWarning("Set Up Phase Duration!");
-        
-        _lastSpawnTime = _startDsp + IngameData.PhaseDurationSec - (IngameData.BeatInterval * (float)moveBeat) + threshold;
+        VariableSetting(go.GetComponent<MovingEnemy>(), enemyType, data);
     }
 
-    #region Variable
-    private void VariableSetting(MovingEnemy movingEnemy, WASDType type)
+    /**
+     * [MODIFIED]
+     * MonsterData를 인스턴스로부터 전달받습니다.
+     */
+    private void VariableSetting(MovingEnemy movingEnemy, WASDType type, MonsterData data)
     {
         float distance = Vector3.Distance(_spawnPosition[type], _targetPosition[type]);
-        movingEnemy.SetVariance(distance, _data, sizeDiffRate, _playerPos, type,_data.monsterType);
+        // [수정] _data 대신 매개변수 data 사용
+        movingEnemy.SetVariance(distance, data, sizeDiffRate, _playerPos, type, data.monsterType);
     }
 
+    #region QA
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)
     {
         this.sizeDiffRate = sizeDiffRate;
         this._maxCnt = Mathf.Clamp(maxCnt, 1, 4);
         this._idx = idx;
-    }
 
-    private WASDType SettingWASD_Type(char type)
-    {
-        if (type == 'A')
-        {
-            return WASDType.A;
-        }
-        else if (type =='W')
-        {
-            return WASDType.W;
-        }
-        else if(type=='S')
-        {
-            return WASDType.S;
-        }
-        else if(type=='D')
-        {
-            return WASDType.D;
-        }
-        else if(type=='R')
-        {
-            return WASDType.Random;
-        }
-
-        return WASDType.None;
+        // [NEW] 이미 실행 중인 패턴에도 QA 변경사항을 적용할 수 있습니다 (선택적)
+        // foreach(var pattern in _activePatterns)
+        // {
+        //     pattern.UpdateQASettings(_maxCnt, _idx);
+        // }
     }
     #endregion
 }
-

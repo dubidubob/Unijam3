@@ -36,6 +36,7 @@ public class GameManager
     public Accuracy accuracy;
     public PlayerActionUI actionUI;
     public MonsterDatabaseSO monster;
+    public BeatClock beatClock;
 
     
     public int perfect = 0;

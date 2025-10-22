@@ -134,11 +134,18 @@ public class PhaseController : MonoBehaviour
             targetTick += delayBeats;
             yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(delaySec) 대체
 
+            // --- 2. Duration 구간 처리 ---
+            long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
+            targetTick += durationBeats;
+           
+            // 미리 생성 가능하게끔
+            
+           
             // [기존 로직 복원] Delay가 끝난 직후에 실행되어야 할 로직들을 호출합니다.
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                Debug.Log($"<color=cyan>PhaseEvent [{i}] Identified! Attempting to spawn monsters. MonsterData count: {phaseEventAfterDelay.MonsterDatas.Count}</color>");
-                SpawnMonsters(phaseEventAfterDelay);
+                Debug.Log($"<color=cyan>PhaseEvent [{i}] Identified! Attempting to spawn monsters. MonsterData count: {phaseEventAfterDelay.MonsterDatas.Count}</color> at {beatClock._tick}");
+                SpawnMonsters(phaseEventAfterDelay,targetTick);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
             {
@@ -146,10 +153,7 @@ public class PhaseController : MonoBehaviour
                     TutorialStoped?.Invoke(false);
             }
 
-            // --- 2. Duration 구간 처리 ---
-            long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
-            targetTick += durationBeats;
-            // 미리 생성 가능하게끔
+
             if (i + 1 < chapters[_chapterIdx].Phases.Count)
             {
                 var next = chapters[_chapterIdx].Phases[i + 1];
@@ -158,6 +162,7 @@ public class PhaseController : MonoBehaviour
                     targetTick -= (int)next.preGenerateBeat;
                 }
             }
+
             yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(durationSec) 대체
 
             // --- 3. 다음 페이즈 준비 ---
@@ -198,9 +203,9 @@ public class PhaseController : MonoBehaviour
             ChangeKey?.Invoke(-1f);
         }
     }
-    private void SpawnMonsters(PhaseEvent phaseEvent)
-    {        
-        spawnController.SpawnMonsterInPhase(phaseEvent.MonsterDatas);
+    private void SpawnMonsters(PhaseEvent phaseEvent,long targetTick)
+    {
+        StartCoroutine(spawnController.SpawnUntilTargetTick(phaseEvent.MonsterDatas,targetTick));
     }
     
     private void HandleTutorialEvent(TutorialEvent tutorialEvent)
