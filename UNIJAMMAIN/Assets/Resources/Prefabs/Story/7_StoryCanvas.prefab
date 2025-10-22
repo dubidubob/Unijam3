@@ -507,7 +507,7 @@ MonoBehaviour:
     requiredKey: 0
     spriteYOffset: 0
     triggerBackgroundFade: 1
-    newBackgroundSprite: {fileID: 21300000, guid: 61f212a0fd451ce48a5a1042eeecbe5b, type: 3}
+    newBackgroundSprite: {fileID: 21300000, guid: edb50ec8754eb4e49a9dd5fa326c6789, type: 3}
   - speakingCharacterData: {fileID: 11400000, guid: 6fe687df23df05e41b6485c560f6ce69, type: 2}
     isFirstAppearance: 0
     text: "\uC5EC\uAE30\uB294, \uBAA8\uB4E0 \uAC83\uC774 \uC870\uD654\uB86D\uACE0,
@@ -655,8 +655,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
-    triggerBackgroundFade: 0
-    newBackgroundSprite: {fileID: 0}
+    triggerBackgroundFade: 1
+    newBackgroundSprite: {fileID: 21300000, guid: 37ca97700bb5ca44cb3d0147b3639a31, type: 3}
   - speakingCharacterData: {fileID: 11400000, guid: 6fe687df23df05e41b6485c560f6ce69, type: 2}
     isFirstAppearance: 0
     text: "...\uB124 \uC2A4\uC2B9\uB3C4, \uCC98\uC74C\uC5D0\uB294 \uADF8\uB7F0 \uB9D0\uC744
@@ -738,8 +738,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
-    triggerBackgroundFade: 0
-    newBackgroundSprite: {fileID: 0}
+    triggerBackgroundFade: 1
+    newBackgroundSprite: {fileID: 21300000, guid: 92a6186a76a1fa648adf17f0b7b42b33, type: 3}
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "...\uC2A4\uC2B9\uB2D8\uC758 \uB9C8\uC9C0\uB9C9\uC744 \uBD24\uC5C8\uC9C0.
