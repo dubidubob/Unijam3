@@ -1058,6 +1058,7 @@ MonoBehaviour:
     triggerBackgroundFade: 1
     newBackgroundSprite: {fileID: 21300000, guid: 45e36b61c356513438fdc1eb0895bfac, type: 3}
   saturatedBackground: {fileID: 957832528194967327}
+  backgroundEaseType: 8
   canGoNextStep: 1
   shop: {fileID: 0}
   leftSDAnimSet: []

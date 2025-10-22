@@ -124,6 +124,7 @@ public class StageSceneUI : UI_Popup
 
     private void Start()
     {
+        StoryDialog.ResetStoryBackground();
         Init();
         UpdateStageButtons();
         UpdateNavigationButtons();

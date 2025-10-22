@@ -61,6 +61,36 @@ public class StoryDialog : UI_Popup
         originalLeftImagePos = StandingImage[0].GetComponent<RectTransform>().anchoredPosition;
         originalRightImagePos = StandingImage[1].GetComponent<RectTransform>().anchoredPosition;
 
+        // --- ▼ 배경 설정 로직을 TypingCoroutine에서 여기로 이동 ▼ ---
+
+        // 1. Awake 시점(OnEnable/첫 프레임 렌더링 전)에 static 배경 확인
+        // (MainTitle에서 ResetStoryBackground()가 호출되었다고 가정)
+        if (currentStoryBackground != null)
+        {
+            backGround.sprite = currentStoryBackground;
+        }
+        else
+        {
+            // 2. static이 null이면(첫 시작) 인스펙터의 기본 이미지 사용
+            backGround.sprite = backGroundImage;
+            currentStoryBackground = backGroundImage; // static에 저장
+        }
+
+        // 3. (중요) 첫 씬이 '즉시 페이드' 트리거를 가졌는지 확인
+        // (scenes 리스트가 Awake 시점에 Inspector에서 할당되었다고 가정)
+        if (scenes != null && scenes.Count > 0 && scenes[0].triggerBackgroundFade && scenes[0].preDelay == 0)
+        {
+            // 첫 씬이 즉시(preDelay=0) 페이드아웃/인 하는 씬이라면,
+            // A층(backGround)을 완전 투명하게 시작해서 깜박임을 원천 차단합니다.
+            backGround.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            // 일반적인 씬은 A층을 불투명하게 시작
+            backGround.color = new Color(1, 1, 1, 1);
+        }
+        // --- ▲ 이동 끝 ▲ ---
+
         Managers.Sound.Play(musicPath, Define.Sound.BGM);
         StartCoroutine(FirstInAnimation());
     }
@@ -93,33 +123,6 @@ public class StoryDialog : UI_Popup
     {
         panelRect.anchoredPosition = originalPanelPos;
         skipAllRequested = false; // 코루틴 시작 시 초기화
-
-        // --- ▼ 여기에 배경 설정 코드를 추가합니다 ▼ ---
-        // 1. 코루틴 시작 시, static에 저장된 배경이 있는지 확인
-        if (currentStoryBackground != null)
-        {
-            backGround.sprite = currentStoryBackground;
-        }
-        else
-        {
-            // 2. static이 null이면(첫 시작) 인스펙터의 기본 이미지 사용
-            backGround.sprite = backGroundImage;
-            currentStoryBackground = backGroundImage; // static에 저장
-        }
-
-        // 3. (중요) 첫 씬이 '즉시 페이드' 트리거를 가졌는지 확인
-        if (scenes.Count > 0 && scenes[0].triggerBackgroundFade && scenes[0].preDelay == 0)
-        {
-            // 첫 씬이 즉시(preDelay=0) 페이드아웃/인 하는 씬이라면,
-            // 기본 배경이 깜박이는 것을 막기 위해 A층(backGround)을 투명하게 시작합니다.
-            backGround.color = new Color(1, 1, 1, 0);
-        }
-        else
-        {
-            // 일반적인 씬은 A층을 불투명하게 시작
-            backGround.color = new Color(1, 1, 1, 1);
-        }
-        // --- ▲ 추가 끝 ▲ ---
 
         for (int idx = 0; idx < scenes.Count; idx++)
         {
@@ -320,8 +323,8 @@ public class StoryDialog : UI_Popup
                     saturatedBackground.sprite = scene.newBackgroundSprite;
                     saturatedBackground.color = new Color(1, 1, 1, 0); // 시작은 확실히 투명하게
 
-                    // 2. B층 Fade In (완료 로그 추가)
-                    saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType).OnComplete(() => {
+                    // 2. B층 Fade In (트윈을 'fadeB' 변수에 저장)
+                    Tween fadeB = saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType).OnComplete(() => {
                         Debug.Log("B층 Fade In 완료! (알파값: " + saturatedBackground.color.a + ")");
                     });
 
@@ -330,9 +333,9 @@ public class StoryDialog : UI_Popup
                         Debug.Log("A층 Fade Out 완료! (알파값: " + backGround.color.a + ")");
                     });
 
-                    // 4. 대기
-                    yield return new WaitForSecondsRealtime(2.0f); // 2초 대기
-                    Debug.Log("2초 대기 완료. 레이어 교체 시도...");
+                    // 4. 대기 (2초 대기 대신, 'fadeB' 트윈이 끝날 때까지 대기)
+                    yield return fadeB.WaitForCompletion();
+                    Debug.Log("fadeB 트윈 완료. 레이어 교체 시도...");
 
                     // 5. 레이어 교체
                     backGround.sprite = scene.newBackgroundSprite;
@@ -522,65 +525,69 @@ public class StoryDialog : UI_Popup
 
 
         LoopEnd:
-        Coroutine skipFadeCoroutine = null;
+        // --- ▼▼▼ 수정된 LoopEnd 로직 ▼▼▼ ---
+        Sprite finalBackground = null;         // 최종 배경 저장용
+        Coroutine backgroundFadeCoroutine = null; // 배경 페이드 코루틴 저장용
 
-        // --- [!!! 스킵 시 최종 배경 '페이드 코루틴 호출' 코드로 수정 !!!] ---
-        if (skipAllRequested) // X키로 스킵했을 때만 실행
-        {
-            // 건너뛴 씬들 중에 배경 전환이 있었는지 역순으로 찾음
-            Sprite finalBackground = null;
-            for (int i = scenes.Count - 1; i >= 0; i--)
+        // 1. 최종 배경 결정 (스킵 or 정상 종료)
+        if (skipAllRequested) // X키 스킵
+        {
+            // 역순으로 마지막 배경 찾기 (기존과 동일)
+            for (int i = scenes.Count - 1; i >= 0; i--)
             {
                 if (scenes[i].triggerBackgroundFade && scenes[i].newBackgroundSprite != null)
                 {
                     finalBackground = scenes[i].newBackgroundSprite;
-                    break; // 가장 마지막(최종) 배경만 찾으면 됨
+                    break;
                 }
             }
-
-            // 최종 배경이 발견되었고 현재 배경과 다르다면 새 코루틴 시작
-            if (finalBackground != null && backGround.sprite != finalBackground)
+        }
+        else // 스페이스바로 정상 종료
+        {
+            // 맨 마지막 씬에 배경 전환 트리거가 있었는지 확인
+            if (scenes.Count > 0)
             {
-                Debug.Log("스킵으로 인한 최종 배경 페이드 코루틴 호출: " + finalBackground.name);
-                skipFadeCoroutine = StartCoroutine(FadeBackgroundAfterSkip(finalBackground));
+                DialogueScene lastScene = scenes[scenes.Count - 1];
+                if (lastScene.triggerBackgroundFade && lastScene.newBackgroundSprite != null)
+                {
+                    finalBackground = lastScene.newBackgroundSprite;
+                }
             }
         }
-        // --- [!!! 수정 끝 !!!] ---
 
-        // --- [!!! 새 코루틴 완료 대기 코드 추가 !!!] ---
-        // 만약 스킵 페이드 코루틴이 시작되었다면, 끝날 때까지 기다림
-        if (skipFadeCoroutine != null)
+        // 2. UI 페이드 아웃 **시작** (아직 기다리지 않음)
+        CanvasGroup canvasGroup = contents.GetComponent<CanvasGroup>();
+        yield return new WaitForSecondsRealtime(0.4f); // 기존 딜레이
+        Tween uiFadeTween = canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
+        Debug.Log("UI Fade Out Started.");
+
+        // 3. 배경 페이드 코루틴 **시작** (필요하다면) (아직 기다리지 않음)
+        if (finalBackground != null && backGround.sprite != finalBackground)
         {
-            // LastOutAnimation()을 직접 호출하는 대신,
-            // "UI 페이드아웃"과 "백그라운드 페이드"를 동시에 진행시킵니다.
-
-            // 1. LastOutAnimation()과 동일한 UI 페이드아웃 로직을 수동으로 시작
-            CanvasGroup canvasGroup = contents.GetComponent<CanvasGroup>();
-            //canvasGroup.alpha = 1;
-            yield return new WaitForSecondsRealtime(0.4f);
-
-            // UI 페이드 아웃 시작 (0.6초)
-            canvasGroup.DOFade(0f, 0.6f).SetUpdate(true);
-
-            // 2. 이제 백그라운드 페이드(skipFadeCoroutine, 2초)가 끝날 때까지 기다립니다.
-            //    UI 페이드(총 1.0초)는 이 2초 대기 시간 안에 자연스럽게 완료됩니다.
-            yield return skipFadeCoroutine;
-
-            Debug.Log("스킵 백그라운드/UI 페이드 동시 완료. 씬 이동.");
-
-            //currentStoryBackground = null;
-
-            // 3. 모든 페이드가 끝났으므로 씬을 이동합니다.
-            SceneMoving();
+            Debug.Log("Starting Background Fade Coroutine: " + finalBackground.name);
+            backgroundFadeCoroutine = StartCoroutine(FadeBackgroundAfterSkip(finalBackground));
         }
         else
         {
-            // 스킵은 했지만 백그라운드 연출이 없거나(skipFadeCoroutine == null),
-            // 스킵하지 않고 정상 종료된 경우,
-            // 기존과 동일하게 LastOutAnimation()을 호출합니다. (UI페이드 + 씬 이동)
-            StartCoroutine(LastOutAnimation());
+            Debug.Log("No background fade needed or already on correct background.");
         }
-        // --- [!!! 추가 끝 !!!] ---
+
+        // 4. UI 페이드 아웃이 **끝날 때까지 대기**
+        yield return uiFadeTween.WaitForCompletion();
+        Debug.Log("UI Fade Out Completed.");
+
+        // 5. 배경 페이드 코루틴이 **끝날 때까지 대기** (시작되었다면)
+        if (backgroundFadeCoroutine != null)
+        {
+            Debug.Log("Waiting for Background Fade Coroutine to complete...");
+            yield return backgroundFadeCoroutine;
+            Debug.Log("Background Fade Coroutine Completed.");
+        }
+
+        // 6. 모든 것이 끝나면 씬 이동
+        Debug.Log("All fades completed. Moving scene.");
+        SceneMoving();
+        // --- ▲▲▲ 수정 끝 ▲▲▲ ---
 
         //StartCoroutine(LastOutAnimation());
 
@@ -634,8 +641,8 @@ public class StoryDialog : UI_Popup
 
             // 2. B층 Fade In & A층 Fade Out (동시 시작)
             //    DOTween 트윈 자체를 변수에 저장
-            Tween fadeB = saturatedBackground.DOFade(1f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType);
-            Tween fadeA = backGround.DOFade(0f, 2.0f).SetUpdate(true).SetEase(backgroundEaseType);
+            Tween fadeB = saturatedBackground.DOFade(1f, 2.5f).SetUpdate(true).SetEase(backgroundEaseType);
+            Tween fadeA = backGround.DOFade(0f, 2.5f).SetUpdate(true).SetEase(backgroundEaseType);
 
             // 3. 두 페이드가 모두 완료될 때까지 기다림 (WaitForSecondsRealtime 대신 사용)
             yield return fadeB.WaitForCompletion();
@@ -659,6 +666,11 @@ public class StoryDialog : UI_Popup
             }
             yield return null; // 코루틴은 최소 한 번의 yield가 필요
         }
+    }
+
+    public static void ResetStoryBackground()
+    {
+        currentStoryBackground = null;
     }
     // --- [!!! 새 코루틴 함수 끝 !!!] ---
 
