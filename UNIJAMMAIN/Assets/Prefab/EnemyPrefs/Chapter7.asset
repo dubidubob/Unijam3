@@ -21,7 +21,7 @@ MonoBehaviour:
   - rid: 7504154169424216064
   - rid: 7504154169424216065
   - rid: 7504154169424216066
-  - rid: 7504154169424216067
+  - rid: 7504154199782588422
   - rid: 7504154192467460096
   - rid: 7504154192467460097
   - rid: 7504154192467460098
@@ -29,6 +29,9 @@ MonoBehaviour:
   - rid: 7504154199782588416
   - rid: 7504154199782588418
   - rid: 7504154199782588417
+  - rid: 7504154199782588419
+  - rid: 7504154199782588420
+  - rid: 7504154199782588421
   MusicPath: BGM/Chapter7_V1
   StartBeat: 26
   DelayPaddingSeconds: 0
@@ -80,8 +83,8 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 24
-        startDelayBeat: 1
+        durationBeat: 28
+        startDelayBeat: 0
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
@@ -96,34 +99,16 @@ MonoBehaviour:
           hiding: 0
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: AWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSXXXX
+          WASD_Pattern: AWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDS
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
           hiding: 1
-    - rid: 7504154169424216067
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 8
-        startDelayBeat: 0
-        bpm: 162
-        timeScale: 1
-        preGenerateBeat: 0
-        isFlipAD: 0
-        monsterDatas:
-        - isIn: 1
-          monsterType: 6
-          WASD_Pattern: AXXXDXXXWXXX(AWD)(AWD)(AWD)(AWD)
-          speedUpRate: 1
-          spawnBeat: 0.5
-          moveBeat: 2
-          hiding: 0
     - rid: 7504154192467460096
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 16
+        durationBeat: 13
         startDelayBeat: 0
         bpm: 162
         timeScale: 1
@@ -148,33 +133,26 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 18
+        durationBeat: 19
         startDelayBeat: 0
         bpm: 162
         timeScale: 1
-        preGenerateBeat: 3
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
           monsterType: 5
-          WASD_Pattern: DDDDDDDDXDDDDDDDAAAAAAAAXAAAAAAAAA
+          WASD_Pattern: DDDDDDDDXDDDDDDDAAAAAAAAXAAAAAAAAAXXXXXXXXXXXXXXXXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 5
-          hiding: 0
-        - isIn: 0
-          monsterType: 0
-          WASD_Pattern: 
-          speedUpRate: 0
-          spawnBeat: 0
-          moveBeat: 0
           hiding: 0
     - rid: 7504154192467460098
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 14
-        startDelayBeat: 3
+        durationBeat: 16
+        startDelayBeat: 0
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
@@ -243,7 +221,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: SXXSXXSXWXXWXXWX(AD)XX(AD)XX(AD)XWXXWXXWX
+          WASD_Pattern: WXXWXXWX(AD)XX(AD)XX(AD)X(AWD)XX(AWD)XX(AWD)X(ASD)XX(ASD)XX(ASD)X
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -268,6 +246,92 @@ MonoBehaviour:
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 0}
+    - rid: 7504154199782588419
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 16
+        startDelayBeat: 0
+        bpm: 174
+        timeScale: 1
+        preGenerateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          WASD_Pattern: SXXDXXWXAXXSXXDXWXXAXXSXDXXWXXAX
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 2
+          hiding: 0
+    - rid: 7504154199782588420
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 16
+        startDelayBeat: 0
+        bpm: 174
+        timeScale: 1
+        preGenerateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 6
+          WASD_Pattern: SXXDXXWXAXXSXXDXWXXAXXSXDXXWXXAX
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 2
+          hiding: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: SXXDXXWXAXXSXXDXWXXAXXSXDXXWXXAX
+          speedUpRate: 1
+          spawnBeat: 4
+          moveBeat: 2
+          hiding: 0
+    - rid: 7504154199782588421
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 64
+        startDelayBeat: 0
+        bpm: 174
+        timeScale: 1
+        preGenerateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          WASD_Pattern: AXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)X
+          speedUpRate: 0
+          spawnBeat: 0
+          moveBeat: 0
+          hiding: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: AXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)X
+          speedUpRate: 1
+          spawnBeat: 4
+          moveBeat: 4
+          hiding: 0
+    - rid: 7504154199782588422
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 4
+        startDelayBeat: 0
+        bpm: 162
+        timeScale: 1
+        preGenerateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 5
+          WASD_Pattern: WXWXWWWW
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 2
+          hiding: 0
     - rid: 9186972795589099540
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
