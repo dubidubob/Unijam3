@@ -519,7 +519,7 @@ MonoBehaviour:
     spriteYOffset: 50
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "\uC870\uD654\uAC00 \uAE68\uC9C4 \uC138\uC0C1\uC774\uB77C\uBA74... \uACB0\uAD6D...
       \uBC14\uB85C\uC7A1\uD790 \uBFD0."
@@ -581,7 +581,7 @@ MonoBehaviour:
     spriteYOffset: 50
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 958517d2caa0fa24fb7c08e3cdc96c71, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 3705865dc6de2e54e86d8b42c233ba3d, type: 2}
     isFirstAppearance: 0
     text: "\uB124\uB188 \uB610\uD55C \uC774 \uC138\uC0C1\uC758 \uC77C\uBD80\uAC00
       \uB420 \uAC83\uC774\uB2E4."
@@ -603,6 +603,7 @@ MonoBehaviour:
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
   saturatedBackground: {fileID: 0}
+  backgroundEaseType: 8
   canGoNextStep: 1
   shop: {fileID: 0}
   leftSDAnimSet: []

@@ -563,7 +563,7 @@ MonoBehaviour:
     spriteYOffset: 50
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "...!! (\uC815\uB9D0 \uC545\uB839\uC774... \uC138\uC0C1\uC744...)"
     overrideSprite: {fileID: 0}
@@ -583,7 +583,7 @@ MonoBehaviour:
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uB798, \uC2DC\uC791\uC774 \uACE7 \uBC18\uC774\uB2E4! \uC5B4\uB290
       \uD558\uB098 \uB450\uB835\uC9C0 \uC54A\uB2E4."
@@ -647,6 +647,7 @@ MonoBehaviour:
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
   saturatedBackground: {fileID: 0}
+  backgroundEaseType: 8
   canGoNextStep: 1
   shop: {fileID: 0}
   leftSDAnimSet: []

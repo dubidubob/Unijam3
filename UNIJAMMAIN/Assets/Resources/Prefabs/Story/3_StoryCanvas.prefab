@@ -699,7 +699,7 @@ MonoBehaviour:
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "...\uC2A4\uC2B9\uB2D8? \uC5B4\uCC0C\uD558\uC5EC \uC2A4\uC2B9\uB2D8\uC774
       \uC774\uACF3\uC5D0..."
@@ -762,7 +762,7 @@ MonoBehaviour:
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "\uC2A4\uC2B9...\uB2D8?"
     overrideSprite: {fileID: 0}
@@ -804,7 +804,7 @@ MonoBehaviour:
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uB3D9\uC548 \uC5B4\uB514 \uACC4\uC168\uB358 \uAC81\uB2C8\uAE4C!
       \uC544\uB2C8, \uC6B0\uC120 \uBAA8\uC2B5\uC774 \uC65C \uC774\uB807\uAC8C..."
@@ -953,7 +953,7 @@ MonoBehaviour:
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uAC83\uC740 \uC9D0\uC2B9\uC758 \uC774\uCE58\uC77C \uBFD0, \uC57D\uC790\uB97C
       \uC9D3\uBC1F\uB294 \uD798\uC740 \uC870\uD654\uAC00 \uC544\uB2CC \uC9C0\uBC30\uC785\uB2C8\uB2E4!"
@@ -995,7 +995,7 @@ MonoBehaviour:
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "\uC2A4\uC2B9\uB2D8."
     overrideSprite: {fileID: 0}
