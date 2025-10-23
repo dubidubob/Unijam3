@@ -534,6 +534,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uB294 \uC870\uC6A9\uD788 \uB208\uC744 \uAC10\uACE0 \uC2A4\uC2B9\uB2D8\uC758
@@ -553,6 +555,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: 53d167dc5ccadcb4ea71a1b73ba0836f, type: 2}
     isFirstAppearance: 0
     text: "\uC138\uC0C1\uC758 \uC18C\uB780\uD568\uC5D0.. \uB124 \uB9C8\uC74C\uAE4C\uC9C0
@@ -572,6 +576,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: "\uC218\uB3C4\uC2B9\uC740 \uC3DF\uC544\uC9C0\uB294 \uBB3C\uC904\uAE30 \uC18D\uC5D0\uC11C
@@ -591,6 +597,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
     text: "\uD750\uD2B8\uB7EC\uC9C4 \uB9C8\uC74C\uC73C\uB85C\uB294 \uC544\uBB34\uAC83\uB3C4
@@ -610,6 +618,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: "\uADF8\uB54C, \uD3ED\uD3EC\uC218 \uB108\uBA38\uB85C \uC7AC\uBE60\uB978
@@ -629,6 +639,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: c609896e1152915409a7cc583a644b35, type: 2}
     isFirstAppearance: 0
     text: "\uC218\uB3C4\uC2B9\uC758 \uC55E\uC744 \uC7AC\uBE60\uB978 \uC545\uB839\uB4E4\uACFC
@@ -648,6 +660,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: 426628e0bb380eb4e818ad61019cbf41, type: 2}
     isFirstAppearance: 0
     text: "\uD638\uC624, \uACB0\uC758\uB97C \uB2E4\uC9C4 \uB208\uC774\uAD70."
@@ -666,6 +680,8 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 50
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: ca13114a29a94a447bfb7948fa087582, type: 2}
     isFirstAppearance: 0
     text: "\uADF8 \uB2E8\uB2E8\uD55C \uB208\uBE5B\uC774 \uC808\uB9DD\uC73C\uB85C
@@ -685,7 +701,9 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 50
-  - speakingCharacterData: {fileID: 11400000, guid: 958517d2caa0fa24fb7c08e3cdc96c71, type: 2}
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: 3705865dc6de2e54e86d8b42c233ba3d, type: 2}
     isFirstAppearance: 0
     text: "\uB124 \uB9C8\uC74C\uC774 \uD754\uB4E4\uB9B4\uC218\uB85D, \uC6B0\uB9AC\uC758
       \uADF8\uB9BC\uC790\uB294 \uB354\uC6B1 \uC9D9\uC5B4\uC9C0\uB294 \uBC95\uC774\uB2E4."
@@ -704,7 +722,9 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
-  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: 15e66e9da03530f4e91dcf0b95352363, type: 2}
     isFirstAppearance: 0
     text: "\uB108\uD76C\uB4E4\uC740 \uC624\uB85C\uC9C0 \uB0B4 \uC55E\uC5D0\uC11C
       \uC605\uC5B4\uC9C8 \uC77C\uB9CC \uB0A8\uC558\uB2E4."
@@ -723,6 +743,10 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
+  saturatedBackground: {fileID: 0}
+  backgroundEaseType: 8
   canGoNextStep: 1
   shop: {fileID: 0}
   leftSDAnimSet: []
