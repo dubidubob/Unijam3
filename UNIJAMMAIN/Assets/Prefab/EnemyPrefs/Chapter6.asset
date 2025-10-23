@@ -62,7 +62,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 36
-        startDelayBeat: 4
+        startDelayBeat: 2
         bpm: 104
         timeScale: 1
         preGenerateBeat: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 30
-        startDelayBeat: 0
+        startDelayBeat: 3
         bpm: 96
         timeScale: 1
         preGenerateBeat: 0
