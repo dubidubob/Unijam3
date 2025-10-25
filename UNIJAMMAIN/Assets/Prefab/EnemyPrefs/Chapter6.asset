@@ -36,8 +36,8 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 34
-        startDelayBeat: 4
+        durationBeat: 36
+        startDelayBeat: 2
         bpm: 104
         timeScale: 1
         preGenerateBeat: 0
