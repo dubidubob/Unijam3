@@ -33,6 +33,9 @@ MonoBehaviour:
   - rid: 7504154199782588420
   - rid: 7504154199782588421
   - rid: 7504154239622971393
+  - rid: 7504154239622971394
+  - rid: 7504154239622971395
+  - rid: 7504154239622971396
   MusicPath: BGM/Chapter7_V1
   StartBeat: 26
   DelayPaddingSeconds: 0
@@ -284,7 +287,7 @@ MonoBehaviour:
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 6
+          monsterType: 0
           WASD_Pattern: (AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
@@ -336,15 +339,15 @@ MonoBehaviour:
         - isIn: 1
           monsterType: 6
           WASD_Pattern: WXXWXXWX(AD)XX(AD)XX(AD)X(AWD)XX(AWD)XX(AWD)X(ASD)XX(ASD)XX(ASD)X
-          speedUpRate: 0
-          spawnBeat: 0
-          moveBeat: 0
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 2
           hiding: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: WXXWXXWX(AD)XX(AD)XX(AD)X(AWD)XX(AWD)XX(AWD)X(ASD)XX(ASD)XX(ASD)X
           speedUpRate: 1
-          spawnBeat: 2
+          spawnBeat: 4
           moveBeat: 2
           hiding: 0
     - rid: 7504154239622971393
@@ -358,12 +361,73 @@ MonoBehaviour:
         preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
-        - isIn: 0
-          monsterType: 0
-          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
+        - isIn: 1
+          monsterType: 5
+          WASD_Pattern: XXXXXXXXXXXXXXXX
           speedUpRate: 1
-          spawnBeat: 1
-          moveBeat: 1
+          spawnBeat: 0.5
+          moveBeat: 2
+          hiding: 0
+    - rid: 7504154239622971394
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 32
+        startDelayBeat: 0
+        bpm: 174
+        timeScale: 1
+        preGenerateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          WASD_Pattern: WXWXWXWXWXWXWXWXWXWXWXWXWXWXWXWXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXWXWXWXWXWXWXWXWXWXWXWXWXWXWXWXWXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 2
+          hiding: 0
+    - rid: 7504154239622971395
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 32
+        startDelayBeat: 0
+        bpm: 174
+        timeScale: 1
+        preGenerateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: (AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)XSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
+          speedUpRate: 1
+          spawnBeat: 4
+          moveBeat: 4
+          hiding: 0
+        - isIn: 1
+          monsterType: 6
+          WASD_Pattern: (AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)XSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)XSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 2
+          hiding: 1
+    - rid: 7504154239622971396
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 16
+        startDelayBeat: 0
+        bpm: 174
+        timeScale: 1
+        preGenerateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 0
+          WASD_Pattern: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd
+          speedUpRate: 0
+          spawnBeat: 0.25
+          moveBeat: 3
           hiding: 0
     - rid: 9186972795589099540
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
