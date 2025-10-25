@@ -45,7 +45,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WWASSDWWASSD
+          WASD_Pattern: WXAX/XXDX/WXAX
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -63,7 +63,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: XXX(AD)XXX(AD)X(AD)X(AD)X(AD)X(AD)X(AS)X(AS)X(AS)X(AS)X(WD)X(WD)X(WD)X(WD)
+          WASD_Pattern: (AD)XXX(AD)XXX(AD)X(AD)X(AD)X(AD)X(AD)X(AS)X(AS)X(AS)X(AS)X(WD)X(WD)X(WD)X(WD)
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -90,8 +90,8 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 29
-        startDelayBeat: 3
+        durationBeat: 31
+        startDelayBeat: 1
         bpm: 113.398
         timeScale: 1
         preGenerateBeat: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WWWASSSDWWWASSSDWWWASSSDWWW
+          WASD_Pattern: WWWASSSDWWWASSSDWWWASSSDWWWXXXXXX
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -133,16 +133,16 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 26
-        startDelayBeat: 6
+        durationBeat: 34
+        startDelayBeat: 2
         bpm: 84
         timeScale: 1
-        preGenerateBeat: 4
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WASDSDWAWASDSDWASDWAWASDSA
+          WASD_Pattern: WASD/SDWA/WASD/SDWA/WAAX/WDDX/SAAX/SDDX
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
@@ -151,8 +151,8 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 33
-        startDelayBeat: 3
+        durationBeat: 32
+        startDelayBeat: 1
         bpm: 100.797
         timeScale: 1
         preGenerateBeat: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WASDWASDDSAWWASDDSAWWASDDSAWDSA
+          WASD_Pattern: X/WASX/WASX/ASDX/ASDX/SDWX/SDWX/DWASD
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
