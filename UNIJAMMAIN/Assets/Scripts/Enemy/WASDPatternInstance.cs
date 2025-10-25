@@ -125,6 +125,19 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
             WASDType enemyType = WASDType.None;
             if (Managers.Game.CurrentState == GameManager.GameState.Battle && _spawnPointString != null)
             {
+                while (_count < _spawnPointString.Length)
+                {
+                    char peekChar = _spawnPointString[_count]; // 현재 문자 확인
+                    if (peekChar == ',' || peekChar == '/')
+                    {
+                        _count++; // 구분자이므로 인덱스만 증가시키고 다음 문자 확인
+                    }
+                    else
+                    {
+                        break; // 유효한 문자(W,A,S,D,R,() 등)이므로 스킵 루프 종료
+                    }
+                }
+
                 if (_count < _spawnPointString.Length)// 출력가능하다면
                 {
                     if (_spawnPointString[_count] == '(') // 동시출력
