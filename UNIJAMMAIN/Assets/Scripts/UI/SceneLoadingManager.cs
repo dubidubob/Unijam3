@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,29 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoadingManager : UI_Base
 {
-    // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º
+    // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤
     public static SceneLoadingManager Instance { get; private set; }
 
-    // ·Îµù Áß¿¡ ESC ´©¸£¸é ¾ÀÀÌ ¾ûÅ°´Â ¹®Á¦ ÇØ°áÇÏ±â À§ÇÑ ¼±¾ğ
+    // ë¡œë”© ì¤‘ì— ESC ëˆ„ë¥´ë©´ ì”¬ì´ ì—‰í‚¤ëŠ” ë¬¸ì œ í•´ê²°í•˜ê¸° ìœ„í•œ ì„ ì–¸
     public static bool IsLoading { get; private set; } = false;
 
-    // 1. ¾À ÁØºñ ¿Ï·á ½ÅÈ£¸¦ ±â´Ù¸®±â À§ÇÑ º¯¼ö Ãß°¡ ¡å¡å¡å
+    // 1. ì”¬ ì¤€ë¹„ ì™„ë£Œ ì‹ í˜¸ë¥¼ ê¸°ë‹¤ë¦¬ê¸° ìœ„í•œ ë³€ìˆ˜ ì¶”ê°€ â–¼â–¼â–¼
     private bool isSceneReadyToDisplay = false;
 
     [SerializeField] private Image leftPanel;
     [SerializeField] private Image rightPanel;
 
     [Header("Animation Settings")]
-    [Tooltip("¹®ÀÌ ¿­·ÁÀÖÀ» ¶§ÀÇ X ÁÂÇ¥ (¿¹: 1490)")]
+    [Tooltip("ë¬¸ì´ ì—´ë ¤ìˆì„ ë•Œì˜ X ì¢Œí‘œ (ì˜ˆ: 1490)")]
     [SerializeField] private float openXPosition = 1490f;
 
-    [Tooltip("¹®ÀÌ ´İÇûÀ» ¶§ÀÇ X ÁÂÇ¥ (¿¹: 480)")]
+    [Tooltip("ë¬¸ì´ ë‹«í˜”ì„ ë•Œì˜ X ì¢Œí‘œ (ì˜ˆ: 480)")]
     [SerializeField] private float closedXPosition = 480f;
 
-    [Tooltip("¹®ÀÌ ¿òÁ÷ÀÌ´Â µ¥ °É¸®´Â ½Ã°£")]
+    [Tooltip("ë¬¸ì´ ì›€ì§ì´ëŠ” ë° ê±¸ë¦¬ëŠ” ì‹œê°„")]
     [SerializeField] private float animationDuration = 0.8f;
 
-    [Tooltip("¹®ÀÌ ´İÈù »óÅÂ¿¡¼­ ´ë±âÇÏ´Â ½Ã°£")]
+    [Tooltip("ë¬¸ì´ ë‹«íŒ ìƒíƒœì—ì„œ ëŒ€ê¸°í•˜ëŠ” ì‹œê°„")]
     [SerializeField] private float waitDuration = 0.5f;
 
     private AnimationCurve closingCurve;
@@ -48,89 +48,106 @@ public class SceneLoadingManager : UI_Base
 
     private void Awake()
     {
-        // ½Ì±ÛÅæ ÆĞÅÏ ±¸Çö
+        // ì‹±ê¸€í†¤ íŒ¨í„´ êµ¬í˜„
       
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ¾ÀÀÌ ÀüÈ¯µÇ¾îµµ ÀÌ ¿ÀºêÁ§Æ®¸¦ ÆÄ±«ÇÏÁö ¾ÊÀ½
+            DontDestroyOnLoad(gameObject); // ì”¬ì´ ì „í™˜ë˜ì–´ë„ ì´ ì˜¤ë¸Œì íŠ¸ë¥¼ íŒŒê´´í•˜ì§€ ì•ŠìŒ
             InitializePanels();
         }
         else
         {
-            Destroy(gameObject); // ÀÌ¹Ì ÀÎ½ºÅÏ½º°¡ ÀÖ´Ù¸é ÀÌ ¿ÀºêÁ§Æ®´Â ÆÄ±«
+            Destroy(gameObject); // ì´ë¯¸ ì¸ìŠ¤í„´ìŠ¤ê°€ ìˆë‹¤ë©´ ì´ ì˜¤ë¸Œì íŠ¸ëŠ” íŒŒê´´
         }
    
     }
 
     public void LoadScene(string sceneName)
     {
-        // ¸¸¾à ÀÌ¹Ì ·Îµù ÁßÀÌ¶ó¸é, ¶Ç LoadSceneÀ» ½ÇÇàÇÏÁö ¾Ê°í Áï½Ã Á¾·áÇÕ´Ï´Ù.
+        // ë§Œì•½ ì´ë¯¸ ë¡œë”© ì¤‘ì´ë¼ë©´, ë˜ LoadSceneì„ ì‹¤í–‰í•˜ì§€ ì•Šê³  ì¦‰ì‹œ ì¢…ë£Œí•©ë‹ˆë‹¤.
         if (IsLoading) return;
 
-        // ÄÚ·çÆ¾À» ½ÃÀÛÇÏ¿© ºñµ¿±â ¾À ·ÎµùÀ» ½ÇÇà
+        // ì½”ë£¨í‹´ì„ ì‹œì‘í•˜ì—¬ ë¹„ë™ê¸° ì”¬ ë¡œë”©ì„ ì‹¤í–‰
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
-    // ¾À ·Îµù ½ÃÄö½º¸¦ °ü¸®ÇÏ´Â ¸ŞÀÎ ÄÚ·çÆ¾
+    // ì”¬ ë¡œë”© ì‹œí€€ìŠ¤ë¥¼ ê´€ë¦¬í•˜ëŠ” ë©”ì¸ ì½”ë£¨í‹´
     private IEnumerator LoadSceneAsync(string sceneName)
     {
-        // ·Îµù ½ÃÀÛ ½Ã Áï½Ã true·Î ¼³Á¤
+        // ë¡œë”© ì‹œì‘ ì‹œ ì¦‰ì‹œ trueë¡œ ì„¤ì •
         IsLoading = true;
 
 
-        // ¡å¡å¡å 2. ÄÚ·çÆ¾ ½ÃÀÛ ½Ã ÁØºñ »óÅÂ¸¦ false·Î ÃÊ±âÈ­ ¡å¡å¡å
+        // â–¼â–¼â–¼ 2. ì½”ë£¨í‹´ ì‹œì‘ ì‹œ ì¤€ë¹„ ìƒíƒœë¥¼ falseë¡œ ì´ˆê¸°í™” â–¼â–¼â–¼
         isSceneReadyToDisplay = false;
 
 
-        // 1. ¹® ´İ±â ¾Ö´Ï¸ŞÀÌ¼Ç
+        // 1. ë¬¸ ë‹«ê¸° ì• ë‹ˆë©”ì´ì…˜
         Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
         leftPanel.gameObject.SetActive(true);
         rightPanel.gameObject.SetActive(true);
-        yield return AnimatePanels(true); // true = ´İ±â
+        yield return AnimatePanels(true); // true = ë‹«ê¸°
 
 
       
-        // 2. ´İÈù »óÅÂ¿¡¼­ Àá½Ã ´ë±â
+        // 2. ë‹«íŒ ìƒíƒœì—ì„œ ì ì‹œ ëŒ€ê¸°
         yield return new WaitForSecondsRealtime(waitDuration);
 
-        // 3. ¾À ºñµ¿±â ·Îµå ½ÃÀÛ (¹®ÀÌ ´İÈù »óÅÂ¿¡¼­ ÁøÇà)
+        // 3. ì”¬ ë¹„ë™ê¸° ë¡œë“œ ì‹œì‘ (ë¬¸ì´ ë‹«íŒ ìƒíƒœì—ì„œ ì§„í–‰)
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         asyncOperation.allowSceneActivation = false;
 
-        // ¾À ·ÎµùÀÌ 90% ¿Ï·áµÉ ¶§±îÁö ´ë±â
+        // ì”¬ ë¡œë”©ì´ 90% ì™„ë£Œë  ë•Œê¹Œì§€ ëŒ€ê¸°
         while (asyncOperation.progress < 0.9f)
         {
             yield return null;
         }
         Managers.Clear();
-        // 4. ¾À È°¼ºÈ­ (¾ÆÁ÷ ¹®Àº ´İÇôÀÖÀ½)
-        // ÀÌ ½ÃÁ¡¿¡¼­ ´ÙÀ½ ¾ÀÀÇ Awake(), OnEnable() µîÀÌ È£ÃâµÊ
+
+        IsLoading = true;
+
+        // 4. ì”¬ í™œì„±í™” (ì•„ì§ ë¬¸ì€ ë‹«í˜€ìˆìŒ)
+        // ì´ ì‹œì ì—ì„œ ë‹¤ìŒ ì”¬ì˜ Awake(), OnEnable() ë“±ì´ í˜¸ì¶œë¨
         asyncOperation.allowSceneActivation = true;
 
-        // ¾ÀÀÌ ¿ÏÀüÈ÷ È°¼ºÈ­µÇ°í Ã¹ ÇÁ·¹ÀÓÀ» ±×¸± ½Ã°£À» ÁÖ±â À§ÇØ ÇÑ ÇÁ·¹ÀÓ ´ë±â
-        yield return null;
-       
-        // ¡å¡å¡å 3. ¿©±â¼­ ¹Ù·Î ¹®À» ¿­Áö ¾Ê°í, ½ÅÈ£¸¦ ¹ŞÀ» ¶§±îÁö ¹«ÇÑ ´ë±â ¡å¡å¡å
+        //// ì”¬ì´ ì™„ì „íˆ í™œì„±í™”ë˜ê³  ì²« í”„ë ˆì„ì„ ê·¸ë¦´ ì‹œê°„ì„ ì£¼ê¸° ìœ„í•´ í•œ í”„ë ˆì„ ëŒ€ê¸°
+        //yield return null;
+
+        //// â–¼â–¼â–¼ 3. ì—¬ê¸°ì„œ ë°”ë¡œ ë¬¸ì„ ì—´ì§€ ì•Šê³ , ì‹ í˜¸ë¥¼ ë°›ì„ ë•Œê¹Œì§€ ë¬´í•œ ëŒ€ê¸° â–¼â–¼â–¼
+        //while (!isSceneReadyToDisplay)
+        //{
+        //    yield return null;
+        //}
+
+
+        // ì”¬ì´ ì™„ì „íˆ í™œì„±í™”ë˜ê³  ì²« í”„ë ˆì„ì„ ê·¸ë¦´ ì‹œê°„ì„ ì£¼ê¸° ìœ„í•´ [ì‹¤ì œ ì‹œê°„] 0.1ì´ˆ ëŒ€ê¸°
+Â  Â  Â  Â  yield return new WaitForSecondsRealtime(0.1f); // <--- ì—¬ê¸° ìˆ˜ì •
+
+        // â–¼â–¼â–¼ 3. ì—¬ê¸°ì„œ ë°”ë¡œ ë¬¸ì„ ì—´ì§€ ì•Šê³ , ì‹ í˜¸ë¥¼ ë°›ì„ ë•Œê¹Œì§€ ë¬´í•œ ëŒ€ê¸° â–¼â–¼â–¼
         while (!isSceneReadyToDisplay)
         {
-            yield return null;
+            // ì—¬ê¸°ë„ Time.timeScale 0ì¼ë•Œ ë©ˆì¶”ë¯€ë¡œ ìˆ˜ì •
+Â  Â  Â  Â  Â  Â  yield return new WaitForSecondsRealtime(0.1f); // <--- ì—¬ê¸° ìˆ˜ì •
+Â  Â  Â  Â  }
+        if (AspectRatioEnforcer.Instance != null)
+        {
+            AspectRatioEnforcer.Instance.RestoreDisplayState();
         }
 
-       
 
         Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1", Define.Sound.SFX);
 
-        // 5. »õ·Î¿î ¾ÀÀÌ ÁØºñµÇ¸é ¹® ¿­±â ¾Ö´Ï¸ŞÀÌ¼Ç ½ÃÀÛ
-        yield return AnimatePanels(false); // false = ¿­±â
+        // 5. ìƒˆë¡œìš´ ì”¬ì´ ì¤€ë¹„ë˜ë©´ ë¬¸ ì—´ê¸° ì• ë‹ˆë©”ì´ì…˜ ì‹œì‘
+        yield return AnimatePanels(false); // false = ì—´ê¸°
 
-        // Àá½Ã ÈÄ ÆĞ³Î ºñÈ°¼ºÈ­ (¼±ÅÃ »çÇ×)
+        // ì ì‹œ í›„ íŒ¨ë„ ë¹„í™œì„±í™” (ì„ íƒ ì‚¬í•­)
         yield return new WaitForSecondsRealtime(0.1f);
         leftPanel.gameObject.SetActive(false);
         rightPanel.gameObject.SetActive(false);
         Managers.Sound.SettingNewSceneVolume();
 
-        // ¸ğµç ·Îµù °úÁ¤ÀÌ ¿ÏÀüÈ÷ ³¡³ª¸é false·Î ¼³Á¤
+        // ëª¨ë“  ë¡œë”© ê³¼ì •ì´ ì™„ì „íˆ ëë‚˜ë©´ falseë¡œ ì„¤ì •
         IsLoading = false;
 
     }
@@ -146,12 +163,12 @@ public class SceneLoadingManager : UI_Base
         isSceneReadyToDisplay = true;
     }
 
-    // ½ÇÁ¦ ÆĞ³ÎÀ» ¿òÁ÷ÀÌ´Â ¾Ö´Ï¸ŞÀÌ¼Ç ÄÚ·çÆ¾
+    // ì‹¤ì œ íŒ¨ë„ì„ ì›€ì§ì´ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì½”ë£¨í‹´
     private IEnumerator AnimatePanels(bool isClosing)
     {
         float timer = 0f;
 
-        // ½ÃÀÛ À§Ä¡¿Í ¸ñÇ¥ À§Ä¡ ¼³Á¤ (isClosing ¿©ºÎ¿¡ µû¶ó)
+        // ì‹œì‘ ìœ„ì¹˜ì™€ ëª©í‘œ ìœ„ì¹˜ ì„¤ì • (isClosing ì—¬ë¶€ì— ë”°ë¼)
         float startX = isClosing ? openXPosition : closedXPosition;
         float endX = isClosing ? closedXPosition : openXPosition;
 
@@ -163,34 +180,34 @@ public class SceneLoadingManager : UI_Base
             timer += Time.unscaledDeltaTime;
             float progress = Mathf.Clamp01(timer / animationDuration);
 
-            // AnimationCurve¸¦ Àû¿ëÇÏ¿© ½Ã°£ ÁøÇà·üÀ» ºñ¼±ÇüÀûÀ¸·Î º¯°æ (Æ¨±â´Â È¿°ú ±¸Çö)
+            // AnimationCurveë¥¼ ì ìš©í•˜ì—¬ ì‹œê°„ ì§„í–‰ë¥ ì„ ë¹„ì„ í˜•ì ìœ¼ë¡œ ë³€ê²½ (íŠ•ê¸°ëŠ” íš¨ê³¼ êµ¬í˜„)
             float curveProgress = curve.Evaluate(progress);
 
-            // LerpUnclamped¸¦ »ç¿ëÇØ¾ß Ä¿ºê °ªÀÌ 1À» ³Ñ¾îµµ Á¤»óÀûÀ¸·Î µ¿ÀÛ
+            // LerpUnclampedë¥¼ ì‚¬ìš©í•´ì•¼ ì»¤ë¸Œ ê°’ì´ 1ì„ ë„˜ì–´ë„ ì •ìƒì ìœ¼ë¡œ ë™ì‘
             float currentX = Mathf.LerpUnclamped(startX, endX, curveProgress);
 
-            // ¿ŞÂÊ ÆĞ³ÎÀº À½¼ö, ¿À¸¥ÂÊ ÆĞ³ÎÀº ¾ç¼ö ÁÂÇ¥·Î ´ëÄª ÀÌµ¿
+            // ì™¼ìª½ íŒ¨ë„ì€ ìŒìˆ˜, ì˜¤ë¥¸ìª½ íŒ¨ë„ì€ ì–‘ìˆ˜ ì¢Œí‘œë¡œ ëŒ€ì¹­ ì´ë™
             leftRect.anchoredPosition = new Vector2(-currentX, leftRect.anchoredPosition.y);
             rightRect.anchoredPosition = new Vector2(currentX, rightRect.anchoredPosition.y);
 
             yield return null;
         }
 
-        // ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³­ ÈÄ Á¤È®ÇÑ ÃÖÁ¾ À§Ä¡·Î ¼³Á¤
+        // ì• ë‹ˆë©”ì´ì…˜ì´ ëë‚œ í›„ ì •í™•í•œ ìµœì¢… ìœ„ì¹˜ë¡œ ì„¤ì •
         leftRect.anchoredPosition = new Vector2(-endX, leftRect.anchoredPosition.y);
         rightRect.anchoredPosition = new Vector2(endX, rightRect.anchoredPosition.y);
     }
 
 
-    // ÆĞ³Î ÃÊ±âÈ­ ¹× ½ÃÀÛ À§Ä¡ ¼³Á¤
+    // íŒ¨ë„ ì´ˆê¸°í™” ë° ì‹œì‘ ìœ„ì¹˜ ì„¤ì •
     private void InitializePanels()
     {
         leftRect = leftPanel.GetComponent<RectTransform>();
         rightRect = rightPanel.GetComponent<RectTransform>();
 
-        // ½ÃÀÛ ½Ã ¹®ÀÌ ¿­¸° »óÅÂ·Î °­Á¦ ¼³Á¤
+        // ì‹œì‘ ì‹œ ë¬¸ì´ ì—´ë¦° ìƒíƒœë¡œ ê°•ì œ ì„¤ì •
         closingCurve = new AnimationCurve(
-            new Keyframe(0.0f, 0.0f),      // 0% ÁöÁ¡¿¡¼­ ½ÃÀÛ (°ª: 0)
+            new Keyframe(0.0f, 0.0f),      // 0% ì§€ì ì—ì„œ ì‹œì‘ (ê°’: 0)
             new Keyframe(0.7f, 0.9f),     // 
             new Keyframe(0.8f, 0.95f),     //
             new Keyframe(0.9f, 0.975f),     //

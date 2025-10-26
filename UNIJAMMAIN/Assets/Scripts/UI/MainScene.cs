@@ -67,7 +67,9 @@ public class MainScene : UI_Popup
     private IEnumerator NotifyManagerWhenReady()
     {
         // 씬의 모든 Start 함수가 실행되고 첫 프레임을 그릴 시간을 안전하게 확보합니다.
-        yield return null;
+        //yield return null;
+
+        yield return new WaitForSecondsRealtime(0.1f);
 
         // SceneLoadingManager에게 "이제 문 열어도 돼!" 라고 신호를 보냅니다.
         if (SceneLoadingManager.Instance != null)

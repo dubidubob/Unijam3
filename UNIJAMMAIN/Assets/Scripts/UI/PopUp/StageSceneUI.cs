@@ -298,6 +298,8 @@ public class StageSceneUI : UI_Popup
         // 여기서도 한 번 더 확인하여 중복 호출을 완벽하게 막습니다.
         if (SceneLoadingManager.IsLoading) return;
 
+        Time.timeScale = 1.0f;
+
         SceneLoadingManager.Instance.LoadScene("MainTitle");
     }
 
@@ -306,6 +308,8 @@ public class StageSceneUI : UI_Popup
         Managers.Sound.Play("SFX/PressToStart_V1");
         if (_selectedButton != null)
         {
+            Time.timeScale = 1.0f;
+
             SceneLoadingManager.Instance.LoadScene("StoryScene");
         }
         else
