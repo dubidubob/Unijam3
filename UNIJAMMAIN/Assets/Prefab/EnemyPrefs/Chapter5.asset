@@ -113,8 +113,8 @@ MonoBehaviour:
         preGenerateBeat: 0
         steps:
         - textContents:
-          - "\uC774\uACF3\uC740 \uB0B4\uAC00 \uC0C1\uC0C1\uD55C \uAC83\uACFC\uB294
-            \uB2E4\uB974\uB2E4 . ."
+          - "\uD604\uC7AC \uC74C\uC545\uC5D0 \uB9DE\uAC8C \uC81C\uC791 \uC911\uC785\uB2C8\uB2E4.
+            (6\uB9C9, 7\uB9C9\uC740 \uAC00\uB2A5\uD569\uB2C8\uB2E4!)"
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 0}

@@ -36,6 +36,7 @@ MonoBehaviour:
         startDelayBeat: 4
         bpm: 88
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -60,6 +61,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 98
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -84,6 +86,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 108
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -108,6 +111,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 98
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -132,6 +136,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 98
         timeScale: 1
+        preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas: []
     - rid: 9186972795589099525
@@ -142,9 +147,11 @@ MonoBehaviour:
         startDelayBeat: 4
         bpm: 88
         timeScale: 1
+        preGenerateBeat: 0
         steps:
         - textContents:
           - "\uD604\uC7AC \uC74C\uC545\uC5D0 \uB9DE\uAC8C \uC81C\uC791 \uC911\uC785\uB2C8\uB2E4.
-            \uAC04\uB2E8\uD788 \uCCB4\uD5D8\uD574\uBCF4\uC138\uC694!"
+            (6\uB9C9, 7\uB9C9\uC740 \uAC00\uB2A5\uD569\uB2C8\uB2E4!)"
           monsterCutline: 0
           delayBeat: 4
+          characterData: {fileID: 0}
