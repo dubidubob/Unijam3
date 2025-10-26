@@ -49,6 +49,7 @@ public class StageSceneUI : UI_Popup
     public TMP_Text stageLevelText;
 
     [SerializeField] GameObject completedObject;
+    [SerializeField] GameObject checkObject;
     
 
     
@@ -394,12 +395,14 @@ public class StageSceneUI : UI_Popup
         {
             IngameData.boolPracticeMode = true;
             practiveModeButtonisClicked = true;
+            checkObject.SetActive(true);
             Debug.Log("practive Mode on");
         }
         else
         {
             IngameData.boolPracticeMode = false;
             practiveModeButtonisClicked = false;
+            checkObject.SetActive(false);
         }
         
     }
