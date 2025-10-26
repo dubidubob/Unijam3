@@ -37,7 +37,7 @@ MonoBehaviour:
   - rid: 7504154239622971395
   - rid: 7504154239622971396
   MusicPath: BGM/Chapter7_V1
-  StartBeat: 40026
+  StartBeat: 26
   DelayPaddingSeconds: 0
   backGroundSprite: {fileID: 21300000, guid: 2252cadf993bd7543be64dc9ce651355, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: f2ac13e5d85087042ab5046a092bbb7a, type: 3}
@@ -74,12 +74,12 @@ MonoBehaviour:
         preGenerateBeat: 0
         steps:
         - textContents:
-          - "\uC774\uC815\uB3C4\uB85C\uB294.. \uC4F0\uB7EC\uC9C0\uC9C0 \uC54A\uB294\uB2E4!"
+          - "\uC815\uC2E0\uC744 \uC783\uC744 \uAC83\uB9CC \uAC19\uB2E4 .."
           monsterCutline: 0
           delayBeat: 12
           characterData: {fileID: 0}
         - textContents:
-          - "\uCD5C\uD6C4\uB97C \uB9DE\uC744 \uC900\uBE44\uB97C \uD574\uB77C."
+          - "\uADF8\uB7FC\uC5D0\uB3C4 \uB09C \uC5EC\uAE30 \uAD73\uAC74\uD788 \uC11C\uC788\uB2E4!"
           monsterCutline: 0
           delayBeat: 12
           characterData: {fileID: 0}
@@ -98,19 +98,19 @@ MonoBehaviour:
           monsterType: 1
           WASD_Pattern: AXWXXDSXAXWXXDSXAXWXXDSXAXWXXDSX(AD)X(AD)X(AD)X(AD)XOXOXOXOX(AWD)X(AWD)X(AWD)X(AWD)XSXSX(ASD)(ASD)(ASD)(ASD)
           speedUpRate: 1
-          spawnBeat: 8
+          spawnBeat: 4
           moveBeat: 2
           hiding: 0
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/
+          WASD_Pattern: AWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSXXXXXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
           hiding: 1
-        - isIn: 0
+        - isIn: 1
           monsterType: 0
-          WASD_Pattern: 
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX(AWD)(AWD)(AWD)(AWD)XXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -248,12 +248,12 @@ MonoBehaviour:
         preGenerateBeat: 0
         steps:
         - textContents:
-          - "\uADF8\uB7FC\uC5D0\uB3C4 \uB09C \uC5EC\uAE30 \uAD73\uAC74\uD788 \uC11C\uC788\uB2E4."
+          - "\uB098\uB294 \uC4F0\uB7EC\uC9C0\uC9C0 \uC54A\uACA0\uB2E4"
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 0}
         - textContents:
-          - "\uB3C4\uB9DD\uAC00\uC9C0 \uB9D0\uACE0 \uB05D\uAE4C\uC9C0 \uB9DE\uC11C\uB77C!"
+          - "\uB098\uB294 \uC544\uC9C1 \uC5EC\uAE30\uC5D0 \uC11C \uC788\uB2E4 !"
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 0}
@@ -313,7 +313,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/XXXX/WWWW/AAAA/SSSS/DDDD/WWWW/AAAA/SSSS/DDDD/XXXX/(AD)(AD)(AD)(AD)/XXXX/(WD)(WD)(WD)(WD)/XXXX/(SD)(SD)(SD)(SD)/XXXX/(AS)(AS)(AS)(AS)/X
+          WASD_Pattern: (ASD)XXX(ASD)(ASD)X(ASD)(ASD)XXXXXXX(AWD)XXX(AWD)(AWD)X(AWD)(AWD)XXXXXXXWXXWSXWSXXXXXXXWXXDWXAWXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -381,7 +381,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/
+          WASD_Pattern: WXWXWXWXWXWXWXWXWXWXWXWXWXWXWXWXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXWXWXWXWXWXWXWXWXWXWXWXWXWXWXWXWXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -440,12 +440,12 @@ MonoBehaviour:
         preGenerateBeat: 0
         steps:
         - textContents:
-          - "\uBAA8\uB4E0 \uAC83\uC758 \uC2DC\uC791\uC778 \uC774 \uACF3\uC5D0\uC11C,"
+          - "\uBAA8\uB4E0 \uAC83\uC758 \uC2DC\uC791\uC778 \uC774\uACF3\uC774"
           monsterCutline: 0
           delayBeat: 14
           characterData: {fileID: 0}
         - textContents:
-          - "\uB0B4 \uC190\uC73C\uB85C \uC774 \uCD5C\uD6C4\uB97C \uC7A5\uC2DD\uD558\uACA0\uB2E4."
+          - "\uACE7 \uBAA8\uB4E0 \uAC83\uC758 \uB05D\uC774 \uB420 \uAC83\uC774\uB2E4"
           monsterCutline: 0
           delayBeat: 14
           characterData: {fileID: 0}
