@@ -50,7 +50,7 @@ public class StageSceneUI : UI_Popup
 
     [SerializeField] GameObject completedObject;
     [SerializeField] GameObject checkObject;
-    
+    [SerializeField] StageLevelSceneUI stageLevelSceneUI;
 
     
 
@@ -408,6 +408,7 @@ public class StageSceneUI : UI_Popup
     }
     private void UpdateNavigationButtons()
     {
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         if (upButton == null || downButton == null) return;
 
         // Down 버튼: 0 (최하층)이 아닐 때만 활성화
