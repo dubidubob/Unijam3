@@ -54,7 +54,7 @@ public class PlayerActionUI : MonoBehaviour
     {
         animator.speed = 0.6f;
         animator.Play("Start", -1, 0f); // 원하는 stateName 실행
-        this.transform.position = new Vector2(-0.2f, 0.7f);
+        
         Invoke("OnAnimationEnd", 1.7f);
     }
 
@@ -63,6 +63,7 @@ public class PlayerActionUI : MonoBehaviour
         animator.speed = 0.2f;
         animator.Play("NormalPosing", -1, 0.2f);
         this.transform.position = new Vector2(START_POSITION.x, START_POSITION.y);
+
     }
 
     private void NormalPosing()

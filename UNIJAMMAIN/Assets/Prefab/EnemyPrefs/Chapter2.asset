@@ -45,7 +45,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 20
-        startDelayBeat: 3
+        startDelayBeat: 4
         bpm: 100
         timeScale: 1
         preGenerateBeat: 0
@@ -181,11 +181,12 @@ MonoBehaviour:
             \uB178\uB824 \uB610 \uBAB0\uB824\uC624\uB294\uAD70."
           monsterCutline: 0
           delayBeat: 8
+          characterData: {fileID: 0}
     - rid: 8813260909700448279
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 32
+        durationBeat: 30
         startDelayBeat: 0
         bpm: 100
         timeScale: 1
@@ -220,10 +221,12 @@ MonoBehaviour:
           - "\uC5EC\uAE30\uAE4C\uC9C0 \uC815\uB9D0 \uADC0\uCC2E\uAC8C \uB530\uB77C\uBD99\uB294\uAD70."
           monsterCutline: 0
           delayBeat: 4
+          characterData: {fileID: 0}
         - textContents:
           - "\uC7A0\uAE50, \uB2E4\uB4E4 \uC18D\uB3C4\uAC00 \uB108\uBB34 \uBE60\uB974\uC796\uC544!"
           monsterCutline: 0
           delayBeat: 4
+          characterData: {fileID: 0}
     - rid: 8813261245056811009
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -247,7 +250,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 16
-        startDelayBeat: 0
+        startDelayBeat: 2
         bpm: 120
         timeScale: 1
         preGenerateBeat: 0

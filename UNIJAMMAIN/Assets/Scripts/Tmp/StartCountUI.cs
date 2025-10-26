@@ -31,6 +31,9 @@ public class StartCountUI : MonoBehaviour
         gameObject.SetActive(false);
 
         // (옵션) 게임 상태를 변경하는 로직이 필요하다면 여기에 추가할 수 있습니다.
-        Managers.Game.currentPlayerState = GameManager.PlayerState.Normal;
+        if (!IngameData.boolPracticeMode)
+        {
+            Managers.Game.currentPlayerState = GameManager.PlayerState.Normal;
+        }
     }
 }

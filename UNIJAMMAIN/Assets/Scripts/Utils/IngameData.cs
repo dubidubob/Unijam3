@@ -7,6 +7,7 @@ public static class IngameData
     public static Action ChangeBpm;
     public static Action<RankType> OnRankUpdate;
     public static int GameBpm;
+    public static bool boolPracticeMode;
 
     public static bool Pause { set; get; }
     private static double beatInterval;

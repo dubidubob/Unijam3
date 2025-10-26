@@ -76,7 +76,8 @@ public class StageSceneUI : UI_Popup
         StageButton_6,
         StageButton_7,
         StageButton_8,
-        StageButton_9
+        StageButton_9,
+        PracticeModeButton
     }
 
     private void Update()
@@ -128,6 +129,7 @@ public class StageSceneUI : UI_Popup
         Init();
         UpdateStageButtons();
         UpdateNavigationButtons();
+        IngameData.boolPracticeMode = false;
 
         var startButton = GetButton((int)Buttons.StartButton);
         if (startButton != null)
@@ -151,6 +153,7 @@ public class StageSceneUI : UI_Popup
         upButton = GetButton((int)Buttons.UpButton);
         downButton = GetButton((int)Buttons.DownButton);
         var startButton = GetButton((int)Buttons.StartButton);
+        var practiceButton = GetButton((int)Buttons.PracticeModeButton);
         GetButton((int)Buttons.ToMain).gameObject.AddUIEvent(ToMainButtonClicked);
 
         // 각 버튼의 클릭 이벤트 및 마우스 오버/이탈 이벤트 연결
@@ -175,6 +178,13 @@ public class StageSceneUI : UI_Popup
             startButton.gameObject.AddUIEvent(StartButtonClicked);
             AddPointerEvent(startButton, (eventData) => OnPointerEnter(startButton), EventTriggerType.PointerEnter);
             AddPointerEvent(startButton, (eventData) => OnPointerExit(startButton), EventTriggerType.PointerExit);
+        }
+
+        if (practiceButton != null)
+        {
+            practiceButton.gameObject.AddUIEvent(PracticeModeButtonClicked);
+            AddPointerEvent(startButton, (eventData) => OnPointerEnter(practiceButton), EventTriggerType.PointerEnter);
+            AddPointerEvent(startButton, (eventData) => OnPointerExit(practiceButton), EventTriggerType.PointerExit);
         }
 
         for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_9; i++)
@@ -377,6 +387,22 @@ public class StageSceneUI : UI_Popup
         }
     }
 
+    private bool practiveModeButtonisClicked = false;
+    private void PracticeModeButtonClicked(PointerEventData eventData)
+    {
+        if(practiveModeButtonisClicked==false)
+        {
+            IngameData.boolPracticeMode = true;
+            practiveModeButtonisClicked = true;
+            Debug.Log("practive Mode on");
+        }
+        else
+        {
+            IngameData.boolPracticeMode = false;
+            practiveModeButtonisClicked = false;
+        }
+        
+    }
     private void UpdateNavigationButtons()
     {
         if (upButton == null || downButton == null) return;
