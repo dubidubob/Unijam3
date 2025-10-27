@@ -52,7 +52,7 @@ public class StageLevelSceneUI : MonoBehaviour
 
         // 2. tmpText 오브젝트가 도장처럼 박히는 애니메이션
         // 3. tmpText.text = "제{nowStageLevel}장" ; 으로 설정
-        tmpText.text = $"제{nowStageLevel}장";
+        tmpText.text = $"제{nowStageLevel+1}장";
 
         tmpText.transform.localScale = new Vector2(3f, 3f);
         yield return new WaitForSeconds(0.4f);
