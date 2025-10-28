@@ -329,8 +329,18 @@ public class StageSceneUI : UI_Popup
         }
     }
 
+    bool isFirst = true;
     public void StageButtonClicked(Button button, int stageIndex)
     {
+        if(isFirst)
+        {
+            CanvasGroup canvas = checkObject.GetComponentInParent<CanvasGroup>();
+            canvas.alpha = 1;
+            canvas.interactable = true;
+            isFirst = false;
+            canvas.blocksRaycasts = true;
+        }
+
         if (stageIndex > currentStageIndex)
         {
             return;

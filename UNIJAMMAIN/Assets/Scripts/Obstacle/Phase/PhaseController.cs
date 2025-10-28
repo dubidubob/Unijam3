@@ -17,6 +17,8 @@ struct StartMotionUIs
 [RequireComponent(typeof(SpawnController))]
 public class PhaseController : MonoBehaviour
 {
+    public bool isTest;
+    public int TestStageIndex;
     [SerializeField] private MonsterDatabaseSO monsterDatabase;
 
     [SerializeField] Image backGround;
@@ -64,6 +66,10 @@ public class PhaseController : MonoBehaviour
         PauseManager.ControlTime(false);
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
+        if(isTest)
+        {
+            _chapterIdx = TestStageIndex;
+        }
         Debug.Log(_chapterIdx);
         
         Debug.Log(chapters[_chapterIdx].MusicPath);
