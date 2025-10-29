@@ -4,7 +4,9 @@ using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.SceneManagement;
+using Kino;
 
 public class StageSceneUI : UI_Popup
 {
@@ -14,6 +16,8 @@ public class StageSceneUI : UI_Popup
     private Button upButton;
     private Button downButton;
 
+    //글리치
+    private DigitalGlitch digitalGlitch;
     // 이미지
     [SerializeField]
     public Sprite deActive;
@@ -103,6 +107,7 @@ public class StageSceneUI : UI_Popup
             SetupGlowMaterial(glowingTextMaterial);
         }
         currentStageIndex = Managers.Game.GameStage+1;
+        digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
     }
 
     private void OnDestroy()
@@ -523,8 +528,7 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill(); // 진행 중인 모든 애니메이션을 즉시 중지
 
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
-  
-        
+
         mapImage.DOAnchorPos(targetPos, moveDuration)
                 .SetEase(moveEase)
                 .OnComplete(() =>
@@ -539,6 +543,7 @@ public class StageSceneUI : UI_Popup
     {
         isAnimating = true;
         mapImage.DOKill();
+        StartCoroutine(StartGlitching());
 
         // 위치 이동과 회전을 동시에 실행
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
@@ -552,5 +557,58 @@ public class StageSceneUI : UI_Popup
                     UpdateNavigationButtons(); // <-- ▼ 여기 추가
                 });
     }
+
+    IEnumerator StartGlitching()
+    {
+        Debug.Log("진입?");
+        float rampUpTime = 0.1f;    // 0.1초 만에 0.8까지 빠르게 증가
+        float glitchDuration = 0.7f;  // 0.7초 동안 깜빡임(왔다갔다)
+        float rampDownTime = 0.2f;  // 0.2초 만에 원래대로 복구
+
+        float timer = 0f;
+
+        // --- 1. 0 -> 0.8 까지 올리기 ---
+        while (timer < rampUpTime)
+        {
+            // 0에서 0.8까지 부드럽게 값을 올립니다.
+            digitalGlitch.intensity = Mathf.Lerp(0f, 0.8f, timer / rampUpTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        digitalGlitch.intensity = 0.8f; // 목표값 보정
+
+        // --- 2. 0.8 근처에서 왔다갔다하기 ---
+        timer = 0f;
+        while (timer < glitchDuration)
+        {
+            // 0.6 ~ 0.9 사이의 값으로 마구 흔들어줍니다.
+            digitalGlitch.intensity = Random.Range(0.6f, 0.9f);
+
+            // 한 프레임이 아니라, 아주 짧은 시간(0.03초~0.1초)을 기다려야
+            // "깜빡!" "깜빡!"하는 느낌이 제대로 납니다.
+            float waitTime = Random.Range(0.03f, 0.1f);
+            yield return new WaitForSeconds(waitTime);
+
+            // 대기한 시간만큼 타이머에 더해줍니다.
+            timer += waitTime;
+        }
+
+        // --- 3. 복구 (0으로 내리기) ---
+        timer = 0f;
+        float lastIntensity = digitalGlitch.intensity; // 마지막으로 흔들린 값
+
+        while (timer < rampDownTime)
+        {
+            // 마지막 값에서 0까지 부드럽게 값을 내립니다.
+            digitalGlitch.intensity = Mathf.Lerp(lastIntensity, 0f, timer / rampDownTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // --- 4. 확실하게 0으로 마무리 ---
+        digitalGlitch.intensity = 0f;
+    }
+
     #endregion
 }
