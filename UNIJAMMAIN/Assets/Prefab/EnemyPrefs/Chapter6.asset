@@ -16,6 +16,7 @@ MonoBehaviour:
   - rid: 9186972795589099532
   - rid: 9186972795589099533
   - rid: 9186972795589099534
+  - rid: 7504154327444881408
   - rid: 7504153785790103552
   - rid: 9186972795589099536
   - rid: 9186972795589099537
@@ -86,12 +87,12 @@ MonoBehaviour:
         preGenerateBeat: 0
         steps:
         - textContents:
-          - "\uC801\uB4E4\uC774.. \uAC10\uB2F9\uD560 \uC218 \uC5C6\uC5B4.."
+          - "\uC8FD\uC74C\uC774 .. \uBAB0\uC544\uCE5C\uB2E4.. !"
           monsterCutline: 0
           delayBeat: 3
           characterData: {fileID: 0}
         - textContents:
-          - "\uC774\uB807\uAC8C \uB05D\uC744 \uB9DE\uC774\uD558\uB294 \uAC74\uAC00.."
+          - "\uC640\uB77C... \uC774\uACF3\uC5D0 \uC11C\uC11C \uAD73\uAC74\uD788 \uBC84\uD2F0\uACA0\uB2E4."
           monsterCutline: 0
           delayBeat: 3
           characterData: {fileID: 0}
@@ -99,8 +100,8 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 30
-        startDelayBeat: 3
+        durationBeat: 33
+        startDelayBeat: 2
         bpm: 96
         timeScale: 1
         preGenerateBeat: 0
@@ -138,32 +139,58 @@ MonoBehaviour:
           spawnBeat: 4
           moveBeat: 1
           hiding: 0
+    - rid: 7504154327444881408
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 16
+        startDelayBeat: 0
+        bpm: 86
+        timeScale: 1
+        preGenerateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 6
+          WASD_Pattern: DDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXAAXXAAXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXAAXXAAXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXX
+          speedUpRate: 1
+          spawnBeat: 0.25
+          moveBeat: 1
+          hiding: 0
+        - isIn: 0
+          monsterType: 1
+          WASD_Pattern: 
+          speedUpRate: 1
+          spawnBeat: 4
+          moveBeat: 2
+          hiding: 0
     - rid: 9186972795589099532
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
         durationBeat: 0
-        startDelayBeat: 6
+        startDelayBeat: 10
         bpm: 86
         timeScale: 1
         preGenerateBeat: 0
         steps:
         - textContents:
-          - "\uC774\uB7F0 \uAE08\uAE30\uB97C \uC800\uC9C0\uB974\uB2E4\uB2C8,"
+          - "\uC774\uACF3\uAE4C\uC9C0 \uC545\uB839\uB4E4\uC774 \uB118\uCCD0\uB098\uB2E4\uB2C8"
           monsterCutline: 0
-          delayBeat: 3
+          delayBeat: 5
           characterData: {fileID: 0}
         - textContents:
-          - "\uC138\uC0C1\uC744 \uB118\uBCF8 \uB108\uB124\uB4E4\uC744 \uC2EC\uD310\uD558\uACA0\uB2E4!"
+          - "\uC774\uACF3\uC740 \uB108\uD76C\uAC00 \uB118 \uBCFC \uC218 \uC788\uB294\uACF3\uC774
+            \uC544\uB2C8\uB2E4!!"
           monsterCutline: 0
-          delayBeat: 3
+          delayBeat: 5
           characterData: {fileID: 0}
     - rid: 9186972795589099533
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
         durationBeat: 36
-        startDelayBeat: 6
+        startDelayBeat: 0
         bpm: 86
         timeScale: 1
         preGenerateBeat: 0
@@ -171,7 +198,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: XXWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASD
+          WASD_Pattern: XXXXWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASD
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 3
@@ -180,8 +207,8 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 34
-        startDelayBeat: 0
+        durationBeat: 16
+        startDelayBeat: 2
         bpm: 86
         timeScale: 1
         preGenerateBeat: 0
@@ -205,7 +232,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 36
+        durationBeat: 34
         startDelayBeat: 0
         bpm: 96
         timeScale: 1
@@ -230,8 +257,8 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 24
-        startDelayBeat: 0
+        durationBeat: 30
+        startDelayBeat: 1
         bpm: 96
         timeScale: 1
         preGenerateBeat: 0
