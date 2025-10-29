@@ -62,6 +62,7 @@ public class StageLevelSceneUI : MonoBehaviour
         }
 
         tmpText.transform.localScale = new Vector2(3f, 3f);
+        Managers.Sound.Play("SFX/UI/Act123_V1", Define.Sound.SFX);
         yield return new WaitForSeconds(0.8f);
         // Ease.OutBack이 도장처럼 통통 튀는 느낌을 줍니다.
         yield return tmpText.transform.DOScale(1.5f, 0.2f).SetEase(Ease.OutBack).WaitForCompletion();

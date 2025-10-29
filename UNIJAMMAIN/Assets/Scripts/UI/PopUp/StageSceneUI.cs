@@ -353,9 +353,17 @@ public class StageSceneUI : UI_Popup
         }
 
         StartButtonAnimation();
-        Managers.Sound.Play("SFX/UI/StageClick_V1", Define.Sound.SFX);
+      
 
         IngameData.ChapterIdx = stageIndex - 1;
+        if(IngameData.ChapterIdx==7)
+        {
+            Managers.Sound.Play("SFX/UI/StageClick7_V1", Define.Sound.SFX,1,2f);
+        }
+        else
+        {
+            Managers.Sound.Play("SFX/UI/StageClick_V1", Define.Sound.SFX);
+        }
         _selectedButton = button;
         _hoveredButton = null;
         UpdateStageButtons();
