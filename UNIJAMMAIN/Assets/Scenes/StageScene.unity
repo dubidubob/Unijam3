@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870b9a8f0f82f4f56800cc427bcd1025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scanLineJitter: 0.344
+  _scanLineJitter: 0
   _verticalJump: 0
   _horizontalShake: 0
   _colorDrift: 0

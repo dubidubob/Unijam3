@@ -148,6 +148,7 @@ public class StageSceneUI : UI_Popup
 
         // 서울게임타운용
         Managers.Game.GameStage = 7;
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
     }
 
     public override void Init()
@@ -262,15 +263,15 @@ public class StageSceneUI : UI_Popup
         {
             case 0:
                 // [Level 0 -> 1] : y좌표 -295으로 이동
-                MoveTo(yPos: -295f);
                 currentPageLevel = 1;
+                MoveTo(yPos: -295f);
                 Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
 
             case 1:
                 // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
-                RotateAndMoveTo(zRot: 180f, yPos: 892f);
                 currentPageLevel = 2;
+                RotateAndMoveTo(zRot: 180f, yPos: 892f);
                 Managers.Sound.Play("SFX/UI/GoToFinalStage_V1",Define.Sound.SFX, 1f, 3f);
                 break;
 
@@ -296,15 +297,16 @@ public class StageSceneUI : UI_Popup
 
             case 1:
                 // [Level 1 -> 0] : y좌표 892으로 이동
-                MoveTo(yPos: 892f);
                 currentPageLevel = 0;
+                MoveTo(yPos: 892f);
+                
                 Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
 
             case 2:
-                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로 이동
-                RotateAndMoveTo(zRot: 0f, yPos: -295f);
+                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로
                 currentPageLevel = 1;
+                RotateAndMoveTo(zRot: 0f, yPos: -295f);
                 Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
         }
@@ -431,7 +433,6 @@ public class StageSceneUI : UI_Popup
     }
     private void UpdateNavigationButtons()
     {
-        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         if (upButton == null || downButton == null) return;
 
         // Down 버튼: 0 (최하층)이 아닐 때만 활성화
@@ -528,7 +529,7 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill(); // 진행 중인 모든 애니메이션을 즉시 중지
 
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
-
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         mapImage.DOAnchorPos(targetPos, moveDuration)
                 .SetEase(moveEase)
                 .OnComplete(() =>
@@ -545,6 +546,7 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill();
         StartCoroutine(StartGlitching());
 
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         // 위치 이동과 회전을 동시에 실행
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
         mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(moveEase);
