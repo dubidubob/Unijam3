@@ -62,14 +62,14 @@ public class StageLevelSceneUI : MonoBehaviour
         }
 
         tmpText.transform.localScale = new Vector2(3f, 3f);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.8f);
         // Ease.OutBack이 도장처럼 통통 튀는 느낌을 줍니다.
-        yield return tmpText.transform.DOScale(1.5f, 0.3f).SetEase(Ease.OutBack).WaitForCompletion();
+        yield return tmpText.transform.DOScale(1.5f, 0.2f).SetEase(Ease.OutBack).WaitForCompletion();
 
         yield return new WaitForSeconds(0.4f);
         tmpText.rectTransform.DOAnchorPosX(-240f, 0.7f); // (O) 인스펙터의 Pos X 기준
         // 4. 잠시 기다림
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.3f);
 
         // 5. tmpText.text 가 기존 글자에 extraText[nowStageLevel] 에 써져있는 글자를 차례로 씀
 
@@ -77,22 +77,10 @@ public class StageLevelSceneUI : MonoBehaviour
         int textIndex = nowStageLevel;
 
         // 리스트 범위 체크
-        if (textIndex >= 0 && textIndex < extraTextString.Count)
-        {
-            string extra = extraTextString[textIndex];
 
-            // DOText를 사용한 타이핑 효과
-            // (참고: 주석의 'ㄱ, 겨, 겨ㅇ' 방식(자소 분리)이 아닌 '겨', '울' 방식(글자)으로 타이핑됩니다)
-            float typingDuration = extra.Length * 0.15f; // 한 글자당 0.15초
-            yield return extraText.DOText(extra, typingDuration)
-                                .SetEase(Ease.Linear) // 일정한 속도로 타이핑
-                                .WaitForCompletion();
-        }
-        else
-        {
-            Debug.LogError($"extraText 리스트에 유효한 인덱스({textIndex})가 없습니다. nowStageLevel: {nowStageLevel}");
-        }
 
+        extraText.text = extraTextString[textIndex];
+       
 
         // 6. 잠시대기하고
         yield return new WaitForSeconds(1.5f);

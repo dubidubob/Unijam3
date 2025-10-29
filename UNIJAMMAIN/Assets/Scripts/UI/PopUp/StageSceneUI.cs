@@ -32,7 +32,7 @@ public class StageSceneUI : UI_Popup
     public float rotateDuration = 1f; // 회전에 걸리는 시간
     public RectTransform mapImage;
     private float moveDistance = 1100f;
-    private float moveDuration = 0.8f;
+    private float moveDuration = 1.6f;
 
     private int currentStageIndex = 2;
     private List<Button> stageButtons = new List<Button>();
@@ -515,13 +515,16 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill(); // 진행 중인 모든 애니메이션을 즉시 중지
 
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
+  
+        
         mapImage.DOAnchorPos(targetPos, moveDuration)
                 .SetEase(moveEase)
                 .OnComplete(() =>
                 {
                     isAnimating = false;
-                    UpdateNavigationButtons(); // <-- ▼ 여기 추가
+                    UpdateNavigationButtons();
                 });
+        
     }
 
     private void RotateAndMoveTo(float zRot, float yPos)

@@ -148,7 +148,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 19
+        durationBeat: 20
         startDelayBeat: 0
         bpm: 162
         timeScale: 1
@@ -170,7 +170,7 @@ MonoBehaviour:
         startDelayBeat: 1
         bpm: 162
         timeScale: 1
-        preGenerateBeat: 0
+        preGenerateBeat: 2
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -292,7 +292,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: (AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWXXXXX
+          WASD_Pattern: (AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX (AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWX(AD)XXX(AD)XXX(ASD)XXXWXWX(ASD)XX(ASD)XXWX(AWD)XXXWXWXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -317,7 +317,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: DXXDDXDDXXXXXXXAXXAAXAAXXXXXXXDXXDDXDDXXXXXXXAXXAAXAAXXXXXXX
+          WASD_Pattern: DXXXDDXDDXXXXXXXAXXXAAXAAXXXXXXXDXXXDDXDDXXXXXXXAXXXAAXAAXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -367,7 +367,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: XXXXXXXXXXXXXXXX
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -385,7 +385,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/WXAX/SXDX/
+          WASD_Pattern: WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -410,7 +410,7 @@ MonoBehaviour:
           hiding: 0
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: (AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)XSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)XSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
+          WASD_Pattern: (AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -428,10 +428,10 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd
-          speedUpRate: 0
-          spawnBeat: 0.25
-          moveBeat: 3
+          WASD_Pattern: DDDDDDDDDDDDDDDDDDDDDDDDDDDDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          speedUpRate: 1
+          spawnBeat: 0.4
+          moveBeat: 4
           hiding: 0
     - rid: 7504154239622971397
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
@@ -446,7 +446,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: DXXDDXDDXXXXXXXAXXAAXAAXXXXXXXDXXDDXDDXXXXXXXAXXAAXAAXXXXXXX
+          WASD_Pattern: DXXXDDXDDXXXXXXXAXXXAAXAAXXXXXXXDXXXDDXDDXXXXXXXAXXXAAXAAXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -464,7 +464,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: DXXDDXDDXXXXXXXAXXAAXAAXXXXXXXDXXDDXDDXXXXXXXAXXAAXAAXXXXXXX
+          WASD_Pattern: DXXXDDXDDXXXXXXXAXXXAAXAAXXXXXXXDXXXDDXDDXXXXXXXAXXXAAXAAXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -482,7 +482,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: DXXDDXDDXXXXXXXAXXAAXAAXXXXXXXDXXDDXDDXXXXXXXAXXAAXAAXXXXXXX
+          WASD_Pattern: DXXXDDXDDXXXXXXXAXXXAAXAAXXXXXXXDXXXDDXDDXXXXXXXAXXXAAXAAXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
