@@ -365,11 +365,11 @@ public class StageSceneUI : UI_Popup
         IngameData.ChapterIdx = stageIndex - 1;
         if(IngameData.ChapterIdx==7)
         {
-            Managers.Sound.Play("SFX/UI/StageClick7_V1", Define.Sound.SFX,1,2f);
+            Managers.Sound.Play("SFX/UI/StageClick7_V1", Define.Sound.SFX, 1f, 5f);
         }
         else
         {
-            Managers.Sound.Play("SFX/UI/StageClick_V1", Define.Sound.SFX);
+            Managers.Sound.Play("SFX/UI/StageClick_V1", Define.Sound.SFX, 1f, 3f);
         }
         _selectedButton = button;
         _hoveredButton = null;

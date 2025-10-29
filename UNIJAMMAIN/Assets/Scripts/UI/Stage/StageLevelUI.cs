@@ -3,106 +3,106 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using DG.Tweening; // DOTween ³×ÀÓ½ºÆäÀÌ½º Ãß°¡
+using DG.Tweening; // DOTween ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ß°ï¿½
 
 public class StageLevelSceneUI : MonoBehaviour
 {
     private Image backGroundImage;
-    private CanvasGroup canvasGroup; // CanvasGroup ÂüÁ¶ Ãß°¡
+    private CanvasGroup canvasGroup; // CanvasGroup ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
     public TMP_Text tmpText;
     public TMP_Text extraText;
     public List<string> extraTextString;
 
     public bool isMoving = false;
 
-    // Start ´ë½Å Awake »ç¿ë ±ÇÀå (GetComponent´Â Awake¿¡¼­)
+    // Start ï¿½ï¿½ï¿½ Awake ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (GetComponentï¿½ï¿½ Awakeï¿½ï¿½ï¿½ï¿½)
     private void Awake()
     {
         backGroundImage = GetComponent<Image>();
-        canvasGroup = GetComponent<CanvasGroup>(); // CanvasGroup ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+        canvasGroup = GetComponent<CanvasGroup>(); // CanvasGroup ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-        // ÄÄÆ÷³ÍÆ®°¡ ¾ø´Â °æ¿ì ¿¡·¯ ¹æÁö
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (canvasGroup == null)
         {
-            Debug.LogError("CanvasGroup ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù. GameObject¿¡ Ãß°¡ÇØÁÖ¼¼¿ä.");
-            canvasGroup = gameObject.AddComponent<CanvasGroup>(); // ÀÓ½Ã·Î Ãß°¡
+            Debug.LogError("CanvasGroup ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. GameObjectï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
+            canvasGroup = gameObject.AddComponent<CanvasGroup>(); // ï¿½Ó½Ã·ï¿½ ï¿½ß°ï¿½
         }
 
-        // ½ÃÀÛ ½Ã Åõ¸íÇÏ°Ô ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
         canvasGroup.alpha = 0f;
     }
 
     
 
     /// <summary>
-    /// ½ºÅ×ÀÌÁö ·¹º§ UI¸¦ Ç¥½ÃÇÏ´Â ÄÚ·çÆ¾ (1-based index)
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UIï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ú·ï¿½Æ¾ (1-based index)
     /// </summary>
-    /// <param name="nowStageLevel">ÇöÀç ½ºÅ×ÀÌÁö ·¹º§ (1, 2, 3...)</param>
+    /// <param name="nowStageLevel">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1, 2, 3...)</param>
     public IEnumerator SetStageLevelSceneUI(int nowStageLevel)
     {
         canvasGroup.blocksRaycasts = true;
         isMoving = true;
-        // 0. ÅØ½ºÆ® ÃÊ±âÈ­
+        // 0. ï¿½Ø½ï¿½Æ® ï¿½Ê±ï¿½È­
         tmpText.text = "";
-        tmpText.transform.localScale = Vector3.zero; // Å©±â ÃÊ±âÈ­
+        tmpText.transform.localScale = Vector3.zero; // Å©ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
-        // 1. µµÆ®À©À¸·Î CanvasGroup ÃµÃµÈ÷ -> ¹à±â Á¶Á¤ (Fade In)
-        yield return canvasGroup.DOFade(1f, 0.7f).WaitForCompletion();
+        // 1. ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CanvasGroup ÃµÃµï¿½ï¿½ -> ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (Fade In)
+        yield return canvasGroup.DOFade(1f, 1.2f).WaitForCompletion();
 
 
-        // 2. tmpText ¿ÀºêÁ§Æ®°¡ µµÀåÃ³·³ ¹ÚÈ÷´Â ¾Ö´Ï¸ÞÀÌ¼Ç
-        // 3. tmpText.text = "Á¦{nowStageLevel}Àå" ; À¸·Î ¼³Á¤
-        yield return new WaitForSeconds(0.8f);
+        // 2. tmpText ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
+        // 3. tmpText.text = "ï¿½ï¿½{nowStageLevel}ï¿½ï¿½" ; ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        yield return new WaitForSeconds(0.5f);
         if (nowStageLevel == 2)
         {
-            tmpText.text = $"Á¦?Àå";
+            tmpText.text = $"ì œ?ìž¥";
         }
         else
         {
-            tmpText.text = $"Á¦{nowStageLevel+1}Àå";
+            tmpText.text = $"ì œ{nowStageLevel+1}ìž¥";
         }
 
         tmpText.transform.localScale = new Vector2(3f, 3f);
-        Managers.Sound.Play("SFX/UI/Act123_V1", Define.Sound.SFX);
-        yield return new WaitForSeconds(0.8f);
-        // Ease.OutBackÀÌ µµÀåÃ³·³ ÅëÅë Æ¢´Â ´À³¦À» ÁÝ´Ï´Ù.
+        Managers.Sound.Play("SFX/UI/Act123_V1", Define.Sound.SFX, 1f, 3f);
+        yield return new WaitForSeconds(0.7f);
+        // Ease.OutBackï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý´Ï´ï¿½.
         yield return tmpText.transform.DOScale(1.5f, 0.2f).SetEase(Ease.OutBack).WaitForCompletion();
 
         yield return new WaitForSeconds(0.4f);
-        tmpText.rectTransform.DOAnchorPosX(-240f, 0.7f); // (O) ÀÎ½ºÆåÅÍÀÇ Pos X ±âÁØ
-        // 4. Àá½Ã ±â´Ù¸²
+        tmpText.rectTransform.DOAnchorPosX(-200f, 0.7f); // (O) ï¿½Î½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Pos X ï¿½ï¿½ï¿½ï¿½
+        // 4. ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½
         yield return new WaitForSeconds(1.3f);
 
-        // 5. tmpText.text °¡ ±âÁ¸ ±ÛÀÚ¿¡ extraText[nowStageLevel] ¿¡ ½áÁ®ÀÖ´Â ±ÛÀÚ¸¦ Â÷·Ê·Î ¾¸
+        // 5. tmpText.text ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ extraText[nowStageLevel] ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½Ê·ï¿½ ï¿½ï¿½
 
-        // nowStageLevelÀº 1ºÎÅÍ ½ÃÀÛÇÏ´Â ·¹º§ °ªÀÌ¹Ç·Î, ¸®½ºÆ® ÀÎµ¦½º·Î´Â -1À» ÇØÁÝ´Ï´Ù.
+        // nowStageLevelï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¹Ç·ï¿½, ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Îµï¿½ï¿½ï¿½ï¿½Î´ï¿½ -1ï¿½ï¿½ ï¿½ï¿½ï¿½Ý´Ï´ï¿½.
         int textIndex = nowStageLevel;
 
-        // ¸®½ºÆ® ¹üÀ§ Ã¼Å©
+        // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 
 
         extraText.text = extraTextString[textIndex];
        
 
-        // 6. Àá½Ã´ë±âÇÏ°í
+        // 6. ï¿½ï¿½Ã´ï¿½ï¿½ï¿½Ï°ï¿½
         yield return new WaitForSeconds(1.5f);
 
-        // 7. SetOffStageLevelSceneUI ½ÇÇà
+        // 7. SetOffStageLevelSceneUI ï¿½ï¿½ï¿½ï¿½
         StartCoroutine(SetOffStageLevelSceneUI());
     }
 
     IEnumerator SetOffStageLevelSceneUI()
     {
-        // 1. CanvasGroup -> ¹à±âÁ¶Á¤ (Fade Out)
-        yield return canvasGroup.DOFade(0f, 0.5f).WaitForCompletion();
+        // 1. CanvasGroup -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Fade Out)
+        yield return canvasGroup.DOFade(0f, 1.8f).WaitForCompletion();
 
-        // 2. ¿ÏÀüÈ÷ ¾îµÎ¿öÁøµÚ ÅØ½ºÆ® clear
+        // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® clear
         tmpText.text = "";
         extraText.text = "";
         canvasGroup.blocksRaycasts = false;
 
         tmpText.rectTransform.anchoredPosition = new Vector2(0, 0);
-        tmpText.transform.localScale = Vector3.zero; // ´ÙÀ½À» À§ÇØ Å©±âµµ ¸®¼Â
+        tmpText.transform.localScale = Vector3.zero; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½âµµ ï¿½ï¿½ï¿½ï¿½
         isMoving = false;
     }
 }

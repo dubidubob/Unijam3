@@ -66,7 +66,7 @@ namespace Kino
             _material = new Material(_shader);
             _material.hideFlags = HideFlags.DontSave;
 
-            _noiseTexture = new Texture2D(64, 32, TextureFormat.ARGB32, false);
+            _noiseTexture = new Texture2D(8, 4, TextureFormat.ARGB32, false);
             _noiseTexture.hideFlags = HideFlags.DontSave;
             _noiseTexture.wrapMode = TextureWrapMode.Clamp;
             _noiseTexture.filterMode = FilterMode.Point;
