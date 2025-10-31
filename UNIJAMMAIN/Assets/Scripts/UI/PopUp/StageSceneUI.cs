@@ -55,7 +55,9 @@ public class StageSceneUI : UI_Popup
     [SerializeField] GameObject completedObject;
     [SerializeField] GameObject checkObject;
     [SerializeField] StageLevelSceneUI stageLevelSceneUI;
-
+    [SerializeField] GameObject darkupObject;
+    [SerializeField] Image dooroImage;
+    [SerializeField] Image patternBackGround;
     
 
 
@@ -540,11 +542,26 @@ public class StageSceneUI : UI_Popup
         
     }
 
+    private bool isRotated = false;
     private void RotateAndMoveTo(float zRot, float yPos)
     {
         isAnimating = true;
         mapImage.DOKill();
         StartCoroutine(StartGlitching());
+        if(isRotated)
+        {
+            darkupObject.SetActive(false);
+            dooroImage.color = new Color(1,1,1);
+            patternBackGround.color = new Color(1,1,1);
+            isRotated = false;
+        }
+        else
+        {
+            darkupObject.SetActive(true);
+            dooroImage.color = new Color(67f / 255f, 117f / 255f, 147f / 255f);
+            patternBackGround.color = new Color(14f / 255f, 106f / 255f, 154f / 255f);
+            isRotated = true;
+        }
 
         StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         // 위치 이동과 회전을 동시에 실행
