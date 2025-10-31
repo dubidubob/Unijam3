@@ -44,7 +44,7 @@ MonoBehaviour:
   DelayPaddingSeconds: 0
   backGroundSprite: {fileID: 21300000, guid: 9c10c4e94114c464f8fb6de6ad2200b5, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 07662740e088cd1478cc8f997d1ce92a, type: 3}
-  colorPalette: {r: 0.23773581, g: 0.23773581, b: 0.23773581, a: 0.5882353}
+  colorPalette: {r: 0.454902, g: 0.65882355, b: 0.6156863, a: 1}
   references:
     version: 2
     RefIds:
