@@ -58,7 +58,9 @@ public class StageSceneUI : UI_Popup
     [SerializeField] GameObject darkupObject;
     [SerializeField] Image dooroImage;
     [SerializeField] Image patternBackGround;
-    
+
+    [SerializeField] Sprite doroDarkSprite;
+    [SerializeField] Sprite backGroundDarkSprite;
 
 
     enum ButtonState
@@ -134,6 +136,8 @@ public class StageSceneUI : UI_Popup
     private void Start()
     {
         StoryDialog.ResetStoryBackground();
+        originalBackGroundSprite = GetComponent<Image>().sprite;
+        originalDoroSprite = dooroImage.sprite;
         Init();
         UpdateStageButtons();
         UpdateNavigationButtons();
@@ -365,14 +369,11 @@ public class StageSceneUI : UI_Popup
       
 
         IngameData.ChapterIdx = stageIndex - 1;
-        if(IngameData.ChapterIdx==7)
-        {
-            Managers.Sound.Play("SFX/UI/StageClick7_V1", Define.Sound.SFX, 1f, 5f);
-        }
-        else
-        {
-            Managers.Sound.Play("SFX/UI/StageClick_V1", Define.Sound.SFX, 1f, 3f);
-        }
+
+       
+        string path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";
+        Managers.Sound.Play(path, Define.Sound.SFX, 1f, 5f);
+       
         _selectedButton = button;
         _hoveredButton = null;
         UpdateStageButtons();
@@ -543,6 +544,8 @@ public class StageSceneUI : UI_Popup
     }
 
     private bool isRotated = false;
+    Sprite originalDoroSprite;
+    Sprite originalBackGroundSprite;
     private void RotateAndMoveTo(float zRot, float yPos)
     {
         isAnimating = true;
@@ -550,16 +553,20 @@ public class StageSceneUI : UI_Popup
         StartCoroutine(StartGlitching());
         if(isRotated)
         {
+            // 복구
             darkupObject.SetActive(false);
             dooroImage.color = new Color(1,1,1);
             patternBackGround.color = new Color(1,1,1);
+            dooroImage.sprite = originalDoroSprite;
+            GetComponent<Image>().sprite = originalBackGroundSprite;
             isRotated = false;
         }
         else
         {
             darkupObject.SetActive(true);
-            dooroImage.color = new Color(67f / 255f, 117f / 255f, 147f / 255f);
-            patternBackGround.color = new Color(14f / 255f, 106f / 255f, 154f / 255f);
+            dooroImage.sprite = doroDarkSprite;
+            GetComponent<Image>().sprite = backGroundDarkSprite;
+
             isRotated = true;
         }
 
@@ -579,7 +586,7 @@ public class StageSceneUI : UI_Popup
 
     IEnumerator StartGlitching()
     {
-        Debug.Log("진입?");
+        Managers.Sound.Play("SFX/UI/Noise_V1");
         float rampUpTime = 0.1f;    // 0.1초 만에 0.8까지 빠르게 증가
         float glitchDuration = 0.7f;  // 0.7초 동안 깜빡임(왔다갔다)
         float rampDownTime = 0.2f;  // 0.2초 만에 원래대로 복구
