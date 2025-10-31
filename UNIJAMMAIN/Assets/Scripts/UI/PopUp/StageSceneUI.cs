@@ -419,7 +419,9 @@ public class StageSceneUI : UI_Popup
     private bool practiveModeButtonisClicked = false;
     private void PracticeModeButtonClicked(PointerEventData eventData)
     {
-        if(practiveModeButtonisClicked==false)
+        Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
+
+        if (practiveModeButtonisClicked==false)
         {
             IngameData.boolPracticeMode = true;
             practiveModeButtonisClicked = true;

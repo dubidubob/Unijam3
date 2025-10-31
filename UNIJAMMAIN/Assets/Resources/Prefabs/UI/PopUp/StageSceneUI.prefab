@@ -2142,8 +2142,8 @@ MonoBehaviour:
   darkupObject: {fileID: 8613829197025739325}
   dooroImage: {fileID: 5039275637561451890}
   patternBackGround: {fileID: 1743468445841097513}
-  doroDarkSprite: {fileID: 21300000, guid: 51ffd6b2ac2159f448740e8f67b51868, type: 3}
-  backGroundDarkSprite: {fileID: 21300000, guid: 1814f2245352ef9469d7d39058cd32cc, type: 3}
+  doroDarkSprite: {fileID: 21300000, guid: 7fdfc4ccb2c14f24980a1b21429da556, type: 3}
+  backGroundDarkSprite: {fileID: 21300000, guid: e5bc97843c75b124daabde1370584f3b, type: 3}
 --- !u!223 &8565910677778262950
 Canvas:
   m_ObjectHideFlags: 0
