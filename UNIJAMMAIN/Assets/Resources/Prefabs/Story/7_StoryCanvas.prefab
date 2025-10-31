@@ -868,7 +868,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    spriteYOffset: 40
+    spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: 6fe687df23df05e41b6485c560f6ce69, type: 2}
