@@ -246,6 +246,8 @@ public class GameManager
     private void GameOver()
     {
         currentPlayerState = PlayerState.Die;
+        IngameData.Pause = true;
+        PauseManager.ControlTime(true);
         actionUI.GameOverAnimation();
         blur.GameOverBlurEffect();
         blur.WaitForGameOver();

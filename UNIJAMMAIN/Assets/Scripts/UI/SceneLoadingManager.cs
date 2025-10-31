@@ -128,7 +128,7 @@ public class SceneLoadingManager : UI_Base
         while (!isSceneReadyToDisplay)
         {
             // 여기도 Time.timeScale 0일때 멈추므로 수정
-            yield return new WaitForSecondsRealtime(0.1f); // <--- 여기 수정
+            yield return new WaitForSecondsRealtime(0.1f); // 
         }
         if (AspectRatioEnforcer.Instance != null)
         {
