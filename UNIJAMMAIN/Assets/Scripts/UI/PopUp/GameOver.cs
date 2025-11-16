@@ -18,6 +18,8 @@ public class GameOver : UI_Popup
     private void Start()
     {
         Init();
+        IngameData.Pause = true;
+        PauseManager.ControlTime(true);
         StartCoroutine(GoingBlack());
         Bind<Button>(typeof(Buttons));
         GetButton((int)Buttons.Why_Am_I_Here).gameObject.AddUIEvent(gohome);

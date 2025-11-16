@@ -91,8 +91,6 @@ public class MovingEnemy : MonoBehaviour
 
     public void SetDead()
     {
-        // 진행 중이던 다른 모든 트윈과 코루틴을 확실히 중지시킵니다.
-        Managers.Game.beatClock.GetNowTickDebugLog();
         KillingDO();
         if (_hidingCoroutine != null)
         {

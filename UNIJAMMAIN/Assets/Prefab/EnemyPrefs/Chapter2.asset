@@ -71,7 +71,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 5
-          WASD_Pattern: AAAADDDDWWWWSSSSAAAADDDDXX
+          WASD_Pattern: XXAAADDDWWWSSSAAADDDWWXX
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 3
