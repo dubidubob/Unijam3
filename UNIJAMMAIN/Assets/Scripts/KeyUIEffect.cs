@@ -14,10 +14,13 @@ public class KeyUIEffect : MonoBehaviour
     private Sprite basic;
     private Color baseColor;
     private SpriteRenderer[] sp;
+
+    private ParticleSystem getKeyParticle;
     private void Awake()
     {
         sp = GetComponentsInChildren<SpriteRenderer>(true);
 
+       
         if (isWasd)
         {
             baseColor = sp[0].color;
@@ -53,13 +56,17 @@ public class KeyUIEffect : MonoBehaviour
 
     private void TurnUIEffect(GamePlayDefine.WASDType t)
     {
+
         if (type == t)
         {
             // sp[0].color = new Color32(0xFF, 0xFB, 0x37, 0xFF);
             sp[1].sprite = candidate;
             sp[2].gameObject.SetActive(true);
-
-            Managers.Game.vfxController.Play(0, transform.position);
+            if(getKeyParticle==null)
+            {
+                getKeyParticle = Managers.Game.vfxController.GetVfx(0, transform.position).GetComponent<ParticleSystem>();
+            }
+            getKeyParticle.Play();
             Invoke("TurnOff", 0.2f);
             
            

@@ -16,14 +16,11 @@ namespace Assets.VFXPACK_IMPACT_WALLCOEUR.Scripts
             Managers.Game.vfxController = this;
         }
 
-        public void Play(int index,Vector2 position)
+        public GameObject GetVfx(int index,Vector2 position)
         {
-            if (_currentVfx != null)
-            {
-                Destroy(_currentVfx);
-            }
-
             _currentVfx = Instantiate(_vfxList[index], position, Quaternion.identity, transform);
+            return _currentVfx;
+           
         }
 
         public void Stop()

@@ -37,7 +37,7 @@ namespace Assets.VFXPACK_IMPACT_WALLCOEUR.Scripts
 
         public void PlayVfx()
         {
-            _vfxController.Play(_dropdown.value,transform.position);
+            //_vfxController.Play(_dropdown.value,transform.position);
         }
 
         public void StopVfx()
