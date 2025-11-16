@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GamePlayDefine;
+using Assets.VFXPACK_IMPACT_WALLCOEUR.Scripts;
 
 
 [Serializable]
@@ -36,6 +37,7 @@ public class GameManager
     public Accuracy accuracy;
     public PlayerActionUI actionUI;
     public MonsterDatabaseSO monster;
+    public VfxController vfxController;
     public BeatClock beatClock;
 
     

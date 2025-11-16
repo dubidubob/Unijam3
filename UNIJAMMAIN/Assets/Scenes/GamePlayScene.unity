@@ -3415,7 +3415,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: 13066fbeac5361f49a3b6b8c0fc04975, type: 3}
-  m_Color: {r: 0.83396226, g: 0.80406547, b: 0.8069645, a: 1}
+  m_Color: {r: 0.4415095, g: 0.42568177, b: 0.42766023, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -7863,6 +7863,7 @@ GameObject:
   - component: {fileID: 5032662942808797823}
   - component: {fileID: 5032662942808797822}
   - component: {fileID: 5032662942808797821}
+  - component: {fileID: 5032662942808797826}
   m_Layer: 0
   m_Name: SpawnerController
   m_TagString: Untagged
@@ -7955,11 +7956,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738542a5a5f67e54a8b0c65ce227e5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTest: 0
+  isTest: 1
   TestStageIndex: 7
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}
   backGroundGray: {fileID: 1742512190}
+  characterSprite: {fileID: 460754922}
   Scoreboard: {fileID: 1483870323}
   beatClock: {fileID: 2094054435}
   tutorialPopUp: {fileID: 529075228}
@@ -7979,6 +7981,21 @@ MonoBehaviour:
   gaugeImage: {fileID: 33989755}
   _chapterIdx: 7
   _totalBeat: 0
+--- !u!114 &5032662942808797826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5032662942808797819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2f4b17ef261474f8627657365315db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfxList:
+  - {fileID: 500345726442012828, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
+  - {fileID: 3371170036899401494, guid: c004a535d952a5c4db2a006a45ac33ab, type: 3}
 --- !u!1001 &5570071771724819243
 PrefabInstance:
   m_ObjectHideFlags: 0
