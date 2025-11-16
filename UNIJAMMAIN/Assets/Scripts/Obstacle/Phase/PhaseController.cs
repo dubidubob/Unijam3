@@ -23,6 +23,7 @@ public class PhaseController : MonoBehaviour
 
     [SerializeField] Image backGround;
     [SerializeField] Image backGroundGray;
+    [SerializeField] SpriteRenderer characterSprite;
     [SerializeField] ResultUI Scoreboard;
     [SerializeField] BeatClock beatClock;
     [SerializeField] UI_Popup tutorialPopUp;
@@ -270,6 +271,37 @@ public class PhaseController : MonoBehaviour
     {
         backGround.overrideSprite = chapters[_chapterIdx].backGroundSprite;
         backGroundGray.overrideSprite = chapters[_chapterIdx].backGroundGraySprite;
+
+        // 프리팹 로드
+        if (_chapterIdx == 1)
+        {
+            GameObject particle = Resources.Load<GameObject>("Prefabs/LeafParticleRain");
+            if (particle != null)
+            {
+                // 게임 월드에 프리팹 인스턴스 생성 (위치: (0,0,0), 회전: 기본값)
+                Instantiate(particle);
+            }
+        }
+        
+        
+        if(_chapterIdx==3)
+        {
+            GameObject rain = Resources.Load<GameObject>("Prefabs/Rain_Front");
+            Instantiate(rain);
+            backGround.color = new Color(127f / 255f, 133f / 255f, 145f / 255f);
+            characterSprite.color = new Color(180f / 255f, 180f / 255f, 180f / 255f);
+        }
+
+        if(_chapterIdx==4)
+        {
+            GameObject particle = Resources.Load<GameObject>("Prefabs/SnowParticleRain");
+            if (particle != null)
+            {
+                // 게임 월드에 프리팹 인스턴스 생성 (위치: (0,0,0), 회전: 기본값)
+                Instantiate(particle);
+            }
+        }
+
     }
 
     private void SetStageTimerInitialize()

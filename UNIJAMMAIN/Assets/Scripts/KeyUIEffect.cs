@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Assets.VFXPACK_IMPACT_WALLCOEUR.Scripts;
+
 public class KeyUIEffect : MonoBehaviour
 {
     [SerializeField] bool isWasd = true;
@@ -56,7 +58,8 @@ public class KeyUIEffect : MonoBehaviour
             // sp[0].color = new Color32(0xFF, 0xFB, 0x37, 0xFF);
             sp[1].sprite = candidate;
             sp[2].gameObject.SetActive(true);
-            
+
+            Managers.Game.vfxController.Play(0, transform.position);
             Invoke("TurnOff", 0.2f);
             
            
