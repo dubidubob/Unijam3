@@ -822,6 +822,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: D_Holder
       objectReference: {fileID: 0}
+    - target: {fileID: 6044968195420482776, guid: 396f368357dd3d943a45397eb6e29ab4, type: 3}
+      propertyPath: type2
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7669738701606069430, guid: 396f368357dd3d943a45397eb6e29ab4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.8
@@ -2544,6 +2548,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: W_Target
       objectReference: {fileID: 0}
+    - target: {fileID: 6044968195420482776, guid: 4d54c8d40521e6c4da683d913efac4b6, type: 3}
+      propertyPath: type2
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7208559420813573076, guid: 4d54c8d40521e6c4da683d913efac4b6, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.5
@@ -3752,6 +3760,10 @@ PrefabInstance:
     - target: {fileID: 4694411840381609183, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
       propertyPath: m_Name
       value: A_Holder
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044968195420482776, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
+      propertyPath: type2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7669738701606069430, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6438,6 +6450,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: S_Holder
       objectReference: {fileID: 0}
+    - target: {fileID: 6044968195420482776, guid: 16c2887a9414a3d4a863e5b4131175a8, type: 3}
+      propertyPath: type2
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7208559420813573076, guid: 16c2887a9414a3d4a863e5b4131175a8, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.15
@@ -7956,7 +7972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738542a5a5f67e54a8b0c65ce227e5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTest: 0
+  isTest: 1
   TestStageIndex: 7
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}
