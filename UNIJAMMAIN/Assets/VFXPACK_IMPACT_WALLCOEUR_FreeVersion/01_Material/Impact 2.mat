@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Impact 2
   m_Shader: {fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}
-  m_Parent: {fileID: 2100000, guid: b3932cd6b6e730f478505fbdc8f875c4, type: 2}
+  m_Parent: {fileID: 2100000, guid: c53cd7fa2129fe54c81ce2e1a3d6e3cc, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1e7b7dbd85d4839448ae4c26ea0765aa, type: 3}
+        m_Texture: {fileID: 2800000, guid: c61af5ac507246e47bb5b6de44768b26, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []

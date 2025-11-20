@@ -7995,7 +7995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vfxList:
   - {fileID: 500345726442012828, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
-  - {fileID: 3371170036899401494, guid: c004a535d952a5c4db2a006a45ac33ab, type: 3}
+  - {fileID: 6554105861613839829, guid: ec62d0a2ecdc02846abad5a733803b81, type: 3}
 --- !u!1001 &5570071771724819243
 PrefabInstance:
   m_ObjectHideFlags: 0

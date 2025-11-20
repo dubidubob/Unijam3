@@ -14,12 +14,13 @@ namespace Assets.VFXPACK_IMPACT_WALLCOEUR.Scripts
         private void Start()
         {
             Managers.Game.vfxController = this;
+
+
         }
 
         public GameObject GetVfx(int index,Vector2 position)
         {
-            _currentVfx = Instantiate(_vfxList[index], position, Quaternion.identity, transform);
-            return _currentVfx;
+            return _vfxList[index];
            
         }
 

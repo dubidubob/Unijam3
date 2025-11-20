@@ -44,7 +44,11 @@ public class HitJudge
                 break;
             case EvaluateType.Success:
                 if (CalculatePerfect(rankNode.Pos, target, rankNode.WASDT))
-                    IngameData.IncPerfect();
+                      {
+                           IngameData.IncPerfect();
+                           IngameData.OnPerfectEffect(rankNode.WASDT);
+                            
+                       }
                 else
                     IngameData.IncGood();
                 break;
