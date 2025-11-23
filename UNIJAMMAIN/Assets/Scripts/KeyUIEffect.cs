@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using Unity.Collections;
 using Assets.VFXPACK_IMPACT_WALLCOEUR.Scripts;
@@ -31,10 +32,12 @@ public class KeyUIEffect : MonoBehaviour
             IngameData.OnPerfectEffect += PlayPerfectEffect;
         }
     }
-    
+
    public IEnumerator waitForEffectLoading(float duration)
     {
         yield return new WaitForSecondsRealtime(duration);
+
+       
 
         if (getKeyParticle == null&&type2==GamePlayDefine.DiagonalType.MaxCnt)
         {
@@ -62,6 +65,7 @@ public class KeyUIEffect : MonoBehaviour
                     perfectEffectParticle = instance1.GetComponent<ParticleSystem>();
                 }
             }
+
 
         }
     }
@@ -94,6 +98,7 @@ public class KeyUIEffect : MonoBehaviour
     {
         Managers.Input.InputWasd -= TurnUIEffect;
         Managers.Input.InputDiagonal -= TurnUIEffect;
+        IngameData.OnPerfectEffect -= PlayPerfectEffect;
     }
 
     private void TurnUIEffect(GamePlayDefine.DiagonalType t)

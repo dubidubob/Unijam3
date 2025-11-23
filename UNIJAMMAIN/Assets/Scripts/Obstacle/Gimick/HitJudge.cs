@@ -5,7 +5,7 @@ using static GamePlayDefine;
 public class HitJudge
 {
     private float horizontalDiameter, verticalDiameter;
-    private float perfectThreshold = 0.4f; //TODO : 80퍼센트 이상은 죄다 perfect 처리
+    private float perfectThreshold = 0.25f; //TODO : 80퍼센트 이상은 죄다 perfect 처리
     
     public HitJudge(float hori, float verti)
     {

@@ -18,7 +18,7 @@ public abstract class GameEvent
 public class PhaseEvent : GameEvent
 {
     public bool isFlipAD;
-    [SerializeField] private List<MonsterData> monsterDatas;
+    [SerializeField] public List<MonsterData> monsterDatas;
     public IReadOnlyList<MonsterData> MonsterDatas => monsterDatas;
 }
 

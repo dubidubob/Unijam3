@@ -170,8 +170,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
-  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
+    rgba: 14285823
+  m_fontColor: {r: 1, g: 0.9842894, b: 0.8509433, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -729,6 +729,7 @@ GameObject:
   - component: {fileID: 210544443}
   - component: {fileID: 210544442}
   - component: {fileID: 210544441}
+  - component: {fileID: 210544444}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -810,6 +811,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &210544444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210544440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870b9a8f0f82f4f56800cc427bcd1025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scanLineJitter: 0
+  _verticalJump: 0
+  _horizontalShake: 0
+  _colorDrift: 0
+  _shader: {fileID: 4800000, guid: da33272284ea24f208f36998880990be, type: 3}
 --- !u!1001 &295339326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1675,6 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPopUp: 0
+  escPanel: {fileID: 207048281}
 --- !u!1 &605990577
 GameObject:
   m_ObjectHideFlags: 0
@@ -4053,7 +4072,7 @@ Transform:
   - {fileID: 6874325470726281469}
   - {fileID: 6874325471044987104}
   - {fileID: 6874325471046444193}
-  m_Father: {fileID: 2059337766}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1319707113
 GameObject:
@@ -7136,7 +7155,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1225381025}
-  - {fileID: 1272120749}
   - {fileID: 1944596560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7974,6 +7992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTest: 1
   TestStageIndex: 7
+  isSinkStage: 0
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}
   backGroundGray: {fileID: 1742512190}
@@ -7990,6 +8009,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 788691d3e6d269c4eaabcfbe0608bb5f, type: 2}
   - {fileID: 11400000, guid: 34f77c21629ef8743905c8baa6718838, type: 2}
   - {fileID: 11400000, guid: b8a3024e81df9f44ea015cc04b0b436a, type: 2}
+  - {fileID: 11400000, guid: 6fc515c901a1b7843b4a6051201b00af, type: 2}
   startMotions:
     startCountUI: {fileID: 1997952375}
     playerActionUI: {fileID: 460754923}
@@ -8576,6 +8596,7 @@ SceneRoots:
   - {fileID: 2094054433}
   - {fileID: 1470370005}
   - {fileID: 2059337766}
+  - {fileID: 1272120749}
   - {fileID: 2769898147421067717}
   - {fileID: 1691584787}
   - {fileID: 1571707113}
