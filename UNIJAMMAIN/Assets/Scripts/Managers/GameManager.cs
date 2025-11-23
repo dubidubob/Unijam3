@@ -39,6 +39,7 @@ public class GameManager
     public MonsterDatabaseSO monster;
     public VfxController vfxController;
     public BeatClock beatClock;
+    public PhaseController phaseController;
 
     
     public int perfect = 0;
