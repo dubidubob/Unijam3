@@ -382,13 +382,17 @@ public class SoundManager
 
 
     public void StopBGM()
-    { 
-        BGM.Stop();
+    {
+        if (BGM != null)
+        {
+            BGM.Stop();
+        }
     }
 
     public void Stop(AudioSource audioSource)
     {
         audioSource.Stop();
+        Debug.Log("Stop 실행");
     }
     public void Clear()
     {
@@ -430,4 +434,87 @@ public class SoundManager
         
         Debug.Log($"SettingNewSceneVolme : {BGMController.CurrentVolumeBGM},{SFXController.CurrentVolumeSFX}");
     }
+
+    // 1. 경로(string)로 호출하는 버전
+    public void PlayScheduled(string path, double dspTime, Define.Sound type = Define.Sound.BGM, float pitch = 1.0f, float volume = 1.0f)
+    {
+        AudioClip audioClip = GetOrAddAudioClip(path, type);
+        PlayScheduled(audioClip, dspTime, type, pitch, volume);
+    }
+
+    // 2. AudioClip으로 호출하는 실제 구현부
+    public void PlayScheduled(AudioClip audioClip, double dspTime, Define.Sound type = Define.Sound.BGM, float pitch = 1.0f, float volume = 1.0f)
+    {
+        if (audioClip == null) return;
+
+        if (type == Define.Sound.BGM)
+        {
+            if (_audioSources == null) Init();
+            AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
+
+            // BGM PlayScheduled는 보통 리듬게임 스테이지 시작 시 강제로 재생하는 경우가 많으므로
+            // 기존 씬 유지 로직(MainTitle <-> StageScene 공유 등)은 무시하고
+            // 요청받은 곡을 해당 시간에 정확히 재생하는 것에 집중합니다.
+
+            _currentSceneName = SceneManager.GetActiveScene().name;
+
+            // 기존 재생 중인 곡 정지
+            audioSource.Stop();
+
+            audioSource.pitch = pitch;
+            audioSource.clip = audioClip;
+
+            // 볼륨 설정 (기존 로직 유지)
+            audioSource.volume = BGMController.CurrentVolumeBGM * volume;
+            _originalBGMVolume = audioSource.volume;
+
+            // Fade 코루틴이 돌고 있었다면 정지
+            if (_fadeCoroutine != null)
+            {
+                StaticCoroutine.StopStaticCoroutine(_fadeCoroutine);
+                _fadeCoroutine = null;
+            }
+
+            // 루프 설정 (기존 로직 유지)
+            if (_currentSceneName == "GamePlayScene")
+            {
+                audioSource.loop = false;
+            }
+            else
+            {
+                audioSource.loop = true;
+            }
+
+            BGM = audioSource;
+
+            audioSource.PlayScheduled(dspTime);
+        }
+        else if (type == Define.Sound.SubBGM)
+        {
+            // SubBGM에 대한 PlayScheduled 로직 (필요시 구현, BGM과 유사)
+            if (_audioSources == null) Init();
+            AudioSource audioSource = _audioSources[(int)Define.Sound.SubBGM];
+
+            audioSource.Stop();
+            audioSource.pitch = pitch;
+            audioSource.clip = audioClip;
+            audioSource.volume = BGMController.CurrentVolumeBGM * volume;
+
+            SubBGM = audioSource;
+            audioSource.PlayScheduled(dspTime);
+        }
+        else // SFX
+        {
+            // 주의: SFX는 보통 PlayOneShot을 쓰지만, Scheduled는 AudioSource가 필요하므로
+            // PlayOneShot을 쓸 수 없습니다. 기존 SFX가 끊길 수 있습니다.
+            if (SFX == null) Init();
+
+            SFX.Stop(); // 예약 재생을 위해 기존 소리 중단
+            SFX.clip = audioClip;
+            SFX.pitch = pitch;
+            SFX.volume = volume * SFXController.CurrentVolumeSFX;
+            SFX.PlayScheduled(dspTime);
+        }
+    }
+
 }

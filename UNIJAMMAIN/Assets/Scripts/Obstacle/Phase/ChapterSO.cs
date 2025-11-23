@@ -18,6 +18,7 @@
         public Sprite backGroundSprite;
         public Sprite backGroundGraySprite;
         public Color colorPalette;
+    public bool SinkStage;
 
 #if UNITY_EDITOR
     private void OnValidate()

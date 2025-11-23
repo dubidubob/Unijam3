@@ -52,14 +52,19 @@
         private void HandleBpmChange()
         {
             // if (!_running || _paused) return; // _paused 대신 IngameData.Pause 사용
-            if (!_running || IngameData.Pause) return;
+           
             if (!_initialized)
             {
+            Debug.Log($"BGM 실행  Tick : {_tick}");
                 _initialized = true;
-            
-            }
+                Managers.Sound.Play(phase.chapters[phase._chapterIdx].MusicPath, Define.Sound.BGM);
+                StartClock();
+               isStart = true;
 
-            double now = AudioSettings.dspTime;
+             }
+        if (!_running || IngameData.Pause) return;
+
+        double now = AudioSettings.dspTime;
 
             // 이 계산은 _lastBpmChangeDspTime이 일시정지에 의해 보정되므로 항상 정확합니다.
             long currentTick = _lastBpmChangeTick + (long)Math.Floor((now - _lastBpmChangeDspTime) / _beatInterval);
@@ -69,15 +74,14 @@
             _beatInterval = IngameData.BeatInterval;
         }
 
+ 
+
 
         void Update()
         {
             if (!isStart)
             {
-                Managers.Sound.Play(phase.chapters[phase._chapterIdx].MusicPath, Define.Sound.BGM);
-               StartClock();
-               isStart = true;
-            _initialized = true;
+
             return;
             }
 
