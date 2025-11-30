@@ -23,7 +23,6 @@ public class PhaseController : MonoBehaviour
     [SerializeField] private MonsterDatabaseSO monsterDatabase;
 
     [SerializeField] Image backGround;
-    [SerializeField] Image backGroundGray;
     [SerializeField] SpriteRenderer characterSprite;
     [SerializeField] ResultUI Scoreboard;
     [SerializeField] BeatClock beatClock;
@@ -278,8 +277,6 @@ public class PhaseController : MonoBehaviour
     private void SetStageBackGround()
     {
         backGround.overrideSprite = chapters[_chapterIdx].backGroundSprite;
-        backGroundGray.overrideSprite = chapters[_chapterIdx].backGroundGraySprite;
-
         // 프리팹 로드
         if (_chapterIdx == 1)
         {

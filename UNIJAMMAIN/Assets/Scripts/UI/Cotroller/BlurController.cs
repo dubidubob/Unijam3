@@ -26,6 +26,9 @@ public class BlurController : MonoBehaviour
     private float imageHeight;
 
 
+    [SerializeField] BackGroundController backGroundController;
+
+
     #region Combo 관련 
     void Update()
     {
@@ -102,9 +105,13 @@ public class BlurController : MonoBehaviour
         StopComboEffect();
     }
     #endregion
+    float invLength;
 
     private void Start()
     {
+        // 이 변수를 클래스 멤버 변수나 루프 밖 지역 변수로 선언
+        invLength = 1f / blurImages.Length;
+
         if (camera == null)
         { 
             camera = Camera.main;
@@ -130,10 +137,23 @@ public class BlurController : MonoBehaviour
         // 초기 배치 - 왼쪽 세트 (아래→위)
         leftCombo1.rectTransform.anchoredPosition = new Vector2(leftCombo1.rectTransform.anchoredPosition.x, 0);
         leftCombo2.rectTransform.anchoredPosition = new Vector2(leftCombo2.rectTransform.anchoredPosition.x, -imageHeight);
+
+        // 시작할 때 누적 경계값을 딱 한 번만 계산
+        // SetBlur 내부의 반복문에서 덧셈 연산을 제거하기 위함
+        if (hpBoundaryWeight != null && hpBoundaryWeight.Length > 0)
+        {
+            _cachedCumulativeBoundaries = new float[hpBoundaryWeight.Length];
+            float sum = 0f;
+            for (int i = 0; i < hpBoundaryWeight.Length; i++)
+            {
+                sum += hpBoundaryWeight[i];
+                _cachedCumulativeBoundaries[i] = sum;
+            }
+        }
     }
 
     public Image[] blurImages; // Blur1 ~ BlurN (Inspector에 넣어줌)
-    public Image goGrayBackGround;
+    public Image BackGroundImage;
     public Image gameOverBlack;
     public TMP_Text gameOverText;
     public TMP_Text gameOverDownText;
@@ -145,6 +165,13 @@ public class BlurController : MonoBehaviour
 
     public int[] hpBoundaryWeight = new int[7];
 
+    // 누적 경계값 미리 계산
+    private float[] _cachedCumulativeBoundaries;
+    // 중복 호출 방지를 위한 캐싱 변수
+    private float _lastCurrentHp = -1f;
+    private float _lastMaxHp = -1f;
+
+
     /// <summary>
     /// 체력에 따라 Blur 상태 업데이트
     /// </summary>
@@ -154,45 +181,48 @@ public class BlurController : MonoBehaviour
         // Debug.Log($"currentHP : {currentHp} - maxHP : {maxHp}");
         if (blurImages.Length == 0) return;
 
-        // 몇 번째 Blur인지 계산
-        float lostHp = maxHp - currentHp;
-        float cumulativeHpBoundary = 0f;
-        int newIndex=0;
-        for (int i = 0; i < hpBoundaryWeight.Length; i++)
+        //이전값과 같다면 즉시 종료
+        if (Mathf.Approximately(currentHp, _lastCurrentHp) && Mathf.Approximately(maxHp, _lastMaxHp))
         {
-            cumulativeHpBoundary += hpBoundaryWeight[i];
-            if (lostHp < cumulativeHpBoundary)
+            return;
+        }
+
+        // 값 업데이트
+        _lastCurrentHp = currentHp;
+        _lastMaxHp = maxHp;
+
+        float lostHp = maxHp - currentHp;
+        int newIndex = 0;
+
+      
+        for (int i = 0; i < _cachedCumulativeBoundaries.Length; i++)
+        {
+            if (lostHp < _cachedCumulativeBoundaries[i])
             {
                 newIndex = i;
-                break; // 현재 체력에 해당하는 구간을 찾았으므로 루프 종료
+                break;
             }
-            // 만약 잃은 체력이 모든 가중치 합보다 크거나 같다면 마지막 인덱스로 설정됩니다.
             newIndex = i;
         }
-        // 안전을 위해 Clamp 처리 (가중치 설정 오류 방지)
+
         newIndex = Mathf.Clamp(newIndex, 0, blurImages.Length - 1);
 
-        if (newIndex != currentIndex) // 새로운 이미지로의 변환 
+        if (newIndex != currentIndex)
         {
-            // 전환 시작
-            if (fadeCoroutine != null)
-                StopCoroutine(fadeCoroutine);
-
+            if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
             fadeCoroutine = StartCoroutine(FadeTransition(currentIndex, newIndex));
+
             currentIndex = newIndex;
 
-            if (newIndex >= blurImages.Length - 2) // 마지막 2단계부터 새로 추가되는 Layer BackGround.LasBlacking
-            {
-                lastBlacking.DOFade(1f, 0.8f); // 어두워지기
-            }
-            else
-            {
-                lastBlacking.DOFade(0f, 0.8f); // 밝아지기
-            }
+            // 채도 조절 함수 호출
+            SettingSaturation();
 
+            // 검은 배경 처리
+            bool isDarkPhase = newIndex >= blurImages.Length - 2;
+            lastBlacking.DOFade(isDarkPhase ? 1f : 0f, 0.8f);
         }
-        
-        
+
+
     }
 
     private void OnDestroy()
@@ -239,7 +269,21 @@ public class BlurController : MonoBehaviour
         newImg.color = endNew;
     }
 
+    bool isSaturationSeqCool = false;
+    private void SettingSaturation()
+    {
+        if (isSaturationSeqCool) return;
+        isSaturationSeqCool = true;
 
+        Sequence seq = DOTween.Sequence();
+
+        // 사용처
+        float targetAlpha = 1f - ((currentIndex + 1) * invLength);
+
+        seq.Join(backGroundController.sharedMaterial.DOFloat(targetAlpha, "_Saturation", 0.3f)); // damageImage와 동시에 페이드
+
+        seq.OnComplete(() => isSaturationSeqCool = false);
+    }
     public void ShowDamageEffect()
     {
         if (isCoolDown) return;
@@ -253,14 +297,8 @@ public class BlurController : MonoBehaviour
         seq.Append(damageImage.DOFade(1f, 0.15f));
         seq.Append(damageImage.DOFade(0f, 0.15f));
 
+
         PlayRandomHurtSound();
-
-        // blurImages 개수 기준으로 goGrayBackGround alpha 계산
-        // currentIndex는 SetBlur에서 갱신됨, 0 ~ blurImages.Length-1
-        float targetAlpha = (currentIndex + 1) / (float)blurImages.Length; // 1/6, 2/6, ... 비율
-
-        // 배경 goGrayBackGround 투명도 점점 진해지도록 추가
-        seq.Join(goGrayBackGround.DOFade(targetAlpha, 0.3f)); // damageImage와 동시에 페이드
 
         // 카메라 흔들림 효과 추가
         camera.transform.DOShakePosition(
