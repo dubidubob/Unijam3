@@ -68,12 +68,6 @@ public class MainUIs : MonoBehaviour
 
     private void HealthChange(float health)
     {
- 
-        if (blurController != null)
-        {
-            blurController.SetBlur(health,MaxHealth); // 체력값을 비교하여 블러표시
-        }
-
         if (Managers.Game.currentPlayerState == GameManager.PlayerState.Normal) // 현재 일반 몹과 상호작용 가능한 상태, 데미지를 받는 상태일때.
         {
             if(blurController!=null)
