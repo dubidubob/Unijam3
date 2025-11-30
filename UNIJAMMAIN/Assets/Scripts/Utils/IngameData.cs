@@ -6,6 +6,7 @@ public static class IngameData
 {
     public static Action ChangeBpm;
     public static Action<RankType> OnRankUpdate;
+    public static Action<GamePlayDefine.WASDType> OnPerfectEffect;
     public static int GameBpm;
     public static bool boolPracticeMode;
 
@@ -107,6 +108,8 @@ public static class IngameData
     public static void IncGood() { GoodMobCnt++; OnRankUpdate?.Invoke(RankType.Good); }
     public static void IncWrong() { WrongInputCnt++; OnRankUpdate?.Invoke(RankType.Miss); }
     public static void IncAttacked() { AttackedMobCnt++; OnRankUpdate?.Invoke(RankType.Miss); }
+
+    public static void ActionPerfectEffect(WASDType wasdType) { OnPerfectEffect?.Invoke(wasdType); }
 
     public static void RankInit()
     {

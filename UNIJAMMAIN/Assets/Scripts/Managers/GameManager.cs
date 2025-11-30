@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GamePlayDefine;
+using Assets.VFXPACK_IMPACT_WALLCOEUR.Scripts;
 
 
 [Serializable]
@@ -36,7 +37,9 @@ public class GameManager
     public Accuracy accuracy;
     public PlayerActionUI actionUI;
     public MonsterDatabaseSO monster;
+    public VfxController vfxController;
     public BeatClock beatClock;
+    public PhaseController phaseController;
 
     
     public int perfect = 0;
@@ -246,6 +249,8 @@ public class GameManager
     private void GameOver()
     {
         currentPlayerState = PlayerState.Die;
+        IngameData.Pause = true;
+        PauseManager.ControlTime(true);
         actionUI.GameOverAnimation();
         blur.GameOverBlurEffect();
         blur.WaitForGameOver();

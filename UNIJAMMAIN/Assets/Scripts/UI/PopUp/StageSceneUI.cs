@@ -4,7 +4,9 @@ using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.SceneManagement;
+using Kino;
 
 public class StageSceneUI : UI_Popup
 {
@@ -14,6 +16,8 @@ public class StageSceneUI : UI_Popup
     private Button upButton;
     private Button downButton;
 
+    //글리치
+    private DigitalGlitch digitalGlitch;
     // 이미지
     [SerializeField]
     public Sprite deActive;
@@ -32,7 +36,7 @@ public class StageSceneUI : UI_Popup
     public float rotateDuration = 1f; // 회전에 걸리는 시간
     public RectTransform mapImage;
     private float moveDistance = 1100f;
-    private float moveDuration = 0.8f;
+    private float moveDuration = 1.6f;
 
     private int currentStageIndex = 2;
     private List<Button> stageButtons = new List<Button>();
@@ -51,8 +55,12 @@ public class StageSceneUI : UI_Popup
     [SerializeField] GameObject completedObject;
     [SerializeField] GameObject checkObject;
     [SerializeField] StageLevelSceneUI stageLevelSceneUI;
+    [SerializeField] GameObject darkupObject;
+    [SerializeField] Image dooroImage;
+    [SerializeField] Image patternBackGround;
 
-    
+    [SerializeField] Sprite doroDarkSprite;
+    [SerializeField] Sprite backGroundDarkSprite;
 
 
     enum ButtonState
@@ -103,6 +111,7 @@ public class StageSceneUI : UI_Popup
             SetupGlowMaterial(glowingTextMaterial);
         }
         currentStageIndex = Managers.Game.GameStage+1;
+        digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
     }
 
     private void OnDestroy()
@@ -127,6 +136,8 @@ public class StageSceneUI : UI_Popup
     private void Start()
     {
         StoryDialog.ResetStoryBackground();
+        originalBackGroundSprite = GetComponent<Image>().sprite;
+        originalDoroSprite = dooroImage.sprite;
         Init();
         UpdateStageButtons();
         UpdateNavigationButtons();
@@ -143,6 +154,7 @@ public class StageSceneUI : UI_Popup
 
         // 서울게임타운용
         Managers.Game.GameStage = 7;
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
     }
 
     public override void Init()
@@ -257,15 +269,15 @@ public class StageSceneUI : UI_Popup
         {
             case 0:
                 // [Level 0 -> 1] : y좌표 -295으로 이동
-                MoveTo(yPos: -295f);
                 currentPageLevel = 1;
+                MoveTo(yPos: -295f);
                 Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
 
             case 1:
                 // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
-                RotateAndMoveTo(zRot: 180f, yPos: 892f);
                 currentPageLevel = 2;
+                RotateAndMoveTo(zRot: 180f, yPos: 892f);
                 Managers.Sound.Play("SFX/UI/GoToFinalStage_V1",Define.Sound.SFX, 1f, 3f);
                 break;
 
@@ -291,15 +303,16 @@ public class StageSceneUI : UI_Popup
 
             case 1:
                 // [Level 1 -> 0] : y좌표 892으로 이동
-                MoveTo(yPos: 892f);
                 currentPageLevel = 0;
+                MoveTo(yPos: 892f);
+                
                 Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
 
             case 2:
-                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로 이동
-                RotateAndMoveTo(zRot: 0f, yPos: -295f);
+                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로
                 currentPageLevel = 1;
+                RotateAndMoveTo(zRot: 0f, yPos: -295f);
                 Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
         }
@@ -329,8 +342,18 @@ public class StageSceneUI : UI_Popup
         }
     }
 
+    bool isFirst = true;
     public void StageButtonClicked(Button button, int stageIndex)
     {
+        if(isFirst)
+        {
+            CanvasGroup canvas = checkObject.GetComponentInParent<CanvasGroup>();
+            canvas.alpha = 1;
+            canvas.interactable = true;
+            isFirst = false;
+            canvas.blocksRaycasts = true;
+        }
+
         if (stageIndex > currentStageIndex)
         {
             return;
@@ -343,9 +366,14 @@ public class StageSceneUI : UI_Popup
         }
 
         StartButtonAnimation();
-        Managers.Sound.Play("SFX/UI/StageClick_V1", Define.Sound.SFX);
+      
 
         IngameData.ChapterIdx = stageIndex - 1;
+
+       
+        string path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";
+        Managers.Sound.Play(path, Define.Sound.SFX, 1f, 5f);
+       
         _selectedButton = button;
         _hoveredButton = null;
         UpdateStageButtons();
@@ -391,7 +419,9 @@ public class StageSceneUI : UI_Popup
     private bool practiveModeButtonisClicked = false;
     private void PracticeModeButtonClicked(PointerEventData eventData)
     {
-        if(practiveModeButtonisClicked==false)
+        Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
+
+        if (practiveModeButtonisClicked==false)
         {
             IngameData.boolPracticeMode = true;
             practiveModeButtonisClicked = true;
@@ -408,7 +438,6 @@ public class StageSceneUI : UI_Popup
     }
     private void UpdateNavigationButtons()
     {
-        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         if (upButton == null || downButton == null) return;
 
         // Down 버튼: 0 (최하층)이 아닐 때만 활성화
@@ -505,20 +534,45 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill(); // 진행 중인 모든 애니메이션을 즉시 중지
 
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         mapImage.DOAnchorPos(targetPos, moveDuration)
                 .SetEase(moveEase)
                 .OnComplete(() =>
                 {
                     isAnimating = false;
-                    UpdateNavigationButtons(); // <-- ▼ 여기 추가
+                    UpdateNavigationButtons();
                 });
+        
     }
 
+    private bool isRotated = false;
+    Sprite originalDoroSprite;
+    Sprite originalBackGroundSprite;
     private void RotateAndMoveTo(float zRot, float yPos)
     {
         isAnimating = true;
         mapImage.DOKill();
+        StartCoroutine(StartGlitching());
+        if(isRotated)
+        {
+            // 복구
+            darkupObject.SetActive(false);
+            dooroImage.color = new Color(1,1,1);
+            patternBackGround.color = new Color(1,1,1);
+            dooroImage.sprite = originalDoroSprite;
+            GetComponent<Image>().sprite = originalBackGroundSprite;
+            isRotated = false;
+        }
+        else
+        {
+            darkupObject.SetActive(true);
+            dooroImage.sprite = doroDarkSprite;
+            GetComponent<Image>().sprite = backGroundDarkSprite;
 
+            isRotated = true;
+        }
+
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         // 위치 이동과 회전을 동시에 실행
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
         mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(moveEase);
@@ -531,5 +585,58 @@ public class StageSceneUI : UI_Popup
                     UpdateNavigationButtons(); // <-- ▼ 여기 추가
                 });
     }
+
+    IEnumerator StartGlitching()
+    {
+        Managers.Sound.Play("SFX/UI/Noise_V1");
+        float rampUpTime = 0.1f;    // 0.1초 만에 0.8까지 빠르게 증가
+        float glitchDuration = 0.7f;  // 0.7초 동안 깜빡임(왔다갔다)
+        float rampDownTime = 0.2f;  // 0.2초 만에 원래대로 복구
+
+        float timer = 0f;
+
+        // --- 1. 0 -> 0.8 까지 올리기 ---
+        while (timer < rampUpTime)
+        {
+            // 0에서 0.8까지 부드럽게 값을 올립니다.
+            digitalGlitch.intensity = Mathf.Lerp(0f, 0.8f, timer / rampUpTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        digitalGlitch.intensity = 0.8f; // 목표값 보정
+
+        // --- 2. 0.8 근처에서 왔다갔다하기 ---
+        timer = 0f;
+        while (timer < glitchDuration)
+        {
+            // 0.6 ~ 0.9 사이의 값으로 마구 흔들어줍니다.
+            digitalGlitch.intensity = Random.Range(0.6f, 0.9f);
+
+            // 한 프레임이 아니라, 아주 짧은 시간(0.03초~0.1초)을 기다려야
+            // "깜빡!" "깜빡!"하는 느낌이 제대로 납니다.
+            float waitTime = Random.Range(0.03f, 0.1f);
+            yield return new WaitForSeconds(waitTime);
+
+            // 대기한 시간만큼 타이머에 더해줍니다.
+            timer += waitTime;
+        }
+
+        // --- 3. 복구 (0으로 내리기) ---
+        timer = 0f;
+        float lastIntensity = digitalGlitch.intensity; // 마지막으로 흔들린 값
+
+        while (timer < rampDownTime)
+        {
+            // 마지막 값에서 0까지 부드럽게 값을 내립니다.
+            digitalGlitch.intensity = Mathf.Lerp(lastIntensity, 0f, timer / rampDownTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // --- 4. 확실하게 0으로 마무리 ---
+        digitalGlitch.intensity = 0f;
+    }
+
     #endregion
 }

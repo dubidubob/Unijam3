@@ -152,7 +152,6 @@ public class SpawnController : MonoBehaviour
 
         // 3. (요청사항) targetTick에 도달했습니다.
         //    이제 *이 코루틴(페이즈)이 스폰했던 몬스터들만* 중단시킵니다.
-        Debug.Log($"<color=orange>Target tick {targetTick} reached. Stopping monsters from this phase.</color>");
         StopSpecificInstances(activeInstances);
     }
 

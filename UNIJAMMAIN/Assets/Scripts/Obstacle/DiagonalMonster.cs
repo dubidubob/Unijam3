@@ -56,6 +56,7 @@ public class DiagonalMonster : MonoBehaviour
     {
         transform.DOKill();
         PauseManager.IsPaused -= PauseForWhile;
+       
 
         var child = GetComponentInChildren<TutorialDiagonalKeyUI>();
         if (child != null)
@@ -82,6 +83,7 @@ public class DiagonalMonster : MonoBehaviour
         jumpSequence = DOTween.Sequence();
 
         // 점프와 대기를 번갈아 가며 설정
+        StartCoroutine(GarbageClean());
         for (int i = 0; i < _jumpCnt; i++)
         {
             Vector3 target = _originPos + _stride * (i + 1);
@@ -157,13 +159,18 @@ public class DiagonalMonster : MonoBehaviour
     IEnumerator PoolOutGo(float waitforseconds)
     {
         yield return new WaitForSeconds(waitforseconds);
-         attackedEffectSpriteRenderer.DOFade(1,0);
-        _isDying = false;
-        gameObject.SetActive(false);
+         attackedEffectSpriteRenderer.DOFade(1,0);        
         transform.position = _originPos;
         _objectRenderer.color = new Color(_objectRenderer.color.r, _objectRenderer.color.g, _objectRenderer.color.b, 1);
-
+        gameObject.SetActive(false);
+        _isDying = false;
     }
-    
-    
+
+    IEnumerator GarbageClean()
+    {
+        yield return new WaitForSeconds(15f);
+        jumpSequence.Kill();
+        StartCoroutine(PoolOutGo(0));
+    }
+
 }

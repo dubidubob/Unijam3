@@ -33,7 +33,7 @@ MonoBehaviour:
   DelayPaddingSeconds: 0
   backGroundSprite: {fileID: 21300000, guid: 45e36b61c356513438fdc1eb0895bfac, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: aea07a6ee41c076459a176217521519c, type: 3}
-  colorPalette: {r: 0.7921569, g: 0.8, b: 0.65882355, a: 1}
+  colorPalette: {r: 0.8078432, g: 0.86274517, b: 0.83921576, a: 1}
   references:
     version: 2
     RefIds:

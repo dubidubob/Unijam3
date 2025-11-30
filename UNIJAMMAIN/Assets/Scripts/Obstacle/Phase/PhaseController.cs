@@ -17,10 +17,14 @@ struct StartMotionUIs
 [RequireComponent(typeof(SpawnController))]
 public class PhaseController : MonoBehaviour
 {
+    public bool isTest;
+    public int TestStageIndex;
+    public bool isSinkStage = false;
     [SerializeField] private MonsterDatabaseSO monsterDatabase;
 
     [SerializeField] Image backGround;
     [SerializeField] Image backGroundGray;
+    [SerializeField] SpriteRenderer characterSprite;
     [SerializeField] ResultUI Scoreboard;
     [SerializeField] BeatClock beatClock;
     [SerializeField] UI_Popup tutorialPopUp;
@@ -50,6 +54,7 @@ public class PhaseController : MonoBehaviour
     
     private void Start()
     {
+        Managers.Game.phaseController = this;
         IngameData.IsStart = false;
         spawnController = GetComponent<SpawnController>();
         Scoreboard.gameObject.SetActive(false);
@@ -64,9 +69,11 @@ public class PhaseController : MonoBehaviour
         PauseManager.ControlTime(false);
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
-        Debug.Log(_chapterIdx);
-        
-        Debug.Log(chapters[_chapterIdx].MusicPath);
+        if(isTest)
+        {
+            _chapterIdx = TestStageIndex;
+        }
+
         Color tmpColor = chapters[_chapterIdx].colorPalette;
         tmpColor.a = 0.7f;
         areaBaseInLine.color = tmpColor;
@@ -84,6 +91,14 @@ public class PhaseController : MonoBehaviour
         SetStageBackGround();
         IngameData.IsStart = true;
 
+        // 싱크스테이지라면
+        if (chapters[_chapterIdx].SinkStage)
+        {
+            // 싱크스테이지에 맞는 기능
+            StartCoroutine(SinkStageInit());
+            yield break;
+        }
+
         // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
         if (chapters[_chapterIdx].Phases.Count > 0)
         {
@@ -97,6 +112,7 @@ public class PhaseController : MonoBehaviour
             IngameData.BeatInterval = 60.0 / firstPhase.bpm;
             IngameData.ChangeBpm?.Invoke();
         }
+       
 
         // 코루틴 내에서 진행될 이벤트의 목표 틱(Beat)을 관리하는 변수
         long targetTick = 0;
@@ -144,7 +160,6 @@ public class PhaseController : MonoBehaviour
             // [기존 로직 복원] Delay가 끝난 직후에 실행되어야 할 로직들을 호출합니다.
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                Debug.Log($"<color=cyan>PhaseEvent [{i}] Identified! Attempting to spawn monsters. MonsterData count: {phaseEventAfterDelay.MonsterDatas.Count}</color> at {beatClock._tick}");
                 SpawnMonsters(phaseEventAfterDelay,targetTick);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
@@ -264,6 +279,37 @@ public class PhaseController : MonoBehaviour
     {
         backGround.overrideSprite = chapters[_chapterIdx].backGroundSprite;
         backGroundGray.overrideSprite = chapters[_chapterIdx].backGroundGraySprite;
+
+        // 프리팹 로드
+        if (_chapterIdx == 1)
+        {
+            GameObject particle = Resources.Load<GameObject>("Prefabs/LeafParticleRain");
+            if (particle != null)
+            {
+                // 게임 월드에 프리팹 인스턴스 생성 (위치: (0,0,0), 회전: 기본값)
+                Instantiate(particle);
+            }
+        }
+        
+        
+        if(_chapterIdx==3)
+        {
+            GameObject rain = Resources.Load<GameObject>("Prefabs/Rain_Front");
+            Instantiate(rain);
+            backGround.color = new Color(127f / 255f, 133f / 255f, 145f / 255f);
+            characterSprite.color = new Color(180f / 255f, 180f / 255f, 180f / 255f);
+        }
+
+        if(_chapterIdx==4)
+        {
+            GameObject particle = Resources.Load<GameObject>("Prefabs/SnowParticleRain");
+            if (particle != null)
+            {
+                // 게임 월드에 프리팹 인스턴스 생성 (위치: (0,0,0), 회전: 기본값)
+                Instantiate(particle);
+            }
+        }
+
     }
 
     private void SetStageTimerInitialize()
@@ -364,5 +410,55 @@ public class PhaseController : MonoBehaviour
     }
 
 
+    #endregion
+
+    #region SinkStage
+    IEnumerator SinkStageInit()
+    {
+        isSinkStage = true;
+        gaugeImage.transform.parent.gameObject.SetActive(false);
+        var firstPhase = chapters[_chapterIdx].Phases[0];
+        beatInterval = 60.0f / firstPhase.bpm;
+        IngameData.GameBpm = (int)firstPhase.bpm;
+        delaySec = firstPhase.startDelayBeat * beatInterval;
+        durationSec = firstPhase.durationBeat * beatInterval;
+        IngameData.PhaseDurationSec = durationSec;
+        IngameData.BeatInterval = 60.0 / firstPhase.bpm;
+
+
+
+        long targetTick = beatClock._tick;
+        while (true)
+        {
+            var gameEvent = chapters[_chapterIdx].Phases[0];
+            long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
+
+
+
+            // 이제 Delay 시간만큼 비트를 누적하고 기다립니다.
+            targetTick += delayBeats;
+            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(delaySec) 대체
+
+            // --- 2. Duration 구간 처리 ---
+            long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
+            targetTick += durationBeats;
+            if (gameEvent is PhaseEvent phaseEventAfterDelay)
+            {
+                Managers.Sound.StopBGM();
+                SpawnMonsters(phaseEventAfterDelay, targetTick+ (long)phaseEventAfterDelay.monsterDatas[0].moveBeat);
+
+                long BGMTargetTick = beatClock._tick + (long)phaseEventAfterDelay.monsterDatas[0].moveBeat;
+                yield return new WaitUntil(() => beatClock._tick >= BGMTargetTick); // WaitForSeconds(delaySec) 대체
+                Managers.Sound.Play("BGM/TestPlay");
+
+
+
+                yield return new WaitUntil(() => beatClock._tick >= targetTick+(long)phaseEventAfterDelay.monsterDatas[0].moveBeat);
+            }
+        }
+
+    }
+    
+    
     #endregion
 }

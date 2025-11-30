@@ -18,12 +18,12 @@ public class SFXController : MonoBehaviour
 
     public static float CurrentVolumeSFX
     {
-        // _currentSFXVolumeStepÀº privateÀÌ¹Ç·Î Á÷Á¢ Á¢±Ù ´ë½Å ÇÁ·ÎÆÛÆ¼¸¦ ÅëÇØ
-        // °è»êµÈ º¼·ý °ªÀ» ¿ÜºÎ¿¡ ¾Ë·ÁÁÝ´Ï´Ù.
+        // _currentSFXVolumeStepï¿½ï¿½ privateï¿½Ì¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ÜºÎ¿ï¿½ ï¿½Ë·ï¿½ï¿½Ý´Ï´ï¿½.
         get
         {
-            // ÀÓ½Ã ¹è¿­À» ¸¸µé¾î ÇöÀç º¼·ýÀ» ¹ÝÈ¯ÇÕ´Ï´Ù.
-            // (readonly ¸â¹ö´Â static ¸Þ¼Òµå/ÇÁ·ÎÆÛÆ¼¿¡¼­ Á÷Á¢ Á¢±ÙÀÌ ¾ÈµÇ±â ¶§¹®)
+            // ï¿½Ó½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Õ´Ï´ï¿½.
+            // (readonly ï¿½ï¿½ï¿½ï¿½ï¿½ static ï¿½Þ¼Òµï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÇ±ï¿½ ï¿½ï¿½ï¿½ï¿½)
             float[] tempLevels = { 0.0f,0.25f, 0.5f, 0.75f, 1.0f };
             return tempLevels[_currentSFXVolumeStep];
         }
@@ -33,17 +33,17 @@ public class SFXController : MonoBehaviour
     /// </summary>
     public void SFXClicked()
     {
-        // 1. ´ÙÀ½ ´Ü°è¸¦ À§ÇØ ¸ÕÀú _currentBGMVolumeStep °ªÀ» 1 Áõ°¡½ÃÅµ´Ï´Ù.
+        // 1. ï¿½ï¿½ï¿½ï¿½ ï¿½Ü°è¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ _currentBGMVolumeStep ï¿½ï¿½ï¿½ï¿½ 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.
         _currentSFXVolumeStep = (_currentSFXVolumeStep + 1) % _volumeLevels.Length;
 
-        // 2. »õ·Ó°Ô º¯°æµÈ _currentBGMVolumeStep °ªÀ¸·Î º¼·ý°ú ½ºÇÁ¶óÀÌÆ®¸¦ °¡Á®¿É´Ï´Ù.
+        // 2. ï¿½ï¿½ï¿½Ó°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ _currentBGMVolumeStep ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
         float newVolume = _volumeLevels[_currentSFXVolumeStep];
         image.sprite = sprite[_currentSFXVolumeStep];
 
-        // 3. È¿°úÀ½À» Àç»ýÇÕ´Ï´Ù.
+        // 3. È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         Managers.Sound.Play("SFX/Setting_Volume_Button_SFX", Define.Sound.SFX);
 
-        // 4. SoundManager¿¡ »õ·Î¿î º¼·ý °ªÀ» Àû¿ëÇÕ´Ï´Ù.
+        // 4. SoundManagerï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         Managers.Sound.ChangeSFXVolume(newVolume);
 
         Debug.Log($"SFX Volume set to: {newVolume * 100}%");

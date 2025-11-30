@@ -8,6 +8,7 @@ public class MainGame : BaseScene
 {
     public bool isPopUp = false;
     private InGameOption_PopUp optionPopUp;
+    [SerializeField] private GameObject escPanel;
 
     // ▼▼▼ 1. Start() 메서드 추가 ▼▼▼
     private void Start()
@@ -70,6 +71,11 @@ public class MainGame : BaseScene
 
     private void Update()
     {
+        if(Managers.Game.phaseController.isSinkStage)
+        {
+            escPanel.gameObject.SetActive(false);
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPopUp)

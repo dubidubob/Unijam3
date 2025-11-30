@@ -170,8 +170,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
-  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
+    rgba: 14285823
+  m_fontColor: {r: 1, g: 0.9842894, b: 0.8509433, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -729,6 +729,7 @@ GameObject:
   - component: {fileID: 210544443}
   - component: {fileID: 210544442}
   - component: {fileID: 210544441}
+  - component: {fileID: 210544444}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -810,6 +811,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &210544444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210544440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870b9a8f0f82f4f56800cc427bcd1025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scanLineJitter: 0
+  _verticalJump: 0
+  _horizontalShake: 0
+  _colorDrift: 0
+  _shader: {fileID: 4800000, guid: da33272284ea24f208f36998880990be, type: 3}
 --- !u!1001 &295339326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -821,6 +839,10 @@ PrefabInstance:
     - target: {fileID: 4694411840381609183, guid: 396f368357dd3d943a45397eb6e29ab4, type: 3}
       propertyPath: m_Name
       value: D_Holder
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044968195420482776, guid: 396f368357dd3d943a45397eb6e29ab4, type: 3}
+      propertyPath: type2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7669738701606069430, guid: 396f368357dd3d943a45397eb6e29ab4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1671,6 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPopUp: 0
+  escPanel: {fileID: 207048281}
 --- !u!1 &605990577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,6 +2567,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: W_Target
       objectReference: {fileID: 0}
+    - target: {fileID: 6044968195420482776, guid: 4d54c8d40521e6c4da683d913efac4b6, type: 3}
+      propertyPath: type2
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7208559420813573076, guid: 4d54c8d40521e6c4da683d913efac4b6, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.5
@@ -3415,7 +3442,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: 13066fbeac5361f49a3b6b8c0fc04975, type: 3}
-  m_Color: {r: 0.83396226, g: 0.80406547, b: 0.8069645, a: 1}
+  m_Color: {r: 0.4415095, g: 0.42568177, b: 0.42766023, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3753,6 +3780,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: A_Holder
       objectReference: {fileID: 0}
+    - target: {fileID: 6044968195420482776, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
+      propertyPath: type2
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7669738701606069430, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.8
@@ -4041,7 +4072,7 @@ Transform:
   - {fileID: 6874325470726281469}
   - {fileID: 6874325471044987104}
   - {fileID: 6874325471046444193}
-  m_Father: {fileID: 2059337766}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1319707113
 GameObject:
@@ -6438,6 +6469,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: S_Holder
       objectReference: {fileID: 0}
+    - target: {fileID: 6044968195420482776, guid: 16c2887a9414a3d4a863e5b4131175a8, type: 3}
+      propertyPath: type2
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7208559420813573076, guid: 16c2887a9414a3d4a863e5b4131175a8, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.15
@@ -7120,7 +7155,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1225381025}
-  - {fileID: 1272120749}
   - {fileID: 1944596560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7863,6 +7897,7 @@ GameObject:
   - component: {fileID: 5032662942808797823}
   - component: {fileID: 5032662942808797822}
   - component: {fileID: 5032662942808797821}
+  - component: {fileID: 5032662942808797826}
   m_Layer: 0
   m_Name: SpawnerController
   m_TagString: Untagged
@@ -7955,9 +7990,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738542a5a5f67e54a8b0c65ce227e5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTest: 1
+  TestStageIndex: 7
+  isSinkStage: 0
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}
   backGroundGray: {fileID: 1742512190}
+  characterSprite: {fileID: 460754922}
   Scoreboard: {fileID: 1483870323}
   beatClock: {fileID: 2094054435}
   tutorialPopUp: {fileID: 529075228}
@@ -7970,6 +8009,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 788691d3e6d269c4eaabcfbe0608bb5f, type: 2}
   - {fileID: 11400000, guid: 34f77c21629ef8743905c8baa6718838, type: 2}
   - {fileID: 11400000, guid: b8a3024e81df9f44ea015cc04b0b436a, type: 2}
+  - {fileID: 11400000, guid: 6fc515c901a1b7843b4a6051201b00af, type: 2}
   startMotions:
     startCountUI: {fileID: 1997952375}
     playerActionUI: {fileID: 460754923}
@@ -7977,6 +8017,21 @@ MonoBehaviour:
   gaugeImage: {fileID: 33989755}
   _chapterIdx: 7
   _totalBeat: 0
+--- !u!114 &5032662942808797826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5032662942808797819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2f4b17ef261474f8627657365315db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfxList:
+  - {fileID: 500345726442012828, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
+  - {fileID: 6554105861613839829, guid: ec62d0a2ecdc02846abad5a733803b81, type: 3}
 --- !u!1001 &5570071771724819243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8541,6 +8596,7 @@ SceneRoots:
   - {fileID: 2094054433}
   - {fileID: 1470370005}
   - {fileID: 2059337766}
+  - {fileID: 1272120749}
   - {fileID: 2769898147421067717}
   - {fileID: 1691584787}
   - {fileID: 1571707113}

@@ -5,7 +5,7 @@ using static GamePlayDefine;
 public class HitJudge
 {
     private float horizontalDiameter, verticalDiameter;
-    private float perfectThreshold = 0.4f; //TODO : 80퍼센트 이상은 죄다 perfect 처리
+    private float perfectThreshold = 0.25f; //TODO : 80퍼센트 이상은 죄다 perfect 처리
     
     public HitJudge(float hori, float verti)
     {
@@ -44,7 +44,11 @@ public class HitJudge
                 break;
             case EvaluateType.Success:
                 if (CalculatePerfect(rankNode.Pos, target, rankNode.WASDT))
-                    IngameData.IncPerfect();
+                      {
+                           IngameData.IncPerfect();
+                           IngameData.OnPerfectEffect(rankNode.WASDT);
+                            
+                       }
                 else
                     IngameData.IncGood();
                 break;
