@@ -62,7 +62,8 @@ public class MouseEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && dir == Dir.Left)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dir == Dir.Left) 
+            //(Input.GetMouseButtonDown(0) && dir == Dir.Left)
         {
             Managers.Sound.Play("SFX/Mouse_Monster_Death_SFX");
             StopBlinking();
@@ -70,7 +71,8 @@ public class MouseEnemy : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        if (Input.GetMouseButtonDown(1) && dir == Dir.Right)
+        if  (Input.GetKeyDown(KeyCode.RightShift) && dir == Dir.Right)
+            //(Input.GetMouseButtonDown(1) && dir == Dir.Right)
         {
             Managers.Sound.Play("SFX/Mouse_Monster_Death_SFX");
             StopBlinking();
