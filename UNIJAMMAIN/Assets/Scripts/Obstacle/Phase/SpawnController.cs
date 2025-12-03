@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
+using Cysharp.Threading.Tasks; // UniTask
+using System.Threading; // CancellationToken
 
 [RequireComponent(typeof(WASDMonsterSpawner))]
 [RequireComponent(typeof(DiagonalMonsterSpawner))]
@@ -11,9 +12,23 @@ public class SpawnController : MonoBehaviour
     private Dictionary<Define.MonsterType, ISpawnable> _spawnerMap;
     private List<ISpawnable> _spawnables;
 
+    // 이 스크립트가 파괴될 때 실행 중인 태스크를 취소하기 위한 토큰 소스
+    private CancellationTokenSource _cts;
+
     private void Awake()
     {
         InitSpawnableDic();
+        _cts = new CancellationTokenSource();
+    }
+
+    private void OnDestroy()
+    {
+        // 오브젝트 파괴 시 실행 중인 모든 태스크 취소
+        if (_cts != null)
+        {
+            _cts.Cancel();
+            _cts.Dispose();
+        }
     }
 
     private void InitSpawnableDic()
@@ -29,12 +44,11 @@ public class SpawnController : MonoBehaviour
     }
 
     /**
-    * [수정됨]
     * 몬스터를 스폰하고, 생성된 '스폰 인스턴스'의 리스트를 반환합니다.
     */
     public List<ISpawnable.ISpawnInstance> SpawnMonsterInPhase(IReadOnlyList<MonsterData> monsterDatas)
     {
-        Debug.Log($"<color=yellow>SpawnController: Received spawn request! Monster count: {monsterDatas.Count}</color>");
+        // Debug.Log($"<color=yellow>SpawnController: Received spawn request! Monster count: {monsterDatas.Count}</color>");
         List<ISpawnable.ISpawnInstance> spawnedInstances = new List<ISpawnable.ISpawnInstance>();
 
         if (monsterDatas == null || monsterDatas.Count == 0)
@@ -63,7 +77,7 @@ public class SpawnController : MonoBehaviour
 
             if (spawner != null)
             {
-                // [수정] Spawn()을 호출하고 반환된 인스턴스를 리스트에 추가합니다.
+                // Spawn()을 호출하고 반환된 인스턴스를 리스트에 추가합니다.
                 ISpawnable.ISpawnInstance instance = spawner.Spawn(m);
                 if (instance != null)
                 {
@@ -79,46 +93,29 @@ public class SpawnController : MonoBehaviour
     }
 
     /**
-    * [이름 변경 및 수정]
-    * 모든 스포너의 모든 스폰 작업을 중단시킵니다. (기존 StopMonsterInPhase)
+    * 모든 스포너의 모든 스폰 작업을 중단시킵니다.
     */
     public void StopAllMonsters()
     {
         for (int i = 0; i < _spawnables.Count; i++)
         {
-            _spawnables[i].UnSpawnAll(); // [수정] UnSpawnAll() 호출
+            _spawnables[i].UnSpawnAll();
         }
     }
 
     /**
-    * [NEW]
     * 전달받은 특정 스폰 인스턴스들만 중단시킵니다.
-    * (PhaseController의 SpawnUntilTargetTick 코루틴에서 사용됩니다.)
     */
     public void StopSpecificInstances(List<ISpawnable.ISpawnInstance> instances)
     {
         if (instances == null) return;
 
-        Debug.Log($"<color=orange>Stopping {instances.Count} specific spawn instances.</color>");
+        // Debug.Log($"<color=orange>Stopping {instances.Count} specific spawn instances.</color>");
         foreach (ISpawnable.ISpawnInstance instance in instances)
         {
             instance.Stop();
         }
     }
-
-
-    /**
-    * [제거됨]
-    * public void StopSpecificSpawners(HashSet<ISpawnable> spawnersToStop)
-    * {
-    * // ...
-    * }
-    *
-    * -> 이 메서드는 더 이상 필요하지 않으며, ISpanwable.UnSpawn() 메서드가
-    * 사라졌으므로 컴파일 오류가 발생합니다.
-    * 'StopSpecificInstances'가 이 역할을 대신합니다.
-    */
-
 
     /// <summary>
     /// 모든스포너 중단 ( 챕터 종료시만 해당 ) 
@@ -129,30 +126,33 @@ public class SpawnController : MonoBehaviour
     }
 
     /**
-    * [RE-ADDED]
+     * [UniTask]
      * 몬스터 스폰을 시작하고, 반환된 인스턴스 핸들(List)을 보관합니다.
      * targetTick에 도달하면, 보관했던 핸들(인스턴스) 만 정확히 중지시킵니다.
+     * PhaseController에서 이 메서드를 호출할 때 .Forget()을 붙여서 실행하세요.
      */
-    public IEnumerator SpawnUntilTargetTick(IReadOnlyList<MonsterData> monsterDatas, long targetTick)
+    public async UniTaskVoid SpawnUntilTargetTick(IReadOnlyList<MonsterData> monsterDatas, long targetTick)
     {
-        // BeatClock 참조를 가져옵니다. (Managers.Game.beatClock이 null이 아니어야 함)
+        // 0. 취소 토큰 획득 (오브젝트 파괴 시 중단용)
+        var token = this.GetCancellationTokenOnDestroy();
+
+        // BeatClock 참조 검사
         BeatClock beatClock = Managers.Game.beatClock;
         if (beatClock == null)
         {
             Debug.LogError("SpawnController: BeatClock is NULL! Cannot proceed with tick-based spawn.");
-            yield break;
+            return;
         }
 
-        // 1. (요청사항) 몬스터 스폰을 "추가"하고, 이 작업의 핸들(인스턴스) 목록을 받습니다.
-        //    이전 몬스터와 공존하게 됩니다.
+        // 1. 몬스터 스폰 시작 및 핸들 획득
         List<ISpawnable.ISpawnInstance> activeInstances = SpawnMonsterInPhase(monsterDatas);
 
-        // 2. 이 페이즈가 끝나야 하는 targetTick까지 기다립니다.
-        yield return new WaitUntil(() => beatClock._tick >= targetTick);
+        // 2. targetTick까지 대기 (비동기)
+        //    WaitUntil을 사용하여 비트가 도달할 때까지 대기합니다.
+        //    Cancellation이 발생하면(오브젝트 파괴 등) 자동으로 중단됩니다.
+        await UniTask.WaitUntil(() => beatClock._tick >= targetTick, cancellationToken: token);
 
-        // 3. (요청사항) targetTick에 도달했습니다.
-        //    이제 *이 코루틴(페이즈)이 스폰했던 몬스터들만* 중단시킵니다.
+        // 3. targetTick 도달 시 해당 인스턴스들만 종료
         StopSpecificInstances(activeInstances);
     }
-
 }

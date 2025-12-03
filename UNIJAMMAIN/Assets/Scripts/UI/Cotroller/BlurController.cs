@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using UnityEngine.EventSystems;
+using Cysharp.Threading.Tasks; // UniTask 추가
+using System.Threading;      // CancellationToken 추가
 
 public class BlurController : MonoBehaviour
 {
@@ -25,16 +27,120 @@ public class BlurController : MonoBehaviour
 
     private float imageHeight;
 
-
     [SerializeField] BackGroundController backGroundController;
 
+    // UniTask 제어용 토큰 소스
+    private CancellationTokenSource _scrollCts;
+    private CancellationTokenSource _shineCts;
+    private CancellationTokenSource _fadeCts;
+    private CancellationTokenSource _destroyCts;
 
-    #region Combo 관련 
-    void Update()
+    private void Awake()
     {
-        if (IsComboEffectOn)
+        _destroyCts = new CancellationTokenSource();
+    }
+
+    private void Start()
+    {
+        // 이 변수를 클래스 멤버 변수나 루프 밖 지역 변수로 선언
+        invLength = 1f / blurImages.Length;
+
+        if (camera == null)
         {
-            float move = scrollSpeedWeight * Time.deltaTime*(float)IngameData.GameBpm;
+            camera = Camera.main;
+        }
+        damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
+
+        Managers.Game.blur = this;
+
+        // 콤보 이펙트 관련 
+        // 기준 이미지의 높이 측정 (두 세트 모두 같은 높이라고 가정)
+        imageHeight = rightCombo1.rectTransform.rect.height;
+
+        // 초기 배치 - 오른쪽 세트 (위→아래)
+        rightCombo1.rectTransform.anchoredPosition = new Vector2(rightCombo1.rectTransform.anchoredPosition.x, 0);
+        rightCombo2.rectTransform.anchoredPosition = new Vector2(rightCombo2.rectTransform.anchoredPosition.x, imageHeight);
+
+        // 초기 배치 - 왼쪽 세트 (아래→위)
+        leftCombo1.rectTransform.anchoredPosition = new Vector2(leftCombo1.rectTransform.anchoredPosition.x, 0);
+        leftCombo2.rectTransform.anchoredPosition = new Vector2(leftCombo2.rectTransform.anchoredPosition.x, -imageHeight);
+
+        // 누적 경계값 캐싱
+        if (hpBoundaryWeight != null && hpBoundaryWeight.Length > 0)
+        {
+            _cachedCumulativeBoundaries = new float[hpBoundaryWeight.Length];
+            float sum = 0f;
+            for (int i = 0; i < hpBoundaryWeight.Length; i++)
+            {
+                sum += hpBoundaryWeight[i];
+                _cachedCumulativeBoundaries[i] = sum;
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
+
+        // 실행 중인 모든 토큰 취소 및 정리
+        CancelAndDispose(ref _scrollCts);
+        CancelAndDispose(ref _shineCts);
+        CancelAndDispose(ref _fadeCts);
+        CancelAndDispose(ref _destroyCts);
+    }
+
+    // 토큰 정리 헬퍼 함수
+    private void CancelAndDispose(ref CancellationTokenSource cts)
+    {
+        if (cts != null)
+        {
+            cts.Cancel();
+            cts.Dispose();
+            cts = null;
+        }
+    }
+
+    #region Combo 관련 (Update -> UniTask Loop)
+
+    public void ComboEffectOn()
+    {
+        IsComboEffectOn = true;
+        rightCombo1.gameObject.SetActive(true);
+        rightCombo2.gameObject.SetActive(true);
+        leftCombo1.gameObject.SetActive(true);
+        leftCombo2.gameObject.SetActive(true);
+        comboEffectbase.gameObject.SetActive(true);
+
+        // 기존 스크롤 작업 취소 후 새로 시작
+        CancelAndDispose(ref _scrollCts);
+        _scrollCts = new CancellationTokenSource();
+        ScrollComboImages(_scrollCts.Token).Forget();
+
+        PlayComboEffect();
+    }
+
+    public void ComboEffectOff()
+    {
+        IsComboEffectOn = false;
+
+        // 스크롤 작업 중단
+        CancelAndDispose(ref _scrollCts);
+
+        rightCombo1.gameObject.SetActive(false);
+        rightCombo2.gameObject.SetActive(false);
+        leftCombo1.gameObject.SetActive(false);
+        leftCombo2.gameObject.SetActive(false);
+        comboEffectbase.gameObject.SetActive(false);
+
+        StopComboEffect();
+    }
+
+    // Update() 대신 비동기 루프 사용
+    private async UniTaskVoid ScrollComboImages(CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
+        {
+            float move = scrollSpeedWeight * Time.deltaTime * (float)IngameData.GameBpm;
 
             // 오른쪽 (아래로)
             MoveImageDown(rightCombo1, move);
@@ -47,8 +153,12 @@ public class BlurController : MonoBehaviour
             MoveImageUp(leftCombo2, move);
             ResetIfOffScreenUp(leftCombo1, leftCombo2);
             ResetIfOffScreenUp(leftCombo2, leftCombo1);
+
+            // 다음 프레임 대기 (Update 타이밍)
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
         }
     }
+
     // ===== 오른쪽 세트 (아래로 스크롤) =====
     void MoveImageDown(Image img, float move)
     {
@@ -82,75 +192,10 @@ public class BlurController : MonoBehaviour
             rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, other.rectTransform.anchoredPosition.y - imageHeight);
         }
     }
-    public void ComboEffectOn()
-    {
-        IsComboEffectOn = true;
-        rightCombo1.gameObject.SetActive(true);
-        rightCombo2.gameObject.SetActive(true);
-        leftCombo1.gameObject.SetActive(true);
-        leftCombo2.gameObject.SetActive(true);
-        comboEffectbase.gameObject.SetActive(true);
 
-        PlayComboEffect();
-    }
-    public void ComboEffectOff()
-    {
-        IsComboEffectOn = false;
-        rightCombo1.gameObject.SetActive(false);
-        rightCombo2.gameObject.SetActive(false);
-        leftCombo1.gameObject.SetActive(false);
-        leftCombo2.gameObject.SetActive(false);
-        comboEffectbase.gameObject.SetActive(false);
-
-        StopComboEffect();
-    }
     #endregion
+
     float invLength;
-
-    private void Start()
-    {
-        // 이 변수를 클래스 멤버 변수나 루프 밖 지역 변수로 선언
-        invLength = 1f / blurImages.Length;
-
-        if (camera == null)
-        { 
-            camera = Camera.main;
-        }
-        damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
-        /*
-        Debug.Log("테스트용 pitch1.3f");
-        Time.timeScale = 1.3f;
-        Managers.Sound.Play("BGM/84bpm_64_V1", Define.Sound.BGM, 1.3f);
-        */
-        Managers.Game.blur = this;
-
-        // 콤보 이펙트 관련 
-
-
-        // 기준 이미지의 높이 측정 (두 세트 모두 같은 높이라고 가정)
-        imageHeight = rightCombo1.rectTransform.rect.height;
-
-        // 초기 배치 - 오른쪽 세트 (위→아래)
-        rightCombo1.rectTransform.anchoredPosition = new Vector2(rightCombo1.rectTransform.anchoredPosition.x, 0);
-        rightCombo2.rectTransform.anchoredPosition = new Vector2(rightCombo2.rectTransform.anchoredPosition.x, imageHeight);
-
-        // 초기 배치 - 왼쪽 세트 (아래→위)
-        leftCombo1.rectTransform.anchoredPosition = new Vector2(leftCombo1.rectTransform.anchoredPosition.x, 0);
-        leftCombo2.rectTransform.anchoredPosition = new Vector2(leftCombo2.rectTransform.anchoredPosition.x, -imageHeight);
-
-        // 시작할 때 누적 경계값을 딱 한 번만 계산
-        // SetBlur 내부의 반복문에서 덧셈 연산을 제거하기 위함
-        if (hpBoundaryWeight != null && hpBoundaryWeight.Length > 0)
-        {
-            _cachedCumulativeBoundaries = new float[hpBoundaryWeight.Length];
-            float sum = 0f;
-            for (int i = 0; i < hpBoundaryWeight.Length; i++)
-            {
-                sum += hpBoundaryWeight[i];
-                _cachedCumulativeBoundaries[i] = sum;
-            }
-        }
-    }
 
     public Image[] blurImages; // Blur1 ~ BlurN (Inspector에 넣어줌)
     public Image BackGroundImage;
@@ -160,7 +205,7 @@ public class BlurController : MonoBehaviour
     public float fadeDuration = 0.5f; // 전환 시간 (초)
 
     private int currentIndex = 0;
-    private Coroutine fadeCoroutine;
+
     public Image lastBlacking;
 
     public int[] hpBoundaryWeight = new int[7];
@@ -175,10 +220,8 @@ public class BlurController : MonoBehaviour
     /// <summary>
     /// 체력에 따라 Blur 상태 업데이트
     /// </summary>
-    public void SetBlur (float currentHp, float maxHp)
-    { 
-
-        // Debug.Log($"currentHP : {currentHp} - maxHP : {maxHp}");
+    public void SetBlur(float currentHp, float maxHp)
+    {
         if (blurImages.Length == 0) return;
 
         //이전값과 같다면 즉시 종료
@@ -194,7 +237,6 @@ public class BlurController : MonoBehaviour
         float lostHp = maxHp - currentHp;
         int newIndex = 0;
 
-      
         for (int i = 0; i < _cachedCumulativeBoundaries.Length; i++)
         {
             if (lostHp < _cachedCumulativeBoundaries[i])
@@ -209,8 +251,12 @@ public class BlurController : MonoBehaviour
 
         if (newIndex != currentIndex)
         {
-            if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
-            fadeCoroutine = StartCoroutine(FadeTransition(currentIndex, newIndex));
+            // 기존 페이드 작업 취소
+            CancelAndDispose(ref _fadeCts);
+            _fadeCts = new CancellationTokenSource();
+
+            // UniTask 실행
+            FadeTransition(currentIndex, newIndex, _fadeCts.Token).Forget();
 
             currentIndex = newIndex;
 
@@ -221,28 +267,24 @@ public class BlurController : MonoBehaviour
             bool isDarkPhase = newIndex >= blurImages.Length - 2;
             lastBlacking.DOFade(isDarkPhase ? 1f : 0f, 0.8f);
         }
-
-
     }
 
-    private void OnDestroy()
-    {
-        transform.DOKill();
-    }
-    private IEnumerator FadeTransition(int oldIndex, int newIndex)
+    // IEnumerator -> async UniTask
+    private async UniTaskVoid FadeTransition(int oldIndex, int newIndex, CancellationToken token)
     {
         float time = 0f;
 
         Image oldImg = blurImages[oldIndex];
         Image newImg = blurImages[newIndex];
 
-        // 시작 알파값
-
         float oldStartAlpha = oldImg.color.a;
         float newStartAlpha = newImg.color.a;
 
         while (time < fadeDuration)
         {
+            // 토큰 취소 확인
+            if (token.IsCancellationRequested) return;
+
             time += Time.deltaTime;
             float t = time / fadeDuration;
 
@@ -256,7 +298,7 @@ public class BlurController : MonoBehaviour
             c2.a = Mathf.Lerp(newStartAlpha, 1f, t);
             newImg.color = c2;
 
-            yield return null;
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
         }
 
         // 최종 보정
@@ -284,6 +326,7 @@ public class BlurController : MonoBehaviour
 
         seq.OnComplete(() => isSaturationSeqCool = false);
     }
+
     public void ShowDamageEffect()
     {
         if (isCoolDown) return;
@@ -322,7 +365,7 @@ public class BlurController : MonoBehaviour
         gameOverText.DOFade(1 / 255f * 248f, 1f)
             .SetEase(Ease.InCirc)
             .SetUpdate(UpdateType.Normal, true);
-        gameOverDownText.DOFade(1 / 255f * 248f, 1f )
+        gameOverDownText.DOFade(1 / 255f * 248f, 1f)
             .SetEase(Ease.InCirc)
             .SetUpdate(UpdateType.Normal, true);
     }
@@ -344,7 +387,8 @@ public class BlurController : MonoBehaviour
         // EventTrigger에 이벤트를 추가합니다.
         eventTrigger.triggers.Add(entry);
     }
-        public void ComboEffect()
+
+    public void ComboEffect()
     {
         float defaultSize = camera.orthographicSize;
 
@@ -353,9 +397,9 @@ public class BlurController : MonoBehaviour
             .SetEase(Ease.OutQuad)
             .OnComplete(() =>
             {
-            // 원래 크기로 복귀
-            camera.DOOrthoSize(defaultSize, 0.4f)
-                    .SetEase(Ease.InOutQuad);
+                // 원래 크기로 복귀
+                camera.DOOrthoSize(defaultSize, 0.4f)
+                        .SetEase(Ease.InOutQuad);
             });
     }
 
@@ -377,9 +421,7 @@ public class BlurController : MonoBehaviour
     }
     #endregion
 
-
-
-    #region ComboEffect
+    #region ComboEffect (Shining)
 
     // [개선] 이미지를 배열로 관리합니다. 인스펙터에서 원하는 만큼 추가할 수 있습니다.
     [Header("반짝일 이미지들")]
@@ -387,8 +429,6 @@ public class BlurController : MonoBehaviour
 
     [Header("사용할 스프라이트들")]
     public Sprite[] comboShiningSprites;
-
-    private Coroutine _comboAnimationCoroutine;
 
     [Tooltip("애니메이션의 프레임 간 시간 (초)")]
     [SerializeField] private float animationFrameDelay = 0.08f;
@@ -407,21 +447,16 @@ public class BlurController : MonoBehaviour
             if (img != null) img.gameObject.SetActive(true);
         }
 
-        if (_comboAnimationCoroutine != null)
-        {
-            StopCoroutine(_comboAnimationCoroutine);
-        }
-
-        _comboAnimationCoroutine = StartCoroutine(AnimateComboShine());
+        // 기존 샤인 애니메이션 취소 및 새 시작
+        CancelAndDispose(ref _shineCts);
+        _shineCts = new CancellationTokenSource();
+        AnimateComboShine(_shineCts.Token).Forget();
     }
 
     public void StopComboEffect()
     {
-        if (_comboAnimationCoroutine != null)
-        {
-            StopCoroutine(_comboAnimationCoroutine);
-            _comboAnimationCoroutine = null;
-        }
+        // 샤인 애니메이션 중단
+        CancelAndDispose(ref _shineCts);
 
         // [개선] 배열을 순회하며 모든 이미지를 비활성화
         if (shiningImages != null)
@@ -434,12 +469,14 @@ public class BlurController : MonoBehaviour
     }
 
     /// <summary>
-    /// [개선]
-    /// 실제 애니메이션을 처리하는 코루틴 (배열 사용)
+    /// 실제 애니메이션을 처리하는 UniTaskVoid
     /// </summary>
-    private IEnumerator AnimateComboShine()
+    private async UniTaskVoid AnimateComboShine(CancellationToken token)
     {
-        while (true)
+        // TimeSpan 캐싱 (GC 감소)
+        var delay = System.TimeSpan.FromSeconds(animationFrameDelay);
+
+        while (!token.IsCancellationRequested)
         {
             // [개선] 배열의 모든 이미지를 순회하며 각각 무작위 스프라이트 할당
             foreach (Image img in shiningImages)
@@ -451,7 +488,8 @@ public class BlurController : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(animationFrameDelay);
+            // WaitForSeconds -> UniTask.Delay
+            await UniTask.Delay(delay, cancellationToken: token);
         }
     }
 

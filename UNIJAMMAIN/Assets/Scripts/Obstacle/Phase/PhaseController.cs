@@ -3,6 +3,8 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks; // UniTask 네임스페이스 추가
+using System.Threading; // CancellationToken 사용
 
 /// <summary>
 /// Phase를 순서대로 재생시키는 클래스
@@ -27,21 +29,18 @@ public class PhaseController : MonoBehaviour
     [SerializeField] ResultUI Scoreboard;
     [SerializeField] BeatClock beatClock;
     [SerializeField] UI_Popup tutorialPopUp;
-    
+
     [SerializeField] public ChapterSO[] chapters;
-    // TODO : tmp!
     [SerializeField] StartMotionUIs startMotions;
     [SerializeField] SpriteRenderer areaBaseInLine;
     [SerializeField] Image gaugeImage;
-    
 
-  
     public static Action<float> ChangeKey;
     public static Action<bool> TutorialStoped;
     public int _chapterIdx;
     private int _lastMonsterHitCnt = 0;
     public float _totalBeat = 0;
-    private float _beatCount=0;
+    private float _beatCount = 0;
     SpawnController spawnController;
 
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
@@ -50,7 +49,10 @@ public class PhaseController : MonoBehaviour
     float beatInterval;
     float delaySec;
     float durationSec;
-    
+
+    // UniTask 취소 토큰 (오브젝트 파괴 시 작업 중단용)
+    private CancellationTokenSource _cts;
+
     private void Start()
     {
         Managers.Game.phaseController = this;
@@ -58,17 +60,15 @@ public class PhaseController : MonoBehaviour
         spawnController = GetComponent<SpawnController>();
         Scoreboard.gameObject.SetActive(false);
         monsterDatabase.Init();
-        
 
         IngameData.RankInit();
         Managers.Game.monster = monsterDatabase;
         Managers.Game.GameStart();
-        
 
         PauseManager.ControlTime(false);
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
-        if(isTest)
+        if (isTest)
         {
             _chapterIdx = TestStageIndex;
         }
@@ -78,25 +78,44 @@ public class PhaseController : MonoBehaviour
         areaBaseInLine.color = tmpColor;
 
         SetStageTimerInitialize();
-        StartCoroutine(RunChapter());
+
+        // UniTask 실행 (Start는 void이므로 async void 대신 Forget() 패턴 사용 권장)
+        RunChapter().Forget();
     }
+
+    private void OnDestroy()
+    {
+        // 오브젝트 파괴 시 실행 중인 UniTask 정리
+        _cts?.Cancel();
+        _cts?.Dispose();
+    }
+
     private void HandleBeatSync(long __)
     {
         beatSynced = true;
-        BeatClock.OnBeat -= HandleBeatSync; // 한 번만 실행하고 즉시 구독 해지
+        BeatClock.OnBeat -= HandleBeatSync;
     }
-    private IEnumerator RunChapter()
+
+    // async UniTask로 변경
+    private async UniTaskVoid RunChapter()
     {
+        // 토큰 획득 (이 스크립트가 파괴되면 await 중인 작업들이 캔슬됨)
+        var token = this.GetCancellationTokenOnDestroy();
+
         SetStageBackGround();
         IngameData.IsStart = true;
 
         // 싱크스테이지라면
         if (chapters[_chapterIdx].SinkStage)
         {
-            // 싱크스테이지에 맞는 기능
-            StartCoroutine(SinkStageInit());
-            yield break;
+            // SinkStageInit도 UniTask로 대기
+            await SinkStageInit(token);
+            return;
         }
+
+
+        
+
 
         // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
         if (chapters[_chapterIdx].Phases.Count > 0)
@@ -111,10 +130,26 @@ public class PhaseController : MonoBehaviour
             IngameData.BeatInterval = 60.0 / firstPhase.bpm;
             IngameData.ChangeBpm?.Invoke();
         }
-       
 
-        // 코루틴 내에서 진행될 이벤트의 목표 틱(Beat)을 관리하는 변수
+    
         long targetTick = 0;
+        // 1. 현재 오디오 엔진 시간에서 1초(혹은 0.5초) 뒤를 '시작 시간'으로 잡습니다.
+        //    이 1초의 여유 동안 오디오 엔진은 소리 낼 준비를 완벽히 마칩니다.
+        double musicStartTime = AudioSettings.dspTime + 1.0;
+
+        // 2. 사운드 매니저에게 "이 시간에 정확히 틀어라"고 예약합니다.
+        //    (SoundManager에 PlayScheduled 기능을 추가해야 함, 아래 참조)
+        string bgmPath = chapters[_chapterIdx].MusicPath;
+        Managers.Sound.PlayScheduled(bgmPath, musicStartTime, Define.Sound.BGM);
+
+        // 3. BeatClock에게도 "게임 시작 시간은 startTime이다"라고 알려줍니다.
+        //    BeatClock은 이제 Update에서 (dspTime - startTime)을 통해 틱을 계산해야 합니다.
+        beatClock.SetStartTime(musicStartTime);
+
+        // 4. 로직은 BGM이 시작될 때까지(1초간) 대기합니다.
+        //    이렇게 하면 "소리가 나는 순간"과 "로직이 시작되는 순간"이 0.001초 오차 범위 내로 맞습니다.
+        await UniTask.WaitUntil(() => AudioSettings.dspTime >= musicStartTime, cancellationToken: token);
+
 
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
@@ -129,11 +164,9 @@ public class PhaseController : MonoBehaviour
             // --- 1. Delay 구간 처리 ---
             long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
 
-            // [기존 로직 복원] Delay가 시작되기 전에 필요한 이벤트들을 먼저 호출합니다.
             if (gameEvent is PhaseEvent phaseEvent)
             {
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
-                // HandleFlipKeyEvent가 delay 시간을 필요로 하므로, 비트 기반으로 다시 계산해줍니다.
                 float delaySec = delayBeats * (float)IngameData.BeatInterval;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
             }
@@ -145,28 +178,24 @@ public class PhaseController : MonoBehaviour
                 HandleTutorialEvent(tutorialEvent);
             }
 
-            // 이제 Delay 시간만큼 비트를 누적하고 기다립니다.
+            // [WaitUntil 변경] 목표 틱까지 대기
             targetTick += delayBeats;
-            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(delaySec) 대체
+            await UniTask.WaitUntil(() => beatClock._tick >= targetTick, cancellationToken: token);
 
             // --- 2. Duration 구간 처리 ---
             long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
             targetTick += durationBeats;
-           
-            // 미리 생성 가능하게끔
-            
-           
-            // [기존 로직 복원] Delay가 끝난 직후에 실행되어야 할 로직들을 호출합니다.
+
+            // Delay 직후 로직 실행
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                SpawnMonsters(phaseEventAfterDelay,targetTick);
+                SpawnMonsters(phaseEventAfterDelay, targetTick);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
             {
                 if (i == 0)
                     TutorialStoped?.Invoke(false);
             }
-
 
             if (i + 1 < chapters[_chapterIdx].Phases.Count)
             {
@@ -177,33 +206,33 @@ public class PhaseController : MonoBehaviour
                 }
             }
 
-            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(durationSec) 대체
+            // [WaitUntil 변경] duration 종료까지 대기
+            await UniTask.WaitUntil(() => beatClock._tick >= targetTick, cancellationToken: token);
 
             // --- 3. 다음 페이즈 준비 ---
             if (i + 1 < chapters[_chapterIdx].Phases.Count)
             {
                 var nextPhase = chapters[_chapterIdx].Phases[i + 1];
-                // 다음 페이즈의 BPM으로 BeatClock을 업데이트하도록 신호를 보냅니다.
-                if(!(nextPhase.bpm==chapters[_chapterIdx].Phases[i].bpm))
+                if (!(nextPhase.bpm == chapters[_chapterIdx].Phases[i].bpm))
                 {
                     IngameData.BeatInterval = 60.0 / nextPhase.bpm;
                     beatInterval = 60.0f / nextPhase.bpm;
                     IngameData.GameBpm = (int)nextPhase.bpm;
                     delaySec = nextPhase.startDelayBeat * beatInterval;
-                  
+
                     IngameData.PhaseDurationSec = durationSec;
                     IngameData.ChangeBpm?.Invoke();
                 }
-             
             }
         }
 
-        // 모든 페이즈가 끝난 후, 2비트만큼 여유를 두고 챕터를 종료합니다.
+        // 모든 페이즈 종료 후 여유 비트 대기
         targetTick += 2;
-        yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(...) 대체
+        await UniTask.WaitUntil(() => beatClock._tick >= targetTick, cancellationToken: token);
 
         EndChapter();
     }
+
     private void HandleFlipKeyEvent(PhaseEvent phaseEvent, float delaySec)
     {
         if (phaseEvent.isFlipAD)
@@ -217,11 +246,17 @@ public class PhaseController : MonoBehaviour
             ChangeKey?.Invoke(-1f);
         }
     }
-    private void SpawnMonsters(PhaseEvent phaseEvent,long targetTick)
+
+    private void SpawnMonsters(PhaseEvent phaseEvent, long targetTick)
     {
-        StartCoroutine(spawnController.SpawnUntilTargetTick(phaseEvent.MonsterDatas,targetTick));
+        // SpawnController가 IEnumerator라면 ToUniTask로 감싸고, 
+        // UniTaskVoid라면 그냥 호출, 여기서는 기존 호환성을 위해 StartCoroutine 유지 가능하지만
+        // UniTask 변환을 권장합니다. 아래는 SpawnController가 기존 코루틴일 경우의 호환 코드입니다.
+        // 만약 SpawnController도 UniTask로 바꿨다면 .Forget()을 쓰세요.
+
+        spawnController.SpawnUntilTargetTick(phaseEvent.MonsterDatas, targetTick).Forget();
     }
-    
+
     private void HandleTutorialEvent(TutorialEvent tutorialEvent)
     {
         tutorialPopUp.gameObject.SetActive(true);
@@ -247,14 +282,7 @@ public class PhaseController : MonoBehaviour
         float perfectCnt = IngameData.PerfectMobCnt;
         float goodCnt = IngameData.GoodMobCnt;
         float rate = (perfectCnt * perfectWeight + goodCnt * goodWeight);
-
         float totalCnt = IngameData.TotalMobCnt;
-        float missedInput = IngameData.WrongInputCnt;
-        //float total = totalCnt + missedInput;
-
-        // miss 자체에 콤보 단절, HP 감소가 있기 때문에, 일단 분모에 missedInput은 뺏음
-        // 넣는다면, playerState가 Ready 상태일 때 누르는 miss 값들은 분모에 들어가지 않게 해야함.
-
         float total = totalCnt;
 
         SetStageIndex(_chapterIdx);
@@ -272,24 +300,20 @@ public class PhaseController : MonoBehaviour
 
     private void SetStageIndex(int index)
     {
-        Managers.Game.GameStage = Mathf.Max(Managers.Game.GameStage,index+1);
+        Managers.Game.GameStage = Mathf.Max(Managers.Game.GameStage, index + 1);
     }
+
     private void SetStageBackGround()
     {
         backGround.overrideSprite = chapters[_chapterIdx].backGroundSprite;
-        // 프리팹 로드
+        // 프리팹 로드 로직 (UniTask에서는 LoadAsync 사용 가능하나 여기선 기존 로직 유지)
         if (_chapterIdx == 1)
         {
             GameObject particle = Resources.Load<GameObject>("Prefabs/LeafParticleRain");
-            if (particle != null)
-            {
-                // 게임 월드에 프리팹 인스턴스 생성 (위치: (0,0,0), 회전: 기본값)
-                Instantiate(particle);
-            }
+            if (particle != null) Instantiate(particle);
         }
-        
-        
-        if(_chapterIdx==3)
+
+        if (_chapterIdx == 3)
         {
             GameObject rain = Resources.Load<GameObject>("Prefabs/Rain_Front");
             Instantiate(rain);
@@ -297,16 +321,11 @@ public class PhaseController : MonoBehaviour
             characterSprite.color = new Color(180f / 255f, 180f / 255f, 180f / 255f);
         }
 
-        if(_chapterIdx==4)
+        if (_chapterIdx == 4)
         {
             GameObject particle = Resources.Load<GameObject>("Prefabs/SnowParticleRain");
-            if (particle != null)
-            {
-                // 게임 월드에 프리팹 인스턴스 생성 (위치: (0,0,0), 회전: 기본값)
-                Instantiate(particle);
-            }
+            if (particle != null) Instantiate(particle);
         }
-
     }
 
     private void SetStageTimerInitialize()
@@ -317,41 +336,56 @@ public class PhaseController : MonoBehaviour
             _totalBeat += chapters[_chapterIdx].Phases[i].startDelayBeat;
         }
     }
+
     public void SetStageTimerGo()
     {
-        // 호환성 유지: BeatClock이 아직 인자로 안 준다면 기존 동작을 하게 함
-        // (이 경우는 단순히 1틱으로 처리)
         double now = AudioSettings.dspTime;
         long inferredTick = _lastScheduledTick >= 0 ? _lastScheduledTick + 1 : (_lastScheduledTick = 1);
         SetStageTimerGoScheduled(inferredTick, now);
     }
 
 
-    public IEnumerator GoStart()
+    public async UniTask GoStart()
     {
         beatSynced = false;
         BeatClock.OnBeat += HandleBeatSync;
-        yield return new WaitUntil(() => beatSynced);
 
-        yield return StartCoroutine(startMotions.startCountUI.Play123Coroutine());
+        // WaitUntil로 동기화 대기
+        await UniTask.WaitUntil(() => beatSynced, cancellationToken: this.GetCancellationTokenOnDestroy());
+
+        // startCountUI가 IEnumerator라면 ToUniTask로 변환하여 대기
+        if (startMotions.startCountUI != null)
+        {
+            await startMotions.startCountUI.Play123Coroutine().ToUniTask(this);
+        }
+
         startMotions.playerActionUI.StartMonkAnimAfter123Count();
-
     }
     #endregion
 
     #region QA
     float qa_startDelay, qa_phaseDuration;
     MonsterData[] monsters = new MonsterData[1];
+
     public void Play()
     {
-        StopAllCoroutines();
-        StartCoroutine(RunQAPhase());
+        StopAllCoroutines(); // 기존 코루틴 정지
+        // UniTask의 경우 CancellationToken으로 제어하지만, 
+        // 여기서는 간단히 QA용 Task를 실행합니다.
+        RunQAPhase().Forget();
     }
-    private IEnumerator RunQAPhase()
+
+    private async UniTaskVoid RunQAPhase()
     {
-        yield return new WaitForSeconds(qa_startDelay);
+        var token = this.GetCancellationTokenOnDestroy();
+
+        // WaitForSeconds 대체 (밀리초 단위 변환)
+        await UniTask.Delay(TimeSpan.FromSeconds(qa_startDelay), cancellationToken: token);
+
         spawnController.SpawnMonsterInPhase(monsters);
-        yield return new WaitForSeconds(qa_phaseDuration);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(qa_phaseDuration), cancellationToken: token);
+
         EndChapter();
     }
 
@@ -363,54 +397,42 @@ public class PhaseController : MonoBehaviour
     }
 
 
-    // 추가한 필드: scheduled 기반 타이밍 추적용
+    // scheduled 기반 타이밍 추적용
     private double _lastScheduledDspTime = double.NaN;
     private long _lastScheduledTick = -1;
 
     public void SetStageTimerGoScheduled(long scheduledTick, double scheduledDspTime)
     {
-        // 1) 몇 틱이 지났는지 계산
         long deltaTicks;
         if (_lastScheduledTick >= 0)
         {
             deltaTicks = scheduledTick - _lastScheduledTick;
-            if (deltaTicks < 1) deltaTicks = 1; // 최소 1틱은 진행된 것으로 간주
+            if (deltaTicks < 1) deltaTicks = 1;
         }
         else
         {
-            // 첫 호출: scheduledTick 자체를 기준으로 삼아 증분을 계산하거나 1로 처리
-            // 만약 scheduledTick==0이라면 1로 올리기
             deltaTicks = Math.Max(1, scheduledTick);
         }
 
-        // 2) 업데이트 (가볍게)
         _beatCount += deltaTicks;
         _lastScheduledTick = scheduledTick;
         _lastScheduledDspTime = scheduledDspTime;
 
-        // 3) 기존 SetStageTimerGo의 내부 로직(스타트判定, 게이지 등)을 그대로 적용하되
-        // deltaTicks > 1인 경우에도 적절히 처리하도록 함.
-        // 스타트 비트 실행
         if (!isMonsterGoStart && _beatCount >= chapters[_chapterIdx].StartBeat)
         {
             isMonsterGoStart = true;
-            StartCoroutine(GoStart());
+            GoStart().Forget(); // async UniTask 실행
         }
 
-        // 진행도 계산 (gauge)
         float progress = (float)_beatCount / _totalBeat;
         gaugeImage.fillAmount = 1.0f - progress;
         gaugeImage.fillAmount = Mathf.Clamp01(gaugeImage.fillAmount);
-
-        // (선택) 필요하면 여기서 다른 lightweight 콜백 호출
-        // e.g. ChangeKey?.Invoke(...) 같은 것들이 있다면 아주 가볍게 호출 가능
     }
-
-
     #endregion
 
     #region SinkStage
-    IEnumerator SinkStageInit()
+    // IEnumerator -> async UniTask
+    async UniTask SinkStageInit(CancellationToken token)
     {
         isSinkStage = true;
         gaugeImage.transform.parent.gameObject.SetActive(false);
@@ -422,40 +444,38 @@ public class PhaseController : MonoBehaviour
         IngameData.PhaseDurationSec = durationSec;
         IngameData.BeatInterval = 60.0 / firstPhase.bpm;
 
-
-
         long targetTick = beatClock._tick;
-        while (true)
+
+        // while(true) 루프도 토큰 체크와 함께 안전하게 실행
+        while (!token.IsCancellationRequested)
         {
             var gameEvent = chapters[_chapterIdx].Phases[0];
             long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
 
-
-
-            // 이제 Delay 시간만큼 비트를 누적하고 기다립니다.
             targetTick += delayBeats;
-            yield return new WaitUntil(() => beatClock._tick >= targetTick); // WaitForSeconds(delaySec) 대체
+            await UniTask.WaitUntil(() => beatClock._tick >= targetTick, cancellationToken: token);
 
-            // --- 2. Duration 구간 처리 ---
             long durationBeats = Mathf.RoundToInt(gameEvent.durationBeat);
             targetTick += durationBeats;
+
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
                 Managers.Sound.StopBGM();
-                SpawnMonsters(phaseEventAfterDelay, targetTick+ (long)phaseEventAfterDelay.monsterDatas[0].moveBeat);
 
-                long BGMTargetTick = beatClock._tick + (long)phaseEventAfterDelay.monsterDatas[0].moveBeat;
-                yield return new WaitUntil(() => beatClock._tick >= BGMTargetTick); // WaitForSeconds(delaySec) 대체
+                long moveBeat = (long)phaseEventAfterDelay.monsterDatas[0].moveBeat;
+                SpawnMonsters(phaseEventAfterDelay, targetTick + moveBeat);
+
+                long BGMTargetTick = beatClock._tick + moveBeat;
+
+                await UniTask.WaitUntil(() => beatClock._tick >= BGMTargetTick, cancellationToken: token);
                 Managers.Sound.Play("BGM/TestPlay");
 
-
-
-                yield return new WaitUntil(() => beatClock._tick >= targetTick+(long)phaseEventAfterDelay.monsterDatas[0].moveBeat);
+                await UniTask.WaitUntil(() => beatClock._tick >= targetTick + moveBeat, cancellationToken: token);
             }
-        }
 
+            // 안전 장치: 무한 루프에서 CPU 점유를 막기 위해 한 프레임 대기 (필요시)
+            // await UniTask.Yield(PlayerLoopTiming.Update, token); 
+        }
     }
-    
-    
     #endregion
 }
