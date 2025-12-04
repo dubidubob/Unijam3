@@ -7,7 +7,6 @@ using DG.Tweening; // DOTween ���ӽ����̽� �߰�
 
 public class StageLevelSceneUI : MonoBehaviour
 {
-    private Image backGroundImage;
     private CanvasGroup canvasGroup; // CanvasGroup ���� �߰�
     public TMP_Text tmpText;
     public TMP_Text extraText;
@@ -18,7 +17,6 @@ public class StageLevelSceneUI : MonoBehaviour
     // Start ��� Awake ��� ���� (GetComponent�� Awake����)
     private void Awake()
     {
-        backGroundImage = GetComponent<Image>();
         canvasGroup = GetComponent<CanvasGroup>(); // CanvasGroup ������Ʈ ��������
 
         // ������Ʈ�� ���� ��� ���� ����
@@ -40,6 +38,20 @@ public class StageLevelSceneUI : MonoBehaviour
     /// <param name="nowStageLevel">���� �������� ���� (1, 2, 3...)</param>
     public IEnumerator SetStageLevelSceneUI(int nowStageLevel)
     {
+
+        // 해당 장에 처음 들어왔을때만 실행하기.
+  
+        if(nowStageLevel+1>IngameData.StageProgress) //해당스테이지에 처음 들어온 순간!
+        {
+            IngameData.StageProgress++;
+        }
+        else
+        {
+            // 해당스테이지에 들어온적이 있었다.
+            yield break;
+        }
+
+
         canvasGroup.blocksRaycasts = true;
         isMoving = true;
         // 0. �ؽ�Ʈ �ʱ�ȭ

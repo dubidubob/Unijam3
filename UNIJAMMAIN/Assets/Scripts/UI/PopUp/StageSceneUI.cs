@@ -112,6 +112,8 @@ public class StageSceneUI : UI_Popup
         }
         currentStageIndex = Managers.Game.GameStage+1;
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
+
+        SetupMapStageByNowChapterIndex();
     }
 
     private void OnDestroy()
@@ -122,6 +124,68 @@ public class StageSceneUI : UI_Popup
             Destroy(glowingTextMaterial);
         }
     }
+
+    /// <summary>
+    /// 스테이지씬으로 들어올때, 현재 스테이지 인덱스에 맞는 맵의 위치(Y)와 회전(Z)을 즉시 지정해주는 함수
+    /// </summary>
+    private void SetupMapStageByNowChapterIndex()
+    {
+        // 1. 현재 스테이지 인덱스를 기반으로 목표 페이지 레벨(0, 1, 2) 계산
+        // (가정: 1~3스테이지=Level0, 4~6스테이지=Level1, 7스테이지=Level2)
+        int nowChapterIdx = IngameData.ChapterIdx;
+        if (nowChapterIdx <= 3)
+        {
+            currentPageLevel = 0;
+        }
+        else if (nowChapterIdx <= 6)
+        {
+            currentPageLevel = 1;
+        }
+        else
+        {
+            currentPageLevel = 2;
+        }
+
+        // 2. 해당 레벨에 맞는 좌표와 회전값 설정 (애니메이션 없이 즉시 이동)
+        float targetY = 892f;   // Level 0 기본값
+        float targetZ = 0f;     // Level 0 기본값
+
+        switch (currentPageLevel)
+        {
+            case 0:
+                // Level 0 (Bottom): Y = 892, Z = 0
+                targetY = 892f;
+                targetZ = 0f;
+                break;
+
+            case 1:
+                // Level 1 (Middle): Y = -295, Z = 0
+                targetY = -295f;
+                targetZ = 0f;
+                break;
+
+            case 2:
+                // Level 2 (Top/Final): Y = 892, Z = 180 (뒤집힘)
+                targetY = 892f;
+                targetZ = 180f;
+                darkupObject.SetActive(true);
+                dooroImage.sprite = doroDarkSprite;
+                GetComponent<Image>().sprite = backGroundDarkSprite;
+
+                isRotated = true;
+                break;
+        }
+
+        // 3. RectTransform에 값 적용
+        if (mapImage != null)
+        {
+            mapImage.anchoredPosition = new Vector2(mapImage.anchoredPosition.x, targetY);
+            mapImage.localEulerAngles = new Vector3(0, 0, targetZ);
+        }
+
+        Debug.Log($"Setup Map: Stage {currentStageIndex} -> PageLevel {currentPageLevel} (Y:{targetY}, Z:{targetZ})");
+    }
+
 
     // ✨ 빛나는 머티리얼의 속성을 설정하는 함수
     private void SetupGlowMaterial(Material material)
@@ -136,8 +200,6 @@ public class StageSceneUI : UI_Popup
     private void Start()
     {
         StoryDialog.ResetStoryBackground();
-        originalBackGroundSprite = GetComponent<Image>().sprite;
-        originalDoroSprite = dooroImage.sprite;
         Init();
         UpdateStageButtons();
         UpdateNavigationButtons();
@@ -546,8 +608,8 @@ public class StageSceneUI : UI_Popup
     }
 
     private bool isRotated = false;
-    Sprite originalDoroSprite;
-    Sprite originalBackGroundSprite;
+    public Sprite originalDoroSprite;
+    public Sprite originalBackGroundSprite;
     private void RotateAndMoveTo(float zRot, float yPos)
     {
         isAnimating = true;
@@ -557,10 +619,10 @@ public class StageSceneUI : UI_Popup
         {
             // 복구
             darkupObject.SetActive(false);
-            dooroImage.color = new Color(1,1,1);
-            patternBackGround.color = new Color(1,1,1);
             dooroImage.sprite = originalDoroSprite;
             GetComponent<Image>().sprite = originalBackGroundSprite;
+            dooroImage.color = new Color(1, 1, 1);
+            patternBackGround.color = new Color(1, 1, 1);
             isRotated = false;
         }
         else

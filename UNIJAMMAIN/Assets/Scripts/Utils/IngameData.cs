@@ -13,6 +13,7 @@ public static class IngameData
     public static bool Pause { set; get; }
     private static double beatInterval;
     public static bool IsStart = false;
+    public static int StageProgress = 0;
 
     static IngameData()
     {

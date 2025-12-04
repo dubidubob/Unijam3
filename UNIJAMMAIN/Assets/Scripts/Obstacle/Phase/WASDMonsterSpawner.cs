@@ -155,27 +155,28 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
      * 이제 MonsterData를 인스턴스로부터 전달받습니다.
      * 이 메서드는 모든 인스턴스가 공유합니다.
      */
-    public void PoolEnemySpawn(WASDType enemyType, MonsterData data)
+    public void PoolEnemySpawn(WASDType enemyType, MonsterData data,float timeOffset)
     {
         IngameData.TotalMobCnt++;
         EnemyTypeSO.EnemyData enemy = enemyTypeSO.GetEnemies(enemyType);
-        GameObject go = Managers.Pool.Pop(enemy.go).gameObject;
+
+        // 풀에서 가져오기
+        var poolable = Managers.Pool.Pop(enemy.go);
+        GameObject go = poolable.gameObject;
         go.transform.position = _spawnPosition[enemyType];
 
-        VariableSetting(go.GetComponent<MovingEnemy>(), enemyType, data);
+        // [수정] timeOffset 전달
+        VariableSetting(go.GetComponent<MovingEnemy>(), enemyType, data, timeOffset);
     }
-
-    /**
-     * [MODIFIED]
-     * MonsterData를 인스턴스로부터 전달받습니다.
-     */
-    private void VariableSetting(MovingEnemy movingEnemy, WASDType type, MonsterData data)
+    // [수정] timeOffset 파라미터 추가 MonsterData를 인스턴스로부터 전달받습니다.
+    private void VariableSetting(MovingEnemy movingEnemy, WASDType type, MonsterData data, float timeOffset)
     {
         float distance = Vector3.Distance(_spawnPosition[type], _targetPosition[type]);
-        // [수정] _data 대신 매개변수 data 사용
-        movingEnemy.SetVariance(distance, data, sizeDiffRate, _playerPos, type, data.monsterType);
+        // [수정] SetVariance에 timeOffset 전달
+        movingEnemy.SetVariance(distance, data, sizeDiffRate, _playerPos, type, data.monsterType, timeOffset);
     }
 
+   
     #region QA
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)
     {
