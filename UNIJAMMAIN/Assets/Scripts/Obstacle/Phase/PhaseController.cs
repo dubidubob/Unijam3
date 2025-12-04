@@ -55,6 +55,7 @@ public class PhaseController : MonoBehaviour
 
     private void Start()
     {
+
         Managers.Game.phaseController = this;
         IngameData.IsStart = false;
         spawnController = GetComponent<SpawnController>();
@@ -63,22 +64,24 @@ public class PhaseController : MonoBehaviour
 
         IngameData.RankInit();
         Managers.Game.monster = monsterDatabase;
-        Managers.Game.GameStart();
+       
 
-        PauseManager.ControlTime(false);
+        
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
         if (isTest)
         {
             _chapterIdx = TestStageIndex;
+            IngameData.ChapterIdx = _chapterIdx;
         }
+        SetStageBackGround();
 
         Color tmpColor = chapters[_chapterIdx].colorPalette;
         tmpColor.a = 0.7f;
         areaBaseInLine.color = tmpColor;
 
         SetStageTimerInitialize();
-
+        Managers.Game.GameStart();
         // UniTask 실행 (Start는 void이므로 async void 대신 Forget() 패턴 사용 권장)
         RunChapter().Forget();
     }
@@ -98,11 +101,14 @@ public class PhaseController : MonoBehaviour
 
     // async UniTask로 변경
     private async UniTaskVoid RunChapter()
-    {
+    {   
         // 토큰 획득 (이 스크립트가 파괴되면 await 중인 작업들이 캔슬됨)
         var token = this.GetCancellationTokenOnDestroy();
 
-        SetStageBackGround();
+        // 게임 안정화 로딩
+        await GameInitLoading(token);
+
+       
         IngameData.IsStart = true;
 
         // 싱크스테이지라면
@@ -477,5 +483,24 @@ public class PhaseController : MonoBehaviour
             // await UniTask.Yield(PlayerLoopTiming.Update, token); 
         }
     }
+
+    /// <summary>
+    /// 게임 시작 전 초기화 및 안정화 로딩
+    /// </summary>
+    private async UniTask GameInitLoading(CancellationToken token)
+    {
+        // 시작 전 메모리 정리 (렉 방지)
+        // 씬 로드 직후 쌓인 가비지정리
+        System.GC.Collect();
+        await Resources.UnloadUnusedAssets().ToUniTask(cancellationToken: token);
+
+        // 오디오/물리 엔진이 안정화될 때까지 짧게 대기 
+        //    ignoreTimeScale: true로 설정하여 퍼즈 상태에서도 흐르게 함
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5f), ignoreTimeScale: true, cancellationToken: token);
+
+        PauseManager.ControlTime(false);
+
+    }
+
     #endregion
 }

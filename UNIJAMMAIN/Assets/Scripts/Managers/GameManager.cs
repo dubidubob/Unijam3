@@ -40,7 +40,7 @@ public class GameManager
     public VfxController vfxController;
     public BeatClock beatClock;
     public PhaseController phaseController;
-
+    public BackGroundController backGroundController;
     
     public int perfect = 0;
     // TODO : 이러지 말기
@@ -81,7 +81,6 @@ public class GameManager
     //인게임 데이터 초기화 
     public void Init()
     {
-        Debug.Log("GameManager Init");
         if (SceneManager.GetActiveScene().name == "GamePlayScene")
         {
             CurrentState = GameState.Battle;
@@ -268,5 +267,6 @@ public class GameManager
     {
         currentPlayerState = PlayerState.Ready; // normal로 바꿔주는건 StartCountUI에서 담당하자.
         isComboEffect = false;
+        backGroundController.ChapterBackGroundInitialize();
     }
 }
