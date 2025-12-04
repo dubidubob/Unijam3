@@ -2144,6 +2144,8 @@ MonoBehaviour:
   patternBackGround: {fileID: 1743468445841097513}
   doroDarkSprite: {fileID: 21300000, guid: 7fdfc4ccb2c14f24980a1b21429da556, type: 3}
   backGroundDarkSprite: {fileID: 21300000, guid: e5bc97843c75b124daabde1370584f3b, type: 3}
+  originalDoroSprite: {fileID: 21300000, guid: 9da0b5d91e6e3d340abefdbdb85712a6, type: 3}
+  originalBackGroundSprite: {fileID: 21300000, guid: 9e529724bc3d8334e99703d2815c10d8, type: 3}
 --- !u!223 &8565910677778262950
 Canvas:
   m_ObjectHideFlags: 0
