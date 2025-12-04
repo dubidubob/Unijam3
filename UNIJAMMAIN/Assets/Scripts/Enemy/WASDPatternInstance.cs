@@ -42,6 +42,9 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
         _count = 0;
 
         _spawnInterval = (IngameData.BeatInterval * data.spawnBeat) / data.speedUpRate;
+        // [안전장치] Interval 0 방지
+        if (_spawnInterval <= 0.001) _spawnInterval = 0.1;
+
         _spawnPointString = data.WASD_Pattern;
 
         // QA 설정값 (부모로부터 복사)
@@ -75,8 +78,13 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
         // 스폰 타이밍 체크
         while (dspTime >= ScheduledTime(_tick))
         {
+            // 늦은 시간(Offset) 계산 (초 단위)
+            double timeOffset = dspTime - ScheduledTime(_tick);
+
+            // DoSpawn에 offset 전달
+            DoSpawn((float)timeOffset);
+
             _tick++;
-            DoSpawn();
         }
     }
 
@@ -113,10 +121,8 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
         }
     }
 
-    // ==================================================
-    // [MOVED] DoSpawn 로직 (WASDMonsterSpawner에서 이동)
-    // ==================================================
-    private void DoSpawn()
+    // [수정] timeOffset 파라미터 추가
+    private void DoSpawn(float timeOffset)
     {
         int cnt = UnityEngine.Random.Range(1, _maxCnt + 1);
 
@@ -127,30 +133,23 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
             {
                 while (_count < _spawnPointString.Length)
                 {
-                    char peekChar = _spawnPointString[_count]; // 현재 문자 확인
-                    if (peekChar == ',' || peekChar == '/')
-                    {
-                        _count++; // 구분자이므로 인덱스만 증가시키고 다음 문자 확인
-                    }
-                    else
-                    {
-                        break; // 유효한 문자(W,A,S,D,R,() 등)이므로 스킵 루프 종료
-                    }
+                    char peekChar = _spawnPointString[_count];
+                    if (peekChar == ',' || peekChar == '/') _count++;
+                    else break;
                 }
 
-                if (_count < _spawnPointString.Length)// 출력가능하다면
+                if (_count < _spawnPointString.Length)
                 {
-                    if (_spawnPointString[_count] == '(') // 동시출력
+                    if (_spawnPointString[_count] == '(')
                     {
                         _count++;
                         while (_spawnPointString[_count] != ')')
                         {
                             enemyType = SettingWASD_Type(_spawnPointString[_count]);
-                            if (enemyType == WASDType.None)
-                                continue;
+                            if (enemyType == WASDType.None) continue;
 
-                            // [수정] 부모의 PoolEnemySpawn 호출 시 _data 전달
-                            _parent.PoolEnemySpawn(enemyType, _data);
+                            // [수정] offset 전달
+                            _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
                             _count++;
                         }
                         _count++;
@@ -158,30 +157,28 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
                     }
 
                     enemyType = SettingWASD_Type(_spawnPointString[_count++]);
-                    if (enemyType == WASDType.None)
+                    if (enemyType == WASDType.None) continue;
+
+                    if (enemyType == WASDType.Random)
                     {
-                        continue;
-                    }
-                    else if (enemyType == WASDType.Random) // 랜덤이라면
-                    {
-                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로
-                        _parent.PoolEnemySpawn(enemyType, _data);
+                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
+                        _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
                     }
                     else
                     {
-                        _parent.PoolEnemySpawn(enemyType, _data);
+                        _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
                     }
                 }
                 else
                 {
-                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
-                    _parent.PoolEnemySpawn(enemyType, _data);
+                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
+                    _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
                 }
             }
             else
             {
-                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)]; //enemyType랜덤으로.
-                _parent.PoolEnemySpawn(enemyType, _data);
+                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
+                _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
             }
         }
     }

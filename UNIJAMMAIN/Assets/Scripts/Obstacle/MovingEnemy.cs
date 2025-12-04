@@ -140,7 +140,7 @@ public class MovingEnemy : MonoBehaviour
         monsterImg.DOKill();
     }
 
-    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType, Define.MonsterType monsterType)
+    public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType, Define.MonsterType monsterType,float timeOffset)
     {
         this._monsterType = monsterType;
         movingDistanceTmp = distance;
@@ -160,6 +160,21 @@ public class MovingEnemy : MonoBehaviour
             monsterImg.flipX = true;
         else
             monsterImg.flipX = false;
+
+        if (timeOffset > 0)
+        {
+            // 1. 이동할 방향 계산
+            Vector3 direction = (playerPos - transform.position).normalized;
+
+            // 2. 건너뛰어야 할 거리 계산 (속도 * 시간)
+            float skippedDistance = speed * timeOffset;
+
+            // 3. 위치 강제 이동
+            transform.position += direction * skippedDistance;
+
+            // 4. 경과 시간도 미리 더해줌 (애니메이션, 크기 조절 등 싱크 맞추기)
+            _elapsedTime += timeOffset;
+        }
 
         SetKnockback(monsterType == Define.MonsterType.Knockback, monsterType);
         SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);
