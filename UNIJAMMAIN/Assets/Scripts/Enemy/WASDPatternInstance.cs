@@ -32,6 +32,16 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
     private int _maxCnt;
     private int[] _idx;
 
+    private struct SpawnCommand
+    {
+        public WASDType[] Types;
+        public bool IsRandom;
+        public bool IsEmpty; // [NEW] 이게 true면 아무것도 소환 안 함 (쉼표 역할)
+    }
+    // [최적화] 파싱된 패턴 리스트
+    private List<SpawnCommand> _preParsedPatterns;
+    private int _patternIndex = 0; // 현재 리스트 인덱스
+
     public WASDPatternInstance(WASDMonsterSpawner parent, MonsterData data, double startDsp)
     {
         _parent = parent;
@@ -56,6 +66,7 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
             Debug.LogWarning("Set Up Phase Duration!");
 
         _lastSpawnTime = _startDsp + IngameData.PhaseDurationSec - (IngameData.BeatInterval * (float)data.moveBeat) + _threshold;
+        PreParsePatternString(_spawnPointString);
     }
 
     private double ScheduledTime(long tickIndex)
@@ -121,64 +132,53 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
         }
     }
 
-    // [수정] timeOffset 파라미터 추가
+
     private void DoSpawn(float timeOffset)
     {
-        int cnt = UnityEngine.Random.Range(1, _maxCnt + 1);
+        // 패턴대로 갈 때는 1번에 1개씩 소비하는 것이 정확함
+        // 만약 난이도 조절로 한 번에 여러 개를 소모해야 한다면 cnt 사용
+        // 여기서는 패턴의 정확성을 위해 cnt=1로 가정하거나, 루프를 돌림
+
+        int cnt = 1;
+        // 만약 랜덤모드일때만 _maxCnt를 쓰고 싶다면 로직 분리가 필요하지만,
+        // 패턴 모드에서는 보통 1틱 = 1패턴글자 입니다.
 
         for (int i = 0; i < cnt; i++)
         {
-            WASDType enemyType = WASDType.None;
-            if (Managers.Game.CurrentState == GameManager.GameState.Battle && _spawnPointString != null)
+            // 1. 미리 파싱된 패턴이 남아있다면 그걸 우선 사용
+            if (_preParsedPatterns != null && _patternIndex < _preParsedPatterns.Count)
             {
-                while (_count < _spawnPointString.Length)
+                SpawnCommand cmd = _preParsedPatterns[_patternIndex++];
+
+                // [핵심] 빈 박자(X)면 아무것도 안 하고 리턴 (박자만 소비됨)
+                if (cmd.IsEmpty)
                 {
-                    char peekChar = _spawnPointString[_count];
-                    if (peekChar == ',' || peekChar == '/') _count++;
-                    else break;
+                    continue;
                 }
 
-                if (_count < _spawnPointString.Length)
+                if (cmd.IsRandom)
                 {
-                    if (_spawnPointString[_count] == '(')
-                    {
-                        _count++;
-                        while (_spawnPointString[_count] != ')')
-                        {
-                            enemyType = SettingWASD_Type(_spawnPointString[_count]);
-                            if (enemyType == WASDType.None) continue;
-
-                            // [수정] offset 전달
-                            _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
-                            _count++;
-                        }
-                        _count++;
-                        return;
-                    }
-
-                    enemyType = SettingWASD_Type(_spawnPointString[_count++]);
-                    if (enemyType == WASDType.None) continue;
-
-                    if (enemyType == WASDType.Random)
-                    {
-                        enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
-                        _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
-                    }
-                    else
-                    {
-                        _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
-                    }
+                    WASDType randomType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
+                    _parent.PoolEnemySpawn(randomType, _data, timeOffset);
                 }
-                else
+                else if (cmd.Types != null)
                 {
-                    enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
-                    _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
+                    for (int j = 0; j < cmd.Types.Length; j++)
+                    {
+                        _parent.PoolEnemySpawn(cmd.Types[j], _data, timeOffset);
+                    }
                 }
             }
+            // 2. 패턴이 다 끝났다면?
             else
             {
-                enemyType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
-                _parent.PoolEnemySpawn(enemyType, _data, timeOffset);
+                // [수정] 패턴이 끝나면 아무것도 소환하지 않음! (랜덤 생성 방지)
+                // 만약 끝나고 랜덤이 나오게 하고 싶으면 아래 주석 해제
+
+                /*
+                WASDType randomType = (WASDType)_idx[UnityEngine.Random.Range(0, _idx.Length)];
+                _parent.PoolEnemySpawn(randomType, _data, timeOffset);
+                */
             }
         }
     }
@@ -192,4 +192,73 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
         else if (type == 'R') return WASDType.Random;
         return WASDType.None;
     }
+
+    #region tool
+    // 문자열을 분석하여 명령어 리스트로 변환하는 함수
+    private void PreParsePatternString(string pattern)
+    {
+        _preParsedPatterns = new List<SpawnCommand>();
+        if (string.IsNullOrEmpty(pattern)) return;
+
+        int len = pattern.Length;
+        int i = 0;
+
+        while (i < len)
+        {
+            char c = pattern[i];
+
+            // 구분자는 그냥 건너뜀
+            if (c == ',' || c == '/' || c == ' ')
+            {
+                i++;
+                continue;
+            }
+
+            // 그룹 패턴 처리 (...)
+            if (c == '(')
+            {
+                i++;
+                List<WASDType> groupTypes = new List<WASDType>();
+                while (i < len && pattern[i] != ')')
+                {
+                    WASDType type = SettingWASD_Type(pattern[i]);
+                    // 그룹 안에서는 유효한 타입만 추가 (그룹 내 X는 무시됨)
+                    if (type != WASDType.None) groupTypes.Add(type);
+                    i++;
+                }
+
+                // 그룹 닫힘 처리
+                if (groupTypes.Count > 0)
+                    _preParsedPatterns.Add(new SpawnCommand { Types = groupTypes.ToArray(), IsRandom = false, IsEmpty = false });
+                else
+                    // 괄호 안에 유효한게 없으면 빈 박자로 처리 () -> X
+                    _preParsedPatterns.Add(new SpawnCommand { IsEmpty = true });
+
+                i++; // ')' 건너뛰기
+            }
+            // 단일 패턴 처리
+            else
+            {
+                WASDType type = SettingWASD_Type(c);
+
+                if (type == WASDType.Random)
+                {
+                    _preParsedPatterns.Add(new SpawnCommand { IsRandom = true, IsEmpty = false });
+                }
+                else if (type != WASDType.None)
+                {
+                    // W, A, S, D
+                    _preParsedPatterns.Add(new SpawnCommand { Types = new WASDType[] { type }, IsRandom = false, IsEmpty = false });
+                }
+                else
+                {
+                    // [핵심] None 타입(X, N 등)이면 '빈 박자' 명령어로 추가!
+                    // 이걸 추가해야 인덱스가 밀리면서 박자를 쉽니다.
+                    _preParsedPatterns.Add(new SpawnCommand { IsEmpty = true });
+                }
+                i++;
+            }
+        }
+    }
+    #endregion
 }
