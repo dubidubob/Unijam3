@@ -26,9 +26,10 @@ MonoBehaviour:
   MusicPath: BGM/Chapter6_V2
   StartBeat: 6
   DelayPaddingSeconds: 0
-  backGroundSprite: {fileID: 21300000, guid: 69fc3a3f9a9d7784892216b41e70282b, type: 3}
+  backGroundSprite: {fileID: 21300000, guid: 798a6cbc05f742c4381887de2804b6c5, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 7d708994ae00951428530f186deeeae4, type: 3}
   colorPalette: {r: 0.1764706, g: 0.24313727, b: 0.24705884, a: 1}
+  SinkStage: 0
   references:
     version: 2
     RefIds:

@@ -21,9 +21,10 @@ MonoBehaviour:
   MusicPath: BGM/Chapter5_V2
   StartBeat: 8
   DelayPaddingSeconds: 0
-  backGroundSprite: {fileID: 21300000, guid: a58bba2bf18f5934c896e08b9d4cc890, type: 3}
+  backGroundSprite: {fileID: 21300000, guid: 2275b117ee9c47542a27fdba9b27a226, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 5e73ef6a181b19145b2d248b6beed720, type: 3}
   colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
+  SinkStage: 0
   references:
     version: 2
     RefIds:
@@ -70,7 +71,7 @@ MonoBehaviour:
           spawnBeat: 4
           moveBeat: 4
           hiding: 0
-        - isIn: 1
+        - isIn: 0
           monsterType: 3
           WASD_Pattern: (WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)
           speedUpRate: 1
@@ -88,20 +89,20 @@ MonoBehaviour:
         preGenerateBeat: 0
         isFlipAD: 0
         monsterDatas:
-        - isIn: 1
-          monsterType: 5
-          WASD_Pattern: WDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)X
-          speedUpRate: 1
-          spawnBeat: 1
-          moveBeat: 2
-          hiding: 0
-        - isIn: 1
+        - isIn: 0
           monsterType: 3
           WASD_Pattern: WDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)X
           speedUpRate: 1
           spawnBeat: 12
           moveBeat: 1
           hiding: 0
+        - isIn: 1
+          monsterType: 5
+          WASD_Pattern: WDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)X
+          speedUpRate: 1
+          spawnBeat: 1
+          moveBeat: 2
+          hiding: 1
     - rid: 9186972795589099526
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:

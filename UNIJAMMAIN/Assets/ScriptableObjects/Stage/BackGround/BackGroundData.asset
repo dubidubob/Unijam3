@@ -23,6 +23,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 3b99dfa2b64dc4e4f990c5513f76b2fe, type: 3}
   - extraBackGroundLists:
     - {fileID: 21300000, guid: 8b9f58625959e62429e5bc71899812a5, type: 3}
-  - extraBackGroundLists: []
-  - extraBackGroundLists: []
-  - extraBackGroundLists: []
+  - extraBackGroundLists:
+    - {fileID: 21300000, guid: 24a8cf37d6907fc4681c93a4ce34e8bd, type: 3}
+    - {fileID: 21300000, guid: a37987448b703744485e170f2146debb, type: 3}
+  - extraBackGroundLists:
+    - {fileID: 21300000, guid: c0ab8b562f91c10438a69f2ff2d60c7f, type: 3}
+    - {fileID: 21300000, guid: b12031a8e96486147bb7d51339deb99d, type: 3}
+  - extraBackGroundLists:
+    - {fileID: 21300000, guid: 61de3e5c4a832a847bd75d000899c75a, type: 3}

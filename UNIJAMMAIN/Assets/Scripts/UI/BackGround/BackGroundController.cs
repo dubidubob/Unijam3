@@ -15,6 +15,8 @@ public class BackGroundController : MonoBehaviour
     private float beatDuration;
     private int chapterIdx =-100;
     [SerializeField] Image extraObjectImage;
+    [SerializeField] Image extraObjectImage2;
+    [SerializeField] Image extraObjectImage3;
     [SerializeField] BackGroundDataSO backGrounddataSO;
 
     [Header("Layer Control")]
@@ -62,9 +64,6 @@ public class BackGroundController : MonoBehaviour
     private int nowactionNumber=1;
     private void BeatOnBackGroundAction(long _)
     {
-       
-        Debug.Log(chapterIdx);
-
         if (nowactionNumber == actionNumberTarget)
         {
             nowactionNumber = 1;
@@ -90,6 +89,17 @@ public class BackGroundController : MonoBehaviour
                 break;
             case 3:
                 ChapterAction_3();
+                break;
+            case 4:
+                ChapterAction_4();
+                break;
+            case 5:
+                ChapterAction_5();
+                break;
+            case 6:
+                ChapterAction_6();
+                break;
+            default:
                 break;
         }
 
@@ -142,8 +152,33 @@ public class BackGroundController : MonoBehaviour
                 UpdateRectMargin(extraObjectImage.rectTransform, 0);
 
                 break;
+            case 4:
+                actionNumberTarget = 2;
+                extraObjectImage.sprite = backGrounddataSO.backGroundDatas[4].extraBackGroundLists[0];
+                extraObjectImage2.sprite = backGrounddataSO.backGroundDatas[4].extraBackGroundLists[1];
+                extraObjectImage.gameObject.SetActive(true);
+                extraObjectImage2.gameObject.SetActive(true);
+                UpdateRectMargin(extraObjectImage.rectTransform, -80);
+                UpdateRectMargin(extraObjectImage2.rectTransform, 0);
 
                 break;
+            case 5:
+                actionNumberTarget = 2;
+                extraObjectImage.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[0];
+                extraObjectImage2.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[1];
+                extraObjectImage.gameObject.SetActive(true);
+                extraObjectImage2.gameObject.SetActive(true);
+                UpdateRectMargin(extraObjectImage.rectTransform, 50);
+                UpdateRectMargin(extraObjectImage2.rectTransform, 0);
+
+                break;
+            case 6:
+                actionNumberTarget = 1;
+                extraObjectImage.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[0];
+                extraObjectImage.gameObject.SetActive(true);
+                UpdateRectMargin(extraObjectImage.rectTransform, 0);   
+                break;
+
         }
     }
     
@@ -261,6 +296,110 @@ public class BackGroundController : MonoBehaviour
         seq.Append(rect.DOScale(Vector3.one, beatDuration * 0.7f)
             .SetEase(Ease.OutQuad));
     }
+
+    private void ChapterAction_4()
+    {
+        ChapterAction_0();
+    }
+
+
+    private bool isTiltRight = true;
+    private void ChapterAction_5()
+    {
+        if (extraObjectImage == null) return;
+        RectTransform rect = extraObjectImage.rectTransform;
+
+        rect.DOKill();
+        rect.localRotation = Quaternion.identity;
+
+        // 방향 토글 (이번엔 오른쪽? 다음엔 왼쪽)
+        float targetAngle = isTiltRight ? 7f : -7f;
+        isTiltRight = !isTiltRight;
+
+        Sequence seq = DOTween.Sequence();
+        seq.SetTarget(extraObjectImage.gameObject);
+
+        // 둠 (기울이기)
+        seq.Append(rect.DOLocalRotate(new Vector3(0, 0, targetAngle), beatDuration * 0.2f)
+            .SetEase(Ease.OutQuad));
+
+        // 칫 (복구)
+        seq.Append(rect.DOLocalRotate(Vector3.zero, beatDuration * 0.8f)
+            .SetEase(Ease.OutBack));
+    }
+
+    // [추가] 스프링 상태 관리 변수 (true: 수축 차례, false: 발사 차례)
+    private bool isSpringCompressPhase = true;
+
+    private void ChapterAction_6()
+    {
+        if (extraObjectImage == null) return;
+
+        RectTransform rect = extraObjectImage.rectTransform;
+
+        // 1. 이전 애니메이션 제거 및 타겟 설정
+        rect.DOKill();
+
+        // -------------------------------------------------------
+        // [설정] Inspector Top 값 기준
+        // -------------------------------------------------------
+        float normalTop = 40f;      // 평소 상태
+        float compressedTop = 60f; // 1차 박자: 꾹 눌린 상태 (값이 클수록 아래로 내려감)
+        float stretchedTop = -70f;  // 2차 박자: 띠용하고 튀어 오른 상태 (음수일수록 위로 올라감)
+
+        if (isSpringCompressPhase)
+        {
+            // ====================================================
+            // Phase 1: 수축 (에너지 모으기)
+            // Normal -> Compressed 상태로 이동 후 대기
+            // ====================================================
+
+            // 혹시 모를 위치 어긋남 방지를 위해 시작점 강제 설정
+            UpdateRectTop(rect, normalTop);
+
+            // 꾹 누르는 애니메이션 (빠르고 단단하게)
+            DOVirtual.Float(normalTop, compressedTop, beatDuration * 0.4f, (val) =>
+            {
+                UpdateRectTop(rect, val);
+            })
+            .SetTarget(rect)
+            .SetEase(Ease.OutCubic); // OutCubic: 묵직하게 눌리는 느낌
+
+            // 다음 박자는 발사
+            isSpringCompressPhase = false;
+        }
+        else
+        {
+            // ====================================================
+            // Phase 2: 발사! (띠용~)
+            // Compressed -> Stretched(튀어오름) -> Normal(복귀)
+            // ====================================================
+
+            // 압축된 상태에서 시작한다고 가정 (안전장치로 강제 설정)
+            UpdateRectTop(rect, compressedTop);
+
+            Sequence seq = DOTween.Sequence();
+            seq.SetTarget(rect);
+
+            // A. 발사!: 압축 상태에서 가장 높은 곳으로 순식간에 이동 (전체 시간의 30%)
+            seq.Append(DOVirtual.Float(compressedTop, stretchedTop, beatDuration * 0.3f, (val) =>
+            {
+                UpdateRectTop(rect, val);
+            }).SetEase(Ease.OutQuad)); // OutQuad: 빠르게 치고 나감
+
+            // B. 띠요옹 복귀: 높은 곳에서 원래 위치로 탄력있게 돌아옴 (전체 시간의 70%)
+            seq.Append(DOVirtual.Float(stretchedTop, normalTop, beatDuration * 0.7f, (val) =>
+            {
+                UpdateRectTop(rect, val);
+            })
+            // Ease.OutElastic: 고무줄이나 스프링이 튕기는 느낌
+            // 매개변수 (반동 크기, 횟수) 조절 가능: (1.2f, 0.4f) 추천
+            .SetEase(Ease.OutElastic, 1.2f, 0.4f));
+
+            // 다음 박자는 다시 수축
+            isSpringCompressPhase = true;
+        }
+    }
     #endregion
 
     // [헬퍼 함수] 상하좌우 여백(Margin)을 한 번에 조절하는 함수
@@ -290,5 +429,13 @@ public class BackGroundController : MonoBehaviour
         }
     }
 
+    // [헬퍼 함수] Inspector의 "Top" 값을 변경하는 함수
+    // 기존의 Right(offsetMax.x) 값은 건드리지 않고 Top만 바꿉니다.
+    private void UpdateRectTop(RectTransform rect, float top)
+    {
+        // Unity UI 구조상 Inspector의 Top 값은 offsetMax.y의 '음수' 값입니다.
+        // 예: Top 40 => offsetMax.y = -40
+        rect.offsetMax = new Vector2(rect.offsetMax.x, -top);
+    }
 }
 
