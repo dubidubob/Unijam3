@@ -136,6 +136,11 @@ public class BeatClock : MonoBehaviour
         return ScheduledTime(tick);
     }
 
+    public double GetTickToSeconds(long tick)
+    {
+        return tick * _beatInterval;   
+    }
+
     public void GetNowTickDebugLog()
     {
         Debug.Log($"Current Tick : {_tick}");

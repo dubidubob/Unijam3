@@ -42,6 +42,7 @@ public class PhaseController : MonoBehaviour
     public float _totalBeat = 0;
     private float _beatCount = 0;
     SpawnController spawnController;
+    [SerializeField] WASDMonsterSpawner wasdMonsterSpawner;
 
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
     private bool isMonsterGoStart = false;
@@ -64,16 +65,22 @@ public class PhaseController : MonoBehaviour
 
         IngameData.RankInit();
         Managers.Game.monster = monsterDatabase;
+
+       
        
 
         
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
+        PreloadWASDPatterns(_chapterIdx);
         if (isTest)
         {
             _chapterIdx = TestStageIndex;
             IngameData.ChapterIdx = _chapterIdx;
         }
+        // 데이터 캐싱
+        
+        
         SetStageBackGround();
 
         Color tmpColor = chapters[_chapterIdx].colorPalette;
@@ -118,9 +125,10 @@ public class PhaseController : MonoBehaviour
             await SinkStageInit(token);
             return;
         }
+       
 
+       
 
-        
 
 
         // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
@@ -136,24 +144,38 @@ public class PhaseController : MonoBehaviour
             IngameData.BeatInterval = 60.0 / firstPhase.bpm;
             IngameData.ChangeBpm?.Invoke();
         }
+        var _event = chapters[_chapterIdx].Phases[0];
+        if(_event is PhaseEvent _parsingEvent)
+        {
+            // Phase의 0 부터 끝까지
+            // _parsingEvent.MonsterData[0] 부터 끝까지 MonsterData[i].WASD_Pattern <- string 에 대해 
+            // 미리 파싱해두기 
+            // GetOrParsePattern 을 타 함수(datainitialize 하는 타 코드에서) 실행할것임.
+        }
 
-    
         long targetTick = 0;
-        // 1. 현재 오디오 엔진 시간에서 1초(혹은 0.5초) 뒤를 '시작 시간'으로 잡습니다.
+        // 현재 오디오 엔진 시간에서 1초(혹은 0.5초) 뒤를 '시작 시간'으로 잡습니다.
         //    이 1초의 여유 동안 오디오 엔진은 소리 낼 준비를 완벽히 마칩니다.
-        double musicStartTime = AudioSettings.dspTime + 1.0;
+        double musicStartTime = AudioSettings.dspTime + 1f;
 
-        // 2. 사운드 매니저에게 "이 시간에 정확히 틀어라"고 예약합니다.
-        //    (SoundManager에 PlayScheduled 기능을 추가해야 함, 아래 참조)
+        // 사운드 매니저에게 "이 시간에 정확히 틀어라"고 예약합니다.
         string bgmPath = chapters[_chapterIdx].MusicPath;
-        Managers.Sound.PlayScheduled(bgmPath, musicStartTime, Define.Sound.BGM);
 
-        // 3. BeatClock에게도 "게임 시작 시간은 startTime이다"라고 알려줍니다.
+
+        // DelayPadding의 Tick의 Second 만큼 대기 ( 몬스터를 미리 소환하고 노래를 늦게 재생 ) 
+        double waitSecondTarget = (long)chapters[_chapterIdx].DelayPaddingTick * IngameData.BeatInterval;
+        Debug.Log(waitSecondTarget);
+        Managers.Sound.PlayScheduled(bgmPath, musicStartTime + waitSecondTarget, Define.Sound.BGM);
+
+
+        // BeatClock에게도 "게임 시작 시간은 startTime이다"라고 알려줍니다.
         //    BeatClock은 이제 Update에서 (dspTime - startTime)을 통해 틱을 계산해야 합니다.
         beatClock.SetStartTime(musicStartTime);
+        
+        
 
-        // 4. 로직은 BGM이 시작될 때까지(1초간) 대기합니다.
-        //    이렇게 하면 "소리가 나는 순간"과 "로직이 시작되는 순간"이 0.001초 오차 범위 내로 맞습니다.
+        //  BGM이 시작될 때까지(1초간) 대기
+        //    이렇게 하면 "소리가 나는 순간"과 "로직이 시작되는 순간"이 맞음.
         await UniTask.WaitUntil(() => AudioSettings.dspTime >= musicStartTime, cancellationToken: token);
 
 
@@ -298,6 +320,47 @@ public class PhaseController : MonoBehaviour
 
     #region Setting
 
+    public void PreloadWASDPatterns(int chapterIdx)
+    {
+        // 1. WASD 스포너 참조 가져오기
+        // (싱글톤 매니저나, 참조 변수가 있다면 그것을 사용하세요)
+        WASDMonsterSpawner wasdSpawner = FindObjectOfType<WASDMonsterSpawner>();
+
+        if (wasdSpawner == null)
+        {
+            Debug.LogWarning("WASD 스포너를 찾을 수 없어 프리로딩을 건너뜁니다.");
+            return;
+        }
+
+        // 2. 해당 챕터 가져오기
+        var currentChapter = chapters[chapterIdx];
+        if (currentChapter == null) return;
+
+        // 3. 챕터 내의 '모든 페이즈' 순회 (0부터 끝까지)
+        foreach (var phase in currentChapter.Phases)
+        {
+            // PhaseEvent 타입인 경우에만 처리 (몬스터 데이터가 있는 이벤트)
+            if (phase is PhaseEvent phaseEvent)
+            {
+                // 4. 페이즈 내의 '모든 몬스터 데이터' 순회
+                foreach (var monsterData in phaseEvent.monsterDatas)
+                {
+                    // 패턴 문자열이 비어있지 않다면 파싱 요청
+                    if (!string.IsNullOrEmpty(monsterData.WASD_Pattern))
+                    {
+                        // [핵심] 리턴값은 필요 없습니다. 호출하는 순간 스포너 내부 Dictionary에 저장됩니다.
+                        wasdSpawner.GetOrParsePattern(monsterData.WASD_Pattern);
+                    }
+                }
+            }
+        }
+
+        Debug.Log($"Chapter {chapterIdx}의 모든 WASD 패턴 프리로딩 완료!");
+    }
+    async void WaitTick(float waitTick)
+    {
+        await UniTask.WaitForSeconds((float)beatClock.GetScheduledDspTimeForTick((long)waitTick));
+    }
     private void SetTimeScale(float time)
     {
         Managers.Sound.ChangeBGMPitch(time);

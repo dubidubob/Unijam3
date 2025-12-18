@@ -53,7 +53,7 @@ public class SpawnController : MonoBehaviour
 
         if (monsterDatas == null || monsterDatas.Count == 0)
         {
-            Debug.LogError("SpawnController: MonsterDatas is NULL or EMPTY! Cannot spawn.");
+            Debug.LogWarning("SpawnController: MonsterDatas is NULL or EMPTY! Cannot spawn.");
             return spawnedInstances;
         }
 
