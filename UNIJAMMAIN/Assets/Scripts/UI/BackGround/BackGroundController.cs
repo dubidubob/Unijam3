@@ -13,19 +13,34 @@ public class BackGroundController : MonoBehaviour
     private readonly string satPropName = "_Saturation";
 
     public Material sharedMaterial;
+
+    // 외부에서 접근 가능하도록 프로퍼티 추가 (getter만 public)
+    public float BeatDuration { get; private set; }
+
     private float beatDuration;
     private int chapterIdx =-100;
     [SerializeField] Image extraObjectImage;
     [SerializeField] Image extraObjectImage2;
     [SerializeField] Image extraObjectImage3;
     [SerializeField] Image extraObjectImage4;
+    [SerializeField] Image extraObjectImage5;
     [SerializeField] BackGroundDataSO backGrounddataSO;
+
+    // 외부 스크립트용 프로퍼티(편의상 이름 매핑)
+    public Image ExtraImage1 => extraObjectImage;
+    public Image ExtraImage2 => extraObjectImage2;
+    public Image ExtraImage3 => extraObjectImage3;
+    public Image ExtraImage4 => extraObjectImage4;
+    public Image ExtraImage5 => extraObjectImage5;
+    public BackGroundDataSO DataSO => backGrounddataSO;
 
     [Header("Layer Control")]
       [SerializeField] Image backGround;
     [SerializeField] Transform bgTransform;
-  
 
+    public int ActionNumberTarget { get; set; } = 4;
+    private int nowactionNumber = 1;
+    private int actionNumberTarget = 4;
 
 
     //---- 각 챕터에 대한 정보 저장용 ---- //
@@ -82,11 +97,14 @@ public class BackGroundController : MonoBehaviour
             case 5: currentChapterAction = ChapterAction_5; break;
             case 6: currentChapterAction = ChapterAction_6; break;
             case 7: currentChapterAction = ChapterAction_7; break;
+            case 10:
+                ConnectExternalEffect<BackGroundEffect_10>(); // 이안에서 currentChapterAction 구독
+                break;
             default: currentChapterAction = null; break;
         }
     }
-    private int actionNumberTarget = 4;
-    private int nowactionNumber=1;
+
+
     private void BeatOnBackGroundAction(long _)
     {
         // 카운터 체크 로직 (기존과 동일)
@@ -215,6 +233,23 @@ public class BackGroundController : MonoBehaviour
                 UpdateRectMargin(extraObjectImage.rectTransform, 0);
                 UpdateRectMargin(extraObjectImage2.rectTransform, 0);
 
+                break;
+
+            case 10:
+                actionNumberTarget = 1;
+                extraObjectImage.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[0];
+                extraObjectImage2.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[1];
+                extraObjectImage3.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[2];
+                extraObjectImage4.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[3];
+                extraObjectImage.gameObject.SetActive(true);
+                extraObjectImage2.gameObject.SetActive(true);
+                extraObjectImage3.gameObject.SetActive(true);
+                extraObjectImage4.gameObject.SetActive(true);
+                UpdateRectMargin(extraObjectImage.rectTransform, 0);
+                UpdateRectMargin(extraObjectImage2.rectTransform, 0);
+                UpdateRectMargin(extraObjectImage3.rectTransform, 0);
+                UpdateRectMargin(extraObjectImage4.rectTransform, 0);
+                
                 break;
 
         }
@@ -619,11 +654,16 @@ public class BackGroundController : MonoBehaviour
                 rect.DORotate(new Vector3(0, 0, -1f), beatDuration * 0.8f* actionNumberTarget).SetEase(Ease.InOutSine);
             });
     }
+
+    private void ChapterAction_10()
+    {
+
+    }
     #endregion
 
     // [헬퍼 함수] 상하좌우 여백(Margin)을 한 번에 조절하는 함수
     // margin이 0이면 stretch 꽉 채움, 50이면 사방에서 50씩 들어옴
-    private void UpdateRectMargin(RectTransform rect, float margin)
+    public void UpdateRectMargin(RectTransform rect, float margin)
     {
         // Left, Bottom은 정수값 그대로
         rect.offsetMin = new Vector2(margin, margin);
@@ -631,7 +671,7 @@ public class BackGroundController : MonoBehaviour
         rect.offsetMax = new Vector2(-margin, -margin);
     }
 
-    private void UpdateRectPosition(RectTransform rect, float X, float Y)
+    public void UpdateRectPosition(RectTransform rect, float X, float Y)
     {
         if (rect == null) return;
 
@@ -660,6 +700,26 @@ public class BackGroundController : MonoBehaviour
         rect.anchoredPosition = new Vector2(X, Y);
     }
 
+    // 외부 효과 스크립트를 연결하는 제네릭 함수
+    private void ConnectExternalEffect<T>() where T : Component, IBackGroundEffect
+    {
+        // 컴포넌트 선언
+        T effectComponent = null;
+
+        if (effectComponent == null)
+        {
+            Debug.LogWarning($"BackGroundController: {typeof(T).Name} 컴포넌트가 없습니다! 추가합니다.");
+            effectComponent = gameObject.AddComponent<T>();
+        }
+
+        // 2. 초기화 실행 (컨트롤러 권한 부여)
+        effectComponent.Initialize(this);
+
+        // 3. 액션 연결 (델리게이트에 인터페이스 메서드 등록)
+        currentChapterAction = effectComponent.EffectActionGo;
+
+        Debug.Log($"Connected External Effect: {typeof(T).Name}");
+    }
     public void SettingSatuation(float value)
     {
         if (sharedMaterial != null)

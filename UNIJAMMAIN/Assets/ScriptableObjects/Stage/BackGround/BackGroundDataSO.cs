@@ -10,5 +10,11 @@ public class BackGroundDataSO : ScriptableObject
     {
         public List<Sprite> extraBackGroundLists;
     }
+    [System.Serializable]
+    public class ExtraBackGroundData
+    {
+        public List<Sprite> extraBackGroundLists;
+    }
     public List<BackGroundData> backGroundDatas;
+    public List<ExtraBackGroundData> extraBackGroundDatas;
 }

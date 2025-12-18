@@ -91,6 +91,7 @@ public class PhaseController : MonoBehaviour
         Managers.Game.GameStart();
         // UniTask 실행 (Start는 void이므로 async void 대신 Forget() 패턴 사용 권장)
         RunChapter().Forget();
+       
     }
 
     private void OnDestroy()
