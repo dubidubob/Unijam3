@@ -214,7 +214,7 @@ public class StageSceneUI : UI_Popup
         // 두 번 호출되므로, (StageScene에서 한 번 이미 호출함) 주석처리함.
         //Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
 
-        // 서울게임타운용
+        // TODO: 서울게임타운용
         Managers.Game.GameStage = 7;
         StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
     }

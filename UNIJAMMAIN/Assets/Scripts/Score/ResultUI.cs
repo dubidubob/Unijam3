@@ -54,7 +54,10 @@ public class ResultUI : MonoBehaviour
         else if (score >= rankUI[3].cutline) { idx = 3; rank = Define.Rank.Normal; } // 중
         else { idx = 4; rank = Define.Rank.Bad; }// 하
 
-        IngameData.ChapterRank = rank;
+        if (!IngameData.boolPracticeMode) //연습모드가 아니라면 저장
+        {
+            IngameData.ChapterRank = rank;
+        }
         resultImg.sprite = rankUI[idx].img;
         resultImg.SetNativeSize();
         resultTxt.text = rankUI[idx].GetRandomMent();

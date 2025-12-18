@@ -32,12 +32,6 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
     private int _maxCnt;
     private int[] _idx;
 
-    private struct SpawnCommand
-    {
-        public WASDType[] Types;
-        public bool IsRandom;
-        public bool IsEmpty; // [NEW] 이게 true면 아무것도 소환 안 함 (쉼표 역할)
-    }
     // [최적화] 파싱된 패턴 리스트
     private List<SpawnCommand> _preParsedPatterns;
     private int _patternIndex = 0; // 현재 리스트 인덱스
@@ -53,7 +47,7 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
 
         _spawnInterval = (IngameData.BeatInterval * data.spawnBeat) / data.speedUpRate;
         // [안전장치] Interval 0 방지
-        if (_spawnInterval <= 0.001) _spawnInterval = 0.1;
+        if (_spawnInterval <= 0.0001) _spawnInterval = 0.1;
 
         _spawnPointString = data.WASD_Pattern;
 
@@ -66,7 +60,8 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
             Debug.LogWarning("Set Up Phase Duration!");
 
         _lastSpawnTime = _startDsp + IngameData.PhaseDurationSec - (IngameData.BeatInterval * (float)data.moveBeat) + _threshold;
-        PreParsePatternString(_spawnPointString);
+
+        _preParsedPatterns = parent.GetOrParsePattern(_spawnPointString);
     }
 
     private double ScheduledTime(long tickIndex)
@@ -183,82 +178,8 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
         }
     }
 
-    private WASDType SettingWASD_Type(char type)
-    {
-        if (type == 'A') return WASDType.A;
-        else if (type == 'W') return WASDType.W;
-        else if (type == 'S') return WASDType.S;
-        else if (type == 'D') return WASDType.D;
-        else if (type == 'R') return WASDType.Random;
-        return WASDType.None;
-    }
 
     #region tool
-    // 문자열을 분석하여 명령어 리스트로 변환하는 함수
-    private void PreParsePatternString(string pattern)
-    {
-        _preParsedPatterns = new List<SpawnCommand>();
-        if (string.IsNullOrEmpty(pattern)) return;
-
-        int len = pattern.Length;
-        int i = 0;
-
-        while (i < len)
-        {
-            char c = pattern[i];
-
-            // 구분자는 그냥 건너뜀
-            if (c == ',' || c == '/' || c == ' ')
-            {
-                i++;
-                continue;
-            }
-
-            // 그룹 패턴 처리 (...)
-            if (c == '(')
-            {
-                i++;
-                List<WASDType> groupTypes = new List<WASDType>();
-                while (i < len && pattern[i] != ')')
-                {
-                    WASDType type = SettingWASD_Type(pattern[i]);
-                    // 그룹 안에서는 유효한 타입만 추가 (그룹 내 X는 무시됨)
-                    if (type != WASDType.None) groupTypes.Add(type);
-                    i++;
-                }
-
-                // 그룹 닫힘 처리
-                if (groupTypes.Count > 0)
-                    _preParsedPatterns.Add(new SpawnCommand { Types = groupTypes.ToArray(), IsRandom = false, IsEmpty = false });
-                else
-                    // 괄호 안에 유효한게 없으면 빈 박자로 처리 () -> X
-                    _preParsedPatterns.Add(new SpawnCommand { IsEmpty = true });
-
-                i++; // ')' 건너뛰기
-            }
-            // 단일 패턴 처리
-            else
-            {
-                WASDType type = SettingWASD_Type(c);
-
-                if (type == WASDType.Random)
-                {
-                    _preParsedPatterns.Add(new SpawnCommand { IsRandom = true, IsEmpty = false });
-                }
-                else if (type != WASDType.None)
-                {
-                    // W, A, S, D
-                    _preParsedPatterns.Add(new SpawnCommand { Types = new WASDType[] { type }, IsRandom = false, IsEmpty = false });
-                }
-                else
-                {
-                    // [핵심] None 타입(X, N 등)이면 '빈 박자' 명령어로 추가!
-                    // 이걸 추가해야 인덱스가 밀리면서 박자를 쉽니다.
-                    _preParsedPatterns.Add(new SpawnCommand { IsEmpty = true });
-                }
-                i++;
-            }
-        }
-    }
+    
     #endregion
 }

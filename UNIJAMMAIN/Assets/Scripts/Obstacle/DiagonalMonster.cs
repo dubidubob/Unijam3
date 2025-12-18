@@ -39,6 +39,10 @@ public class DiagonalMonster : MonoBehaviour
 
     private void OnEnable()
     {
+        if(_isDying)
+        {
+            return;
+        }
 
         // 이전에 남아있을 수 있는 타격 이펙트의 모든 애니메이션을 중지하고,
         attackedEffectSpriteRenderer.DOKill();

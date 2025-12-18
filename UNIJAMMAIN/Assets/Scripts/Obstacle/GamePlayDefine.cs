@@ -1,5 +1,12 @@
 public class GamePlayDefine
 {
+    [System.Serializable]
+    public class SpawnCommand // 혹은 public struct SpawnCommand
+    {
+        public GamePlayDefine.WASDType[] Types; // 동시 입력(괄호) 처리를 위해 배열로 선언
+        public bool IsRandom;    // 'R' 타입인지 여부
+        public bool IsEmpty;     // 빈 박자(공백, 탭, X 등)인지 여부
+    }
     public enum AllType
     {
         A,

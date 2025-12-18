@@ -15,7 +15,16 @@ MonoBehaviour:
   backGroundDatas:
   - extraBackGroundLists:
     - {fileID: 21300000, guid: 85170b7ecbe868844833a2a7c0bdacfc, type: 3}
-  - extraBackGroundLists: []
+    - {fileID: 21300000, guid: d8cd8396e886943449ea37b2241dacf0, type: 3}
+    - {fileID: 21300000, guid: 40775fcaf43a95e4aa9ad574bd6837a0, type: 3}
+    - {fileID: 21300000, guid: 83149f5d18690584085e51ab8f5334ef, type: 3}
+  - extraBackGroundLists:
+    - {fileID: 21300000, guid: 98fe6a3cf7d9ec247a5c884491731f55, type: 3}
+    - {fileID: 21300000, guid: feb8cfb99cf0b0a4ebba1bd6eb260d62, type: 3}
+    - {fileID: 21300000, guid: 2c31b7f6cc84de949a8e07c84f132a7b, type: 3}
+    - {fileID: 21300000, guid: d8cd8396e886943449ea37b2241dacf0, type: 3}
+    - {fileID: 21300000, guid: 40775fcaf43a95e4aa9ad574bd6837a0, type: 3}
+    - {fileID: 21300000, guid: 83149f5d18690584085e51ab8f5334ef, type: 3}
   - extraBackGroundLists:
     - {fileID: 21300000, guid: b712b57eb35b5f84bbb5e5f443cebe87, type: 3}
     - {fileID: 21300000, guid: e389421f40ba02045971f6ac5e506af3, type: 3}
@@ -31,3 +40,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: b12031a8e96486147bb7d51339deb99d, type: 3}
   - extraBackGroundLists:
     - {fileID: 21300000, guid: 61de3e5c4a832a847bd75d000899c75a, type: 3}
+  - extraBackGroundLists:
+    - {fileID: 21300000, guid: 7466ea724856f7840827c6ddb61e09eb, type: 3}
+    - {fileID: 21300000, guid: d669cbf10f0de6446b2e4b678db31a33, type: 3}

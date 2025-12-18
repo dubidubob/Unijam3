@@ -33,6 +33,10 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
     Define.MonsterType ISpawnable.MonsterType => Define.MonsterType.WASD;
 
+    // 패턴 캐싱 저장소(Key: 원본 문자열, Value: 파싱된 커맨드 리스트)
+    private Dictionary<string, List<SpawnCommand>> _patternCache = new Dictionary<string, List<SpawnCommand>>();
+
+
     private void Start()
     {
         Init();
@@ -43,12 +47,14 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         Managers.Game.RankUpdate += UpdateRankCnt;
         PauseManager.IsPaused -= PauseForWhile;
         PauseManager.IsPaused += PauseForWhile;
+
     }
 
     private void OnDestroy()
     {
         Managers.Game.RankUpdate -= UpdateRankCnt;
         PauseManager.IsPaused -= PauseForWhile;
+        _patternCache.Clear(); // 메모리 정리
     }
 
     private void Init() // (기존과 동일)
@@ -176,7 +182,111 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         movingEnemy.SetVariance(distance, data, sizeDiffRate, _playerPos, type, data.monsterType, timeOffset);
     }
 
-   
+
+    #region 데이터 캐싱
+
+    public void InitiallizePatternData()
+    {
+
+    }
+    public List<SpawnCommand> GetOrParsePattern(string patternString)
+    {
+        // 1. 이미 파싱해둔 적이 있는지 확인
+        if (_patternCache.ContainsKey(patternString))
+        {
+            return _patternCache[patternString];
+        }
+
+        // 2. 없으면 새로 파싱 (아까 수정한 탭 구분 로직 적용)
+        List<SpawnCommand> newPatternList = ParsePatternStringInternal(patternString);
+
+        // 3. 캐시에 저장 후 리턴
+        _patternCache.Add(patternString, newPatternList);
+        return newPatternList;
+    }
+    //내 부 파싱 로직
+    private List<SpawnCommand> ParsePatternStringInternal(string pattern)
+    {
+        List<SpawnCommand> result = new List<SpawnCommand>();
+        if (string.IsNullOrEmpty(pattern)) return result;
+
+        // 탭(\t) 기준으로 쪼개서 빈 셀 처리 확실하게 하기
+        string[] cells = pattern.Split('\t');
+
+        foreach (string rawCell in cells)
+        {
+            string cellContent = rawCell.Trim();
+
+            // 빈 셀(블랭크) 처리
+            if (string.IsNullOrEmpty(cellContent))
+            {
+                result.Add(new SpawnCommand { IsEmpty = true });
+                continue;
+            }
+
+            // 셀 내부 파싱
+            int len = cellContent.Length;
+            int i = 0;
+            while (i < len)
+            {
+                char c = cellContent[i];
+
+                if (c == ',' || c == '/' || c == ' ')
+                {
+                    i++; continue;
+                }
+
+                if (c == '(') // 그룹 패턴
+                {
+                    i++;
+                    List<WASDType> groupTypes = new List<WASDType>();
+                    while (i < len && cellContent[i] != ')')
+                    {
+                        WASDType type = SettingWASD_Type(cellContent[i]);
+                        if (type != WASDType.None) groupTypes.Add(type);
+                        i++;
+                    }
+
+                    if (groupTypes.Count > 0)
+                        result.Add(new SpawnCommand { Types = groupTypes.ToArray(), IsRandom = false, IsEmpty = false });
+                    else
+                        result.Add(new SpawnCommand { IsEmpty = true });
+
+                    i++;
+                }
+                else // 단일 패턴
+                {
+                    WASDType type = SettingWASD_Type(cellContent[i]);
+
+                    if (type == WASDType.Random)
+                        result.Add(new SpawnCommand { IsRandom = true, IsEmpty = false });
+                    else if (type != WASDType.None)
+                        result.Add(new SpawnCommand { Types = new WASDType[] { type }, IsRandom = false, IsEmpty = false });
+                    else
+                        result.Add(new SpawnCommand { IsEmpty = true }); // X, N 등
+
+                    i++;
+                }
+            }
+        }
+        return result;
+    }
+
+    private WASDType SettingWASD_Type(char c)
+    {
+        switch (char.ToUpper(c))
+        {
+            case 'W': return WASDType.W;
+            case 'A': return WASDType.A;
+            case 'S': return WASDType.S;
+            case 'D': return WASDType.D;
+            case 'R': return WASDType.Random;
+            default: return WASDType.None;
+        }
+    }
+
+    #endregion
+
     #region QA
     public void QAUpdateVariables(Vector2 sizeDiffRate, int[] idx, int maxCnt)
     {

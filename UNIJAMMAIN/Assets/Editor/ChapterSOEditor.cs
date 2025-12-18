@@ -9,7 +9,7 @@ public class ChapterSOEditor : Editor
 {
     SerializedProperty musicPath;
     SerializedProperty startbeat;
-    SerializedProperty delayPaddingSeconds;
+    SerializedProperty delayPaddingTick;
      SerializedProperty phases;
     SerializedProperty backGroundSprite; // Sprite 타입 필드
     SerializedProperty backGroundGraySprite; // Sprite 타입 필드
@@ -21,7 +21,7 @@ public class ChapterSOEditor : Editor
         musicPath = serializedObject.FindProperty("MusicPath");
         phases = serializedObject.FindProperty("phases");
         startbeat = serializedObject.FindProperty("StartBeat");
-        delayPaddingSeconds = serializedObject.FindProperty("DelayPaddingSeconds");
+        delayPaddingTick = serializedObject.FindProperty("DelayPaddingTick");
         backGroundSprite = serializedObject.FindProperty("backGroundSprite"); // 필드 이름과 일치하도록 수정
         backGroundGraySprite = serializedObject.FindProperty("backGroundGraySprite"); // 필드 이름과 일치하도록 수정
         colorPalette = serializedObject.FindProperty("colorPalette");
@@ -34,7 +34,7 @@ public class ChapterSOEditor : Editor
 
         EditorGUILayout.PropertyField(musicPath);
         EditorGUILayout.PropertyField(startbeat);
-        EditorGUILayout.PropertyField(delayPaddingSeconds);
+        EditorGUILayout.PropertyField(delayPaddingTick);
         EditorGUILayout.PropertyField(phases, true);
         EditorGUILayout.PropertyField(backGroundSprite); // 인스펙터에 Sprite 필드 표시
         EditorGUILayout.PropertyField(backGroundGraySprite); // 인스펙터에 Sprite 필드 표시
