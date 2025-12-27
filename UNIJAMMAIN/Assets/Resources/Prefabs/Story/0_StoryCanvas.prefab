@@ -627,8 +627,7 @@ MonoBehaviour:
     newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
     isFirstAppearance: 0
-    text: "\uADF8\uB807\uB2E4\uBA74, \uB124\uB188\uC744 \uBCA0\uB294 \uAC83\uC774
-      \uB098\uC758 \uC2DC\uC791\uC774\uB2E4."
+    text: "\uC2DC\uB044\uB7EC\uC6B4 \uB124\uB188\uBD80\uD130 \uC190\uC744 \uBD10\uC918\uC57C\uACA0\uAD70."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0

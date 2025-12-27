@@ -454,7 +454,7 @@ MonoBehaviour:
   - speakingCharacterData: {fileID: 11400000, guid: 6fe687df23df05e41b6485c560f6ce69, type: 2}
     isFirstAppearance: 0
     text: "\uC5B4\uC11C \uC640\uB77C, \uB9C8\uC9C0\uB9C9 \uC218\uD589\uC790\uC5EC.
-      \uC9C4\uC2E4\uC744 \uCC3E\uC544 \uC5EC\uAE30\uAE4C\uC9C0 \uC654\uAD6C\uB098."
+      \uC9C4\uB9AC\uB97C \uCC3E\uC544 \uC5EC\uAE30\uAE4C\uC9C0 \uC654\uAD6C\uB098."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0

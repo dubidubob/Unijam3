@@ -571,9 +571,9 @@ MonoBehaviour:
   extraText: {fileID: 7641234315462779855}
   extraTextString:
   - "\uAC1C\uBB38"
-  - "\uB4DD\uB3C4"
+  - "\uD53C\uC548"
   - "\uC545\uC5F0"
-  isMoving: 0
+  isMoving: 1
 --- !u!1 &735246676575004700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,8 +2096,8 @@ MonoBehaviour:
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uD558\n\n\uD65C\uC57D\uCE58"
   - stageMainText: "1. \uAE4A\uC740 \uC232"
-    stageMainSubText: "\uC870\uD654\uB97C \uC783\uC740 \uC138\uC0C1,\L\uB0B4 \uB300\uC801\uC744
-      \uAC10\uD788 \uC2DC\uC791\uD558\uB9AC."
+    stageMainSubText: "\uC870\uD654\uB97C \uC783\uC740 \uC138\uC0C1,\L\uB0B4 \uAC10\uD788
+      \uB300\uC801\uC744 \uC2DC\uC791\uD558\uB9AC."
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uD558\n\n\uD65C\uC57D\uCE58"
   - stageMainText: "2. \uD3ED\uD3EC"
