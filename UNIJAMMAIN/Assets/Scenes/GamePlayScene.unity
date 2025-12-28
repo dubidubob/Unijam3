@@ -3908,6 +3908,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1944596560}
     m_Modifications:
+    - target: {fileID: 2323621788367450462, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2323621788367450462, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2323621788367450462, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4694411840381609183, guid: 549e455e99eea3c41b589289b8d10f1b, type: 3}
       propertyPath: m_Name
       value: A_Holder
@@ -6991,6 +7003,7 @@ MonoBehaviour:
   extraObjectImage2: {fileID: 1440720354}
   extraObjectImage3: {fileID: 1826261508}
   extraObjectImage4: {fileID: 65303009}
+  extraObjectImage5: {fileID: 483622035}
   backGrounddataSO: {fileID: 11400000, guid: 452e50fb19525a8489e730569cb554d3, type: 2}
   backGround: {fileID: 0}
   bgTransform: {fileID: 1698842288}

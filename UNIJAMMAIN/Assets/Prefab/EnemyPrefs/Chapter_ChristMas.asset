@@ -36,6 +36,7 @@ MonoBehaviour:
         bpm: 156
         timeScale: 1
         preGenerateBeat: 0
+        extensionBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -61,6 +62,7 @@ MonoBehaviour:
         bpm: 156
         timeScale: 1
         preGenerateBeat: 0
+        extensionBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 0
@@ -74,11 +76,12 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 16
+        durationBeat: 18
         startDelayBeat: 0
         bpm: 156
         timeScale: 1
         preGenerateBeat: 0
+        extensionBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -97,6 +100,7 @@ MonoBehaviour:
         bpm: 156
         timeScale: 1
         preGenerateBeat: 0
+        extensionBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
