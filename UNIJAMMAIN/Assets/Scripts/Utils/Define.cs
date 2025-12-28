@@ -84,6 +84,8 @@
         WASDHiding,
         WASDDash,
         WASDFIFO,
+        WASD_ChristMas_Normal,
+        WASD_CristMas_Dash,
         MaxCount
     }
 

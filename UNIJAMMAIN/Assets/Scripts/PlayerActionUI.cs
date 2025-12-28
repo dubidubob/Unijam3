@@ -20,20 +20,19 @@ public class PlayerActionUI : MonoBehaviour
     private Sprite origin;
     private Animator animator;
     private bool isActioning = false;
+
+
+    // [핵심 1] 애니메이션 실행을 위한 캐싱된 Hash ID 변수들
+    private int _animID_Start;
+    private int _animID_Idle;
+    private int _animID_GameOver;
+
+    // TODO : 나중에 이미지가 더 바뀔일이 있다면, 이곳에 추가하고 리팩토링
+    public CharacterSpriteSO characterSpriteSO;
     void Start()
     {   
         Managers.Game.actionUI = this;
-        sp = GetComponent<SpriteRenderer>();
-        origin = sp.sprite;
-
-        animator = GetComponent<Animator>();
-        animator.speed = 0; // 시작 시 정지
-
-        _actionImgsDic = new Dictionary<GamePlayDefine.AllType, Sprite>();
-        foreach (var a in actionImgs)
-        {
-            _actionImgsDic[a.type] = a.sprite;
-        }
+        
 
         Managers.Input.InputWasd -= ChangePlayerSprite;
         Managers.Input.InputWasd += ChangePlayerSprite;
@@ -41,7 +40,54 @@ public class PlayerActionUI : MonoBehaviour
         Managers.Input.InputDiagonal -= ChangePlayerSprite_Arrow;
         Managers.Input.InputDiagonal += ChangePlayerSprite_Arrow;
 
-        
+    }
+
+    public void PlayerSpriteInit(int _chapterIdx)
+    {
+        sp = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+       
+        animator.enabled = false;
+        animator.speed = 0;
+
+        // [핵심 2] 챕터에 따라 애니메이션 이름 결정 및 ID 캐싱
+        // 한 번만 실행되므로 여기서 if문을 쓰는 것은 전혀 문제되지 않습니다.
+        string startName = "Start";
+        string idleName = "NormalPosing";
+        string gameOverName = "GameOver";
+
+        // 크리스마스 챕터 (예시)
+        if (_chapterIdx == 9)
+        {
+            // 이미지 교체
+            
+            actionImgs = characterSpriteSO.actionImgs;
+            sp.sprite = actionImgs[8].sprite;
+            Debug.Log(sp.sprite.name);
+
+            // 애니메이션 이름 교체
+            startName = "Santa_Start";       // Animator에 등록된 State 이름
+            idleName = "Santa_Idle";
+            gameOverName = "Santa_GameOver";
+        }
+        else
+        {
+            // 기본 챕터는 기존 리스트 사용
+            // actionImgs는 인스펙터에 할당된 기본값 사용됨
+        }
+        origin = sp.sprite;
+
+        // [핵심 3] String을 Int(Hash)로 변환하여 저장 (성능 최적화)
+        _animID_Start = Animator.StringToHash(startName);
+        _animID_Idle = Animator.StringToHash(idleName);
+        _animID_GameOver = Animator.StringToHash(gameOverName);
+
+        // 딕셔너리 세팅
+        _actionImgsDic = new Dictionary<GamePlayDefine.AllType, Sprite>();
+        foreach (var a in actionImgs)
+        {
+            _actionImgsDic[a.type] = a.sprite;
+        }
     }
 
     private void OnDestroy()
@@ -52,26 +98,28 @@ public class PlayerActionUI : MonoBehaviour
 
     public void StartMonkAnimAfter123Count()
     {
+        animator.enabled = true;
+
         animator.speed = 0.6f;
-        animator.Play("Start", -1, 0f); // 원하는 stateName 실행
-        
+        // [핵심 4] 저장해둔 ID를 사용하여 재생 (if문 불필요)
+        animator.Play(_animID_Start, -1, 0f);
+
         Invoke("OnAnimationEnd", 1.7f);
     }
 
     private void OnAnimationEnd()
     {
         animator.speed = 0.2f;
-        animator.Play("NormalPosing", -1, 0.2f);
-        this.transform.position = new Vector2(START_POSITION.x, START_POSITION.y);
+        animator.Play(_animID_Idle, -1, 0.3f); // ID 사용
 
+        this.transform.position = new Vector2(START_POSITION.x, START_POSITION.y);
     }
 
     private void NormalPosing()
     {
-        // _isActioning이 아닐 때만 노말 포징을 재생합니다.
         if (animator != null && !isActioning)
         {
-            animator.Play("NormalPosing", -1, 0.2f);
+            animator.Play(_animID_Idle, -1, 0.3f); // ID 사용
             animator.speed = 0.2f;
         }
     }
@@ -131,20 +179,20 @@ public class PlayerActionUI : MonoBehaviour
         animator.enabled = true;
         if (animator != null)
         {
-            animator.speed = 0.2f; //  애니메이터 속도를 다시 1로 되돌립니다.
+            animator.speed = 0.3f; //  애니메이터 속도를 다시 1로 되돌립니다.
         }
         NormalPosing();
     }
 
     public void GameOverAnimation()
     {
-        // 게임 오버 애니메이션 시작 시, 다른 모든 Invoke를 취소합니다.
         CancelInvoke();
-        this.transform.position = new Vector2(0.4f, 0.7f); 
+        this.transform.position = new Vector2(0.4f, 0.7f);
         isActioning = true;
         animator.enabled = true;
         animator.speed = 0.5f;
-        animator.Play("GameOver", -1, 0f);
+
+        animator.Play(_animID_GameOver, -1, 0f); // ID 사용
     }
 
 

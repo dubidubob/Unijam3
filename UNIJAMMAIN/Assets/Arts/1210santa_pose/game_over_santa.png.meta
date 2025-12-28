@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -95,7 +95,217 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: game_over_santa_4
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 86
+        width: 202
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86aeec6d7f12b6d438a1cfdbe8496e46
+      internalID: 389266558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_7
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 83
+        width: 202
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64a4264614e966b459bc2c88ca4840ab
+      internalID: 1485774386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_10
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 86
+        width: 204
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deaf2927bce71d54197c9d9783d3d8ac
+      internalID: -131490313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_13
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 83
+        width: 209
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 847851aa9f6d7c744acb5ac82e9d63c7
+      internalID: -1565527929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_14
+      rect:
+        serializedVersion: 2
+        x: 1892
+        y: 90
+        width: 316
+        height: 297
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5391eab7f453b2429d54b5c8d01ca46
+      internalID: -1513166634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_15
+      rect:
+        serializedVersion: 2
+        x: 2351
+        y: 81
+        width: 301
+        height: 308
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7194ebaedffa614cbd00d23e43c73b0
+      internalID: -196296641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_16
+      rect:
+        serializedVersion: 2
+        x: 2787
+        y: 77
+        width: 297
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 867c79b5e570b9e4d8451ee454be7dfe
+      internalID: 1693204402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_17
+      rect:
+        serializedVersion: 2
+        x: 3229
+        y: 77
+        width: 306
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a43b122f0548bc42847724e0a52d286
+      internalID: -518037811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_18
+      rect:
+        serializedVersion: 2
+        x: 3674
+        y: 76
+        width: 293
+        height: 252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fee9e76aec52dd94aadee447a4bdd51e
+      internalID: -15539059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_over_santa_19
+      rect:
+        serializedVersion: 2
+        x: 4116
+        y: 76
+        width: 303
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49ec7b031719e174f8c0dbfc1f353da8
+      internalID: -20835433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +316,40 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      game_over_santa_0: 157800730
+      game_over_santa_1: -1110250776
+      game_over_santa_10: -131490313
+      game_over_santa_11: 687638090
+      game_over_santa_12: -1146874040
+      game_over_santa_13: -1565527929
+      game_over_santa_14: -1513166634
+      game_over_santa_15: -196296641
+      game_over_santa_16: 1693204402
+      game_over_santa_17: -518037811
+      game_over_santa_18: -15539059
+      game_over_santa_19: -20835433
+      game_over_santa_2: -1289451905
+      game_over_santa_20: -1763603626
+      game_over_santa_21: 311443403
+      game_over_santa_22: -412212846
+      game_over_santa_23: 1557863689
+      game_over_santa_24: 1146773867
+      game_over_santa_25: 1241180268
+      game_over_santa_26: -1414246437
+      game_over_santa_27: 1392616425
+      game_over_santa_28: 2126579940
+      game_over_santa_29: 1715768981
+      game_over_santa_3: 462531560
+      game_over_santa_30: 356034939
+      game_over_santa_31: -1107146472
+      game_over_santa_32: -1200687502
+      game_over_santa_4: 389266558
+      game_over_santa_5: -1628255769
+      game_over_santa_6: 328606194
+      game_over_santa_7: 1485774386
+      game_over_santa_8: -670413968
+      game_over_santa_9: -1257595325
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

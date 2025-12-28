@@ -62,6 +62,7 @@ public class SpawnController : MonoBehaviour
             if (!m.isIn) continue;
 
             ISpawnable spawner = null;
+            // TODO: Open-Closed Principle 위반 구조 바꿔주기. 
             if (_spawnerMap.TryGetValue(m.monsterType, out var directSpawner))
             {
                 spawner = directSpawner;
@@ -69,7 +70,10 @@ public class SpawnController : MonoBehaviour
             else if (m.monsterType == Define.MonsterType.Knockback ||
                      m.monsterType == Define.MonsterType.WASDHiding ||
                      m.monsterType == Define.MonsterType.WASDDash ||
-                     m.monsterType == Define.MonsterType.WASDFIFO)
+                     m.monsterType == Define.MonsterType.WASDFIFO ||
+                     m.monsterType == Define.MonsterType.WASD_ChristMas_Normal ||
+                     m.monsterType == Define.MonsterType.WASD_CristMas_Dash
+                     )
             {
                 // WASD 스포너로 대체(Fallback)
                 _spawnerMap.TryGetValue(Define.MonsterType.WASD, out spawner);

@@ -41,7 +41,7 @@ MonoBehaviour:
   - rid: 7504154239622971396
   MusicPath: BGM/Chapter7_V1
   StartBeat: 26
-  DelayPaddingSeconds: 0
+  DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: a2639f0e744e41c4194773103618cb9b, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 07662740e088cd1478cc8f997d1ce92a, type: 3}
   colorPalette: {r: 0.454902, g: 0.65882355, b: 0.6156863, a: 1}
@@ -58,6 +58,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 1
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -76,6 +77,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         steps:
         - textContents:
           - "\uB098\uB294 \uC544\uC9C1 \uC5EC\uAE30 \uAD73\uAC74\uD788 \uC11C\uC788\uB2E4!"
@@ -96,15 +98,9 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
-        - isIn: 1
-          monsterType: 1
-          WASD_Pattern: AXWXXDSXAXWXXDSXAXWXXDSXAXWXXDSX(AD)X(AD)X(AD)X(AD)XOXOXOXOX(AWD)X(AWD)X(AWD)X(AWD)XSXSX(ASD)(ASD)(ASD)(ASD)
-          speedUpRate: 1
-          spawnBeat: 4
-          moveBeat: 2
-          hiding: 0
         - isIn: 0
           monsterType: 0
           WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXWWWWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -119,6 +115,13 @@ MonoBehaviour:
           spawnBeat: 0.5
           moveBeat: 2
           hiding: 1
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: 01230123
+          speedUpRate: 1
+          spawnBeat: 4
+          moveBeat: 2
+          hiding: 0
     - rid: 7504154192467460096
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -128,6 +131,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 4
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -153,6 +157,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -171,6 +176,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 2
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -189,6 +195,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -214,6 +221,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -232,6 +240,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -250,6 +259,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         steps:
         - textContents:
           - "\uAE38\uACE0 \uAE34 \uC545\uC5F0\uC758 \uACE0\uB9AC\uB97C \uC5EC\uAE30\uC11C
@@ -271,6 +281,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -289,6 +300,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -314,6 +326,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -339,6 +352,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -364,6 +378,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -382,6 +397,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -400,6 +416,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -425,6 +442,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 1
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -443,6 +461,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -461,6 +480,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -479,6 +499,7 @@ MonoBehaviour:
         bpm: 174
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -504,6 +525,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         steps:
         - textContents:
           - "\uBAA8\uB4E0 \uAC83\uC758 \uC2DC\uC791\uC778 \uC774 \uACF3\uC5D0\uC11C,"
@@ -524,6 +546,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -542,6 +565,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 1
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -560,11 +584,12 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: AXAXAXXDXAXADXAXAXAXDXXAXAXADXXXAXAXAXXDXAXADXAXAXAXDXXAXAXADXXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX
+          WASD_Pattern: AXAXAXXDXAXADXAXAXAXDXXAXAXADXXXAXAXAXXDXAXADXAXAXAXDXXAXAXADXXXXXXXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -578,6 +603,7 @@ MonoBehaviour:
         bpm: 162
         timeScale: 1
         preGenerateBeat: 1
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1

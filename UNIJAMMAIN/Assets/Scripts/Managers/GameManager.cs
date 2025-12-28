@@ -268,5 +268,6 @@ public class GameManager
         currentPlayerState = PlayerState.Ready; // normal로 바꿔주는건 StartCountUI에서 담당하자.
         isComboEffect = false;
         backGroundController.ChapterBackGroundInitialize();
+        actionUI.PlayerSpriteInit(IngameData.ChapterIdx);
     }
 }

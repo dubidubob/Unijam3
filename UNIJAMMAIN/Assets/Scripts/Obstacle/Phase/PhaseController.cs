@@ -218,7 +218,8 @@ public class PhaseController : MonoBehaviour
             // Delay 직후 로직 실행
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                SpawnMonsters(phaseEventAfterDelay, targetTick);
+                Debug.Log($"타겟틱 : {targetTick} extesntion : {phaseEventAfterDelay.extensionCreateBeat} ");  
+                SpawnMonsters(phaseEventAfterDelay, targetTick+phaseEventAfterDelay.extensionCreateBeat);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
             {

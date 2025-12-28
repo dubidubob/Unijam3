@@ -176,49 +176,76 @@ public class MovingEnemy : MonoBehaviour
             _elapsedTime += timeOffset;
         }
 
-        SetKnockback(monsterType == Define.MonsterType.Knockback, monsterType);
-        SetHiding(monsterType == Define.MonsterType.WASDHiding, monsterType);
-        SetSpeeding(monsterType == Define.MonsterType.WASDDash, monsterType);
-        SetFIFO(monsterType == Define.MonsterType.WASDFIFO, monsterType);
+        ApplyMonsterTypeBehavior(monsterType);
+
     }
 
-    public void SetKnockback(bool isTrue, Define.MonsterType monsterType)
+    private void ApplyMonsterTypeBehavior(Define.MonsterType monsterType)
     {
-        if (isTrue) SettingSprite(monsterType);
-        knockback.OnKnockback(isTrue);
-    }
+        // 기본적으로 넉백 기능은 꺼둠 (필요한 경우만 켬)
+        knockback.OnKnockback(false);
 
-    public void SetSpeeding(bool isTrue, Define.MonsterType monsterType)
-    {
-        if (isTrue)
+        switch (monsterType)
         {
-            Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
-            // DOTween도 Link를 걸어 게임오브젝트 파괴 시 안전하게
-            transform.DOMove(targetPos, movingDuration).SetEase(Ease.InQuint).SetId("Speeding").SetLink(gameObject);
-            SettingSprite(monsterType);
+            case Define.MonsterType.Knockback:
+                EnableKnockback();
+                break;
+
+            case Define.MonsterType.WASDHiding:
+                EnableHiding();
+                break;
+
+            case Define.MonsterType.WASDDash:
+                EnableSpeeding();
+                break;
+
+            case Define.MonsterType.WASDFIFO:
+                EnableFIFO();
+                break;
+            case Define.MonsterType.WASD_CristMas_Dash:
+                EnableSpeeding();
+                break;
+
+            // 일반 몬스터나 기타 타입은 추가 행동 없음
+            default:
+                break;
         }
     }
 
-    public void SetFIFO(bool isTrue, Define.MonsterType monsterType)
+    #region Specific Behaviors 
+
+    // 파라미터 제거: 이미 멤버변수 _monsterType과 세팅된 값들을 사용
+    private void EnableKnockback()
     {
-        if (isTrue)
-        {
-            Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
-            transform.DOMove(targetPos, movingDuration).SetEase(Ease.InOutCirc).SetId("FIFO").SetLink(gameObject);
-            SettingSprite(monsterType);
-        }
+        // 넉백 활성화
+        knockback.OnKnockback(true);
+        // 스프라이트는 이미 SetVariance -> SettingSprite에서 설정됨
     }
 
-    public void SetHiding(bool isTrue, Define.MonsterType monsterType)
+    private void EnableSpeeding()
     {
-        if (isTrue)
-        {
-            SettingSprite(monsterType);
-            HidingAnimation(monsterImg, _cts.Token).Forget();
-        }
+        Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+        transform.DOMove(targetPos, movingDuration)
+                 .SetEase(Ease.InQuint)
+                 .SetId("Speeding")
+                 .SetLink(gameObject);
     }
 
-    // async UniTask로 변경
+    private void EnableFIFO()
+    {
+        Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+        transform.DOMove(targetPos, movingDuration)
+                 .SetEase(Ease.InOutCirc)
+                 .SetId("FIFO")
+                 .SetLink(gameObject);
+    }
+
+    private void EnableHiding()
+    {
+        HidingAnimation(monsterImg, _cts.Token).Forget();
+    }
+
+    #endregion
     private async UniTaskVoid HidingAnimation(SpriteRenderer _spriteRenderer, CancellationToken token)
     {
         // 1. 대기

@@ -22,11 +22,9 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
     private long _tick;
     private bool _spawning;
     private double _startDsp;
-    private double _lastSpawnTime;
     private string _spawnPointString;
     private int _count;
     private double _pauseStartTime;
-    private float _threshold = 0.1f;
 
     // 이 패턴의 DoSpawn()에 필요한 설정값
     private int _maxCnt;
@@ -59,8 +57,6 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
         if (IngameData.PhaseDurationSec == 0)
             Debug.LogWarning("Set Up Phase Duration!");
 
-        _lastSpawnTime = _startDsp + IngameData.PhaseDurationSec - (IngameData.BeatInterval * (float)data.moveBeat) + _threshold;
-
         _preParsedPatterns = parent.GetOrParsePattern(_spawnPointString);
     }
 
@@ -74,12 +70,6 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
     {
         if (!_spawning) return;
 
-        // 이 패턴의 생존 시간이 다 되면 스스로를 중지
-        if (dspTime > _lastSpawnTime)
-        {
-            Stop();
-            return;
-        }
 
         // 스폰 타이밍 체크
         while (dspTime >= ScheduledTime(_tick))
@@ -121,7 +111,6 @@ public class WASDPatternInstance : ISpawnable.ISpawnInstance
             {
                 double pausedDuration = dspTime - _pauseStartTime;
                 _startDsp += pausedDuration;
-                _lastSpawnTime += pausedDuration; // 마지막 시간도 함께 밀어줌
                 _pauseStartTime = 0;
             }
         }

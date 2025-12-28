@@ -6,7 +6,7 @@ public class MonsterDatabaseSO : ScriptableObject
 {
     [System.Serializable]
     public class MonsterData
-    {
+    {   
         public Define.MonsterType monsterType;
         public Color color;
         public Sprite sprite;
