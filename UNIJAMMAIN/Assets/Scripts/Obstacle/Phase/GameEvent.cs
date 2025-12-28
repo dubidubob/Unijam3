@@ -11,6 +11,7 @@ public abstract class GameEvent
     [Min(1f)] public float bpm;
     [Min(1f)] public float timeScale=1;
     public float preGenerateBeat;
+    public int extensionCreateBeat;
 }
 
 // 리듬 게임 페이즈를 위한 이벤트

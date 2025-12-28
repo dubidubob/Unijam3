@@ -42,6 +42,7 @@ public class MonsterDataDrawer : PropertyDrawer
             || selectedType == Define.MonsterType.WASDFIFO
             || selectedType == Define.MonsterType.WASDHiding
             || selectedType == Define.MonsterType.Knockback
+            || selectedType == Define.MonsterType.Diagonal
             )
         {
             var bossNameProp = property.FindPropertyRelative("WASD_Pattern");

@@ -65,25 +65,56 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         }
     }
 
-    // [MODIFIED] 이 메서드는 이제 모든 인스턴스에 의해 공유됩니다.
-    public void ActivateEnemy(float moveBeat)
+    // 이 메서드는 이제 모든 인스턴스에 의해 공유됩니다.
+    // [수정] targetIndex 인자를 추가하여 특정 위치 소환을 지원합니다. (기본값 null)
+    public void ActivateEnemy(float moveBeat, MonsterData data, int? targetIndex = null)
     {
         UpdateRankCnt(RankState.Spawned);
 
-        int idx = Random.Range(0, deactivatedDiagonalIdx.Count);
-        if (IngameData.ChapterIdx == 0 && spawnedDiagonalMobCnt < 2)
+        int mIdx = -1; // 실제 활성화할 몬스터의 Enum Index
+
+        // 1. 지정된 패턴이 있는 경우 (targetIndex가 값이 있음)
+        if (targetIndex != null)
         {
-            idx = (spawnedDiagonalMobCnt == 0) ? (int)DiagonalType.RightUp : (int)DiagonalType.LeftDown;
-            spawnedDiagonalMobCnt++;
+            // 원하는 위치가 현재 비활성 리스트(대기중)에 있는지 확인
+            if (deactivatedDiagonalIdx.Contains(targetIndex.Value))
+            {
+                mIdx = targetIndex.Value;
+                deactivatedDiagonalIdx.Remove(mIdx);
+            }
+            else
+            {
+                // 이미 활성화된 상태라면, 겹치지 않게 이번 스폰은 스킵하거나
+                // 필요하다면 여기서 강제 재설정 로직을 넣을 수 있음.
+                // 현재는 겹침 방지를 위해 리턴.
+                return;
+            }
+        }
+        // 2. 지정된 패턴이 없는 경우 (기존 랜덤/튜토리얼 로직)
+        else
+        {
+            int idx = Random.Range(0, deactivatedDiagonalIdx.Count);
+
+            if (IngameData.ChapterIdx == 0 && spawnedDiagonalMobCnt < 2)
+            {
+                idx = (spawnedDiagonalMobCnt == 0) ? (int)DiagonalType.RightUp : (int)DiagonalType.LeftDown;
+                spawnedDiagonalMobCnt++;
+            }
+
+            if (deactivatedDiagonalIdx.Count == 0) return;
+
+            // 리스트에 있는 값(Enum Index)을 가져옴
+            mIdx = deactivatedDiagonalIdx[idx];
+            deactivatedDiagonalIdx.Remove(mIdx);
         }
 
-        if (deactivatedDiagonalIdx.Count == 0) return;
-        int mIdx = deactivatedDiagonalIdx[idx];
-        deactivatedDiagonalIdx.Remove(mIdx);
-
-        diagonalDict[(DiagonalType)mIdx].GetComponent<DiagonalMonster>().SetMovebeat(moveBeat);
-        diagonalDict[(DiagonalType)mIdx].SetActive(true);
-        activatedDiagonalIdx.Add(mIdx);
+        // 몬스터 활성화 로직
+        if (mIdx != -1)
+        {
+            diagonalDict[(DiagonalType)mIdx].GetComponent<DiagonalMonster>().SetMovebeat(moveBeat);
+            diagonalDict[(DiagonalType)mIdx].SetActive(true);
+            activatedDiagonalIdx.Add(mIdx);
+        }
     }
 
     private void DeactivateDiagonal(DiagonalType attackType)
@@ -119,7 +150,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         _activePatterns.Add(instance);
 
         // 3. 인스턴스의 스폰 코루틴 시작
-        instance.StartSpawning();
+        instance.StartSpawning(data);
 
         // 4. 제어 핸들(인스턴스) 반환
         return instance;
@@ -202,12 +233,16 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
     private double _pauseStartTime;
     private float threshold = 0.4f;
 
+    // [NEW] 패턴 순서를 기억할 변수 추가
+    private int _patternIdx = 0;
+
     public DiagonalPatternInstance(DiagonalMonsterSpawner parent, MonsterData data)
     {
         _parent = parent;
         _data = data;
         _moveBeat = data.moveBeat;
         _spawning = true;
+        _patternIdx = 0; // 패턴 인덱스 초기화
 
         // [MOVED] SetLastSpawnTime 로직을 인스턴스 생성 시 처리
         if (IngameData.PhaseDurationSec == 0)
@@ -221,10 +256,10 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
     /**
      * 부모 스포너(MonoBehaviour)를 통해 코루틴을 시작합니다.
      */
-    public void StartSpawning()
+    public void StartSpawning(MonsterData data)
     {
         float spawnDuration = (float)IngameData.BeatInterval * _data.spawnBeat;
-        _spawnCoroutine = _parent.StartCoroutine(DoSpawn(spawnDuration));
+        _spawnCoroutine = _parent.StartCoroutine(DoSpawn(spawnDuration, data));
     }
 
     /**
@@ -269,11 +304,11 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
 
     /**
      * [MOVED]
-     * 스폰 코루틴 로직 (기존과 거의 동일)
+     * 스폰 코루틴 로직 (기존과 거의 동일 + 패턴 로직 추가)
      */
-    private IEnumerator DoSpawn(float spawnDuration)
+    private IEnumerator DoSpawn(float spawnDuration, MonsterData data)
     {
-        yield return new WaitForSeconds((float)IngameData.BeatInterval * 0.5f);
+        yield return new WaitForSeconds((float)IngameData.BeatInterval * 0.45f);
         while (_spawning)
         {
             // dspTime이 이 인스턴스의 lastSpawnTime을 넘으면 코루틴 종료
@@ -283,7 +318,23 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
                 yield break;
             }
 
-            _parent.ActivateEnemy(_moveBeat); // 부모의 공용 메서드 호출
+            // [추가됨] WASD_Pattern이 존재하면 파싱하여 targetIndex 결정
+            int? targetIndex = null;
+            if (!string.IsNullOrEmpty(data.WASD_Pattern))
+            {
+                if (_patternIdx >= data.WASD_Pattern.Length) _patternIdx = 0; // Loop pattern
+
+                char c = data.WASD_Pattern[_patternIdx];
+                if (char.IsDigit(c))
+                {
+                    targetIndex = (int)char.GetNumericValue(c);
+                }
+
+                // 다음 패턴 글자로 이동
+                _patternIdx++;
+            }
+
+            _parent.ActivateEnemy(_moveBeat, data, targetIndex); // 부모의 공용 메서드 호출 (targetIndex 전달)
 
             // Time.timeScale의 영향을 받는 WaitForSeconds 사용
             yield return new WaitForSeconds(spawnDuration);
