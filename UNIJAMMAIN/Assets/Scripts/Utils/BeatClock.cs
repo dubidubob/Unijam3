@@ -145,4 +145,28 @@ public class BeatClock : MonoBehaviour
     {
         Debug.Log($"Current Tick : {_tick}");
     }
+
+    /// <summary>
+    /// 게임 시작 후 실제 플레이 시간(초)을 반환합니다.
+    /// 일시정지 시간은 자동으로 제외됩니다.
+    /// 비용 : O(1) (단순 뺄셈)
+    /// Steam 업적 : 시작한지 15초뒤면 게임오버
+    /// </summary>
+    public double GetCurrentPlayTime()
+    {
+        // 1. 아직 시작 안 했으면 0초
+        if (!_running) return 0.0;
+
+        // 2. 현재 시간을 가져옴
+        // 만약 GameOver()에서 이미 Pause = true로 만들었다면, 
+        // 멈춘 그 순간의 시간(_pauseStartedDspTime)을 가져와야 정확함.
+        double targetTime = (IngameData.Pause && _pauseStartedDspTime > 0)
+                            ? _pauseStartedDspTime
+                            : AudioSettings.dspTime;
+
+        // 3. 현재시간 - 시작시간 = 플레이 시간
+        // (BeatClock이 일시정지 때 _startTime을 계속 밀어주므로 단순 뺄셈으로 정확한 플레이 타임이 나옴)
+        return Math.Max(0, targetTime - _startTime);
+    }
+
 }

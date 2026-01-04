@@ -569,7 +569,11 @@ public class StoryDialog : UI_Popup
                     finalBackground = lastScene.newBackgroundSprite;
                 }
             }
+            CheckFirstClearSteamAchievement();
         }
+
+
+
 
         if (currentStoryBackground != null && backGround.sprite != currentStoryBackground)
         {
@@ -715,6 +719,17 @@ public class StoryDialog : UI_Popup
     }
     // --- [!!! 새 코루틴 함수 끝 !!!] ---
 
+
+    // Steam 업적 : 챕터 3의 스토리를 스페이스바를 통해서 읽었을때
+    private void CheckFirstClearSteamAchievement()
+    {
+        if(IngameData.ChapterIdx==3||IngameData.ChapterIdx==4)
+        {
+            Managers.Steam.UnlockAchievement($"ACH_STORY_{IngameData.ChapterIdx}_CLEAR");
+        }
+
+
+    }
     #region Tool
 
     #endregion

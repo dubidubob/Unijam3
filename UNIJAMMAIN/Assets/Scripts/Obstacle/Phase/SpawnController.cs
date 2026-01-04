@@ -72,7 +72,11 @@ public class SpawnController : MonoBehaviour
                      m.monsterType == Define.MonsterType.WASDDash ||
                      m.monsterType == Define.MonsterType.WASDFIFO ||
                      m.monsterType == Define.MonsterType.WASD_ChristMas_Normal ||
-                     m.monsterType == Define.MonsterType.WASD_CristMas_Dash
+                     m.monsterType == Define.MonsterType.WASD_CristMas_Dash||
+                     m.monsterType == Define.MonsterType.WASD_EDM_Dash||
+                     m.monsterType == Define.MonsterType.WASD_EDM_Normal||
+                     m.monsterType == Define.MonsterType.WASD_STOPANDGO||
+                     (int)m.monsterType >8
                      )
             {
                 // WASD 스포너로 대체(Fallback)

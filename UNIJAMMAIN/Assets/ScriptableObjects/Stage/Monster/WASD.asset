@@ -44,5 +44,25 @@ MonoBehaviour:
     attackedSprite: {fileID: 21300000, guid: 8c90c735d122c4b4fb06312f69dfc16d, type: 3}
   - monsterType: 9
     color: {r: 1, g: 1, b: 1, a: 1}
-    sprite: {fileID: 21300000, guid: 8c90c735d122c4b4fb06312f69dfc16d, type: 3}
-    attackedSprite: {fileID: 21300000, guid: 8c90c735d122c4b4fb06312f69dfc16d, type: 3}
+    sprite: {fileID: 21300000, guid: a56564353df04a74a825336a805204d4, type: 3}
+    attackedSprite: {fileID: 21300000, guid: a56564353df04a74a825336a805204d4, type: 3}
+  - monsterType: 10
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+    attackedSprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+  - monsterType: 12
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+    attackedSprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+  - monsterType: 13
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+    attackedSprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+  - monsterType: 14
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+    attackedSprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+  - monsterType: 15
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}
+    attackedSprite: {fileID: 21300000, guid: b3e2cc12865ef3c44a4fcb68ff3684f0, type: 3}

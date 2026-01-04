@@ -281,6 +281,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
             case 'S': return WASDType.S;
             case 'D': return WASDType.D;
             case 'R': return WASDType.Random;
+            case 'O': return WASDType.Random;
             default: return WASDType.None;
         }
     }

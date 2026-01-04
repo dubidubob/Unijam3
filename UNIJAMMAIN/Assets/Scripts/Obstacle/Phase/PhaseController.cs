@@ -301,8 +301,15 @@ public class PhaseController : MonoBehaviour
         Managers.Sound.PauseBGM(false);
         IngameData.Pause = false;
 
+        // 스팀 업적
+        CheckFirstClearSteamAchievement();
+
+
         Scoreboard.ChangeUI(CalculateScore());
         Scoreboard.gameObject.SetActive(true);
+
+
+        SetStageIndex(_chapterIdx);
     }
 
     private float perfectWeight = 1.0f;
@@ -315,7 +322,6 @@ public class PhaseController : MonoBehaviour
         float totalCnt = IngameData.TotalMobCnt;
         float total = totalCnt;
 
-        SetStageIndex(_chapterIdx);
 
         return (rate / total) * 100f;
     }
@@ -415,6 +421,19 @@ public class PhaseController : MonoBehaviour
         SetStageTimerGoScheduled(inferredTick, now);
     }
 
+    // Steam 업적 :  처음으로 클리어되었다면
+    private void CheckFirstClearSteamAchievement()
+    {
+        string achievementID = $"ACH_CHAPTER_{_chapterIdx}_CLEAR";
+
+        // 챕터 기록이 없고 연습모드가 아니라면
+        if(IngameData.GetRankForChapter(_chapterIdx)==Define.Rank.Unknown&&!IngameData.boolPracticeMode)
+        {
+            Managers.Steam.UnlockAchievement(achievementID);
+        }
+    }
+
+    
 
     public async UniTask GoStart()
     {

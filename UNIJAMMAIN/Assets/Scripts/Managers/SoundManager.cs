@@ -24,34 +24,60 @@ public class SoundManager
     public void Init()
     {
         GameObject root = GameObject.Find("@Sound");
+
+        // root가 없으면 새로 만듦
         if (root == null)
         {
-
-            audioMixer = Resources.Load<AudioMixer>("Sounds/SoundSetting");
             root = new GameObject { name = "@Sound" };
             Object.DontDestroyOnLoad(root);
+        }
 
-         
+        // [수정됨] root가 있든 없든, 리소스 로드와 AudioSource 배열 연결은 
+        // _audioSources가 비어있다면 무조건 실행해야 함
+        if (_audioSources == null || _audioSources.Length == 0)
+        {
+            audioMixer = Resources.Load<AudioMixer>("Sounds/SoundSetting"); // 경로 확인 필요
 
             _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
             _audioClips = new Dictionary<string, AudioClip>();
+
             string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
             for (int i = 0; i < soundNames.Length - 1; i++)
             {
-                GameObject go = new GameObject { name = soundNames[i] };
-                _audioSources[i] = go.AddComponent<AudioSource>();
-                _audioSources[i].outputAudioMixerGroup = audioMixer.FindMatchingGroups($"{soundNames[i]}")[0];
-                go.transform.parent = root.transform;
+                // 기존에 만들어진 자식 오브젝트가 있는지 확인
+                Transform child = root.transform.Find(soundNames[i]);
+                if (child == null)
+                {
+                    GameObject go = new GameObject { name = soundNames[i] };
+                    _audioSources[i] = go.AddComponent<AudioSource>();
+                    go.transform.parent = root.transform;
+                }
+                else
+                {
+                    _audioSources[i] = child.GetComponent<AudioSource>();
+                }
+
+                // 믹서 그룹 연결 (믹서가 로드 성공했을 때만)
+                if (audioMixer != null)
+                {
+                    var groups = audioMixer.FindMatchingGroups($"{soundNames[i]}");
+                    if (groups.Length > 0)
+                        _audioSources[i].outputAudioMixerGroup = groups[0];
+                }
             }
 
             SFX = _audioSources[(int)Define.Sound.SFX];
+            // BGM과 SubBGM 변수도 여기서 미리 할당해두는 것이 안전함
+            BGM = _audioSources[(int)Define.Sound.BGM];
+            SubBGM = _audioSources[(int)Define.Sound.SubBGM];
+
             SettingNewSceneVolume();
-           
         }
-      
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f)
     {
+
+
         if (audioClip == null)
         {
             return;
@@ -201,12 +227,16 @@ public class SoundManager
     /// <param name="volume">The new volume, from 0.0f to 1.0f.</param>
     public void ChangeBGMVolume(float volume)
     {
+        // Steam 업적 : 처음으로 SFX나 BGM을 변경 
+        Managers.Steam.UnlockAchievement("ACH_SETTING_CALIBRATION");
         if (BGM != null)
         {
             // Clamp the value to ensure it's between 0 and 1.
             BGM.volume = Mathf.Clamp01(volume);
         }
     }
+
+
 
     // --- BGM FadeOut & Restore --- //
     public void BGMFadeOut(float duration = 1.0f)
@@ -279,6 +309,8 @@ public class SoundManager
     /// <param name="volume">The new volume, from 0.0f to 1.0f.</param>
     public void ChangeSFXVolume(float volume)
     {
+        // Steam 업적 : 처음으로 SFX나 BGM을 변경 
+        Managers.Steam.UnlockAchievement("ACH_SETTING_CALIBRATION");
         // SFX AudioSource가 초기화되었는지 확인
         if (SFX != null)
         {
@@ -429,10 +461,11 @@ public class SoundManager
 
     public void SettingNewSceneVolume()
     {
-        Managers.Sound.ChangeBGMVolume(BGMController.CurrentVolumeBGM);
-        Managers.Sound.ChangeSFXVolume(SFXController.CurrentVolumeSFX);
-        
-        Debug.Log($"SettingNewSceneVolme : {BGMController.CurrentVolumeBGM},{SFXController.CurrentVolumeSFX}");
+        if (BGM != null&&SFX!=null)
+        {
+            BGM.volume = Mathf.Clamp01(BGMController.CurrentVolumeBGM);
+            SFX.volume = Mathf.Clamp01(SFXController.CurrentVolumeSFX);
+        }
     }
 
     // 1. 경로(string)로 호출하는 버전
