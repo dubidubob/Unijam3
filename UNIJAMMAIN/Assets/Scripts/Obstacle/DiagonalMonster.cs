@@ -82,6 +82,7 @@ public class DiagonalMonster : MonoBehaviour
         _cts?.Dispose();
         _cts = null;
 
+        jumpSequence?.Kill();
         transform.DOKill();
 
         // PauseManager 해제는 OnDestroy나 OnDisable 한 곳에서 관리하는 것이 좋으나 원본 유지
@@ -150,6 +151,9 @@ public class DiagonalMonster : MonoBehaviour
     // Invoke 대신 UniTask 사용
     private async UniTaskVoid DoFadeAsync()
     {
+        // _cts가 null이면(이미 오브젝트가 꺼졌으면) 실행하지 않고 리턴
+        if (_cts == null) return;
+
         _isDying = true;
         _objectRenderer.sprite = outline;
 

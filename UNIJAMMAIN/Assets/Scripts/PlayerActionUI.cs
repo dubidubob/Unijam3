@@ -198,26 +198,6 @@ public class PlayerActionUI : MonoBehaviour
 
     #region Sound
 
-    private void SetAttackSound()
-    {
-        // Generates a random integer from 0 (inclusive) to 4 (exclusive), so the result is 0, 1, 2, or 3.
-        int random = UnityEngine.Random.Range(0, 4);
-
-        switch (random)
-        {
-            case 0:
-                Managers.Sound.Play("SFX/Accuracy/Perfect1_V2", Define.Sound.SFX);
-                break;
-            case 1:
-                Managers.Sound.Play("SFX/Accuracy/Perfect2_V2", Define.Sound.SFX);
-                break;
-            case 2:
-                Managers.Sound.Play("SFX/Accuracy/Perfect3_V2", Define.Sound.SFX);
-                break;
-            case 3:
-                Managers.Sound.Play("SFX/Accuracy/Perfect4_V2", Define.Sound.SFX);
-                break;
-        }
-    }
+    
     #endregion
 }
