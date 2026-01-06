@@ -168,7 +168,6 @@ public class PhaseController : MonoBehaviour
         // DelayPadding의 Tick의 Second 만큼 대기 ( 몬스터를 미리 소환하고 노래를 늦게 재생 ) 
         // sinkTimer추가, sinkTimer만큼 노래가 늦게 재생되거나 빨리재생됨
         double waitSecondTarget = (long)chapters[_chapterIdx].DelayPaddingTick * IngameData.BeatInterval+sinkTimer;
-        Debug.Log(waitSecondTarget);
         Managers.Sound.PlayScheduled(bgmPath, musicStartTime + waitSecondTarget, Define.Sound.BGM);
 
 
