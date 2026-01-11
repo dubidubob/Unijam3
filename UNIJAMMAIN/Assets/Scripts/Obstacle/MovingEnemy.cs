@@ -131,7 +131,7 @@ public class MovingEnemy : MonoBehaviour
         RefreshCancellationToken();
 
         // Steam 업적을위해 InGameData에 처치한 수 저장
-        IngameData.DefeatEnemyCount++;
+        IngameData._defeatEnemyCount++;
 
         // 사망 처리 (UniTask)
         ProcessDeath(_cts.Token).Forget();

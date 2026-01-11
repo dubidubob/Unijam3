@@ -264,7 +264,7 @@ public class BackGroundController : MonoBehaviour
             // startMargin: 0 (꽉 찬 상태)
             // shrinkMargin: 100 (안쪽으로 쪼그라든 상태)
             // -------------------------------------------------------
-            float startMargin = -80f;
+            float startMargin = -50f;
             float shrinkMargin = 0f;
 
             // 2. 시작 상태 강제 초기화 (0에서 시작)

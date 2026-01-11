@@ -72,7 +72,7 @@ public class StageScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        if (Test) { Managers.Game.GameStage = 8; }
+        if (Test) { IngameData._nowStageIndex = 8; }
         Managers.Game.Init();
     }
 }
