@@ -43,7 +43,8 @@ public class StageSceneUI : UI_Popup
     private List<Button> stageButtons = new List<Button>();
 
     public TMP_Text startButtonText;
-   
+
+    public Canvas mycanvas;
 
     [Header("Stage Data Inputs")]
     public List<StageUIData> stageDataList;
@@ -104,6 +105,7 @@ public class StageSceneUI : UI_Popup
 
         private void Awake()
     {
+        
         // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
         if (normalTextMaterial != null)
         {
@@ -116,6 +118,7 @@ public class StageSceneUI : UI_Popup
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
 
         SetupMapStageByNowChapterIndex();
+        mycanvas.renderMode = RenderMode.WorldSpace;
     }
 
     private void OnDestroy()
@@ -224,6 +227,7 @@ public class StageSceneUI : UI_Popup
     public override void Init()
     {
         base.Init();
+        mycanvas.renderMode = RenderMode.WorldSpace;
         Bind<Button>(typeof(Buttons));
 
         // Up, Down, Start 버튼의 참조 가져오기
@@ -445,6 +449,10 @@ public class StageSceneUI : UI_Popup
         stageSceneResultUI.LoadClickedStageData(IngameData.ChapterIdx);
     }
 
+    private void BeadsButtonClicked(Button button)
+    {
+
+    }
     private void UpdateStageButtons()
     {
         if (_selectedButton == null)
