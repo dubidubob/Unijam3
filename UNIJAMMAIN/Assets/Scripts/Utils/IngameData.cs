@@ -14,15 +14,18 @@ public static class IngameData
     private static double beatInterval;
     public static bool IsStart = false;
     public static int StageProgress = 0;
+    public static int DefeatEnemyCount = 0;
 
     static IngameData()
     {
         _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
         _bestChapterRanks = new Define.Rank[TOTAL_CHAPTERS];
+        _bestChapterScore = new float[TOTAL_CHAPTERS];
         for (int i = 0; i < TOTAL_CHAPTERS; i++)
         {
             _chapterRanks[i] = Define.Rank.Unknown;
             _bestChapterRanks[i] = Define.Rank.Unknown;
+            _bestChapterScore[i] = 0;
         }
         Debug.Log("IngameData이 시작될때 초기화되었습니다.");
     }
@@ -43,9 +46,34 @@ public static class IngameData
     public static int ChapterIdx { set; get; }
 
     //저장할 랭크의 개수에 따라 달라짐
-    private const int TOTAL_CHAPTERS = 8;
+    private const int TOTAL_CHAPTERS = 11;
     public static Define.Rank[] _chapterRanks;
     public static Define.Rank[] _bestChapterRanks;
+    public static float[] _bestChapterScore;
+    public static float BestChapterScore
+    {
+        get
+        {
+            // 인덱스 범위 체크
+            if (ChapterIdx < 0 || ChapterIdx >= TOTAL_CHAPTERS)
+            {
+                return 0;
+            }
+            return _bestChapterScore[ChapterIdx];
+        }
+        set
+        {
+            // 인덱스 범위 체크 (안전 장치)
+            if (ChapterIdx >= 0 && ChapterIdx < TOTAL_CHAPTERS)
+            {
+                if (_bestChapterScore[ChapterIdx] < value)
+                {
+                    _bestChapterScore[ChapterIdx] = value;
+                }
+            }
+        }
+    }
+
 
     // ChapterRank 프로퍼티는 이제 현재 선택된 ChapterIdx에 해당하는 배열의 값을 다룸
     public static Define.Rank ChapterRank
@@ -95,6 +123,15 @@ public static class IngameData
             return Define.Rank.Unknown;
         }
         return _bestChapterRanks[chapterIndex];
+    }
+
+    public static float GetBestRankScoreForChapter(int chapterIndex)
+    {
+        if (chapterIndex < 0 || chapterIndex >= TOTAL_CHAPTERS)
+        {
+            return 0;
+        }
+        return _bestChapterScore[chapterIndex];
     }
 
     public static double PhaseDurationSec { set; get; }

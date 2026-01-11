@@ -17,14 +17,15 @@ public class BackGroundController : MonoBehaviour
     // 외부에서 접근 가능하도록 프로퍼티 추가 (getter만 public)
     public float BeatDuration { get; private set; }
 
-    private float beatDuration;
+    public float beatDuration;
     private int chapterIdx =-100;
-    [SerializeField] Image extraObjectImage;
-    [SerializeField] Image extraObjectImage2;
-    [SerializeField] Image extraObjectImage3;
-    [SerializeField] Image extraObjectImage4;
-    [SerializeField] Image extraObjectImage5;
-    [SerializeField] BackGroundDataSO backGrounddataSO;
+    [SerializeField] public Image extraObjectImage;
+    [SerializeField] public Image extraObjectImage2;
+    [SerializeField] public Image extraObjectImage3;
+    [SerializeField] public Image extraObjectImage4;
+    [SerializeField] public Image extraObjectImage5;
+    [SerializeField] public Image extraObjectImage6;
+    [SerializeField] public BackGroundDataSO backGrounddataSO;
 
     // 외부 스크립트용 프로퍼티(편의상 이름 매핑)
     public Image ExtraImage1 => extraObjectImage;
@@ -40,11 +41,11 @@ public class BackGroundController : MonoBehaviour
 
     public int ActionNumberTarget { get; set; } = 4;
     private int nowactionNumber = 1;
-    private int actionNumberTarget = 4;
+    public int actionNumberTarget = 4;
 
 
     //---- 각 챕터에 대한 정보 저장용 ---- //
-
+    private Action currentChapterAction;
 
     private void Start()
     {
@@ -79,10 +80,10 @@ public class BackGroundController : MonoBehaviour
 
         chapterIdx = IngameData.ChapterIdx;
         SetCurrentChapterAction(chapterIdx);
-        Debug.Log(chapterIdx);
+        
     }
 
-    private Action currentChapterAction;
+    
     public void SetCurrentChapterAction(int chapterIndex)
     {
         chapterIdx = chapterIndex; // 변수 동기화
@@ -235,21 +236,8 @@ public class BackGroundController : MonoBehaviour
 
                 break;
 
-            case 10:
-                actionNumberTarget = 1;
-                extraObjectImage.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[0];
-                extraObjectImage2.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[1];
-                extraObjectImage3.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[2];
-                extraObjectImage4.sprite = backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[3];
-                extraObjectImage.gameObject.SetActive(true);
-                extraObjectImage2.gameObject.SetActive(true);
-                extraObjectImage3.gameObject.SetActive(true);
-                extraObjectImage4.gameObject.SetActive(true);
-                UpdateRectMargin(extraObjectImage.rectTransform, 0);
-                UpdateRectMargin(extraObjectImage2.rectTransform, 0);
-                UpdateRectMargin(extraObjectImage3.rectTransform, 0);
-                UpdateRectMargin(extraObjectImage4.rectTransform, 0);
-                
+                break;
+            default:
                 break;
 
         }
@@ -714,9 +702,9 @@ public class BackGroundController : MonoBehaviour
 
         // 2. 초기화 실행 (컨트롤러 권한 부여)
         effectComponent.Initialize(this);
-
         // 3. 액션 연결 (델리게이트에 인터페이스 메서드 등록)
         currentChapterAction = effectComponent.EffectActionGo;
+
 
         Debug.Log($"Connected External Effect: {typeof(T).Name}");
     }

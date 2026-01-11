@@ -86,6 +86,12 @@
         WASDFIFO,
         WASD_ChristMas_Normal,
         WASD_CristMas_Dash,
+        WASD_EDM_Normal,
+        WASD_EDM_Dash,
+        WASD_STOPANDGO,
+        WASD_Blink,
+        WASD_Spiral,
+        WASD_SmoothDash,
         MaxCount
     }
 

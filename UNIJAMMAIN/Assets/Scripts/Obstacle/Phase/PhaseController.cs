@@ -22,6 +22,8 @@ public class PhaseController : MonoBehaviour
     public bool isTest;
     public int TestStageIndex;
     public bool isSinkStage = false;
+    [SerializeField] [Range(-0.2f, 0.2f)] float sinkTimer; // 노래를 빨리 재생시키거나 늦게재생시키는 타이머, 늦게 재생시키면 몬스터가 더 빨리옴.
+
     [SerializeField] private MonsterDatabaseSO monsterDatabase;
 
     [SerializeField] Image backGround;
@@ -164,8 +166,8 @@ public class PhaseController : MonoBehaviour
 
 
         // DelayPadding의 Tick의 Second 만큼 대기 ( 몬스터를 미리 소환하고 노래를 늦게 재생 ) 
-        double waitSecondTarget = (long)chapters[_chapterIdx].DelayPaddingTick * IngameData.BeatInterval;
-        Debug.Log(waitSecondTarget);
+        // sinkTimer추가, sinkTimer만큼 노래가 늦게 재생되거나 빨리재생됨
+        double waitSecondTarget = (long)chapters[_chapterIdx].DelayPaddingTick * IngameData.BeatInterval+sinkTimer;
         Managers.Sound.PlayScheduled(bgmPath, musicStartTime + waitSecondTarget, Define.Sound.BGM);
 
 
@@ -188,7 +190,6 @@ public class PhaseController : MonoBehaviour
             float durationSec = gameEvent.durationBeat * beatInterval;
             IngameData.PhaseDurationSec = durationSec;
 
-            SetTimeScale(gameEvent.timeScale);
 
             // --- 1. Delay 구간 처리 ---
             long delayBeats = Mathf.RoundToInt(gameEvent.startDelayBeat);
@@ -218,7 +219,6 @@ public class PhaseController : MonoBehaviour
             // Delay 직후 로직 실행
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                Debug.Log($"타겟틱 : {targetTick} extesntion : {phaseEventAfterDelay.extensionCreateBeat} ");  
                 SpawnMonsters(phaseEventAfterDelay, targetTick+phaseEventAfterDelay.extensionCreateBeat);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
@@ -301,8 +301,15 @@ public class PhaseController : MonoBehaviour
         Managers.Sound.PauseBGM(false);
         IngameData.Pause = false;
 
+        // 스팀 업적
+        CheckFirstClearSteamAchievement();
+
+
         Scoreboard.ChangeUI(CalculateScore());
         Scoreboard.gameObject.SetActive(true);
+
+
+        SetStageIndex(_chapterIdx);
     }
 
     private float perfectWeight = 1.0f;
@@ -315,7 +322,6 @@ public class PhaseController : MonoBehaviour
         float totalCnt = IngameData.TotalMobCnt;
         float total = totalCnt;
 
-        SetStageIndex(_chapterIdx);
 
         return (rate / total) * 100f;
     }
@@ -363,11 +369,7 @@ public class PhaseController : MonoBehaviour
     {
         await UniTask.WaitForSeconds((float)beatClock.GetScheduledDspTimeForTick((long)waitTick));
     }
-    private void SetTimeScale(float time)
-    {
-        Managers.Sound.ChangeBGMPitch(time);
-        Time.timeScale = time;
-    }
+
 
     private void SetStageIndex(int index)
     {
@@ -415,6 +417,19 @@ public class PhaseController : MonoBehaviour
         SetStageTimerGoScheduled(inferredTick, now);
     }
 
+    // Steam 업적 :  처음으로 클리어되었다면
+    private void CheckFirstClearSteamAchievement()
+    {
+        string achievementID = $"ACH_CHAPTER_{_chapterIdx}_CLEAR";
+
+        // 챕터 기록이 없고 연습모드가 아니라면
+        if(IngameData.GetRankForChapter(_chapterIdx)==Define.Rank.Unknown&&!IngameData.boolPracticeMode)
+        {
+            Managers.Steam.UnlockAchievement(achievementID);
+        }
+    }
+
+    
 
     public async UniTask GoStart()
     {

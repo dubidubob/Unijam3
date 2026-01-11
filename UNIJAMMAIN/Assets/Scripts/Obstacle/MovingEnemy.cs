@@ -74,9 +74,11 @@ public class MovingEnemy : MonoBehaviour
         isDead = false;
         isKnockbackActive = false; // 넉백 상태 초기화 필수
 
-        if (monsterImg != null)
+        if (monsterImg != null) // 몬스터의 색깔 조정
         {
+           
             Color originalColor = monsterImg.color;
+            
             monsterImg.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
             monsterImg.transform.localScale = origin; // 크기 초기화 안전장치
         }
@@ -127,6 +129,9 @@ public class MovingEnemy : MonoBehaviour
         KillingDO();
         // 사망 시 기존 움직임/숨기기 등은 취소하고 사망 연출만 실행
         RefreshCancellationToken();
+
+        // Steam 업적을위해 InGameData에 처치한 수 저장
+        IngameData.DefeatEnemyCount++;
 
         // 사망 처리 (UniTask)
         ProcessDeath(_cts.Token).Forget();
@@ -206,6 +211,25 @@ public class MovingEnemy : MonoBehaviour
                 EnableSpeeding();
                 break;
 
+            case Define.MonsterType.WASD_EDM_Normal:
+                EnableZigZag(_cts.Token).Forget();
+                break;
+
+            case Define.MonsterType.WASD_EDM_Dash:
+                EnableSpin();
+                break;
+            case Define.MonsterType.WASD_STOPANDGO:
+                EnableStopAndGo(_cts.Token).Forget();
+                break;
+            case Define.MonsterType.WASD_Blink:
+                EnableBlink(_cts.Token).Forget();
+                break;
+            case Define.MonsterType.WASD_Spiral:
+                EnableSpiral(_cts.Token).Forget();
+                break;
+            case Define.MonsterType.WASD_SmoothDash:
+                EnableSmoothDash(_cts.Token).Forget();
+                break;
             // 일반 몬스터나 기타 타입은 추가 행동 없음
             default:
                 break;
@@ -230,7 +254,35 @@ public class MovingEnemy : MonoBehaviour
                  .SetId("Speeding")
                  .SetLink(gameObject);
     }
+    private async UniTaskVoid EnableSmoothDash(CancellationToken token)
+    {
+        Vector3 startPos = transform.position;
 
+        // 1. [급접근 Phase]
+        // 목표: 40% 지점까지 순식간에 도달
+        // 거리: 40% (0.4f)
+        // 시간: 15% (0.15f) -> 아주 짧은 시간에 이동하므로 속도가 빠름
+        float fastPhaseDuration = movingDuration * 0.15f;
+        Vector3 midPos = Vector3.Lerp(startPos, playerPos, 0.4f);
+
+        // Ease.OutSine: 빠르지만 연결 부위에서 튀지 않게 살짝 감속 시작
+        await transform.DOMove(midPos, fastPhaseDuration)
+                       .SetEase(Ease.OutSine)
+                       .SetLink(gameObject)
+                       .ToUniTask(cancellationToken: token);
+
+        // 2. [스무스 돌격 Phase]
+        // 목표: 나머지 거리를 부드럽게 관성으로 밀고 들어감
+        // 거리: 남은 60%
+        // 시간: 남은 85% (0.85f) -> 긴 시간 동안 이동하므로 느려짐
+        float smoothPhaseDuration = movingDuration * 0.85f;
+
+        // Ease.OutCubic: Quad보다 조금 더 길게 늘어지는 느낌 (미끄러짐 강조)
+        await transform.DOMove(playerPos, smoothPhaseDuration)
+                       .SetEase(Ease.OutCubic)
+                       .SetLink(gameObject)
+                       .ToUniTask(cancellationToken: token);
+    }
     private void EnableFIFO()
     {
         Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
@@ -243,6 +295,195 @@ public class MovingEnemy : MonoBehaviour
     private void EnableHiding()
     {
         HidingAnimation(monsterImg, _cts.Token).Forget();
+    }
+
+    private async UniTaskVoid EnableStopAndGo(CancellationToken token)
+    {
+        // 전체 거리를 2분할
+        Vector3 startPos = transform.position;
+        Vector3 midPos = Vector3.Lerp(startPos, playerPos, 0.4f); // 40% 지점까지 이동
+
+        float firstMoveTime = movingDuration * 0.3f; // 전체 시간의 30% 동안 40% 이동 (빠름)
+        float stopTime = movingDuration * 0.2f;      // 20% 시간 동안 정지 (엇박 유도)
+        float lastMoveTime = movingDuration * 0.5f;  // 나머지 시간 동안 돌진
+
+        // 1. 1차 급접근
+        await transform.DOMove(midPos, firstMoveTime).SetEase(Ease.OutQuad)
+                       .SetLink(gameObject).ToUniTask(cancellationToken: token);
+
+        // 2. 정지 (두근거림 연출 추가 가능)
+        await transform.DOPunchScale(Vector3.one * 0.2f, stopTime, 2, 1)
+                       .SetLink(gameObject).ToUniTask(cancellationToken: token);
+
+        // 3. 2차 돌진 (플레이어에게 꽂힘)
+        await transform.DOMove(playerPos, lastMoveTime).SetEase(Ease.InExpo)
+                       .SetLink(gameObject).ToUniTask(cancellationToken: token);
+    }
+
+    private async UniTaskVoid EnableZigZag(CancellationToken token)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPos = transform.position;
+        Vector3 endPos = playerPos; // Start에서 계산된 타겟 위치
+
+        // 진행 방향의 오른쪽(수직) 벡터 계산
+        Vector3 forward = (endPos - startPos).normalized;
+        Vector3 right = Vector3.Cross(forward, Vector3.forward).normalized;
+
+        float frequency = 6f; // 흔들리는 빈도
+        float magnitude = 0.5f; // 흔들리는 폭
+
+        while (elapsedTime < movingDuration)
+        {
+            if (token.IsCancellationRequested) return;
+            if (IngameData.Pause) { await UniTask.Yield(token); continue; }
+
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / movingDuration;
+
+            // 1. 선형 이동 (기본 이동)
+            Vector3 currentPos = Vector3.Lerp(startPos, endPos, t);
+
+            // 2. 수직 흔들림 (Sin 파형)
+            // 끝으로 갈수록(t가 1에 가까울수록) 흔들림이 줄어들어 정확히 타겟에 꽂히게(Mathf.Lerp(magnitude, 0, t)) 처리
+            float wave = Mathf.Sin(t * frequency * Mathf.PI) * Mathf.Lerp(magnitude, 0f, t);
+
+            transform.position = currentPos + (right * wave);
+
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
+        }
+    }
+
+    private void EnableSpin()
+    {
+        // 이동은 기본 Move() 혹은 EnableSpeeding() 등을 사용한다고 가정
+        // 별도로 회전만 추가
+
+        // 1초에 360도 회전, 무한 반복
+        monsterImg.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart)
+            .SetEase(Ease.Linear)
+            .SetLink(gameObject);
+
+        // 참고: 이동 로직은 별도로 실행되어야 함 (예: default의 Move() 사용)
+    }
+
+   
+    private async UniTaskVoid EnableBlink(CancellationToken token)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPos = transform.position;
+
+        // 전체 거리의 30% 지점에서 사라졌다가 70% 지점에서 나타남
+        bool hasBlinked = false;
+
+        while (elapsedTime < movingDuration)
+        {
+            if (token.IsCancellationRequested) return;
+            if (IngameData.Pause) { await UniTask.Yield(token); continue; }
+
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / movingDuration;
+
+            // 30% ~ 70% 구간에서 점멸 처리
+            if (t > 0.3f && t < 0.7f)
+            {
+                if (!hasBlinked)
+                {
+                    hasBlinked = true;
+                    monsterImg.color = new Color(monsterImg.color.r, monsterImg.color.g, monsterImg.color.b, 0.2f); // 반투명 혹은 투명
+                                                                                                                    // 필요하다면 Collider 꺼서 무적 판정 줄 수도 있음
+                }
+
+                // 이 구간에서는 이동을 멈추거나, 혹은 아주 빠르게 다음 지점으로 건너뛰는 연출 가능
+                // 여기서는 단순히 모습만 감추고 위치는 선형 이동 (예측 가능하게 하려면)
+                // 예측 불가능하게 하려면 여기서 transform.position 업데이트를 안 하다가 0.7f에 텔레포트
+            }
+            else if (t >= 0.7f && hasBlinked)
+            {
+                hasBlinked = false; // 플래그 리셋하여 한 번만 실행되게
+                monsterImg.color = new Color(monsterImg.color.r, monsterImg.color.g, monsterImg.color.b, 1f); // 원복
+
+                // '뿅' 하고 나타나는 효과음이나 파티클 추가 가능
+            }
+
+            // 기본 이동 (Blink 구간에 위치를 건너뛰고 싶다면 로직 추가 필요)
+            transform.position = Vector3.Lerp(startPos, playerPos, t);
+
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
+        }
+    }
+
+    private async UniTaskVoid EnableSpiral(CancellationToken token)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPos = transform.position;
+
+        // 진행 방향 벡터 계산
+        Vector3 forward = (playerPos - startPos).normalized;
+        // 진행 방향의 수직 벡터 (오른쪽, 위쪽) - 2D 기준 임의의 축 생성
+        Vector3 right = Vector3.Cross(forward, Vector3.forward).normalized;
+        Vector3 up = Vector3.Cross(right, forward).normalized; // 사실상 forward와 직각인 또 다른 축
+
+        // 나선 회전 반경과 속도
+        float radius = 1f;
+        float frequency = 5f; // 회전 속도
+
+        while (elapsedTime < movingDuration)
+        {
+            if (token.IsCancellationRequested) return;
+            if (IngameData.Pause) { await UniTask.Yield(token); continue; }
+
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / movingDuration;
+
+            // 1. 중심축 이동 (선형)
+            Vector3 centerPos = Vector3.Lerp(startPos, playerPos, t);
+
+            // 2. 나선 회전 (플레이어에게 가까워질수록 반지름 0으로 수렴)
+            float currentRadius = Mathf.Lerp(radius, 0f, t);
+            float angle = t * frequency * Mathf.PI * 2f;
+
+            // 2D 평면상에서의 회전 (X, Y 축 기준 변형)
+            // 진행 방향이 어디냐에 따라 축 보정이 필요하지만, 간단히 right 벡터를 기준으로 회전
+            Vector3 offset = (right * Mathf.Cos(angle) + up * Mathf.Sin(angle)) * currentRadius;
+
+            // *단순 2D 게임(Z축 고정)이라면 아래 방식이 더 직관적일 수 있음*
+            // transform.position = centerPos + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * currentRadius;
+
+            // 벡터 기반 적용
+            transform.position = centerPos + offset;
+
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
+        }
+    }
+
+    private async UniTaskVoid EnableBerserk(CancellationToken token)
+    {
+        // 색상을 빨갛게 예열하는 연출 추가
+        monsterImg.DOColor(Color.red, movingDuration * 0.5f).SetLink(gameObject);
+
+        Vector3 startPos = transform.position;
+
+        // 커스텀 Easing: 처음 60% 시간 동안 20%만 이동, 나머지 40% 시간에 80% 이동
+        await transform.DOMove(playerPos, movingDuration)
+            .SetEase(Ease.InExpo) // 혹은 Custom Curve 사용
+            .SetLink(gameObject)
+            .ToUniTask(cancellationToken: token);
+
+        // 참고: 만약 직접 제어하고 싶다면 아래처럼 Lerp의 t값을 조작
+        /*
+        float elapsedTime = 0f;
+        while (elapsedTime < movingDuration)
+        {
+           // ... (Pause 체크 등) ...
+           float t = elapsedTime / movingDuration;
+           // t를 세제곱하면 초반엔 아주 작고 후반에 급격히 커짐
+           float curvedT = t * t * t * t; 
+           transform.position = Vector3.Lerp(startPos, playerPos, curvedT);
+           // ...
+        }
+        */
     }
 
     #endregion
@@ -341,6 +582,9 @@ public class MovingEnemy : MonoBehaviour
     {
         // 넉백 중일 때는 일반 이동 로직을 태우지 않음 (위치가 튀는 현상 방지)
         if (isKnockbackActive) return;
+
+        // 커스텀 이동 로직을 가진 애들은 기본 이동(Move)을 막음
+        if (IsCustomMovementType(_monsterType)) return;
 
         // 단순 Transform 이동이므로 Update에서 실행
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
@@ -453,7 +697,22 @@ public class MovingEnemy : MonoBehaviour
     {
         monsterImg.sprite = Managers.Game.monster.GetSprite(monsterType);
         orginSprite = monsterImg.sprite;
-        monsterImg.color = Managers.Game.monster.GetColor(monsterType);
+
+        if (IngameData.ChapterIdx == 10) // Chapter10에서는 색깔이 다름
+        {
+            monsterImg.color = BackGroundEffect_10.CurrentClubColor;
+        }
+       
     }
+    #endregion
+
+    #region tool
+    private bool IsCustomMovementType(Define.MonsterType type)
+    {
+        return type == Define.MonsterType.WASD_EDM_Normal ||
+               type == Define.MonsterType.WASD_EDM_Normal 
+               ;
+    }
+
     #endregion
 }

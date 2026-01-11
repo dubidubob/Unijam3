@@ -151,6 +151,11 @@ public class GameManager
     public bool isComboEffect = false;
     public void ComboInc(int healingValue=1)
     {
+        if(IngameData.DefeatEnemyCount>=10000)
+        {
+            Managers.Steam.UnlockAchievement("ACH_COMBO_TOTAL_10000");
+        }
+
         Combo++;
         IncHealth(healingValue); // 체력회복
         if (ComboContinue != null)
@@ -169,6 +174,13 @@ public class GameManager
             {
                 blur.ComboEffectOn();
                 isComboEffect = true;
+
+                // Steam 업적 : 108콤보 달성시
+                if (Combo >= 108)
+                {
+                    Managers.Steam.UnlockAchievement("ACH_COMBO_108");
+                    
+                }
             }
         }
         
@@ -253,6 +265,20 @@ public class GameManager
         actionUI.GameOverAnimation();
         blur.GameOverBlurEffect();
         blur.WaitForGameOver();
+
+        //스팀 업적 체크(부하 없음)
+        // BeatClock에서 정확히 보정된 플레이 시간을 가져옴
+        if (Managers.Game.beatClock != null)
+        {
+            double playTime = Managers.Game.beatClock.GetCurrentPlayTime();
+
+            // 15초 이내 사망 시
+            if (playTime <= 15.0d)
+            {
+                Managers.Steam.UnlockAchievement("ACH_DEATH_INSTANT"); // 업적 ID 예시
+                Debug.Log($"[Steam] 15초 내 사망 업적 달성! (기록: {playTime:F2}초)");
+            }
+        }
 
         Managers.Sound.BGMFadeOut();
         Managers.Sound.Play("BGM/GameOver_V1");

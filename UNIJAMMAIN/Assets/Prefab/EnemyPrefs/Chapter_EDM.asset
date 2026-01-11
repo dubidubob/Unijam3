@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88a7b8007bad7a43abe76cf9a9d3d0f, type: 3}
+  m_Name: Chapter_EDM
+  m_EditorClassIdentifier: 
+  phases:
+  - rid: 4747093713714151426
+  - rid: 4747093736959246336
+  - rid: 6162095367951745024
+  - rid: 6162095367951745026
+  MusicPath: BGM/ChapterEDM
+  StartBeat: 532532
+  DelayPaddingTick: 0
+  backGroundSprite: {fileID: 21300000, guid: 38636aab8002b274094fa2b5237bd0dd, type: 3}
+  backGroundGraySprite: {fileID: 21300000, guid: 38636aab8002b274094fa2b5237bd0dd, type: 3}
+  colorPalette: {r: 1, g: 1, b: 1, a: 0.40784314}
+  SinkStage: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4747093713714151426
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 11
+        startDelayBeat: 0
+        bpm: 138
+        timeScale: 1
+        preGenerateBeat: 0
+        extensionCreateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 12
+          WASD_Pattern: "XXXXXXXX\tXXXXXXXX\tXXXXXXXX\tXXXXXXXX"
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 5
+          hiding: 0
+    - rid: 4747093736959246336
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 64
+        startDelayBeat: 0
+        bpm: 138
+        timeScale: 1
+        preGenerateBeat: 0
+        extensionCreateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 14
+          WASD_Pattern: "OXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXOXOX\tOXOXXXXX"
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 5
+          hiding: 0
+    - rid: 6162095367951745024
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 32
+        startDelayBeat: 0
+        bpm: 138
+        timeScale: 1
+        preGenerateBeat: 0
+        extensionCreateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 14
+          WASD_Pattern: "OXOXOXOO\tOXOXOXOO\tOXOXOXOO\tOXOXOOOO\tOXOXOXOO\tOXOXOXOO\tOOOOOOO\tOOOOOOO"
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 5
+          hiding: 0
+    - rid: 6162095367951745026
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 20
+        startDelayBeat: 0
+        bpm: 138
+        timeScale: 1
+        preGenerateBeat: 0
+        extensionCreateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 15
+          WASD_Pattern: RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr
+          speedUpRate: 1
+          spawnBeat: 1
+          moveBeat: 5
+          hiding: 0
