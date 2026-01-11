@@ -597,6 +597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2d96d4922ac7c48af7c12654dc6a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverTextSO: {fileID: 11400000, guid: 0f60b937a8ac3b3488d02d644089b19f, type: 2}
   damageImage: {fileID: 1827902259}
   camera: {fileID: 210544442}
   shakeStrength: 0.2
@@ -8311,7 +8312,6 @@ MonoBehaviour:
   isTest: 1
   TestStageIndex: 7
   isSinkStage: 0
-  sinkTimer: 0
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}
   characterSprite: {fileID: 460754922}

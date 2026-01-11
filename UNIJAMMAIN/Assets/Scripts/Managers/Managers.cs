@@ -35,6 +35,10 @@ public class Managers : MonoBehaviour
 
     public static void Init()
     {
+        if(!Application.isPlaying)
+        {
+            return;
+        }
         if (s_instance == null)
         {
             GameObject go = GameObject.Find("@Manager");

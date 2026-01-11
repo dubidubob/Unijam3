@@ -9,6 +9,8 @@ using System.Threading;      // CancellationToken 추가
 
 public class BlurController : MonoBehaviour
 {
+    [SerializeField] GameOverTextSO gameOverTextSO;  
+
     public Image damageImage;
     bool isCoolDown;
     public Camera camera; // 흔들릴 카메라 Transform
@@ -358,6 +360,18 @@ public class BlurController : MonoBehaviour
 
     public void GameOverBlurEffect()
     {
+        // 게임오버 텍스트 설정 랜덤으로 출력
+        if (gameOverTextSO.StageTexts[IngameData.ChapterIdx].gameOverText.Count!=0)
+        {
+            gameOverText.text = gameOverTextSO.StageTexts[IngameData.ChapterIdx].gameOverText
+                [Random.Range(0, gameOverTextSO.StageTexts[IngameData.ChapterIdx].gameOverText.Count)];
+        }
+        else
+        {
+            gameOverText.text = "중요한 것은 흔들리지 않는 마음이오.";
+        }
+
+
         // InCirc 천천히 어두워지다가 갑자기 어두워지기
         gameOverBlack.DOFade(1 / 255f * 248f, 1f)
             .SetEase(Ease.InCirc)

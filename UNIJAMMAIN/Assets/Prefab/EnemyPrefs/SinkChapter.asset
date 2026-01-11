@@ -16,7 +16,7 @@ MonoBehaviour:
   - rid: 6876808040217313282
   MusicPath: 
   StartBeat: 100000000
-  DelayPaddingSeconds: 0
+  DelayPaddingTick: 1
   backGroundSprite: {fileID: 21300000, guid: 61c81636d75b2954c9f8021921b17b96, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 61c81636d75b2954c9f8021921b17b96, type: 3}
   colorPalette: {r: 0.1764706, g: 0.24313727, b: 0.24705884, a: 0}
@@ -33,11 +33,12 @@ MonoBehaviour:
         bpm: 80
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: DXDDDXDXDXDDDXDXDXDDDXDXDXDDDXDXDXDDDXDX
+          WASD_Pattern: DXDDDXDXDXDDDXDXDXDDDXDXDXDDDXDXDXDDDXDXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 1

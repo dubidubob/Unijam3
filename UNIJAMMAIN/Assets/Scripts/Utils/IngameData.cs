@@ -9,26 +9,38 @@ public static class IngameData
     public static Action<GamePlayDefine.WASDType> OnPerfectEffect;
     public static int GameBpm;
     public static bool boolPracticeMode;
+    [Range(-0.2f, 0.2f)] public static float sinkTimer =0; // 노래를 빨리 재생시키거나 늦게재생시키는 타이머, 늦게 재생시키면 몬스터가 더 빨리옴.
+
 
     public static bool Pause { set; get; }
     private static double beatInterval;
     public static bool IsStart = false;
     public static int StageProgress = 0;
-    public static int DefeatEnemyCount = 0;
+    public static int _defeatEnemyCount = 0;
+    public static int _clearStageIndex = 0;
+    public static int _nowStageIndex = 0;
 
     static IngameData()
     {
-        _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
-        _bestChapterRanks = new Define.Rank[TOTAL_CHAPTERS];
-        _bestChapterScore = new float[TOTAL_CHAPTERS];
-        for (int i = 0; i < TOTAL_CHAPTERS; i++)
-        {
-            _chapterRanks[i] = Define.Rank.Unknown;
-            _bestChapterRanks[i] = Define.Rank.Unknown;
-            _bestChapterScore[i] = 0;
-        }
-        Debug.Log("IngameData이 시작될때 초기화되었습니다.");
+        // 배열 초기화
+        ClearMemoryData();
+
+        // 데이터 로드 시도
+        LoadGameData();
     }
+    // 저장할 데이터
+    [System.Serializable]
+    public class SaveDataContainer
+    {
+        public int DefeatEnemyCount;
+        public float[] BestChapterScore;
+        public Define.Rank[] BestChapterRanks;
+        public int ClearStoryStageIndex;
+        public int NowStoryStageIndex;
+        // 필요한 변수가 더 있다면 여기에 추가 (public이어야 저장됨)
+    }
+
+    
 
     public static double BeatInterval 
     {
@@ -158,4 +170,84 @@ public static class IngameData
         WrongInputCnt = 0;
         AttackedMobCnt = 0;
     }
+
+    // 세이브로드
+
+    // 데이터 세이브
+    public static void SaveGameData()
+    {
+        SaveDataContainer data = new SaveDataContainer();
+        data.DefeatEnemyCount = _defeatEnemyCount;
+        data.BestChapterScore = _bestChapterScore;
+        data.BestChapterRanks = _bestChapterRanks;
+        data.ClearStoryStageIndex = _clearStageIndex;
+        data.NowStoryStageIndex = _nowStageIndex;
+
+        string json = JsonUtility.ToJson(data, true);
+        PlayerPrefs.SetString("IngameSaveData", json);
+        PlayerPrefs.Save();
+
+        Debug.Log($"게임 데이터 저장 완료: 스테이지 {data.ClearStoryStageIndex}");
+    }
+
+    // 로드
+    public static void LoadGameData()
+    {
+        if (PlayerPrefs.HasKey("IngameSaveData"))
+        {
+            string json = PlayerPrefs.GetString("IngameSaveData");
+            SaveDataContainer data = JsonUtility.FromJson<SaveDataContainer>(json);
+
+            if (data != null)
+            {
+                _defeatEnemyCount = data.DefeatEnemyCount;
+                _clearStageIndex = data.ClearStoryStageIndex;
+
+                if (data.BestChapterScore != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
+                    _bestChapterScore = data.BestChapterScore;
+
+                if (data.BestChapterRanks != null && data.BestChapterRanks.Length == TOTAL_CHAPTERS)
+                    _bestChapterRanks = data.BestChapterRanks;
+            }
+        }
+        else
+        {
+            Debug.Log("저장된 데이터가 없습니다.");
+        }
+    }
+
+    public static void ResetData()
+    {
+        // 1. 파일 삭제
+        PlayerPrefs.DeleteKey("IngameSaveData");
+
+        // 2. ★ 수정 5: 메모리 상의 데이터도 반드시 초기화해줘야 함
+        // (안 그러면 리셋 버튼 누르고 바로 게임 시작하면 옛날 점수가 그대로 있음)
+        ClearMemoryData();
+
+        Debug.Log("데이터 리셋 및 메모리 초기화 완료");
+    }
+
+    // ★ 수정 2: 메모리 상의 데이터를 초기화하는 별도 함수 분리
+    private static void ClearMemoryData()
+    {
+        // [핵심 수정] 배열이 비어있다면(null) 새로 생성(new)해주는 코드 추가
+        if (_chapterRanks == null) _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
+        if (_bestChapterRanks == null) _bestChapterRanks = new Define.Rank[TOTAL_CHAPTERS];
+        if (_bestChapterScore == null) _bestChapterScore = new float[TOTAL_CHAPTERS];
+
+        // 이제 배열이 확실히 존재하므로 안심하고 값을 채워도 됨
+        for (int i = 0; i < TOTAL_CHAPTERS; i++)
+        {
+            _chapterRanks[i] = Define.Rank.Unknown;       // 여기서 오류 안 남
+            _bestChapterRanks[i] = Define.Rank.Unknown;
+            _bestChapterScore[i] = 0;
+        }
+
+        _defeatEnemyCount = 0;
+        _nowStageIndex = 0;
+        _clearStageIndex = 0;
+    }
+
+
 }

@@ -19,7 +19,6 @@ public struct RankNode
 
 public class GameManager 
 {
-    public int GameStage = 0;
 
     public Action<int> ComboContinue = null;
     public Action<float> HealthUpdate = null;
@@ -151,7 +150,7 @@ public class GameManager
     public bool isComboEffect = false;
     public void ComboInc(int healingValue=1)
     {
-        if(IngameData.DefeatEnemyCount>=10000)
+        if(IngameData._defeatEnemyCount>=10000)
         {
             Managers.Steam.UnlockAchievement("ACH_COMBO_TOTAL_10000");
         }

@@ -39,6 +39,7 @@ public class StageSceneUI : UI_Popup
     private float moveDuration = 1.6f;
 
     private int currentStageIndex = 2;
+    private int forClearApproachStageIndex = 0;
     private List<Button> stageButtons = new List<Button>();
 
     public TMP_Text startButtonText;
@@ -110,7 +111,8 @@ public class StageSceneUI : UI_Popup
             glowingTextMaterial = new Material(normalTextMaterial);
             SetupGlowMaterial(glowingTextMaterial);
         }
-        currentStageIndex = Managers.Game.GameStage+1;
+        forClearApproachStageIndex = IngameData._clearStageIndex +1;
+        currentStageIndex = IngameData._nowStageIndex+1;
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
 
         SetupMapStageByNowChapterIndex();
@@ -132,7 +134,7 @@ public class StageSceneUI : UI_Popup
     {
         // 1. 현재 스테이지 인덱스를 기반으로 목표 페이지 레벨(0, 1, 2) 계산
         // (가정: 1~3스테이지=Level0, 4~6스테이지=Level1, 7스테이지=Level2)
-        int nowChapterIdx = IngameData.ChapterIdx;
+        int nowChapterIdx = currentStageIndex-1;
         if (nowChapterIdx <= 3)
         {
             currentPageLevel = 0;
@@ -215,7 +217,7 @@ public class StageSceneUI : UI_Popup
         //Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
 
         // TODO: 서울게임타운용
-        Managers.Game.GameStage = 7;
+        // Managers.Game.GameStage = 7;
         StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
     }
 
@@ -447,9 +449,9 @@ public class StageSceneUI : UI_Popup
     {
         if (_selectedButton == null)
         {
-            if (currentStageIndex > 0 && currentStageIndex <= stageButtons.Count)
+            if (forClearApproachStageIndex > 0 && forClearApproachStageIndex <= stageButtons.Count)
             {
-                _selectedButton = stageButtons[currentStageIndex - 1];
+                _selectedButton = stageButtons[forClearApproachStageIndex - 1];
             }
         }
 
@@ -458,11 +460,11 @@ public class StageSceneUI : UI_Popup
             var button = stageButtons[i];
             int stageIndex = i + 1;
 
-            if (stageIndex < currentStageIndex)
+            if (stageIndex < forClearApproachStageIndex)
             {
                 SetButtonState(button, ButtonState.NonClickActive);
             }
-            else if (stageIndex == currentStageIndex)
+            else if (stageIndex == forClearApproachStageIndex)
             {
                 SetButtonState(button, ButtonState.NonClickActive);
             }
