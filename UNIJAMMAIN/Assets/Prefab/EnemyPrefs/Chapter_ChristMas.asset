@@ -44,17 +44,17 @@ MonoBehaviour:
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
+          monsterType: 3
+          WASD_Pattern: 123401234
+          speedUpRate: 1
+          spawnBeat: 5
+          moveBeat: 5
+          hiding: 0
+        - isIn: 1
           monsterType: 7
           WASD_Pattern: "DXDXDXXX\tDXDXDXXX\tDXWXAXXW\tDXXXXXXX\tSXSXSXSX\tWXWXWXWX\tSXAXDXWX\tWXXXWXXX\tDXDXDXXX\tDXDXDXXX\tDXWXAXXW\tDXXXXXXX"
           speedUpRate: 1
           spawnBeat: 0.5
-          moveBeat: 5
-          hiding: 0
-        - isIn: 0
-          monsterType: 1
-          WASD_Pattern: 123401234
-          speedUpRate: 1
-          spawnBeat: 1
           moveBeat: 5
           hiding: 0
     - rid: 4747093464073371649

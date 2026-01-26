@@ -5,7 +5,10 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 public class MiddleBoss : MonoBehaviour
-{
+{ 
+
+    // 기획 우선 적용 X
+    /*
     int bossHP = 1000;
     BossPaternChicken nowBossChicken;
 
@@ -149,4 +152,5 @@ public class MiddleBoss : MonoBehaviour
 
         seq.OnComplete(() => isCoolDown = false);
     }
+    */
 }

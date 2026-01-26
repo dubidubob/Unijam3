@@ -20,6 +20,10 @@ public class SteamManager : MonoBehaviour
 
 	protected virtual void Awake()
 	{
+#if UNITY_EDITOR
+		return;
+#endif
+
 		if (s_Instance != null)
 		{
 			Destroy(gameObject);
