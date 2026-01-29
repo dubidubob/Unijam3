@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BossPaternChicken : UI_Popup
 {
+    /* ±‚»π∫Ø∞Ê
     [Header("Arrow Prefab & Parent")]
     public RectTransform patternPanel; // PaternPanel¿« RectTransform
     public GameObject arrowPrefab;
@@ -155,4 +156,5 @@ public class BossPaternChicken : UI_Popup
     {
         middleBoss.InCorrectChickenPattern(number);
     }
+    */
 }
