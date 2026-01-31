@@ -65,6 +65,9 @@ public class StageSceneUI : UI_Popup
     [SerializeField] Sprite backGroundDarkSprite;
 
 
+    // 비트 컨트롤러 관련한 변수
+    private bool isEventMap = false; // 현재 이벤트맵으로 이동되어있는지, 스토리맵과 관련된 효과 연출등 off
+
     enum ButtonState
     {
         DeActive,
@@ -450,10 +453,6 @@ public class StageSceneUI : UI_Popup
         stageSceneResultUI.LoadClickedStageData(IngameData.ChapterIdx);
     }
 
-    private void BeadsButtonClicked(Button button)
-    {
-
-    }
     private void UpdateStageButtons()
     {
         if (_selectedButton == null)
@@ -607,7 +606,10 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill(); // 진행 중인 모든 애니메이션을 즉시 중지
 
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
-        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
+        if(!isEventMap) // 이벤트맵이 아닐때만 출력하자
+        {
+            StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
+        }
         mapImage.DOAnchorPos(targetPos, moveDuration)
                 .SetEase(moveEase)
                 .OnComplete(() =>
@@ -655,7 +657,7 @@ public class StageSceneUI : UI_Popup
                 .OnComplete(() =>
                 {
                     isAnimating = false;
-                    UpdateNavigationButtons(); // <-- ▼ 여기 추가
+                    UpdateNavigationButtons();
                 });
     }
 
@@ -712,12 +714,145 @@ public class StageSceneUI : UI_Popup
     }
 
 
+
+
+    #endregion
+    #region 비트 컨트롤러 관련 상호작용
+
+    // [추가] 각 맵의 상태를 저장하기 위한 변수들
+    private int storedStoryLevel = 0;
+    private bool storedStoryRotated = false;
+
+    private int storedEventLevel = 0; // 이벤트 맵은 처음에 Level 0에서 시작한다고 가정
+    private bool storedEventRotated = false;
+
     /// <summary>
     /// 비트 컨트롤러에서 호출할 맵이미지 변경
+    /// 단순히 타겟만 바꾸는 것이 아니라, 애니메이션을 멈추고 안전하게 교체합니다.
     /// </summary>
     public void MapTargetRectChange(RectTransform rect)
     {
+        // 이동 중이었다면 즉시 완료 처리
+        if (mapImage != null) mapImage.DOKill();
+
         mapImage = rect;
     }
+
+    /// <summary>
+    /// 이벤트 맵 상태 변경 (true: 이벤트맵 진입 / false: 스토리맵 복귀)
+    /// </summary>
+    public void MapSetting(bool _isEventMap)
+    {
+        // 1. 현재 사용 중이던 맵의 상태(위치, 회전)를 먼저 저장합니다.
+        if (isEventMap)
+        {
+            SaveEventMapSetting();
+        }
+        else
+        {
+            SaveStoryMapSetting();
+        }
+
+        // 2. 모드 변경
+        isEventMap = _isEventMap;
+
+        // 3. 변경된 모드에 맞춰 저장된 상태를 불러오고, 화면을 강제로 동기화합니다.
+        if (isEventMap)
+        {
+            LoadEventMapSetting();
+        }
+        else
+        {
+            LoadStoryMapSetting();
+        }
+
+        // 4. UI 및 버튼 상태 업데이트
+        UpdateNavigationButtons();
+
+        // 5. 사이드 인디케이터(레벨 표시) 업데이트
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
+    }
+
+    // 스토리맵의 현재 상태 저장
+    private void SaveStoryMapSetting()
+    {
+        storedStoryLevel = currentPageLevel;
+        storedStoryRotated = isRotated;
+    }
+
+    // 이벤트맵의 현재 상태 저장
+    private void SaveEventMapSetting()
+    {
+        storedEventLevel = currentPageLevel;
+        storedEventRotated = isRotated;
+    }
+
+    // 스토리맵 세팅 로드 및 시각적 적용
+    private void LoadStoryMapSetting()
+    {
+        currentPageLevel = storedStoryLevel;
+        isRotated = storedStoryRotated;
+
+        // 저장된 데이터에 맞춰 맵의 위치와 그래픽을 '즉시' 동기화합니다.
+        SyncMapVisuals();
+    }
+
+    // 이벤트맵 세팅 로드 및 시각적 적용
+    private void LoadEventMapSetting()
+    {
+        currentPageLevel = storedEventLevel;
+        isRotated = storedEventRotated;
+
+        // 저장된 데이터에 맞춰 맵의 위치와 그래픽을 '즉시' 동기화합니다.
+        SyncMapVisuals();
+    }
+
+    /// <summary>
+    /// [핵심] 현재 currentPageLevel과 isRotated 변수에 맞춰
+    /// 맵의 위치, 회전, 배경 다크 모드 등을 즉시 적용하는 함수 (애니메이션 X)
+    /// </summary>
+    private void SyncMapVisuals()
+    {
+        if (mapImage == null) return;
+
+        // 1. 애니메이션 중단
+        mapImage.DOKill();
+        isAnimating = false;
+
+        // 2. 레벨에 따른 목표 좌표 설정
+        float targetY = 892f;
+        float targetZ = 0f;
+
+        switch (currentPageLevel)
+        {
+            case 0: targetY = 892f; targetZ = 0f; break;
+            case 1: targetY = -295f; targetZ = 0f; break;
+            case 2: targetY = 892f; targetZ = 180f; break;
+        }
+
+        // 3. RectTransform 즉시 이동 (애니메이션 없이 텔레포트)
+        mapImage.anchoredPosition = new Vector2(mapImage.anchoredPosition.x, targetY);
+        mapImage.localEulerAngles = new Vector3(0, 0, targetZ);
+
+        // 4. 다크 모드 / 회전 관련 스프라이트 복구 또는 적용
+        // (RotateAndMoveTo의 로직을 즉시 적용 버전으로 구현)
+        if (currentPageLevel == 2 && isRotated)
+        {
+            // 어두운 테마 적용
+            darkupObject.SetActive(true);
+            dooroImage.sprite = doroDarkSprite;
+            GetComponent<Image>().sprite = backGroundDarkSprite;
+        }
+        else
+        {
+            // 원래 테마로 복구
+            darkupObject.SetActive(false);
+            if (originalDoroSprite != null) dooroImage.sprite = originalDoroSprite;
+            if (originalBackGroundSprite != null) GetComponent<Image>().sprite = originalBackGroundSprite;
+            dooroImage.color = Color.white;
+            patternBackGround.color = Color.white;
+        }
+    }
+
     #endregion
 }

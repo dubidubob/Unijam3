@@ -269,7 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
@@ -3115,6 +3115,15 @@ MonoBehaviour:
       \uC7A5\uC18C\uC5D0\uC11C,\L\uC545\uC5F0\uC758 \uC885\uC9C0\uBD80\uB97C \uCC0D\uB294\uB2E4."
     stageExplain: 
     levelText: "\uB09C\uC774\uB3C4 : \uCD5C\uC0C1\n\n\uD65C\uC57D\uCE58"
+  - stageMainText: "\uD06C\uB9AC\uC2A4\uB9C8\uC2A4"
+    stageMainSubText: "\uC18C\uC911\uD55C \uC0AC\uB78C\uB4E4\uACFC \uD568\uAED8\L\uC6B8\uB824\uD37C\uC9C0\uB294
+      \uCE90\uB864 \uC18C\uB9AC\uB97C \uB4E3\uC790"
+    stageExplain: 
+    levelText: "\uB09C\uC774\uB3C4 : \uC911\n\n\uD65C\uC57D\uCE58"
+  - stageMainText: EDM
+    stageMainSubText: "\uC2E0\uB09C\uB2E4 !"
+    stageExplain: 
+    levelText: "\uB09C\uC774\uB3C4 : \uCD5C\uC0C1\n\n\uD65C\uC57D\uCE58"
   stageSceneResultUI: {fileID: 2474771292265306423}
   stageMainText: {fileID: 3591954167521034253}
   stageMainSubText: {fileID: 4089383583512907318}
@@ -3174,7 +3183,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!222 &5657406619086058807
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 5
           hiding: 0
-          dir: 1
+          dir: 0
           cameraActionDuration: 10
         - isIn: 1
           monsterType: 7
@@ -120,7 +120,7 @@ MonoBehaviour:
           moveBeat: 5
           hiding: 0
           dir: 0
-          cameraActionDuration: 0
+          cameraActionDuration: 5
     - rid: 4747093464073371651
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:

@@ -60,7 +60,8 @@ public class BeadController : MonoBehaviour
     private Sprite pattern_targetSprite;
     private RectTransform targetRect;
     private GameObject targetMapObject;
-       
+
+    private bool isEventMap = false;
     public void StoryBeadAction(int index = 0)
     {
         if (storyBeads != null && index < storyBeads.Count)
@@ -70,6 +71,7 @@ public class BeadController : MonoBehaviour
             pattern_targetSprite = pattern_Original;
             targetRect = storyRect;
             targetMapObject = map_MainStory;
+            isEventMap = false;
             CameraZoominAndBlackOut(storyBeads[index].GetComponent<RectTransform>());
         }
     }
@@ -84,18 +86,20 @@ public class BeadController : MonoBehaviour
             pattern_targetSprite = pattern_Winter;
             targetRect = eventWinterRect;
             targetMapObject = map_EventWinter;
+            isEventMap = true;
             CameraZoominAndBlackOut(eventBeads[index].GetComponent<RectTransform>());
         }
     }
 
     private void CameraZoominAndBlackOut(RectTransform targetRect)
     {
+        backGroundBlackPanel.blocksRaycasts = true;
+        backGroundBlackPanel.interactable = true;
         StartCoroutine(CoZoomAndFade(targetRect));
     }
 
     private IEnumerator CoZoomAndFade(RectTransform target)
     {
-        backGroundBlackPanel.blocksRaycasts = true;
         // 1. 초기값 저장 (이 위치로 반드시 돌아오게 됨)
         Vector3 startCamPos = uiCamera.transform.position;
         float startCamSize = uiCamera.orthographicSize;
@@ -136,8 +140,7 @@ public class BeadController : MonoBehaviour
         // 줌인 상태 강제 고정
         uiCamera.transform.position = targetCamPos;
         uiCamera.orthographicSize = targetZoomSize;
-        if (blackPanel != null) blackPanel.alpha = 1f;
-
+ 
         // =========================================================
         // [Phase 2] 맵 교체 (암전 상태)
         // =========================================================
@@ -168,6 +171,7 @@ public class BeadController : MonoBehaviour
             uiCamera.orthographicSize = startCamSize;
             NewSpriteSetting(); // 두루마리 등 세팅 이미지 설정
             stageSceneUI.MapTargetRectChange(targetRect);
+            stageSceneUI.MapSetting(isEventMap);
             backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true);
             yield return blackPanel.DOFade(0f, 1f).SetUpdate(true).WaitForCompletion();  
             blackPanel.blocksRaycasts = false;
@@ -193,6 +197,7 @@ public class BeadController : MonoBehaviour
 
         // 클릭가능
         backGroundBlackPanel.blocksRaycasts = false;
+        backGroundBlackPanel.interactable = false;
     }
 
 
