@@ -88,6 +88,7 @@ public class StageSceneUI : UI_Popup
         StageButton_7,
         StageButton_8,
         StageButton_9,
+        StageButton_10,
         PracticeModeButton
     }
 
@@ -268,7 +269,7 @@ public class StageSceneUI : UI_Popup
             AddPointerEvent(startButton, (eventData) => OnPointerExit(practiceButton), EventTriggerType.PointerExit);
         }
 
-        for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_9; i++)
+        for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_10; i++)
         {
             var button = GetButton(i);
             if (button != null)
@@ -710,5 +711,13 @@ public class StageSceneUI : UI_Popup
         digitalGlitch.intensity = 0f;
     }
 
+
+    /// <summary>
+    /// 비트 컨트롤러에서 호출할 맵이미지 변경
+    /// </summary>
+    public void MapTargetRectChange(RectTransform rect)
+    {
+        mapImage = rect;
+    }
     #endregion
 }

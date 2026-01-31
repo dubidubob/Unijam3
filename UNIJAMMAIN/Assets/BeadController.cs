@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,19 +6,41 @@ using DG.Tweening;
 
 public class BeadController : MonoBehaviour
 {
+    [Header("íƒ€ cs ì—°ê²°")]
+    [SerializeField] StageSceneUI stageSceneUI;
+
     [Header("Bead Lists")]
     [SerializeField] List<GameObject> storyBeads;
     [SerializeField] List<GameObject> eventBeads;
 
     [Header("Effect Settings")]
-    [SerializeField] private Camera uiCamera;       // ÁÜÀÎ È¿°ú¸¦ ÁÙ Ä«¸Ş¶ó
-    [SerializeField] private CanvasGroup blackPanel; // ¾ÏÀü È¿°ú¸¦ ÁÙ °ËÀº ÆĞ³Î
-    [SerializeField] private float effectDuration = 1.0f;
-    [SerializeField] private float targetZoomSize = 4.0f; // ¸ñÇ¥ Ä«¸Ş¶ó »çÀÌÁî
+    [SerializeField] private Camera uiCamera;Â  Â  Â  Â // ì¤Œì¸ íš¨ê³¼ë¥¼ ì¤„ ì¹´ë©”ë¼
+Â  Â  [SerializeField] private CanvasGroup blackPanel; // ì•”ì „ íš¨ê³¼ë¥¼ ì¤„ ê²€ì€ íŒ¨ë„
+    [SerializeField] private CanvasGroup backGroundBlackPanel; // í™”ë©´ ì™„ì „ ì „í™˜ìš© ê²€ì€ íŒ¨ë„
+Â  Â  [SerializeField] private float effectDuration = 1.0f;
+    [SerializeField] private float targetZoomSize = 4.0f; // ëª©í‘œ ì¹´ë©”ë¼ ì‚¬ì´ì¦ˆ
 
-    [Header("Boundary Settings")]
-    [SerializeField] private RectTransform backgroundRect; // [Ãß°¡] ¹è°æ ÀÌ¹ÌÁö(ÁöµµÀÇ ÀüÃ¼ Å©±â)
+Â  Â  [Header("Boundary Settings")]
+    [SerializeField] private RectTransform backgroundRect; // [ì¶”ê°€] ë°°ê²½ ì´ë¯¸ì§€(ì§€ë„ì˜ ì „ì²´ í¬ê¸°)
 
+Â  Â  [Header("Bead ì´í™íŠ¸ ì´ë¯¸ì§€ ê´€ë ¨ ì„¸íŒ…")]
+    [SerializeField] private RectTransform storyRect;
+    [SerializeField] private RectTransform eventWinterRect;
+    [SerializeField] private Image doorooImage;
+    [SerializeField] private Image patternImage;
+    [Header("ë§µ ì˜¤ë¸Œì íŠ¸")]
+    private readonly float default_MapPositionY = 893.08f;
+    [SerializeField] private GameObject map_MainStory; // ê¸°ë³¸ê°’ y 893.08
+Â  Â  [SerializeField] private GameObject map_EventWinter; // ê¸°ë³¸ê°’ y -3000
+
+
+    [Header("ìŠ¤í”„ë¼ì´íŠ¸")]
+    [SerializeField] private Sprite dooroo_Original;
+    [SerializeField] private Sprite pattern_Original;
+
+    [SerializeField] private Sprite dooroo_Winter;
+    [SerializeField] private Sprite pattern_Winter;
+       
     private void Start()
     {
         if (blackPanel != null)
@@ -28,21 +50,40 @@ public class BeadController : MonoBehaviour
         }
 
         if (uiCamera == null) uiCamera = Camera.main;
+
+
+        map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -4000);
     }
 
+
+    private Sprite dooroo_targetSprite;
+    private Sprite pattern_targetSprite;
+    private RectTransform targetRect;
+    private GameObject targetMapObject;
+       
     public void StoryBeadAction(int index = 0)
     {
         if (storyBeads != null && index < storyBeads.Count)
         {
-            // GetComponentInChildren ´ë½Å ¹Ù·Î GetComponent »ç¿ë (»óÈ²¿¡ ¸ÂÃç Á¶Á¤)
-            CameraZoominAndBlackOut(storyBeads[index].GetComponent<RectTransform>());
+Â  Â  Â  Â  Â  Â  // GetComponentInChildren ëŒ€ì‹  ë°”ë¡œ GetComponent ì‚¬ìš© (ìƒí™©ì— ë§ì¶° ì¡°ì •)
+            dooroo_targetSprite = dooroo_Original;
+            pattern_targetSprite = pattern_Original;
+            targetRect = storyRect;
+            targetMapObject = map_MainStory;
+Â  Â  Â  Â  Â  Â  CameraZoominAndBlackOut(storyBeads[index].GetComponent<RectTransform>());
         }
     }
 
+
+    // ì´ë²¤íŠ¸ ë²„íŠ¼ í´ë¦­ 
     public void EventBeadAction(int index = 0)
     {
         if (eventBeads != null && index < eventBeads.Count)
         {
+            dooroo_targetSprite = dooroo_Winter;
+            pattern_targetSprite = pattern_Winter;
+            targetRect = eventWinterRect;
+            targetMapObject = map_EventWinter;
             CameraZoominAndBlackOut(eventBeads[index].GetComponent<RectTransform>());
         }
     }
@@ -54,83 +95,141 @@ public class BeadController : MonoBehaviour
 
     private IEnumerator CoZoomAndFade(RectTransform target)
     {
-        // 1. ÃÊ±â°ª ¼³Á¤
+        backGroundBlackPanel.blocksRaycasts = true;
+        // 1. ì´ˆê¸°ê°’ ì €ì¥ (ì´ ìœ„ì¹˜ë¡œ ë°˜ë“œì‹œ ëŒì•„ì˜¤ê²Œ ë¨)
         Vector3 startCamPos = uiCamera.transform.position;
         float startCamSize = uiCamera.orthographicSize;
         float time = 0f;
 
-        // 2. ¸ñÇ¥ À§Ä¡ °è»ê
+        // 2. ëª©í‘œ ìœ„ì¹˜ ê³„ì‚°
         Vector3 targetCamPos = target.position;
-        targetCamPos.z = startCamPos.z; // ZÃà À¯Áö
+        targetCamPos.z = startCamPos.z; // Zì¶• ìœ ì§€
 
-        // [ÇÙ½É ·ÎÁ÷] ¸ñÇ¥ À§Ä¡°¡ ¹è°æ ¹ÛÀ¸·Î ³ª°¡Áö ¾Êµµ·Ï º¸Á¤(Clamp)
+        // ë°°ê²½ ë°–ìœ¼ë¡œ ë‚˜ê°€ì§€ ì•Šê²Œ ë³´ì •
         if (backgroundRect != null)
         {
             targetCamPos = GetClampedTargetPos(targetCamPos, targetZoomSize);
         }
 
-        // ¾ÏÀü ÆĞ³Î Å¬¸¯ Â÷´Ü
+        // ì…ë ¥ ì°¨ë‹¨
         if (blackPanel != null) blackPanel.blocksRaycasts = true;
 
-        // 3. ·çÇÁ ½ÇÇà
+        // =========================================================
+        // [Phase 1] ì¤Œì¸ & ì•”ì „ (ë“¤ì–´ê°ˆ ë•Œ)
+        // =========================================================
+        // (ì°¸ê³ : ë£¨í”„ ë°– DOFadeëŠ” ì œê±°í–ˆìŠµë‹ˆë‹¤. ë£¨í”„ ì•ˆì—ì„œ ìˆ˜ë™ ì œì–´í•˜ëŠ” ê²ƒì´ ë” ì •í™•í•©ë‹ˆë‹¤.)
+        
         while (time < effectDuration)
         {
-            time += Time.deltaTime;
+            yield return null;
+            time += Time.unscaledDeltaTime;
+
             float t = time / effectDuration;
+            float smoothT = 1f - Mathf.Pow(1f - t, 4f); // Ease Out Quart
 
-            // Ease Out Quart (ÃµÃµÈ÷ µµÂøÇÏ´Â ´À³¦)
-            float smoothT = 1f - Mathf.Pow(1f - t, 4f);
-
-            // ÀÌµ¿ ¹× ÁÜ
             uiCamera.transform.position = Vector3.Lerp(startCamPos, targetCamPos, smoothT);
             uiCamera.orthographicSize = Mathf.Lerp(startCamSize, targetZoomSize, smoothT);
 
-          
-            // ¾ÏÀü
-            if (blackPanel != null)
-            {
-                blackPanel.alpha = Mathf.Lerp(0f, 1f, smoothT);
-            }
-
-            yield return null;
+            if (blackPanel != null) blackPanel.alpha = Mathf.Lerp(0f, 0.7f, smoothT);
         }
 
-        // 4. ÃÖÁ¾°ª Àû¿ë
+        // ì¤Œì¸ ìƒíƒœ ê°•ì œ ê³ ì •
         uiCamera.transform.position = targetCamPos;
         uiCamera.orthographicSize = targetZoomSize;
         if (blackPanel != null) blackPanel.alpha = 1f;
 
-        Debug.Log("¿¬Ãâ Á¾·á!");
-        // ¾À ÀÌµ¿ ·ÎÁ÷...
+        // =========================================================
+        // [Phase 2] ë§µ êµì²´ (ì•”ì „ ìƒíƒœ)
+        // =========================================================
+        // ì„ì‹œ ëª¨ë“  ê²ƒë“¤ ì•ˆë³´ì´ê²Œ ì´ë™
+        if (map_MainStory != null)
+            map_MainStory.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -3000);
+        if (map_EventWinter != null)
+            map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -3000);
+
+        //---
+
+        // íƒ€ê²Ÿì€ ë³´ì´ëŠ”ê³³ìœ¼ë¡œ ì´ë™
+        if (targetMapObject != null)
+            targetMapObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, default_MapPositionY);
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        float allblackDuration = 0.7f;
+        backGroundBlackPanel.DOFade(1f, allblackDuration); // ì™„ì „íˆ ì•”ì „
+
+        yield return new WaitForSeconds(allblackDuration);
+        // =========================================================
+        // [Phase 3] ì•”ì „ ë³µêµ¬ (í™”ë©´ ë°ì•„ì§)
+        // =========================================================
+        if (blackPanel != null)
+        {
+            uiCamera.transform.position = startCamPos;
+            uiCamera.orthographicSize = startCamSize;
+            NewSpriteSetting(); // ë‘ë£¨ë§ˆë¦¬ ë“± ì„¸íŒ… ì´ë¯¸ì§€ ì„¤ì •
+            stageSceneUI.MapTargetRectChange(targetRect);
+            backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true);
+            yield return blackPanel.DOFade(0f, 1f).SetUpdate(true).WaitForCompletion();  
+            blackPanel.blocksRaycasts = false;
+           
+        }
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        // =========================================================
+        // [Phase 4] ë³µê·€ (ìˆ˜ì •ë¨: DOTween ì œê±° -> ìˆ˜ë™ ê³„ì‚°)
+        // =========================================================
+        // ì—¬ê¸°ì„œ DOTweenì„ ì“°ë©´ ì´ìƒí•œ ê³³ìœ¼ë¡œ íŠˆ ìˆ˜ ìˆìœ¼ë¯€ë¡œ, 
+        // í˜„ì¬ ìœ„ì¹˜ì—ì„œ startCamPosê¹Œì§€ ì§ì ‘ ê³„ì‚°í•´ì„œ ì´ë™ì‹œí‚µë‹ˆë‹¤.
+
+
+        // ë§ˆì§€ë§‰ ë§µ ì´ë™ ì—°ì¶œ
+        /*
+        if (map_EventWinter != null)
+        {
+            map_EventWinter.GetComponent<RectTransform>().DOAnchorPosY(892f, 1f).SetUpdate(true);
+        }
+        */
+
+        // í´ë¦­ê°€ëŠ¥
+        backGroundBlackPanel.blocksRaycasts = false;
     }
 
-    // [Ãß°¡ ÇÔ¼ö] Ä«¸Ş¶ó°¡ ¹è°æ ¹ÛÀ¸·Î ³ª°¡Áö ¾Ê°Ô À§Ä¡¸¦ Á¦ÇÑÇÏ´Â ÇÔ¼ö
+
+    private void NewSpriteSetting()
+    {
+        doorooImage.sprite = dooroo_targetSprite;
+        patternImage.sprite = pattern_targetSprite;
+    }
+
+    // [ìˆ˜ì •ëœ í•¨ìˆ˜] ê³„ì‚° ì˜¤ë¥˜ ì‹œ ì¤‘ì•™ ê³ ì • ë°©ì§€ ë¡œì§ ì¶”ê°€
     private Vector3 GetClampedTargetPos(Vector3 targetPos, float targetSize)
     {
-        // 1. ÁÜÀÎ µÈ »óÅÂ¿¡¼­ÀÇ Ä«¸Ş¶ó ³ôÀÌ/³Êºñ °è»ê
         float camHeight = targetSize * 2f;
         float camWidth = camHeight * uiCamera.aspect;
 
-        // 2. ¹è°æ ÀÌ¹ÌÁöÀÇ ¿ùµå ÁÂÇ¥ °æ°è(Bound) ±¸ÇÏ±â
         Vector3[] corners = new Vector3[4];
         backgroundRect.GetWorldCorners(corners);
-        // corners[0] = ÁÂÇÏ´Ü, corners[2] = ¿ì»ó´Ü
 
         float bgMinX = corners[0].x;
         float bgMaxX = corners[2].x;
         float bgMinY = corners[0].y;
         float bgMaxY = corners[2].y;
 
-        // 3. Ä«¸Ş¶ó Áß½ÉÀÌ °¥ ¼ö ÀÖ´Â ÃÖ¼Ò/ÃÖ´ë ÁÂÇ¥ °è»ê
-        // (¹è°æ ³¡ - Ä«¸Ş¶ó Àı¹İ Å©±â) ¸¸Å­¸¸ °¥ ¼ö ÀÖÀ½
         float minX = bgMinX + (camWidth / 2f);
         float maxX = bgMaxX - (camWidth / 2f);
         float minY = bgMinY + (camHeight / 2f);
         float maxY = bgMaxY - (camHeight / 2f);
 
-        // 4. ¸ñÇ¥ À§Ä¡¸¦ ÀÌ ¹üÀ§ ¾ÈÀ¸·Î °¡µÎ±â(Clamp)
-        float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
-        float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
+        // [ì¤‘ìš” ìˆ˜ì •] ë°°ê²½ì´ ì¹´ë©”ë¼ë³´ë‹¤ ì‘ê±°ë‚˜ ê³„ì‚°ì´ ê¼¬ì—¬ì„œ min > maxê°€ ë˜ë©´
+        // Clampê°€ ê°•ì œë¡œ ê°’ì„ ì´ìƒí•œ ê³³(ì¤‘ì•™ ë“±)ìœ¼ë¡œ íŠ€ê²Œ ë§Œë“­ë‹ˆë‹¤.
+        // ì´ ê²½ìš° Clampë¥¼ í•˜ì§€ ì•Šê³  ê·¸ëƒ¥ ì›ë˜ êµ¬ìŠ¬ ìœ„ì¹˜(targetPos)ë¥¼ ë°˜í™˜í•˜ë„ë¡ ì•ˆì „ì¥ì¹˜ë¥¼ ê²ë‹ˆë‹¤.
+
+        float clampedX = targetPos.x;
+        float clampedY = targetPos.y;
+
+        if (minX < maxX) clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
+        if (minY < maxY) clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
 
         return new Vector3(clampedX, clampedY, targetPos.z);
     }

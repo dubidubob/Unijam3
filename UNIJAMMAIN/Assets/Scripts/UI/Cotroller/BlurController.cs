@@ -401,19 +401,21 @@ public class BlurController : MonoBehaviour
         // EventTrigger에 이벤트를 추가합니다.
         eventTrigger.triggers.Add(entry);
     }
-
     public void ComboEffect()
     {
-        float defaultSize = camera.orthographicSize;
+        // 몬스터 액션 중이라면 줌인만 하고, 복귀는 몬스터가 정한 TargetBaseSize로 한다.
+        Camera.main.DOKill(false);
 
-        // 줌인
-        camera.DOOrthoSize(defaultSize * 0.9f, 0.4f)
+        float currentBase = Camera.main.orthographicSize; // 현재 사이즈에서
+        float punchSize = currentBase * 0.9f; // 살짝만 펀치
+
+        Camera.main.DOOrthoSize(punchSize, 0.4f)
             .SetEase(Ease.OutQuad)
             .OnComplete(() =>
             {
-                // 원래 크기로 복귀
-                camera.DOOrthoSize(defaultSize, 0.4f)
-                        .SetEase(Ease.InOutQuad);
+                // [해결책] 무조건 5f로 가는 게 아니라, 현재 카메라가 잠겨있다면 잠긴 값을 유지!
+            float recoverSize = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
+                Camera.main.DOOrthoSize(recoverSize, 0.4f).SetEase(Ease.OutSine);
             });
     }
 

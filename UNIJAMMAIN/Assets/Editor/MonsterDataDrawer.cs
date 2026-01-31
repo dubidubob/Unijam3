@@ -1,29 +1,21 @@
 using UnityEngine;
 using UnityEditor;
 
-// 이 Drawer가 MonsterData 타입을 위한 것임을 Unity에 알려줍니다.
 [CustomPropertyDrawer(typeof(MonsterData))]
 public class MonsterDataDrawer : PropertyDrawer
 {
-    // 인스펙터에 UI를 그리는 메인 함수입니다.
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
 
-        // 한 줄의 높이를 미리 계산합니다.
         float singleLineHeight = EditorGUIUtility.singleLineHeight;
-        // 필드 사이의 간격
         float spacing = EditorGUIUtility.standardVerticalSpacing;
-
-        // 현재 Y 위치
         float currentY = position.y;
 
-        // isin, monsterType 필드는 항상 보이도록 그립니다.
-        // 각 프로퍼티(변수)를 이름으로 찾아옵니다.
+        // 1. 기본 필드 그리기 (isIn, monsterType)
         var isInProp = property.FindPropertyRelative("isIn");
         var monsterTypeProp = property.FindPropertyRelative("monsterType");
 
-        // UI를 그릴 사각형 영역을 설정하고 프로퍼티 필드를 그립니다.
         Rect isInRect = new Rect(position.x, currentY, position.width, singleLineHeight);
         EditorGUI.PropertyField(isInRect, isInProp);
         currentY += singleLineHeight + spacing;
@@ -32,13 +24,11 @@ public class MonsterDataDrawer : PropertyDrawer
         EditorGUI.PropertyField(monsterTypeRect, monsterTypeProp);
         currentY += singleLineHeight + spacing;
 
-        //  --- 여기가 핵심 로직 ---
-        // monsterType enum의 현재 선택된 값을 가져옵니다.
+        // --- 조건부 로직 ---
         Define.MonsterType selectedType = (Define.MonsterType)monsterTypeProp.enumValueIndex;
 
-        // 만약 선택된 타입에 따라, 필드를 그립니다. 12-28 -> 이제 대각선도 패턴이 있으니 모두 그립니다
-        if (true
-            )
+        // 조건 1: MouseClick이 아닐 때 -> WASD_Pattern 표시
+        if (selectedType != Define.MonsterType.MouseClick)
         {
             var bossNameProp = property.FindPropertyRelative("WASD_Pattern");
             Rect bossNameRect = new Rect(position.x, currentY, position.width, singleLineHeight);
@@ -46,7 +36,32 @@ public class MonsterDataDrawer : PropertyDrawer
             currentY += singleLineHeight + spacing;
         }
 
-        // 나머지 필드들을 그립니다.
+        if (selectedType == Define.MonsterType.MouseClick)
+        {
+
+            var dirProp = property.FindPropertyRelative("dir");
+
+            Rect dirRect = new Rect(position.x, currentY, position.width, singleLineHeight);
+
+            EditorGUI.PropertyField(dirRect, dirProp);
+
+            currentY += singleLineHeight + spacing;
+
+        }
+
+
+        // 조건 2: MouseClick 일 때 -> cameraActionDuration 표시
+        if (selectedType == Define.MonsterType.MouseClick)
+        {
+            // MonsterData 클래스에 'cameraActionDuration' 변수가 있어야 합니다.
+            var cameraActionProp = property.FindPropertyRelative("cameraActionDuration");
+
+            Rect cameraActionRect = new Rect(position.x, currentY, position.width, singleLineHeight);
+            EditorGUI.PropertyField(cameraActionRect, cameraActionProp);
+            currentY += singleLineHeight + spacing;
+        }
+
+        // 2. 나머지 공통 필드 그리기
         var speedUpRateProp = property.FindPropertyRelative("speedUpRate");
         Rect speedUpRateRect = new Rect(position.x, currentY, position.width, singleLineHeight);
         EditorGUI.PropertyField(speedUpRateRect, speedUpRateProp);
@@ -69,25 +84,31 @@ public class MonsterDataDrawer : PropertyDrawer
         EditorGUI.EndProperty();
     }
 
-    // 동적으로 필드가 추가/제거되므로 전체 높이를 다시 계산해줘야 합니다.
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        float totalHeight = 0;
         float singleLineHeight = EditorGUIUtility.singleLineHeight;
         float spacing = EditorGUIUtility.standardVerticalSpacing;
 
-        // 기본적으로 6개의 필드가 있으므로 높이를 계산합니다.
-        totalHeight = (singleLineHeight * 6) + (spacing * 5);
+        // 기본 필드 6개 (isIn, monsterType, speedUpRate, spawnBeat, moveBeat, hiding)
+        int fieldCount = 6;
 
         var monsterTypeProp = property.FindPropertyRelative("monsterType");
-        Define.MonsterType selectedType = (Define.MonsterType)monsterTypeProp.enumValueIndex;
-
-        // 만약 Boss 타입이 선택되었다면, bossName 필드의 높이를 추가합니다.
-        if (selectedType == Define.MonsterType.WASD)
+        if (monsterTypeProp != null)
         {
-            totalHeight += singleLineHeight + spacing;
+            Define.MonsterType selectedType = (Define.MonsterType)monsterTypeProp.enumValueIndex;
+
+            // MouseClick이 아니면 WASD_Pattern 때문에 +1
+            if (selectedType != Define.MonsterType.MouseClick)
+            {
+                fieldCount++;
+            }
+            // MouseClick 이면 cameraActionDuration 때문에 +1
+            else if (selectedType == Define.MonsterType.MouseClick)
+            {
+                fieldCount++;
+            }
         }
 
-        return totalHeight;
+        return (singleLineHeight * fieldCount) + (spacing * (fieldCount - 1));
     }
 }

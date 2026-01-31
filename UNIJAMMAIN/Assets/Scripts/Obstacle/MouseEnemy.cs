@@ -69,15 +69,16 @@ public class MouseEnemy : MonoBehaviour
         // BlinkingLoop(this.GetCancellationTokenOnDestroy()).Forget();
     }
     // 강타 애니메이션
-    public void PlaySlamAction(float duration, System.Action onImpact) // Action 매개변수 추가
+    public void PlaySlamAction(float duration, System.Action onImpact)
     {
-        DOTween.Kill("MouseFloat");
+        // 부유 트윈만 정확히 제거
+        DOTween.Kill(_rectTransform);
 
         Sequence seq = DOTween.Sequence();
         float prepTime = duration * 0.3f;
         float slamTime = duration * 0.7f;
 
-        // [Phase 1: 준비]
+        // [준비 단계]
         image.sprite = _screamSprite;
         if (_waveTransform != null)
         {
@@ -89,36 +90,33 @@ public class MouseEnemy : MonoBehaviour
         seq.Append(_rectTransform.DOScale(1.5f, prepTime).SetEase(Ease.OutQuad));
         seq.Join(_rectTransform.DOAnchorPosY(_originalPos.y + 70f, prepTime).SetEase(Ease.OutQuad));
 
-        // [중간 콜백] 스프라이트 원복
+        // [중간 콜백]
         seq.AppendCallback(() =>
         {
             image.sprite = _originalSprite;
             if (_waveTransform != null)
             {
-                CanvasGroup cg = _waveTransform.GetComponent<CanvasGroup>();
-                if (cg != null) cg.DOFade(0f, 0.5f).OnComplete(() => _waveTransform.gameObject.SetActive(false));
+                _waveTransform.gameObject.SetActive(false);
             }
         });
 
-        // [Phase 2: 타격]
+        // [타격 단계]
         seq.Append(_rectTransform.DOScale(1.0f, slamTime).SetEase(Ease.InBack));
         seq.Join(_rectTransform.DOAnchorPosY(-350f, slamTime).SetEase(Ease.InBack));
         seq.Join(image.DOColor(Color.red, slamTime));
 
-        // [완료] 바닥에 닿는 순간!
         seq.OnComplete(() =>
         {
-            // 1. 사운드 재생
             Managers.Sound.Play("SFX/SlamSound");
-
-            // 2. 외부에서 넘겨받은 카메라 흔들림/회전 액션 실행 (핵심!)
             onImpact?.Invoke();
 
-            // 3. 후처리
-            image.DOFade(0, 1.5f);
-            WaitForDisable().Forget();
+            // 자연스럽게 사라지기
+            image.DOFade(0, 0.5f).OnComplete(() => {
+                this.gameObject.SetActive(false);
+            });
         });
     }
+
     private CancellationTokenSource _blinkCts; // 블링킹 취소용 토큰
 
     private async UniTask WaitForDisable()
@@ -128,6 +126,7 @@ public class MouseEnemy : MonoBehaviour
 
     }
 
+    /*
     // [변경점] 재귀 호출 -> async Loop 패턴으로 변경
     // 훨씬 직관적이며, 실행 중인 Tween을 관리하기 편합니다.
     private async UniTaskVoid BlinkingLoop(CancellationToken token)
@@ -157,7 +156,7 @@ public class MouseEnemy : MonoBehaviour
             if (image != null) image.color = Color.white;
         }
     }
-
+    */
     private void Update()
     {
         /*
@@ -180,7 +179,7 @@ public class MouseEnemy : MonoBehaviour
         }
         */
     }
-
+    /*
     private void StopBlinking()
     {
         if (blinkTweener != null && blinkTweener.IsActive())
@@ -193,13 +192,14 @@ public class MouseEnemy : MonoBehaviour
         image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
         
     }
-
+    */
     private void OnDisable()
     {
         PauseManager.IsPaused -= PauseForWhile;
-        // StopBlinking(); // 오브젝트 비활성화 시 블링킹 중단
-       
-        this.gameObject.SetActive(false);
+        // 비활성화 시 해당 오브젝트의 모든 트윈 정지
+        _rectTransform.DOKill();
+        image.DOKill();
+        // 주의: 여기서 gameObject.SetActive(false)를 다시 호출하면 무한 루프가 발생할 수 있어 제거했습니다.
     }
 
     private void PauseForWhile(bool isStop)
