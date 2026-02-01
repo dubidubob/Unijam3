@@ -27,7 +27,7 @@ public class MonsterDataDrawer : PropertyDrawer
         // --- 조건부 로직 ---
         Define.MonsterType selectedType = (Define.MonsterType)monsterTypeProp.enumValueIndex;
 
-        // 조건 1: MouseClick이 아닐 때 -> WASD_Pattern 표시
+        // 조건 1: MouseClick이 "아닐 때" (WASD_Pattern)
         if (selectedType != Define.MonsterType.MouseClick)
         {
             var bossNameProp = property.FindPropertyRelative("WASD_Pattern");
@@ -35,29 +35,26 @@ public class MonsterDataDrawer : PropertyDrawer
             EditorGUI.PropertyField(bossNameRect, bossNameProp);
             currentY += singleLineHeight + spacing;
         }
-
-        if (selectedType == Define.MonsterType.MouseClick)
+        // 조건 2: MouseClick "일 때" (dir, cameraActionDuration, floatDuration)
+        else
         {
-
+            // 2-1. dir
             var dirProp = property.FindPropertyRelative("dir");
-
             Rect dirRect = new Rect(position.x, currentY, position.width, singleLineHeight);
-
             EditorGUI.PropertyField(dirRect, dirProp);
-
             currentY += singleLineHeight + spacing;
 
-        }
-
-
-        // 조건 2: MouseClick 일 때 -> cameraActionDuration 표시
-        if (selectedType == Define.MonsterType.MouseClick)
-        {
-            // MonsterData 클래스에 'cameraActionDuration' 변수가 있어야 합니다.
+            // 2-2. cameraActionDuration
             var cameraActionProp = property.FindPropertyRelative("cameraActionDuration");
-
             Rect cameraActionRect = new Rect(position.x, currentY, position.width, singleLineHeight);
             EditorGUI.PropertyField(cameraActionRect, cameraActionProp);
+            currentY += singleLineHeight + spacing;
+
+            // 2-3. [추가됨] floatDuration
+            // MonsterData 클래스에 'floatDuration' 변수가 선언되어 있어야 합니다.
+            var floatDurationProp = property.FindPropertyRelative("floatDuration");
+            Rect floatDurationRect = new Rect(position.x, currentY, position.width, singleLineHeight);
+            EditorGUI.PropertyField(floatDurationRect, floatDurationProp);
             currentY += singleLineHeight + spacing;
         }
 
@@ -97,15 +94,16 @@ public class MonsterDataDrawer : PropertyDrawer
         {
             Define.MonsterType selectedType = (Define.MonsterType)monsterTypeProp.enumValueIndex;
 
-            // MouseClick이 아니면 WASD_Pattern 때문에 +1
             if (selectedType != Define.MonsterType.MouseClick)
             {
-                fieldCount++;
+                // MouseClick이 아니면: WASD_Pattern (1개 추가)
+                fieldCount += 1;
             }
-            // MouseClick 이면 cameraActionDuration 때문에 +1
-            else if (selectedType == Define.MonsterType.MouseClick)
+            else
             {
-                fieldCount++;
+                // MouseClick 이면: dir + cameraActionDuration + floatDuration (3개 추가)
+                // 여기서 숫자를 3으로 해줘야 UI가 겹치지 않습니다.
+                fieldCount += 3;
             }
         }
 

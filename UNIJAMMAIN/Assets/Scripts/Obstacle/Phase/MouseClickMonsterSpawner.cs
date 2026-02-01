@@ -226,8 +226,9 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
             myEnemy = _parent.CurrentEnemy;
             if (myEnemy == null) return;
 
-            myEnemy.PlayFloatAction((float)IngameData.BeatInterval * _seqData.floatBeats);
-            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval * _seqData.floatBeats), cancellationToken: token);
+
+            myEnemy.PlayFloatAction();
+            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval *_data.floatDuration), cancellationToken: token);
             CameraController.SetMonsterMode(true, _seqData.enlargementSize);
 
             System.Action slamImpactAction = () =>
