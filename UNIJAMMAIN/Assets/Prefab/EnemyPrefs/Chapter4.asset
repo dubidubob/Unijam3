@@ -15,7 +15,8 @@ MonoBehaviour:
   phases:
   - rid: 9186972795589099525
   - rid: 5234464834424930304
-  MusicPath: BGM/Chapter4_V2
+  - rid: 5234464837725323264
+  MusicPath: BGM/temp_chapter4/1_32
   StartBeat: 4
   DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: 3671557f515f15f4b994f54933047d81, type: 3}
@@ -38,14 +39,38 @@ MonoBehaviour:
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 3
-          WASD_Pattern: 
-          speedUpRate: 0
-          spawnBeat: 4
-          moveBeat: 0
+          monsterType: 6
+          WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
+            / D/////DD"
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 4
           hiding: 0
           dir: 0
-          cameraActionDuration: 4
+          cameraActionDuration: 0
+          floatDuration: 0
+    - rid: 5234464837725323264
+      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
+      data:
+        isIn: 1
+        durationBeat: 32
+        startDelayBeat: 0
+        bpm: 88
+        timeScale: 1
+        preGenerateBeat: 0
+        extensionCreateBeat: 0
+        isFlipAD: 0
+        monsterDatas:
+        - isIn: 1
+          monsterType: 6
+          WASD_Pattern: 
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 2
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 9186972795589099525
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
