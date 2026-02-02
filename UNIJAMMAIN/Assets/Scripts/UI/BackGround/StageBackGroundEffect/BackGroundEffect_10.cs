@@ -16,7 +16,9 @@ public class BackGroundEffect_10 : MonoBehaviour, IBackGroundEffect
 
     Image 5 -> 미러볼의 불빛
 
-    Image 6 -> color Effect 
+    Image 6 -> 개
+
+    Image 7-> ColorEffect
 
    
 
@@ -44,9 +46,11 @@ public class BackGroundEffect_10 : MonoBehaviour, IBackGroundEffect
 
             StartSmoothColorLoop(_ctrl.extraObjectImage4, 1.0f);
             StartSmoothColorLoop(_ctrl.extraObjectImage5, 1.0f);
-            StartSmoothColorLoop(_ctrl.extraObjectImage6, image6MaxAlpha); // Color Effect
+            StartSmoothColorLoop(_ctrl.extraObjectImage7, image6MaxAlpha); // Color Effect
         }
     }
+
+    private bool oneTwo = false;
 
     // 인터페이스 구현: 비트 액션
     public void EffectActionGo()
@@ -97,7 +101,25 @@ public class BackGroundEffect_10 : MonoBehaviour, IBackGroundEffect
         PunchAlpha(_ctrl.extraObjectImage4, 0.3f, 1.0f, duration);
         PunchAlpha(_ctrl.extraObjectImage5, 0.5f, 1.0f, duration);
         float minAlpha = image6MaxAlpha * 0.3f;
-        PunchAlpha(_ctrl.extraObjectImage6, minAlpha, image6MaxAlpha, duration);
+
+        if(_ctrl.extraObjectImage6!=null)
+        {
+            if (oneTwo)
+            {
+                _ctrl.extraObjectImage6.sprite = _ctrl.backGrounddataSO.extraBackGroundDatas[1].animationBackGroundSprites[0];
+                oneTwo = false;
+            }
+            else
+            {
+                _ctrl.extraObjectImage6.sprite = _ctrl.backGrounddataSO.extraBackGroundDatas[1].animationBackGroundSprites[1];
+                oneTwo = true;
+            }
+        }
+
+
+
+        PunchAlpha(_ctrl.extraObjectImage7, minAlpha, image6MaxAlpha, duration);
+
     }
 
 
@@ -110,6 +132,7 @@ public class BackGroundEffect_10 : MonoBehaviour, IBackGroundEffect
         _ctrl.extraObjectImage4.sprite = _ctrl.backGrounddataSO.extraBackGroundDatas[1].extraBackGroundLists[3];
         _ctrl.extraObjectImage5.sprite = _ctrl.backGrounddataSO.extraBackGroundDatas[1].extraBackGroundLists[4];
         _ctrl.extraObjectImage6.sprite = _ctrl.backGrounddataSO.extraBackGroundDatas[1].extraBackGroundLists[5];
+        _ctrl.extraObjectImage7.sprite = _ctrl.backGrounddataSO.extraBackGroundDatas[1].extraBackGroundLists[6];
 
 
         _ctrl.extraObjectImage.gameObject.SetActive(true);
@@ -118,6 +141,7 @@ public class BackGroundEffect_10 : MonoBehaviour, IBackGroundEffect
         _ctrl.extraObjectImage4.gameObject.SetActive(true);
         _ctrl.extraObjectImage5.gameObject.SetActive(true);
         _ctrl.extraObjectImage6.gameObject.SetActive(true);
+        _ctrl.extraObjectImage7.gameObject.SetActive(true);
 
 
 
@@ -127,6 +151,7 @@ public class BackGroundEffect_10 : MonoBehaviour, IBackGroundEffect
         _ctrl.UpdateRectMargin(_ctrl.extraObjectImage4.rectTransform, 0);
         _ctrl.UpdateRectMargin(_ctrl.extraObjectImage5.rectTransform, 0);
         _ctrl.UpdateRectMargin(_ctrl.extraObjectImage6.rectTransform, 0);
+        _ctrl.UpdateRectMargin(_ctrl.extraObjectImage7.rectTransform, 0);
 
         _ctrl.extraObjectImage.rectTransform.anchoredPosition += new Vector2(0, -100);
     
@@ -196,6 +221,7 @@ public class BackGroundEffect_10 : MonoBehaviour, IBackGroundEffect
             _ctrl.extraObjectImage4?.DOKill();
             _ctrl.extraObjectImage5?.DOKill();
             _ctrl.extraObjectImage6?.DOKill();
+            _ctrl.extraObjectImage7?.DOKill();
         }
         CurrentClubColor = Color.white;
     }

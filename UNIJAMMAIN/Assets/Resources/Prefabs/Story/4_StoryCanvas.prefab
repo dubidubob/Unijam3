@@ -420,6 +420,13 @@ MonoBehaviour:
   - {fileID: 587098028343102862}
   - {fileID: 587098028343102862}
   - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
+  - {fileID: 587098028343102862}
   StandingImage:
   - {fileID: 4050828568703129866}
   - {fileID: 5613997954310720840}
@@ -716,9 +723,73 @@ MonoBehaviour:
     spriteYOffset: 50
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+    isFirstAppearance: 0
+    text: "(\uAC00\uC5EC\uC6B4 \uAC83 \uC8FC\uC81C\uC5D0 \uBAA9\uC228\uC774 \uCC38
+      \uAE38\uAD70.)"
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+    spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+    isFirstAppearance: 0
+    text: "\uB108\uB294 \uC774\uBBF8 \uCDA9\uBD84\uD788 \uC8FC\uC81C\uB97C \uB118\uC5C8\uB2E4.."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+    spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+    isFirstAppearance: 0
+    text: "\uB108\uAC00 \uBC1C\uBC84\uB465\uCE5C\uB2E4\uACE0 \uC138\uC0C1\uC774 \uBC14\uB014
+      \uAC83 \uAC19\uC73C\uB0D0?"
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+    spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
   - speakingCharacterData: {fileID: 11400000, guid: 24cc31d9d80b98d4892faf99519c6150, type: 2}
     isFirstAppearance: 0
-    text: . . . !!
+    text: "\uC774 \uACF3\uC5D0 \uC628 \uC774\uC0C1, \uC55E\uC73C\uB85C \uB0B4 \uC788\uB294
+      \uD798\uC744 \uB2E4\uD574 \uB124\uAC00 \uC788\uB294 \uACF3 \uC871\uC871 \uBAA8\uB450
+      \uBD80\uC220 \uAC83\uC774\uB2E4."
     overrideSprite: {fileID: 0}
     panelPositionOffset: {x: 0, y: 0}
     preDelay: 0
@@ -734,6 +805,68 @@ MonoBehaviour:
     goingTimeAmount: 0
     requiredKey: 0
     spriteYOffset: 50
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: 24cc31d9d80b98d4892faf99519c6150, type: 2}
+    isFirstAppearance: 0
+    text: "(\uADF8\uB9AC\uACE0 \uB124 \uC2E0\uB150\uAE4C\uC9C0\uB3C4..)"
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+    spriteYOffset: 0
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: 24cc31d9d80b98d4892faf99519c6150, type: 2}
+    isFirstAppearance: 0
+    text: "\uB124 \uC544\uBB34\uB9AC \uC798\uB0AC\uB2E4\uC9C0\uB9CC, \uADF8 \uBD84\uACFC\uB294
+      \uB300\uC801\uB3C4 \uBABB \uD560 \uAC83\uC774\uB2E4!"
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 0
+    showRightCharacter: 1
+    isAnger: 1
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+    spriteYOffset: 50
+    triggerBackgroundFade: 0
+    newBackgroundSprite: {fileID: 0}
+  - speakingCharacterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
+    isFirstAppearance: 0
+    text: ". . . \uB108 \uB610\uD55C \uADF8\uB807\uB4EF, \uB098\uB3C4 \uB0B4 \uC0AC\uBA85\uC744
+      \uB2E4\uD558\uACA0\uB2E4."
+    overrideSprite: {fileID: 0}
+    panelPositionOffset: {x: 0, y: 0}
+    preDelay: 0
+    postDelay: 0
+    showLeftCharacter: 1
+    showRightCharacter: 0
+    isAnger: 0
+    isSurprized: 0
+    leftSDAnim: 0
+    rightSDAnim: 0
+    isEnding: 0
+    XFlip: 0
+    goingTimeAmount: 0
+    requiredKey: 0
+    spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
   saturatedBackground: {fileID: 3082138766304979402}

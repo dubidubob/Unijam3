@@ -50,4 +50,5 @@ public struct TextInfo
     public int monsterCutline;
     public float delayBeat;
     public CharacterData characterData;
+    public Tutorial_PopUp.dir dir;
 }

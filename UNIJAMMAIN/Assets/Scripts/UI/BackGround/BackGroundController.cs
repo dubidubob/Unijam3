@@ -25,6 +25,7 @@ public class BackGroundController : MonoBehaviour
     [SerializeField] public Image extraObjectImage4;
     [SerializeField] public Image extraObjectImage5;
     [SerializeField] public Image extraObjectImage6;
+    [SerializeField] public Image extraObjectImage7;
     [SerializeField] public BackGroundDataSO backGrounddataSO;
 
     // 외부 스크립트용 프로퍼티(편의상 이름 매핑)

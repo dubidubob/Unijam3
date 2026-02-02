@@ -10,4 +10,5 @@ public struct MonsterData
     public bool hiding;
     public MouseEnemy.Dir dir;
     public float cameraActionDuration;
+    public float floatDuration;
 }

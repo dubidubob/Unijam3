@@ -25,6 +25,7 @@ public class PhaseController : MonoBehaviour
 
     [SerializeField] private MonsterDatabaseSO monsterDatabase;
 
+
     [SerializeField] Image backGround;
     [SerializeField] SpriteRenderer characterSprite;
     [SerializeField] ResultUI Scoreboard;

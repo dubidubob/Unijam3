@@ -57,7 +57,7 @@ public class MouseEnemy : MonoBehaviour
     }
 
     // 부유상태시작
-    public void PlayFloatAction(float duration)
+    public void PlayFloatAction()
     {
         // 둥둥 떠있는 느낌 (위아래 반복)
         _rectTransform.DOAnchorPosY(_originalPos.y + 50f, 1f)
