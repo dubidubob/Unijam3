@@ -52,7 +52,7 @@ MonoBehaviour:
           hiding: 0
           dir: 0
           cameraActionDuration: 10
-          floatDuration: 20
+          floatDuration: 4
         - isIn: 1
           monsterType: 7
           WASD_Pattern: "DXDXDXXX\tDXDXDXXX\tDXWXAXXW\tDXXXXXXX\tSXSXSXSX\tWXWXWXWX\tSXAXDXWX\tWXXXWXXX\tDXDXDXXX\tDXDXDXXX\tDXWXAXXW\tDXXXXXXX"

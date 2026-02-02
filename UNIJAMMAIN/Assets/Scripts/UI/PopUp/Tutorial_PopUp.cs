@@ -4,9 +4,17 @@ using TMPro;
 using UnityEngine;
 using Cysharp.Threading.Tasks; // UniTask 필수
 using System.Threading;      // CancellationToken 필수
+using UnityEngine.UI;
+
 
 public class Tutorial_PopUp : UI_Popup
 {
+    public enum dir
+    {
+        left,
+        right
+    }
+
     public TMP_Text text;
     public GameObject contents;
     public GameObject keyBoardGuide;
@@ -20,6 +28,10 @@ public class Tutorial_PopUp : UI_Popup
 
     [SerializeField] private GameObject leftCharacter;
     [SerializeField] private GameObject rightCharacter;
+    [SerializeField] private Image leftImage;
+    [SerializeField] private Image rightIamge;
+
+    [SerializeField] private Sprite defualt_Image;
 
     // 실행 중인 작업 취소를 위한 토큰 소스
     private CancellationTokenSource _cts;
@@ -92,6 +104,8 @@ public class Tutorial_PopUp : UI_Popup
         ShowSequenceOfPopups(textInfo, lastMonsterHitCnt, _cts.Token).Forget();
     }
 
+  
+
     // 메인 시퀀스 (async UniTaskVoid)
     private async UniTaskVoid ShowSequenceOfPopups(IReadOnlyList<TextInfo> textInfo, int? lastMonsterHitCnt, CancellationToken token)
     {
@@ -106,6 +120,10 @@ public class Tutorial_PopUp : UI_Popup
             if (token.IsCancellationRequested) return;
 
             var info = textInfo[i];
+
+            // 이미지 세팅
+            ImageSetting(info);
+
 
             // IngameData 값 캐싱 (불필요한 접근 최소화)
             float beatInterval = (float)IngameData.BeatInterval;
@@ -234,8 +252,35 @@ public class Tutorial_PopUp : UI_Popup
             keyBoardGuide.SetActive(false);
     }
 
+    private void ImageSetting(TextInfo textInfo)    
+    {
+        if(textInfo.characterData ==null)
+        {
+            leftImage.sprite = defualt_Image;
+            return;
+        }
+
+        dir d = textInfo.dir;
+        if(d == dir.left) // 왼쪽
+        {
+            leftCharacter.SetActive(true);
+            rightCharacter.SetActive(false);
+            leftImage.sprite = textInfo.characterData.CharacterImage;
+           
+        }
+        else // 오른쪽
+        {
+            leftCharacter.SetActive(false);
+            rightCharacter.SetActive(true);
+            rightIamge.sprite = textInfo.characterData.CharacterImage;
+        }
+    }
     private void KeyBoardGuideOn()
     {
+        if(IngameData.ChapterIdx!=0)
+        {
+            return;
+        }
         // 문자열 비교 최적화를 위해 상수로 관리하거나 ID로 관리하는 것이 좋지만, 
         // 현재 로직을 유지하면서 string.Equals 사용
         if (string.Equals(text.text, "(너를 잠식하려는 혼령이 보이는 순간, 바로 대각선 방향키를 통해 공격해!)"))
