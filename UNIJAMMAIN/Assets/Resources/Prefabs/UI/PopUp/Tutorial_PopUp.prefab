@@ -201,7 +201,7 @@ MonoBehaviour:
   rightCharacter: {fileID: 6467029079304942459}
   leftImage: {fileID: 4050828568703129866}
   rightIamge: {fileID: 3813293283574603767}
-  default_Imgae: {fileID: 21300000, guid: 44a502ce1a3ba384aa61d42dc3205d7e, type: 3}
+  default_Image: {fileID: 21300000, guid: 44a502ce1a3ba384aa61d42dc3205d7e, type: 3}
 --- !u!1 &3586880080357216618
 GameObject:
   m_ObjectHideFlags: 0
