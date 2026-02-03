@@ -31,7 +31,7 @@ public class Tutorial_PopUp : UI_Popup
     [SerializeField] private Image leftImage;
     [SerializeField] private Image rightIamge;
 
-    [SerializeField] private Sprite defualt_Image;
+    [SerializeField] private Sprite default_Imgae;
 
     // 실행 중인 작업 취소를 위한 토큰 소스
     private CancellationTokenSource _cts;
@@ -256,7 +256,7 @@ public class Tutorial_PopUp : UI_Popup
     {
         if(textInfo.characterData ==null)
         {
-            leftImage.sprite = defualt_Image;
+            leftImage.sprite = default_Imgae;
             return;
         }
 

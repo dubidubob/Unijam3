@@ -15,8 +15,7 @@ MonoBehaviour:
   phases:
   - rid: 9186972795589099525
   - rid: 5234464834424930304
-  - rid: 5234464878274543616
-  MusicPath: BGM/temp_chapter4/4_32
+  MusicPath: BGM/Chapter4_V2
   StartBeat: 4
   DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: 3671557f515f15f4b994f54933047d81, type: 3}
@@ -29,7 +28,7 @@ MonoBehaviour:
     - rid: 5234464834424930304
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 0
+        isIn: 1
         durationBeat: 96
         startDelayBeat: 0
         bpm: 88
@@ -48,7 +47,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
-        - isIn: 1
+        - isIn: 0
           monsterType: 3
           WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
             / D/////DD"
@@ -59,7 +58,7 @@ MonoBehaviour:
           dir: 1
           cameraActionDuration: 4
           floatDuration: 2
-        - isIn: 1
+        - isIn: 0
           monsterType: 3
           WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
             / D/////DD"
@@ -70,32 +69,10 @@ MonoBehaviour:
           dir: 1
           cameraActionDuration: 4
           floatDuration: 2
-    - rid: 5234464878274543616
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 64
-        startDelayBeat: 0
-        bpm: 98
-        timeScale: 1
-        preGenerateBeat: 0
-        extensionCreateBeat: 0
-        isFlipAD: 0
-        monsterDatas:
-        - isIn: 1
-          monsterType: 6
-          WASD_Pattern: "OOXXOOOX\tOOXXOOOX\tOOOOOOOO\tOOOXOOOX\tOOOXOOOX\tOOOXOOOX\tOOOXOOOX"
-          speedUpRate: 1
-          spawnBeat: 0.5
-          moveBeat: 4
-          hiding: 0
-          dir: 0
-          cameraActionDuration: 0
-          floatDuration: 0
     - rid: 9186972795589099525
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 0
+        isIn: 1
         durationBeat: 0
         startDelayBeat: 8
         bpm: 88
@@ -107,7 +84,7 @@ MonoBehaviour:
           - "\uADFC\uC6D0\uC744 \uD5A5\uD574,"
           monsterCutline: 0
           delayBeat: 4
-          characterData: {fileID: 0}
+          characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
           dir: 0
         - textContents:
           - "\uC774 \uD55C \uBAB8 \uC73C\uC2A4\uB7EC\uC9C8 \uB54C\uAE4C\uC9C0 \uACC4\uC18D
