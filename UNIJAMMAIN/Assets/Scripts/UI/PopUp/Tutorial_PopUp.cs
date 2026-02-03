@@ -29,7 +29,7 @@ public class Tutorial_PopUp : UI_Popup
     [SerializeField] private GameObject leftCharacter;
     [SerializeField] private GameObject rightCharacter;
     [SerializeField] private Image leftImage;
-    [SerializeField] private Image rightIamge;
+    [SerializeField] private Image rightImage;
 
     [SerializeField] private Sprite default_Image;
 
@@ -272,7 +272,7 @@ public class Tutorial_PopUp : UI_Popup
         {
             leftCharacter.SetActive(false);
             rightCharacter.SetActive(true);
-            rightIamge.sprite = textInfo.characterData.CharacterImage;
+            rightImage.sprite = textInfo.characterData.CharacterImage;
         }
     }
     private void KeyBoardGuideOn()
