@@ -49,6 +49,28 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
+            / D/////DD"
+          speedUpRate: 1
+          spawnBeat: 0
+          moveBeat: 0
+          hiding: 0
+          dir: 1
+          cameraActionDuration: 4
+          floatDuration: 2
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
+            / D/////DD"
+          speedUpRate: 1
+          spawnBeat: 12
+          moveBeat: 0
+          hiding: 0
+          dir: 1
+          cameraActionDuration: 4
+          floatDuration: 2
     - rid: 5234464837725323264
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -87,9 +109,11 @@ MonoBehaviour:
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 0}
+          dir: 0
         - textContents:
           - "\uC774 \uD55C \uBAB8 \uC73C\uC2A4\uB7EC\uC9C8 \uB54C\uAE4C\uC9C0 \uACC4\uC18D
             \uB098\uC544\uAC00\uB9AC."
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 0}
+          dir: 0
