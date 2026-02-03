@@ -15,8 +15,8 @@ MonoBehaviour:
   phases:
   - rid: 9186972795589099525
   - rid: 5234464834424930304
-  - rid: 5234464837725323264
-  MusicPath: BGM/temp_chapter4/1_32
+  - rid: 5234464878274543616
+  MusicPath: BGM/temp_chapter4/4_32
   StartBeat: 4
   DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: 3671557f515f15f4b994f54933047d81, type: 3}
@@ -29,19 +29,18 @@ MonoBehaviour:
     - rid: 5234464834424930304
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
-        durationBeat: 24
+        isIn: 0
+        durationBeat: 96
         startDelayBeat: 0
         bpm: 88
         timeScale: 1
-        preGenerateBeat: 0
-        extensionCreateBeat: 0
+        preGenerateBeat: 8
+        extensionCreateBeat: 4
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
-            / D/////DD"
+          WASD_Pattern: "DXDXDXDX\tDXDXDXDX\tDXDXDXDX\tDXDXDXDX\tDXDXDXDDDXDXDDDX\tDXDDDDDD\tDXDXDDDX\tDXDDDDDD\tDXDXDDDX\tDXDDDDDD\tDXDXDDDX\tDXDDDDDDDXXXDXDX\tDXXXDXXX\tDXDDXDXX\tDXXXDDDD\tDDDXDDDX\tDDDXDDDX\tDDDXDDDX\tDDDXDDDX"
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 4
@@ -71,13 +70,13 @@ MonoBehaviour:
           dir: 1
           cameraActionDuration: 4
           floatDuration: 2
-    - rid: 5234464837725323264
+    - rid: 5234464878274543616
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 32
+        durationBeat: 64
         startDelayBeat: 0
-        bpm: 88
+        bpm: 98
         timeScale: 1
         preGenerateBeat: 0
         extensionCreateBeat: 0
@@ -85,10 +84,10 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: 
+          WASD_Pattern: "OOXXOOOX\tOOXXOOOX\tOOOOOOOO\tOOOXOOOX\tOOOXOOOX\tOOOXOOOX\tOOOXOOOX"
           speedUpRate: 1
           spawnBeat: 0.5
-          moveBeat: 2
+          moveBeat: 4
           hiding: 0
           dir: 0
           cameraActionDuration: 0
@@ -96,7 +95,7 @@ MonoBehaviour:
     - rid: 9186972795589099525
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
+        isIn: 0
         durationBeat: 0
         startDelayBeat: 8
         bpm: 88
