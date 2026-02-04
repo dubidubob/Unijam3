@@ -40,7 +40,9 @@ public class BeadController : MonoBehaviour
 
     [SerializeField] private Sprite dooroo_Winter;
     [SerializeField] private Sprite pattern_Winter;
-       
+
+
+    private Bounds bgWorldBounds;
     private void Start()
     {
         if (blackPanel != null)
@@ -53,6 +55,8 @@ public class BeadController : MonoBehaviour
 
 
         map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -4000);
+
+        CacheBackgroundBounds();
     }
 
 
@@ -100,47 +104,49 @@ public class BeadController : MonoBehaviour
 
     private IEnumerator CoZoomAndFade(RectTransform target)
     {
-        // 1. 초기값 저장 (이 위치로 반드시 돌아오게 됨)
+        // 0. 해상도 변경사항 물리적 강제 갱신
+        Canvas.ForceUpdateCanvases();
+
+        // 1. 초기값 저장
         Vector3 startCamPos = uiCamera.transform.position;
         float startCamSize = uiCamera.orthographicSize;
         float time = 0f;
 
-        // 2. 목표 위치 계산
-        Vector3 targetCamPos = target.position;
-        targetCamPos.z = startCamPos.z; // Z축 유지
+        // 2. [수정] 월드 좌표를 직접 가져오되, Z축은 카메라의 시작 위치를 엄격히 따름
+        // TransformPoint를 쓰지 않고 타겟의 world position을 직접 활용합니다.
+        Vector3 targetWorldPos = target.position;
 
-        // 배경 밖으로 나가지 않게 보정
+        // 만약 피벗이 중앙이 아니라서 틀어지는 경우를 대비해 센터 보정 추가
+        Vector3 targetCenterOffset = (Vector3)target.rect.center;
+        // 로컬 오프셋을 월드 스케일에 맞춰 변환하여 더함
+        targetWorldPos += target.TransformDirection(targetCenterOffset);
+
+        Vector3 targetCamPos = new Vector3(targetWorldPos.x, targetWorldPos.y, startCamPos.z);
+
+        // 3. [임시 테스트] 배경 제한 로직이 범인인지 확인하기 위해 주석 처리하거나 아래처럼 수정
         if (backgroundRect != null)
         {
-            targetCamPos = GetClampedTargetPos(targetCamPos, targetZoomSize);
+            // Clamp 함수 내부에서 uiCamera.aspect를 사용하므로 창모드에 대응함
+            // targetCamPos = GetClampedTargetPos(targetCamPos, targetZoomSize);
+            targetCamPos = ClampCameraPosition(targetCamPos, targetZoomSize);
         }
 
-        // 입력 차단
-        if (blackPanel != null) blackPanel.blocksRaycasts = true;
-
-        // =========================================================
-        // [Phase 1] 줌인 & 암전 (들어갈 때)
-        // =========================================================
-        // (참고: 루프 밖 DOFade는 제거했습니다. 루프 안에서 수동 제어하는 것이 더 정확합니다.)
-        
+        // [Phase 1] 이동 로직 (동일)
         while (time < effectDuration)
         {
             yield return null;
             time += Time.unscaledDeltaTime;
-
             float t = time / effectDuration;
-            float smoothT = 1f - Mathf.Pow(1f - t, 4f); // Ease Out Quart
+            float smoothT = 1f - Mathf.Pow(1f - t, 4f);
 
             uiCamera.transform.position = Vector3.Lerp(startCamPos, targetCamPos, smoothT);
             uiCamera.orthographicSize = Mathf.Lerp(startCamSize, targetZoomSize, smoothT);
-
             if (blackPanel != null) blackPanel.alpha = Mathf.Lerp(0f, 0.7f, smoothT);
         }
 
-        // 줌인 상태 강제 고정
         uiCamera.transform.position = targetCamPos;
         uiCamera.orthographicSize = targetZoomSize;
- 
+
         // =========================================================
         // [Phase 2] 맵 교체 (암전 상태)
         // =========================================================
@@ -180,21 +186,6 @@ public class BeadController : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.5f);
 
-        // =========================================================
-        // [Phase 4] 복귀 (수정됨: DOTween 제거 -> 수동 계산)
-        // =========================================================
-        // 여기서 DOTween을 쓰면 이상한 곳으로 튈 수 있으므로, 
-        // 현재 위치에서 startCamPos까지 직접 계산해서 이동시킵니다.
-
-
-        // 마지막 맵 이동 연출
-        /*
-        if (map_EventWinter != null)
-        {
-            map_EventWinter.GetComponent<RectTransform>().DOAnchorPosY(892f, 1f).SetUpdate(true);
-        }
-        */
-
         // 클릭가능
         backGroundBlackPanel.blocksRaycasts = false;
         backGroundBlackPanel.interactable = false;
@@ -207,35 +198,65 @@ public class BeadController : MonoBehaviour
         patternImage.sprite = pattern_targetSprite;
     }
 
-    // [수정된 함수] 계산 오류 시 중앙 고정 방지 로직 추가
     private Vector3 GetClampedTargetPos(Vector3 targetPos, float targetSize)
     {
-        float camHeight = targetSize * 2f;
-        float camWidth = camHeight * uiCamera.aspect;
+        // 카메라가 실제로 차지하는 월드 크기
+        float camHalfHeight = targetSize;
+        float camHalfWidth = camHalfHeight * uiCamera.aspect;
+
+        // backgroundRect의 월드 경계
+        Vector3[] corners = new Vector3[4];
+        backgroundRect.GetWorldCorners(corners);
+
+        float bgLeft = corners[0].x;
+        float bgRight = corners[2].x;
+        float bgBottom = corners[0].y;
+        float bgTop = corners[2].y;
+
+        // 카메라 중심이 갈 수 있는 한계
+        float minX = bgLeft + camHalfWidth;
+        float maxX = bgRight - camHalfWidth;
+        float minY = bgBottom + camHalfHeight;
+        float maxY = bgTop - camHalfHeight;
+
+        // 배경이 카메라보다 작은 경우 → 중앙 고정
+        float clampedX = (minX <= maxX)
+            ? Mathf.Clamp(targetPos.x, minX, maxX)
+            : (bgLeft + bgRight) * 0.5f;
+
+        float clampedY = (minY <= maxY)
+            ? Mathf.Clamp(targetPos.y, minY, maxY)
+            : (bgBottom + bgTop) * 0.5f;
+
+        return new Vector3(clampedX, clampedY, targetPos.z);
+    }
+
+    private void CacheBackgroundBounds()
+    {
+        if (backgroundRect == null) return;
 
         Vector3[] corners = new Vector3[4];
         backgroundRect.GetWorldCorners(corners);
 
-        float bgMinX = corners[0].x;
-        float bgMaxX = corners[2].x;
-        float bgMinY = corners[0].y;
-        float bgMaxY = corners[2].y;
-
-        float minX = bgMinX + (camWidth / 2f);
-        float maxX = bgMaxX - (camWidth / 2f);
-        float minY = bgMinY + (camHeight / 2f);
-        float maxY = bgMaxY - (camHeight / 2f);
-
-        // [중요 수정] 배경이 카메라보다 작거나 계산이 꼬여서 min > max가 되면
-        // Clamp가 강제로 값을 이상한 곳(중앙 등)으로 튀게 만듭니다.
-        // 이 경우 Clamp를 하지 않고 그냥 원래 구슬 위치(targetPos)를 반환하도록 안전장치를 겁니다.
-
-        float clampedX = targetPos.x;
-        float clampedY = targetPos.y;
-
-        if (minX < maxX) clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
-        if (minY < maxY) clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
-
-        return new Vector3(clampedX, clampedY, targetPos.z);
+        bgWorldBounds = new Bounds(corners[0], Vector3.zero);
+        for (int i = 1; i < 4; i++)
+            bgWorldBounds.Encapsulate(corners[i]);
     }
+    private Vector3 ClampCameraPosition(Vector3 desiredPos, float orthoSize)
+    {
+        float halfHeight = orthoSize;
+        float halfWidth = orthoSize * uiCamera.aspect;
+
+        float minX = bgWorldBounds.min.x + halfWidth;
+        float maxX = bgWorldBounds.max.x - halfWidth;
+        float minY = bgWorldBounds.min.y + halfHeight;
+        float maxY = bgWorldBounds.max.y - halfHeight;
+
+        desiredPos.x = Mathf.Clamp(desiredPos.x, minX, maxX);
+        desiredPos.y = Mathf.Clamp(desiredPos.y, minY, maxY);
+
+        return desiredPos;
+    }
+
+
 }

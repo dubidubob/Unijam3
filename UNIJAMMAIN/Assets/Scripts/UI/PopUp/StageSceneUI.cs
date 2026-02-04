@@ -95,6 +95,12 @@ public class StageSceneUI : UI_Popup
         PracticeModeButton
     }
 
+    IEnumerator ResetCanvasSystem()
+    {
+        yield return null; // 해상도 변경 반영 대기
+        Canvas.ForceUpdateCanvases();
+    }
+
     private void Update()
     {
         // ESC버튼
@@ -122,7 +128,6 @@ public class StageSceneUI : UI_Popup
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
 
         SetupMapStageByNowChapterIndex();
-        mycanvas.renderMode = RenderMode.WorldSpace;
     }
 
     private void OnDestroy()
@@ -179,7 +184,7 @@ public class StageSceneUI : UI_Popup
                 targetZ = 180f;
                 darkupObject.SetActive(true);
                 dooroImage.sprite = doroDarkSprite;
-                GetComponent<Image>().sprite = backGroundDarkSprite;
+                patternBackGround.sprite = backGroundDarkSprite;
 
                 isRotated = true;
                 break;
@@ -210,6 +215,7 @@ public class StageSceneUI : UI_Popup
     {
         StoryDialog.ResetStoryBackground();
         Init();
+        StartCoroutine(InitWorldCanvasOnce());
         UpdateStageButtons();
         UpdateNavigationButtons();
         IngameData.boolPracticeMode = false;
@@ -231,7 +237,6 @@ public class StageSceneUI : UI_Popup
     public override void Init()
     {
         base.Init();
-        mycanvas.renderMode = RenderMode.WorldSpace;
         Bind<Button>(typeof(Buttons));
 
         // Up, Down, Start 버튼의 참조 가져오기
@@ -633,7 +638,7 @@ public class StageSceneUI : UI_Popup
             // 복구
             darkupObject.SetActive(false);
             dooroImage.sprite = originalDoroSprite;
-            GetComponent<Image>().sprite = originalBackGroundSprite;
+            patternBackGround.sprite = originalBackGroundSprite;
             dooroImage.color = new Color(1, 1, 1);
             patternBackGround.color = new Color(1, 1, 1);
             isRotated = false;
@@ -642,7 +647,7 @@ public class StageSceneUI : UI_Popup
         {
             darkupObject.SetActive(true);
             dooroImage.sprite = doroDarkSprite;
-            GetComponent<Image>().sprite = backGroundDarkSprite;
+            patternBackGround.sprite = backGroundDarkSprite;
 
             isRotated = true;
         }
@@ -841,18 +846,41 @@ public class StageSceneUI : UI_Popup
             // 어두운 테마 적용
             darkupObject.SetActive(true);
             dooroImage.sprite = doroDarkSprite;
-            GetComponent<Image>().sprite = backGroundDarkSprite;
+            patternBackGround.sprite = backGroundDarkSprite;
         }
         else
         {
             // 원래 테마로 복구
             darkupObject.SetActive(false);
             if (originalDoroSprite != null) dooroImage.sprite = originalDoroSprite;
-            if (originalBackGroundSprite != null) GetComponent<Image>().sprite = originalBackGroundSprite;
+            if (originalBackGroundSprite != null) patternBackGround.sprite = originalBackGroundSprite;
             dooroImage.color = Color.white;
             patternBackGround.color = Color.white;
         }
     }
 
     #endregion
+    IEnumerator InitWorldCanvasOnce()
+    {
+        // 🔥 해상도 / 창모드 반영 대기
+        yield return null;
+
+        Canvas.ForceUpdateCanvases();
+        
+        // WorldSpace 설정 단 한 번
+        mycanvas.renderMode = RenderMode.WorldSpace;
+        mycanvas.worldCamera = Camera.main;
+        mycanvas.overrideSorting = false;
+        // 🔥 CanvasScaler 완전 차단
+        CanvasScaler scaler = mycanvas.GetComponent<CanvasScaler>();
+        if (scaler != null)
+            scaler.enabled = false;
+
+        // 🔥 모든 스케일 리셋
+        RectTransform rt = mycanvas.GetComponent<RectTransform>();
+        rt.localScale = Vector3.one*0.009259259f; // 이게 정해진 스케일
+
+        transform.localScale = Vector3.one* 0.009259259f;
+    }
+
 }
