@@ -31,6 +31,7 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     // 현재 활성화된 적을 제어하기 위해 프로퍼티나 변수로 노출
     public MouseEnemy CurrentEnemy { get; private set; }
 
+
     private void Awake()
     {
         LeftOne.SetActive(false);
@@ -46,6 +47,12 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     {
         Managers.Input.InputMouse -= DeactivateMouse;
         PauseManager.IsPaused -= PauseForWhile;
+
+        foreach(var pattern in _activePatterns) // 모든 패턴 스탑시키기
+        {
+            pattern.Stop();
+        }
+
     }
 
     // --- (DeactivateMouse, ActivateEnemy 등 기존 로직은 대부분 유지) ---
@@ -186,7 +193,8 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
         _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDurationSec - threshold;
     }
     private CancellationTokenSource _cts;
-
+    
+  
     public void StartSpawning(MonsterData data)
     {
         // 기존 CTS 정리

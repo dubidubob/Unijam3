@@ -32,6 +32,8 @@ public class MouseEnemy : MonoBehaviour
     [SerializeField] private Sprite _originalSprite;
     private Vector3 _originalPos;
 
+    private Sequence _slamSequence; // 시퀀스 참조 저장
+
 
     private void Awake()
     {
@@ -71,10 +73,11 @@ public class MouseEnemy : MonoBehaviour
     // 강타 애니메이션
     public void PlaySlamAction(float duration, System.Action onImpact)
     {
+
         // 부유 트윈만 정확히 제거
         DOTween.Kill(_rectTransform);
 
-        Sequence seq = DOTween.Sequence();
+        _slamSequence = DOTween.Sequence();
         float prepTime = duration * 0.3f;
         float slamTime = duration * 0.7f;
 
@@ -84,14 +87,14 @@ public class MouseEnemy : MonoBehaviour
         {
             _waveTransform.gameObject.SetActive(true);
             _waveTransform.localScale = Vector3.zero;
-            seq.Join(_waveTransform.DOScale(3f, prepTime).SetEase(Ease.OutQuad));
+            _slamSequence.Join(_waveTransform.DOScale(3f, prepTime).SetEase(Ease.OutQuad));
         }
 
-        seq.Append(_rectTransform.DOScale(1.5f, prepTime).SetEase(Ease.OutQuad));
-        seq.Join(_rectTransform.DOAnchorPosY(_originalPos.y + 70f, prepTime).SetEase(Ease.OutQuad));
+        _slamSequence.Append(_rectTransform.DOScale(1.5f, prepTime).SetEase(Ease.OutQuad));
+        _slamSequence.Join(_rectTransform.DOAnchorPosY(_originalPos.y + 70f, prepTime).SetEase(Ease.OutQuad));
 
         // [중간 콜백]
-        seq.AppendCallback(() =>
+        _slamSequence.AppendCallback(() =>
         {
             image.sprite = _originalSprite;
             if (_waveTransform != null)
@@ -101,11 +104,11 @@ public class MouseEnemy : MonoBehaviour
         });
 
         // [타격 단계]
-        seq.Append(_rectTransform.DOScale(1.0f, slamTime).SetEase(Ease.InBack));
-        seq.Join(_rectTransform.DOAnchorPosY(-350f, slamTime).SetEase(Ease.InBack));
-        seq.Join(image.DOColor(Color.red, slamTime));
+        _slamSequence.Append(_rectTransform.DOScale(1.0f, slamTime).SetEase(Ease.InBack));
+        _slamSequence.Join(_rectTransform.DOAnchorPosY(-350f, slamTime).SetEase(Ease.InBack));
+        _slamSequence.Join(image.DOColor(Color.red, slamTime));
 
-        seq.OnComplete(() =>
+        _slamSequence.OnComplete(() =>
         {
             Managers.Sound.Play("SFX/SlamSound");
             onImpact?.Invoke();
@@ -197,11 +200,21 @@ public class MouseEnemy : MonoBehaviour
     {
         PauseManager.IsPaused -= PauseForWhile;
         // 비활성화 시 해당 오브젝트의 모든 트윈 정지
+
+        _slamSequence?.Kill();
+        _slamSequence = null;
+
         _rectTransform.DOKill();
         image.DOKill();
-        // 주의: 여기서 gameObject.SetActive(false)를 다시 호출하면 무한 루프가 발생할 수 있어 제거했습니다.
+       
+        if (_waveTransform != null) _waveTransform.DOKill();
     }
 
+
+    private void OnDestroy()
+    {
+        gameObject.SetActive(false); // Disable 호출
+    }
     private void PauseForWhile(bool isStop)
     {
         if (isStop)
