@@ -29,9 +29,9 @@ public class Tutorial_PopUp : UI_Popup
     [SerializeField] private GameObject leftCharacter;
     [SerializeField] private GameObject rightCharacter;
     [SerializeField] private Image leftImage;
-    [SerializeField] private Image rightIamge;
+    [SerializeField] private Image rightImage;
 
-    [SerializeField] private Sprite defualt_Image;
+    [SerializeField] private Sprite default_Image;
 
     // 실행 중인 작업 취소를 위한 토큰 소스
     private CancellationTokenSource _cts;
@@ -256,7 +256,7 @@ public class Tutorial_PopUp : UI_Popup
     {
         if(textInfo.characterData ==null)
         {
-            leftImage.sprite = defualt_Image;
+            leftImage.sprite = default_Image;
             return;
         }
 
@@ -272,7 +272,7 @@ public class Tutorial_PopUp : UI_Popup
         {
             leftCharacter.SetActive(false);
             rightCharacter.SetActive(true);
-            rightIamge.sprite = textInfo.characterData.CharacterImage;
+            rightImage.sprite = textInfo.characterData.CharacterImage;
         }
     }
     private void KeyBoardGuideOn()
