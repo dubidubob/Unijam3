@@ -600,9 +600,9 @@ public class StageSceneUI : UI_Popup
 
     private void TextSetting(int index)
     {
-        stageMainText.text = stageDataList[index].stageMainText;
-        stageMainSubText.text = stageDataList[index].stageMainSubText;
-        stageLevelText.text = stageDataList[index].levelText;
+        stageMainText.text = stageDataList[index].stageMainText.GetLocalizedString();
+        stageMainSubText.text = stageDataList[index].stageMainSubText.GetLocalizedString();
+        stageLevelText.text = stageDataList[index].levelText.GetLocalizedString();
 
     }
     #region Tool

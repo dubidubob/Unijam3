@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: StageSceneUI Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: StageSceneUI
+  m_TableCollectionNameGuidString: 20fca0cdc91ceae4f9c3539ef8e20aae
+  m_Entries:
+  - m_Id: 28886827008
+    m_Key: ST_0_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28953935872
+    m_Key: ST_0_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130176
+    m_Key: ST_0_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130177
+    m_Key: ST_1_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130178
+    m_Key: ST_1_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130179
+    m_Key: ST_1_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130180
+    m_Key: ST_2_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130181
+    m_Key: ST_2_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130182
+    m_Key: ST_2_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130183
+    m_Key: ST_3_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130184
+    m_Key: ST_3_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130185
+    m_Key: ST_3_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130186
+    m_Key: ST_4_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130187
+    m_Key: ST_4_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130188
+    m_Key: ST_4_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130189
+    m_Key: ST_5_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130190
+    m_Key: ST_5_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130191
+    m_Key: ST_5_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130192
+    m_Key: ST_6_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130193
+    m_Key: ST_6_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130194
+    m_Key: ST_6_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130195
+    m_Key: ST_7_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130196
+    m_Key: ST_7_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130197
+    m_Key: ST_7_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130198
+    m_Key: ST_ChristMas_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130199
+    m_Key: ST_ChristMas_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130200
+    m_Key: ST_ChristMas_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130201
+    m_Key: ST_EDM_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130202
+    m_Key: ST_EDM_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130203
+    m_Key: ST_EDM_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 3596656607092539396
+  references:
+    version: 2
+    RefIds:
+    - rid: 3596656607092539396
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1770361932419
