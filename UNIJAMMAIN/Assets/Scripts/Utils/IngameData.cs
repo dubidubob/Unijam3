@@ -17,8 +17,15 @@ public static class IngameData
     public static bool IsStart = false;
     public static int StageProgress = 0;
     public static int _defeatEnemyCount = 0;
+    /// <summary>
+    /// 현재 플레이어가 클리어한 최대 스테이지 (스토리기준)
+    /// </summary>
     public static int _clearStageIndex = 0;
-    public static int _nowStageIndex = 0;
+
+    /// <summary>
+    /// 현재 플레이어가 진입중인 스테이지
+    /// </summary>
+    public static int _nowStageIndex = 0; 
 
     static IngameData()
     {

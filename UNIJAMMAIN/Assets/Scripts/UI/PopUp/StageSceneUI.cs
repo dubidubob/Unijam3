@@ -123,8 +123,8 @@ public class StageSceneUI : UI_Popup
             glowingTextMaterial = new Material(normalTextMaterial);
             SetupGlowMaterial(glowingTextMaterial);
         }
-        forClearApproachStageIndex = IngameData._clearStageIndex +1;
-        currentStageIndex = IngameData._nowStageIndex+1;
+        forClearApproachStageIndex = IngameData._clearStageIndex +1; // 클리어된 최대스테이지
+        currentStageIndex = IngameData._nowStageIndex+1; // 현재 스테이지
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
 
         SetupMapStageByNowChapterIndex();
@@ -197,7 +197,7 @@ public class StageSceneUI : UI_Popup
             mapImage.localEulerAngles = new Vector3(0, 0, targetZ);
         }
 
-        Debug.Log($"Setup Map: Stage {currentStageIndex} -> PageLevel {currentPageLevel} (Y:{targetY}, Z:{targetZ})");
+        Debug.Log($"Setup Map: Stage {forClearApproachStageIndex} -> PageLevel {currentPageLevel} (Y:{targetY}, Z:{targetZ})");
     }
 
 
@@ -431,7 +431,7 @@ public class StageSceneUI : UI_Popup
             canvas.blocksRaycasts = true;
         }
 
-        if (stageIndex > currentStageIndex)
+        if (stageIndex > forClearApproachStageIndex)
         {
             return;
         }
