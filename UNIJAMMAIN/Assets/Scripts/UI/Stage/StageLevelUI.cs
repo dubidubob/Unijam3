@@ -14,6 +14,8 @@ public class StageLevelSceneUI : MonoBehaviour
 
     public bool isMoving = false;
 
+    [SerializeField] private StageSceneUI stageSceneUI;
+
     // Start ��� Awake ��� ���� (GetComponent�� Awake����)
     private void Awake()
     {
@@ -38,6 +40,14 @@ public class StageLevelSceneUI : MonoBehaviour
     /// <param name="nowStageLevel">���� �������� ���� (1, 2, 3...)</param>
     public IEnumerator SetStageLevelSceneUI(int nowStageLevel)
     {
+        
+        if(stageSceneUI.isEventMap) // 이벤트 맵이라면 작동하지않는다
+        {
+            yield break;
+        
+
+        }
+        
 
         // 해당 장에 처음 들어왔을때만 실행하기.
   

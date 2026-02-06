@@ -65,8 +65,9 @@ public class StageSceneUI : UI_Popup
     [SerializeField] Sprite backGroundDarkSprite;
 
 
+
     // 비트 컨트롤러 관련한 변수
-    private bool isEventMap = false; // 현재 이벤트맵으로 이동되어있는지, 스토리맵과 관련된 효과 연출등 off
+    public bool isEventMap = false; // 현재 이벤트맵으로 이동되어있는지, 스토리맵과 관련된 효과 연출등 off
 
     enum ButtonState
     {
@@ -446,6 +447,7 @@ public class StageSceneUI : UI_Popup
       
 
         IngameData.ChapterIdx = stageIndex - 1;
+        IngameData._nowStageIndex = stageIndex - 1;
 
        
         string path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";

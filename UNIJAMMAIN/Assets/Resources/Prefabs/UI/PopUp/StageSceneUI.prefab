@@ -836,6 +836,7 @@ MonoBehaviour:
   - "\uD53C\uC548"
   - "\uC545\uC5F0"
   isMoving: 1
+  stageSceneUI: {fileID: 0}
 --- !u!1 &735246676575004700
 GameObject:
   m_ObjectHideFlags: 0
@@ -3080,6 +3081,7 @@ GameObject:
   - component: {fileID: 5657406619086058807}
   - component: {fileID: 2609161628759521468}
   - component: {fileID: 3740241303624223987}
+  - component: {fileID: 3954616068721196523}
   m_Layer: 0
   m_Name: StageSceneUI
   m_TagString: Untagged
@@ -3211,6 +3213,7 @@ MonoBehaviour:
   patternBackGround: {fileID: 1837488514607287861}
   doroDarkSprite: {fileID: 21300000, guid: 7fdfc4ccb2c14f24980a1b21429da556, type: 3}
   backGroundDarkSprite: {fileID: 21300000, guid: e5bc97843c75b124daabde1370584f3b, type: 3}
+  isEventMap: 0
   originalDoroSprite: {fileID: 21300000, guid: 9da0b5d91e6e3d340abefdbdb85712a6, type: 3}
   originalBackGroundSprite: {fileID: 21300000, guid: 9e529724bc3d8334e99703d2815c10d8, type: 3}
 --- !u!223 &8565910677778262950
@@ -3291,6 +3294,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3954616068721196523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3748283175784367811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d963aa141ffc1246a8556a7fa012d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3804147762436622902
 GameObject:
   m_ObjectHideFlags: 0
@@ -4186,7 +4201,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 45.608643, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5383,7 +5398,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -11.991333, w: 0}
+  m_margin: {x: 0, y: 0, z: 102.481445, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6867,7 +6882,7 @@ GameObject:
   - component: {fileID: 7624919492957446122}
   - component: {fileID: 6171396077456384196}
   m_Layer: 0
-  m_Name: 3
+  m_Name: StageLevel_Information
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

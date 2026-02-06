@@ -374,8 +374,8 @@ public class PhaseController : MonoBehaviour
 
     private void SetStageIndex(int index)
     {
-        IngameData._nowStageIndex = Mathf.Max(IngameData._nowStageIndex, index + 1);
-        IngameData._clearStageIndex = Mathf.Max(IngameData._clearStageIndex, IngameData._nowStageIndex);
+        int minMaxStage_nowStageIndexPlus = Mathf.Min(IngameData._nowStageIndex+1, 7); // 7보다 초과되면(최대스테이지라면) 7로 고정
+        IngameData._clearStageIndex = Mathf.Max(IngameData._clearStageIndex, minMaxStage_nowStageIndexPlus); 
     }
 
     private void SetStageBackGround()
