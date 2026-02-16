@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phases:
   - rid: 9186972795589099525
-  - rid: 5234464834424930304
   - rid: 5234464878274543618
+  - rid: 5234464834424930304
   - rid: 5234464878274543619
   MusicPath: BGM/Chapter4_V2
   StartBeat: 4
@@ -35,7 +35,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 88
         timeScale: 1
-        preGenerateBeat: 8
+        preGenerateBeat: 0
         extensionCreateBeat: 4
         isFlipAD: 0
         monsterDatas:
@@ -54,7 +54,7 @@ MonoBehaviour:
           WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
             / D/////DD"
           speedUpRate: 1
-          spawnBeat: 0
+          spawnBeat: 4
           moveBeat: 0
           hiding: 0
           dir: 1
@@ -87,7 +87,7 @@ MonoBehaviour:
             \uACF3\uC5D0 \uC788\uC5B4\uB77C!"
           monsterCutline: 0
           delayBeat: 4
-          characterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+          characterData: {fileID: 11400000, guid: 24cc31d9d80b98d4892faf99519c6150, type: 2}
           dir: 1
     - rid: 5234464878274543619
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}

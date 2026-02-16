@@ -54,7 +54,7 @@ MonoBehaviour:
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
-          dir: 1
+          dir: 0
         - textContents:
           - "\uC2A4\uC2B9\uB2D8 \uB9D0\uC500\uC744 \uB530\uB77C.. \uADF8\uB798 \uD55C
             \uBC88 \uD574\uBCF4\uC790!"

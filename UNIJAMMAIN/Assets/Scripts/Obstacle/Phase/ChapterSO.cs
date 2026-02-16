@@ -16,7 +16,7 @@
         public int StartBeat;
     public float DelayPaddingTick;
         public Sprite backGroundSprite;
-        //public Sprite backGroundGraySprite;
+        public Sprite backGroundGraySprite;
         public Color colorPalette;
     public bool SinkStage;
 
