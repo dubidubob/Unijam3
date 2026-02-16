@@ -17,6 +17,10 @@ public class MouseEnemy : MonoBehaviour
 
     private Image image;
     private Tweener blinkTweener;
+
+    [Header("Fade Settings")]
+    public float fadeInDuration = 0.5f;
+
     public float initialBlinkDuration = 0.8f; // 시작 블링킹 지속 시간
     public float minBlinkDuration = 0.05f;     // 블링킹 최소 지속 시간
     public float blinkSpeedIncrease = 0.1f;  // 매 사이클마다 지속 시간 감소량
@@ -30,6 +34,7 @@ public class MouseEnemy : MonoBehaviour
     [SerializeField] private RectTransform _waveTransform;
     [SerializeField] private Sprite _screamSprite;
     [SerializeField] private Sprite _originalSprite;
+
     private Vector3 _originalPos;
 
     private Sequence _slamSequence; // 시퀀스 참조 저장
@@ -51,11 +56,27 @@ public class MouseEnemy : MonoBehaviour
         PauseManager.IsPaused -= PauseForWhile;
         PauseManager.IsPaused += PauseForWhile;
 
+
         // 초기화: 위치 원복
         _rectTransform.localPosition = _originalPos;
         _rectTransform.localScale = Vector3.one;
         image.sprite = _originalSprite;
-        image.color = Color.white;
+
+
+        //image.color = Color.white;
+        Color c = Color.white;
+        c.a = 0f; // 알파값을 0으로 설정
+        image.color = c;
+
+        // [추가됨] 1. 생성 효과음 재생 위치
+        // 몬스터가 등장(Enable)하자마자 소리가 나야 자연스럽습니다.
+        if (!string.IsNullOrEmpty("SFX/Enemy/MaskSpawn"))
+            Managers.Sound.Play("SFX/Enemy/MaskSpawn");
+
+        // [추가됨] 3. 페이드인 실행 (0 -> 1)
+        image.DOFade(1f, fadeInDuration)
+             .SetEase(Ease.OutQuad) // 부드러운 등장 감속
+             .SetLink(gameObject);  // 오브젝트가 꺼지면 트윈도 자동 종료
     }
 
     // 부유상태시작
@@ -81,6 +102,9 @@ public class MouseEnemy : MonoBehaviour
         float prepTime = duration * 0.3f;
         float slamTime = duration * 0.7f;
 
+        if (!string.IsNullOrEmpty("SFX/Enemy/MaskRoar"))
+            Managers.Sound.Play("SFX/Enemy/MaskRoar");
+
         // [준비 단계]
         image.sprite = _screamSprite;
         if (_waveTransform != null)
@@ -93,6 +117,7 @@ public class MouseEnemy : MonoBehaviour
         _slamSequence.Append(_rectTransform.DOScale(1.5f, prepTime).SetEase(Ease.OutQuad));
         _slamSequence.Join(_rectTransform.DOAnchorPosY(_originalPos.y + 70f, prepTime).SetEase(Ease.OutQuad));
 
+
         // [중간 콜백]
         _slamSequence.AppendCallback(() =>
         {
@@ -100,6 +125,9 @@ public class MouseEnemy : MonoBehaviour
             if (_waveTransform != null)
             {
                 _waveTransform.gameObject.SetActive(false);
+
+                if (!string.IsNullOrEmpty("SFX/Enemy/MaskSmash"))
+                    Managers.Sound.Play("SFX/Enemy/MaskSmash");
             }
         });
 
@@ -107,10 +135,8 @@ public class MouseEnemy : MonoBehaviour
         _slamSequence.Append(_rectTransform.DOScale(1.0f, slamTime).SetEase(Ease.InBack));
         _slamSequence.Join(_rectTransform.DOAnchorPosY(-350f, slamTime).SetEase(Ease.InBack));
         _slamSequence.Join(image.DOColor(Color.red, slamTime));
-
         _slamSequence.OnComplete(() =>
         {
-            Managers.Sound.Play("SFX/SlamSound");
             onImpact?.Invoke();
 
             // 자연스럽게 사라지기
