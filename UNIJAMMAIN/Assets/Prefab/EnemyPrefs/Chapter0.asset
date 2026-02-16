@@ -20,7 +20,7 @@ MonoBehaviour:
   - rid: 8855663901085794310
   - rid: 8855663901085794311
   - rid: 8855663901085794312
-  MusicPath: BGM/Chapter0_V2
+  MusicPath: BGM/Chapter0_V3
   StartBeat: 16
   DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: 99535dfa15f32c04080f3357e6166718, type: 3}

@@ -9041,7 +9041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 1
-  TestStageIndex: 9
+  TestStageIndex: 2
   isSinkStage: 0
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}
@@ -9061,6 +9061,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6fc515c901a1b7843b4a6051201b00af, type: 2}
   - {fileID: 11400000, guid: 72567280c88f6644cab170b42ae95122, type: 2}
   - {fileID: 11400000, guid: bd2d8e4a691a52247ab7fab03d25504e, type: 2}
+  - {fileID: 11400000, guid: 35be0e1c40b064443b80266d936d5bdf, type: 2}
   startMotions:
     startCountUI: {fileID: 1997952375}
     playerActionUI: {fileID: 460754923}
