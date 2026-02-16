@@ -5159,7 +5159,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 27640fc4f6f71654fae9b92cc77a87f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: db0bd7ff43658ca449dddf022c30b70a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6689,7 +6689,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 38636aab8002b274094fa2b5237bd0dd, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7277,7 +7277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c17f480faac384b499828ac5c3323abd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77fae97c53c5fae4a8d1d4c73bdb0069, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7427,7 +7427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: db0bd7ff43658ca449dddf022c30b70a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 91a7dcfe540cf0446b4a7a238b8e84e4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9041,7 +9041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 1
-  TestStageIndex: 2
+  TestStageIndex: 10
   isSinkStage: 0
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}

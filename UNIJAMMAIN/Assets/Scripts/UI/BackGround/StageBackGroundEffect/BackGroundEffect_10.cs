@@ -98,7 +98,7 @@ public class BackGroundEffect_10 : MonoBehaviour, IBackGroundEffect
         // 3. Image 4, 5, 6: 조명 (색은 자동, 여기선 밝기만 펀치)
         // -------------------------------------------------------
         // 비트가 칠 때마다 불빛이 "번쩍(Flash)" 하는 느낌만 추가
-        PunchAlpha(_ctrl.extraObjectImage4, 0.3f, 1.0f, duration);
+        //PunchAlpha(_ctrl.extraObjectImage4, 0.3f, 1.0f, duration);
         PunchAlpha(_ctrl.extraObjectImage5, 0.5f, 1.0f, duration);
         float minAlpha = image6MaxAlpha * 0.3f;
 

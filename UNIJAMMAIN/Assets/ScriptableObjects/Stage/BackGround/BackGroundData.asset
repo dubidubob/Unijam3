@@ -48,9 +48,9 @@ MonoBehaviour:
     animationBackGroundSprites: []
   - extraBackGroundLists:
     - {fileID: 21300000, guid: db0bd7ff43658ca449dddf022c30b70a, type: 3}
-    - {fileID: 21300000, guid: 27640fc4f6f71654fae9b92cc77a87f5, type: 3}
-    - {fileID: 21300000, guid: c17f480faac384b499828ac5c3323abd, type: 3}
-    - {fileID: 21300000, guid: 438ee982ece63ff4d90f8b6ac959f61e, type: 3}
+    - {fileID: 21300000, guid: 91a7dcfe540cf0446b4a7a238b8e84e4, type: 3}
+    - {fileID: 21300000, guid: 77fae97c53c5fae4a8d1d4c73bdb0069, type: 3}
+    - {fileID: 21300000, guid: d2d07713f673cc842a964db6cc89d9f3, type: 3}
     - {fileID: 21300000, guid: 4415a4f346c1bdb44a91a6ad2084e1bb, type: 3}
     - {fileID: 21300000, guid: 8a143c00189a9904cbd81d420960e788, type: 3}
     - {fileID: 21300000, guid: 23d280c0a5ac1c24d92b571fde1b454f, type: 3}
