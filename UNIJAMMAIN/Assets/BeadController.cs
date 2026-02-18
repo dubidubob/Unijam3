@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Cysharp.Threading.Tasks; 
 
 public class BeadController : MonoBehaviour
 {
@@ -33,6 +34,9 @@ public class BeadController : MonoBehaviour
     [SerializeField] private GameObject map_MainStory; // 기본값 y 893.08
     [SerializeField] private GameObject map_EventWinter; // 기본값 y -3000
 
+    [SerializeField] private RectTransform move_AllContainer;
+    [SerializeField] private RectTransform move_NameContainer;
+
 
     [Header("스프라이트")]
     [SerializeField] private Sprite dooroo_Original;
@@ -57,6 +61,29 @@ public class BeadController : MonoBehaviour
         map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -4000);
 
         CacheBackgroundBounds();
+
+        WindMoveAction().Forget();
+        // container들 움직이기 시작
+    }
+
+    private async UniTask WindMoveAction()
+    {
+        // 취소 토큰 (오브젝트가 파괴될 때 루프를 멈추기 위함)
+        var cts = this.GetCancellationTokenOnDestroy();
+
+        // 1. AllContainer 회전 (느리고 크게 흔들림)
+        move_AllContainer.DOLocalRotate(new Vector3(0, 0, 2.5f), 2.0f)
+            .SetEase(Ease.InOutQuad)
+            .SetLoops(-1, LoopType.Yoyo);
+
+        // 2. NameContainer 회전 (약간 더 빠르고 불규칙하게 흔들림)
+        // AllContainer와 시작 타이밍이나 속도를 다르게 주어 엇박자 연출
+        move_NameContainer.DOLocalRotate(new Vector3(0, 0, -2.5f), 1.5f)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+
+        // UniTask를 사용해 별도의 로직이 필요하다면 아래에 작성 (현재는 Tween이 무한 반복)
+        await UniTask.CompletedTask;
     }
 
 
