@@ -184,8 +184,8 @@ public class PhaseController : MonoBehaviour
         //    이렇게 하면 "소리가 나는 순간"과 "로직이 시작되는 순간"이 맞음.
         await UniTask.WaitUntil(() => AudioSettings.dspTime >= musicStartTime, cancellationToken: token);
 
-
-        cameraController.WindowStretchAction(60,2,0).Forget();
+        // 주석처리하면 윈도우 스트레치 꺼짐
+        //cameraController.WindowStretchAction(60,2,0).Forget();
        // cameraController.WindowRythmContinueStretchAction(60).Forget();
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
