@@ -354,22 +354,53 @@ public class StageSceneUI : UI_Popup
         {
             case 0:
                 // [Level 0 -> 1] : y좌표 -295으로 이동
-                currentPageLevel = 1;
-                MoveTo(yPos: -295f);
-                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
-                break;
+
+                if (isEventMap)
+                {
+                    currentPageLevel = 1;
+                    MoveTo(yPos: -295f);
+                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    break;
+                }
+                else
+                {
+                    currentPageLevel = 1;
+                    MoveTo(yPos: -295f);
+                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    break;
+                }
 
             case 1:
-                // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
-                currentPageLevel = 2;
-                RotateAndMoveTo(zRot: 180f, yPos: 892f);
-                Managers.Sound.Play("SFX/UI/GoToFinalStage_V1",Define.Sound.SFX, 1f, 3f);
+
+                if (isEventMap)
+                {
+                    currentPageLevel = 2;
+                    MoveTo(yPos: -892f);
+
+                    Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 3f);
+                }
+                else
+                {
+                    // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
+                    currentPageLevel = 2;
+                    RotateAndMoveTo(zRot: 180f, yPos: 892f);
+                    Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 3f);
+                }
+                
+
                 break;
 
             case 2:
-                // Level 2가 마지막 레벨이므로 아무 동작 안 함
-                Debug.Log("Already at the top level.");
-                Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
+                if (isEventMap)
+                {
+                    Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
+                }
+                else
+                {
+                    // Level 2가 마지막 레벨이므로 아무 동작 안 함
+                    Debug.Log("Already at the top level.");
+                    Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
+                }
                 break;
         }
         localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
@@ -391,17 +422,38 @@ public class StageSceneUI : UI_Popup
 
             case 1:
                 // [Level 1 -> 0] : y좌표 892으로 이동
-                currentPageLevel = 0;
-                MoveTo(yPos: 892f);
-                
-                Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
+                if(isEventMap)
+                {
+
+                    currentPageLevel = 0;
+                    MoveTo(yPos: 892f);
+                    Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
+                }
+                else
+                {
+                    currentPageLevel = 0;
+                    MoveTo(yPos: 892f);
+
+                    Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
+                }
                 break;
 
             case 2:
-                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로
-                currentPageLevel = 1;
-                RotateAndMoveTo(zRot: 0f, yPos: -295f);
-                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                if (isEventMap)
+                {
+                    currentPageLevel = 1;
+                    MoveTo(yPos: 295f);
+                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                }
+                else
+                {
+                    // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로
+                    currentPageLevel = 1;
+                    RotateAndMoveTo(zRot: 0f, yPos: -295f);
+                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                }
+
+               
                 break;
         }
 

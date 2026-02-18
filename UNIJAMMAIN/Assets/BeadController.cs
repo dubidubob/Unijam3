@@ -15,7 +15,7 @@ public class BeadController : MonoBehaviour
 
     [Header("Effect Settings")]
     [SerializeField] private Camera uiCamera;       // 줌인 효과를 줄 카메라
-    [SerializeField] private CanvasGroup blackPanel; // 암전 효과를 줄 검은 패널
+    [SerializeField] private CanvasGroup blackPanel; // Bead 제외 암전 효과암전 효과를 줄 검은 패널
     [SerializeField] private CanvasGroup backGroundBlackPanel; // 화면 완전 전환용 검은 패널
     [SerializeField] private float effectDuration = 1.0f;
     [SerializeField] private float targetZoomSize = 4.0f; // 목표 카메라 사이즈
@@ -132,6 +132,7 @@ public class BeadController : MonoBehaviour
         }
 
         // [Phase 1] 이동 로직 (동일)
+        blackPanel.DOFade(0.95f, effectDuration/2f).SetUpdate(true).SetEase(Ease.OutSine);
         while (time < effectDuration)
         {
             yield return null;
@@ -141,7 +142,7 @@ public class BeadController : MonoBehaviour
 
             uiCamera.transform.position = Vector3.Lerp(startCamPos, targetCamPos, smoothT);
             uiCamera.orthographicSize = Mathf.Lerp(startCamSize, targetZoomSize, smoothT);
-            if (blackPanel != null) blackPanel.alpha = Mathf.Lerp(0f, 0.7f, smoothT);
+           
         }
 
         uiCamera.transform.position = targetCamPos;
@@ -179,7 +180,8 @@ public class BeadController : MonoBehaviour
             stageSceneUI.MapTargetRectChange(targetRect);
             stageSceneUI.MapSetting(isEventMap);
             backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true);
-            yield return blackPanel.DOFade(0f, 1f).SetUpdate(true).WaitForCompletion();  
+            blackPanel.DOFade(0, 1f);
+            yield return backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true).WaitForCompletion();  
             blackPanel.blocksRaycasts = false;
            
         }
