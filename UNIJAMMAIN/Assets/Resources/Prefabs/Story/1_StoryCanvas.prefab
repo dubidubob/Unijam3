@@ -454,6 +454,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    localizationKey: 1_StoryCanvas_000
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -475,6 +476,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    localizationKey: 1_StoryCanvas_001
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -496,6 +498,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    localizationKey: 1_StoryCanvas_002
     spriteYOffset: 50
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -516,6 +519,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    localizationKey: 1_StoryCanvas_003
     spriteYOffset: 50
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -537,6 +541,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    localizationKey: 1_StoryCanvas_004
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -557,6 +562,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    localizationKey: 1_StoryCanvas_005
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -578,6 +584,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    localizationKey: 1_StoryCanvas_006
     spriteYOffset: 50
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -599,6 +606,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
+    localizationKey: 1_StoryCanvas_007
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}

@@ -15,7 +15,8 @@ public static class IngameData
     public static bool Pause { set; get; }
     private static double beatInterval;
     public static bool IsStart = false;
-    public static int StageProgress = 0;
+
+    public static int StageProgress = 0; // 스테이지 레벨과 관련도니 변수, "" 장을 한번만 띄우게끔 조절
     public static int _defeatEnemyCount = 0;
     /// <summary>
     /// 현재 플레이어가 클리어한 최대 스테이지 (스토리기준)

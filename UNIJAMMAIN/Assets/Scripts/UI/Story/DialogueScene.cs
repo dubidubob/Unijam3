@@ -40,6 +40,9 @@ public class DialogueScene
     public float goingTimeAmount;
     public KeyCode requiredKey;
 
+    [HideInInspector]            // inspector에 안 보이게 (원하면 public으로 노출)
+    public string localizationKey; // 자동으로 채워질 키 (예: Story1_scenes_0_text)
+
     [Header("캐릭터 Y축 오프셋 (띄우기)")]
     public float spriteYOffset = 0f;  // 0 = 바닥
 

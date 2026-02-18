@@ -45,6 +45,8 @@ public class PhaseController : MonoBehaviour
     private float _beatCount = 0;
     SpawnController spawnController;
     [SerializeField] WASDMonsterSpawner wasdMonsterSpawner;
+    [SerializeField] CameraController cameraController;
+
 
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
     private bool isMonsterGoStart = false;
@@ -183,6 +185,8 @@ public class PhaseController : MonoBehaviour
         await UniTask.WaitUntil(() => AudioSettings.dspTime >= musicStartTime, cancellationToken: token);
 
 
+        cameraController.WindowStretchAction(60,2,0).Forget();
+       // cameraController.WindowRythmContinueStretchAction(60).Forget();
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];

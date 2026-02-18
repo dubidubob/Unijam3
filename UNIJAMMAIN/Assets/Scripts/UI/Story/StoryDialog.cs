@@ -54,6 +54,9 @@ public class StoryDialog : UI_Popup
 
     private void Awake()
     {
+        LocalizationManager.CurrentLanguage = Language.Korean; // 로컬라이제이션 Language 설정 TODO: 스팀설정에따라 언어설정바꾸기
+        LocalizationManager.Load();
+
         panelRect = TextPanel.GetComponent<RectTransform>();
         originalPanelPos = panelRect.anchoredPosition;
         contents.SetActive(true);
@@ -270,7 +273,7 @@ public class StoryDialog : UI_Popup
 
             // �ؽ�Ʈ ǥ�� (Ÿ���� ȿ��)
             TestTexts[idx].gameObject.SetActive(true);
-            string full = scene.text;
+            string full = LocalizationManager.Get(scene.localizationKey, scene.text);
             int len = full.GetTypingLength();
 
             inputRequested = false;

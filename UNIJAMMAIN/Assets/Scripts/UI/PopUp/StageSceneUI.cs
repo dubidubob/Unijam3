@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Kino;
-
+using UnityEngine.Localization;
 public class StageSceneUI : UI_Popup
 {
     private Button _selectedButton = null;
@@ -52,7 +52,8 @@ public class StageSceneUI : UI_Popup
     [Header("Text Objects")]
     public TMP_Text stageMainText;
     public TMP_Text stageMainSubText;
-    public TMP_Text stageLevelText;
+    public TMP_Text stageDifficultyLevelText;
+    public TMP_Text stageLevelInfo_TMP;
 
     [SerializeField] GameObject completedObject;
     [SerializeField] GameObject checkObject;
@@ -63,7 +64,7 @@ public class StageSceneUI : UI_Popup
 
     [SerializeField] Sprite doroDarkSprite;
     [SerializeField] Sprite backGroundDarkSprite;
-
+    [SerializeField] StageSceneLocalizationController localizationController;
 
 
     // 비트 컨트롤러 관련한 변수
@@ -116,7 +117,9 @@ public class StageSceneUI : UI_Popup
 
         private void Awake()
     {
-        
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
+
+
         // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
         if (normalTextMaterial != null)
         {
@@ -197,6 +200,8 @@ public class StageSceneUI : UI_Popup
             mapImage.anchoredPosition = new Vector2(mapImage.anchoredPosition.x, targetY);
             mapImage.localEulerAngles = new Vector3(0, 0, targetZ);
         }
+
+        
 
         Debug.Log($"Setup Map: Stage {forClearApproachStageIndex} -> PageLevel {currentPageLevel} (Y:{targetY}, Z:{targetZ})");
     }
@@ -343,6 +348,8 @@ public class StageSceneUI : UI_Popup
 
         if (isAnimating) return; // 애니메이션 중에는 입력을 무시
 
+      
+
         switch (currentPageLevel)
         {
             case 0:
@@ -365,11 +372,14 @@ public class StageSceneUI : UI_Popup
                 Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
                 break;
         }
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
     }
 
     public void DownButtonClicked(PointerEventData eventData)
     {
         if (isAnimating) return; // 애니메이션 중에는 입력을 무시
+
+       
 
         switch (currentPageLevel)
         {
@@ -394,6 +404,9 @@ public class StageSceneUI : UI_Popup
                 Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                 break;
         }
+
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
+
     }
     public void ToMainButtonClicked(PointerEventData eventData)
     {
@@ -602,7 +615,7 @@ public class StageSceneUI : UI_Popup
     {
         stageMainText.text = stageDataList[index].stageMainText.GetLocalizedString();
         stageMainSubText.text = stageDataList[index].stageMainSubText.GetLocalizedString();
-        stageLevelText.text = stageDataList[index].levelText.GetLocalizedString();
+        stageDifficultyLevelText.text = stageDataList[index].levelText.GetLocalizedString();
 
     }
     #region Tool
@@ -654,7 +667,10 @@ public class StageSceneUI : UI_Popup
             isRotated = true;
         }
 
-        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel)); // 현재 무슨 장인지 출력
+       
+
+
         // 위치 이동과 회전을 동시에 실행
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
         mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(moveEase);
@@ -775,6 +791,8 @@ public class StageSceneUI : UI_Popup
 
         // 4. UI 및 버튼 상태 업데이트
         UpdateNavigationButtons();
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
+
 
         // 5. 사이드 인디케이터(레벨 표시) 업데이트
         StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
@@ -885,4 +903,5 @@ public class StageSceneUI : UI_Popup
         transform.localScale = Vector3.one* 0.009259259f;
     }
 
+   
 }
