@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: bb4be4f7fb5b12546b71dd23c3803efa
   m_SerializeEntries:
+  - m_GUID: 20fca0cdc91ceae4f9c3539ef8e20aae
+    m_Address: Assets/Localization/StageScene/StageSceneUI Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 375083b407cea4549ab8bc480eeb725c
     m_Address: Assets/MyGameText Shared Data.asset
     m_ReadOnly: 1
@@ -24,6 +29,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45479b31f723a3c45ae2a00e06f2dd01
     m_Address: Assets/MainScene Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5230906f11d24d245ba62a06f0fd471f
+    m_Address: Assets/Localization/StoryLevelInfo_Table Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dcbf6cce1646a884b8e7e23d7c649aac
+    m_Address: Assets/Localization/WinterLevelInfo_Table Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

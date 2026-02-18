@@ -17,8 +17,26 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f4fbf14c994ef9c4b9d2014e48624e1e
   m_SerializeEntries:
+  - m_GUID: 7e5018c58a0375d44b77e19bacc18f39
+    m_Address: StoryLevelInfo_Table_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8f96e06c1d0d6e64e9a1df3f271d719d
+    m_Address: StageSceneUI_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9328d3c49a78666428e35d39590de602
     m_Address: MainScene_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c0cceea5acf4d147b6d92aee888d86d
+    m_Address: WinterLevelInfo_Table_zh-Hans
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans

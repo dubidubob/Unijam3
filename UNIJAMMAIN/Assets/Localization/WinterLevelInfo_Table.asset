@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: WinterLevelInfo_Table
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: dcbf6cce1646a884b8e7e23d7c649aac, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: 9c0cceea5acf4d147b6d92aee888d86d, type: 2}
+  - {fileID: 11400000, guid: d762e1587250b9a478a299b3ec6959a7, type: 2}
+  - {fileID: 11400000, guid: e8a2f07f0b0f6a94c9aee03dc39519e8, type: 2}
+  - {fileID: 11400000, guid: 75aecd97872c77143bdaf141557c9217, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []

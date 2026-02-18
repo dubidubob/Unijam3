@@ -3784,20 +3784,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d963aa141ffc1246a8556a7fa012d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bead_StoryMap_StageInfo:
+  normalLevelFormat:
     m_TableReference:
-      m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
+      m_TableCollectionName: GUID:5230906f11d24d245ba62a06f0fd471f
     m_TableEntryReference:
-      m_KeyId: 8874460053507
+      m_KeyId: 24747048961
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  Bead_WinterMap_StageInfo:
+  eventLevelFormat:
     m_TableReference:
-      m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
+      m_TableCollectionName: GUID:5230906f11d24d245ba62a06f0fd471f
     m_TableEntryReference:
-      m_KeyId: 8874460053508
+      m_KeyId: 24747048962
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
