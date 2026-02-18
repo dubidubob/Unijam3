@@ -203,9 +203,10 @@ public class BeadController : MonoBehaviour
         {
             uiCamera.transform.position = startCamPos;
             uiCamera.orthographicSize = startCamSize;
-            NewSpriteSetting(); // 두루마리 등 세팅 이미지 설정
+           
             stageSceneUI.MapTargetRectChange(targetRect);
             stageSceneUI.MapSetting(isEventMap);
+            NewSpriteSetting(); // 두루마리 등 세팅 이미지 설정
             backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true);
             blackPanel.DOFade(0, 1f);
             yield return backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true).WaitForCompletion();  
@@ -225,6 +226,7 @@ public class BeadController : MonoBehaviour
     {
         doorooImage.sprite = dooroo_targetSprite;
         patternImage.sprite = pattern_targetSprite;
+        patternImage.SetNativeSize();
     }
 
     private Vector3 GetClampedTargetPos(Vector3 targetPos, float targetSize)
