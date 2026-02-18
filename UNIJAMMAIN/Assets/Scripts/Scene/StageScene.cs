@@ -12,7 +12,7 @@ public class StageScene : BaseScene
     // ▼▼▼ 수정된 Start 메서드 ▼▼▼
     private void Start()
     {
-        Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
+        Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
 
         // 1. 씬에 필요한 모든 초기화를 먼저 실행합니다.
         Init();

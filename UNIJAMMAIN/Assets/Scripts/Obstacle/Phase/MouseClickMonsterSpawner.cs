@@ -37,15 +37,17 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
         LeftOne.SetActive(false);
         RightOne.SetActive(false);
 
-        Managers.Input.InputMouse -= DeactivateMouse;
-        Managers.Input.InputMouse += DeactivateMouse;
+        // 마우스 입력 사라졌으므로 없앰
+        //Managers.Input.InputMouse -= DeactivateMouse;
+        //Managers.Input.InputMouse += DeactivateMouse;
         PauseManager.IsPaused -= PauseForWhile;
         PauseManager.IsPaused += PauseForWhile;
     }
 
     private void OnDestroy()
     {
-        Managers.Input.InputMouse -= DeactivateMouse;
+        // 마우스 입력 사라졌으므로 없앰
+        //Managers.Input.InputMouse -= DeactivateMouse;
         PauseManager.IsPaused -= PauseForWhile;
 
         foreach(var pattern in _activePatterns) // 모든 패턴 스탑시키기
@@ -57,11 +59,12 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
 
     // --- (DeactivateMouse, ActivateEnemy 등 기존 로직은 대부분 유지) ---
     #region Existing Logic
-    private void DeactivateMouse(GamePlayDefine.MouseType mouseType)
-    {
-        GameObject deactivateGo = mouseType == GamePlayDefine.MouseType.Left ? LeftOne : RightOne;
-        deactivateGo.SetActive(false);
-    }
+    // 더 이상 호출되지 않으므로 주석처리
+    //private void DeactivateMouse(GamePlayDefine.MouseType mouseType)
+    //{
+    //    GameObject deactivateGo = mouseType == GamePlayDefine.MouseType.Left ? LeftOne : RightOne;
+    //    deactivateGo.SetActive(false);
+    //}
 
     // [MODIFIED] 이 메서드는 이제 모든 인스턴스에 의해 공유됩니다.
     public void ActivateEnemy()

@@ -193,7 +193,28 @@ public class PhaseController : MonoBehaviour
             if (!gameEvent.isIn) continue;
 
             float durationSec = gameEvent.durationBeat * beatInterval;
-            IngameData.PhaseDurationSec = durationSec;
+
+            // [핵심 수정 - 대윤이형 확인 바람] 
+            // "비트를 초로 바꾸는 게 목적"이 아니라, 
+            // "스포너가 초 단위(dspTime)로 작동하니까, 연장할 비트만큼 시간을 더해주는 것"입니다.
+            if (gameEvent is PhaseEvent pEvent)
+            {
+                // 연장할 비트(extensionCreateBeat)가 있다면, 
+                // 그만큼의 시간(beatInterval 곱하기)을 더해줍니다.
+                float extensionSec = pEvent.extensionCreateBeat * beatInterval;
+
+                // 최종적으로 "원래 시간 + 연장된 시간"을 전역 변수에 넣어줍니다.
+                IngameData.PhaseDurationSec = durationSec + extensionSec;
+            }
+            else
+            {
+                IngameData.PhaseDurationSec = durationSec;
+            }
+            // [확인 바람]
+
+
+            // 기존 코드
+            //IngameData.PhaseDurationSec = durationSec;
 
 
             // --- 1. Delay 구간 처리 ---

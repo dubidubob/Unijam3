@@ -17,11 +17,11 @@ MonoBehaviour:
   - rid: 4747093736959246336
   - rid: 6162095367951745024
   - rid: 6162095367951745026
-  MusicPath: BGM/ChapterEDM
+  MusicPath: BGM/ChapterEDM_V1
   StartBeat: 532532
   DelayPaddingTick: 0
-  backGroundSprite: {fileID: 21300000, guid: 38636aab8002b274094fa2b5237bd0dd, type: 3}
-  backGroundGraySprite: {fileID: 21300000, guid: 38636aab8002b274094fa2b5237bd0dd, type: 3}
+  backGroundSprite: {fileID: 21300000, guid: 91a7dcfe540cf0446b4a7a238b8e84e4, type: 3}
+  backGroundGraySprite: {fileID: 21300000, guid: 91a7dcfe540cf0446b4a7a238b8e84e4, type: 3}
   colorPalette: {r: 1, g: 1, b: 1, a: 0.40784314}
   SinkStage: 0
   references:
@@ -46,6 +46,9 @@ MonoBehaviour:
           spawnBeat: 0.5
           moveBeat: 5
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 4747093736959246336
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -65,6 +68,9 @@ MonoBehaviour:
           spawnBeat: 0.5
           moveBeat: 5
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 6162095367951745024
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -84,6 +90,9 @@ MonoBehaviour:
           spawnBeat: 0.5
           moveBeat: 5
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 6162095367951745026
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -103,3 +112,6 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 5
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
