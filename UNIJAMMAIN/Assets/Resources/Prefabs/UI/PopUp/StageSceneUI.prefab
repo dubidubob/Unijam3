@@ -965,7 +965,7 @@ GameObject:
   - component: {fileID: 6426396123389640876}
   - component: {fileID: 9157081893141932431}
   m_Layer: 0
-  m_Name: eventBead1
+  m_Name: eventBead_City
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1714,7 +1714,7 @@ GameObject:
   - component: {fileID: 2954696038565222161}
   - component: {fileID: 4665492954946728975}
   m_Layer: 0
-  m_Name: eventBead2
+  m_Name: eventBead_Winter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2136,6 +2136,11 @@ MonoBehaviour:
   pattern_Original: {fileID: 21300000, guid: 9e529724bc3d8334e99703d2815c10d8, type: 3}
   dooroo_Winter: {fileID: 21300000, guid: e86d5b204678d464a95eb2284fa1a0eb, type: 3}
   pattern_Winter: {fileID: 21300000, guid: f0173e2de1dc75d4ea6125f1f2d3974c, type: 3}
+  eventBead_Winter: {fileID: 2154905557536127173}
+  eventBead_City: {fileID: 935347371009636086}
+  storyBead_1: {fileID: 8263165671635400357}
+  storyBead_2: {fileID: 9114374301771329185}
+  storyBead_3: {fileID: 7532017388182476662}
 --- !u!1 &2905870535684058287
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,6 +3814,7 @@ MonoBehaviour:
   isEventMap: 0
   originalDoroSprite: {fileID: 21300000, guid: 9da0b5d91e6e3d340abefdbdb85712a6, type: 3}
   originalBackGroundSprite: {fileID: 21300000, guid: 9e529724bc3d8334e99703d2815c10d8, type: 3}
+  storedStoryLevel: 0
   references:
     version: 2
     RefIds: []

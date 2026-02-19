@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using Cysharp.Threading.Tasks; 
+using Cysharp.Threading.Tasks;
 
 public class BeadController : MonoBehaviour
 {
+    public enum Bead
+    {
+        event_Winter,
+        event_City,
+        story_1,
+        story_2,
+        story_3
+    }
+
     [Header("타 cs 연결")]
     [SerializeField] StageSceneUI stageSceneUI;
 
@@ -45,6 +54,13 @@ public class BeadController : MonoBehaviour
     [SerializeField] private Sprite dooroo_Winter;
     [SerializeField] private Sprite pattern_Winter;
 
+    [Header("구슬 오브젝트")]
+    [SerializeField] private GameObject eventBead_Winter;
+    [SerializeField] private GameObject eventBead_City;
+    [SerializeField] private GameObject storyBead_1;
+    [SerializeField] private GameObject storyBead_2;
+    [SerializeField] private GameObject storyBead_3;
+
 
     private Bounds bgWorldBounds;
     private void Start()
@@ -61,7 +77,7 @@ public class BeadController : MonoBehaviour
         map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -4000);
 
         CacheBackgroundBounds();
-
+        LoadBeadStateActive(); // 구슬 활성화
         WindMoveAction().Forget();
         // container들 움직이기 시작
     }
@@ -98,7 +114,7 @@ public class BeadController : MonoBehaviour
         if (storyBeads != null && index < storyBeads.Count)
         {
             // GetComponentInChildren 대신 바로 GetComponent 사용 (상황에 맞춰 조정)
-            if(stageSceneUI.storedStoryLevel == 2) // 지옥스테이지라면 특별 타깃 스프라이트로 지정
+            if (stageSceneUI.storedStoryLevel == 2) // 지옥스테이지라면 특별 타깃 스프라이트로 지정
             {
                 dooroo_targetSprite = stageSceneUI.doroDarkSprite;
                 pattern_targetSprite = stageSceneUI.backGroundDarkSprite;
@@ -108,11 +124,11 @@ public class BeadController : MonoBehaviour
                 dooroo_targetSprite = dooroo_Original;
                 pattern_targetSprite = pattern_Original;
             }
-           
+
             targetRect = storyRect;
             targetMapObject = map_MainStory;
             isEventMap = false;
-            CameraZoominAndBlackOut(storyBeads[index].GetComponent<RectTransform>());
+            CameraZoominAndBlackOut(storyBeads[index].GetComponent<RectTransform>());
         }
     }
 
@@ -168,7 +184,7 @@ public class BeadController : MonoBehaviour
         }
 
         // [Phase 1] 이동 로직 (동일)
-        blackPanel.DOFade(0.95f, effectDuration/2f).SetUpdate(true).SetEase(Ease.OutSine);
+        blackPanel.DOFade(0.95f, effectDuration / 2f).SetUpdate(true).SetEase(Ease.OutSine);
         while (time < effectDuration)
         {
             yield return null;
@@ -178,7 +194,7 @@ public class BeadController : MonoBehaviour
 
             uiCamera.transform.position = Vector3.Lerp(startCamPos, targetCamPos, smoothT);
             uiCamera.orthographicSize = Mathf.Lerp(startCamSize, targetZoomSize, smoothT);
-           
+
         }
 
         uiCamera.transform.position = targetCamPos;
@@ -212,15 +228,15 @@ public class BeadController : MonoBehaviour
         {
             uiCamera.transform.position = startCamPos;
             uiCamera.orthographicSize = startCamSize;
-           
+
             stageSceneUI.MapTargetRectChange(targetRect);
             stageSceneUI.MapSetting(isEventMap);
             NewSpriteSetting(); // 두루마리 등 세팅 이미지 설정
             backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true);
             blackPanel.DOFade(0, 1f);
-            yield return backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true).WaitForCompletion();  
+            yield return backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true).WaitForCompletion();
             blackPanel.blocksRaycasts = false;
-           
+
         }
 
         yield return new WaitForSecondsRealtime(0.5f);
@@ -296,6 +312,90 @@ public class BeadController : MonoBehaviour
         desiredPos.y = Mathf.Clamp(desiredPos.y, minY, maxY);
 
         return desiredPos;
+    }
+
+    /// <summary>
+    /// 새로운 비드 추가해주기
+    /// </summary>
+    public void UpdateNewBead(Bead bead)
+    {
+        GameObject target = null;
+
+        switch (bead)
+        {
+            case Bead.event_Winter:
+                target = eventBead_Winter;
+                break;
+
+            case Bead.event_City:
+                target = eventBead_City;
+                break;
+
+            case Bead.story_1:
+                target = storyBead_1;
+                break;
+
+            case Bead.story_2:
+                target = storyBead_2;
+                break;
+
+            case Bead.story_3:
+                target = storyBead_3;
+                break;
+        }
+
+        if (target == null)
+        {
+            Debug.LogWarning($"[BeadController] {bead} 에 해당하는 오브젝트가 없습니다.");
+            return;
+        }
+
+        // 이미 켜져있으면 무시
+        if (target.activeSelf)
+            return;
+
+        // 활성화
+        target.SetActive(true);
+
+        // 리스트에도 자동 추가 (나중에 클릭용 인덱스 대응 유지)
+        if (bead.ToString().StartsWith("story"))
+        {
+            if (!storyBeads.Contains(target))
+                storyBeads.Add(target);
+        }
+        else
+        {
+            if (!eventBeads.Contains(target))
+                eventBeads.Add(target);
+        }
+    }
+
+    public void LoadBeadStateActive()
+    {
+        int clear = IngameData._clearStageIndex;
+
+        // 1 이상 → 겨울 이벤트 + 겨울맞이(스토리1)
+        if (clear >= 1)
+        {
+            UpdateNewBead(Bead.event_Winter);
+            UpdateNewBead(Bead.story_1);
+        }
+
+        // 3 이상 → 도시 이벤트 + 스토리2
+        if (clear >= 3)
+        {
+            UpdateNewBead(Bead.event_City);
+            UpdateNewBead(Bead.story_2);
+        }
+
+        // 6 이상 → 스토리3
+        if (clear >= 6)
+        {
+            UpdateNewBead(Bead.story_3);
+        }
+
+        // (필요 시 추가 확장 가능)
+        // 7 이상 → 밤하늘 맵 같은 추가 해금 여기에 이어서 작성
     }
 
 
