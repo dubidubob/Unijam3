@@ -166,12 +166,16 @@ MonoBehaviour:
     m_Localized: "\uC2DC\uC791\uD558\uAE30 >"
     m_Metadata:
       m_Items: []
-  - m_Id: 24747048961
+  - m_Id: 399360391774208
     m_Localized: "\uC81C {0} \uC7A5"
     m_Metadata:
       m_Items: []
   - m_Id: 24747048962
     m_Localized: "\uACA8 \uC6B8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399055897886720
+    m_Localized: "\uB3C4 \uC2DC"
     m_Metadata:
       m_Items: []
   references:

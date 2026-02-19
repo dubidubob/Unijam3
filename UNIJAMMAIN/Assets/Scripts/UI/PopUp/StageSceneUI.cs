@@ -62,8 +62,8 @@ public class StageSceneUI : UI_Popup
     [SerializeField] Image dooroImage;
     [SerializeField] Image patternBackGround;
 
-    [SerializeField] Sprite doroDarkSprite;
-    [SerializeField] Sprite backGroundDarkSprite;
+    [SerializeField] public Sprite doroDarkSprite;
+    [SerializeField] public Sprite backGroundDarkSprite;
     [SerializeField] StageSceneLocalizationController localizationController;
 
 
@@ -357,8 +357,8 @@ public class StageSceneUI : UI_Popup
 
                 if (isEventMap)
                 {
-                    currentPageLevel = 1;
-                    MoveTo(yPos: -295f);
+                    currentPageLevel = 2;
+                    MoveTo(yPos: -892f);
                     Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                     break;
                 }
@@ -441,8 +441,8 @@ public class StageSceneUI : UI_Popup
             case 2:
                 if (isEventMap)
                 {
-                    currentPageLevel = 1;
-                    MoveTo(yPos: 295f);
+                    currentPageLevel = 0;
+                    MoveTo(yPos: 892f);
                     Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
                 }
                 else
@@ -795,8 +795,10 @@ public class StageSceneUI : UI_Popup
     #region 비트 컨트롤러 관련 상호작용
 
     // [추가] 각 맵의 상태를 저장하기 위한 변수들
-    private int storedStoryLevel = 0;
+    public int storedStoryLevel = 0;
     private bool storedStoryRotated = false;
+    private Sprite storedDoorooSprite = null;
+    private Sprite storedPatternSprite = null;
 
     private int storedEventLevel = 0; // 이벤트 맵은 처음에 Level 0에서 시작한다고 가정
     private bool storedEventRotated = false;
@@ -862,6 +864,7 @@ public class StageSceneUI : UI_Popup
     {
         storedEventLevel = currentPageLevel;
         storedEventRotated = isRotated;
+
     }
 
     // 스토리맵 세팅 로드 및 시각적 적용
@@ -869,7 +872,6 @@ public class StageSceneUI : UI_Popup
     {
         currentPageLevel = storedStoryLevel;
         isRotated = storedStoryRotated;
-
         // 저장된 데이터에 맞춰 맵의 위치와 그래픽을 '즉시' 동기화합니다.
         SyncMapVisuals();
     }
@@ -904,7 +906,14 @@ public class StageSceneUI : UI_Popup
         {
             case 0: targetY = 892f; targetZ = 0f; break;
             case 1: targetY = -295f; targetZ = 0f; break;
-            case 2: targetY = 892f; targetZ = 180f; break;
+            case 2:
+                targetY = 892f; targetZ = 180f; 
+                if (isEventMap)
+                { 
+                    targetZ = 0f;
+                    targetY = -892f;
+                }
+                break;
         }
 
         // 3. RectTransform 즉시 이동 (애니메이션 없이 텔레포트)

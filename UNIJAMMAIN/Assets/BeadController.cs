@@ -98,8 +98,17 @@ public class BeadController : MonoBehaviour
         if (storyBeads != null && index < storyBeads.Count)
         {
             // GetComponentInChildren 대신 바로 GetComponent 사용 (상황에 맞춰 조정)
-            dooroo_targetSprite = dooroo_Original;
-            pattern_targetSprite = pattern_Original;
+            if(stageSceneUI.storedStoryLevel == 2) // 지옥스테이지라면 특별 타깃 스프라이트로 지정
+            {
+                dooroo_targetSprite = stageSceneUI.doroDarkSprite;
+                pattern_targetSprite = stageSceneUI.backGroundDarkSprite;
+            }
+            else
+            {
+                dooroo_targetSprite = dooroo_Original;
+                pattern_targetSprite = pattern_Original;
+            }
+           
             targetRect = storyRect;
             targetMapObject = map_MainStory;
             isEventMap = false;

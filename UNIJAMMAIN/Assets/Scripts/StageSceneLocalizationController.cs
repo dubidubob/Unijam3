@@ -11,7 +11,9 @@ public class StageSceneLocalizationController : MonoBehaviour
     public LocalizedString normalLevelFormat;
 
     // 인스펙터에서 "이벤트 {0}" 또는 "보너스 {0}" 등의 키를 연결하세요.
-    public LocalizedString eventLevelFormat;
+    public LocalizedString event_Winter_LevelFormat;
+
+    public LocalizedString event_City_LevelFormat;
 
     /// <summary>
     /// 레벨 표현 UI를 현재 언어와 맵 종류에 맞게 업데이트합니다.
@@ -26,6 +28,8 @@ public class StageSceneLocalizationController : MonoBehaviour
             Debug.LogWarning("RefreshLevelInfoUI: stageLevelInfo_TMP가 할당되지 않았습니다.");
             return;
         }
+
+        LocalizedString eventLevelFormat = currentPageLevel == 2 ? event_City_LevelFormat : event_Winter_LevelFormat;
 
         // 1. 맵 종류에 따라 사용할 로컬라이즈 형식을 선택합니다.
         LocalizedString selectedFormat = isEventMap ? eventLevelFormat : normalLevelFormat;
