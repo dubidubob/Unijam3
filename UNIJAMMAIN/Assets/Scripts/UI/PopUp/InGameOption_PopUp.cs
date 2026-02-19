@@ -37,10 +37,9 @@ public class InGameOption_PopUp : UI_Popup
         GetButton((int)Buttons.Continues).gameObject.AddUIEvent(ContinuesButtonClicked);
 
         // 팝업 UI가 다른 UI 위에 항상 보이도록 캔버스 순서를 설정합니다.
-        Managers.UI.SetCanvasMost(this.gameObject,32767);
         PauseManager.ControlTime(true);
         Managers.Sound.PlayInOptionSoundMusic(true);
-   
+        GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
     }
 
     private void Start()
