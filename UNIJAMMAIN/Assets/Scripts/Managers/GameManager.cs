@@ -51,7 +51,7 @@ public class GameManager
     public enum GameState { Battle, Stage, Tutorial, Die }
     public enum PlayerState { Normal, GroggyAttack, Ready, Die }
 
-    private bool isADReverse = false;
+    public bool isADReverse = false;
     private bool isComboEffect = false;
     private bool _comboCheck = false;
 
@@ -129,6 +129,7 @@ public class GameManager
     public void ReceiveKey(WASDType key)
     {
         if (currentPlayerState == PlayerState.Die) return;
+
 
         // 키 반전 로직
         if (isADReverse)
