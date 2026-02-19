@@ -133,6 +133,13 @@ public class CameraController : MonoBehaviour
         int originalWidth = Screen.width;
         int originalHeight = Screen.height;
 
+        // [변화한 부분] 몬스터들의 원래 로컬 좌표 기억해두기
+        Vector3 origPosA = A_Enemytransform.localPosition;
+        Vector3 origPosS = S_Enemytransform.localPosition;
+        Vector3 origPosD = D_Enemytransform.localPosition;
+        Vector3 origPosW = W_Enemytransform.localPosition;
+
+
         AspectRatioEnforcer.Instance.isCameraAction = true;
         await backGroundCanvas.DOFade(0, 1f);
 
@@ -192,6 +199,11 @@ public class CameraController : MonoBehaviour
                 int targetWidth = baseWidth + (int)(value * stretchX);
                 int targetHeight = baseHeight + (int)(value * stretchY);
                 Screen.SetResolution(targetWidth, targetHeight, FullScreenMode.Windowed);
+                A_Enemytransform.DOLocalMove(origPosA, shrinkDuration).SetEase(Ease.InOutSine);
+                S_Enemytransform.DOLocalMove(origPosS, shrinkDuration).SetEase(Ease.InOutSine);
+                D_Enemytransform.DOLocalMove(origPosD, shrinkDuration).SetEase(Ease.InOutSine);
+                W_Enemytransform.DOLocalMove(origPosW, shrinkDuration).SetEase(Ease.InOutSine);
+
             }).SetEase(Ease.InOutSine).ToUniTask(cancellationToken: token); // 자연스러운 축소를 위해 Ease 변경
         }
         catch (System.OperationCanceledException) { }
@@ -202,6 +214,11 @@ public class CameraController : MonoBehaviour
             Screen.SetResolution(originalWidth, originalHeight, targetMode);
 
             await backGroundCanvas.DOFade(1, 1f);
+            A_Enemytransform.localPosition = origPosA;
+            S_Enemytransform.localPosition = origPosS;
+            D_Enemytransform.localPosition = origPosD;
+            W_Enemytransform.localPosition = origPosW;
+
             AspectRatioEnforcer.Instance.isCameraAction = false;
         }
     }
@@ -210,96 +227,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Canvas _overlayCanvas; // 최상위 Canvas (Constant Pixel Size 권장)
     [SerializeField] private UnityEngine.UI.RawImage _renderDisplay; // 게임 화면을 보여줄 RawImage
 
-    /// <summary>
-    /// 비트에 따라 화면이 쿵짝쿵짝 변하는 함수 (리듬닥터 스타일)
-    /// 창만 움직이고 내부 렌더링은 고정
-    /// </summary>
-    async public UniTask WindowRythmContinueStretchAction(float delaySec,float durationBeat)
-    {
-        if (Screen.fullScreen) return;
-        if (_overlayCanvas == null || _renderDisplay == null)
-        {
-            Debug.LogError("Overlay Canvas와 RawImage를 할당해야 리듬닥터 효과가 가능합니다.");
-            return;
-        }
-
-        AspectRatioEnforcer.Instance.isCameraAction = true;
-
-
-        // 1. 초기 상태 저장
-        WindowManager.RECT startRect = WindowManager.GetCurrentWindowPos();
-        int baseWidth = Screen.width;
-        int baseHeight = Screen.height;
-
-        // 2. [핵심] 게임 화면을 고정 크기 RenderTexture로 "박제"
-        RenderTexture rt = new RenderTexture(baseWidth, baseHeight, 24);
-        RenderTexture originalTarget = _camera.targetTexture;
-        _camera.targetTexture = rt;
-
-        // 3. Canvas 설정 (Screen Space - Overlay, Constant Pixel Size)
-        _overlayCanvas.gameObject.SetActive(true);
-
-        // 4. RawImage 설정 - 화면 중앙에 고정 크기로 표시
-        _renderDisplay.texture = rt;
-        _renderDisplay.gameObject.SetActive(true);
-        _renderDisplay.rectTransform.sizeDelta = new Vector2(baseWidth, baseHeight);
-        _renderDisplay.rectTransform.anchoredPosition = Vector2.zero; // 중앙 고정
-
-        float currentBPM = IngameData.GameBpm;
-        float secPerBeat = 60f / currentBPM;
-        int totalBeats = Mathf.FloorToInt(durationBeat);
-        var token = this.GetCancellationTokenOnDestroy();
-
-        try
-        {
-            for (int i = 0; i < totalBeats; i++)
-            {
-                float timer = 0f;
-                while (timer < secPerBeat)
-                {
-                    timer += Time.deltaTime;
-                    float t = timer / secPerBeat;
-
-                    // Sin 곡선으로 자연스러운 리듬감
-                    float punch = Mathf.Sin(t * Mathf.PI);
-
-                    // 창 크기 계산 (중앙 정렬을 위해 짝수 스냅핑)
-                    int addW = Mathf.RoundToInt(punch * _stretchIntensityX);
-                    int addH = Mathf.RoundToInt(punch * _stretchIntensityY);
-                    if (addW % 2 != 0) addW++;
-                    if (addH % 2 != 0) addH++;
-
-                    int targetWidth = baseWidth + addW;
-                    int targetHeight = baseHeight + addH;
-
-                    // [중요] Unity 해상도는 변경하지 않음! Win32 API로만 창 조작
-                    WindowManager.ResizeCentered(targetWidth, targetHeight, startRect);
-
-                    await UniTask.Yield(PlayerLoopTiming.Update, token);
-                }
-            }
-        }
-        catch (System.OperationCanceledException) { }
-        finally
-        {
-            // 원상 복구
-            _camera.targetTexture = originalTarget;
-            _renderDisplay.gameObject.SetActive(false);
-            _overlayCanvas.gameObject.SetActive(false);
-            _renderDisplay.texture = null;
-
-
-            if (rt != null)
-            {
-                rt.Release();
-                Destroy(rt);
-            }
-
-            WindowManager.ResizeCentered(baseWidth, baseHeight, startRect);
-            AspectRatioEnforcer.Instance.isCameraAction = false;
-        }
-    }
-
+  
     /// <summary>
     /// t값(0~1)에 따라 해상도를 실시간으로 적용하는 헬퍼 함수
     /// </summary>
