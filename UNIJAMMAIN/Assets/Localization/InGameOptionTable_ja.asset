@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: InGameOptionTable_ja
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ja
+  m_SharedData: {fileID: 11400000, guid: 9f78b5dbd75a3a643a45710eeae2ae44, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 30656823296
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30715543552
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30715543553
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30715543554
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30723932160
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30723932161
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30723932162
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30723932163
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
