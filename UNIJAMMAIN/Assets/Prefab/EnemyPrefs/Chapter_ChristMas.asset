@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88a7b8007bad7a43abe76cf9a9d3d0f, type: 3}
-  m_Name: Chapter_Christmas
+  m_Name: Chapter_ChristMas
   m_EditorClassIdentifier: 
   phases:
   - rid: 4747093464073371648
@@ -42,6 +42,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 6
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 3
@@ -84,6 +87,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 0
           monsterType: 7
@@ -106,6 +112,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 3
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 7
@@ -138,6 +147,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 3
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 7
@@ -160,6 +172,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 3
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 8
@@ -182,6 +197,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 3
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 8
@@ -204,6 +222,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 2
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 8
@@ -226,6 +247,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 2
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 7

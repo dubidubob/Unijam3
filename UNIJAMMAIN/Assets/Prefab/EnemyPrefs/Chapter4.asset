@@ -39,6 +39,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 8
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -83,6 +86,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 8
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -115,6 +121,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 8
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -147,6 +156,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 12
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6

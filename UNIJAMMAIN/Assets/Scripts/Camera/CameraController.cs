@@ -122,50 +122,59 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// 창모드로 게임시작하여 적용될 수 있는 좌우로 OS화면을 넓히는 코드
     /// </summary>
-    /// <param name="durationBeats"></param>
-    /// <returns></returns>
-    async public UniTask WindowStretchAction(float durationBeat, float stretchX_rate = 0,float stretchY_rate =0)
+    /// <param name="delaySec">확장하는 데 걸리는 시간 (초)</param>
+    /// <param name="durationBeat">확장 상태를 유지할 박자 수</param>
+    /// <param name="stretchX_rate">가로 확장 비율</param>
+    /// <param name="stretchY_rate">세로 확장 비율</param>
+    async public UniTask WindowStretchAction(float delaySec, float durationBeat, float stretchX_rate = 0, float stretchY_rate = 0)
     {
-        if (Screen.fullScreen) return; // 전체화면일 때는 작동하지 않음
-        AspectRatioEnforcer.Instance.isCameraAction = true; // true로 설정하여 화면 비율을 마음대로 조절 할 수 없도록 설정
+        // [변화한 부분] 1. 초기 해상도 및 전체화면 여부 저장
+        bool wasFullScreen = Screen.fullScreen;
+        int originalWidth = Screen.width;
+        int originalHeight = Screen.height;
+
+        AspectRatioEnforcer.Instance.isCameraAction = true;
         await backGroundCanvas.DOFade(0, 1f);
 
-        // 3배 멀어지게하기
-        A_Enemytransform.DOLocalMoveX(A_Enemytransform.position.x * 3, 0f);
-        S_Enemytransform.DOLocalMoveY(S_Enemytransform.position.y * 3, 0f);
-        D_Enemytransform.DOLocalMoveX(D_Enemytransform.position.x * 3, 1f);
-        W_Enemytransform.DOLocalMoveY(W_Enemytransform.position.y * 3, 1f);
+        // [변화한 부분] 2. 화면 정가운데 배치를 위한 베이스 창모드 전환
+        // 1920x1080 모니터에서 늘어나는 것을 보여주기 위해 1280x720 같은 여유 있는 베이스 사이즈로 1차 전환합니다.
+        int baseWidth = 1280;
+        int baseHeight = 720;
+        Screen.SetResolution(baseWidth, baseHeight, FullScreenMode.Windowed);
 
+        // 해상도가 적용되고 창이 중앙으로 이동할 수 있도록 아주 짧은 프레임 대기
+        await UniTask.DelayFrame(3);
 
-        // 1. 초기 해상도 저장 (원복을 위해)
-        int baseWidth = Screen.width;
-        int baseHeight = Screen.height;
-        // 2. 늘어날 양 계산 (rate가 2이면 baseWidth * 2만큼 더해서 최종 3배가 됨)
-        // rate가 0이면 늘어날 양이 0이므로 크기 변화 없음
+        // [변화한 부분] 몬스터 이동 로직: rate에 비례하여 거리를 계산하고, delaySec 동안 부드럽게 이동시킴
+        // DOLocalMove이므로 position이 아닌 localPosition을 참조해야 위치가 튀지 않습니다.
+        float targetMoveRateX = 1f + stretchX_rate;
+        float targetMoveRateY = 1f + stretchY_rate;
+
+        A_Enemytransform.DOLocalMoveX(A_Enemytransform.localPosition.x * targetMoveRateX, delaySec).SetEase(Ease.OutExpo);
+        S_Enemytransform.DOLocalMoveY(S_Enemytransform.localPosition.y * targetMoveRateY, delaySec).SetEase(Ease.OutExpo);
+        D_Enemytransform.DOLocalMoveX(D_Enemytransform.localPosition.x * targetMoveRateX, delaySec).SetEase(Ease.OutExpo);
+        W_Enemytransform.DOLocalMoveY(W_Enemytransform.localPosition.y * targetMoveRateY, delaySec).SetEase(Ease.OutExpo);
+
+        // 3. 늘어날 양 계산
         int stretchX = (int)(baseWidth * stretchX_rate);
         int stretchY = (int)(baseHeight * stretchY_rate);
-
-
 
         float currentBPM = 120f;
         try { currentBPM = IngameData.GameBpm; } catch { }
         float secPerBeat = 60f / currentBPM;
-        int totalBeats = Mathf.FloorToInt(durationBeat);
 
-        // 늘어나는 시간: 1초 / 유지: durationBeat / 줄어드는 시간: 1초
-        float expandDuration = expandTime;
+        // [변화한 부분] delaySec를 확장 시간으로 사용하고, shrinkDuration도 에러가 안 나게 정의
+        float expandDuration = delaySec;
         float holdDuration = (secPerBeat * durationBeat);
-        float shrinkDuration = secPerBeat * shrinkTime;
-
+        float shrinkDuration = secPerBeat * 2f; // 축소 시간 임의 지정 (원하시는 박자 수로 수정 가능)
 
         var token = this.GetCancellationTokenOnDestroy();
 
         try
         {
-            // A. 확장 (0 -> 1)
+            // A. 확장 (delaySec 동안 창모드 변환 후 점진적 늘리기)
             await DOVirtual.Float(0, 1, expandDuration, value =>
             {
-                // _stretchIntensityX 대신 계산된 stretchX를 전달
                 int targetWidth = baseWidth + (int)(value * stretchX);
                 int targetHeight = baseHeight + (int)(value * stretchY);
                 Screen.SetResolution(targetWidth, targetHeight, FullScreenMode.Windowed);
@@ -183,13 +192,15 @@ public class CameraController : MonoBehaviour
                 int targetWidth = baseWidth + (int)(value * stretchX);
                 int targetHeight = baseHeight + (int)(value * stretchY);
                 Screen.SetResolution(targetWidth, targetHeight, FullScreenMode.Windowed);
-            }).ToUniTask(cancellationToken: token);
+            }).SetEase(Ease.InOutSine).ToUniTask(cancellationToken: token); // 자연스러운 축소를 위해 Ease 변경
         }
         catch (System.OperationCanceledException) { }
         finally
         {
-            // 종료 및 복구
-            Screen.SetResolution(baseWidth, baseHeight, FullScreenMode.Windowed);
+            // [변화한 부분] 기존의 창모드 크기 or 전체화면 모드였다면 원래대로 완벽하게 복귀
+            FullScreenMode targetMode = wasFullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+            Screen.SetResolution(originalWidth, originalHeight, targetMode);
+
             await backGroundCanvas.DOFade(1, 1f);
             AspectRatioEnforcer.Instance.isCameraAction = false;
         }
@@ -203,7 +214,7 @@ public class CameraController : MonoBehaviour
     /// 비트에 따라 화면이 쿵짝쿵짝 변하는 함수 (리듬닥터 스타일)
     /// 창만 움직이고 내부 렌더링은 고정
     /// </summary>
-    async public UniTask WindowRythmContinueStretchAction(float durationBeat)
+    async public UniTask WindowRythmContinueStretchAction(float delaySec,float durationBeat)
     {
         if (Screen.fullScreen) return;
         if (_overlayCanvas == null || _renderDisplay == null)
@@ -213,6 +224,7 @@ public class CameraController : MonoBehaviour
         }
 
         AspectRatioEnforcer.Instance.isCameraAction = true;
+
 
         // 1. 초기 상태 저장
         WindowManager.RECT startRect = WindowManager.GetCurrentWindowPos();
@@ -275,6 +287,7 @@ public class CameraController : MonoBehaviour
             _renderDisplay.gameObject.SetActive(false);
             _overlayCanvas.gameObject.SetActive(false);
             _renderDisplay.texture = null;
+
 
             if (rt != null)
             {

@@ -17,8 +17,7 @@ public class StageScene : BaseScene
         // 1. 씬에 필요한 모든 초기화를 먼저 실행합니다.
         Init();
 
-        // 2. UI를 화면에 띄웁니다.
-        Managers.UI.ShowPopUpUI<StageSceneUI>();
+     
 
         // 3. 모든 준비가 끝났다고 LoadingManager에게 알립니다. (UniTask 실행)
         NotifyManagerWhenReady().Forget();

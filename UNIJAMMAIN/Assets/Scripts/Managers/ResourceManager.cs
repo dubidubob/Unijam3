@@ -42,7 +42,15 @@ public class ResourceManager
             return Managers.Pool.Pop(original, parent).gameObject;
         }
         GameObject go = Object.Instantiate(original, parent);
-        go.name = original.name;
+        // go가 Awake 도중 파괴되지 않았을 때만 이름을 변경합니다.
+        if (go != null)
+        {
+            go.name = original.name;
+        }
+        else
+        {
+            Debug.LogWarning($"[ResourceManager] {path} 프리팹이 Awake 과정에서 스스로 파괴되었습니다!");
+        }
 
         return go;
     }

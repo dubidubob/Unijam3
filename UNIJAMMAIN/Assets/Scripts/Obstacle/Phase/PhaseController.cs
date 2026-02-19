@@ -225,6 +225,7 @@ public class PhaseController : MonoBehaviour
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
                 float delaySec = delayBeats * (float)IngameData.BeatInterval;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
+                HandleStretchWindowEvent(phaseEvent, delaySec);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
@@ -300,6 +301,14 @@ public class PhaseController : MonoBehaviour
         {
             Managers.Game.SetADReverse(false);
             ChangeKey?.Invoke(-1f);
+        }
+    }
+
+    private void HandleStretchWindowEvent(PhaseEvent phaseEvent, float delaySec)
+    {
+        if(phaseEvent.isStretchWindow)
+        {
+            cameraController.WindowStretchAction(delaySec,phaseEvent.durationBeat,phaseEvent.stretchX_rate,phaseEvent.stretchY_rate).Forget();
         }
     }
 
