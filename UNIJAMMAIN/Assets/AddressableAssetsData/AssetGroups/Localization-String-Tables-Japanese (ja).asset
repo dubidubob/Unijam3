@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c18ea894fab08fb4e91314a4558b41fd
+    m_Address: InGameOptionTable_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: df9411b70fc59e045aa3a6c2c77f75a2
     m_Address: StageSceneUI_ja
     m_ReadOnly: 1
