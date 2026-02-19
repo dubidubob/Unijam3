@@ -29,6 +29,13 @@ public class PlayerActionUI : MonoBehaviour
 
     // TODO : 나중에 이미지가 더 바뀔일이 있다면, 이곳에 추가하고 리팩토링
     public CharacterSpriteSO characterSpriteSO;
+
+
+    [Header("플레이어 액션")]
+    // 최소 스프라이트 유지 시간 설정
+    [SerializeField] private const float MIN_DURATION = 0.25f;
+    [SerializeField] private const float RECOVER_DELAY = 0.4f; // 기존 코드의 0.4초 유지
+    private float _lastActionTime = 0f; // 마지막으로 액션(스프라이트 변경)이 일어난 시간
     void Start()
     {   
         Managers.Game.actionUI = this;
@@ -135,37 +142,36 @@ public class PlayerActionUI : MonoBehaviour
     }
     private void ChangePlayerSprite(GamePlayDefine.WASDType type)
     {
-        if (Managers.Game.currentPlayerState == GameManager.PlayerState.Die)
-        {
-            CancelInvoke("Recover"); // 게임오버 상태일 때 Invoke를 취소합니다.
-            return;
-        }
-
-        StopNormalPosing();
-        // 애니메이터 비활성화
-        animator.enabled = false;
-
-        sp.sprite = _actionImgsDic[Util.WASDTypeChange(type)];
-        Invoke("Recover", 0.4f);
+        ExecuteAction(_actionImgsDic[Util.WASDTypeChange(type)]);
     }
-
-
 
     private void ChangePlayerSprite_Arrow(GamePlayDefine.DiagonalType type)
     {
+        ExecuteAction(_actionImgsDic[Util.DiagonalTypeChange(type)]);
+    }
+
+    // 중복 로직을 하나로 합친 핵심 실행 함수
+    private void ExecuteAction(Sprite actionSprite)
+    {
         if (Managers.Game.currentPlayerState == GameManager.PlayerState.Die)
         {
-            CancelInvoke("Recover"); // 게임오버 상태일 때 Invoke를 취소합니다.
+            CancelInvoke("Recover");
             return;
         }
 
-        StopNormalPosing();
-        // 애니메이터 비활성화
-        animator.enabled = false;
+        // 1. 새로운 액션이 들어왔으므로 기존에 예약된 Recover는 모두 취소
+        CancelInvoke("Recover");
 
-        sp.sprite = _actionImgsDic[Util.DiagonalTypeChange(type)];
-        Invoke("Recover", 0.4f);
+        // 2. 현재 시간을 기록하고 스프라이트 교체
+        _lastActionTime = Time.time;
+        StopNormalPosing();
+        animator.enabled = false;
+        sp.sprite = actionSprite;
+
+        // 3. 0.4초 뒤에 복구 시도
+        Invoke("Recover", RECOVER_DELAY);
     }
+
 
     private void Recover()
     {
@@ -174,6 +180,12 @@ public class PlayerActionUI : MonoBehaviour
         {
             return; // 죽은 상태에서는 복구하지 않습니다.
         }
+
+        if (Time.time - _lastActionTime < MIN_DURATION)
+        {
+            return;
+        }
+
         sp.sprite = origin;
         isActioning = false;
         animator.enabled = true;
