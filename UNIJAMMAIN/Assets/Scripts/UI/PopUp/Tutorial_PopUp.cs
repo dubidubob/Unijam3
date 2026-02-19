@@ -5,6 +5,8 @@ using UnityEngine;
 using Cysharp.Threading.Tasks; // UniTask 필수
 using System.Threading;      // CancellationToken 필수
 using UnityEngine.UI;
+using DG.Tweening;
+
 
 
 public class Tutorial_PopUp : UI_Popup
@@ -32,6 +34,10 @@ public class Tutorial_PopUp : UI_Popup
     [SerializeField] private Image rightImage;
 
     [SerializeField] private Sprite default_Image;
+
+    [Header("0장 튜토리얼 이미지 설정")]
+    [SerializeField] RectTransform leftHandRect;
+    [SerializeField] GameObject rightHand;
 
     // 실행 중인 작업 취소를 위한 토큰 소스
     private CancellationTokenSource _cts;
@@ -287,6 +293,11 @@ public class Tutorial_PopUp : UI_Popup
         {
             if (keyBoardGuide != null)
                 keyBoardGuide.SetActive(true);
+
+            rightHand.SetActive(true);
+            Image rightHandimage = rightHand.GetComponent<Image>();
+            rightHandimage.DOFade(1f, 0.5f);
+            rightHand.GetComponent<RectTransform>().DOAnchorPosY(-293, 1f);
         }
     }
 }
