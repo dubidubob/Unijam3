@@ -243,6 +243,15 @@ MonoBehaviour:
         - textContents:
           - "\uBCF4\uC5EC\uC8FC\uB9C8. \uC870\uD654\uB97C \uAC70\uC2A4\uB978 \uC790\uC758
             \uACB0\uB9D0\uC774 \uBB34\uC5C7\uC778\uC9C0."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948875
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 3
           characterData: {fileID: 0}

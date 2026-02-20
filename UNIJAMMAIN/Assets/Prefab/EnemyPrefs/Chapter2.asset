@@ -35,6 +35,7 @@ MonoBehaviour:
   StartBeat: 8
   DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: cae03c4b32bb42f4aab710e768ed28eb, type: 3}
+  backGroundGraySprite: {fileID: 0}
   colorPalette: {r: 0.36862746, g: 0.6745098, b: 0.627451, a: 0}
   SinkStage: 0
   references:
@@ -208,6 +209,15 @@ MonoBehaviour:
         - textContents:
           - "\uC548\uAC1C\uAC00 \uC790\uC6B1\uD574\uC84C\uB2E4..! \uC774\uB54C\uB97C
             \uB178\uB824 \uB610 \uBAB0\uB824\uC624\uB294\uAD70."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948878
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 0}
@@ -257,12 +267,30 @@ MonoBehaviour:
         steps:
         - textContents:
           - "\uC5EC\uAE30\uAE4C\uC9C0 \uC815\uB9D0 \uADC0\uCC2E\uAC8C \uB530\uB77C\uBD99\uB294\uAD70."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948876
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 0}
           dir: 0
         - textContents:
           - "\uC7A0\uAE50, \uB2E4\uB4E4 \uC18D\uB3C4\uAC00 \uB108\uBB34 \uBE60\uB974\uC796\uC544!"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948877
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 0}

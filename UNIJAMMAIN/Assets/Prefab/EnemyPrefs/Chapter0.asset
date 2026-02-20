@@ -44,6 +44,15 @@ MonoBehaviour:
         - textContents:
           - "(\uB9D0\uC740 \uADF8\uB807\uAC8C \uD588\uC9C0\uB9CC, \uC2E4\uC740 \uD55C
             \uBC88\uB3C4 \uB300\uC801\uD574\uBCF8 \uC801\uC774 \uC5C6\uB2E4.)"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767249977344
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
@@ -51,6 +60,15 @@ MonoBehaviour:
         - textContents:
           - "(\uC0AC\uBC29\uC758 \uC801\uC740.. \uADFC\uCC98\uC5D0 \uC624\uBA74 WASD\uB97C
             \uB20C\uB7EC \uBB3C\uB9AC\uCCD0\uB77C..)"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948864
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 11400000, guid: 313c8734c78cf2f40b73790982ae3de7, type: 2}
@@ -58,6 +76,15 @@ MonoBehaviour:
         - textContents:
           - "\uC2A4\uC2B9\uB2D8 \uB9D0\uC500\uC744 \uB530\uB77C.. \uADF8\uB798 \uD55C
             \uBC88 \uD574\uBCF4\uC790!"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948865
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 0}
@@ -98,12 +125,38 @@ MonoBehaviour:
         - textContents:
           - "\uD560\uB9CC\uD558\uAD70."
           - "\uC0DD\uAC01\uBCF4\uB2E4 \uC5B4\uB835\uAD70."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948866
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948867
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 2
           delayBeat: 4
           characterData: {fileID: 0}
           dir: 0
         - textContents:
           - "\uC800.. \uB098\uB97C \uB2EE\uC740 \uC545\uB839\uB4E4\uC740.. \uC124\uB9C8.."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948868
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 0}
@@ -112,6 +165,15 @@ MonoBehaviour:
           - "\uAC00\uC7A5 \uD070 \uC2DC\uB828\uC774 \uC790\uC2E0\uC774\uB77C\uB294\uAC8C..
             \uC7A0\uAE50, \uC774\uB550 \uC2A4\uC2B9\uB2D8\uC774 \uBB50\uB77C\uACE0
             \uD558\uC168\uC9C0?"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948869
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 0}
@@ -120,6 +182,15 @@ MonoBehaviour:
           - "(\uB108\uB97C \uC7A0\uC2DD\uD558\uB824\uB294 \uD63C\uB839\uC774 \uBCF4\uC774\uB294
             \uC21C\uAC04, \uBC14\uB85C \uB300\uAC01\uC120 \uBC29\uD5A5\uD0A4\uB97C
             \uD1B5\uD574 \uACF5\uACA9\uD574!)"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948870
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 0}
@@ -128,6 +199,15 @@ MonoBehaviour:
           - "\uB300\uAC01\uC120..? \uC624\uB978\uCABD \uC704\uBA74, \uC624\uB978\uCABD
             + \uC704 \uBC29\uD5A5\uD0A4\uB97C \uB3D9\uC2DC\uC5D0 \uB204\uB974\uBA74
             \uB418\uB098?"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948871
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 0}
@@ -168,6 +248,23 @@ MonoBehaviour:
         - textContents:
           - "\uC880, \uBB34\uC12D\uAC8C \uC0DD\uACBC\uAD70."
           - "\uC810\uCC28 \uC815\uC2E0\uC744 \uC783\uC744 \uAC83 \uAC19\uAD70."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948872
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948873
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 1
           delayBeat: 3
           characterData: {fileID: 0}
@@ -175,6 +272,15 @@ MonoBehaviour:
         - textContents:
           - "\uC800\uAE30 \uB354 \uB9CE\uC740 \uC545\uB839\uB4E4\uC774 \uBAB0\uB824\uC628\uB2E4.
             \uC815\uC2E0\uC744 \uBC14\uC9DD \uCC28\uB824\uC57C\uD574!"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948874
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 3
           characterData: {fileID: 0}

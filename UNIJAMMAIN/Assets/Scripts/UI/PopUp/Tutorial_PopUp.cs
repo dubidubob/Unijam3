@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks; // UniTask 필수
 using System.Threading;      // CancellationToken 필수
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Localization;
 
 
 
@@ -142,9 +143,11 @@ public class Tutorial_PopUp : UI_Popup
             int curMonsterHitCnt = IngameData.PerfectMobCnt + IngameData.GoodMobCnt;
             bool isFail = (curMonsterHitCnt - baseHitCnt) < info.monsterCutline;
 
-            if (info.textContents != null && info.textContents.Count() > 0)
+            if(info.localizedTextContents!=null && info.localizedTextContents.Count() > 0)
             {
-                text.text = isFail ? info.textContents.Last() : info.textContents.First();
+                var targetLocalizedString = isFail ? info.localizedTextContents.Last() : info.localizedTextContents.First();
+                string translatedText = await targetLocalizedString.GetLocalizedStringAsync().ToUniTask(cancellationToken: token);
+                text.text = translatedText;
             }
 
             // 1. 팝업 나타나기

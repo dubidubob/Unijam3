@@ -20,7 +20,7 @@ MonoBehaviour:
   - rid: 7504153760568705024
   MusicPath: BGM/Chapter5_V2
   StartBeat: 8
-  DelayPaddingSeconds: 0
+  DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: 2275b117ee9c47542a27fdba9b27a226, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 5e73ef6a181b19145b2d248b6beed720, type: 3}
   colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
@@ -37,6 +37,7 @@ MonoBehaviour:
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -46,6 +47,9 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 2
           hiding: 1
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 7504153760568705025
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -55,6 +59,7 @@ MonoBehaviour:
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -64,6 +69,9 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 1
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: (WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)
@@ -71,6 +79,9 @@ MonoBehaviour:
           spawnBeat: 4
           moveBeat: 4
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 0
           monsterType: 3
           WASD_Pattern: (WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)
@@ -78,6 +89,9 @@ MonoBehaviour:
           spawnBeat: 16
           moveBeat: 1
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 7504153833746464770
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -87,6 +101,7 @@ MonoBehaviour:
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 0
@@ -96,6 +111,9 @@ MonoBehaviour:
           spawnBeat: 12
           moveBeat: 1
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 1
           monsterType: 5
           WASD_Pattern: WDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)X
@@ -103,6 +121,9 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 2
           hiding: 1
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 9186972795589099526
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -112,20 +133,41 @@ MonoBehaviour:
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         steps:
         - textContents:
           - "\uD604\uC7AC \uC74C\uC545\uC5D0 \uB9DE\uAC8C \uC81C\uC791 \uC911\uC785\uB2C8\uB2E4.
             (6\uB9C9, 7\uB9C9\uC740 \uAC00\uB2A5\uD569\uB2C8\uB2E4!)"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948889
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 8
           characterData: {fileID: 0}
+          dir: 0
         - textContents:
           - "\uAC00\uBA74\uC545\uB839\uC774 \uC67C\uCABD\uD654\uBA74\uC744 \uAC00\uB9AC\uBA74
             \"\uC88C\uD074\uB9AD\", \uBC18\uB300\uBA74 \"\uC6B0\uD074\uB9AD\"\uC73C\uB85C
             \uC5C6\uC560\uC57C\uD558\uB294\uAD70!"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948890
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 0}
+          dir: 0
     - rid: 9186972795589099527
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -135,6 +177,7 @@ MonoBehaviour:
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -144,6 +187,9 @@ MonoBehaviour:
           spawnBeat: 0.5
           moveBeat: 2
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 1
           monsterType: 3
           WASD_Pattern: 
@@ -151,3 +197,6 @@ MonoBehaviour:
           spawnBeat: 8
           moveBeat: 1
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0

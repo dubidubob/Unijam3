@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 using NaughtyAttributes;
 
 // 모든 게임 이벤트를 위한 인터페이스 또는 추상 클래스
@@ -58,6 +59,7 @@ public class TutorialEvent : GameEvent
 public struct TextInfo
 {
     public string[] textContents;
+    public LocalizedString[] localizedTextContents;
     public int monsterCutline;
     public float delayBeat;
     public CharacterData characterData;

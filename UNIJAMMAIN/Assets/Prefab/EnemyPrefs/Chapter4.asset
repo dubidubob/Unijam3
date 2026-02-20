@@ -213,6 +213,15 @@ MonoBehaviour:
         steps:
         - textContents:
           - "\uADFC\uC6D0\uC744 \uD5A5\uD574,"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948885
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
@@ -220,6 +229,15 @@ MonoBehaviour:
         - textContents:
           - "\uC774 \uD55C \uBAB8 \uC73C\uC2A4\uB7EC\uC9C8 \uB54C\uAE4C\uC9C0 \uACC4\uC18D
             \uB098\uC544\uAC00\uB9AC."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948886
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
@@ -227,12 +245,30 @@ MonoBehaviour:
         - textContents:
           - "\uB124 \uC2E0\uB150\uB300\uB85C \uACE7\uC774\uACE7\uB300\uB85C \uADF8
             \uACF3\uC5D0 \uC788\uC5B4\uB77C!"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948887
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
           dir: 1
         - textContents:
           - "\uB0B4 \uC788\uB294 \uD798\uC744 \uB2E4\uD574 \uC871\uC871 \uBD80\uC234\uC8FC\uB9C8."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948888
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
           characterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}

@@ -131,11 +131,6 @@ public class PhaseController : MonoBehaviour
             return;
         }
        
-
-       
-
-
-
         // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
         if (chapters[_chapterIdx].Phases.Count > 0)
         {
@@ -166,20 +161,16 @@ public class PhaseController : MonoBehaviour
         // 사운드 매니저에게 "이 시간에 정확히 틀어라"고 예약합니다.
         string bgmPath = chapters[_chapterIdx].MusicPath;
 
-
         // DelayPadding의 Tick의 Second 만큼 대기 ( 몬스터를 미리 소환하고 노래를 늦게 재생 ) 
         // sinkTimer추가, sinkTimer만큼 노래가 늦게 재생되거나 빨리재생됨
         // 노래가 빨리 재생된다는것(SinTimer가 + 라는것은 몹이 늦게 도착한다는 뜻이다)
         double waitSecondTarget = (long)chapters[_chapterIdx].DelayPaddingTick * IngameData.BeatInterval+IngameData.sinkTimer;
         Managers.Sound.PlayScheduled(bgmPath, musicStartTime + waitSecondTarget, Define.Sound.BGM);
 
-
         // BeatClock에게도 "게임 시작 시간은 startTime이다"라고 알려줍니다.
         //    BeatClock은 이제 Update에서 (dspTime - startTime)을 통해 틱을 계산해야 합니다.
         beatClock.SetStartTime(musicStartTime);
         
-        
-
         //  BGM이 시작될 때까지(1초간) 대기
         //    이렇게 하면 "소리가 나는 순간"과 "로직이 시작되는 순간"이 맞음.
         await UniTask.WaitUntil(() => AudioSettings.dspTime >= musicStartTime, cancellationToken: token);

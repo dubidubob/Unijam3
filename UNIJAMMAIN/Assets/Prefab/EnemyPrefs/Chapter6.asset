@@ -90,12 +90,30 @@ MonoBehaviour:
         steps:
         - textContents:
           - "\uC5EC\uAE30\uC5D0\uC11C.. \uBB34\uB108\uC9C8 \uC218\uB294 \uC5C6\uB2E4."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948893
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 3
           characterData: {fileID: 0}
           dir: 0
         - textContents:
           - "\uC640\uB77C... \uC774\uACF3\uC5D0 \uC11C\uC11C \uAD73\uAC74\uD788 \uBC84\uD2F0\uACA0\uB2E4."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948894
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 3
           characterData: {fileID: 0}
@@ -167,6 +185,15 @@ MonoBehaviour:
         steps:
         - textContents:
           - "\uC2E0\uC131\uD55C \uACF3\uC5D0 \uC545\uB839\uB4E4\uC774 \uB4E4\uC774\uB2E5\uCE58\uB2E4\uB2C8,"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948891
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 5
           characterData: {fileID: 0}
@@ -174,6 +201,15 @@ MonoBehaviour:
         - textContents:
           - "\uC774\uACF3\uC740 \uB108\uD76C\uAC00 \uB118\uBCFC \uC218 \uC788\uB294\uACF3\uC774
             \uC544\uB2C8\uB2E4!"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948892
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 5
           characterData: {fileID: 0}
