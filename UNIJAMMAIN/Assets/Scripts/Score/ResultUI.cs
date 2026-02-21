@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using System.Threading; // CancellationToken 사용을 위해 필요
 
 [Serializable]
 struct RankUI {
@@ -25,8 +27,10 @@ public class ResultUI : MonoBehaviour
     [SerializeField] private Image resultImg;
     [SerializeField] private TMP_Text resultTxt;
     [SerializeField] private TMP_Text resultScore;
+    [SerializeField] private Image resultNewRecordImg;
     [Header("UI 정보 : 최상, 상, 중상, 중, 하 순으로")]
     [SerializeField] List<RankUI> rankUI;
+    
 
     private void Awake()
     {
@@ -64,8 +68,12 @@ public class ResultUI : MonoBehaviour
         if (!IngameData.boolPracticeMode)
         {
             // 데이터 저장 (Best Score, Rank) - 업적 체크보다 먼저 해야 함!
-            // (기존 코드에 있던 BestScore 저장은 밖으로 뺐습니다. 연습모드 기록 저장 여부에 따라 위치 조정하세요)
-            IngameData.BestChapterScore = score;
+            if (score < IngameData.BestChapterScore) // 최고기록 달성 완료!
+            {
+                BestRecordAchieve();
+            }
+            IngameData.BestChapterScore = score; // 자등으로 최고기록 저장
+           
             IngameData.ChapterRank = rank; // 이번 판 기록 확정 저장
 
             // 개별 업적 : 0 챕터가 아닌 곳에서 첫 최상 등급
@@ -117,4 +125,60 @@ public class ResultUI : MonoBehaviour
         Managers.Steam.UnlockAchievement("ACH_SCORE_100_ALL");
     }
 
+    /// <summary>
+    /// 최고 기록을 달성했을때, 신기록 이미지를 띄워주는 코드
+    /// </summary>
+    public void BestRecordAchieve()
+    {
+        resultNewRecordImg.color = new Color(1, 1, 1, 1); // 색깔 활성화
+        ImageAlphaBrightning(resultNewRecordImg).Forget();
+    }
+
+    // ==================================================================================
+    // ▼ 구현된 부분 ▼
+    // ==================================================================================
+    private async UniTask ImageAlphaBrightning(Image targetImg)
+    {
+        // 방어 코드: 타겟 이미지가 없으면 실행 취소
+        if (targetImg == null) return;
+
+        // 1. 중요: 이 객체(ResultUI)가 파괴될 때 루프를 멈추기 위한 토큰 획득
+        CancellationToken cancellationToken = this.GetCancellationTokenOnDestroy();
+
+        // 2. 초기 상태 저장 (기준점)
+        Vector3 initialLocalPos = targetImg.transform.localPosition;
+        Color initialColor = targetImg.color; // 원래 색상(RGB) 유지용
+
+        // 3. 애니메이션 설정값 (취향에 맞게 조절하세요)
+        float alphaSpeed = 3f;       // 깜빡임 속도
+        float minAlpha = 0.7f;       // 최소 투명도
+        float maxAlpha = 1.0f;       // 최대 투명도
+
+        float moveSpeed = 2f;        // 둥둥 떠다니는 속도
+        float moveRangeY = 10f;      // 위아래 이동 범위
+
+        // 무한 루프를 돌며 애니메이션 수행
+        while (true)
+        {
+            // [Alpha 애니메이션]
+            // PingPong: 0에서 1 사이를 지정된 속도로 왕복
+            float t = Mathf.PingPong(Time.unscaledTime * alphaSpeed, 1f);
+            // Lerp: t값에 따라 minAlpha와 maxAlpha 사이를 보간
+            float currentAlpha = Mathf.Lerp(minAlpha, maxAlpha, t);
+            targetImg.color = new Color(initialColor.r, initialColor.g, initialColor.b, currentAlpha);
+
+            // [위치 애니메이션]
+            // Sin 그래프를 이용해 -1 ~ 1 사이 값을 얻고 범위(moveRangeY)를 곱함
+            float yOffset = Mathf.Sin(Time.unscaledTime * moveSpeed) * moveRangeY;
+            targetImg.transform.localPosition = new Vector3(initialLocalPos.x, initialLocalPos.y + yOffset, initialLocalPos.z);
+
+            // 다음 프레임까지 대기 (cancellationToken을 전달하여 파괴 시 루프 탈출)
+            // PlayerLoopTiming.Update: 매 프레임 업데이트 시점
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+        }
+    }
+    private void OnDestroy()
+    {
+        
+    }
 }
