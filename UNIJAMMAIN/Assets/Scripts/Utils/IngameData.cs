@@ -96,6 +96,9 @@ public static class IngameData
 
 
     // ChapterRank 프로퍼티는 이제 현재 선택된 ChapterIdx에 해당하는 배열의 값을 다룸
+    /// <summary>
+    /// stageScene에 표시할 최고 랭크 점수를 의미함, 최고점수
+    /// </summary>
     public static Define.Rank ChapterRank
     {
         // get: 현재 ChapterIdx에 맞는 랭크를 배열에서 가져옴
