@@ -454,7 +454,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 6_StoryCanvas_000
+    localizationKey: STORY_6_StoryCanvas_000
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -476,7 +476,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 6_StoryCanvas_001
+    localizationKey: STORY_6_StoryCanvas_001
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -499,7 +499,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 6_StoryCanvas_002
+    localizationKey: STORY_6_StoryCanvas_002
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -520,7 +520,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 6_StoryCanvas_003
+    localizationKey: STORY_6_StoryCanvas_003
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -541,7 +541,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 6_StoryCanvas_004
+    localizationKey: STORY_6_StoryCanvas_004
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -562,7 +562,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 6_StoryCanvas_005
+    localizationKey: STORY_6_StoryCanvas_005
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -583,7 +583,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 6_StoryCanvas_006
+    localizationKey: STORY_6_StoryCanvas_006
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -604,7 +604,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 6_StoryCanvas_007
+    localizationKey: STORY_6_StoryCanvas_007
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}

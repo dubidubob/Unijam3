@@ -28,6 +28,11 @@ public class BackGroundController : MonoBehaviour
     [SerializeField] public Image extraObjectImage7;
     [SerializeField] public BackGroundDataSO backGrounddataSO;
 
+
+    [Header("회전 컨테이너")]
+    [SerializeField] public RectTransform target2_Container;
+    [SerializeField] public RectTransform target3_Container;
+
     // 외부 스크립트용 프로퍼티(편의상 이름 매핑)
     public Image ExtraImage1 => extraObjectImage;
     public Image ExtraImage2 => extraObjectImage2;
@@ -99,8 +104,11 @@ public class BackGroundController : MonoBehaviour
             case 5: currentChapterAction = ChapterAction_5; break;
             case 6: currentChapterAction = ChapterAction_6; break;
             case 7: currentChapterAction = ChapterAction_7; break;
-            case 10:
+            case 10: // EDM
                 ConnectExternalEffect<BackGroundEffect_10>(); // 이안에서 currentChapterAction 구독
+                break;
+            case 11: // 도시
+                ConnectExternalEffect<BackGroundEffect_11>();
                 break;
             default: currentChapterAction = null; break;
         }

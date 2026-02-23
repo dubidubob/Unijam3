@@ -547,7 +547,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_000
+    localizationKey: STORY_3_StoryCanvas_000
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -570,7 +570,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_001
+    localizationKey: STORY_3_StoryCanvas_001
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -592,7 +592,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_002
+    localizationKey: STORY_3_StoryCanvas_002
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -614,7 +614,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_003
+    localizationKey: STORY_3_StoryCanvas_003
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -636,7 +636,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_004
+    localizationKey: STORY_3_StoryCanvas_004
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -658,7 +658,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_005
+    localizationKey: STORY_3_StoryCanvas_005
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -681,7 +681,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_006
+    localizationKey: STORY_3_StoryCanvas_006
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -703,7 +703,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_007
+    localizationKey: STORY_3_StoryCanvas_007
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -725,7 +725,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_008
+    localizationKey: STORY_3_StoryCanvas_008
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -747,7 +747,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_009
+    localizationKey: STORY_3_StoryCanvas_009
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -769,7 +769,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_010
+    localizationKey: STORY_3_StoryCanvas_010
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -790,7 +790,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_011
+    localizationKey: STORY_3_StoryCanvas_011
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -813,7 +813,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_012
+    localizationKey: STORY_3_StoryCanvas_012
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -835,7 +835,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_013
+    localizationKey: STORY_3_StoryCanvas_013
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -858,7 +858,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_014
+    localizationKey: STORY_3_StoryCanvas_014
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -880,7 +880,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_015
+    localizationKey: STORY_3_StoryCanvas_015
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -903,7 +903,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_016
+    localizationKey: STORY_3_StoryCanvas_016
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -924,7 +924,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_017
+    localizationKey: STORY_3_StoryCanvas_017
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -946,7 +946,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_018
+    localizationKey: STORY_3_StoryCanvas_018
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -969,7 +969,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_019
+    localizationKey: STORY_3_StoryCanvas_019
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -991,7 +991,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_020
+    localizationKey: STORY_3_StoryCanvas_020
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -1013,7 +1013,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_021
+    localizationKey: STORY_3_StoryCanvas_021
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -1034,7 +1034,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_022
+    localizationKey: STORY_3_StoryCanvas_022
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -1056,7 +1056,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_023
+    localizationKey: STORY_3_StoryCanvas_023
     spriteYOffset: 0
     triggerBackgroundFade: 0
     newBackgroundSprite: {fileID: 0}
@@ -1078,7 +1078,7 @@ MonoBehaviour:
     XFlip: 0
     goingTimeAmount: 0
     requiredKey: 0
-    localizationKey: 3_StoryCanvas_024
+    localizationKey: STORY_3_StoryCanvas_024
     spriteYOffset: 0
     triggerBackgroundFade: 1
     newBackgroundSprite: {fileID: 21300000, guid: 45e36b61c356513438fdc1eb0895bfac, type: 3}

@@ -24,7 +24,7 @@ MonoBehaviour:
   MusicPath: BGM/ChapterChristmas_V1
   StartBeat: 0
   DelayPaddingTick: 5
-  backGroundSprite: {fileID: 21300000, guid: 01e0d901559d3fa4c8a3117305ed3453, type: 3}
+  backGroundSprite: {fileID: 21300000, guid: 3f3c4561bb27c9b4cbea34b94e1d2981, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 01e0d901559d3fa4c8a3117305ed3453, type: 3}
   colorPalette: {r: 0.3115279, g: 0.4943396, b: 0.07741541, a: 0}
   SinkStage: 0

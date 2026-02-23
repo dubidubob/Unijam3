@@ -20,7 +20,7 @@ MonoBehaviour:
   MusicPath: BGM/ChapterEDM_V1
   StartBeat: 532532
   DelayPaddingTick: 0
-  backGroundSprite: {fileID: 21300000, guid: 91a7dcfe540cf0446b4a7a238b8e84e4, type: 3}
+  backGroundSprite: {fileID: 21300000, guid: 4fd296de0ac5a9846a03f27629df73f5, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 91a7dcfe540cf0446b4a7a238b8e84e4, type: 3}
   colorPalette: {r: 1, g: 1, b: 1, a: 0.40784314}
   SinkStage: 0
@@ -38,6 +38,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 12
@@ -60,6 +63,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 14
@@ -82,6 +88,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 14
@@ -104,6 +113,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 15

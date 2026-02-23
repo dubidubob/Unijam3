@@ -15,7 +15,7 @@ public enum Language
 public static class LocalizationManager
 {
     // key -> (langKey -> value)
-    static Dictionary<string, Dictionary<Language, string>> table = new Dictionary<string, Dictionary<Language, string>>();
+    static Dictionary<string, Dictionary<Language, string>> story_table = new Dictionary<string, Dictionary<Language, string>>();
 
     public static Language CurrentLanguage = Language.Korean;
     public static event Action OnLanguageChanged;
@@ -23,7 +23,7 @@ public static class LocalizationManager
     // Load CSV from Resources (can be called at runtime or editor)
     public static void Load(string resourcesPath = "Localization/StoryDialogue")
     {
-        table.Clear();
+        story_table.Clear();
 
         TextAsset csvAsset = Resources.Load<TextAsset>(resourcesPath);
         if (csvAsset == null)
@@ -68,16 +68,16 @@ public static class LocalizationManager
                 if (row.Count <= keyIdx || string.IsNullOrWhiteSpace(row[keyIdx])) continue;
 
                 string key = row[keyIdx].Trim();
-                if (!table.ContainsKey(key)) table[key] = new Dictionary<Language, string>();
+                if (!story_table.ContainsKey(key)) story_table[key] = new Dictionary<Language, string>();
 
-                if (koIdx >= 0 && koIdx < row.Count) table[key][Language.Korean] = row[koIdx];
-                if (enIdx >= 0 && enIdx < row.Count) table[key][Language.English] = row[enIdx];
-                if (zhIdx >= 0 && zhIdx < row.Count) table[key][Language.Chinese] = row[zhIdx];
-                if (jaIdx >= 0 && jaIdx < row.Count) table[key][Language.Japanese] = row[jaIdx];
+                if (koIdx >= 0 && koIdx < row.Count) story_table[key][Language.Korean] = row[koIdx];
+                if (enIdx >= 0 && enIdx < row.Count) story_table[key][Language.English] = row[enIdx];
+                if (zhIdx >= 0 && zhIdx < row.Count) story_table[key][Language.Chinese] = row[zhIdx];
+                if (jaIdx >= 0 && jaIdx < row.Count) story_table[key][Language.Japanese] = row[jaIdx];
             }
         }
 
-        Debug.Log($"Localization Loaded: {table.Count} keys.");
+        Debug.Log($"Localization Loaded: {story_table.Count} keys.");
     }
 
     // 언어 변경 (UI용)
@@ -92,7 +92,7 @@ public static class LocalizationManager
     {
         if (string.IsNullOrEmpty(key)) return fallback;
 
-        if (table.TryGetValue(key, out var perLang))
+        if (story_table.TryGetValue(key, out var perLang))
         {
             if (perLang.TryGetValue(CurrentLanguage, out var val))
             {
