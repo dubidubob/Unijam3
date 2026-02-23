@@ -75,6 +75,8 @@ public class StageLevelSceneUI : MonoBehaviour
         // 2. tmpText ������Ʈ�� ����ó�� ������ �ִϸ��̼�
         // 3. tmpText.text = "��{nowStageLevel}��" ; ���� ����
         yield return new WaitForSeconds(0.5f);
+        stageSceneUI.localizationController.RefreshLevelInfoUI(tmpText, stageSceneUI.currentPageLevel, stageSceneUI.isEventMap); // 로컬라이제이션 
+        /*
         if (nowStageLevel == 2)
         {
             tmpText.text = $"제?장";
@@ -83,6 +85,7 @@ public class StageLevelSceneUI : MonoBehaviour
         {
             tmpText.text = $"제{nowStageLevel+1}장";
         }
+        */
 
         tmpText.transform.localScale = new Vector2(3f, 3f);
         Managers.Sound.Play("SFX/UI/Act123_V1", Define.Sound.SFX, 1f, 3f);
@@ -103,7 +106,8 @@ public class StageLevelSceneUI : MonoBehaviour
         // ����Ʈ ���� üũ
 
 
-        extraText.text = extraTextString[textIndex];
+        extraText.text = stageSceneUI.localizationController.levelGuide_localizedString[textIndex].GetLocalizedString(); // 로컬라이제이션 적용
+        // extraText.text = extraTextString[textIndex];
        
 
         // 6. ��ô���ϰ�

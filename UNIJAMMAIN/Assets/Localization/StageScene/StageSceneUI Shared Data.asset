@@ -135,6 +135,46 @@ MonoBehaviour:
     m_Key: ST_EDM_Data_LevelText
     m_Metadata:
       m_Items: []
+  - m_Id: 6184490368630784
+    m_Key: ST_Default_Data_StageMainText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905472
+    m_Key: ST_Default_Data_StageMainSubText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905473
+    m_Key: ST_Default_Data_LevelText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905474
+    m_Key: StageScene_Start_BTN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905475
+    m_Key: StageScene_Bead_StoryMap_StageInfo_Text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905476
+    m_Key: StageScene_Bead_WinterMap_Winter_StageInfo_Text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905477
+    m_Key: StageScene_Bead_WinterMap_City_StageInfo_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905478
+    m_Key: StageScene_Level_Guide_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905479
+    m_Key: StageScene_Level_Guide_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905480
+    m_Key: StageScene_Level_Guide_2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

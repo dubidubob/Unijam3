@@ -15,6 +15,8 @@ public class StageSceneLocalizationController : MonoBehaviour
 
     public LocalizedString event_City_LevelFormat;
 
+    public List<LocalizedString> levelGuide_localizedString;
+
     /// <summary>
     /// 레벨 표현 UI를 현재 언어와 맵 종류에 맞게 업데이트합니다.
     /// </summary>

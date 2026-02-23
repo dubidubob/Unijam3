@@ -30,7 +30,7 @@ public class StageSceneUI : UI_Popup
     private Material glowingTextMaterial; // 코드에서 자동으로 생성할 머티리얼
 
     // 맵 이동관련
-    private int currentPageLevel = 0;
+    public int currentPageLevel = 0;
     private bool isAnimating = false;
     public Ease moveEase = Ease.OutCubic; // 이동 애니메이션의 Ease 효과
     public float rotateDuration = 1f; // 회전에 걸리는 시간
@@ -64,7 +64,7 @@ public class StageSceneUI : UI_Popup
 
     [SerializeField] public Sprite doroDarkSprite;
     [SerializeField] public Sprite backGroundDarkSprite;
-    [SerializeField] StageSceneLocalizationController localizationController;
+    [SerializeField] public StageSceneLocalizationController localizationController;
 
 
     // 비트 컨트롤러 관련한 변수
