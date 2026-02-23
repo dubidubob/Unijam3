@@ -142,9 +142,11 @@ public class BackGroundController : MonoBehaviour
             case 0:
                 actionNumberTarget = 2;
                 extraObjectImage.sprite = backGrounddataSO.backGroundDatas[0].extraBackGroundLists[0];
+                
                 extraObjectImage.gameObject.SetActive(true);
                 extraObjectImage2.sprite = backGrounddataSO.backGroundDatas[0].extraBackGroundLists[1];
                 UpdateRectMargin(extraObjectImage.rectTransform,0);
+                extraObjectImage.SetNativeSize();
                 UpdateRectPosition(extraObjectImage2.rectTransform, -700f, 300);
 
 
@@ -152,7 +154,6 @@ public class BackGroundController : MonoBehaviour
                 {
                     birdSprites.Add(backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[i+1]);
                 }
-                extraObjectImage.gameObject.SetActive(true);
                 extraObjectImage2.gameObject.SetActive(true);
 
                 break;
@@ -662,9 +663,16 @@ public class BackGroundController : MonoBehaviour
     // margin이 0이면 stretch 꽉 채움, 50이면 사방에서 50씩 들어옴
     public void UpdateRectMargin(RectTransform rect, float margin)
     {
-        // Left, Bottom은 정수값 그대로
+        // 1. 앵커를 Stretch(전체 채우기)로 변경
+        // Min(0,0), Max(1,1)은 부모의 사방 끝에 앵커를 붙이겠다는 의미입니다.
+        rect.anchorMin = new Vector2(0, 0);
+        rect.anchorMax = new Vector2(1, 1);
+
+        // 2. 피벗도 중앙으로 맞춰주는 것이 계산상 안전합니다.
+        rect.pivot = new Vector2(0.5f, 0.5f);
+
+        // 3. 이제 offset 설정이 'Margin'으로 작동합니다.
         rect.offsetMin = new Vector2(margin, margin);
-        // Right, Top은 음수값이어야 안쪽으로 들어옴
         rect.offsetMax = new Vector2(-margin, -margin);
     }
 
