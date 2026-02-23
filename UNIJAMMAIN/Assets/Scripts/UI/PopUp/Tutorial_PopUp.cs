@@ -42,6 +42,7 @@ public class Tutorial_PopUp : UI_Popup
 
     // 실행 중인 작업 취소를 위한 토큰 소스
     private CancellationTokenSource _cts;
+    private string _currentLocKey = ""; // 현재 진행 중인 텍스트의 Key를 저장할 변수
 
     public override void Init()
     {
@@ -143,9 +144,27 @@ public class Tutorial_PopUp : UI_Popup
             int curMonsterHitCnt = IngameData.PerfectMobCnt + IngameData.GoodMobCnt;
             bool isFail = (curMonsterHitCnt - baseHitCnt) < info.monsterCutline;
 
+            
             if(info.localizedTextContents!=null && info.localizedTextContents.Count() > 0)
             {
                 var targetLocalizedString = isFail ? info.localizedTextContents.Last() : info.localizedTextContents.First();
+
+                _currentLocKey = targetLocalizedString.TableEntryReference.Key;  // Key 값을 확인해서 특정 액션 가능
+                if (string.IsNullOrEmpty(_currentLocKey)&&IngameData.ChapterIdx==0)
+                {
+                    // 로드된 테이블 데이터에서 숫자 ID(KeyId)를 가지고 진짜 문자열 Key를 찾아냅니다!
+                    var table = UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetTable(targetLocalizedString.TableReference);
+                    if (table != null)
+                    {
+                        var entry = table.SharedData.GetEntry(targetLocalizedString.TableEntryReference.KeyId);
+                        if (entry != null)
+                        {
+                            _currentLocKey = entry.Key; // 여기서 "CH0_Mid_07"이 나옵니다!
+                        }
+                    }
+                }
+
+
                 string translatedText = await targetLocalizedString.GetLocalizedStringAsync().ToUniTask(cancellationToken: token);
                 text.text = translatedText;
             }
@@ -286,13 +305,13 @@ public class Tutorial_PopUp : UI_Popup
     }
     private void KeyBoardGuideOn()
     {
-        if(IngameData.ChapterIdx!=0)
+        if (IngameData.ChapterIdx != 0)
         {
             return;
         }
-        // 문자열 비교 최적화를 위해 상수로 관리하거나 ID로 관리하는 것이 좋지만, 
-        // 현재 로직을 유지하면서 string.Equals 사용
-        if (string.Equals(text.text, "(너를 잠식하려는 혼령이 보이는 순간, 바로 대각선 방향키를 통해 공격해!)"))
+
+        // [수정] 텍스트 문자열 비교 대신, 저장해둔 Key 값을 확인합니다.
+        if (_currentLocKey == "CH0_Mid_07")
         {
             if (keyBoardGuide != null)
                 keyBoardGuide.SetActive(true);

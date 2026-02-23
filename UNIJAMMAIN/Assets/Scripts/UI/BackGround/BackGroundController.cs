@@ -144,6 +144,7 @@ public class BackGroundController : MonoBehaviour
                 extraObjectImage.sprite = backGrounddataSO.backGroundDatas[0].extraBackGroundLists[0];
                 extraObjectImage.gameObject.SetActive(true);
                 extraObjectImage2.sprite = backGrounddataSO.backGroundDatas[0].extraBackGroundLists[1];
+                UpdateRectMargin(extraObjectImage.rectTransform,0);
                 UpdateRectPosition(extraObjectImage2.rectTransform, -700f, 300);
 
 
@@ -151,10 +152,9 @@ public class BackGroundController : MonoBehaviour
                 {
                     birdSprites.Add(backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[i+1]);
                 }
-
+                extraObjectImage.gameObject.SetActive(true);
                 extraObjectImage2.gameObject.SetActive(true);
 
-                UpdateRectMargin(extraObjectImage.rectTransform, -80f);
                 break;
             case 1:
                 actionNumberTarget = 2;
