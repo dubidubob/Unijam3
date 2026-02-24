@@ -47,7 +47,7 @@ public class StageLevelSceneUI : MonoBehaviour
         
 
         }
-        
+
 
         // 해당 장에 처음 들어왔을때만 실행하기.
   

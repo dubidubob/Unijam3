@@ -20,14 +20,25 @@ public static class IngameData
     public static int StageProgress = 0; // 스테이지 레벨과 관련도니 변수, "" 장을 한번만 띄우게끔 조절
     public static int _defeatEnemyCount = 0;
     /// <summary>
-    /// 현재 플레이어가 클리어한 최대 스테이지 (스토리기준)
+    /// 현재 플레이어가 클리어한 최대 스테이지 (스토리기준), 마지막 7장은 클리어해도 같으니. storyCompleteClear로 관리함
     /// </summary>
-    public static int _clearStageIndex = 0;
+    public static int _unLockStageIndex = 0;
 
+    /// <summary>
+    /// 모든 스테이지를 완전히 클리어했는지
+    /// </summary>
+    public static bool _isStoryCompleteClear = false;
+
+    /// <summary>
+    /// 현재 진입한 상태가 이벤트스테이지인지 확인
+    /// </summary>
+    public static bool isEventStage = false; 
     /// <summary>
     /// 현재 플레이어가 진입중인 스테이지
     /// </summary>
     public static int _nowStageIndex = 0;
+
+ 
 
     // [STEAM CLOUD 수정] 스팀 클라우드와 동기화될 파일의 저장 경로
     private static string SaveFilePath => Path.Combine(Application.persistentDataPath, "SteamCloudSaveData.json");
@@ -49,7 +60,7 @@ public static class IngameData
         public int ClearStoryStageIndex;
         public int NowStoryStageIndex;
         public Define.Rank[] ChapterRanks;
-
+        public bool IsStoryCompleteClear;
         public int StageProgress;
         // 필요한 변수가 더 있다면 여기에 추가 (public이어야 저장됨)
     }
@@ -201,12 +212,13 @@ public static class IngameData
 
         // 현재 데이터 매핑
         data.DefeatEnemyCount = _defeatEnemyCount;
-        data.ClearStoryStageIndex = _clearStageIndex;
+        data.ClearStoryStageIndex = _unLockStageIndex;
         data.NowStoryStageIndex = _nowStageIndex;
         data.StageProgress = StageProgress;
         data.ChapterRanks = _chapterRanks;
         data.BestChapterRanks = _bestChapterRanks;
         data.BestChapterScore = _bestChapterScore;
+        data.IsStoryCompleteClear = _isStoryCompleteClear;
 
         try
         {
@@ -234,8 +246,9 @@ public static class IngameData
                 if (data != null)
                 {
                     _defeatEnemyCount = data.DefeatEnemyCount;
-                    _clearStageIndex = data.ClearStoryStageIndex;
+                    _unLockStageIndex = data.ClearStoryStageIndex;
                     _nowStageIndex = data.NowStoryStageIndex;
+                    _isStoryCompleteClear = data.IsStoryCompleteClear;
                     StageProgress = data.StageProgress;
 
                     if (data.ChapterRanks != null && data.ChapterRanks.Length == TOTAL_CHAPTERS)
@@ -289,9 +302,10 @@ public static class IngameData
 
         _defeatEnemyCount = 0;
         _nowStageIndex = 0;
-        _clearStageIndex = 0;
+        _unLockStageIndex = 0;
         StageProgress = 0;
         ChapterIdx = 0;
+        _isStoryCompleteClear = false;
     }
 
 

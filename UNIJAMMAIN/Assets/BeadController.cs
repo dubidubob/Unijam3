@@ -379,17 +379,17 @@ public class BeadController : MonoBehaviour
 
     public void LoadBeadStateActive()
     {
-        int clear = IngameData._clearStageIndex;
+        int clear = IngameData._unLockStageIndex;
 
         UpdateNewBead(Bead.story_1);
         // 1 이상 → 겨울 이벤트 + 겨울맞이(스토리1)
-        if (clear >= 1)
+        if (IngameData._unLockStageIndex >= 2 || IngameData._isStoryCompleteClear)
         {
             UpdateNewBead(Bead.event_Winter);
         }
 
         // 3 이상 → 도시 이벤트 + 스토리2
-        if (clear >= 3)
+        if(IngameData._unLockStageIndex >= 4 || IngameData._isStoryCompleteClear)
         {
             UpdateNewBead(Bead.event_City);
             UpdateNewBead(Bead.story_2);
@@ -400,6 +400,8 @@ public class BeadController : MonoBehaviour
         {
             UpdateNewBead(Bead.story_3);
         }
+
+        Debug.Log(IngameData._unLockStageIndex);
 
         // (필요 시 추가 확장 가능)
         // 7 이상 → 밤하늘 맵 같은 추가 해금 여기에 이어서 작성

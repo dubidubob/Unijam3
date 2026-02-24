@@ -399,8 +399,16 @@ public class PhaseController : MonoBehaviour
 
     private void SetStageIndex(int index)
     {
+        if(IngameData.isEventStage) // 이벤트 스테이지라면 갱신하지 않는다.
+        {
+            return;
+        }
+        if(IngameData._nowStageIndex==7)
+        {
+            IngameData._isStoryCompleteClear = true;
+        }
         int minMaxStage_nowStageIndexPlus = Mathf.Min(IngameData._nowStageIndex+1, 7); // 7보다 초과되면(최대스테이지라면) 7로 고정
-        IngameData._clearStageIndex = Mathf.Max(IngameData._clearStageIndex, minMaxStage_nowStageIndexPlus); 
+        IngameData._unLockStageIndex = Mathf.Max(IngameData._unLockStageIndex, minMaxStage_nowStageIndexPlus); 
     }
 
     private void SetStageBackGround()

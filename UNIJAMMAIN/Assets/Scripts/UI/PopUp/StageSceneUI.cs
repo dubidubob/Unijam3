@@ -39,7 +39,6 @@ public class StageSceneUI : UI_Popup
     private float moveDuration = 1.6f;
 
     private int currentStageIndex = 2;
-    private int forClearApproachStageIndex = 0;
     private List<Button> stageButtons = new List<Button>();
 
     public TMP_Text startButtonText;
@@ -70,6 +69,10 @@ public class StageSceneUI : UI_Popup
     // 비트 컨트롤러 관련한 변수
     public bool isEventMap = false; // 현재 이벤트맵으로 이동되어있는지, 스토리맵과 관련된 효과 연출등 off
 
+    /* 
+     * 
+     * 
+     */
     enum ButtonState
     {
         DeActive,
@@ -94,6 +97,7 @@ public class StageSceneUI : UI_Popup
         StageButton_8,
         StageButton_9,
         StageButton_10,
+        StageButton_11,
         PracticeModeButton
     }
 
@@ -115,7 +119,7 @@ public class StageSceneUI : UI_Popup
     }
 
 
-        private void Awake()
+      private void Awake()
     {
         localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
 
@@ -127,7 +131,6 @@ public class StageSceneUI : UI_Popup
             glowingTextMaterial = new Material(normalTextMaterial);
             SetupGlowMaterial(glowingTextMaterial);
         }
-        forClearApproachStageIndex = IngameData._clearStageIndex +1; // 클리어된 최대스테이지
         currentStageIndex = IngameData._nowStageIndex+1; // 현재 스테이지
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
 
@@ -203,7 +206,7 @@ public class StageSceneUI : UI_Popup
 
         
 
-        Debug.Log($"Setup Map: Stage {forClearApproachStageIndex} -> PageLevel {currentPageLevel} (Y:{targetY}, Z:{targetZ})");
+        Debug.Log($"Setup Map: Stage {IngameData._unLockStageIndex+1} -> PageLevel {currentPageLevel} (Y:{targetY}, Z:{targetZ})");
     }
 
 
@@ -283,7 +286,7 @@ public class StageSceneUI : UI_Popup
             AddPointerEvent(startButton, (eventData) => OnPointerExit(practiceButton), EventTriggerType.PointerExit);
         }
 
-        for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_10; i++)
+        for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_11; i++)
         {
             var button = GetButton(i);
             if (button != null)
@@ -497,7 +500,8 @@ public class StageSceneUI : UI_Popup
             canvas.blocksRaycasts = true;
         }
 
-        if (stageIndex > forClearApproachStageIndex)
+        // 해금 판별 함수를 사용해 클릭 여부를 결정합니다.
+        if (!IsStageUnlocked(stageIndex - 1))
         {
             return;
         }
@@ -513,6 +517,7 @@ public class StageSceneUI : UI_Popup
 
         IngameData.ChapterIdx = stageIndex - 1;
         IngameData._nowStageIndex = stageIndex - 1;
+        IngameData.isEventStage = isEventMap;
 
         string path;
         // 이벤트스테이지는 다르게 사운드 출력
@@ -553,33 +558,32 @@ public class StageSceneUI : UI_Popup
     {
         if (_selectedButton == null)
         {
-            if (forClearApproachStageIndex > 0 && forClearApproachStageIndex <= stageButtons.Count)
+            if (IngameData._unLockStageIndex + 1 > 0 && IngameData._unLockStageIndex + 1 <= stageButtons.Count)
             {
-                _selectedButton = stageButtons[forClearApproachStageIndex - 1];
+                _selectedButton = stageButtons[IngameData._unLockStageIndex];
             }
         }
-
         for (int i = 0; i < stageButtons.Count; i++)
         {
             var button = stageButtons[i];
-            int stageIndex = i + 1;
 
-            if (stageIndex < forClearApproachStageIndex)
+            // 함수 하나로 해금 여부 판별
+            bool isUnlocked = IsStageUnlocked(i);
+
+            if (isUnlocked)
             {
-                SetButtonState(button, ButtonState.NonClickActive);
-            }
-            else if (stageIndex == forClearApproachStageIndex)
-            {
-                SetButtonState(button, ButtonState.NonClickActive);
+                if (_selectedButton != null && _selectedButton == button)
+                {
+                    SetButtonState(button, ButtonState.ClickActive);
+                }
+                else
+                {
+                    SetButtonState(button, ButtonState.NonClickActive);
+                }
             }
             else
             {
                 SetButtonState(button, ButtonState.DeActive);
-            }
-
-            if (_selectedButton != null && _selectedButton == button)
-            {
-                SetButtonState(button, ButtonState.ClickActive);
             }
         }
     }
@@ -604,6 +608,9 @@ public class StageSceneUI : UI_Popup
         }
         
     }
+    /// <summary>
+    /// InGameData.clearStage 에 따라 이전장, 다음장 활성화 
+    /// </summary>
     private void UpdateNavigationButtons()
     {
         if (upButton == null || downButton == null) return;
@@ -613,6 +620,22 @@ public class StageSceneUI : UI_Popup
 
         // Up 버튼: 2 (최상층)가 아닐 때만 활성화
         upButton.interactable = (currentPageLevel != 2);
+
+        if(!isEventMap) // 스토리맵에서는 이전장으로, 다음장으로의 제한을 만들어두어야함.
+        {
+            if(IngameData._unLockStageIndex<=3)
+            {
+                // 다음장으로 비활성화
+                upButton.interactable = false;
+            }
+            else if(IngameData._unLockStageIndex<=6)
+            {
+                if(currentPageLevel==1)
+                {
+                    upButton.interactable = false;
+                }
+            }
+        }
     }
 
     private void SetButtonState(Button button, ButtonState state)
@@ -990,5 +1013,25 @@ public class StageSceneUI : UI_Popup
         transform.localScale = Vector3.one* 0.009259259f;
     }
 
-   
+    private bool IsStageUnlocked(int index)
+    {
+        // 0~7: 일반 스토리 스테이지 (Stage 1~8)
+        if (index < 8)
+        {
+            return index <= IngameData._unLockStageIndex;
+        }
+        // 8 이상: 이벤트 스테이지 (Stage 9, 10, 11)
+        else
+        {
+            if (index == 8)
+                return (IngameData._unLockStageIndex >= 2 || IngameData._isStoryCompleteClear);
+            else if (index == 9)
+                return (IngameData._unLockStageIndex >= 4 || IngameData._isStoryCompleteClear);
+            else if (index >= 10)
+                return IngameData._isStoryCompleteClear;
+        }
+        return false;
+    }
+
+
 }

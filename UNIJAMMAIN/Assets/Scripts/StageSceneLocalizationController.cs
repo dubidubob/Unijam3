@@ -37,7 +37,7 @@ public class StageSceneLocalizationController : MonoBehaviour
         LocalizedString selectedFormat = isEventMap ? eventLevelFormat : normalLevelFormat;
 
         // 2. 변수(Arguments)를 설정합니다. {0} 자리에 currentPageLevel이 들어갑니다.
-        selectedFormat.Arguments = new object[] { currentPageLevel == 2 ? "?" : currentPageLevel };
+        selectedFormat.Arguments = new object[] { currentPageLevel == 2 ? "?" : currentPageLevel+1 };
 
         // 3. 번역된 텍스트를 TMP에 적용합니다.
         // GetLocalizedString()은 현재 설정된 언어에 맞는 텍스트를 즉시 반환합니다.

@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks; // UniTask 필수 네임스페이스
 public class StageScene : BaseScene
 {
     public bool Test;
+    public StageSceneUI stageSceneUI;
 
     // ▼▼▼ 수정된 Start 메서드 ▼▼▼
     private void Start()
@@ -73,7 +74,7 @@ public class StageScene : BaseScene
         base.Init();
         if (Test) { 
             IngameData._nowStageIndex = 0;
-            IngameData._clearStageIndex = 7;
+            IngameData._unLockStageIndex = 2;
         }
         Managers.Game.Init();
     }
