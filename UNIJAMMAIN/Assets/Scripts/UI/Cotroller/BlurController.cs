@@ -363,25 +363,41 @@ public class BlurController : MonoBehaviour
 
     public void GameOverBlurEffect()
     {
-        // 게임오버 텍스트 설정 랜덤으로 출력
-        if (gameOverTextSO.StageTexts[IngameData.ChapterIdx].gameOverText.Count!=0)
+        // 현재 스테이지 인덱스를 기반으로 기본 Key 접두사 생성
+        int currentStage = IngameData.ChapterIdx;
+        string keyPrefix = $"Stage{currentStage}_GameOverText";
+
+        // 해당 스테이지의 게임오버 텍스트가 몇 개인지 파악
+        int textCount = 0;
+        while (LocalizationManager.HasKey($"{keyPrefix}{textCount}"))
         {
-            gameOverText.text = gameOverTextSO.StageTexts[IngameData.ChapterIdx].gameOverText
-                [Random.Range(0, gameOverTextSO.StageTexts[IngameData.ChapterIdx].gameOverText.Count)];
+            textCount++;
+        }
+
+        // 텍스트가 하나라도 존재한다면 랜덤으로 뽑아서 출력
+        if (textCount > 0)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, textCount);
+            string finalKey = $"{keyPrefix}{randomIndex}";
+            gameOverText.text = LocalizationManager.Get(finalKey);
         }
         else
         {
-            gameOverText.text = "중요한 것은 흔들리지 않는 마음이오.";
+            // CSV에 해당 스테이지 데이터가 아예 없을 경우의 예외 처리 (Fallback)
+            gameOverText.text = LocalizationManager.Get("Default_GameOverText", "중요한 것은 흔들리지 않는 마음이오.");
         }
+        gameOverDownText.text = LocalizationManager.Get("Default_GameOverDownGuideText", "클릭하면 스테이지 선택창으로 이동합니다.");
 
-
+        // 4. 기존 연출(DOTween) 코드 유지
         // InCirc 천천히 어두워지다가 갑자기 어두워지기
         gameOverBlack.DOFade(1 / 255f * 248f, 1f)
             .SetEase(Ease.InCirc)
             .SetUpdate(UpdateType.Normal, true);
+
         gameOverText.DOFade(1 / 255f * 248f, 1f)
             .SetEase(Ease.InCirc)
             .SetUpdate(UpdateType.Normal, true);
+
         gameOverDownText.DOFade(1 / 255f * 248f, 1f)
             .SetEase(Ease.InCirc)
             .SetUpdate(UpdateType.Normal, true);

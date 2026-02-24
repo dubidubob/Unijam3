@@ -54,7 +54,6 @@ public class StoryDialog : UI_Popup
 
     private void Awake()
     {
-        LocalizationManager.Load();
 
         panelRect = TextPanel.GetComponent<RectTransform>();
         originalPanelPos = panelRect.anchoredPosition;

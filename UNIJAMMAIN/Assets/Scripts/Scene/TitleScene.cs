@@ -17,8 +17,6 @@ public class TitleScene : BaseScene
     private void Start()
     {
         Init();
-        LocalizationManager.CurrentLanguage = Language.Korean; // 로컬라이제이션 Language 설정 TODO: 스팀설정에따라 언어설정바꾸기
-        LocalizationManager.Load();
 
     }
 
