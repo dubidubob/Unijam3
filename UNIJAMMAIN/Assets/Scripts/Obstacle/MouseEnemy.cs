@@ -68,10 +68,6 @@ public class MouseEnemy : MonoBehaviour
         c.a = 0f; // 알파값을 0으로 설정
         image.color = c;
 
-        // [추가됨] 1. 생성 효과음 재생 위치
-        // 몬스터가 등장(Enable)하자마자 소리가 나야 자연스럽습니다.
-        if (!string.IsNullOrEmpty("SFX/Enemy/MaskSpawn"))
-            Managers.Sound.Play("SFX/Enemy/MaskSpawn");
 
         // [추가됨] 3. 페이드인 실행 (0 -> 1)
         image.DOFade(1f, fadeInDuration)
@@ -82,6 +78,8 @@ public class MouseEnemy : MonoBehaviour
     // 부유상태시작
     public void PlayFloatAction()
     {
+        Managers.Sound.Play("SFX/Enemy/MaskSpawn"); // 등장 생성 효과
+
         // 둥둥 떠있는 느낌 (위아래 반복)
         _rectTransform.DOAnchorPosY(_originalPos.y + 50f, 1f)
             .SetLoops(-1, LoopType.Yoyo)
@@ -102,8 +100,7 @@ public class MouseEnemy : MonoBehaviour
         float prepTime = duration * 0.3f;
         float slamTime = duration * 0.7f;
 
-        if (!string.IsNullOrEmpty("SFX/Enemy/MaskRoar"))
-            Managers.Sound.Play("SFX/Enemy/MaskRoar");
+        Managers.Sound.Play("SFX/Enemy/MaskRoar"); // 포효
 
         // [준비 단계]
         image.sprite = _screamSprite;
@@ -125,9 +122,7 @@ public class MouseEnemy : MonoBehaviour
             if (_waveTransform != null)
             {
                 _waveTransform.gameObject.SetActive(false);
-
-                if (!string.IsNullOrEmpty("SFX/Enemy/MaskSmash"))
-                    Managers.Sound.Play("SFX/Enemy/MaskSmash");
+                 Managers.Sound.Play("SFX/Enemy/MaskSmash");
             }
         });
 

@@ -128,33 +128,42 @@ public class BeadController : MonoBehaviour
             targetRect = storyRect;
             targetMapObject = map_MainStory;
             isEventMap = false;
-            CameraZoominAndBlackOut(storyBeads[index].GetComponent<RectTransform>());
+            CameraZoominAndBlackOut(storyBeads[index].GetComponent<RectTransform>(),index);
         }
     }
 
 
-    // 이벤트 버튼 클릭 
+    // 이벤트 버튼 클릭 index =0 -> 도시 , index =1 -> 겨울
     public void EventBeadAction(int index = 0)
     {
         if (eventBeads != null && index < eventBeads.Count)
         {
+            if(index==0)
+            {
+                Managers.Sound.Play("SFX/UI/GoToWinter_V2", Define.Sound.SFX, 1f, 5f);
+            }
+            else if(index==1)
+            { 
+                Managers.Sound.Play("SFX/UI/GoToCity_V2", Define.Sound.SFX, 1f, 5f);
+            }
+
             dooroo_targetSprite = dooroo_Winter;
             pattern_targetSprite = pattern_Winter;
             targetRect = eventWinterRect;
             targetMapObject = map_EventWinter;
             isEventMap = true;
-            CameraZoominAndBlackOut(eventBeads[index].GetComponent<RectTransform>());
+            CameraZoominAndBlackOut(eventBeads[index].GetComponent<RectTransform>(),index);
         }
     }
 
-    private void CameraZoominAndBlackOut(RectTransform targetRect)
+    private void CameraZoominAndBlackOut(RectTransform targetRect,int idx =0)
     {
         backGroundBlackPanel.blocksRaycasts = true;
         backGroundBlackPanel.interactable = true;
-        StartCoroutine(CoZoomAndFade(targetRect));
+        StartCoroutine(CoZoomAndFade(targetRect,idx));
     }
 
-    private IEnumerator CoZoomAndFade(RectTransform target)
+    private IEnumerator CoZoomAndFade(RectTransform target,int idx)
     {
         // 0. 해상도 변경사항 물리적 강제 갱신
         Canvas.ForceUpdateCanvases();
@@ -175,12 +184,10 @@ public class BeadController : MonoBehaviour
 
         Vector3 targetCamPos = new Vector3(targetWorldPos.x, targetWorldPos.y, startCamPos.z);
 
-        // 3. [임시 테스트] 배경 제한 로직이 범인인지 확인하기 위해 주석 처리하거나 아래처럼 수정
+        // 3. 타겟 위치를 구한 직후, 배경 범위를 벗어나지 않도록 안전하게 제한 (실시간 갱신)
         if (backgroundRect != null)
         {
-            // Clamp 함수 내부에서 uiCamera.aspect를 사용하므로 창모드에 대응함
-            // targetCamPos = GetClampedTargetPos(targetCamPos, targetZoomSize);
-            targetCamPos = ClampCameraPosition(targetCamPos, targetZoomSize);
+            targetCamPos = GetSafeClampedPosition(targetCamPos, targetZoomSize);
         }
 
         // [Phase 1] 이동 로직 (동일)
@@ -230,7 +237,7 @@ public class BeadController : MonoBehaviour
             uiCamera.orthographicSize = startCamSize;
 
             stageSceneUI.MapTargetRectChange(targetRect);
-            stageSceneUI.MapSetting(isEventMap);
+            stageSceneUI.MapSetting(isEventMap,idx);
             NewSpriteSetting(); // 두루마리 등 세팅 이미지 설정
             backGroundBlackPanel.DOFade(0f, 1f).SetUpdate(true);
             blackPanel.DOFade(0, 1f);
@@ -398,5 +405,41 @@ public class BeadController : MonoBehaviour
         // 7 이상 → 밤하늘 맵 같은 추가 해금 여기에 이어서 작성
     }
 
+    /// <summary>
+    /// 실시간으로 배경 RectTransform의 월드 좌표를 가져와 카메라가 배경 밖으로 나가지 않도록 제한합니다.
+    /// </summary>
+    private Vector3 GetSafeClampedPosition(Vector3 targetPos, float targetZoomSize)
+    {
+        if (backgroundRect == null) return targetPos;
 
+        // 1. 현재 프레임 기준의 배경 월드 좌표 실시간 계산 (해상도 변경 대응)
+        Vector3[] corners = new Vector3[4];
+        backgroundRect.GetWorldCorners(corners);
+
+        float bgLeft = corners[0].x;
+        float bgRight = corners[2].x;
+        float bgBottom = corners[0].y;
+        float bgTop = corners[2].y;
+
+        // 2. 카메라가 차지하는 월드 크기 계산
+        float camHalfHeight = targetZoomSize;
+        float camHalfWidth = camHalfHeight * uiCamera.aspect;
+
+        // 3. 카메라 중심이 위치할 수 있는 한계선 (최소/최대 좌표)
+        float minX = bgLeft + camHalfWidth;
+        float maxX = bgRight - camHalfWidth;
+        float minY = bgBottom + camHalfHeight;
+        float maxY = bgTop - camHalfHeight;
+
+        // 4. 안전한 클램핑 (배경이 너무 작아서 카메라보다 작을 경우 중앙에 고정)
+        float clampedX = (minX <= maxX)
+            ? Mathf.Clamp(targetPos.x, minX, maxX)
+            : (bgLeft + bgRight) * 0.5f;
+
+        float clampedY = (minY <= maxY)
+            ? Mathf.Clamp(targetPos.y, minY, maxY)
+            : (bgBottom + bgTop) * 0.5f;
+
+        return new Vector3(clampedX, clampedY, targetPos.z);
+    }
 }

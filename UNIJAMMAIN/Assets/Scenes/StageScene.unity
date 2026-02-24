@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &50204142 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6631511581638999066, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+  m_PrefabInstance: {fileID: 1496663460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &312954704
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +599,14 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5464409306216451680, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: eventBeads.Array.data[0]
+      value: 
+      objectReference: {fileID: 1790394609}
+    - target: {fileID: 5464409306216451680, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: eventBeads.Array.data[1]
+      value: 
+      objectReference: {fileID: 50204142}
     - target: {fileID: 5560245550528160564, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_fontColor.b
       value: 1
@@ -610,11 +623,24 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 7697920802728588578, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132691315980082631, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+--- !u!1 &1790394609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 518441529642918644, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+  m_PrefabInstance: {fileID: 1496663460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

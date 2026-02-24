@@ -106,6 +106,8 @@ public class BlurController : MonoBehaviour
 
     public void ComboEffectOn()
     {
+        Managers.Sound.Play("SFX/Accuracy/ComboBackGround", Define.Sound.SubBGM);
+
         IsComboEffectOn = true;
         rightCombo1.gameObject.SetActive(true);
         rightCombo2.gameObject.SetActive(true);
@@ -123,6 +125,7 @@ public class BlurController : MonoBehaviour
 
     public void ComboEffectOff()
     {
+        Managers.Sound.SubBGMFadeOut(1.0f);
         IsComboEffectOn = false;
 
         // 스크롤 작업 중단

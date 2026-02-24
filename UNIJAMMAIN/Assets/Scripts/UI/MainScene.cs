@@ -119,6 +119,8 @@ public class MainScene : UI_Popup
 
     public void EnterToStartClicked(PointerEventData eventData)
     {
+        Managers.Sound.Play("SFX/UI/PressToStart_V1",Define.Sound.SFX);
+
         toStartSequence?.Kill();
         toStartText.fontMaterial = originalMaterial;
         toStartText.transform.localScale = Vector3.one;

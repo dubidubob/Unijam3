@@ -2023,6 +2023,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2361028422082906487, guid: 1c5dd20d4dd0ffa4cb5fc6424beae046, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361028422082906487, guid: 1c5dd20d4dd0ffa4cb5fc6424beae046, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2630843551951615991, guid: 1c5dd20d4dd0ffa4cb5fc6424beae046, type: 3}
       propertyPath: m_Name
       value: Tutorial_PopUp

@@ -359,7 +359,7 @@ public class StageSceneUI : UI_Popup
                 {
                     currentPageLevel = 2;
                     MoveTo(yPos: -892f);
-                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    Managers.Sound.Play("SFX/UI/GoToCity_V2", Define.Sound.SFX, 1f, 5f);
                     break;
                 }
                 else
@@ -443,7 +443,7 @@ public class StageSceneUI : UI_Popup
                 {
                     currentPageLevel = 0;
                     MoveTo(yPos: 892f);
-                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    Managers.Sound.Play("SFX/UI/GoToWinter_V2", Define.Sound.SFX, 1f, 5f);
                 }
                 else
                 {
@@ -472,7 +472,7 @@ public class StageSceneUI : UI_Popup
 
     public void StartButtonClicked(PointerEventData eventData)
     {
-        Managers.Sound.Play("SFX/PressToStart_V1");
+        Managers.Sound.Play("SFX/UI/PressToStart_V1");
         if (_selectedButton != null)
         {
             Time.timeScale = 1.0f;
@@ -514,8 +514,32 @@ public class StageSceneUI : UI_Popup
         IngameData.ChapterIdx = stageIndex - 1;
         IngameData._nowStageIndex = stageIndex - 1;
 
-       
-        string path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";
+        string path;
+        // 이벤트스테이지는 다르게 사운드 출력
+        if (isEventMap)
+        {
+            switch(IngameData.ChapterIdx)
+            {
+                case 9:
+                    path = $"SFX/UI/StageClickChris";
+                    break;
+                case 10:
+                    path = $"SFX/UI/StageClickEDM";
+                    break;
+                case 11:
+                    path = $"SFX/UI/StageClickNight";
+                    break;
+
+                default:
+                    path = "";
+                    Debug.LogWarning("SFXP Path를 찾을 수 없습니다");
+                    break;
+            }
+        }
+        else
+        {
+            path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";
+        }
         Managers.Sound.Play(path, Define.Sound.SFX, 1f, 5f);
        
         _selectedButton = button;
@@ -818,7 +842,7 @@ public class StageSceneUI : UI_Popup
     /// <summary>
     /// 이벤트 맵 상태 변경 (true: 이벤트맵 진입 / false: 스토리맵 복귀)
     /// </summary>
-    public void MapSetting(bool _isEventMap)
+    public void MapSetting(bool _isEventMap, int idx=0)
     {
         // 1. 현재 사용 중이던 맵의 상태(위치, 회전)를 먼저 저장합니다.
         if (isEventMap)
@@ -836,11 +860,11 @@ public class StageSceneUI : UI_Popup
         // 3. 변경된 모드에 맞춰 저장된 상태를 불러오고, 화면을 강제로 동기화합니다.
         if (isEventMap)
         {
-            LoadEventMapSetting();
+            LoadEventMapSetting(idx);
         }
         else
         {
-            LoadStoryMapSetting();
+            LoadStoryMapSetting(idx);
         }
 
         // 4. UI 및 버튼 상태 업데이트
@@ -868,18 +892,18 @@ public class StageSceneUI : UI_Popup
     }
 
     // 스토리맵 세팅 로드 및 시각적 적용
-    private void LoadStoryMapSetting()
+    private void LoadStoryMapSetting(int idx)
     {
-        currentPageLevel = storedStoryLevel;
+        currentPageLevel = idx;
         isRotated = storedStoryRotated;
         // 저장된 데이터에 맞춰 맵의 위치와 그래픽을 '즉시' 동기화합니다.
         SyncMapVisuals();
     }
 
     // 이벤트맵 세팅 로드 및 시각적 적용
-    private void LoadEventMapSetting()
+    private void LoadEventMapSetting(int idx)
     {
-        currentPageLevel = storedEventLevel;
+        currentPageLevel = idx==1?2:idx;
         isRotated = storedEventRotated;
 
         // 저장된 데이터에 맞춰 맵의 위치와 그래픽을 '즉시' 동기화합니다.
@@ -922,9 +946,10 @@ public class StageSceneUI : UI_Popup
 
         // 4. 다크 모드 / 회전 관련 스프라이트 복구 또는 적용
         // (RotateAndMoveTo의 로직을 즉시 적용 버전으로 구현)
-        if (currentPageLevel == 2 && isRotated)
+        if (currentPageLevel == 2&&!isEventMap) // 스토리 2장에서만 어두운 스프라이트 적용
         {
             // 어두운 테마 적용
+            isRotated = true;
             darkupObject.SetActive(true);
             dooroImage.sprite = doroDarkSprite;
             patternBackGround.sprite = backGroundDarkSprite;
@@ -933,6 +958,7 @@ public class StageSceneUI : UI_Popup
         {
             // 원래 테마로 복구
             darkupObject.SetActive(false);
+            isRotated = false;
             if (originalDoroSprite != null) dooroImage.sprite = originalDoroSprite;
             if (originalBackGroundSprite != null) patternBackGround.sprite = originalBackGroundSprite;
             dooroImage.color = Color.white;

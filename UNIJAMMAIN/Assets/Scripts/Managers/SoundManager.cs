@@ -21,6 +21,10 @@ public class SoundManager
     //--- BGM Fade
     private float _originalBGMVolume = 1.0f;
     private Coroutine _fadeCoroutine;
+
+    // SubBGM 전용 페이드 코루틴 관리
+    private Coroutine _subFadeCoroutine;
+
     public void Init()
     {
         GameObject root = GameObject.Find("@Sound");
@@ -269,6 +273,44 @@ public class SoundManager
             BGM.volume = _originalBGMVolume;
         }
     }
+
+    // --- SubBGM FadeOut --- //
+    /// <summary>
+    /// SubBGM(예: ComboBackGround)을 지정한 시간 동안 서서히 끄고 재생을 멈춥니다.
+    /// </summary>
+    public void SubBGMFadeOut(float duration = 1.0f)
+    {
+        if (SubBGM == null || !SubBGM.isPlaying) return;
+
+        if (_subFadeCoroutine != null)
+        {
+            StaticCoroutine.StopStaticCoroutine(_subFadeCoroutine);
+        }
+        _subFadeCoroutine = StaticCoroutine.StartStaticCoroutine(FadeOutSubBGMCoroutine(duration));
+    }
+
+    private IEnumerator FadeOutSubBGMCoroutine(float duration)
+    {
+        float startVolume = SubBGM.volume;
+        float startTime = Time.realtimeSinceStartup;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime = Time.realtimeSinceStartup - startTime;
+            SubBGM.volume = Mathf.Lerp(startVolume, 0f, elapsedTime / duration);
+            yield return null;
+        }
+
+        SubBGM.volume = 0f;
+        SubBGM.Stop(); // ★ 핵심: 볼륨이 0이 되면 재생 자체를 완전히 정지시킵니다.
+
+        // 정지 후 볼륨을 다시 원래 설정값으로 복구해둡니다. (다음에 재생할 때 소리가 안 나는 현상 방지)
+        SubBGM.volume = BGMController.CurrentVolumeBGM;
+
+        _subFadeCoroutine = null;
+    }
+
 
     private IEnumerator FadeOutCoroutine(float duration)
     {

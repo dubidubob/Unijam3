@@ -61,13 +61,13 @@ public class Tutorial_PopUp : UI_Popup
                 canvasGroup = contents.AddComponent<CanvasGroup>();
             }
         }
-
+            
         if (keyBoardGuide != null)
         {
             keyBoardGuide.SetActive(false);
         }
 
-        Managers.UI.SetCanvasMost(this.gameObject);
+        Managers.UI.SetOverlayCanvas(this.gameObject,4);
     }
 
     private void OnEnable()
