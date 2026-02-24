@@ -503,6 +503,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageSceneUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3978024184335879253, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_margin.z
+      value: -28.209229
+      objectReference: {fileID: 0}
     - target: {fileID: 4407148592500585965, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -599,6 +603,14 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4976546849837568988, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 24742854676
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976546849837568988, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:5230906f11d24d245ba62a06f0fd471f
+      objectReference: {fileID: 0}
     - target: {fileID: 5464409306216451680, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: eventBeads.Array.data[0]
       value: 
@@ -622,6 +634,14 @@ PrefabInstance:
     - target: {fileID: 5560245550528160564, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016398201331796706, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 24742854673
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016398201331796706, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
+      value: GUID:5230906f11d24d245ba62a06f0fd471f
       objectReference: {fileID: 0}
     - target: {fileID: 7697920802728588578, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
