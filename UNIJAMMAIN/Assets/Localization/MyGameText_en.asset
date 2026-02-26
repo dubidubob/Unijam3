@@ -48,7 +48,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 11179167186953
-    m_Localized: Click to Start
+    m_Localized: Language
     m_Metadata:
       m_Items: []
   - m_Id: 11179167186949
@@ -63,6 +63,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 11179167186945
     m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7894916249268224
+    m_Localized: The game will restart to apply changes.
     m_Metadata:
       m_Items: []
   references:

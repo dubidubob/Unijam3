@@ -52,7 +52,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 11179167186953
-    m_Key: MainScene_StartToClick_Text
+    m_Key: LanguageSettingPanel_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7894916249268224
+    m_Key: LanguageSettingPanel_CloseToClick_Text
     m_Metadata:
       m_Items: []
   m_Metadata:
