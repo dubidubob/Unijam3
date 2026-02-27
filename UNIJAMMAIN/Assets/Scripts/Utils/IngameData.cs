@@ -62,6 +62,7 @@ public static class IngameData
         public Define.Rank[] ChapterRanks;
         public bool IsStoryCompleteClear;
         public int StageProgress;
+        public bool[] IsFirstClearChapter;
         // 필요한 변수가 더 있다면 여기에 추가 (public이어야 저장됨)
     }
 
@@ -87,6 +88,7 @@ public static class IngameData
     public static Define.Rank[] _chapterRanks;
     public static Define.Rank[] _bestChapterRanks;
     public static float[] _bestChapterScore;
+    public static bool[] _isFirstClearChapter;
     public static float BestChapterScore
     {
         get
@@ -219,6 +221,8 @@ public static class IngameData
         data.BestChapterRanks = _bestChapterRanks;
         data.BestChapterScore = _bestChapterScore;
         data.IsStoryCompleteClear = _isStoryCompleteClear;
+        data.IsFirstClearChapter = _isFirstClearChapter;
+    
 
         try
         {
@@ -260,6 +264,11 @@ public static class IngameData
                     if (data.BestChapterScore != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
                         _bestChapterScore = data.BestChapterScore;
 
+                    if (data.IsFirstClearChapter != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
+                        _isFirstClearChapter = data.IsFirstClearChapter;
+
+
+
                     Debug.Log("[Steam Cloud] 게임 데이터 로드 완료");
                 }
             }
@@ -292,13 +301,16 @@ public static class IngameData
         if (_chapterRanks == null) _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
         if (_bestChapterRanks == null) _bestChapterRanks = new Define.Rank[TOTAL_CHAPTERS];
         if (_bestChapterScore == null) _bestChapterScore = new float[TOTAL_CHAPTERS];
+        if (_isFirstClearChapter == null) _isFirstClearChapter = new bool[TOTAL_CHAPTERS];
 
         for (int i = 0; i < TOTAL_CHAPTERS; i++)
         {
             _chapterRanks[i] = Define.Rank.Unknown;
             _bestChapterRanks[i] = Define.Rank.Unknown;
             _bestChapterScore[i] = 0;
+            _isFirstClearChapter[i] = false;
         }
+
 
         _defeatEnemyCount = 0;
         _nowStageIndex = 0;

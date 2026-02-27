@@ -123,6 +123,7 @@ public class PhaseController : MonoBehaviour
        
         IngameData.IsStart = true;
 
+
         // 싱크스테이지라면
         if (chapters[_chapterIdx].SinkStage)
         {
@@ -130,7 +131,7 @@ public class PhaseController : MonoBehaviour
             await SinkStageInit(token);
             return;
         }
-       
+
         // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
         if (chapters[_chapterIdx].Phases.Count > 0)
         {
@@ -331,7 +332,7 @@ public class PhaseController : MonoBehaviour
         CheckFirstClearSteamAchievement();
 
 
-        Scoreboard.ChangeUI(CalculateScore());
+        Scoreboard.RankAnimation(CalculateScore()).Forget();
         Scoreboard.gameObject.SetActive(true);
 
 
@@ -407,8 +408,27 @@ public class PhaseController : MonoBehaviour
         {
             IngameData._isStoryCompleteClear = true;
         }
-        int minMaxStage_nowStageIndexPlus = Mathf.Min(IngameData._nowStageIndex+1, 7); // 7보다 초과되면(최대스테이지라면) 7로 고정
-        IngameData._unLockStageIndex = Mathf.Max(IngameData._unLockStageIndex, minMaxStage_nowStageIndexPlus); 
+        
+
+        int minMaxStage_nowStageIndexPlus = Mathf.Min(IngameData._nowStageIndex+1, 7); // 7보다 초과되면(최대스테이지라면) 7로
+                                                                                       // 
+        if (minMaxStage_nowStageIndexPlus > IngameData._unLockStageIndex) // 새로 해금된 스테이지가 기존 언락된 스테이지보다 크다면
+        {
+            IngameData._unLockStageIndex = minMaxStage_nowStageIndexPlus;
+
+
+            // 새로운 스테이지가 해금되었음.
+            if(IngameData._unLockStageIndex==1|| IngameData._unLockStageIndex == 3)
+            {
+                if (IngameData._isFirstClearChapter[IngameData._nowStageIndex]!=true) // 처음들어온 스테이지가 아니라면
+                {
+                    Scoreboard.UI_Setting_UnlockNewEventStageInfo();
+                }
+            }
+            IngameData._isFirstClearChapter[IngameData._nowStageIndex] = true;
+        }
+
+       
     }
 
     private void SetStageBackGround()
