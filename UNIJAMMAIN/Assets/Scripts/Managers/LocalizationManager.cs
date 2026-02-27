@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public enum Language
 {
@@ -16,8 +17,6 @@ public static class LocalizationManager
 {
     // key -> (langKey -> value)
     static Dictionary<string, Dictionary<Language, string>> Localization_Table = new Dictionary<string, Dictionary<Language, string>>();
-
-    public static Language CurrentLanguage = Language.Chinese; // TODO: 스팀에서 언어 설정 받아오는 코드 추가
     public static event Action OnLanguageChanged;
 
     // Load CSV from Resources (can be called at runtime or editor)
@@ -88,10 +87,31 @@ public static class LocalizationManager
         Debug.Log($"Localization Loaded: {Localization_Table.Count} keys from {csvAssets.Length} files.");
     }
 
+    public static Language CurrentLanguage
+    {
+        get
+        {
+            // 유니티 공식 SelectedLocale의 Identifier 가져옴
+            var currentLocale = LocalizationSettings.SelectedLocale;
+            if (currentLocale == null) return Language.English;
+
+            string code = currentLocale.Identifier.Code;
+            return GetLanguageFromCode(code);
+        }
+    }
+
+    // Locale 코드를 Language enum으로 변환하는 헬퍼 함수
+    private static Language GetLanguageFromCode(string code)
+    {
+        if (code.StartsWith("ko")) return Language.Korean;
+        if (code.StartsWith("ja")) return Language.Japanese;
+        if (code.StartsWith("zh")) return Language.Chinese;
+        return Language.English;
+    }
+
     // 언어 변경 (UI용)
     public static void SetLanguage(Language lang)
     {
-        CurrentLanguage = lang;
         OnLanguageChanged?.Invoke();
     }
 

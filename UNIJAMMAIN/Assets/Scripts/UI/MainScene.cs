@@ -221,11 +221,11 @@ public class MainScene : UI_Popup
         // 1초짜리 '시각적' 애니메이션 재생
         for (int i = 0; i < index + 1; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y + 250, ANIMATION_DURATION).SetEase(Ease.OutCubic);
+            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y + 150, ANIMATION_DURATION).SetEase(Ease.OutCubic);
         }
         for (int i = index + 1; i < buttonsTransform.Length; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 250, ANIMATION_DURATION).SetEase(Ease.OutCubic);
+            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 150, ANIMATION_DURATION).SetEase(Ease.OutCubic);
         }
 
         TogglePanel(true);
