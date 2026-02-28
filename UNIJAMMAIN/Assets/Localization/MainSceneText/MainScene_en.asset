@@ -18,67 +18,69 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 52244905984
-    m_Localized: Quit
+  - m_Id: 8497189383942154
+    m_Localized: Focus your mind on the sound...
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460416
-    m_Localized: Credits
+  - m_Id: 8497189383942153
+    m_Localized: Click to Start
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460417
-    m_Localized: Options
+  - m_Id: 8497189383942152
+    m_Localized: SFX
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460418
-    m_Localized: Story Mode
+  - m_Id: 8497189383942151
+    m_Localized: BGM
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460419
-    m_Localized: The Ancient Monk
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52278460420
-    m_Localized: 'Game Design
-
-      Programming
-
-
-      Art
-
-
-      Audio'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52278460421
+  - m_Id: 8497189383942150
     m_Localized: 'Yejun Kim
 
       Daeyoon Kim
 
       Soyeon Joo
 
-      Dahyeon Yoon
+      Dahyun
+      Yoon
 
-      Minji
-      Kim
+      Minji Kim
 
       Jee-woo Kwon'
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460422
-    m_Localized: BGM
+  - m_Id: 8497189383942149
+    m_Localized: 'Game Design
+
+      Programming
+
+      
+
+      Art
+
+      
+
+      Audio'
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460423
-    m_Localized: SFX
+  - m_Id: 8497189383942148
+    m_Localized: The Ancient Monk
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460424
-    m_Localized: Click to Start
+  - m_Id: 8497189383942146
+    m_Localized: Options
     m_Metadata:
       m_Items: []
-  - m_Id: 8455551590465536
-    m_Localized: Focus your mind on the sound...
+  - m_Id: 8497189383942147
+    m_Localized: Story Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8497189383942145
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8497189383942144
+    m_Localized: Quit
     m_Metadata:
       m_Items: []
   references:
