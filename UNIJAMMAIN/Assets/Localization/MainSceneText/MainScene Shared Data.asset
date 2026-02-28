@@ -55,6 +55,10 @@ MonoBehaviour:
     m_Key: MainScene_StartToClick_Text
     m_Metadata:
       m_Items: []
+  - m_Id: 8455551590465536
+    m_Key: MainScene_ContentOption_Text
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

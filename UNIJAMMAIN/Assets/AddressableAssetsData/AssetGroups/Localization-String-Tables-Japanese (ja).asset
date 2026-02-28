@@ -28,6 +28,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c18ea894fab08fb4e91314a4558b41fd
     m_Address: InGameOptionTable_ja

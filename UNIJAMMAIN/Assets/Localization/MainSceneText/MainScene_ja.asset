@@ -19,15 +19,15 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 52244905984
-    m_Localized: 
+    m_Localized: "\u7D42\u4E86"
     m_Metadata:
       m_Items: []
   - m_Id: 52278460416
-    m_Localized: 
+    m_Localized: "\u30AF\u30EC\u30B8\u30C3\u30C8"
     m_Metadata:
       m_Items: []
   - m_Id: 52278460417
-    m_Localized: 
+    m_Localized: "\u30AA\u30D7\u30B7\u30E7\u30F3"
     m_Metadata:
       m_Items: []
   - m_Id: 52278460418
@@ -43,7 +43,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52278460421
-    m_Localized: 
+    m_Localized: 'Yejun Kim
+
+      Daeyoon Kim
+
+      Soyeon Joo
+
+      Dahyeon Yoon
+
+      Minji
+      Kim
+
+      Jee-woo Kwon'
     m_Metadata:
       m_Items: []
   - m_Id: 52278460422
@@ -55,6 +66,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52278460424
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8455551590465536
     m_Localized: 
     m_Metadata:
       m_Items: []

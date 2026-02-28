@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 52244905984
-    m_Localized: Exit
+    m_Localized: Quit
     m_Metadata:
       m_Items: []
   - m_Id: 52278460416
@@ -35,22 +35,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52278460419
-    m_Localized: Ancient Monk
+    m_Localized: The Ancient Monk
     m_Metadata:
       m_Items: []
   - m_Id: 52278460420
-    m_Localized: 'Concept
+    m_Localized: 'Game Design
 
-      Computer
+      Programming
+
 
       Art
 
-      Sound'
+
+      Audio'
     m_Metadata:
       m_Items: []
   - m_Id: 52278460421
-    m_Localized: "Kim Ye-junKim\nDae-yunJu \nSo-yeonYoon \nDa-hyeonKim \nMin-jiKwon
-      \nJi-woo"
+    m_Localized: 'Yejun Kim
+
+      Daeyoon Kim
+
+      Soyeon Joo
+
+      Dahyeon Yoon
+
+      Minji
+      Kim
+
+      Jee-woo Kwon'
     m_Metadata:
       m_Items: []
   - m_Id: 52278460422
@@ -63,6 +75,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52278460424
     m_Localized: Click to Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8455551590465536
+    m_Localized: Focus your mind on the sound...
     m_Metadata:
       m_Items: []
   references:
