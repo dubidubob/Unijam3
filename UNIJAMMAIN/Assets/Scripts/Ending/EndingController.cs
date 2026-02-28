@@ -15,6 +15,7 @@ public class EndingAction
     public int index;
     public string id;
     public string speakerKey;
+    public string rawSpeaker;    // [추가된 부분] "X", "~" 등을 원본 그대로 확인하기 위한 변수
     public float duration;     // 대기 시간 (변화 없는 시간)
     public float conversion;   // 전환 시간 (페이드 인/아웃 진행 시간)
     public Color nameColor;
@@ -27,6 +28,7 @@ public class EndingController : MonoBehaviour
 {
     [Header("Image Connects")]
     [SerializeField] Image backGround;
+    [SerializeField] Image lineImage;
     [SerializeField] RectTransform upDark;
     [SerializeField] RectTransform downDark;
 
@@ -148,6 +150,7 @@ public class EndingController : MonoBehaviour
                 if (int.TryParse(indexPart, out int idx)) action.index = idx;
 
                 string rawSpeaker = (speakerIdx >= 0 && speakerIdx < row.Count) ? row[speakerIdx].Trim() : "X";
+                action.rawSpeaker = rawSpeaker;
                 action.speakerKey = speakerKeyMap.ContainsKey(rawSpeaker) ? speakerKeyMap[rawSpeaker] : "";
 
                 action.duration = (durationIdx >= 0 && durationIdx < row.Count) ? ParseTime(row[durationIdx]) : 0f;
@@ -179,10 +182,13 @@ public class EndingController : MonoBehaviour
 
         foreach (var action in endingSequence)
         {
-            SpecialAction(action.index);
+
+            SpecialAction(action.index, action);
 
             string localizedName = string.IsNullOrEmpty(action.speakerKey) ? "" : LocalizationManager.Get(action.speakerKey);
             string localizedContent = LocalizationManager.Get(action.id);
+
+
 
             if (localizedContent == "X" || localizedContent == "~") localizedContent = "";
 
@@ -209,6 +215,10 @@ public class EndingController : MonoBehaviour
 
             if (!string.IsNullOrEmpty(localizedContent))
             {
+                // [추가된 부분] 텍스트가 바뀔 때 이름이 계속 유지 중이었다면 깜빡이지 않게 방지
+                float prevNameAlpha = activeName.color.a;
+                string prevNameText = activeName.text;
+
                 // [새로운 텍스트 출력 페이즈]
                 activeName.text = localizedName;
                 activeContent.text = localizedContent;
@@ -218,6 +228,10 @@ public class EndingController : MonoBehaviour
                 SetAlpha(inactiveContent, 0f);
 
                 Color startNameCol = action.nameColor; startNameCol.a = 0f;
+
+                // 이전 대사와 이름이 똑같고 이미 화면에 떠있다면 알파값을 0으로 덮어쓰지 않고 유지합니다.
+                startNameCol.a = (prevNameText == localizedName && prevNameAlpha > 0f) ? prevNameAlpha : 0f;
+
                 Color startTextCol = action.textColor; startTextCol.a = 0f;
                 activeName.color = startNameCol;
                 activeContent.color = startTextCol;
@@ -227,11 +241,7 @@ public class EndingController : MonoBehaviour
                     var t1 = activeName.DOColor(action.nameColor, action.conversion).SetEase(action.easeType);
                     var t2 = activeContent.DOColor(action.textColor, action.conversion).SetEase(action.easeType);
 
-                    if (action.isMiddleHighlight)   // 화면 암전 효과
-                    {
-                        backGround.DOColor(new Color(100f / 255f, 100f / 255f, 100f / 255f, 255f / 255f), action.conversion);
-                        wasImpactOn = true;
-                    }
+       
 
                     await UniTask.WhenAll(t1.ToUniTask(), t2.ToUniTask());
                 }
@@ -246,6 +256,9 @@ public class EndingController : MonoBehaviour
             }
             else
             {
+                // [수정된 부분] 화자가 "~"인 쉬어가는 구간인지 확인
+                bool isResting = (action.rawSpeaker == "~");
+
                 // [수정된 부분] 빈 줄(X, ~)이 들어와서 사라져야 할 때!
                 // 현재 화면에 알파값이 있어서 눈에 보이는 "모든" 텍스트를 찾아 부드럽게 지워버립니다. (구글 시트의 True/False 값과 무관하게 완벽 작동)
 
@@ -253,11 +266,15 @@ public class EndingController : MonoBehaviour
                 {
                     var fadeTasks = new List<UniTask>();
 
-                    if (name.color.a > 0) fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                    //keepname이 false 일때만 페이드시킵니다
+                    if (!isResting&&name.color.a > 0) fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                   
                     if (content_Text.color.a > 0) fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
-                    if (Impact_Name.color.a > 0) fadeTasks.Add(Impact_Name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                    if (!isResting && Impact_Name.color.a > 0) fadeTasks.Add(Impact_Name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
                     if (impact_Content_Text.color.a > 0) fadeTasks.Add(impact_Content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
-                    if (wasImpactOn) fadeTasks.Add(backGround.DOColor(new Color(168f / 255f, 168f / 255f, 168f / 255f, 1),action.conversion).SetEase(action.easeType).ToUniTask());// 화면이 바로전 변화된적이 있다면
+                    if (wasImpactOn&&!action.isMiddleHighlight) fadeTasks.Add(backGround.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1),action.conversion).SetEase(action.easeType).ToUniTask());// 화면이 바로전 변화된적이 있다면
+                    if (wasImpactOn && !action.isMiddleHighlight) fadeTasks.Add(lineImage.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1), action.conversion).SetEase(action.easeType).ToUniTask());
+                    // middleHighLight가 ture라면원래대로 복구하지 않아야함.
                     // color와 관련된것은 default값을 따르고있음.
 
                     if (fadeTasks.Count > 0)
@@ -271,11 +288,26 @@ public class EndingController : MonoBehaviour
                     SetAlpha(Impact_Name, 0f); SetAlpha(impact_Content_Text, 0f);
                 }
 
+
+
+
                 // 모두 투명해졌으면 텍스트 내용 비우기
-                name.text = ""; content_Text.text = "";
-                Impact_Name.text = ""; impact_Content_Text.text = "";
+                if (!isResting)
+                {
+                    name.text = "";
+                    Impact_Name.text = "";
+                }
+                content_Text.text = "";
+                impact_Content_Text.text = "";
                 wasImpactOn = false;
             }
+
+            if (action.isMiddleHighlight || action.index == 30)   // 별개로 isMiddleHighLight가 존재하면 화면 암전 효과
+            {
+                backGround.DOColor(new Color(100f / 255f, 100f / 255f, 100f / 255f, 255f / 255f), action.conversion);
+                lineImage.DOColor(new Color(100f / 255f, 100f / 255f, 100f / 255f, 255f / 255f), action.conversion);
+                wasImpactOn = true;
+            }   
 
             if (action.duration > 0f)
             {
@@ -400,16 +432,20 @@ public class EndingController : MonoBehaviour
             {
                 cur.Append(c);
             }
-        }
+        }   
         result.Add(cur.ToString());
         return result;
     }
 
-    private void SpecialAction(int index)
+    private void SpecialAction(int index,EndingAction action)
     {
         if (index == 0)
         {
-            backGround.DOColor(new Color(168f / 255f, 168f / 255f, 168f / 255f, 1), 1.5f);
+            backGround.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1), 1.5f);
+        }
+        if(index==28)
+        {
+            action.speakerKey = "   ";
         }
     }
 
