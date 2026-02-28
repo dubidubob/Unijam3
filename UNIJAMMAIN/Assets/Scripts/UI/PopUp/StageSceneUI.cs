@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Kino;
-
+using UnityEngine.Localization;
 public class StageSceneUI : UI_Popup
 {
     private Button _selectedButton = null;
@@ -30,7 +30,7 @@ public class StageSceneUI : UI_Popup
     private Material glowingTextMaterial; // 코드에서 자동으로 생성할 머티리얼
 
     // 맵 이동관련
-    private int currentPageLevel = 0;
+    public int currentPageLevel = 0;
     private bool isAnimating = false;
     public Ease moveEase = Ease.OutCubic; // 이동 애니메이션의 Ease 효과
     public float rotateDuration = 1f; // 회전에 걸리는 시간
@@ -39,7 +39,6 @@ public class StageSceneUI : UI_Popup
     private float moveDuration = 1.6f;
 
     private int currentStageIndex = 2;
-    private int forClearApproachStageIndex = 0;
     private List<Button> stageButtons = new List<Button>();
 
     public TMP_Text startButtonText;
@@ -52,7 +51,8 @@ public class StageSceneUI : UI_Popup
     [Header("Text Objects")]
     public TMP_Text stageMainText;
     public TMP_Text stageMainSubText;
-    public TMP_Text stageLevelText;
+    public TMP_Text stageDifficultyLevelText;
+    public TMP_Text stageLevelInfo_TMP;
 
     [SerializeField] GameObject completedObject;
     [SerializeField] GameObject checkObject;
@@ -61,10 +61,18 @@ public class StageSceneUI : UI_Popup
     [SerializeField] Image dooroImage;
     [SerializeField] Image patternBackGround;
 
-    [SerializeField] Sprite doroDarkSprite;
-    [SerializeField] Sprite backGroundDarkSprite;
+    [SerializeField] public Sprite doroDarkSprite;
+    [SerializeField] public Sprite backGroundDarkSprite;
+    [SerializeField] public StageSceneLocalizationController localizationController;
 
 
+    // 비트 컨트롤러 관련한 변수
+    public bool isEventMap = false; // 현재 이벤트맵으로 이동되어있는지, 스토리맵과 관련된 효과 연출등 off
+
+    /* 
+     * 
+     * 
+     */
     enum ButtonState
     {
         DeActive,
@@ -88,7 +96,15 @@ public class StageSceneUI : UI_Popup
         StageButton_7,
         StageButton_8,
         StageButton_9,
+        StageButton_10,
+        StageButton_11,
         PracticeModeButton
+    }
+
+    IEnumerator ResetCanvasSystem()
+    {
+        yield return null; // 해상도 변경 반영 대기
+        Canvas.ForceUpdateCanvases();
     }
 
     private void Update()
@@ -103,9 +119,11 @@ public class StageSceneUI : UI_Popup
     }
 
 
-        private void Awake()
+      private void Awake()
     {
-        
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
+
+
         // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
         if (normalTextMaterial != null)
         {
@@ -113,12 +131,10 @@ public class StageSceneUI : UI_Popup
             glowingTextMaterial = new Material(normalTextMaterial);
             SetupGlowMaterial(glowingTextMaterial);
         }
-        forClearApproachStageIndex = IngameData._clearStageIndex +1;
-        currentStageIndex = IngameData._nowStageIndex+1;
+        currentStageIndex = IngameData._nowStageIndex+1; // 현재 스테이지
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
 
         SetupMapStageByNowChapterIndex();
-        mycanvas.renderMode = RenderMode.WorldSpace;
     }
 
     private void OnDestroy()
@@ -175,7 +191,7 @@ public class StageSceneUI : UI_Popup
                 targetZ = 180f;
                 darkupObject.SetActive(true);
                 dooroImage.sprite = doroDarkSprite;
-                GetComponent<Image>().sprite = backGroundDarkSprite;
+                patternBackGround.sprite = backGroundDarkSprite;
 
                 isRotated = true;
                 break;
@@ -188,7 +204,9 @@ public class StageSceneUI : UI_Popup
             mapImage.localEulerAngles = new Vector3(0, 0, targetZ);
         }
 
-        Debug.Log($"Setup Map: Stage {currentStageIndex} -> PageLevel {currentPageLevel} (Y:{targetY}, Z:{targetZ})");
+        
+
+        Debug.Log($"Setup Map: Stage {IngameData._unLockStageIndex+1} -> PageLevel {currentPageLevel} (Y:{targetY}, Z:{targetZ})");
     }
 
 
@@ -206,6 +224,7 @@ public class StageSceneUI : UI_Popup
     {
         StoryDialog.ResetStoryBackground();
         Init();
+        StartCoroutine(InitWorldCanvasOnce());
         UpdateStageButtons();
         UpdateNavigationButtons();
         IngameData.boolPracticeMode = false;
@@ -227,7 +246,6 @@ public class StageSceneUI : UI_Popup
     public override void Init()
     {
         base.Init();
-        mycanvas.renderMode = RenderMode.WorldSpace;
         Bind<Button>(typeof(Buttons));
 
         // Up, Down, Start 버튼의 참조 가져오기
@@ -268,7 +286,7 @@ public class StageSceneUI : UI_Popup
             AddPointerEvent(startButton, (eventData) => OnPointerExit(practiceButton), EventTriggerType.PointerExit);
         }
 
-        for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_9; i++)
+        for (int i = (int)Buttons.StageButton_1; i <= (int)Buttons.StageButton_11; i++)
         {
             var button = GetButton(i);
             if (button != null)
@@ -333,33 +351,69 @@ public class StageSceneUI : UI_Popup
 
         if (isAnimating) return; // 애니메이션 중에는 입력을 무시
 
+      
+
         switch (currentPageLevel)
         {
             case 0:
                 // [Level 0 -> 1] : y좌표 -295으로 이동
-                currentPageLevel = 1;
-                MoveTo(yPos: -295f);
-                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
-                break;
+
+                if (isEventMap)
+                {
+                    currentPageLevel = 2;
+                    MoveTo(yPos: -892f);
+                    Managers.Sound.Play("SFX/UI/GoToCity_V2", Define.Sound.SFX, 1f, 5f);
+                    break;
+                }
+                else
+                {
+                    currentPageLevel = 1;
+                    MoveTo(yPos: -295f);
+                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    break;
+                }
 
             case 1:
-                // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
-                currentPageLevel = 2;
-                RotateAndMoveTo(zRot: 180f, yPos: 892f);
-                Managers.Sound.Play("SFX/UI/GoToFinalStage_V1",Define.Sound.SFX, 1f, 3f);
+
+                if (isEventMap)
+                {
+                    currentPageLevel = 2;
+                    MoveTo(yPos: -892f);
+
+                    Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 3f);
+                }
+                else
+                {
+                    // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
+                    currentPageLevel = 2;
+                    RotateAndMoveTo(zRot: 180f, yPos: 892f);
+                    Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 3f);
+                }
+                
+
                 break;
 
             case 2:
-                // Level 2가 마지막 레벨이므로 아무 동작 안 함
-                Debug.Log("Already at the top level.");
-                Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
+                if (isEventMap)
+                {
+                    Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
+                }
+                else
+                {
+                    // Level 2가 마지막 레벨이므로 아무 동작 안 함
+                    Debug.Log("Already at the top level.");
+                    Managers.Sound.Play("SFX/UI/GoToNowhere_V1", Define.Sound.SFX);
+                }
                 break;
         }
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
     }
 
     public void DownButtonClicked(PointerEventData eventData)
     {
         if (isAnimating) return; // 애니메이션 중에는 입력을 무시
+
+       
 
         switch (currentPageLevel)
         {
@@ -371,19 +425,43 @@ public class StageSceneUI : UI_Popup
 
             case 1:
                 // [Level 1 -> 0] : y좌표 892으로 이동
-                currentPageLevel = 0;
-                MoveTo(yPos: 892f);
-                
-                Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
+                if(isEventMap)
+                {
+
+                    currentPageLevel = 0;
+                    MoveTo(yPos: 892f);
+                    Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
+                }
+                else
+                {
+                    currentPageLevel = 0;
+                    MoveTo(yPos: 892f);
+
+                    Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
+                }
                 break;
 
             case 2:
-                // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로
-                currentPageLevel = 1;
-                RotateAndMoveTo(zRot: 0f, yPos: -295f);
-                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                if (isEventMap)
+                {
+                    currentPageLevel = 0;
+                    MoveTo(yPos: 892f);
+                    Managers.Sound.Play("SFX/UI/GoToWinter_V2", Define.Sound.SFX, 1f, 5f);
+                }
+                else
+                {
+                    // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로
+                    currentPageLevel = 1;
+                    RotateAndMoveTo(zRot: 0f, yPos: -295f);
+                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                }
+
+               
                 break;
         }
+
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
+
     }
     public void ToMainButtonClicked(PointerEventData eventData)
     {
@@ -397,7 +475,7 @@ public class StageSceneUI : UI_Popup
 
     public void StartButtonClicked(PointerEventData eventData)
     {
-        Managers.Sound.Play("SFX/PressToStart_V1");
+        Managers.Sound.Play("SFX/UI/PressToStart_V1");
         if (_selectedButton != null)
         {
             Time.timeScale = 1.0f;
@@ -422,7 +500,8 @@ public class StageSceneUI : UI_Popup
             canvas.blocksRaycasts = true;
         }
 
-        if (stageIndex > currentStageIndex)
+        // 해금 판별 함수를 사용해 클릭 여부를 결정합니다.
+        if (!IsStageUnlocked(stageIndex - 1))
         {
             return;
         }
@@ -437,9 +516,35 @@ public class StageSceneUI : UI_Popup
       
 
         IngameData.ChapterIdx = stageIndex - 1;
+        IngameData._nowStageIndex = stageIndex - 1;
+        IngameData.isEventStage = isEventMap;
 
-       
-        string path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";
+        string path;
+        // 이벤트스테이지는 다르게 사운드 출력
+        if (isEventMap)
+        {
+            switch(IngameData.ChapterIdx)
+            {
+                case 9:
+                    path = $"SFX/UI/StageClickChris";
+                    break;
+                case 10:
+                    path = $"SFX/UI/StageClickEDM";
+                    break;
+                case 11:
+                    path = $"SFX/UI/StageClickNight";
+                    break;
+
+                default:
+                    path = "";
+                    Debug.LogWarning("SFXP Path를 찾을 수 없습니다");
+                    break;
+            }
+        }
+        else
+        {
+            path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";
+        }
         Managers.Sound.Play(path, Define.Sound.SFX, 1f, 5f);
        
         _selectedButton = button;
@@ -449,41 +554,36 @@ public class StageSceneUI : UI_Popup
         stageSceneResultUI.LoadClickedStageData(IngameData.ChapterIdx);
     }
 
-    private void BeadsButtonClicked(Button button)
-    {
-
-    }
     private void UpdateStageButtons()
     {
         if (_selectedButton == null)
         {
-            if (forClearApproachStageIndex > 0 && forClearApproachStageIndex <= stageButtons.Count)
+            if (IngameData._unLockStageIndex + 1 > 0 && IngameData._unLockStageIndex + 1 <= stageButtons.Count)
             {
-                _selectedButton = stageButtons[forClearApproachStageIndex - 1];
+                _selectedButton = stageButtons[IngameData._unLockStageIndex];
             }
         }
-
         for (int i = 0; i < stageButtons.Count; i++)
         {
             var button = stageButtons[i];
-            int stageIndex = i + 1;
 
-            if (stageIndex < forClearApproachStageIndex)
+            // 함수 하나로 해금 여부 판별
+            bool isUnlocked = IsStageUnlocked(i);
+
+            if (isUnlocked)
             {
-                SetButtonState(button, ButtonState.NonClickActive);
-            }
-            else if (stageIndex == forClearApproachStageIndex)
-            {
-                SetButtonState(button, ButtonState.NonClickActive);
+                if (_selectedButton != null && _selectedButton == button)
+                {
+                    SetButtonState(button, ButtonState.ClickActive);
+                }
+                else
+                {
+                    SetButtonState(button, ButtonState.NonClickActive);
+                }
             }
             else
             {
                 SetButtonState(button, ButtonState.DeActive);
-            }
-
-            if (_selectedButton != null && _selectedButton == button)
-            {
-                SetButtonState(button, ButtonState.ClickActive);
             }
         }
     }
@@ -508,6 +608,9 @@ public class StageSceneUI : UI_Popup
         }
         
     }
+    /// <summary>
+    /// InGameData.clearStage 에 따라 이전장, 다음장 활성화 
+    /// </summary>
     private void UpdateNavigationButtons()
     {
         if (upButton == null || downButton == null) return;
@@ -517,6 +620,22 @@ public class StageSceneUI : UI_Popup
 
         // Up 버튼: 2 (최상층)가 아닐 때만 활성화
         upButton.interactable = (currentPageLevel != 2);
+
+        if(!isEventMap) // 스토리맵에서는 이전장으로, 다음장으로의 제한을 만들어두어야함.
+        {
+            if(IngameData._unLockStageIndex<=3)
+            {
+                // 다음장으로 비활성화
+                upButton.interactable = false;
+            }
+            else if(IngameData._unLockStageIndex<=6)
+            {
+                if(currentPageLevel==1)
+                {
+                    upButton.interactable = false;
+                }
+            }
+        }
     }
 
     private void SetButtonState(Button button, ButtonState state)
@@ -593,9 +712,9 @@ public class StageSceneUI : UI_Popup
 
     private void TextSetting(int index)
     {
-        stageMainText.text = stageDataList[index].stageMainText;
-        stageMainSubText.text = stageDataList[index].stageMainSubText;
-        stageLevelText.text = stageDataList[index].levelText;
+        stageMainText.text = stageDataList[index].stageMainText.GetLocalizedString();
+        stageMainSubText.text = stageDataList[index].stageMainSubText.GetLocalizedString();
+        stageDifficultyLevelText.text = stageDataList[index].levelText.GetLocalizedString();
 
     }
     #region Tool
@@ -606,7 +725,10 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill(); // 진행 중인 모든 애니메이션을 즉시 중지
 
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
-        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
+        if(!isEventMap) // 이벤트맵이 아닐때만 출력하자
+        {
+            StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
+        }
         mapImage.DOAnchorPos(targetPos, moveDuration)
                 .SetEase(moveEase)
                 .OnComplete(() =>
@@ -630,7 +752,7 @@ public class StageSceneUI : UI_Popup
             // 복구
             darkupObject.SetActive(false);
             dooroImage.sprite = originalDoroSprite;
-            GetComponent<Image>().sprite = originalBackGroundSprite;
+            patternBackGround.sprite = originalBackGroundSprite;
             dooroImage.color = new Color(1, 1, 1);
             patternBackGround.color = new Color(1, 1, 1);
             isRotated = false;
@@ -639,12 +761,15 @@ public class StageSceneUI : UI_Popup
         {
             darkupObject.SetActive(true);
             dooroImage.sprite = doroDarkSprite;
-            GetComponent<Image>().sprite = backGroundDarkSprite;
+            patternBackGround.sprite = backGroundDarkSprite;
 
             isRotated = true;
         }
 
-        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel)); // 현재 무슨 장인지 출력
+       
+
+
         // 위치 이동과 회전을 동시에 실행
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
         mapImage.DOAnchorPos(targetPos, moveDuration).SetEase(moveEase);
@@ -654,7 +779,7 @@ public class StageSceneUI : UI_Popup
                 .OnComplete(() =>
                 {
                     isAnimating = false;
-                    UpdateNavigationButtons(); // <-- ▼ 여기 추가
+                    UpdateNavigationButtons();
                 });
     }
 
@@ -710,5 +835,203 @@ public class StageSceneUI : UI_Popup
         digitalGlitch.intensity = 0f;
     }
 
+
+
+
     #endregion
+    #region 비트 컨트롤러 관련 상호작용
+
+    // [추가] 각 맵의 상태를 저장하기 위한 변수들
+    public int storedStoryLevel = 0;
+    private bool storedStoryRotated = false;
+    private Sprite storedDoorooSprite = null;
+    private Sprite storedPatternSprite = null;
+
+    private int storedEventLevel = 0; // 이벤트 맵은 처음에 Level 0에서 시작한다고 가정
+    private bool storedEventRotated = false;
+
+    /// <summary>
+    /// 비트 컨트롤러에서 호출할 맵이미지 변경
+    /// 단순히 타겟만 바꾸는 것이 아니라, 애니메이션을 멈추고 안전하게 교체합니다.
+    /// </summary>
+    public void MapTargetRectChange(RectTransform rect)
+    {
+        // 이동 중이었다면 즉시 완료 처리
+        if (mapImage != null) mapImage.DOKill();
+
+        mapImage = rect;
+    }
+
+    /// <summary>
+    /// 이벤트 맵 상태 변경 (true: 이벤트맵 진입 / false: 스토리맵 복귀)
+    /// </summary>
+    public void MapSetting(bool _isEventMap, int idx=0)
+    {
+        // 1. 현재 사용 중이던 맵의 상태(위치, 회전)를 먼저 저장합니다.
+        if (isEventMap)
+        {
+            SaveEventMapSetting();
+        }
+        else
+        {
+            SaveStoryMapSetting();
+        }
+
+        // 2. 모드 변경
+        isEventMap = _isEventMap;
+
+        // 3. 변경된 모드에 맞춰 저장된 상태를 불러오고, 화면을 강제로 동기화합니다.
+        if (isEventMap)
+        {
+            LoadEventMapSetting(idx);
+        }
+        else
+        {
+            LoadStoryMapSetting(idx);
+        }
+
+        // 4. UI 및 버튼 상태 업데이트
+        UpdateNavigationButtons();
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
+
+
+        // 5. 사이드 인디케이터(레벨 표시) 업데이트
+        StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
+    }
+
+    // 스토리맵의 현재 상태 저장
+    private void SaveStoryMapSetting()
+    {
+        storedStoryLevel = currentPageLevel;
+        storedStoryRotated = isRotated;
+    }
+
+    // 이벤트맵의 현재 상태 저장
+    private void SaveEventMapSetting()
+    {
+        storedEventLevel = currentPageLevel;
+        storedEventRotated = isRotated;
+
+    }
+
+    // 스토리맵 세팅 로드 및 시각적 적용
+    private void LoadStoryMapSetting(int idx)
+    {
+        currentPageLevel = idx;
+        isRotated = storedStoryRotated;
+        // 저장된 데이터에 맞춰 맵의 위치와 그래픽을 '즉시' 동기화합니다.
+        SyncMapVisuals();
+    }
+
+    // 이벤트맵 세팅 로드 및 시각적 적용
+    private void LoadEventMapSetting(int idx)
+    {
+        currentPageLevel = idx==1?2:idx;
+        isRotated = storedEventRotated;
+
+        // 저장된 데이터에 맞춰 맵의 위치와 그래픽을 '즉시' 동기화합니다.
+        SyncMapVisuals();
+    }
+
+    /// <summary>
+    /// [핵심] 현재 currentPageLevel과 isRotated 변수에 맞춰
+    /// 맵의 위치, 회전, 배경 다크 모드 등을 즉시 적용하는 함수 (애니메이션 X)
+    /// </summary>
+    private void SyncMapVisuals()
+    {
+        if (mapImage == null) return;
+
+        // 1. 애니메이션 중단
+        mapImage.DOKill();
+        isAnimating = false;
+
+        // 2. 레벨에 따른 목표 좌표 설정
+        float targetY = 892f;
+        float targetZ = 0f;
+
+        switch (currentPageLevel)
+        {
+            case 0: targetY = 892f; targetZ = 0f; break;
+            case 1: targetY = -295f; targetZ = 0f; break;
+            case 2:
+                targetY = 892f; targetZ = 180f; 
+                if (isEventMap)
+                { 
+                    targetZ = 0f;
+                    targetY = -892f;
+                }
+                break;
+        }
+
+        // 3. RectTransform 즉시 이동 (애니메이션 없이 텔레포트)
+        mapImage.anchoredPosition = new Vector2(mapImage.anchoredPosition.x, targetY);
+        mapImage.localEulerAngles = new Vector3(0, 0, targetZ);
+
+        // 4. 다크 모드 / 회전 관련 스프라이트 복구 또는 적용
+        // (RotateAndMoveTo의 로직을 즉시 적용 버전으로 구현)
+        if (currentPageLevel == 2&&!isEventMap) // 스토리 2장에서만 어두운 스프라이트 적용
+        {
+            // 어두운 테마 적용
+            isRotated = true;
+            darkupObject.SetActive(true);
+            dooroImage.sprite = doroDarkSprite;
+            patternBackGround.sprite = backGroundDarkSprite;
+        }
+        else
+        {
+            // 원래 테마로 복구
+            darkupObject.SetActive(false);
+            isRotated = false;
+            if (originalDoroSprite != null) dooroImage.sprite = originalDoroSprite;
+            if (originalBackGroundSprite != null) patternBackGround.sprite = originalBackGroundSprite;
+            dooroImage.color = Color.white;
+            patternBackGround.color = Color.white;
+        }
+    }
+
+    #endregion
+    IEnumerator InitWorldCanvasOnce()
+    {
+        // 🔥 해상도 / 창모드 반영 대기
+        yield return null;
+
+        Canvas.ForceUpdateCanvases();
+        
+        // WorldSpace 설정 단 한 번
+        mycanvas.renderMode = RenderMode.WorldSpace;
+        mycanvas.worldCamera = Camera.main;
+        mycanvas.overrideSorting = false;
+        // 🔥 CanvasScaler 완전 차단
+        CanvasScaler scaler = mycanvas.GetComponent<CanvasScaler>();
+        if (scaler != null)
+            scaler.enabled = false;
+
+        // 🔥 모든 스케일 리셋
+        RectTransform rt = mycanvas.GetComponent<RectTransform>();
+        rt.localScale = Vector3.one*0.009259259f; // 이게 정해진 스케일
+
+        transform.localScale = Vector3.one* 0.009259259f;
+    }
+
+    private bool IsStageUnlocked(int index)
+    {
+        // 0~7: 일반 스토리 스테이지 (Stage 1~8)
+        if (index < 8)
+        {
+            return index <= IngameData._unLockStageIndex;
+        }
+        // 8 이상: 이벤트 스테이지 (Stage 9, 10, 11)
+        else
+        {
+            if (index == 8)
+                return (IngameData._unLockStageIndex >= 2 || IngameData._isStoryCompleteClear);
+            else if (index == 9)
+                return (IngameData._unLockStageIndex >= 4 || IngameData._isStoryCompleteClear);
+            else if (index >= 10)
+                return IngameData._isStoryCompleteClear;
+        }
+        return false;
+    }
+
+
 }

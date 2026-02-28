@@ -25,10 +25,11 @@ MonoBehaviour:
   - rid: 7460641668082171908
   MusicPath: BGM/Chapter1_V3
   StartBeat: 3
-  DelayPaddingSeconds: 0
+  DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: c1c29fc23cb312d42980869ac03d64ee, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: ba7bf52925914b54a91246d97d0f38da, type: 3}
   colorPalette: {r: 0.6395074, g: 0.8018868, b: 0.3290762, a: 0.92941177}
+  SinkStage: 0
   references:
     version: 2
     RefIds:
@@ -41,6 +42,7 @@ MonoBehaviour:
         bpm: 100.797
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -50,6 +52,9 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 7460641668082171905
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -59,6 +64,7 @@ MonoBehaviour:
         bpm: 84
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -68,6 +74,9 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 7460641668082171906
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -77,6 +86,7 @@ MonoBehaviour:
         bpm: 100.797
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -86,6 +96,9 @@ MonoBehaviour:
           spawnBeat: 4
           moveBeat: 1
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 7460641668082171907
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -95,6 +108,7 @@ MonoBehaviour:
         bpm: 113.398
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -104,6 +118,9 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -111,6 +128,9 @@ MonoBehaviour:
           spawnBeat: 4
           moveBeat: 1
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 7460641668082171908
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -120,6 +140,7 @@ MonoBehaviour:
         bpm: 100.8
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -129,6 +150,9 @@ MonoBehaviour:
           spawnBeat: 4
           moveBeat: 1
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 8480390322059476994
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -138,6 +162,7 @@ MonoBehaviour:
         bpm: 84
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -147,6 +172,9 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 8480390322059476995
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -156,6 +184,7 @@ MonoBehaviour:
         bpm: 100.797
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -165,6 +194,9 @@ MonoBehaviour:
           spawnBeat: 1
           moveBeat: 3
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -172,6 +204,9 @@ MonoBehaviour:
           spawnBeat: 8
           moveBeat: 2
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 8480390322059476996
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -181,15 +216,19 @@ MonoBehaviour:
         bpm: 113.398
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 1
+          monsterType: 0
           WASD_Pattern: WWAASSDDWWAASSDDWWAASSDDWASD
           speedUpRate: 1
           spawnBeat: 4
           moveBeat: 2
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
     - rid: 8813260913744019457
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -199,13 +238,24 @@ MonoBehaviour:
         bpm: 84
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         steps:
         - textContents:
           - "\uBCF4\uC5EC\uC8FC\uB9C8. \uC870\uD654\uB97C \uAC70\uC2A4\uB978 \uC790\uC758
             \uACB0\uB9D0\uC774 \uBB34\uC5C7\uC778\uC9C0."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948875
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 3
           characterData: {fileID: 0}
+          dir: 0
     - rid: 9186972787983777792
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -215,6 +265,7 @@ MonoBehaviour:
         bpm: 84
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         isFlipAD: 0
         monsterDatas:
         - isIn: 1
@@ -224,3 +275,6 @@ MonoBehaviour:
           spawnBeat: 2
           moveBeat: 2
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0

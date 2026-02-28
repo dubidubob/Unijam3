@@ -84,7 +84,7 @@ public class SceneLoadingManager : UI_Base
         IsLoading = true;
 
         // ▼▼▼ 2. 코루틴 시작 시 준비 상태를 false로 초기화 ▼▼▼
-        isSceneReadyToDisplay = false;
+        isSceneReadyToDisplay = false;  
 
         // 1. 문 닫기 애니메이션
         Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
@@ -122,7 +122,7 @@ public class SceneLoadingManager : UI_Base
             AspectRatioEnforcer.Instance.RestoreDisplayState();
         }
 
-        Managers.Sound.Play("SFX/UI/Dialogue/Dialogue_V1", Define.Sound.SFX);
+        Managers.Sound.Play("SFX/UI/DoorOpen_V1", Define.Sound.SFX);
 
         // 5. 새로운 씬이 준비되면 문 열기 애니메이션 시작
         await AnimatePanels(false, token); // false = 열기

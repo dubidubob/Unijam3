@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Tutorial_Table_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: f68a5f249762c2b4a9833b0311d64148, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 846767249977344
+    m_Localized: "(Though I said that... I\u2019ve never truly faced them before.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948864
+    m_Localized: "(Enemies from all directions\u2026 Press WASD when they get close
+      to drive them back\u2026)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948865
+    m_Localized: "Following Master\u2019s words\u2026 Alright. Let\u2019s do this!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948866
+    m_Localized: This is manageable.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948867
+    m_Localized: Harder than I expected.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948868
+    m_Localized: "Those spirits that resemble me\u2026 No way\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948869
+    m_Localized: "The greatest trial is oneself\u2026 Wait, what did Master say at
+      times like this?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948870
+    m_Localized: (The moment you see a spirit trying to consume you, strike with
+      a diagonal input!)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948871
+    m_Localized: "Diagonal\u2026? So upper-right means pressing Right + Up together?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948872
+    m_Localized: "They look\u2026 unsettling."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948873
+    m_Localized: I feel my mind slipping away.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948874
+    m_Localized: More spirits are approaching. Stay focused!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948875
+    m_Localized: "I\u2019ll show you the fate of those who defy harmony."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948876
+    m_Localized: "You\u2019re persistent, aren\u2019t you?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948877
+    m_Localized: "Wait\u2014why are they moving so fast?!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948878
+    m_Localized: "The fog thickens\u2026 and they charge again under its cover!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948879
+    m_Localized: I will prove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948880
+    m_Localized: "that the weight of my conviction surpasses even my Master\u2019s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948881
+    m_Localized: Their aura is overwhelming. It takes two strikes to banish them!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948882
+    m_Localized: "I can\u2019t focus. My thoughts and movements are reversed!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948883
+    m_Localized: "Left is right, right is left\u2014what?!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948884
+    m_Localized: "It\u2019s returning to normal!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948885
+    m_Localized: "Toward the origin\u2014"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948886
+    m_Localized: I will advance until this body is shattered.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948887
+    m_Localized: Remain there, bound by your own conviction!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948888
+    m_Localized: With all my strength, I will crush every last one of you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948889
+    m_Localized: Currently being produced in sync with the music. (Acts 6 and 7 available!)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948890
+    m_Localized: If the Masked Spirit covers the left side of the screen, click left.
+      If the opposite, click right!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948891
+    m_Localized: Spirits dare invade sacred ground?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948892
+    m_Localized: This is not a place you may defile!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948893
+    m_Localized: I will not fall here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948894
+    m_Localized: "Come\u2026 I shall stand firm in this place."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948895
+    m_Localized: "At the beginning of all things\u2014"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948896
+    m_Localized: I will bring this end to its close with my own hands.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948897
+    m_Localized: I still stand, unwavering!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948898
+    m_Localized: Do not flee. Face me to the end!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948899
+    m_Localized: Here, I sever this long, cursed chain.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 846767270948900
+    m_Localized: "Now\u2026 face your end."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 849773190213632
+    m_Localized: "The beginning\u2026 is already half the battle."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

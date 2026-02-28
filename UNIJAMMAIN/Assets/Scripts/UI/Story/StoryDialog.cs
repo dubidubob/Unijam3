@@ -54,6 +54,7 @@ public class StoryDialog : UI_Popup
 
     private void Awake()
     {
+
         panelRect = TextPanel.GetComponent<RectTransform>();
         originalPanelPos = panelRect.anchoredPosition;
         contents.SetActive(true);
@@ -165,7 +166,13 @@ public class StoryDialog : UI_Popup
                 // ���� ĳ���� ó��
                 if (scene.showLeftCharacter)
                 {
-                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.CharacterName;
+                    // 키 생성 규칙 일치: NAME_ + 에셋이름
+                    string nameKey = $"NAME_{scene.speakingCharacterData.name}";
+                    string localizedName = LocalizationManager.Get(nameKey, scene.speakingCharacterData.CharacterName);
+
+                    // 이름 TMP 적용
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = localizedName;
+
                     StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[0].gameObject.SetActive(true);
 
@@ -213,7 +220,14 @@ public class StoryDialog : UI_Popup
                 // ������ ĳ���� ó��
                 if (scene.showRightCharacter)
                 {
-                    TextPanel.GetComponentInChildren<TMP_Text>().text = scene.speakingCharacterData.CharacterName;
+                    // 키 생성 규칙 일치: NAME_ + 에셋이름 이름 로컬라이제이션
+                    string nameKey = $"NAME_{scene.speakingCharacterData.name}";
+                    string localizedName = LocalizationManager.Get(nameKey, scene.speakingCharacterData.CharacterName);
+
+                    // 이름 TMP 적용
+                    TextPanel.GetComponentInChildren<TMP_Text>().text = localizedName;
+
+
                     StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
                     RectTransform imageRect = StandingImage[1].GetComponent<RectTransform>();
@@ -270,7 +284,7 @@ public class StoryDialog : UI_Popup
 
             // �ؽ�Ʈ ǥ�� (Ÿ���� ȿ��)
             TestTexts[idx].gameObject.SetActive(true);
-            string full = scene.text;
+            string full = LocalizationManager.Get(scene.localizationKey, scene.text);
             int len = full.GetTypingLength();
 
             inputRequested = false;

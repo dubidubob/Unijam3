@@ -8,4 +8,7 @@ public struct MonsterData
     public float spawnBeat;
     public float moveBeat;
     public bool hiding;
+    public MouseEnemy.Dir dir;
+    public float cameraActionDuration;
+    public float floatDuration;
 }

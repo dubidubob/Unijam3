@@ -14,14 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phases:
   - rid: 9186972795589099525
-  - rid: 9186972795589099520
-  - rid: 9186972795589099521
-  - rid: 9186972795589099522
-  - rid: 9186972795589099523
-  - rid: 9186972795589099524
+  - rid: 5234464834424930304
+  - rid: 6834123748669390850
+  - rid: 6834123748669390851
+  - rid: 6834123748669390852
   MusicPath: BGM/Chapter4_V2
-  StartBeat: 4
-  DelayPaddingSeconds: 0
+  StartBeat: 12000
+  DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: 3671557f515f15f4b994f54933047d81, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 287ee5b64068a4c4a8bb75ede71cd485, type: 3}
   colorPalette: {r: 0.60784316, g: 0.36862746, b: 0.33333334, a: 1}
@@ -29,130 +28,248 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 9186972795589099520
+    - rid: 5234464834424930304
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 34
-        startDelayBeat: 4
+        durationBeat: 16
+        startDelayBeat: 0
         bpm: 88
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 8
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: 
+          WASD_Pattern: XDXDXDXDX/DXDXDXDX/AXAXAXAAA/
           speedUpRate: 1
-          spawnBeat: 1
+          spawnBeat: 0.5
           moveBeat: 4
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 1
-          monsterType: 1
-          WASD_Pattern: 
+          monsterType: 3
+          WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
+            / D/////DD"
           speedUpRate: 1
           spawnBeat: 2
-          moveBeat: 0.33333334
+          moveBeat: 0
           hiding: 0
-    - rid: 9186972795589099521
+          dir: 0
+          cameraActionDuration: 4
+          floatDuration: 2
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: "AXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tAXAXAXAX\tWXWXWXWW
+            / D/////DD"
+          speedUpRate: 1
+          spawnBeat: 11
+          moveBeat: 0
+          hiding: 0
+          dir: 1
+          cameraActionDuration: 2
+          floatDuration: 2
+    - rid: 6834123748669390850
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 64
+        durationBeat: 32
         startDelayBeat: 0
-        bpm: 98
+        bpm: 88
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 8
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: 
+          WASD_Pattern: X/SSDX/SSDX/SSDX/SSDX/SSAX/SSAX/SSAX/SSAX/SSDX/SSDX/SSDX/SSDX/SSDX/SSXX/DXXXDXD
           speedUpRate: 1
-          spawnBeat: 1
-          moveBeat: 3
+          spawnBeat: 0.5
+          moveBeat: 4
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 
+          WASD_Pattern: XXXX44333344444
           speedUpRate: 1
-          spawnBeat: 4
+          spawnBeat: 2
           moveBeat: 2
           hiding: 0
-    - rid: 9186972795589099522
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+    - rid: 6834123748669390851
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 64
+        durationBeat: 32
         startDelayBeat: 0
-        bpm: 108
+        bpm: 88
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 8
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 0
-          WASD_Pattern: 
+          monsterType: 6
+          WASD_Pattern: XSXX/XSXX/XSSS/XXAX/XWXX///XXXXX/SSAX/SSDX/SSAX/SSDX/SSAX/SSDX/SSAX/SSDX/
           speedUpRate: 1
-          spawnBeat: 1
-          moveBeat: 3
+          spawnBeat: 0.5
+          moveBeat: 4
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 
+          WASD_Pattern: XXXXXXXX2121212
           speedUpRate: 1
-          spawnBeat: 4
-          moveBeat: 1
+          spawnBeat: 2
+          moveBeat: 2
           hiding: 0
-    - rid: 9186972795589099523
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+    - rid: 6834123748669390852
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 40
+        durationBeat: 32
         startDelayBeat: 0
         bpm: 98
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 12
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 0
-          WASD_Pattern: 
+          monsterType: 6
+          WASD_Pattern: WWWW/XXAX/WWWW/XXAX/WWWW/XXDX/WWWW/XXDX/WWWW/XXXX/WWWW/XXXX/WWWW/
           speedUpRate: 1
-          spawnBeat: 1
-          moveBeat: 3
+          spawnBeat: 0.5
+          moveBeat: 3.5
           hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: SSSS/XXX/SSSS/XXX/SSSS/XXXX/SSSS/XXX/SSSS/XXX/SSSS/XXX/SSSS
+          speedUpRate: 1
+          spawnBeat: 5
+          moveBeat: 0
+          hiding: 0
+          dir: 1
+          cameraActionDuration: 4
+          floatDuration: 2.3
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: SSSS/XXX/SSSS/XXX/SSSS/XXXX/SSSS/XXX/SSSS/XXX/SSSS/XXX/SSSS
+          speedUpRate: 1
+          spawnBeat: 12
+          moveBeat: 0
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 3
+          floatDuration: 3.3
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX2XXXXXXX1XXXXXXX2
           speedUpRate: 1
-          spawnBeat: 4
+          spawnBeat: 0.5
           moveBeat: 2
           hiding: 0
-    - rid: 9186972795589099524
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 4
-        startDelayBeat: 0
-        bpm: 98
-        timeScale: 1
-        preGenerateBeat: 0
-        isFlipAD: 0
-        monsterDatas: []
+          dir: 0
+          cameraActionDuration: 2
+          floatDuration: 4
     - rid: 9186972795589099525
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
         durationBeat: 0
-        startDelayBeat: 4
+        startDelayBeat: 16
         bpm: 88
         timeScale: 1
         preGenerateBeat: 0
+        extensionCreateBeat: 0
         steps:
         - textContents:
-          - "\uD604\uC7AC \uC74C\uC545\uC5D0 \uB9DE\uAC8C \uC81C\uC791 \uC911\uC785\uB2C8\uB2E4.
-            (6\uB9C9, 7\uB9C9\uC740 \uAC00\uB2A5\uD569\uB2C8\uB2E4!)"
+          - "\uADFC\uC6D0\uC744 \uD5A5\uD574,"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948885
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
-          characterData: {fileID: 0}
+          characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
+          dir: 0
+        - textContents:
+          - "\uC774 \uD55C \uBAB8 \uC73C\uC2A4\uB7EC\uC9C8 \uB54C\uAE4C\uC9C0 \uACC4\uC18D
+            \uB098\uC544\uAC00\uB9AC."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948886
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+          monsterCutline: 0
+          delayBeat: 4
+          characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
+          dir: 0
+        - textContents:
+          - "\uB124 \uC2E0\uB150\uB300\uB85C \uACE7\uC774\uACE7\uB300\uB85C \uADF8
+            \uACF3\uC5D0 \uC788\uC5B4\uB77C!"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948887
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+          monsterCutline: 0
+          delayBeat: 4
+          characterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+          dir: 1
+        - textContents:
+          - "\uB0B4 \uC788\uB294 \uD798\uC744 \uB2E4\uD574 \uC871\uC871 \uBD80\uC234\uC8FC\uB9C8."
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948888
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+          monsterCutline: 0
+          delayBeat: 4
+          characterData: {fileID: 11400000, guid: e284440e035048341b2f0bb0a549e3d5, type: 2}
+          dir: 1

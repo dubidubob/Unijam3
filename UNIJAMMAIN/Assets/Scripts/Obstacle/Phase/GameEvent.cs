@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
+using NaughtyAttributes;
 
 // 모든 게임 이벤트를 위한 인터페이스 또는 추상 클래스
 [System.Serializable]
@@ -19,6 +21,16 @@ public abstract class GameEvent
 public class PhaseEvent : GameEvent
 {
     public bool isFlipAD;
+    // NaughtyAttributes 에셋을 사용할 경우의 예시
+    public bool isStretchWindow;
+
+    [ShowIf("isStretchWindow")] // isStretchWindow가 true일 때만 인스펙터에 표시됨!
+    [AllowNesting]
+    public float stretchX_rate;
+
+    [ShowIf("isStretchWindow")]
+    [AllowNesting]
+    public float stretchY_rate;
     [SerializeField] public List<MonsterData> monsterDatas;
     public IReadOnlyList<MonsterData> MonsterDatas => monsterDatas;
 }
@@ -47,7 +59,9 @@ public class TutorialEvent : GameEvent
 public struct TextInfo
 {
     public string[] textContents;
+    public LocalizedString[] localizedTextContents;
     public int monsterCutline;
     public float delayBeat;
     public CharacterData characterData;
+    public Tutorial_PopUp.dir dir;
 }

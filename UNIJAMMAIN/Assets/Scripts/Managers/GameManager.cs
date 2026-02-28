@@ -51,7 +51,7 @@ public class GameManager
     public enum GameState { Battle, Stage, Tutorial, Die }
     public enum PlayerState { Normal, GroggyAttack, Ready, Die }
 
-    private bool isADReverse = false;
+    public bool isADReverse = false;
     private bool isComboEffect = false;
     private bool _comboCheck = false;
 
@@ -130,6 +130,7 @@ public class GameManager
     {
         if (currentPlayerState == PlayerState.Die) return;
 
+
         // 키 반전 로직
         if (isADReverse)
         {
@@ -142,7 +143,7 @@ public class GameManager
         {
             Queue<MovingEnemy> enemyQueue = attacks[key];
 
-            // [핵심 수정 3] 큐의 앞부분에 파괴된(Null) 오브젝트가 있다면 제거 (청소 로직)
+            // 큐의 앞부분에 파괴된(Null) 오브젝트가 있다면 제거 (청소 로직)
             // 재시작 직후나 몬스터가 다른 이유로 죽었을 때 발생하는 MissingReferenceException 방지
             while (enemyQueue.Count > 0 && enemyQueue.Peek() == null)
             {
@@ -152,7 +153,7 @@ public class GameManager
             // 유효한 적이 남아있는 경우
             if (enemyQueue.Count > 0)
             {
-                // [최적화 3] GetComponent 없이 바로 접근
+                // GetComponent 없이 바로 접근
                 MovingEnemy targetEnemy = enemyQueue.Peek();
 
                 if (targetEnemy.CheckCanDead())
@@ -163,6 +164,10 @@ public class GameManager
                     targetEnemy.SetDead();
                     ComboInc();
                     return; // 성공했으므로 종료
+                }
+                else  // 유효한 적이 존재하지만 처리할 수는 없는 상태
+                {
+                    return; // 넉백몹일 가능성이 높으므로 종료
                 }
             }
         }

@@ -119,6 +119,8 @@ public class MainScene : UI_Popup
 
     public void EnterToStartClicked(PointerEventData eventData)
     {
+        Managers.Sound.Play("SFX/UI/PressToStart_V1",Define.Sound.SFX);
+
         toStartSequence?.Kill();
         toStartText.fontMaterial = originalMaterial;
         toStartText.transform.localScale = Vector3.one;
@@ -219,11 +221,11 @@ public class MainScene : UI_Popup
         // 1초짜리 '시각적' 애니메이션 재생
         for (int i = 0; i < index + 1; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y + 250, ANIMATION_DURATION).SetEase(Ease.OutCubic);
+            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y + 150, ANIMATION_DURATION).SetEase(Ease.OutCubic);
         }
         for (int i = index + 1; i < buttonsTransform.Length; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 250, ANIMATION_DURATION).SetEase(Ease.OutCubic);
+            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 150, ANIMATION_DURATION).SetEase(Ease.OutCubic);
         }
 
         TogglePanel(true);

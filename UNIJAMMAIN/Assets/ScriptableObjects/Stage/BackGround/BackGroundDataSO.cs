@@ -14,6 +14,7 @@ public class BackGroundDataSO : ScriptableObject
     public class ExtraBackGroundData
     {
         public List<Sprite> extraBackGroundLists;
+        public List<Sprite> animationBackGroundSprites;
     }
     public List<BackGroundData> backGroundDatas;
     public List<ExtraBackGroundData> extraBackGroundDatas;

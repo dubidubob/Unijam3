@@ -1343,6 +1343,9 @@ MonoBehaviour:
   - {fileID: 2630843551951615991, guid: 5003512bcf2c4a44da8b8e0da84be855, type: 3}
   - {fileID: 2630843551951615991, guid: 15f2af25d664c4e4ea673dd47367622e, type: 3}
   - {fileID: 2630843551951615991, guid: 793d6d7ce781467469977a3ecfabde5e, type: 3}
+  - {fileID: 2630843551951615991, guid: 793d6d7ce781467469977a3ecfabde5e, type: 3}
+  - {fileID: 2630843551951615991, guid: 793d6d7ce781467469977a3ecfabde5e, type: 3}
+  - {fileID: 2630843551951615991, guid: 793d6d7ce781467469977a3ecfabde5e, type: 3}
   BackGround: {fileID: 928231783}
 --- !u!4 &1531425654
 Transform:
@@ -1669,6 +1672,7 @@ MonoBehaviour:
   resultImg: {fileID: 1599355159}
   resultTxt: {fileID: 907363134}
   resultScore: {fileID: 600977480}
+  resultNewRecordImg: {fileID: 0}
   rankUI:
   - cutline: 95
     img: {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}

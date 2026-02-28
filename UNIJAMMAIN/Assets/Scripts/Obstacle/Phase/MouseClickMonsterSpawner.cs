@@ -16,7 +16,10 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] GameObject LeftOne;
     [SerializeField] GameObject RightOne;
 
+
     public Define.MonsterType MonsterType => Define.MonsterType.MouseClick;
+
+
 
     // [NEW] 현재 활성화된 모든 스폰 패턴(페이지)을 관리하는 리스트
     private List<MouseClickPatternInstance> _activePatterns = new List<MouseClickPatternInstance>();
@@ -28,30 +31,40 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
     // 현재 활성화된 적을 제어하기 위해 프로퍼티나 변수로 노출
     public MouseEnemy CurrentEnemy { get; private set; }
 
+
     private void Awake()
     {
         LeftOne.SetActive(false);
         RightOne.SetActive(false);
 
-        Managers.Input.InputMouse -= DeactivateMouse;
-        Managers.Input.InputMouse += DeactivateMouse;
+        // 마우스 입력 사라졌으므로 없앰
+        //Managers.Input.InputMouse -= DeactivateMouse;
+        //Managers.Input.InputMouse += DeactivateMouse;
         PauseManager.IsPaused -= PauseForWhile;
         PauseManager.IsPaused += PauseForWhile;
     }
 
     private void OnDestroy()
     {
-        Managers.Input.InputMouse -= DeactivateMouse;
+        // 마우스 입력 사라졌으므로 없앰
+        //Managers.Input.InputMouse -= DeactivateMouse;
         PauseManager.IsPaused -= PauseForWhile;
+
+        foreach(var pattern in _activePatterns) // 모든 패턴 스탑시키기
+        {
+            pattern.Stop();
+        }
+
     }
 
     // --- (DeactivateMouse, ActivateEnemy 등 기존 로직은 대부분 유지) ---
     #region Existing Logic
-    private void DeactivateMouse(GamePlayDefine.MouseType mouseType)
-    {
-        GameObject deactivateGo = mouseType == GamePlayDefine.MouseType.Left ? LeftOne : RightOne;
-        deactivateGo.SetActive(false);
-    }
+    // 더 이상 호출되지 않으므로 주석처리
+    //private void DeactivateMouse(GamePlayDefine.MouseType mouseType)
+    //{
+    //    GameObject deactivateGo = mouseType == GamePlayDefine.MouseType.Left ? LeftOne : RightOne;
+    //    deactivateGo.SetActive(false);
+    //}
 
     // [MODIFIED] 이 메서드는 이제 모든 인스턴스에 의해 공유됩니다.
     public void ActivateEnemy()
@@ -77,11 +90,15 @@ public class MouseClickMonsterSpawner : MonoBehaviour, ISpawnable
         // 생성 시 설정값(sequenceSettings)을 같이 넘김
         MouseClickPatternInstance instance = new MouseClickPatternInstance(this, data, sequenceSettings);
         _activePatterns.Add(instance);
-        instance.StartSpawning();
+        instance.StartSpawning(data);
         return instance;
     }
 
     // 인스턴스가 호출할 헬퍼 메서드
+    /// <summary>
+    /// true라면 왼쪽 false라면 오른쪽
+    /// </summary>
+    /// <param name="isLeft"></param>
     public void ActivateEnemyForSequence(bool isLeft)
     {
         // 예시: 왼쪽/오른쪽 중 하나를 켜고 CurrentEnemy로 할당
@@ -179,8 +196,9 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
         _lastSpawnTime = AudioSettings.dspTime + IngameData.PhaseDurationSec - threshold;
     }
     private CancellationTokenSource _cts;
-
-    public void StartSpawning()
+    
+  
+    public void StartSpawning(MonsterData data)
     {
         // 기존 CTS 정리
         if (_cts != null)
@@ -196,69 +214,76 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
         CancellationToken parentDestroyToken = _parent.GetCancellationTokenOnDestroy();
         CancellationToken linkedToken = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, parentDestroyToken).Token;
 
+
+        // 현재 비트에서 spawnBeat 이후에 정확히 출현하게끔 설정.
+        // _data.spawnBeat 뒤에 출현하게끔 설정 
         // 연결된 토큰을 전달
-        RunSequence(linkedToken).Forget();
+
+        // 만약에 오브젝트가 파괴되었을때 이 기다림을 어떻게 멈출지도 알아서 생각
+        RunSequence(linkedToken,data).Forget();
     }
-    private async UniTaskVoid RunSequence(CancellationToken token)
+
+    private async UniTaskVoid RunSequence(CancellationToken token, MonsterData data)
     {
-        float beatInterval = (float)IngameData.BeatInterval;
-        float slamDuration = _seqData.slamAnimDuration;
-        float prepTime = slamDuration * 0.3f;
+        MouseEnemy myEnemy = null;
+        bool sizeChanged = false;
 
-        // Phase 1: 등장 및 부유
-        float floatDuration = beatInterval * _seqData.floatBeats;
-        _parent.ActivateEnemyForSequence(true);
-        _parent.CurrentEnemy.PlayFloatAction(floatDuration);
-
-        if (await UniTask.Delay(TimeSpan.FromSeconds(floatDuration), cancellationToken: token).SuppressCancellationThrow()) return;
-
-        // ====================================================
-        // Phase 2 & 3: 준비 및 내려찍기 (통합 제어)
-        // ====================================================
-
-        // 몬스터가 바닥에 닿았을 때 실행할 '액션' 정의
-        System.Action slamImpactAction = () =>
+        try
         {
-            int leftOrRight = (_parent.CurrentEnemy.dir == MouseEnemy.Dir.Left) ? -1 : 1;
+            float secPerBeat = 60f / (float)IngameData.GameBpm;
+            await UniTask.Delay(TimeSpan.FromSeconds(_data.spawnBeat * secPerBeat), cancellationToken: token);
 
-            // 카메라 회전
-            Camera.main.transform.DORotate(new Vector3(0, 0, _seqData.tiltAngle * leftOrRight), 0.15f)
-                .SetEase(Ease.OutBack)
-                .SetLink(_parent.gameObject);
-
-            // 화면 흔들림
-            Camera.main.transform.DOShakePosition(0.4f, 1.5f, 10).SetLink(_parent.gameObject);
-        };
-
-        // 몬스터 애니메이션 시작 (액션을 매개변수로 전달)
-        _parent.CurrentEnemy.PlaySlamAction(slamDuration, slamImpactAction);
-
-        // 몬스터가 소리지르기 시작할 때 카메라 확대 (이건 시작점이 같으니 그대로 유지)
-        Camera.main.DOOrthoSize(4f, prepTime).SetEase(Ease.OutQuad).SetLink(_parent.gameObject);
-
-        // [수정] 임의의 시간을 기다리는 대신, 애니메이션 전체 시간만큼만 대기하여 시퀀스 흐름 유지
-        if (await UniTask.Delay(TimeSpan.FromSeconds(slamDuration), cancellationToken: token).SuppressCancellationThrow()) return;
+            _parent.ActivateEnemyForSequence(data.dir == MouseEnemy.Dir.Left);
+            myEnemy = _parent.CurrentEnemy;
+            if (myEnemy == null) return;
 
 
-        // ====================================================
-        // Phase 4: 복귀 (Recover)
-        // ====================================================
-        float holdDuration = beatInterval * _seqData.tiltHoldBeats;
-        if (await UniTask.Delay(TimeSpan.FromSeconds(holdDuration), cancellationToken: token).SuppressCancellationThrow()) return;
+            myEnemy.PlayFloatAction();
+            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval *_data.floatDuration), cancellationToken: token);
+            CameraController.SetMonsterMode(true, _seqData.enlargementSize);
 
-        float recoverTime = _seqData.recoverDuration;
-        Camera.main.transform.DORotateQuaternion(_defaultCameraRot, recoverTime).SetEase(Ease.InOutSine);
-        Camera.main.DOOrthoSize(5f, recoverTime).SetEase(Ease.InOutSine);
+            System.Action slamImpactAction = () =>
+            {
+                int leftOrRight = (myEnemy.dir == MouseEnemy.Dir.Left) ? -1 : 1;
+                Camera.main.transform.DOKill();
+                // 회전 상태 고정
+                Camera.main.transform.DORotate(new Vector3(0, 0, _seqData.tiltAngle * leftOrRight), 0.15f).SetEase(Ease.OutBack);
+                Camera.main.transform.DOShakePosition(0.4f, 1.5f, 10);
+            };
+            myEnemy.PlaySlamAction(_seqData.slamAnimDuration, slamImpactAction);
 
-        await UniTask.Delay(TimeSpan.FromSeconds(recoverTime), cancellationToken: token).SuppressCancellationThrow();
+            // [확대 상태 고정]
+            Camera.main.DOKill(false);
+            Camera.main.DOOrthoSize(CameraController.TargetBaseSize, _seqData.slamAnimDuration * 0.3f).SetEase(Ease.OutQuad);
 
-        Stop();
+            // [핵심] 지정된 duration 동안 아무도 카메라를 건드리지 못하게 대기
+            await UniTask.Delay(TimeSpan.FromSeconds(_seqData.slamAnimDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval * data.cameraActionDuration), cancellationToken: token);
+        }
+        catch (OperationCanceledException) { }
+        finally
+        {
+            // 이 인스턴스가 끝날 때 몬스터가 더 이상 없다면 잠금 해제
+            // (만약 멀티 몬스터라면 별도의 카운팅이 필요하지만, 현재는 이 시퀀스 종료 시점에 맞춰 복구)
+            CameraOriginalAction();
+            Stop();
+        }
     }
 
-    /**
-     * [IMPLEMENTS] ISpawnable.ISpawnInstance.Stop
-     * 이 인스턴스를 중지합니다.
-     */
+    public void CameraOriginalAction()
+    {
+        Camera.main.transform.DOKill();
+        Camera.main.DOKill();
+
+        Camera.main.transform.DORotate(Vector3.zero, 0.5f).SetEase(Ease.OutSine);
+        Camera.main.DOOrthoSize(5f, 0.5f).SetEase(Ease.OutSine).OnComplete(()=>
+        {
+            CameraController.SetMonsterMode(false); // 카메라 액션까지 모두 끝나면 이제 원래대로 받기
+        });
+    }
+
+    /* 이 인스턴스를 중지합니다.
+    */
     public void Stop()
     {
         // 1. UniTask 취소
@@ -269,14 +294,7 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
             _cts = null;
         }
 
-        // 2. 실행 중이던 카메라 Tween 강제 종료 (안전을 위해)
-        Camera.main.transform.DOKill();
-        Camera.main.DOKill(); // OrthoSize Tween 종료
-
-        // 3. 카메라 원상복구 (중요: 중간에 멈췄을 때 화면이 돌아가 있는 것 방지)
-        Camera.main.transform.rotation = _defaultCameraRot;
-        Camera.main.orthographicSize = 5f; // 기본 사이즈 복구
-
+      
         // 4. 리스트에서 제거
         _parent.RemovePattern(this);
     }

@@ -17,6 +17,10 @@ public class MouseEnemy : MonoBehaviour
 
     private Image image;
     private Tweener blinkTweener;
+
+    [Header("Fade Settings")]
+    public float fadeInDuration = 0.5f;
+
     public float initialBlinkDuration = 0.8f; // 시작 블링킹 지속 시간
     public float minBlinkDuration = 0.05f;     // 블링킹 최소 지속 시간
     public float blinkSpeedIncrease = 0.1f;  // 매 사이클마다 지속 시간 감소량
@@ -30,7 +34,10 @@ public class MouseEnemy : MonoBehaviour
     [SerializeField] private RectTransform _waveTransform;
     [SerializeField] private Sprite _screamSprite;
     [SerializeField] private Sprite _originalSprite;
+
     private Vector3 _originalPos;
+
+    private Sequence _slamSequence; // 시퀀스 참조 저장
 
 
     private void Awake()
@@ -49,16 +56,30 @@ public class MouseEnemy : MonoBehaviour
         PauseManager.IsPaused -= PauseForWhile;
         PauseManager.IsPaused += PauseForWhile;
 
+
         // 초기화: 위치 원복
         _rectTransform.localPosition = _originalPos;
         _rectTransform.localScale = Vector3.one;
         image.sprite = _originalSprite;
-        image.color = Color.white;
+
+
+        //image.color = Color.white;
+        Color c = Color.white;
+        c.a = 0f; // 알파값을 0으로 설정
+        image.color = c;
+
+
+        // [추가됨] 3. 페이드인 실행 (0 -> 1)
+        image.DOFade(1f, fadeInDuration)
+             .SetEase(Ease.OutQuad) // 부드러운 등장 감속
+             .SetLink(gameObject);  // 오브젝트가 꺼지면 트윈도 자동 종료
     }
 
     // 부유상태시작
-    public void PlayFloatAction(float duration)
+    public void PlayFloatAction()
     {
+        Managers.Sound.Play("SFX/Enemy/MaskSpawn"); // 등장 생성 효과
+
         // 둥둥 떠있는 느낌 (위아래 반복)
         _rectTransform.DOAnchorPosY(_originalPos.y + 50f, 1f)
             .SetLoops(-1, LoopType.Yoyo)
@@ -69,56 +90,57 @@ public class MouseEnemy : MonoBehaviour
         // BlinkingLoop(this.GetCancellationTokenOnDestroy()).Forget();
     }
     // 강타 애니메이션
-    public void PlaySlamAction(float duration, System.Action onImpact) // Action 매개변수 추가
+    public void PlaySlamAction(float duration, System.Action onImpact)
     {
-        DOTween.Kill("MouseFloat");
 
-        Sequence seq = DOTween.Sequence();
+        // 부유 트윈만 정확히 제거
+        DOTween.Kill(_rectTransform);
+
+        _slamSequence = DOTween.Sequence();
         float prepTime = duration * 0.3f;
         float slamTime = duration * 0.7f;
 
-        // [Phase 1: 준비]
+        Managers.Sound.Play("SFX/Enemy/MaskRoar"); // 포효
+
+        // [준비 단계]
         image.sprite = _screamSprite;
         if (_waveTransform != null)
         {
             _waveTransform.gameObject.SetActive(true);
             _waveTransform.localScale = Vector3.zero;
-            seq.Join(_waveTransform.DOScale(3f, prepTime).SetEase(Ease.OutQuad));
+            _slamSequence.Join(_waveTransform.DOScale(3f, prepTime).SetEase(Ease.OutQuad));
         }
 
-        seq.Append(_rectTransform.DOScale(1.5f, prepTime).SetEase(Ease.OutQuad));
-        seq.Join(_rectTransform.DOAnchorPosY(_originalPos.y + 70f, prepTime).SetEase(Ease.OutQuad));
+        _slamSequence.Append(_rectTransform.DOScale(1.5f, prepTime).SetEase(Ease.OutQuad));
+        _slamSequence.Join(_rectTransform.DOAnchorPosY(_originalPos.y + 70f, prepTime).SetEase(Ease.OutQuad));
 
-        // [중간 콜백] 스프라이트 원복
-        seq.AppendCallback(() =>
+
+        // [중간 콜백]
+        _slamSequence.AppendCallback(() =>
         {
             image.sprite = _originalSprite;
             if (_waveTransform != null)
             {
-                CanvasGroup cg = _waveTransform.GetComponent<CanvasGroup>();
-                if (cg != null) cg.DOFade(0f, 0.5f).OnComplete(() => _waveTransform.gameObject.SetActive(false));
+                _waveTransform.gameObject.SetActive(false);
+                 Managers.Sound.Play("SFX/Enemy/MaskSmash");
             }
         });
 
-        // [Phase 2: 타격]
-        seq.Append(_rectTransform.DOScale(1.0f, slamTime).SetEase(Ease.InBack));
-        seq.Join(_rectTransform.DOAnchorPosY(-350f, slamTime).SetEase(Ease.InBack));
-        seq.Join(image.DOColor(Color.red, slamTime));
-
-        // [완료] 바닥에 닿는 순간!
-        seq.OnComplete(() =>
+        // [타격 단계]
+        _slamSequence.Append(_rectTransform.DOScale(1.0f, slamTime).SetEase(Ease.InBack));
+        _slamSequence.Join(_rectTransform.DOAnchorPosY(-350f, slamTime).SetEase(Ease.InBack));
+        _slamSequence.Join(image.DOColor(Color.red, slamTime));
+        _slamSequence.OnComplete(() =>
         {
-            // 1. 사운드 재생
-            Managers.Sound.Play("SFX/SlamSound");
-
-            // 2. 외부에서 넘겨받은 카메라 흔들림/회전 액션 실행 (핵심!)
             onImpact?.Invoke();
 
-            // 3. 후처리
-            image.DOFade(0, 1.5f);
-            WaitForDisable().Forget();
+            // 자연스럽게 사라지기
+            image.DOFade(0, 0.5f).OnComplete(() => {
+                this.gameObject.SetActive(false);
+            });
         });
     }
+
     private CancellationTokenSource _blinkCts; // 블링킹 취소용 토큰
 
     private async UniTask WaitForDisable()
@@ -128,6 +150,7 @@ public class MouseEnemy : MonoBehaviour
 
     }
 
+    /*
     // [변경점] 재귀 호출 -> async Loop 패턴으로 변경
     // 훨씬 직관적이며, 실행 중인 Tween을 관리하기 편합니다.
     private async UniTaskVoid BlinkingLoop(CancellationToken token)
@@ -157,7 +180,7 @@ public class MouseEnemy : MonoBehaviour
             if (image != null) image.color = Color.white;
         }
     }
-
+    */
     private void Update()
     {
         /*
@@ -180,7 +203,7 @@ public class MouseEnemy : MonoBehaviour
         }
         */
     }
-
+    /*
     private void StopBlinking()
     {
         if (blinkTweener != null && blinkTweener.IsActive())
@@ -193,15 +216,26 @@ public class MouseEnemy : MonoBehaviour
         image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
         
     }
-
+    */
     private void OnDisable()
     {
         PauseManager.IsPaused -= PauseForWhile;
-        // StopBlinking(); // 오브젝트 비활성화 시 블링킹 중단
+        // 비활성화 시 해당 오브젝트의 모든 트윈 정지
+
+        _slamSequence?.Kill();
+        _slamSequence = null;
+
+        _rectTransform.DOKill();
+        image.DOKill();
        
-        this.gameObject.SetActive(false);
+        if (_waveTransform != null) _waveTransform.DOKill();
     }
 
+
+    private void OnDestroy()
+    {
+        gameObject.SetActive(false); // Disable 호출
+    }
     private void PauseForWhile(bool isStop)
     {
         if (isStop)

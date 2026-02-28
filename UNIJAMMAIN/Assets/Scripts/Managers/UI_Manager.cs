@@ -48,6 +48,17 @@ public class UI_Manager
         }
     }
     
+    public void SetOverlayCanvas(GameObject go,int sortingOrder = 0)
+    {
+        Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.worldCamera = Camera.main;
+        canvas.overrideSorting = true;
+
+
+        canvas.sortingOrder = sortingOrder;
+    }
+
     public void SetCanvasMost(GameObject go,int sortingOrder= 30000) // 캔버스 SortOrder을 가장 위로 올려주는 함수
     {
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);

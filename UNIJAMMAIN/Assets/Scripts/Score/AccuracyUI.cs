@@ -10,13 +10,16 @@ public class AccuracyUI : MonoBehaviour
     private void Start()
     {
         txt = textPrefab.GetComponent<TMP_Text>();
-        
+        txt.text = "";
+
+
         IngameData.OnRankUpdate -= UpdateAccuracyUI;
         IngameData.OnRankUpdate += UpdateAccuracyUI;
     }
 
     private void OnDestroy()
     {
+        txt.text = "";
         IngameData.OnRankUpdate -= UpdateAccuracyUI;
     }
 

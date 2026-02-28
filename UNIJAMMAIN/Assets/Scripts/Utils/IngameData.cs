@@ -1,6 +1,7 @@
 ﻿using System;
 using static GamePlayDefine;
 using UnityEngine;
+using System.IO;
 
 public static class IngameData 
 {
@@ -15,11 +16,32 @@ public static class IngameData
     public static bool Pause { set; get; }
     private static double beatInterval;
     public static bool IsStart = false;
-    public static int StageProgress = 0;
+
+    public static int StageProgress = 0; // 스테이지 레벨과 관련도니 변수, "" 장을 한번만 띄우게끔 조절
     public static int _defeatEnemyCount = 0;
-    public static int _clearStageIndex = 0;
+    /// <summary>
+    /// 현재 플레이어가 클리어한 최대 스테이지 (스토리기준), 마지막 7장은 클리어해도 같으니. storyCompleteClear로 관리함
+    /// </summary>
+    public static int _unLockStageIndex = 0;
+
+    /// <summary>
+    /// 모든 스테이지를 완전히 클리어했는지
+    /// </summary>
+    public static bool _isStoryCompleteClear = false;
+
+    /// <summary>
+    /// 현재 진입한 상태가 이벤트스테이지인지 확인
+    /// </summary>
+    public static bool isEventStage = false; 
+    /// <summary>
+    /// 현재 플레이어가 진입중인 스테이지
+    /// </summary>
     public static int _nowStageIndex = 0;
 
+ 
+
+    // [STEAM CLOUD 수정] 스팀 클라우드와 동기화될 파일의 저장 경로
+    private static string SaveFilePath => Path.Combine(Application.persistentDataPath, "SteamCloudSaveData.json");
     static IngameData()
     {
         // 배열 초기화
@@ -37,6 +59,10 @@ public static class IngameData
         public Define.Rank[] BestChapterRanks;
         public int ClearStoryStageIndex;
         public int NowStoryStageIndex;
+        public Define.Rank[] ChapterRanks;
+        public bool IsStoryCompleteClear;
+        public int StageProgress;
+        public bool[] IsFirstClearChapter;
         // 필요한 변수가 더 있다면 여기에 추가 (public이어야 저장됨)
     }
 
@@ -62,6 +88,7 @@ public static class IngameData
     public static Define.Rank[] _chapterRanks;
     public static Define.Rank[] _bestChapterRanks;
     public static float[] _bestChapterScore;
+    public static bool[] _isFirstClearChapter;
     public static float BestChapterScore
     {
         get
@@ -88,6 +115,9 @@ public static class IngameData
 
 
     // ChapterRank 프로퍼티는 이제 현재 선택된 ChapterIdx에 해당하는 배열의 값을 다룸
+    /// <summary>
+    /// stageScene에 표시할 최고 랭크 점수를 의미함, 최고점수
+    /// </summary>
     public static Define.Rank ChapterRank
     {
         // get: 현재 ChapterIdx에 맞는 랭크를 배열에서 가져옴
@@ -174,79 +204,120 @@ public static class IngameData
     // 세이브로드
 
     // 데이터 세이브
+    // ==========================================
+    // 세이브 / 로드 (PlayerPrefs -> File I/O 변경)
+    // ==========================================
+
     public static void SaveGameData()
     {
         SaveDataContainer data = new SaveDataContainer();
+
+        // 현재 데이터 매핑
         data.DefeatEnemyCount = _defeatEnemyCount;
-        data.BestChapterScore = _bestChapterScore;
-        data.BestChapterRanks = _bestChapterRanks;
-        data.ClearStoryStageIndex = _clearStageIndex;
+        data.ClearStoryStageIndex = _unLockStageIndex;
         data.NowStoryStageIndex = _nowStageIndex;
+        data.StageProgress = StageProgress;
+        data.ChapterRanks = _chapterRanks;
+        data.BestChapterRanks = _bestChapterRanks;
+        data.BestChapterScore = _bestChapterScore;
+        data.IsStoryCompleteClear = _isStoryCompleteClear;
+        data.IsFirstClearChapter = _isFirstClearChapter;
+    
 
-        string json = JsonUtility.ToJson(data, true);
-        PlayerPrefs.SetString("IngameSaveData", json);
-        PlayerPrefs.Save();
-
-        Debug.Log($"게임 데이터 저장 완료: 스테이지 {data.ClearStoryStageIndex}");
+        try
+        {
+            // JSON으로 변환 후 파일로 저장
+            string json = JsonUtility.ToJson(data, true);
+            File.WriteAllText(SaveFilePath, json);
+            Debug.Log($"[Steam Cloud] 게임 데이터 저장 완료: {SaveFilePath}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"데이터 저장 실패: {e.Message}");
+        }
     }
 
     // 로드
     public static void LoadGameData()
     {
-        if (PlayerPrefs.HasKey("IngameSaveData"))
+        if (File.Exists(SaveFilePath))
         {
-            string json = PlayerPrefs.GetString("IngameSaveData");
-            SaveDataContainer data = JsonUtility.FromJson<SaveDataContainer>(json);
-
-            if (data != null)
+            try
             {
-                _defeatEnemyCount = data.DefeatEnemyCount;
-                _clearStageIndex = data.ClearStoryStageIndex;
+                string json = File.ReadAllText(SaveFilePath);
+                SaveDataContainer data = JsonUtility.FromJson<SaveDataContainer>(json);
 
-                if (data.BestChapterScore != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
-                    _bestChapterScore = data.BestChapterScore;
+                if (data != null)
+                {
+                    _defeatEnemyCount = data.DefeatEnemyCount;
+                    _unLockStageIndex = data.ClearStoryStageIndex;
+                    _nowStageIndex = data.NowStoryStageIndex;
+                    _isStoryCompleteClear = data.IsStoryCompleteClear;
+                    StageProgress = data.StageProgress;
 
-                if (data.BestChapterRanks != null && data.BestChapterRanks.Length == TOTAL_CHAPTERS)
-                    _bestChapterRanks = data.BestChapterRanks;
+                    if (data.ChapterRanks != null && data.ChapterRanks.Length == TOTAL_CHAPTERS)
+                        _chapterRanks = data.ChapterRanks;
+
+                    if (data.BestChapterRanks != null && data.BestChapterRanks.Length == TOTAL_CHAPTERS)
+                        _bestChapterRanks = data.BestChapterRanks;
+
+                    if (data.BestChapterScore != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
+                        _bestChapterScore = data.BestChapterScore;
+
+                    if (data.IsFirstClearChapter != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
+                        _isFirstClearChapter = data.IsFirstClearChapter;
+
+
+
+                    Debug.Log("[Steam Cloud] 게임 데이터 로드 완료");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"데이터 로드 실패: {e.Message}");
             }
         }
         else
         {
-            Debug.Log("저장된 데이터가 없습니다.");
+            Debug.Log("저장된 데이터 파일이 없습니다. (첫 실행이거나 리셋됨)");
         }
     }
 
     public static void ResetData()
     {
-        // 1. 파일 삭제
-        PlayerPrefs.DeleteKey("IngameSaveData");
+        // 파일 삭제
+        if (File.Exists(SaveFilePath))
+        {
+            File.Delete(SaveFilePath);
+        }
 
-        // 2. ★ 수정 5: 메모리 상의 데이터도 반드시 초기화해줘야 함
-        // (안 그러면 리셋 버튼 누르고 바로 게임 시작하면 옛날 점수가 그대로 있음)
         ClearMemoryData();
-
-        Debug.Log("데이터 리셋 및 메모리 초기화 완료");
+        Debug.Log("[Steam Cloud] 데이터 파일 삭제 및 메모리 초기화 완료");
     }
 
     // ★ 수정 2: 메모리 상의 데이터를 초기화하는 별도 함수 분리
     private static void ClearMemoryData()
     {
-        // [핵심 수정] 배열이 비어있다면(null) 새로 생성(new)해주는 코드 추가
         if (_chapterRanks == null) _chapterRanks = new Define.Rank[TOTAL_CHAPTERS];
         if (_bestChapterRanks == null) _bestChapterRanks = new Define.Rank[TOTAL_CHAPTERS];
         if (_bestChapterScore == null) _bestChapterScore = new float[TOTAL_CHAPTERS];
+        if (_isFirstClearChapter == null) _isFirstClearChapter = new bool[TOTAL_CHAPTERS];
 
-        // 이제 배열이 확실히 존재하므로 안심하고 값을 채워도 됨
         for (int i = 0; i < TOTAL_CHAPTERS; i++)
         {
-            _chapterRanks[i] = Define.Rank.Unknown;       // 여기서 오류 안 남
+            _chapterRanks[i] = Define.Rank.Unknown;
             _bestChapterRanks[i] = Define.Rank.Unknown;
             _bestChapterScore[i] = 0;
+            _isFirstClearChapter[i] = false;
         }
+
 
         _defeatEnemyCount = 0;
         _nowStageIndex = 0;
-        _clearStageIndex = 0;
+        _unLockStageIndex = 0;
+        StageProgress = 0;
+        ChapterIdx = 0;
+        _isStoryCompleteClear = false;
     }
 
 

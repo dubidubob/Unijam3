@@ -1,29 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems; // 마우스 이벤트 감지를 위해 필요
+using TMPro; // TextMeshPro 사용
+using DG.Tweening;
 
-public class Tmp_StageSceneResultUI : MonoBehaviour
+public class Tmp_StageSceneResultUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("B, n, ng, g, p,None 순")]
     [SerializeField] Sprite[] sprites;
     private Image sp;
 
+    [SerializeField] private CanvasGroup scoreCanvasGroup; // 페이드 효과를 위해 필요
+    [SerializeField] private TextMeshProUGUI scoreText;   // 점수 텍스트
+    [SerializeField] private RectTransform scoreRect;      // 위치 이동을 위해 필요
+
+    private Vector2 originPos; // 원래 위치 저장용
+
     private void Start()
     {
         sp = GetComponent<Image>();
         sp.enabled = false;
-        //int rank = (int)IngameData.GetRankForChapter(0);
-        //if (rank >= sprites.Length)
-        //{
-        //    sp.sprite = null;
-        //    sp.enabled = false;
-        //}
-        //else
-        //{
-        //    sp.sprite = sprites[rank];
-        //    sp.enabled = true;
-        //}        
-
-        //sp.SetNativeSize();
+        // 초기 세팅: 투명도를 0으로 만들고 원래 위치 저장
+        if (scoreCanvasGroup != null) scoreCanvasGroup.alpha = 0;
+        originPos = scoreRect.anchoredPosition;
     }
 
     /// <summary>
@@ -48,4 +47,36 @@ public class Tmp_StageSceneResultUI : MonoBehaviour
         sp.enabled = true;
         sp.SetNativeSize();
     }
+
+
+    // 1. 마우스를 올렸을 때 (Hover Enter)
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 기존에 실행 중인 애니메이션이 있다면 중지 (꼬임 방지)
+        scoreRect.DOKill();
+        scoreCanvasGroup.DOKill();
+
+        // [애니메이션 설정]
+        // 시작 위치를 약간 아래로 설정하고 원래 위치로 복귀하며 Fade In
+        scoreRect.anchoredPosition = originPos + new Vector2(0, -20f);
+
+        // 위로 슥 올라오는 연출 (0.4초 동안)
+        scoreRect.DOAnchorPos(originPos, 0.4f).SetEase(Ease.OutBack);
+
+        scoreText.text = "Score : ";
+        scoreText.text += IngameData.GetBestRankScoreForChapter(IngameData.ChapterIdx).ToString();
+        // 나타나는 연출 (0.3초 동안)
+        scoreCanvasGroup.DOFade(1f, 0.3f);
+    }
+
+    // 2. 마우스가 나갔을 때 (Hover Exit)
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        scoreRect.DOKill();
+        scoreCanvasGroup.DOKill();
+
+        // 다시 사라지는 연출
+        scoreCanvasGroup.DOFade(0f, 0.2f);
+    }
+
 }

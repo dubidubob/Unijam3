@@ -11,7 +11,7 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
     [SerializeField] Collider2D holder;
 
     public BeatClock beatClock;
-    private Dictionary<WASDType, Vector2> _spawnPosition;
+    private Dictionary<WASDType, Transform> _spawnPosition;
     private Dictionary<WASDType, Vector2> _targetPosition;
     private HitJudge _rank;
     private Vector3 _playerPos;
@@ -59,12 +59,12 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
 
     private void Init() // (기존과 동일)
     {
-        _spawnPosition = new Dictionary<WASDType, Vector2>();
+        _spawnPosition = new Dictionary<WASDType, Transform>();
         _targetPosition = new Dictionary<WASDType, Vector2>();
         for (int i = 0; i < positions.Length; i++)
         {
             var p = positions[i];
-            _spawnPosition[p.WASDType] = p.spawnPos.transform.position;
+            _spawnPosition[p.WASDType] = p.spawnPos.transform;
             _targetPosition[p.WASDType] = p.targetPos.transform.position;
         }
     }
@@ -169,15 +169,19 @@ public class WASDMonsterSpawner : MonoBehaviour, ISpawnable
         // 풀에서 가져오기
         var poolable = Managers.Pool.Pop(enemy.go);
         GameObject go = poolable.gameObject;
-        go.transform.position = _spawnPosition[enemyType];
+
+        // 실시간 위치(.position)를 가져옴으로써 DOTween으로 이동된 좌표가 반영됨
+        Vector3 currentMovePos = _spawnPosition[enemyType].position;
+        go.transform.position = currentMovePos;
+
 
         // [수정] timeOffset 전달
-        VariableSetting(go.GetComponent<MovingEnemy>(), enemyType, data, timeOffset);
+        VariableSetting(go.GetComponent<MovingEnemy>(), enemyType, data, timeOffset, currentMovePos);
     }
     // [수정] timeOffset 파라미터 추가 MonsterData를 인스턴스로부터 전달받습니다.
-    private void VariableSetting(MovingEnemy movingEnemy, WASDType type, MonsterData data, float timeOffset)
+    private void VariableSetting(MovingEnemy movingEnemy, WASDType type, MonsterData data, float timeOffset,Vector3 currentSpawnPos)
     {
-        float distance = Vector3.Distance(_spawnPosition[type], _targetPosition[type]);
+        float distance = Vector3.Distance(currentSpawnPos, _targetPosition[type]);
         // [수정] SetVariance에 timeOffset 전달
         movingEnemy.SetVariance(distance, data, sizeDiffRate, _playerPos, type, data.monsterType, timeOffset);
     }

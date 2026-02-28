@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-Shared
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-Assets-Shared
+  m_Data:
+    m_SerializedData: []
+  m_GUID: bb4be4f7fb5b12546b71dd23c3803efa
+  m_SerializeEntries:
+  - m_GUID: 20fca0cdc91ceae4f9c3539ef8e20aae
+    m_Address: Assets/Localization/StageScene/StageSceneUI Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 375083b407cea4549ab8bc480eeb725c
+    m_Address: Assets/MyGameText Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45479b31f723a3c45ae2a00e06f2dd01
+    m_Address: Assets/MainScene Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5230906f11d24d245ba62a06f0fd471f
+    m_Address: Assets/Localization/StoryLevelInfo_Table Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f78b5dbd75a3a643a45710eeae2ae44
+    m_Address: Assets/Localization/InGameOptionTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dcbf6cce1646a884b8e7e23d7c649aac
+    m_Address: Assets/Localization/WinterLevelInfo_Table Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f68a5f249762c2b4a9833b0311d64148
+    m_Address: Assets/Localization/Tutorial(ChapterSO)/Tutorial_Table Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: b7785ec6ed7046847b65508524f2ed65, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d42fb91f72c1d5a4cb7b946d8339296a, type: 2}
+    - {fileID: 11400000, guid: eb88333eb1f482d43aee331e49761b9c, type: 2}

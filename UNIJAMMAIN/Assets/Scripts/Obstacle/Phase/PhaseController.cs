@@ -25,6 +25,7 @@ public class PhaseController : MonoBehaviour
 
     [SerializeField] private MonsterDatabaseSO monsterDatabase;
 
+
     [SerializeField] Image backGround;
     [SerializeField] SpriteRenderer characterSprite;
     [SerializeField] ResultUI Scoreboard;
@@ -44,6 +45,8 @@ public class PhaseController : MonoBehaviour
     private float _beatCount = 0;
     SpawnController spawnController;
     [SerializeField] WASDMonsterSpawner wasdMonsterSpawner;
+    [SerializeField] CameraController cameraController;
+
 
     private bool beatSynced = false; // 비트 동기화 신호를 위한 플래그
     private bool isMonsterGoStart = false;
@@ -120,6 +123,7 @@ public class PhaseController : MonoBehaviour
        
         IngameData.IsStart = true;
 
+
         // 싱크스테이지라면
         if (chapters[_chapterIdx].SinkStage)
         {
@@ -127,11 +131,6 @@ public class PhaseController : MonoBehaviour
             await SinkStageInit(token);
             return;
         }
-       
-
-       
-
-
 
         // --- 루프 시작 전, 첫 번째 페이즈의 BPM을 미리 설정합니다 ---
         if (chapters[_chapterIdx].Phases.Count > 0)
@@ -163,32 +162,51 @@ public class PhaseController : MonoBehaviour
         // 사운드 매니저에게 "이 시간에 정확히 틀어라"고 예약합니다.
         string bgmPath = chapters[_chapterIdx].MusicPath;
 
-
         // DelayPadding의 Tick의 Second 만큼 대기 ( 몬스터를 미리 소환하고 노래를 늦게 재생 ) 
         // sinkTimer추가, sinkTimer만큼 노래가 늦게 재생되거나 빨리재생됨
         // 노래가 빨리 재생된다는것(SinTimer가 + 라는것은 몹이 늦게 도착한다는 뜻이다)
         double waitSecondTarget = (long)chapters[_chapterIdx].DelayPaddingTick * IngameData.BeatInterval+IngameData.sinkTimer;
         Managers.Sound.PlayScheduled(bgmPath, musicStartTime + waitSecondTarget, Define.Sound.BGM);
 
-
         // BeatClock에게도 "게임 시작 시간은 startTime이다"라고 알려줍니다.
         //    BeatClock은 이제 Update에서 (dspTime - startTime)을 통해 틱을 계산해야 합니다.
         beatClock.SetStartTime(musicStartTime);
         
-        
-
         //  BGM이 시작될 때까지(1초간) 대기
         //    이렇게 하면 "소리가 나는 순간"과 "로직이 시작되는 순간"이 맞음.
         await UniTask.WaitUntil(() => AudioSettings.dspTime >= musicStartTime, cancellationToken: token);
 
-
+        // 주석처리하면 윈도우 스트레치 꺼짐
+        //cameraController.WindowStretchAction(60,2,0).Forget();
+       // cameraController.WindowRythmContinueStretchAction(60).Forget();
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
             var gameEvent = chapters[_chapterIdx].Phases[i];
             if (!gameEvent.isIn) continue;
 
             float durationSec = gameEvent.durationBeat * beatInterval;
-            IngameData.PhaseDurationSec = durationSec;
+
+            // [핵심 수정 - 대윤이형 확인 바람] 
+            // "비트를 초로 바꾸는 게 목적"이 아니라, 
+            // "스포너가 초 단위(dspTime)로 작동하니까, 연장할 비트만큼 시간을 더해주는 것"입니다.
+            if (gameEvent is PhaseEvent pEvent)
+            {
+                // 연장할 비트(extensionCreateBeat)가 있다면, 
+                // 그만큼의 시간(beatInterval 곱하기)을 더해줍니다.
+                float extensionSec = pEvent.extensionCreateBeat * beatInterval;
+
+                // 최종적으로 "원래 시간 + 연장된 시간"을 전역 변수에 넣어줍니다.
+                IngameData.PhaseDurationSec = durationSec + extensionSec;
+            }
+            else
+            {
+                IngameData.PhaseDurationSec = durationSec;
+            }
+            // [확인 바람]
+
+
+            // 기존 코드
+            //IngameData.PhaseDurationSec = durationSec;
 
 
             // --- 1. Delay 구간 처리 ---
@@ -199,6 +217,7 @@ public class PhaseController : MonoBehaviour
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
                 float delaySec = delayBeats * (float)IngameData.BeatInterval;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
+                HandleStretchWindowEvent(phaseEvent, delaySec);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
@@ -277,6 +296,14 @@ public class PhaseController : MonoBehaviour
         }
     }
 
+    private void HandleStretchWindowEvent(PhaseEvent phaseEvent, float delaySec)
+    {
+        if(phaseEvent.isStretchWindow)
+        {
+            cameraController.WindowStretchAction(delaySec,phaseEvent.durationBeat,phaseEvent.stretchX_rate,phaseEvent.stretchY_rate).Forget();
+        }
+    }
+
     private void SpawnMonsters(PhaseEvent phaseEvent, long targetTick)
     {
         // SpawnController가 IEnumerator라면 ToUniTask로 감싸고, 
@@ -305,7 +332,7 @@ public class PhaseController : MonoBehaviour
         CheckFirstClearSteamAchievement();
 
 
-        Scoreboard.ChangeUI(CalculateScore());
+        Scoreboard.RankAnimation(CalculateScore()).Forget();
         Scoreboard.gameObject.SetActive(true);
 
 
@@ -373,8 +400,35 @@ public class PhaseController : MonoBehaviour
 
     private void SetStageIndex(int index)
     {
-        IngameData._nowStageIndex = Mathf.Max(IngameData._nowStageIndex, index + 1);
-        IngameData._clearStageIndex = Mathf.Max(IngameData._clearStageIndex, IngameData._nowStageIndex);
+        if(IngameData.isEventStage) // 이벤트 스테이지라면 갱신하지 않는다.
+        {
+            return;
+        }
+        if(IngameData._nowStageIndex==7)
+        {
+            IngameData._isStoryCompleteClear = true;
+        }
+        
+
+        int minMaxStage_nowStageIndexPlus = Mathf.Min(IngameData._nowStageIndex+1, 7); // 7보다 초과되면(최대스테이지라면) 7로
+                                                                                       // 
+        if (minMaxStage_nowStageIndexPlus > IngameData._unLockStageIndex) // 새로 해금된 스테이지가 기존 언락된 스테이지보다 크다면
+        {
+            IngameData._unLockStageIndex = minMaxStage_nowStageIndexPlus;
+
+
+            // 새로운 스테이지가 해금되었음.
+            if(IngameData._unLockStageIndex==1|| IngameData._unLockStageIndex == 3)
+            {
+                if (IngameData._isFirstClearChapter[IngameData._nowStageIndex]!=true) // 처음들어온 스테이지가 아니라면
+                {
+                    Scoreboard.UI_Setting_UnlockNewEventStageInfo();
+                }
+            }
+            IngameData._isFirstClearChapter[IngameData._nowStageIndex] = true;
+        }
+
+       
     }
 
     private void SetStageBackGround()

@@ -21,6 +21,8 @@ public class AspectRatioEnforcer : MonoBehaviour
 
     // 이 변수는 "사용자가 *현재* 원하는 상태(전체화면 or 창모드)"를 기억합니다.
     private bool _userWantsFullscreen = false;
+
+    public bool isCameraAction = false; // 현재 ratio를 업데이트해야하는 상황인지 확인
     // --- [핵심 수정 끝] ---
 
 
@@ -52,9 +54,9 @@ public class AspectRatioEnforcer : MonoBehaviour
         }
         else
         {
-            // 창모드로 시작했다면, 현재 크기를 기억하고 비율을 1회 적용
-            _lastWindowWidth = Screen.width;
-            _lastWindowHeight = Screen.height;
+            // 창모드로 시작했다면, 현재 크기를 기억하지않고 창모드의 크기를 제한함。
+            _lastWindowWidth = minWindowWidth;
+            _lastWindowHeight = minWindowHeight;
             EnforceWindowedResolution();
         }
     }
@@ -62,6 +64,9 @@ public class AspectRatioEnforcer : MonoBehaviour
     void Update()
     {
         if (Application.isEditor) return;
+
+        if (isCameraAction) return; // 카메라 액션 중이라면 리턴함
+
 
         // 1. [핵심] 사용자가 Alt+Enter 등으로 상태를 "변경"했는지 감지
         if (Screen.fullScreen != _userWantsFullscreen)
@@ -103,6 +108,8 @@ public class AspectRatioEnforcer : MonoBehaviour
     {
         if (Screen.fullScreen) return; // 창모드일 때만 실행
 
+        if (isCameraAction) return;
+
         int newWidth = Screen.width;
 
         // 최소 크기 보정
@@ -143,5 +150,8 @@ public class AspectRatioEnforcer : MonoBehaviour
     }
 
     // OnDestroy는 비워둡니다 (싱글톤 원본은 파괴되지 않음)
-    void OnDestroy() { }
+    void OnDestroy() 
+    {
+
+    }
 }

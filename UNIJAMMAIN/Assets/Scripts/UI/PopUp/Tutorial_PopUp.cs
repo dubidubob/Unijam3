@@ -1,12 +1,23 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using Cysharp.Threading.Tasks; // UniTask 필수
 using System.Threading;      // CancellationToken 필수
+using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.Localization;
+
+
 
 public class Tutorial_PopUp : UI_Popup
 {
+    public enum dir
+    {
+        left,
+        right
+    }
+
     public TMP_Text text;
     public GameObject contents;
     public GameObject keyBoardGuide;
@@ -20,9 +31,18 @@ public class Tutorial_PopUp : UI_Popup
 
     [SerializeField] private GameObject leftCharacter;
     [SerializeField] private GameObject rightCharacter;
+    [SerializeField] private Image leftImage;
+    [SerializeField] private Image rightImage;
+
+    [SerializeField] private Sprite default_Image;
+
+    [Header("0장 튜토리얼 이미지 설정")]
+    [SerializeField] RectTransform leftHandRect;
+    [SerializeField] GameObject rightHand;
 
     // 실행 중인 작업 취소를 위한 토큰 소스
     private CancellationTokenSource _cts;
+    private string _currentLocKey = ""; // 현재 진행 중인 텍스트의 Key를 저장할 변수
 
     public override void Init()
     {
@@ -41,13 +61,13 @@ public class Tutorial_PopUp : UI_Popup
                 canvasGroup = contents.AddComponent<CanvasGroup>();
             }
         }
-
+            
         if (keyBoardGuide != null)
         {
             keyBoardGuide.SetActive(false);
         }
 
-        Managers.UI.SetCanvasMost(this.gameObject);
+        Managers.UI.SetOverlayCanvas(this.gameObject,4);
     }
 
     private void OnEnable()
@@ -92,6 +112,8 @@ public class Tutorial_PopUp : UI_Popup
         ShowSequenceOfPopups(textInfo, lastMonsterHitCnt, _cts.Token).Forget();
     }
 
+  
+
     // 메인 시퀀스 (async UniTaskVoid)
     private async UniTaskVoid ShowSequenceOfPopups(IReadOnlyList<TextInfo> textInfo, int? lastMonsterHitCnt, CancellationToken token)
     {
@@ -107,6 +129,10 @@ public class Tutorial_PopUp : UI_Popup
 
             var info = textInfo[i];
 
+            // 이미지 세팅
+            ImageSetting(info);
+
+
             // IngameData 값 캐싱 (불필요한 접근 최소화)
             float beatInterval = (float)IngameData.BeatInterval;
             float durationSec = beatInterval * (info.delayBeat - 1);
@@ -118,9 +144,29 @@ public class Tutorial_PopUp : UI_Popup
             int curMonsterHitCnt = IngameData.PerfectMobCnt + IngameData.GoodMobCnt;
             bool isFail = (curMonsterHitCnt - baseHitCnt) < info.monsterCutline;
 
-            if (info.textContents != null && info.textContents.Count() > 0)
+            
+            if(info.localizedTextContents!=null && info.localizedTextContents.Count() > 0)
             {
-                text.text = isFail ? info.textContents.Last() : info.textContents.First();
+                var targetLocalizedString = isFail ? info.localizedTextContents.Last() : info.localizedTextContents.First();
+
+                _currentLocKey = targetLocalizedString.TableEntryReference.Key;  // Key 값을 확인해서 특정 액션 가능
+                if (string.IsNullOrEmpty(_currentLocKey)&&IngameData.ChapterIdx==0)
+                {
+                    // 로드된 테이블 데이터에서 숫자 ID(KeyId)를 가지고 진짜 문자열 Key를 찾아냅니다!
+                    var table = UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetTable(targetLocalizedString.TableReference);
+                    if (table != null)
+                    {
+                        var entry = table.SharedData.GetEntry(targetLocalizedString.TableEntryReference.KeyId);
+                        if (entry != null)
+                        {
+                            _currentLocKey = entry.Key; // 여기서 "CH0_Mid_07"이 나옵니다!
+                        }
+                    }
+                }
+
+
+                string translatedText = await targetLocalizedString.GetLocalizedStringAsync().ToUniTask(cancellationToken: token);
+                text.text = translatedText;
             }
 
             // 1. 팝업 나타나기
@@ -234,14 +280,46 @@ public class Tutorial_PopUp : UI_Popup
             keyBoardGuide.SetActive(false);
     }
 
+    private void ImageSetting(TextInfo textInfo)    
+    {
+        if(textInfo.characterData ==null)
+        {
+            leftImage.sprite = default_Image;
+            return;
+        }
+
+        dir d = textInfo.dir;
+        if(d == dir.left) // 왼쪽
+        {
+            leftCharacter.SetActive(true);
+            rightCharacter.SetActive(false);
+            leftImage.sprite = textInfo.characterData.CharacterImage;
+           
+        }
+        else // 오른쪽
+        {
+            leftCharacter.SetActive(false);
+            rightCharacter.SetActive(true);
+            rightImage.sprite = textInfo.characterData.CharacterImage;
+        }
+    }
     private void KeyBoardGuideOn()
     {
-        // 문자열 비교 최적화를 위해 상수로 관리하거나 ID로 관리하는 것이 좋지만, 
-        // 현재 로직을 유지하면서 string.Equals 사용
-        if (string.Equals(text.text, "(너를 잠식하려는 혼령이 보이는 순간, 바로 대각선 방향키를 통해 공격해!)"))
+        if (IngameData.ChapterIdx != 0)
+        {
+            return;
+        }
+
+        // [수정] 텍스트 문자열 비교 대신, 저장해둔 Key 값을 확인합니다.
+        if (_currentLocKey == "CH0_Mid_07")
         {
             if (keyBoardGuide != null)
                 keyBoardGuide.SetActive(true);
+
+            rightHand.SetActive(true);
+            Image rightHandimage = rightHand.GetComponent<Image>();
+            rightHandimage.DOFade(1f, 0.5f);
+            rightHand.GetComponent<RectTransform>().DOAnchorPosY(-293, 1f);
         }
     }
 }

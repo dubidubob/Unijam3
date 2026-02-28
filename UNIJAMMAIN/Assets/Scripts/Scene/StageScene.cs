@@ -8,17 +8,17 @@ using Cysharp.Threading.Tasks; // UniTask 필수 네임스페이스
 public class StageScene : BaseScene
 {
     public bool Test;
+    public StageSceneUI stageSceneUI;
 
     // ▼▼▼ 수정된 Start 메서드 ▼▼▼
     private void Start()
     {
-        Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
+        Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
 
         // 1. 씬에 필요한 모든 초기화를 먼저 실행합니다.
         Init();
 
-        // 2. UI를 화면에 띄웁니다.
-        Managers.UI.ShowPopUpUI<StageSceneUI>();
+     
 
         // 3. 모든 준비가 끝났다고 LoadingManager에게 알립니다. (UniTask 실행)
         NotifyManagerWhenReady().Forget();
@@ -72,7 +72,10 @@ public class StageScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        if (Test) { IngameData._nowStageIndex = 8; }
+        if (Test) { 
+            IngameData._nowStageIndex = 0;
+            IngameData._unLockStageIndex = 2;
+        }
         Managers.Game.Init();
     }
 }

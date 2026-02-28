@@ -25,7 +25,13 @@ public class BackGroundController : MonoBehaviour
     [SerializeField] public Image extraObjectImage4;
     [SerializeField] public Image extraObjectImage5;
     [SerializeField] public Image extraObjectImage6;
+    [SerializeField] public Image extraObjectImage7;
     [SerializeField] public BackGroundDataSO backGrounddataSO;
+
+
+    [Header("회전 컨테이너")]
+    [SerializeField] public RectTransform target2_Container;
+    [SerializeField] public RectTransform target3_Container;
 
     // 외부 스크립트용 프로퍼티(편의상 이름 매핑)
     public Image ExtraImage1 => extraObjectImage;
@@ -98,8 +104,11 @@ public class BackGroundController : MonoBehaviour
             case 5: currentChapterAction = ChapterAction_5; break;
             case 6: currentChapterAction = ChapterAction_6; break;
             case 7: currentChapterAction = ChapterAction_7; break;
-            case 10:
+            case 10: // EDM
                 ConnectExternalEffect<BackGroundEffect_10>(); // 이안에서 currentChapterAction 구독
+                break;
+            case 11: // 도시
+                ConnectExternalEffect<BackGroundEffect_11>();
                 break;
             default: currentChapterAction = null; break;
         }
@@ -133,8 +142,11 @@ public class BackGroundController : MonoBehaviour
             case 0:
                 actionNumberTarget = 2;
                 extraObjectImage.sprite = backGrounddataSO.backGroundDatas[0].extraBackGroundLists[0];
+                
                 extraObjectImage.gameObject.SetActive(true);
                 extraObjectImage2.sprite = backGrounddataSO.backGroundDatas[0].extraBackGroundLists[1];
+                UpdateRectMargin(extraObjectImage.rectTransform,0);
+                extraObjectImage.SetNativeSize();
                 UpdateRectPosition(extraObjectImage2.rectTransform, -700f, 300);
 
 
@@ -142,10 +154,8 @@ public class BackGroundController : MonoBehaviour
                 {
                     birdSprites.Add(backGrounddataSO.backGroundDatas[chapterIdx].extraBackGroundLists[i+1]);
                 }
-
                 extraObjectImage2.gameObject.SetActive(true);
 
-                UpdateRectMargin(extraObjectImage.rectTransform, -80f);
                 break;
             case 1:
                 actionNumberTarget = 2;
@@ -653,9 +663,16 @@ public class BackGroundController : MonoBehaviour
     // margin이 0이면 stretch 꽉 채움, 50이면 사방에서 50씩 들어옴
     public void UpdateRectMargin(RectTransform rect, float margin)
     {
-        // Left, Bottom은 정수값 그대로
+        // 1. 앵커를 Stretch(전체 채우기)로 변경
+        // Min(0,0), Max(1,1)은 부모의 사방 끝에 앵커를 붙이겠다는 의미입니다.
+        rect.anchorMin = new Vector2(0, 0);
+        rect.anchorMax = new Vector2(1, 1);
+
+        // 2. 피벗도 중앙으로 맞춰주는 것이 계산상 안전합니다.
+        rect.pivot = new Vector2(0.5f, 0.5f);
+
+        // 3. 이제 offset 설정이 'Margin'으로 작동합니다.
         rect.offsetMin = new Vector2(margin, margin);
-        // Right, Top은 음수값이어야 안쪽으로 들어옴
         rect.offsetMax = new Vector2(-margin, -margin);
     }
 
