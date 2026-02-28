@@ -8,7 +8,7 @@ Ending_Talk_3,~,,,,,Ease out,1000ms,400ms,,,FALSE,->4,34까지 딱 UP
 Ending_Talk_4,근원,"전쟁이 끝난 뒤 찾아온 평화가, 인간에게 무엇을 심었는지 아느냐?",,,,Ease out,3000ms,400ms,B20000,C0C0C0,FALSE,->5,76000ms
 Ending_Talk_5,~,,,,,Ease out,1000ms,400ms,,,FALSE,->6,
 Ending_Talk_6,근원,그것은 바로 ‘더 갖고자 하는 마음’이었다.,,,,Ease out,2000ms,400ms,B20000,C0C0C0,FALSE,->7,
-Ending_Talk_7,~,,,,,Ease out,1000ms,400ms,,,TRUE,->8,어둠 (000000 40%)
+Ending_Talk_7,X,,,,,Ease out,1000ms,400ms,,,TRUE,->8,어둠 (000000 40%)
 Ending_Talk_8,근원,"평온함은 지루함을 낳고, 지루함은 욕망을 부르지.",,,,Ease out,3000ms,400ms,B20000,C0C0C0,TRUE,->9,어둠 (000000 40%)
 Ending_Talk_9,~,,,,,Ease out,1000ms,400ms,,,TRUE,->10,어둠 (000000 40%)
 Ending_Talk_10,근원,"물이 아래로 흐르듯, 인간이 욕심을 내는 것은 거스를 수 없는 순리(順理)였다.",,,,Ease out,3000ms,400ms,B20000,C0C0C0,TRUE,->11,어둠 (000000 40%)
@@ -28,7 +28,7 @@ Ending_Talk_23,~,,,,,Ease out,1000ms,400ms,,,FALSE,->24,
 Ending_Talk_24,수도승,"그 치열한 균형만이, 짐승과 다른 세상으로 우리를 이끌어왔다.",,,,Ease out,3000ms,400ms,EEEEB9,FFFFFF,FALSE,->25,
 Ending_Talk_25,X,,,,,Ease out,1000ms,500ms,,,TRUE,->26,어둠 (000000 40%)
 Ending_Talk_26,근원,... 본성을 거스르는 자제라.,,,,Ease out,2000ms,400ms,B20000,C0C0C0,TRUE,->27,어둠 (000000 40%)
-Ending_Talk_27,~,,,,,Ease out,1000ms,400ms,,,TRUE,->28,어둠 (000000 40%)
+Ending_Talk_27,X,,,,,Ease out,1000ms,400ms,,,TRUE,->28,어둠 (000000 40%)
 Ending_Talk_28,근원,그것이 네놈이 깨달은... 인간의 길인가.,,,,Ease out,3000ms,400ms,B20000,790000,TRUE,->29,어둠 (000000 40%)
 Ending_Talk_29,X,,,,,Ease out,1000ms,500ms,,,TRUE,->30,어둠 (000000 40%)
 Ending_Talk_30,수도승,욕망에 휘둘리지 않고 중심을 잡는 것.,,,,Ease out,2000ms,400ms,EEEEB9,FFFFFF,FALSE,->31,어둠 (000000 40%)
