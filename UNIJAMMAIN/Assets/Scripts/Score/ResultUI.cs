@@ -12,14 +12,23 @@ using DG.Tweening;
 struct RankUI {
     public float cutline;
     public Sprite img;
-    public string ment1;
-    public string ment2;
-
-    public string GetRandomMent()
+    [Header("출력할 텍스트 번호들 (예: 0, 1)")]
+    public List<int> mentIndices; // 이 커트라인에서 사용할 텍스트 번호들
+                                  // 현재 챕터 인덱스를 매개변수로 받습니다.
+    public string GetRandomMent(int chapterIdx)
     {
-        // 0 또는 1 중 랜덤으로 뽑기
-        int rand = UnityEngine.Random.Range(0, 2);
-        return (rand == 0) ? ment1 : ment2;
+        // 등록된 멘트 번호가 없다면 빈 문자열 반환
+        if (mentIndices == null || mentIndices.Count == 0)
+            return "";
+
+        // 등록된 번호 중 랜덤으로 하나를 뽑습니다.
+        int randIdx = mentIndices[UnityEngine.Random.Range(0, mentIndices.Count)];
+
+        // 로컬라이제이션 Key 조합 (예: GameClear_Stage0_Text0)
+        string key = $"GameClear_StageDefault_Text{randIdx}"; // TODO : chapterIdx로 받도록 수정할것.
+
+        // LocalizationManager에서 번역된 텍스트 가져오기 (키가 없을 경우 대비 fallback 추가)
+        return LocalizationManager.Get(key, "멘트를 찾을 수 없습니다.");
     }
 }
 public class ResultUI : MonoBehaviour
@@ -79,7 +88,7 @@ public class ResultUI : MonoBehaviour
         resultTxt.text = ""; // DOText 타이핑 효과를 위해 텍스트 비우기
         lateUpCanvasGroup.alpha = 0f; // CanvasGroup 투명하게 대기
 
-        string targetMent = rankUI[idx].GetRandomMent(); // 출력할 멘트 미리 뽑아두기
+        string targetMent = rankUI[idx].GetRandomMent(IngameData.ChapterIdx); // 출력할 멘트 미리 뽑아두기
 
         // 3. DOTween 애니메이션 시퀀스 실행
         // (TimeScale이 0일 경우를 대비해 SetUpdate(true)를 넣어주는 것이 안전합니다)
@@ -130,6 +139,7 @@ public class ResultUI : MonoBehaviour
     }
 
 
+    /*
     public void ChangeUI(float score)
     {
         // TODO : UI 로직과 데이터 처리 로직 분리 권장 (일단 작동하도록 수정함)
@@ -180,6 +190,7 @@ public class ResultUI : MonoBehaviour
             }
         }
     }
+    */
 
     // Steam : 모든 스테이지의 등급이 최상(Perfect)인지 확인
     private void CheckAllPerfectSteamAchievement()
