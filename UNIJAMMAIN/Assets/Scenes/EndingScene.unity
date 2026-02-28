@@ -409,17 +409,17 @@ MonoBehaviour:
   scrollEase: 18
   startPosY: 4747
   targetPosY1: 3100
-  duration1: 3
+  duration1: 2.35
   targetPosY2: 1200
-  duration2: 3
+  duration2: 2.42
   targetPosY3: -600
-  duration3: 3
+  duration3: 2.31
   targetPosY4: -2200
-  duration4: 3
+  duration4: 2.45
   targetPosY5: -3680
-  duration5: 5
+  duration5: 4.8
   endPosY: -4747
-  durationEnd: 4
+  durationEnd: 2.37
 --- !u!114 &770792046 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3474276301079470532, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
