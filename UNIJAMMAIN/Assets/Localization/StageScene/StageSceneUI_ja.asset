@@ -19,123 +19,123 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 28886827008
-    m_Localized: 
+    m_Localized: 0. E
     m_Metadata:
       m_Items: []
   - m_Id: 28953935872
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130176
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u5165\u9580 (\u4E0B)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130177
-    m_Localized: 
+    m_Localized: 1. E
     m_Metadata:
       m_Items: []
   - m_Id: 28958130178
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130179
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u5165\u9580 (\u4E0B)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130180
-    m_Localized: 
+    m_Localized: 2. E
     m_Metadata:
       m_Items: []
   - m_Id: 28958130181
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130182
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u4FEE\u7DF4 (\u4E2D)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130183
-    m_Localized: 
+    m_Localized: 3. E
     m_Metadata:
       m_Items: []
   - m_Id: 28958130184
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130185
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u9054\u4EBA (\u4E2D\u4E0A)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130186
-    m_Localized: 
+    m_Localized: 4. E
     m_Metadata:
       m_Items: []
   - m_Id: 28958130187
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130188
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u9054\u4EBA (\u4E2D\u4E0A)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130189
-    m_Localized: 
+    m_Localized: 5. E
     m_Metadata:
       m_Items: []
   - m_Id: 28958130190
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130191
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u9053\u58EB (\u4E0A)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130192
-    m_Localized: 
+    m_Localized: 6. E
     m_Metadata:
       m_Items: []
   - m_Id: 28958130193
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130194
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u9053\u58EB (\u4E0A)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130195
-    m_Localized: 
+    m_Localized: 7. E
     m_Metadata:
       m_Items: []
   - m_Id: 28958130196
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130197
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u795E\u4ED9 (\u6700\u4E0A)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130198
-    m_Localized: 
+    m_Localized: E1. Winter Celebration
     m_Metadata:
       m_Items: []
   - m_Id: 28958130199
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130200
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u4FEE\u7DF4 (\u4E2D)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130201
-    m_Localized: 
+    m_Localized: E2.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130202
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 28958130203
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u9054\u4EBA (\u4E2D\u4E0A)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   - m_Id: 6184490368630784
@@ -179,15 +179,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6558356299448320
-    m_Localized: 
+    m_Localized: E3.
     m_Metadata:
       m_Items: []
   - m_Id: 6558356349779968
-    m_Localized: 
+    m_Localized: ja
     m_Metadata:
       m_Items: []
   - m_Id: 6558356349779969
-    m_Localized: 
+    m_Localized: "\u96E3\u6613\u5EA6: \u795E\u4ED9 (\u6700\u4E0A)\n\n\u30E9\u30F3\u30AF"
     m_Metadata:
       m_Items: []
   references:
