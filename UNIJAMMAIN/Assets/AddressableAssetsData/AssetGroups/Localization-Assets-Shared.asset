@@ -44,6 +44,13 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53027ca2874e0804f9c8022a8fc6e514
+    m_Address: BMEULJIROTTF SDF
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9adb078fbd0f73443ae0e516b3aa8545
     m_Address: RIDIBatang SDF_TMP Pro
     m_ReadOnly: 1

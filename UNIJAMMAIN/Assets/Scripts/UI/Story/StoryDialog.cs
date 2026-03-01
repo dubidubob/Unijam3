@@ -17,7 +17,7 @@ public class StoryDialog : UI_Popup
 
     private static Sprite currentStoryBackground = null;
 
-    public Text[] TestTexts;
+    public TMP_Text Text;
     public Image[] StandingImage;
     public GameObject TextPanel;
     public DOTweenAnimation[] StandingAnimations;
@@ -283,7 +283,7 @@ public class StoryDialog : UI_Popup
             }
 
             // �ؽ�Ʈ ǥ�� (Ÿ���� ȿ��)
-            TestTexts[idx].gameObject.SetActive(true);
+            Text.gameObject.SetActive(true);
             string full = LocalizationManager.Get(scene.localizationKey, scene.text);
             int len = full.GetTypingLength();
 
@@ -296,13 +296,13 @@ public class StoryDialog : UI_Popup
                 {
                     break;
                 }
-                TestTexts[idx].text = full.Typing(i);
+                Text.text = full.Typing(i);
                 yield return new WaitForSecondsRealtime(0.02f);
 
             }
 
             // 타이핑이 끝나거나 스킵되면, 항상 전체 텍스트를 확실히 표시
-            TestTexts[idx].text = full;
+            Text.text = full;
 
             // 2. 다음으로 넘어가기 위한 대기
             inputRequested = false; // 방금 사용한 스킵 입력을 초기화
@@ -414,8 +414,8 @@ public class StoryDialog : UI_Popup
                         StandingImage[1].gameObject.SetActive(false);
 
                         // --- [!!! 이 줄을 추가하세요 !!!] ---
-                        if (TestTexts[idx] != null) // 널 체크 추가
-                            TestTexts[idx].gameObject.SetActive(false);
+                        if (Text != null) // 널 체크 추가
+                            Text.gameObject.SetActive(false);
                         // --- [!!! 추가 끝 !!!] ---
                     }
                 }
