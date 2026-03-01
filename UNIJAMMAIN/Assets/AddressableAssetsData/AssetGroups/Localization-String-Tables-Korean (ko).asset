@@ -17,14 +17,14 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: daf690afc53c91e40923f17850ade499
   m_SerializeEntries:
-  - m_GUID: 1852d50d31ee6a345941816f6e8c7235
-    m_Address: Tutorial_Table_ko
+  - m_GUID: 047ffc7daa4ba6e4bb3a8d18b9267f7f
+    m_Address: InGameOptionTable_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 047ffc7daa4ba6e4bb3a8d18b9267f7f
-    m_Address: InGameOptionTable_ko
+  - m_GUID: 1852d50d31ee6a345941816f6e8c7235
+    m_Address: Tutorial_Table_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
@@ -52,6 +52,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1d9540390e778845b269eeee73a5dcc
     m_Address: StoryLevelInfo_Table_ko

@@ -1,0 +1,52 @@
+﻿Key,Id,Chinese (Simplified)(zh-Hans),English(en),Japanese(ja),Korean(ko)
+MainScene_End_BTN,2.57E+11,退出,Quit,終了,종 료
+MainScene_Members_BTN,,制作组,Credits,クレジット,제작진
+MainScene_Option_BTN,,设置,Options,オプション,옵 션
+MainScene_StoryMode_BTN,,故事模式,Story Mode,ストーリーモード,스토리 모드
+MainScene_ContentMembers_Text_0,,隐世高僧,The Ancient Monk,古の行者,고대의 수도승
+MainScene_ContentMembers_Text_1,,"游戏企划
+程序
+
+美术
+
+音频","Game Design
+Programming
+
+Art
+
+Audio","企画
+プログラム
+
+アート
+
+サウンド","구상
+콤푸타
+
+그림
+
+소리"
+MainScene_ContentMembers_Text_2,,"Yejun Kim
+Daeyoon Kim
+Soyeon Joo
+Dahyun Yoon
+Minji Kim
+Jee-woo Kwon","Yejun Kim
+Daeyoon Kim
+Soyeon Joo
+Dahyun Yoon
+Minji Kim
+Jee-woo Kwon","Yejun Kim
+Daeyoon Kim
+Soyeon Joo
+Dahyun Yoon
+Minji Kim
+Jee-woo Kwon","김예준
+김대윤
+주소연
+윤다현
+김민지
+권지우"
+MainScene_ContentOption_BGMUp_Text,,背景音乐,BGM,BGM,배경음
+MainScene_ContentOption_SFXUp_Text,,音效,SFX,SE,효과음
+MainScene_StartToClick_Text,,点击屏幕开始,Click to Start,画面をクリックしてスタート,화면을 클릭해 시작하세요
+MainScene_ContentOption_Text,,屏息凝神，倾听其音...,Focus your mind on the sound...,音に、集中せよ...,소리에 집중하시오..

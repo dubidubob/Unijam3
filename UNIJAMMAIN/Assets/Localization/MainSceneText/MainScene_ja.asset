@@ -18,44 +18,59 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 52244905984
-    m_Localized: 
+  - m_Id: 8497189383942154
+    m_Localized: "\u97F3\u306B\u3001\u96C6\u4E2D\u305B\u3088..."
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460416
-    m_Localized: 
+  - m_Id: 8497189383942153
+    m_Localized: "\u753B\u9762\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u30B9\u30BF\u30FC\u30C8"
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460417
-    m_Localized: 
+  - m_Id: 8497189383942152
+    m_Localized: SE
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460418
-    m_Localized: 
+  - m_Id: 8497189383942151
+    m_Localized: BGM
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460419
-    m_Localized: 
+  - m_Id: 8497189383942150
+    m_Localized: 'Yejun Kim
+
+      Daeyoon Kim
+
+      Soyeon Joo
+
+      Dahyun
+      Yoon
+
+      Minji Kim
+
+      Jee-woo Kwon'
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460420
-    m_Localized: 
+  - m_Id: 8497189383942149
+    m_Localized: "\u4F01\u753B\r\n\u30D7\u30ED\u30B0\u30E9\u30E0\r\n\r\n\u30A2\u30FC\u30C8\r\n\r\n\u30B5\u30A6\u30F3\u30C9"
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460421
-    m_Localized: 
+  - m_Id: 8497189383942148
+    m_Localized: "\u53E4\u306E\u884C\u8005"
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460422
-    m_Localized: 
+  - m_Id: 8497189383942146
+    m_Localized: "\u30AA\u30D7\u30B7\u30E7\u30F3"
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460423
-    m_Localized: 
+  - m_Id: 8497189383942147
+    m_Localized: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30E2\u30FC\u30C9"
     m_Metadata:
       m_Items: []
-  - m_Id: 52278460424
-    m_Localized: 
+  - m_Id: 8497189383942145
+    m_Localized: "\u30AF\u30EC\u30B8\u30C3\u30C8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8497189383942144
+    m_Localized: "\u7D42\u4E86"
     m_Metadata:
       m_Items: []
   references:
