@@ -122,7 +122,7 @@ public class MainScene : UI_Popup
         Managers.Sound.Play("SFX/UI/PressToStart_V1",Define.Sound.SFX);
 
         toStartSequence?.Kill();
-        toStartText.fontMaterial = originalMaterial;
+        toStartText.fontMaterial = toStartText.font.material;
         toStartText.transform.localScale = Vector3.one;
         toStartText.color = Color.white;
         if (eventData.pointerPress != null)
@@ -143,7 +143,7 @@ public class MainScene : UI_Popup
     private void TextGlow(int index)
     {
         if (index < 0 || index >= tmpText.Length || tmpText[index] == null) return;
-        tmpText[index].fontMaterial = new Material(toStartText.fontSharedMaterial);
+        tmpText[index].fontMaterial = new Material(tmpText[index].fontSharedMaterial);
         tmpText[index].fontMaterial.EnableKeyword("UNDERLAY_ON");
         tmpText[index].fontMaterial.SetColor("_UnderlayColor", Color.white);
         tmpText[index].fontMaterial.SetFloat("_UnderlaySoftness", 0.4f);
@@ -253,7 +253,7 @@ public class MainScene : UI_Popup
     private void ResetHighlight(int index)
     {
         if (index < 0 || index >= tmpText.Length || tmpText[index] == null) return;
-        tmpText[index].fontMaterial = originalMaterial;
+        tmpText[index].fontMaterial = tmpText[index].font.material;
     }
 
     // --- 핵심 로직: 버튼 위치 초기화 ---

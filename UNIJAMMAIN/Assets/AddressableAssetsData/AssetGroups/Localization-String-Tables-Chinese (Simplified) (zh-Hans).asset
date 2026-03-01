@@ -40,7 +40,6 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
-    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c0cceea5acf4d147b6d92aee888d86d
     m_Address: WinterLevelInfo_Table_zh-Hans
