@@ -69,7 +69,10 @@ public static class LocalizationManager
                     if (row.Count <= keyIdx || string.IsNullOrWhiteSpace(row[keyIdx])) continue;
 
                     string key = row[keyIdx].Trim();
-                    
+
+                 
+
+
                     // 핵심: 파일이 달라도 키가 딕셔너리에 없다면 새로 생성하여 추가
                     if (!Localization_Table.ContainsKey(key)) 
                     {
@@ -118,7 +121,10 @@ public static class LocalizationManager
     // 키로 번역 가져오기 (fallback 사용)
     public static string Get(string key, string fallback = "")
     {
-        if (string.IsNullOrEmpty(key)) return fallback;
+        if (string.IsNullOrEmpty(key))
+        {
+            Debug.Log($"{key}를 찾을 수 없습니다. by null");
+            return fallback; }
 
         if (Localization_Table.TryGetValue(key, out var perLang))
         {

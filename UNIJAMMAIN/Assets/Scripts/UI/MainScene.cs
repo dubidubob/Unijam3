@@ -148,7 +148,7 @@ public class MainScene : UI_Popup
         Color downColor = Image_LogoDown.color;
         downColor.a = 0;
         Image_LogoDown.color = downColor;
-        Image_LogoDown.transform.localScale = Vector3.one * 1.5f;
+        Image_LogoDown.transform.localScale = Vector3.one * 1.2f;
 
         // 1. LogoUpImage Filled 1로 채우기 (붓으로 쓰는 느낌)
         // .ToUniTask()를 붙여서 애니메이션이 끝날 때까지 비동기로 대기합니다.
@@ -157,14 +157,14 @@ public class MainScene : UI_Popup
             .ToUniTask();
 
         // 2. 약간의 시간차 (여운)
-        await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
 
         // 3. LogoDownImage 도장 찍기 애니메이션
         // 알파값 조절과 크기 조절을 동시에 진행
         Sequence stampSeq = DOTween.Sequence();
 
-        stampSeq.Join(Image_LogoDown.DOFade(1f, 0.1f)); // 순식간에 나타남
-        stampSeq.Join(Image_LogoDown.transform.DOScale(1f, 0.15f).SetEase(Ease.InBack)); // 쿵! 찍히는 느낌
+        stampSeq.Join(Image_LogoDown.DOFade(1f, 0f)); // 순식간에 나타남
+        stampSeq.Join(Image_LogoDown.transform.DOScale(1f, 0.3f).SetEase(Ease.InBack)); // 쿵! 찍히는 느낌
 
         // 도장이 찍히는 순간 화면(또는 로고 전체)을 살짝 흔들어줌
         stampSeq.OnComplete(() => {

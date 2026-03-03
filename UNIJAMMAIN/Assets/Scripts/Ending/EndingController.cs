@@ -66,7 +66,13 @@ public class EndingController : MonoBehaviour
 
     [SerializeField] private float waitingTime = 1.5f; // 잠시 대기하는 시간
     [SerializeField] private GameObject cloudObject;
-    
+
+
+    [Header("Ending Part 3 Settings")]
+    [SerializeField] private Image image_UpEye;
+    [SerializeField] private Image image_DownEye;
+    [SerializeField] private Image image_UpDarkBackGround;
+
 
     // ================================================================
 
@@ -85,12 +91,17 @@ public class EndingController : MonoBehaviour
 
     private void Start()
     {
+        LocalizationManager.LoadAll();
         SettingClearForStart();
         ClearAllTexts();
         LoadEndingSequenceData("Localization/EndingTable");
         PlayEndingSequence().Forget();
-    }
 
+       // PlayEndingSequence_Part2().Forget();
+       // PlayEndingSequence_Part2_TextAction().Forget();
+ 
+    }
+    
     private void ClearAllTexts()
     {
         // SetActive(false)로 끄지 않고 무조건 켜둡니다. 알파(투명도)로만 제어합니다.
@@ -151,11 +162,11 @@ public class EndingController : MonoBehaviour
 
                 if (idIdx < 0 || row.Count <= idIdx || string.IsNullOrWhiteSpace(row[idIdx])) continue;
 
-                string id = row[idIdx];
+                string id = row[idIdx].Trim();
 
                 // [수정된 부분] 어떤 연출 파트의 데이터인지 확인
                 bool isPart1 = id.StartsWith("Ending_Talk_");
-                bool isPart2 = id.StartsWith("Ending_Up_Talk_"); // 후반부 대사용 ID 접두사
+                bool isPart2 = id.StartsWith("Ending_UpTalk_"); // 후반부 대사용 ID 접두사
 
                 // 둘 다 아니라면 스킵
                 if (!isPart1 && !isPart2) continue;
@@ -164,7 +175,7 @@ public class EndingController : MonoBehaviour
                 action.id = id;
 
                 // 인덱스 파싱
-                string indexPart = isPart1 ? id.Replace("Ending_Talk_", "").Trim() : id.Replace("Ending_Up_Talk_", "").Trim();
+                string indexPart = isPart1 ? id.Replace("Ending_Talk_", "").Trim() : id.Replace("Ending_UpTalk_", "").Trim();
                 if (int.TryParse(indexPart, out int idx)) action.index = idx;
 
                 string rawSpeaker = (speakerIdx >= 0 && speakerIdx < row.Count) ? row[speakerIdx].Trim() : "X";
@@ -200,6 +211,8 @@ public class EndingController : MonoBehaviour
                 }
             }
         }
+
+     
     }
 
     private async UniTaskVoid PlayEndingSequence()
@@ -238,6 +251,7 @@ public class EndingController : MonoBehaviour
                 inactiveName = Impact_Name;
                 inactiveContent = impact_Content_Text;
             }
+      
 
             if (!string.IsNullOrEmpty(localizedContent))
             {
@@ -341,6 +355,14 @@ public class EndingController : MonoBehaviour
             }
         }
         Debug.Log("엔딩 시퀀스 1 종료!");
+        name.text = "";
+        Impact_Name.text = "";
+        content_Text.text = "";
+        impact_Content_Text.text = "";
+        wasImpactOn = false;
+        content_Text.DOFade(1f, 0);
+        name.DOFade(1f, 0);
+
 
         PlayEndingSequence_Part2().Forget();
     }
@@ -348,6 +370,10 @@ public class EndingController : MonoBehaviour
     private async UniTask PlayEndingSequence_Part2()
     {
         Debug.Log("엔딩 시퀀스 2 시작!");
+        content_Text.GetComponent<RectTransform>().DOAnchorPosY(-500, 0);
+
+        SetAlpha(name, 1f);
+        SetAlpha(content_Text, 1f);
 
         // 영화 위 아래에서 검은색 내려오는 액션
         var tasks = new List<UniTask>();
@@ -386,6 +412,14 @@ public class EndingController : MonoBehaviour
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY4, duration4).SetEase(scrollEase));
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY5, duration5).SetEase(scrollEase));
             scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(scrollEase));
+            // [수정된 부분] tasks -> tasks2 로 변경하여 새 리스트에 담습니다.
+            scrollSequence.Join(upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 0), 1.7f)
+                            .SetEase(Ease.OutQuad)); // 부드러운 효과 추가
+
+
+            scrollSequence.Join(downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 0), 1.7f)
+                         .SetEase(Ease.OutQuad)); // 부드러운 효과 추가
+
 
             // 시퀀스가 끝날 때까지 대기
             await scrollSequence.ToUniTask();
@@ -402,14 +436,6 @@ public class EndingController : MonoBehaviour
         // 영화 효과 다시 사라지기
         var tasks2 = new List<UniTask>();
 
-        // [수정된 부분] tasks -> tasks2 로 변경하여 새 리스트에 담습니다.
-        tasks2.Add(upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 0), 1.7f)
-                        .SetEase(Ease.OutQuad) // 부드러운 효과 추가
-                        .ToUniTask());
-
-        tasks2.Add(downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 0), 1.7f)
-                     .SetEase(Ease.OutQuad) // 부드러운 효과 추가
-                     .ToUniTask());
 
         // === 구름 올라오기 ===
         // cloudObject가 GameObject로 선언되어 있으므로, 위치와 투명도를 제어할 컴포넌트를 가져옵니다.
@@ -436,14 +462,20 @@ public class EndingController : MonoBehaviour
         // 영화 레터박스가 사라지는 효과와 구름이 올라오는 효과를 동시에 실행하고 대기
         await UniTask.WhenAll(tasks2);
 
-        Debug.Log("모든 엔딩 연출 종료!");
+        Debug.Log("대화 연출 시작!");
 
         // 잠시대기
         await UniTask.Delay(TimeSpan.FromSeconds(waitingTime));
 
 
         // 대화시작! 
+        Debug.Log(ending_Up_Sequence.Count);
+        PlayEndingSequence_Part2_TextAction().Forget();
 
+    }
+
+    private async UniTask PlayEndingSequence_Part2_TextAction()
+    {
         // 대화시작! 
         foreach (var action in ending_Up_Sequence)
         {
@@ -527,7 +559,7 @@ public class EndingController : MonoBehaviour
         }
 
 
-
+        Debug.Log("Part2 모든 액션 종료");
     }
 
     private async UniTask Last_Ending_Animation()
@@ -613,9 +645,88 @@ public class EndingController : MonoBehaviour
         }
     }
 
-    private void SpecialAction_Up(int index,EndingAction action)
+    private void SpecialAction_Up(int index, EndingAction action)
     {
-        
+        if (index == 7)
+        {
+            // [구름 내려감] 
+            // 이전에 -1200까지 올라왔던 구름을 다시 화면 아래로 내립니다.
+            RectTransform cloudRect = cloudObject.GetComponent<RectTransform>();
+            if (cloudRect != null)
+            {
+                // action.conversion 시간을 활용하거나, 적절한 고정 시간(예: 2.5s)을 사용합니다.
+                image_UpDarkBackGround.DOFade(1, 2f).SetEase(Ease.OutQuad);
+                cloudRect.DOAnchorPosY(-2500f, 2f).SetEase(Ease.InQuad);
+                cloudObject.GetComponent<Image>()?.DOFade(0f, 2f);
+            }
+        }
+        else if (index == 8)
+        {
+            // [쓰러지는 듯한 연출]
+            // 1ms(거의 즉시) EaseOut으로 어두운 배경 확대 및 뒤틀기
+            if (image_UpDarkBackGround != null)
+            {
+                image_UpDarkBackGround.rectTransform.DOScale(1.2f, 1f).SetEase(Ease.OutCirc);
+                image_UpDarkBackGround.rectTransform.DORotate(new Vector3(0, 0, 6.7f), 1f).SetEase(Ease.InExpo);
+
+            }
+        }
+        else if (index == 9)
+        {
+            // [최종 연출: 확대 + 눈 감기]
+
+            // 1. 16.3초 동안 화면이 점점 Linear 확대되는 애니메이션
+            if (image_UpDarkBackGround != null)
+            {
+                image_UpDarkBackGround.rectTransform.DOScale(1.6f, 16.3f).SetEase(Ease.Linear);
+            }
+
+            // 2. 12초 대기 후 남은 4.3초 동안 눈 감는 연출 시작
+            PlayEyeClosingSequence(12f, 4.3f).Forget();
+        }
+    }
+
+    private async UniTaskVoid PlayEyeClosingSequence(float delay, float duration)
+    {
+        // 12초 대기
+        await UniTask.Delay(TimeSpan.FromSeconds(delay));
+        image_UpEye.DOFade(1, 0);
+        image_DownEye.DOFade(1, 0);
+
+
+        // 눈꺼풀 RectTransform 가져오기
+        RectTransform upEye = image_UpEye.rectTransform;
+        RectTransform downEye = image_DownEye.rectTransform;
+
+        // 눈 감기 시퀀스 (총 4.3초 구성)
+        Sequence eyeSeq = DOTween.Sequence();
+
+        // 1. 살짝 700 / -700 까지 감김 (깜빡임 시작)
+        eyeSeq.Append(upEye.DOAnchorPosY(700f, 0.5f).SetEase(Ease.OutQuad));
+        eyeSeq.Join(downEye.DOAnchorPosY(-700f, 0.5f).SetEase(Ease.OutQuad));
+
+        // 2. 800 / -800 으로 살짝 다시 떠짐 (정신을 차리려는 시도)
+        eyeSeq.Append(upEye.DOAnchorPosY(800f, 0.3f).SetEase(Ease.InOutQuad));
+        eyeSeq.Join(downEye.DOAnchorPosY(-800f, 0.3f).SetEase(Ease.InOutQuad));
+
+        // 3. 600 / -600 까지 더 깊게 감김
+        eyeSeq.Append(upEye.DOAnchorPosY(600f, 0.6f).SetEase(Ease.OutQuad));
+        eyeSeq.Join(downEye.DOAnchorPosY(-600f, 0.6f).SetEase(Ease.OutQuad));
+
+        // 4. 잠시 떨림 효과 (재생 시간 약 0.4초)
+        eyeSeq.Append(upEye.DOShakeAnchorPos(0.4f, new Vector2(0, 10f), 10, 90, false, true));
+        eyeSeq.Join(downEye.DOShakeAnchorPos(0.4f, new Vector2(0, 10f), 10, 90, false, true));
+
+        // 5. 슬며시 완전히 감김 (목표치 350 / -350)
+        // 남은 시간 동안 천천히 닫힙니다.
+        eyeSeq.Append(upEye.DOAnchorPosY(350f, 2.5f).SetEase(Ease.InOutSine));
+        eyeSeq.Join(downEye.DOAnchorPosY(-350f, 2.5f).SetEase(Ease.InOutSine));
+
+        // 6. 완전히 감긴 후 암전 처리 (선택 사항)
+        eyeSeq.OnComplete(() => {
+            Debug.Log("눈을 완전히 감았습니다.");
+            // 필요 시 추가적인 엔딩 크레딧이나 페이드 아웃 처리
+        });
     }
 
     private void SettingClearForStart()

@@ -35,14 +35,40 @@ Ending_Talk_30,수도승,욕망에 휘둘리지 않고 중심을 잡는 것.,,,,
 Ending_Talk_31,~,,,,,Ease out,1000ms,400ms,,,FALSE,->32,어둠 (000000 40%)
 Ending_Talk_32,수도승,나는 그 길을... 계속해서 두드려 나갈 뿐이다.,,,,Ease out,3000ms,2500ms,EEEEB9,FFFFFF,FALSE,->33,
 Ending_Talk_33,X,,,,,Ease out,1000ms,00ms,,,FALSE,->34,34프레임부터 20초 영상 재생
-Ending_UpTalk_0,X,,,,,Ease out,00ms,2000ms,,,,->1,구름 올라가는 장면(->1)
+Ending_UpTalk_0,X,,,,,Ease out,00ms,2000ms,,,,->1,"텍스트 가독성을 위한, 큰 구름이
+하단 부분에 올라가는 장면(->1)"
 Ending_UpTalk_1,X,,,,,Ease out,2000ms,500ms,,,,->2,
 Ending_UpTalk_2,수도승,구름 위에서 내려다본 세상은 이토록 고요하구나.,,,,Ease out,2000ms,400ms,,,,->3,
 Ending_UpTalk_3,~,,,,,Ease out,1000ms,400ms,,,,->4,
 Ending_UpTalk_4,수도승,"세상을 뒤덮던 부조화도, 결국 저 거대한 침묵 속의 작은 파음(破音)이었을 뿐.",,,,Ease out,3000ms,400ms,,,,->5,
 Ending_UpTalk_5,~,,,,,Ease out,1000ms,400ms,,,,->6,
-Ending_UpTalk_6,수도승,"이토록 덧없이 흘러갈 것들을... 인간들은, 아니 나조차도 왜 그리 꽉 쥐고 놓지 못했던가.",,,,Ease out,2000ms,400ms,,,,->7,
-Ending_UpTalk_7,X,,,,,Ease out,00ms,1500ms,,,,->8,구름 내려가는 장면(->8)
-Ending_UpTalk_8,X,,,,,Ease out,,,,,,->9,
-Ending_UpTalk_9,X,,,,,Ease out,,,,,,->10,
-Ending_UpTalk_10,X,,,,,Ease out,,,,,,->11,
+Ending_UpTalk_6,수도승,"이토록 덧없이 흘러갈 것들을... 인간들은, 아니 나조차도 왜 그리 꽉 쥐고 놓지 못했던가.",,,,Ease out,3000ms,400ms,,,,->7,
+Ending_UpTalk_7,X,,,,,Ease out,00ms,2000ms,,,,->8,"구름 내려가면서, 어두운 화면 페이드인"
+Ending_UpTalk_8,X,,,,,Ease out,00ms,1000ms,,,,->9,"[뒤틀리는 연출]
+1000ms에 걸쳐서, Ease Out으로
+
+어두운 화면 Scale x1.2 되면서,
+6.7도 기울여짐."
+Ending_UpTalk_9,X,,,,,Ease out,100ms,500ms,,,,->10,"9번 프레임 시작하는 즉시, 하단 연출 실행.
+[화면 계속 확대되는 연출 시작]
+16300ms동안, Linear로
+현재 화면 Scale x1.21
+
+12000ms가 지나고, 남은 4300ms
+동안은 화면이 서서히 Linear로
+암전되는 연출이 있음.
+(이 시간초 4300ms동안, 눈 감는 걸
+해봐도 좋음.)"
+Ending_UpTalk_10,수도승,. . .,,,,Ease out,2000ms,400ms,,,,->11,
+Ending_UpTalk_11,~,,,,,Ease out,1000ms,400ms,,,,->12,
+Ending_UpTalk_12,수도승,나의 소임은... 여기까지였던 것인가?,,,,Ease out,2000ms,400ms,,,,->13,
+Ending_UpTalk_13,~,,,,,Ease out,1000ms,400ms,,,,->14,
+Ending_UpTalk_14,수도승,". . . 이제야, 꽉 쥐었던 두 손을 놓는군.",,,,Ease out,2000ms,400ms,,,,->15,
+Ending_UpTalk_15,~,,,,,Ease out,1000ms,400ms,,,,->16,
+Ending_UpTalk_16,수도승,아프지만 아름다웠던 수행이었다.,,,,Ease out,2000ms,400ms,,,,->17,
+Ending_UpTalk_17,X,,,,,Ease out,6000ms,500ms,,,,->18,암전된 상태.
+Ending_UpTalk_18,,독백 대사 1,,,,,,,,,,->19,
+Ending_UpTalk_19,,,,,,,,,,,,->20,
+Ending_UpTalk_20,,독백 대사 1,,,,,,,,,,->21,
+Ending_UpTalk_21,,,,,,,,,,,,->22,
+Ending_UpTalk_22,,독백 대사 1,,,,,,,,,,->23,
