@@ -1,0 +1,137 @@
+Key,Id,Chinese (Simplified)(zh-Hans),English(en),Japanese(ja),Korean(ko)
+ST_0_Data_StageMainText,,0. 山寺前,0. Temple Yard,0. 山寺の庭,0. 절 앞
+ST_0_Data_StageMainSubText,,,,,수련의 시작. 스승님께서는 항상 시작이 곧 반이라 하셨지.
+ST_0_Data_LevelText,,"难度: 入门 (下)
+
+评级","Difficulty: Easy
+
+Rank","難易度: 入門 (下)
+
+ランク","난이도 : 입문 (하)
+
+활약치"
+ST_1_Data_StageMainText,,1. 幽深密林,1. Deep Woods,1. 深き森,1. 산속
+ST_1_Data_StageMainSubText,,,,,"조화를 잃은 세상, 내 감히 대적을 시작하리."
+ST_1_Data_LevelText,,"难度: 入门 (下)
+
+评级","Difficulty: Easy
+
+Rank","難易度: 入門 (下)
+
+ランク","난이도 : 입문 (하)
+
+활약치"
+ST_2_Data_StageMainText,,2. 瀑布,2. Cascade,2. 清滝,2. 폭포
+ST_2_Data_StageMainSubText,,,,,"쏟아지는 폭포 속에서,흐트러진 마음을 다잡자."
+ST_2_Data_LevelText,,"难度: 修炼 (中)
+
+评级","Difficulty: Normal
+
+Rank","難易度: 修練 (中)
+
+ランク","난이도 : 수련 (중)
+
+활약치"
+ST_3_Data_StageMainText,,3. 顶峰,3. The Peak,3. 山頂,3. 산 정상
+ST_3_Data_StageMainSubText,,,,,운명처럼 이끌린 산 정상. ...나를 기다리고 있었다.
+ST_3_Data_LevelText,,"难度: 达人 (中上)
+
+评级","Difficulty: Hard
+
+Rank","難易度: 達人 (中上)
+
+ランク","난이도 : 달인 (중상)
+
+활약치"
+ST_4_Data_StageMainText,,4. 般若龙船,4. Prajna Dragon Boat,4. 般若龍船,4. 반야용선
+ST_4_Data_StageMainSubText,,,,,"슬픔을 뒤로 하고, 나의 사명을 향해 하늘길에 오른다."
+ST_4_Data_LevelText,,"难度: 达人 (中上)
+
+评级","Difficulty: Hard
+
+Rank","難易度: 達人 (中上)
+
+ランク","난이도 : 달인 (중상)
+
+활약치"
+ST_5_Data_StageMainText,,5. 天界之门,5. The Celestial Gates,5. 天界の門,5. 천당 앞
+ST_5_Data_StageMainSubText,,,,,"수많은 시련 끝에, 마침내 천상의 문턱에 섰다. 악령들이 더 몰아치는군."
+ST_5_Data_LevelText,,"难度: 道士 (上)
+
+评级","Difficulty: Master
+
+Rank","難易度: 道士 (上)
+
+ランク","난이도 : 도사 (상)
+
+활약치"
+ST_6_Data_StageMainText,,6. 天界寺庙,6. Celestial Temple,6. 天界の寺院,6. 천당
+ST_6_Data_StageMainSubText,,,,,부처님께서는... 아무 말씀이 없으셨다. 혼란 속 유일했던... 희망.
+ST_6_Data_LevelText,,"难度: 道士 (上)
+
+评级","Difficulty: Master
+
+Rank","難易度: 道士 (上)
+
+ランク","난이도 : 도사 (상)
+
+활약치"
+ST_7_Data_StageMainText,,7. 九幽?,7. The Below?,7. 奈落?,7. 지하?
+ST_7_Data_StageMainSubText,,,,,"혼란의 시작과 끝. 이 결전의 장소에서, 악연의 종지부를 찍는다."
+ST_7_Data_LevelText,,"难度: 神仙 (最上)
+
+评级","Difficulty: Grandmaster
+
+Rank","難易度: 神仙 (最上)
+
+ランク","난이도 : 신선 (최상)
+
+활약치"
+ST_ChristMas_Data_StageMainText,,E1. 迎冬,E1. Winter Celebration,E1. 迎冬,E1. 겨울맞이
+ST_ChristMas_Data_StageMainSubText,,,,,붉은 모자와 뿔 달린 악령들. 겨울날의 수련이 시작된다!
+ST_ChristMas_Data_LevelText,,"难度: 修炼 (中)
+
+评级","Difficulty: Normal
+
+Rank","難易度: 修練 (中)
+
+ランク","난이도 : 수련 (중)
+
+활약치"
+ST_EDM_Data_StageMainText,,E2. 红尘之夜,E2. Secular Night,E2. 俗世の夜,E2. 속세의 밤
+ST_EDM_Data_StageMainSubText,,,,,"번쩍이는 빛, 지독한 속세의 번뇌. 내가 왜 여기 있는진 묻지 마시오..."
+ST_EDM_Data_LevelText,,"难度: 达人 (中上)
+
+评级","Difficulty: Hard
+
+Rank","難易度: 達人 (中上)
+
+ランク","난이도 : 달인 (중상)
+
+활약치"
+ST_Night_Data_StageMainText,,E3. 月下疾走,E3. Moonlight Dash,E3. 月下疾走,E3. 달빛 질주
+ST_Night_Data_StageMainSubText,,,,,구름을 뚫은 낯선 철탑 위. 사방의 기이한 빛줄기. 우리는 어디를 향해 가는 것일까.
+ST_Night_Data_LevelText,,"难度: 神仙 (最上)
+
+评级","Difficulty: Grandmaster
+
+Rank","難易度: 神仙 (最上)
+
+ランク","난이도 : 신선 (최상)
+
+활약치"
+ST_Default_Data_StageMainText,,,,,조화를 되찾으리라.
+ST_Default_Data_StageMainSubText,,,,,"속세의 먼지를 털어내고,
+끝없는 길 위에 서서,
+한 걸음, 발을 내딛는다."
+ST_Default_Data_LevelText,,,,,"
+
+수련할 장소를
+먼저 선택하게나."
+StageScene_Start_BTN,,,,,시작하기 >
+StageScene_Bead_StoryMap_StageInfo_Text,,,,,제{0}장
+StageScene_Bead_WinterMap_Winter_StageInfo_Text,,,Winter,,겨 울
+StageScene_Bead_WinterMap_City_StageInfo_text,,,City,,도 시
+StageScene_Level_Guide_0,,,,,개문
+StageScene_Level_Guide_1,,,,,피안
+StageScene_Level_Guide_2,,,,,악연

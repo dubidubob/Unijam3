@@ -23,6 +23,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 24db48748ea53c444bffebda7241b1bc
+    m_Address: PrevChapterBtn_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a630c2ec8b3fba4e83f6b351906d3e2
     m_Address: Credit_Text_ja
     m_ReadOnly: 1
@@ -35,8 +41,38 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53cda9d136d661e4083d352418a3fb1a
+    m_Address: NewRecord_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76b909fcecda57344b8637bc33c54d45
+    m_Address: Beat_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d1f9f103346dee4cbc3f86d13c32acc
+    m_Address: PauseInfo_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7e25d9f7a259abc42b3ca07fcc6e78ee
     m_Address: Ready_2_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 822d8846160b36246bc49e909f2110b6
+    m_Address: ToMainBtn_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9eaae5d25f979cf4f80c67de9b2187cd
+    m_Address: NextChapterBtn_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
@@ -47,8 +83,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2596271e6d0ad04daf5c9c32e731a7e
+    m_Address: StoryInfo_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d193abc9b41431d498483f3e766de1dd
     m_Address: Ready_Start_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6fce2a2803a5604d8a855d8ef83f544
+    m_Address: Deukdo_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja

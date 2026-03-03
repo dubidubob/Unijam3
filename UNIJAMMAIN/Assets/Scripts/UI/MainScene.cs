@@ -34,6 +34,14 @@ public class MainScene : UI_Popup
 
 
     [Header("NewScene Setting")]
+    [SerializeField] private CanvasGroup Canvas_GamesLogo;
+    [SerializeField] private Image Image_GamesLogoUp;
+    [SerializeField] private Image Image_GamesLogoDown;
+
+    [SerializeField] private Image Image_LogoUp;
+    [SerializeField] private Image Image_LogoDown;
+
+
     [SerializeField] private Image drawing_Image;
     [SerializeField] private List<Image> buttons_Image;
     [SerializeField] private Image patternBackGround_Image;
@@ -64,7 +72,117 @@ public class MainScene : UI_Popup
         {
             originalPositions[i] = buttonsTransform[i].anchoredPosition;
         }
+        ActionGamesLogo().Forget();
 
+       
+    }
+
+    private async UniTask ActionGamesLogo()
+    {
+        // 0. 초기 설정
+        CanvasGroup gamesLogoCanvasGroup = Canvas_GamesLogo;
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
+
+        gamesLogoCanvasGroup.alpha = 1;
+
+        // 시작 스케일을 5f -> 1.8f로 줄여서 너무 멀리서 날아오지 않게 설정
+        float startScale = 1.8f;
+        Image_GamesLogoUp.transform.localScale = Vector3.one * startScale;
+        Image_GamesLogoDown.transform.localScale = Vector3.one * startScale;
+
+        Image_GamesLogoUp.color = new Color(1, 1, 1, 0);
+        Image_GamesLogoDown.color = new Color(1, 1, 1, 0);
+
+        // 1. Up 로고 박힘 (강도 1.2 - "탕!")
+        Image_GamesLogoUp.DOFade(1f, 0.05f); // 페이드는 아주 빠르게
+                                             // InExpo 대신 OutQuad를 사용하고 시간을 줄여 타격감을 높임
+        await Image_GamesLogoUp.transform.DOScale(1f, 0.12f).SetEase(Ease.OutQuad).ToUniTask();
+        Image_GamesLogoUp.transform.DOShakePosition(0.2f, 3f, 20); // 절도 있는 짧은 흔들림
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f));
+
+        // 2. Down 로고 박힘 (강도 3.6 - "쾅!")
+        Image_GamesLogoDown.DOFade(1f, 0.05f);
+        await Image_GamesLogoDown.transform.DOScale(1f, 0.1f).SetEase(Ease.OutQuad).ToUniTask();
+        // 강도 3.6을 위해 진동 세기를 유지하면서 타격 시간을 짧게 가져감
+        Image_GamesLogoDown.transform.DOShakePosition(0.3f, 9f, 30);
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
+
+        // 3. 심장 박동하듯이 2번 쿵쿵!
+        for (int i = 0; i < 2; i++)
+        {
+            Sequence beatSeq = DOTween.Sequence();
+            // 박동은 0.1초 내외로 짧아야 쫄깃한 느낌이 납니다.
+            beatSeq.Join(Image_GamesLogoUp.transform.DOScale(1.1f, 0.08f).SetEase(Ease.OutSine));
+            beatSeq.Join(Image_GamesLogoDown.transform.DOScale(1.1f, 0.08f).SetEase(Ease.OutSine));
+            beatSeq.Append(Image_GamesLogoUp.transform.DOScale(1f, 0.12f).SetEase(Ease.InSine));
+            beatSeq.Join(Image_GamesLogoDown.transform.DOScale(1f, 0.12f).SetEase(Ease.InSine));
+
+            await beatSeq.ToUniTask();
+            await UniTask.Delay(System.TimeSpan.FromSeconds(0.05f));
+        }
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(1.2f));
+
+        // 4. 사라지기
+        await gamesLogoCanvasGroup.DOFade(0f, 1f).ToUniTask();
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.3f));
+
+        // 5. 다음 로고 액션 진행
+        await ActionLogo();
+    }
+
+    private async UniTask ActionLogo()
+    {
+        Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
+
+        Managers.Sound.Play("SFX/UI/SettingCredit_V2", Define.Sound.SFX);
+
+        // 0. 초기 설정 (이미지들이 안 보이는 상태로 시작)
+        Image_LogoUp.fillAmount = 0;
+
+        // LogoDown은 투명하고 약간 크게 설정 (찍히기 전 상태)
+        Color downColor = Image_LogoDown.color;
+        downColor.a = 0;
+        Image_LogoDown.color = downColor;
+        Image_LogoDown.transform.localScale = Vector3.one * 1.5f;
+
+        // 1. LogoUpImage Filled 1로 채우기 (붓으로 쓰는 느낌)
+        // .ToUniTask()를 붙여서 애니메이션이 끝날 때까지 비동기로 대기합니다.
+        await Image_LogoUp.DOFillAmount(1f, 0.5f)
+            .SetEase(Ease.InSine)
+            .ToUniTask();
+
+        // 2. 약간의 시간차 (여운)
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f));
+
+        // 3. LogoDownImage 도장 찍기 애니메이션
+        // 알파값 조절과 크기 조절을 동시에 진행
+        Sequence stampSeq = DOTween.Sequence();
+
+        stampSeq.Join(Image_LogoDown.DOFade(1f, 0.1f)); // 순식간에 나타남
+        stampSeq.Join(Image_LogoDown.transform.DOScale(1f, 0.15f).SetEase(Ease.InBack)); // 쿵! 찍히는 느낌
+
+        // 도장이 찍히는 순간 화면(또는 로고 전체)을 살짝 흔들어줌
+        stampSeq.OnComplete(() => {
+            // 카메라나 로고 부모 객체를 흔들어도 좋지만, 여기서는 로고 자체를 살짝 흔듭니다.
+            Image_LogoDown.transform.DOShakePosition(0.2f, 10f, 20);
+            // 여기서 도장 찍히는 소리(SFX)를 재생하면 최고입니다.
+            // Managers.Sound.Play("SFX/Stamp", Define.Sound.SFX); 
+        });
+
+        await stampSeq.ToUniTask();
+
+        // 4. 모든 로고 연출 끝난 뒤 메인 액션 시작
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f));
+        StartMainSceneAction();
+    }
+
+    private void StartMainSceneAction()
+    {
         Init();
 
 
@@ -94,7 +212,6 @@ public class MainScene : UI_Popup
         toStartText.fontMaterial.EnableKeyword("UNDERLAY_ON");
         toStartText.fontMaterial.SetColor("_UnderlayColor", new Color(0f, 0f, 0f, 1f));
         toStartText.fontMaterial.SetFloat("_UnderlaySoftness", 0.5f);
-        toStartText.fontMaterial.SetFloat("_UnderlayDilate", 0.3f);
         toStartText.fontMaterial.SetFloat("_UnderlayOffsetX", 0f);
         toStartText.fontMaterial.SetFloat("_UnderlayOffsetY", 0f);
 
@@ -111,7 +228,6 @@ public class MainScene : UI_Popup
 
     private async UniTask PlayComingAnimation()
     {
-        Managers.Sound.Play("SFX/UI/SettingCredit_V2", Define.Sound.SFX);
         // 시퀀스 생성 (애니메이션 그룹화)
         Sequence seq = DOTween.Sequence();
 

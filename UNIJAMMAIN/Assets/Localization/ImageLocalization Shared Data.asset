@@ -39,6 +39,38 @@ MonoBehaviour:
     m_Key: Image_Start!
     m_Metadata:
       m_Items: []
+  - m_Id: 66669695860736
+    m_Key: Image_NewRecord
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67608058134528
+    m_Key: Image_UpButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67639901290496
+    m_Key: Image_DownButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67683853402112
+    m_Key: Image_Pasue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67702425780224
+    m_Key: Image_ToMain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67730078826496
+    m_Key: Image_StoryInfo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74632074493952
+    m_Key: Image_Logo_Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74669491879936
+    m_Key: Image_Logo_Down
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 3596657104847372631
@@ -90,6 +122,54 @@ MonoBehaviour:
           - ko
           - ja
           - en
+          - zh-Hans
+        - m_KeyId: 66669695860736
+          m_TableCodes:
+          - ko
+          - zh-Hans
+          - ja
+          - en
+        - m_KeyId: 67608058134528
+          m_TableCodes:
+          - en
+          - zh-Hans
+          - ja
+          - ko
+        - m_KeyId: 67639901290496
+          m_TableCodes:
+          - en
+          - zh-Hans
+          - ja
+          - ko
+        - m_KeyId: 67683853402112
+          m_TableCodes:
+          - en
+          - zh-Hans
+          - ja
+          - ko
+        - m_KeyId: 67730078826496
+          m_TableCodes:
+          - en
+          - zh-Hans
+          - ja
+          - ko
+        - m_KeyId: 67702425780224
+          m_TableCodes:
+          - en
+          - zh-Hans
+          - ja
+          - ko
+        - m_KeyId: 74632074493952
+          m_TableCodes:
+          - en
+          - ko
+          - ja
+          - zh-Hans
+        - m_KeyId: 74669491879936
+          m_TableCodes:
+          - en
+          - ko
+          - ja
           - zh-Hans
         m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null

@@ -35,6 +35,30 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a3d97ca7870a9b4ea3937d8556dd1dc
+    m_Address: ToMainBtn_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59e8a754577a9b04b93a9bc280f5bb78
+    m_Address: StoryInfo_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62b20908886fcde42a75bb1d38800732
+    m_Address: Deukdo_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89828b1ee4520db4cac4076106c0d3fc
+    m_Address: PauseInfo_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9415efd2ada4d7048af982772d1af0ad
     m_Address: NotoSerifSC-Regular
     m_ReadOnly: 1
@@ -47,8 +71,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 991dcde1a18bcb2478a550c1d1b0b84b
+    m_Address: NewRecord_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a7415bcffde09b24a9876fd0d83bf2c1
     m_Address: Ready_3_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aff2fbf5f0976744aa3600fe2557bce8
+    m_Address: Beat_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b170d798dd742cc4fad55c6057065f8c
+    m_Address: PrevChapterBtn_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef3cb71f398646b42abd711440ab5f60
+    m_Address: NextChapterBtn_zh-CN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
