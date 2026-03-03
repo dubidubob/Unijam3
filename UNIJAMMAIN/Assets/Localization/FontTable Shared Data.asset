@@ -31,6 +31,10 @@ MonoBehaviour:
     m_Key: Ridi_JustText
     m_Metadata:
       m_Items: []
+  - m_Id: 739890355109888
+    m_Key: New Entry
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 3596657104847372300

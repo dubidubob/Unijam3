@@ -451,6 +451,7 @@ public class EndingController : MonoBehaviour
             string localizedContent = LocalizationManager.Get(action.id);
 
             if (localizedContent == "X" || localizedContent == "~") localizedContent = "";
+            SpecialAction_Up(action.index, action);
 
             if (!string.IsNullOrEmpty(localizedContent))
             {
@@ -610,6 +611,11 @@ public class EndingController : MonoBehaviour
         {
             action.speakerKey = "   ";
         }
+    }
+
+    private void SpecialAction_Up(int index,EndingAction action)
+    {
+        
     }
 
     private void SettingClearForStart()
