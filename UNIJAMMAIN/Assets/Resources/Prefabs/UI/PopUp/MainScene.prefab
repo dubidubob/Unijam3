@@ -144,8 +144,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD654\uBA74\uC744 \uD074\uB9AD\uD574 \uC2DC\uC791\uD558\uC138\uC694"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
-  m_sharedMaterial: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a1b660ffd6b423d4f9ac7eb254b8d789, type: 2}
+  m_sharedMaterial: {fileID: -8320487334739067656, guid: a1b660ffd6b423d4f9ac7eb254b8d789, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -289,7 +289,7 @@ MonoBehaviour:
         m_TableReference:
           m_TableCollectionName: GUID:b0d2aa89c1d491c4b907f1aceb42c108
         m_TableEntryReference:
-          m_KeyId: 124886056960
+          m_KeyId: 170838851584
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
@@ -305,7 +305,7 @@ MonoBehaviour:
         m_TableReference:
           m_TableCollectionName: GUID:b0d2aa89c1d491c4b907f1aceb42c108
         m_TableEntryReference:
-          m_KeyId: 124886056960
+          m_KeyId: 170838851584
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
@@ -556,7 +556,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce9011d54f16c4b4795e91e788a437f3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0babf97cee72124448d3da559f02c604, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -727,7 +727,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 0.9090909}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 5471833023059857014}
+  m_Father: {fileID: 7355973248244736890}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -767,7 +767,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
@@ -1027,7 +1027,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2549825157476052928}
   - {fileID: 2869119198452184948}
   - {fileID: 4377033329280659726}
   - {fileID: 868285909232374243}
@@ -2606,6 +2605,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1137330430421324163}
+  - {fileID: 2549825157476052928}
   - {fileID: 5471833023059857014}
   - {fileID: 3373506188981422251}
   - {fileID: 4605126084722637355}
@@ -2705,15 +2705,14 @@ MonoBehaviour:
   memberPanel: {fileID: 2301663870639267065}
   toStartText: {fileID: 2017242296217434883}
   drawing_Image: {fileID: 1093390552705902112}
-  muck_Image: {fileID: 0}
   buttons_Image:
   - {fileID: 3358590066574391563}
   - {fileID: 592777567104695256}
   - {fileID: 2283761685680366818}
   - {fileID: 2256980176618240907}
   patternBackGround_Image: {fileID: 4494032644047127008}
-  Monsters1: {fileID: 3838020865116532163}
-  Monsters2: {fileID: 8760196453414560858}
+  Monster1: {fileID: 3838020865116532163}
+  Monster2: {fileID: 8760196453414560858}
 --- !u!114 &8198784162413686288
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,8 +37,8 @@ public class MainScene : UI_Popup
     [SerializeField] private Image drawing_Image;
     [SerializeField] private List<Image> buttons_Image;
     [SerializeField] private Image patternBackGround_Image;
-    [SerializeField] private Image Monsters1;
-    [SerializeField] private Image Monsters2;
+    [SerializeField] private Image Monster1;
+    [SerializeField] private Image Monster2;
     enum CanClcikState
     {
         isOptionClick,
@@ -118,14 +118,16 @@ public class MainScene : UI_Popup
         // 2. 좌우 이미지 이동 (동시에 실행)
         // float 변수 제어 대신 UI이므로 DOAnchorPos(RectTransform)를 권장하지만, 
         // 기존 코드 스타일(Position)을 유지하여 작성합니다.
-        seq.Join(leftImage.transform.DOMoveX(0f, comeTime).From(new Vector3(-10, 0f, 0f)).SetEase(Ease.OutQuad));
+        seq.Append(leftImage.transform.DOMoveX(0f, comeTime).From(new Vector3(-10, 0f, 0f)).SetEase(Ease.OutQuad));
 
         // 3. 이동이 완료된 후 실행될 애니메이션들 (Append 사용)
         float fillDuration = 0.5f; // 채워지는 시간 설정
 
         // Drawing과 Muck 이미지를 1로 채움
-        seq.Append(drawing_Image.DOFillAmount(1f, fillDuration).SetEase(Ease.OutQuad));
- 
+        seq.Join(drawing_Image.DOFillAmount(1f, comeTime).SetEase(Ease.OutQuad));
+
+        seq.Append(rightImage.transform.DOMoveX(0f, comeTime).From(new Vector3(10f, 0f, 0f)).SetEase(Ease.OutQuad));
+
         /*
         // 버튼 리스트들을 순차적으로 혹은 동시에 채움
         foreach (var btnImg in buttons_Image)
@@ -135,13 +137,37 @@ public class MainScene : UI_Popup
         }
         */
         // 시퀀스 맨 마지막에 실행될 함수 등록
-        seq.OnComplete(() => {
-            seq.Join(rightImage.transform.DOMoveX(0f, comeTime).From(new Vector3(10f, 0f, 0f)).SetEase(Ease.OutQuad));
-            seq.OnComplete(() => { seq.Append(Monsters1.DOFade(1, 1f)).Join(Monsters2.DOFade(1, 1f)); });
-            
+        seq.OnComplete(() =>
+        {
+            // 1. Monster들의 현재(기준) 위치 기억 및 초기화 (아래로 100만큼 내림)
+            // RectTransform을 사용하므로 anchoredPosition을 활용하는 것이 정확합니다.
+            RectTransform m1Rect = Monster1.rectTransform;
+            RectTransform m2Rect = Monster2.rectTransform;
+
+            Vector2 m1TargetPos = m1Rect.anchoredPosition;
+            Vector2 m2TargetPos = m2Rect.anchoredPosition;
+
+            // 시작 위치 설정: 현재 위치에서 Y축으로 -100만큼 내리고, 투명하게 설정
+            m1Rect.anchoredPosition = new Vector2(m1TargetPos.x, m1TargetPos.y - 100f);
+            m2Rect.anchoredPosition = new Vector2(m2TargetPos.x, m2TargetPos.y - 100f);
+
+            Monster1.color = new Color(1f, 1f, 1f, 0f); // 투명하게 시작
+            Monster2.color = new Color(1f, 1f, 1f, 0f);
+
+            // 2. 새로운 시퀀스로 몬스터 등장 연출
+            Sequence monsterSeq = DOTween.Sequence();
+
+            // Monster 1 등장 (위로 올라오면서 Fade In)
+            monsterSeq.Join(m1Rect.DOAnchorPos(m1TargetPos, 0.5f).SetEase(Ease.OutQuad));
+            monsterSeq.Join(Monster1.DOFade(1f, 0.5f));
+
+            // Monster 2 등장 (동시에 실행)
+            monsterSeq.Join(m2Rect.DOAnchorPos(m2TargetPos, 0.5f).SetEase(Ease.OutQuad));
+            monsterSeq.Join(Monster2.DOFade(1f, 0.5f));
         });
 
-    
+
+
     }
 
     public override void Init()

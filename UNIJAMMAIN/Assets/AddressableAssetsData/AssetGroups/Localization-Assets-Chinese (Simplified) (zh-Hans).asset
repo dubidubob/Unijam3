@@ -23,8 +23,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 065e1facc9058a44e97dc325fa4654b5
+    m_Address: Ready_1_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b239b55404eff34e8a1857d13f56e47
+    m_Address: Ready_2_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9415efd2ada4d7048af982772d1af0ad
     m_Address: NotoSerifSC-Regular
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 963c84bc88418f54ba3103cc563ccba0
+    m_Address: Ready_Start_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a7415bcffde09b24a9876fd0d83bf2c1
+    m_Address: Ready_3_zh-CN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans

@@ -23,6 +23,22 @@ MonoBehaviour:
     m_Key: Image_Logo
     m_Metadata:
       m_Items: []
+  - m_Id: 58997332377600
+    m_Key: Image_Start1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59047114571776
+    m_Key: Image_Start2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59083651153920
+    m_Key: Image_Start3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59124633698304
+    m_Key: Image_Start!
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 3596657104847372631
@@ -51,5 +67,29 @@ MonoBehaviour:
           - ja
           - ko
           - en
+        - m_KeyId: 58997332377600
+          m_TableCodes:
+          - ko
+          - ja
+          - en
+          - zh-Hans
+        - m_KeyId: 59047114571776
+          m_TableCodes:
+          - ko
+          - ja
+          - en
+          - zh-Hans
+        - m_KeyId: 59083651153920
+          m_TableCodes:
+          - ko
+          - ja
+          - en
+          - zh-Hans
+        - m_KeyId: 59124633698304
+          m_TableCodes:
+          - ko
+          - ja
+          - en
+          - zh-Hans
         m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
