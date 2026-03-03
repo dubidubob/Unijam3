@@ -27,9 +27,14 @@ MonoBehaviour:
     m_Key: eulziro
     m_Metadata:
       m_Items: []
+  - m_Id: 678325731852288
+    m_Key: Ridi_JustText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 3596657104847372300
+    - rid: 3596657104847372635
   m_KeyGenerator:
     rid: 3596657104847372293
   references:
@@ -52,9 +57,9 @@ MonoBehaviour:
         - m_KeyId: 170838851584
           m_TableCodes:
           - zh-Hans
-          - en
           - ko
           - ja
+          - en
         - m_KeyId: 718094860288
           m_TableCodes:
           - zh-Hans
@@ -63,3 +68,15 @@ MonoBehaviour:
           - en
         m_TypeString: TMPro.TMP_FontAsset, Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
+    - rid: 3596657104847372635
+      type: {class: AssetTypeMetadata, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries:
+        - m_KeyId: 678325731852288
+          m_TableCodes:
+          - ko
+          - en
+          - ja
+          - zh-Hans
+        m_TypeString: UnityEngine.Font, UnityEngine.TextRenderingModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null

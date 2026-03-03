@@ -16,7 +16,19 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 20c110d9fdc3d344293190258e85d148
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 4a630c2ec8b3fba4e83f6b351906d3e2
+    m_Address: Credit_Text_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bb89a2c22e3e2440a4e02ff61cc4c6a
+    m_Address: YujiSyuku-Regular
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: b7785ec6ed7046847b65508524f2ed65, type: 2}
   m_SchemaSet:

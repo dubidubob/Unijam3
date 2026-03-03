@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: bb4be4f7fb5b12546b71dd23c3803efa
   m_SerializeEntries:
+  - m_GUID: 04920eab8bb328a4cb1bb6e3a2250852
+    m_Address: Assets/Localization/ImageLocalization Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 20fca0cdc91ceae4f9c3539ef8e20aae
     m_Address: Assets/Localization/StageScene/StageSceneUI Shared Data.asset
     m_ReadOnly: 1
@@ -39,6 +44,13 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4af639907b749c544972741da7bbc605
+    m_Address: RIDIBatang
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5230906f11d24d245ba62a06f0fd471f
     m_Address: Assets/Localization/StoryLevelInfo_Table Shared Data.asset
     m_ReadOnly: 1
@@ -50,6 +62,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6515731e2d908ba4fab819da2b770bf9
+    m_Address: DeukdoBeat_Logo_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7bb46ed568bd5744d8b5e9f7a10ba9e0
+    m_Address: DeukdoBeat_Logo_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9adb078fbd0f73443ae0e516b3aa8545
     m_Address: RIDIBatang SDF_TMP Pro

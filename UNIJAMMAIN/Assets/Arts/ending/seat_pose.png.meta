@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: seat_pose_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 30
+        width: 227
+        height: 335
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bf53e1bcc0acb6439db91708a3da7e5
+      internalID: 672535742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: seat_pose_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 29
+        width: 227
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ac7dd3e42d59fb46a71405dc5222b0a
+      internalID: 2075161133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: seat_pose_4
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 31
+        width: 227
+        height: 334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89a2d43f0fbb8484fad62e3f63fb485d
+      internalID: 236221933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: seat_pose_5
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 35
+        width: 227
+        height: 330
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faf01e13161fac744a248fa68308ac7f
+      internalID: -328888674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +190,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      seat_pose_0: 1149808306
+      seat_pose_1: 672535742
+      seat_pose_2: -1587951804
+      seat_pose_3: 2075161133
+      seat_pose_4: 236221933
+      seat_pose_5: -328888674
+      seat_pose_6: 223793119
+      seat_pose_7: -389613067
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
