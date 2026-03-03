@@ -17,7 +17,172 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 20fca0cdc91ceae4f9c3539ef8e20aae, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 28886827008
+    m_Localized: 0. Temple Courtyard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28953935872
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130176
+    m_Localized: 'Difficulty: Easy
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130177
+    m_Localized: 1. Deep Forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130178
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130179
+    m_Localized: 'Difficulty: Easy
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130180
+    m_Localized: 2. Waterfall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130181
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130182
+    m_Localized: 'Difficulty: Normal
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130183
+    m_Localized: 3. The Peak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130184
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130185
+    m_Localized: 'Difficulty: Hard
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130186
+    m_Localized: 4. E
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130187
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130188
+    m_Localized: 'Difficulty: Hard
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130189
+    m_Localized: 5. The Celestial Gates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130190
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130191
+    m_Localized: 'Difficulty: Master
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130192
+    m_Localized: 6. E
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130193
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130194
+    m_Localized: 'Difficulty: Master
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130195
+    m_Localized: 7. Abyss?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130196
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130197
+    m_Localized: 'Difficulty: Grandmaster
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130198
+    m_Localized: E1. Winter Celebration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130199
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130200
+    m_Localized: 'Difficulty: Normal
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130201
+    m_Localized: E2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130202
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28958130203
+    m_Localized: 'Difficulty: Hard
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6558356299448320
+    m_Localized: E3.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6558356349779968
+    m_Localized: en
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6558356349779969
+    m_Localized: 'Difficulty: Grandmaster
+
+
+      Rank'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

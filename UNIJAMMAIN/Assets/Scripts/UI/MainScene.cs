@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 public class MainScene : UI_Popup
 {
@@ -31,6 +32,13 @@ public class MainScene : UI_Popup
     private const float ANIMATION_DURATION = 1.0f; // 애니메이션 시간 (상수)
     private const float INPUT_UNLOCK_TIME = 0.7f;  // 입력 잠금 해제 시간 (더 빠르게, 사용성을 위해 넣었음.)
 
+
+    [Header("NewScene Setting")]
+    [SerializeField] private Image drawing_Image;
+    [SerializeField] private List<Image> buttons_Image;
+    [SerializeField] private Image patternBackGround_Image;
+    [SerializeField] private Image Monster1;
+    [SerializeField] private Image Monster2;
     enum CanClcikState
     {
         isOptionClick,
@@ -58,7 +66,9 @@ public class MainScene : UI_Popup
         }
 
         Init();
-        PlayBrushFillAnimation();
+
+
+        // PlayBrushFillAnimation();
         AnimateToStartText();
 
         StartCoroutine(NotifyManagerWhenReady());
@@ -99,11 +109,65 @@ public class MainScene : UI_Popup
         toStartSequence.SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
-    private void PlayComingAnimation()
+    private async UniTask PlayComingAnimation()
     {
         Managers.Sound.Play("SFX/UI/SettingCredit_V2", Define.Sound.SFX);
-        DOTween.To(() => -10f, x => leftImage.transform.position = new Vector3(x, 0f, 0f), 0f, comeTime);
-        DOTween.To(() => 10f, x => rightImage.transform.position = new Vector3(x, 0f, 0f), 0f, comeTime);
+        // 시퀀스 생성 (애니메이션 그룹화)
+        Sequence seq = DOTween.Sequence();
+
+        // 2. 좌우 이미지 이동 (동시에 실행)
+        // float 변수 제어 대신 UI이므로 DOAnchorPos(RectTransform)를 권장하지만, 
+        // 기존 코드 스타일(Position)을 유지하여 작성합니다.
+        seq.Append(leftImage.transform.DOMoveX(0f, comeTime).From(new Vector3(-10, 0f, 0f)).SetEase(Ease.OutQuad));
+
+        // 3. 이동이 완료된 후 실행될 애니메이션들 (Append 사용)
+        float fillDuration = 0.5f; // 채워지는 시간 설정
+
+        // Drawing과 Muck 이미지를 1로 채움
+        seq.Join(drawing_Image.DOFillAmount(1f, comeTime).SetEase(Ease.OutQuad));
+
+        seq.Append(rightImage.transform.DOMoveX(0f, comeTime).From(new Vector3(10f, 0f, 0f)).SetEase(Ease.OutQuad));
+
+        /*
+        // 버튼 리스트들을 순차적으로 혹은 동시에 채움
+        foreach (var btnImg in buttons_Image)
+        {
+            // Join을 쓰면 동시에, Append를 쓰면 하나씩 차례대로 실행됩니다.
+            seq.Join(btnImg.DOFillAmount(1f, fillDuration).SetEase(Ease.OutQuad));
+        }
+        */
+        // 시퀀스 맨 마지막에 실행될 함수 등록
+        seq.OnComplete(() =>
+        {
+            // 1. Monster들의 현재(기준) 위치 기억 및 초기화 (아래로 100만큼 내림)
+            // RectTransform을 사용하므로 anchoredPosition을 활용하는 것이 정확합니다.
+            RectTransform m1Rect = Monster1.rectTransform;
+            RectTransform m2Rect = Monster2.rectTransform;
+
+            Vector2 m1TargetPos = m1Rect.anchoredPosition;
+            Vector2 m2TargetPos = m2Rect.anchoredPosition;
+
+            // 시작 위치 설정: 현재 위치에서 Y축으로 -100만큼 내리고, 투명하게 설정
+            m1Rect.anchoredPosition = new Vector2(m1TargetPos.x, m1TargetPos.y - 100f);
+            m2Rect.anchoredPosition = new Vector2(m2TargetPos.x, m2TargetPos.y - 100f);
+
+            Monster1.color = new Color(1f, 1f, 1f, 0f); // 투명하게 시작
+            Monster2.color = new Color(1f, 1f, 1f, 0f);
+
+            // 2. 새로운 시퀀스로 몬스터 등장 연출
+            Sequence monsterSeq = DOTween.Sequence();
+
+            // Monster 1 등장 (위로 올라오면서 Fade In)
+            monsterSeq.Join(m1Rect.DOAnchorPos(m1TargetPos, 0.5f).SetEase(Ease.OutQuad));
+            monsterSeq.Join(Monster1.DOFade(1f, 0.5f));
+
+            // Monster 2 등장 (동시에 실행)
+            monsterSeq.Join(m2Rect.DOAnchorPos(m2TargetPos, 0.5f).SetEase(Ease.OutQuad));
+            monsterSeq.Join(Monster2.DOFade(1f, 0.5f));
+        });
+
+
+
     }
 
     public override void Init()
@@ -122,7 +186,7 @@ public class MainScene : UI_Popup
         Managers.Sound.Play("SFX/UI/PressToStart_V1",Define.Sound.SFX);
 
         toStartSequence?.Kill();
-        toStartText.fontMaterial = originalMaterial;
+        toStartText.fontMaterial = toStartText.font.material;
         toStartText.transform.localScale = Vector3.one;
         toStartText.color = Color.white;
         if (eventData.pointerPress != null)
@@ -130,7 +194,16 @@ public class MainScene : UI_Popup
             Destroy(eventData.pointerPress);
         }
         Debug.Log("시작, 입장");
-        PlayComingAnimation();
+
+        // 1. 배경 밝아지는 애니메이션 먼저 실행
+        // patternBackGround_Image의 컬러를 흰색(기본밝기)으로 1초 동안 변경
+        patternBackGround_Image.DOColor(Color.white, 1.0f)
+            .SetEase(Ease.OutCubic)
+            .OnComplete(() =>
+            {
+            // 완전히 다 밝아지면 실행
+            PlayComingAnimation().Forget();
+            });
     }
 
     private void PlayBrushFillAnimation()
@@ -143,7 +216,7 @@ public class MainScene : UI_Popup
     private void TextGlow(int index)
     {
         if (index < 0 || index >= tmpText.Length || tmpText[index] == null) return;
-        tmpText[index].fontMaterial = new Material(toStartText.fontSharedMaterial);
+        tmpText[index].fontMaterial = new Material(tmpText[index].fontSharedMaterial);
         tmpText[index].fontMaterial.EnableKeyword("UNDERLAY_ON");
         tmpText[index].fontMaterial.SetColor("_UnderlayColor", Color.white);
         tmpText[index].fontMaterial.SetFloat("_UnderlaySoftness", 0.4f);
@@ -253,7 +326,7 @@ public class MainScene : UI_Popup
     private void ResetHighlight(int index)
     {
         if (index < 0 || index >= tmpText.Length || tmpText[index] == null) return;
-        tmpText[index].fontMaterial = originalMaterial;
+        tmpText[index].fontMaterial = tmpText[index].font.material;
     }
 
     // --- 핵심 로직: 버튼 위치 초기화 ---

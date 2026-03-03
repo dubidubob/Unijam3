@@ -62,6 +62,12 @@ public class EndingController : MonoBehaviour
 
     [SerializeField] private float endPosY = -4747f;
     [SerializeField] private float durationEnd = 3f; // -2200 -> -4747 까지 가는 데 걸리는 시간
+
+
+    [SerializeField] private float waitingTime = 1.5f; // 잠시 대기하는 시간
+    [SerializeField] private GameObject cloudObject;
+    
+
     // ================================================================
 
     private bool wasImpactOn = false;
@@ -74,6 +80,8 @@ public class EndingController : MonoBehaviour
     };
 
     private List<EndingAction> endingSequence = new List<EndingAction>();
+    private List<EndingAction> ending_Up_Sequence = new List<EndingAction>();
+
 
     private void Start()
     {
@@ -111,7 +119,10 @@ public class EndingController : MonoBehaviour
 
     private void LoadEndingSequenceData(string resourcePath)
     {
+        // [수정된 부분] 두 리스트 모두 초기화
         endingSequence.Clear();
+        ending_Up_Sequence.Clear();
+
         TextAsset csvAsset = Resources.Load<TextAsset>(resourcePath);
         if (csvAsset == null) return;
 
@@ -141,12 +152,19 @@ public class EndingController : MonoBehaviour
                 if (idIdx < 0 || row.Count <= idIdx || string.IsNullOrWhiteSpace(row[idIdx])) continue;
 
                 string id = row[idIdx];
-                if (!id.StartsWith("Ending_Talk_")) continue;
+
+                // [수정된 부분] 어떤 연출 파트의 데이터인지 확인
+                bool isPart1 = id.StartsWith("Ending_Talk_");
+                bool isPart2 = id.StartsWith("Ending_Up_Talk_"); // 후반부 대사용 ID 접두사
+
+                // 둘 다 아니라면 스킵
+                if (!isPart1 && !isPart2) continue;
 
                 EndingAction action = new EndingAction();
                 action.id = id;
 
-                string indexPart = id.Replace("Ending_Talk_", "").Trim();
+                // 인덱스 파싱
+                string indexPart = isPart1 ? id.Replace("Ending_Talk_", "").Trim() : id.Replace("Ending_Up_Talk_", "").Trim();
                 if (int.TryParse(indexPart, out int idx)) action.index = idx;
 
                 string rawSpeaker = (speakerIdx >= 0 && speakerIdx < row.Count) ? row[speakerIdx].Trim() : "X";
@@ -171,7 +189,15 @@ public class EndingController : MonoBehaviour
                 string curveStr = (curveIdx >= 0 && curveIdx < row.Count) ? row[curveIdx] : "";
                 action.easeType = ParseEase(curveStr);
 
-                endingSequence.Add(action);
+                // [수정된 부분] ID에 맞게 알맞은 리스트에 추가
+                if (isPart1)
+                {
+                    endingSequence.Add(action);
+                }
+                else if (isPart2)
+                {
+                    ending_Up_Sequence.Add(action);
+                }
             }
         }
     }
@@ -368,9 +394,146 @@ public class EndingController : MonoBehaviour
         {
             Debug.LogWarning("인스펙터 창에서 Scroll Target이 비어있어 상승 연출을 재생할 수 없습니다.");
         }
+
+        Debug.Log("끝까지 도착했습니다!");
+        // 잠시대기
+        await UniTask.Delay(TimeSpan.FromSeconds(waitingTime));
+
+        // 영화 효과 다시 사라지기
+        var tasks2 = new List<UniTask>();
+
+        // [수정된 부분] tasks -> tasks2 로 변경하여 새 리스트에 담습니다.
+        tasks2.Add(upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 0), 1.7f)
+                        .SetEase(Ease.OutQuad) // 부드러운 효과 추가
+                        .ToUniTask());
+
+        tasks2.Add(downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 0), 1.7f)
+                     .SetEase(Ease.OutQuad) // 부드러운 효과 추가
+                     .ToUniTask());
+
+        // === 구름 올라오기 ===
+        // cloudObject가 GameObject로 선언되어 있으므로, 위치와 투명도를 제어할 컴포넌트를 가져옵니다.
+        RectTransform cloudRect = cloudObject.GetComponent<RectTransform>();
+        Image cloudImage = cloudObject.GetComponent<Image>();
+
+        if (cloudRect != null && cloudImage != null)
+        {
+            // 1. PosY -1200으로 살며시 올라오기 (시간은 2.5초로 임의 설정)
+            tasks2.Add(cloudRect.DOAnchorPosY(-1200f, 2.5f)
+                .SetEase(Ease.OutQuad) // 도착할 때 부드럽게 감속
+                .ToUniTask());
+
+            // 2. 구름 오브젝트 Alpha(투명도) 1로 변환하면서 나타나기
+            tasks2.Add(cloudImage.DOFade(1f, 2.5f)
+                .SetEase(Ease.OutQuad)
+                .ToUniTask());
+        }
+        else
+        {
+            Debug.LogWarning("cloudObject에 RectTransform 또는 Image 컴포넌트가 없습니다.");
+        }
+
+        // 영화 레터박스가 사라지는 효과와 구름이 올라오는 효과를 동시에 실행하고 대기
+        await UniTask.WhenAll(tasks2);
+
+        Debug.Log("모든 엔딩 연출 종료!");
+
+        // 잠시대기
+        await UniTask.Delay(TimeSpan.FromSeconds(waitingTime));
+
+
+        // 대화시작! 
+
+        // 대화시작! 
+        foreach (var action in ending_Up_Sequence)
+        {
+            string localizedName = string.IsNullOrEmpty(action.speakerKey) ? "" : LocalizationManager.Get(action.speakerKey);
+            string localizedContent = LocalizationManager.Get(action.id);
+
+            if (localizedContent == "X" || localizedContent == "~") localizedContent = "";
+
+            if (!string.IsNullOrEmpty(localizedContent))
+            {
+                // [이름 깜빡임 방지 로직] 이전 대사와 화자가 같으면 이름의 알파값을 유지
+                float prevNameAlpha = name.color.a;
+                string prevNameText = name.text;
+
+                name.text = localizedName;
+                content_Text.text = localizedContent;
+
+                Color startNameCol = action.nameColor;
+                startNameCol.a = (prevNameText == localizedName && prevNameAlpha > 0f) ? prevNameAlpha : 0f;
+                name.color = startNameCol;
+
+                Color startTextCol = action.textColor;
+                startTextCol.a = 0f;
+                content_Text.color = startTextCol;
+
+                // 페이드 인 진행
+                if (action.conversion > 0f)
+                {
+                    var t1 = name.DOColor(action.nameColor, action.conversion).SetEase(action.easeType);
+                    var t2 = content_Text.DOColor(action.textColor, action.conversion).SetEase(action.easeType);
+
+                    await UniTask.WhenAll(t1.ToUniTask(), t2.ToUniTask());
+                }
+                else
+                {
+                    name.color = action.nameColor;
+                    content_Text.color = action.textColor;
+                }
+            }
+            else
+            {
+                // 빈 줄(X, ~)이 들어왔을 때 화면의 텍스트를 지우는 로직
+                bool isResting = (action.rawSpeaker == "~");
+
+                if (action.conversion > 0f)
+                {
+                    var fadeTasks = new List<UniTask>();
+
+                    // 쉬는 구간(~ 즉, isResting이 true)이 아닐 때만 이름을 페이드 아웃
+                    if (!isResting && name.color.a > 0)
+                        fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+
+                    if (content_Text.color.a > 0)
+                        fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+
+                    if (fadeTasks.Count > 0)
+                    {
+                        await UniTask.WhenAll(fadeTasks);
+                    }
+                }
+                else
+                {
+                    SetAlpha(name, 0f);
+                    SetAlpha(content_Text, 0f);
+                }
+
+                // 모두 투명해졌으면 텍스트 비우기
+                if (!isResting)
+                {
+                    name.text = "";
+                }
+                content_Text.text = "";
+            }
+
+            // 대사 유지(대기) 시간
+            if (action.duration > 0f)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
+            }
+        }
+
+
+
     }
 
-    private float ParseTime(string timeStr)
+    private async UniTask Last_Ending_Animation()
+    {
+
+    }
+        private float ParseTime(string timeStr)
     {
         if (string.IsNullOrEmpty(timeStr)) return 0f;
         string cleanStr = timeStr.ToLower().Replace("ms", "").Trim();
