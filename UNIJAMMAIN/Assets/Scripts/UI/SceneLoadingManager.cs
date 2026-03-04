@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks; // UniTask 필수 네임스페이스
 using System.Threading; // CancellationToken
+using DG.Tweening;
 
 public class SceneLoadingManager : UI_Base
 {
@@ -103,6 +104,15 @@ public class SceneLoadingManager : UI_Base
 
         // 씬 로딩이 90% 완료될 때까지 대기
         await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f, cancellationToken: token);
+
+        // 씬에 남아있는 모든 MovingEnemy (Poolable을 가진 오브젝트) 강제 파괴
+        MovingEnemy[] allEnemies = GameObject.FindObjectsOfType<MovingEnemy>(true);
+        foreach (var enemy in allEnemies)
+        {
+            // DOTween이 돌고 있을 수 있으므로 Kill
+            DOTween.Kill(enemy.dyingEffectObject);
+            GameObject.Destroy(enemy.gameObject);
+        }
 
         Managers.Clear();
 
