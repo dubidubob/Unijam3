@@ -88,6 +88,9 @@ public class EndingController : MonoBehaviour
     private List<EndingAction> endingSequence = new List<EndingAction>();
     private List<EndingAction> ending_Up_Sequence = new List<EndingAction>();
 
+    private List<EndingAction> ending_Normal_Sequence = new List<EndingAction>();
+    private List<EndingAction> ending_Hidden_Sequence = new List<EndingAction>();
+
 
     private void Start()
     {
@@ -133,6 +136,8 @@ public class EndingController : MonoBehaviour
         // [수정된 부분] 두 리스트 모두 초기화
         endingSequence.Clear();
         ending_Up_Sequence.Clear();
+        ending_Normal_Sequence.Clear();
+        ending_Hidden_Sequence.Clear();
 
         TextAsset csvAsset = Resources.Load<TextAsset>(resourcePath);
         if (csvAsset == null) return;
@@ -164,18 +169,53 @@ public class EndingController : MonoBehaviour
 
                 string id = row[idIdx].Trim();
 
-                // [수정된 부분] 어떤 연출 파트의 데이터인지 확인
-                bool isPart1 = id.StartsWith("Ending_Talk_");
-                bool isPart2 = id.StartsWith("Ending_UpTalk_"); // 후반부 대사용 ID 접두사
+                int caseType = 0;
 
-                // 둘 다 아니라면 스킵
-                if (!isPart1 && !isPart2) continue;
+              
+                if(id.StartsWith("Ending_Talk_"))
+                {
+                    caseType = 1;
+                }
+                else if(id.StartsWith("Ending_UpTalk_"))
+                {
+                    caseType = 2;
+                }
+                else if(id.StartsWith("Ending_Normal_"))
+                {
+                    caseType = 3;
+                }
+                else if(id.StartsWith("Ending_Hidden_"))
+                {
+                    caseType = 4;
+                }
 
+
+             
                 EndingAction action = new EndingAction();
                 action.id = id;
 
                 // 인덱스 파싱
-                string indexPart = isPart1 ? id.Replace("Ending_Talk_", "").Trim() : id.Replace("Ending_UpTalk_", "").Trim();
+                string indexPart= null;
+
+                switch(caseType)
+                {
+                    case 1:
+                        indexPart = id.Replace("Ending_Talk_", "").Trim();
+                        break;
+                    case 2:
+                        indexPart = id.Replace("Ending_UpTalk_", "").Trim();
+                        break;
+                    case 3:
+                        indexPart = id.Replace("Ending_Normal_", "").Trim();
+                        break;
+
+                    case 4:
+                        indexPart = id.Replace("Ending_Hidden_", "").Trim();
+                        break;
+                }
+
+
+
                 if (int.TryParse(indexPart, out int idx)) action.index = idx;
 
                 string rawSpeaker = (speakerIdx >= 0 && speakerIdx < row.Count) ? row[speakerIdx].Trim() : "X";
@@ -200,15 +240,25 @@ public class EndingController : MonoBehaviour
                 string curveStr = (curveIdx >= 0 && curveIdx < row.Count) ? row[curveIdx] : "";
                 action.easeType = ParseEase(curveStr);
 
-                // [수정된 부분] ID에 맞게 알맞은 리스트에 추가
-                if (isPart1)
+              
+
+                switch (caseType)
                 {
-                    endingSequence.Add(action);
+                    case 1:
+                        endingSequence.Add(action);
+                        break;
+                    case 2:
+                        ending_Up_Sequence.Add(action);
+                        break;
+                    case 3:
+                        ending_Normal_Sequence.Add(action);
+                        break;
+
+                    case 4:
+                        ending_Hidden_Sequence.Add(action);
+                        break;
                 }
-                else if (isPart2)
-                {
-                    ending_Up_Sequence.Add(action);
-                }
+
             }
         }
 
@@ -560,13 +610,192 @@ public class EndingController : MonoBehaviour
 
 
         Debug.Log("Part2 모든 액션 종료");
+
+
+        if(Bool_CheckHiddenEndingEnter())
+        {
+            HiddenEnding_Sequence().Forget();
+            return;
+        }
+        else
+        {
+            NormalEnding_Sequence().Forget();
+            return;
+        }
     }
 
-    private async UniTask Last_Ending_Animation()
+
+    private async UniTask NormalEnding_Sequence()
     {
+        // 대화시작! 
+        foreach (var action in ending_Normal_Sequence)
+        {
+            string localizedName = string.IsNullOrEmpty(action.speakerKey) ? "" : LocalizationManager.Get(action.speakerKey);
+            string localizedContent = LocalizationManager.Get(action.id);
+
+            if (localizedContent == "X" || localizedContent == "~") localizedContent = "";
+           
+            if (!string.IsNullOrEmpty(localizedContent))
+            {
+                // [이름 깜빡임 방지 로직] 이전 대사와 화자가 같으면 이름의 알파값을 유지
+                float prevNameAlpha = name.color.a;
+                string prevNameText = name.text;
+
+                name.text = localizedName;
+                content_Text.text = localizedContent;
+
+                Color startNameCol = action.nameColor;
+                startNameCol.a = (prevNameText == localizedName && prevNameAlpha > 0f) ? prevNameAlpha : 0f;
+                name.color = startNameCol;
+
+                Color startTextCol = action.textColor;
+                startTextCol.a = 0f;
+                content_Text.color = startTextCol;
+
+                // 페이드 인 진행
+                if (action.conversion > 0f)
+                {
+                    var t1 = name.DOColor(action.nameColor, action.conversion).SetEase(action.easeType);
+                    var t2 = content_Text.DOColor(action.textColor, action.conversion).SetEase(action.easeType);
+
+                    await UniTask.WhenAll(t1.ToUniTask(), t2.ToUniTask());
+                }
+                else
+                {
+                    name.color = action.nameColor;
+                    content_Text.color = action.textColor;
+                }
+            }
+            else
+            {
+                // 빈 줄(X, ~)이 들어왔을 때 화면의 텍스트를 지우는 로직
+                bool isResting = (action.rawSpeaker == "~");
+
+                if (action.conversion > 0f)
+                {
+                    var fadeTasks = new List<UniTask>();
+
+                    // 쉬는 구간(~ 즉, isResting이 true)이 아닐 때만 이름을 페이드 아웃
+                    if (!isResting && name.color.a > 0)
+                        fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+
+                    if (content_Text.color.a > 0)
+                        fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+
+                    if (fadeTasks.Count > 0)
+                    {
+                        await UniTask.WhenAll(fadeTasks);
+                    }
+                }
+                else
+                {
+                    SetAlpha(name, 0f);
+                    SetAlpha(content_Text, 0f);
+                }
+
+                // 모두 투명해졌으면 텍스트 비우기
+                if (!isResting)
+                {
+                    name.text = "";
+                }
+                content_Text.text = "";
+            }
+
+            // 대사 유지(대기) 시간
+            if (action.duration > 0f)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
+            }
+        }
 
     }
-        private float ParseTime(string timeStr)
+
+    private async UniTask HiddenEnding_Sequence()
+    {
+        // 대화시작! 
+        foreach (var action in ending_Hidden_Sequence)
+        {
+            string localizedName = string.IsNullOrEmpty(action.speakerKey) ? "" : LocalizationManager.Get(action.speakerKey);
+            string localizedContent = LocalizationManager.Get(action.id);
+
+            if (localizedContent == "X" || localizedContent == "~") localizedContent = "";
+            SpecialAction_Up(action.index, action);
+
+            if (!string.IsNullOrEmpty(localizedContent))
+            {
+                // [이름 깜빡임 방지 로직] 이전 대사와 화자가 같으면 이름의 알파값을 유지
+                float prevNameAlpha = name.color.a;
+                string prevNameText = name.text;
+
+                name.text = localizedName;
+                content_Text.text = localizedContent;
+
+                Color startNameCol = action.nameColor;
+                startNameCol.a = (prevNameText == localizedName && prevNameAlpha > 0f) ? prevNameAlpha : 0f;
+                name.color = startNameCol;
+
+                Color startTextCol = action.textColor;
+                startTextCol.a = 0f;
+                content_Text.color = startTextCol;
+
+                // 페이드 인 진행
+                if (action.conversion > 0f)
+                {
+                    var t1 = name.DOColor(action.nameColor, action.conversion).SetEase(action.easeType);
+                    var t2 = content_Text.DOColor(action.textColor, action.conversion).SetEase(action.easeType);
+
+                    await UniTask.WhenAll(t1.ToUniTask(), t2.ToUniTask());
+                }
+                else
+                {
+                    name.color = action.nameColor;
+                    content_Text.color = action.textColor;
+                }
+            }
+            else
+            {
+                // 빈 줄(X, ~)이 들어왔을 때 화면의 텍스트를 지우는 로직
+                bool isResting = (action.rawSpeaker == "~");
+
+                if (action.conversion > 0f)
+                {
+                    var fadeTasks = new List<UniTask>();
+
+                    // 쉬는 구간(~ 즉, isResting이 true)이 아닐 때만 이름을 페이드 아웃
+                    if (!isResting && name.color.a > 0)
+                        fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+
+                    if (content_Text.color.a > 0)
+                        fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+
+                    if (fadeTasks.Count > 0)
+                    {
+                        await UniTask.WhenAll(fadeTasks);
+                    }
+                }
+                else
+                {
+                    SetAlpha(name, 0f);
+                    SetAlpha(content_Text, 0f);
+                }
+
+                // 모두 투명해졌으면 텍스트 비우기
+                if (!isResting)
+                {
+                    name.text = "";
+                }
+                content_Text.text = "";
+            }
+
+            // 대사 유지(대기) 시간
+            if (action.duration > 0f)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
+            }
+        }
+
+    }
+    private float ParseTime(string timeStr)
     {
         if (string.IsNullOrEmpty(timeStr)) return 0f;
         string cleanStr = timeStr.ToLower().Replace("ms", "").Trim();
@@ -729,9 +958,28 @@ public class EndingController : MonoBehaviour
         });
     }
 
+
+
     private void SettingClearForStart()
     {
         scrollTarget.DOAnchorPosY(startPosY, 0);
         backGround.DOColor(new Color(0, 0, 0, 1), 0);
+    }
+
+    /// <summary>
+    /// Noraml 엔딩 fale, Hidden 엔딩 true
+    /// </summary>
+    private bool Bool_CheckHiddenEndingEnter()
+    {
+        // 모든 챕터의 랭크가 최상일때 
+        for(int i=0;i<IngameData.TOTAL_STORY_CHAPTERS;i++)//모든 스토리 챕터에 대해
+        {
+            if(IngameData._bestChapterRanks[i]!=Define.Rank.Perfect) // 최고 랭크가 아니라면
+            {
+                return false; // 노말 엔딩으로 진입
+            }
+        }
+
+        return true; // 모든것을 통과했다면 히든엔딩으로 진입할 수 있음.
     }
 }
