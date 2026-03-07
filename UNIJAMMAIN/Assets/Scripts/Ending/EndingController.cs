@@ -683,7 +683,7 @@ public class EndingController : MonoBehaviour
     private async UniTask NormalEnding_Sequence()
     {
         // 대화시작! 
-        Managers.Sound.Play("BGM/Exhaust", Define.Sound.BGM);
+        Managers.Sound.Play("BGM/Exhaust", Define.Sound.BGM,1,1,false);
         Debug.Log("노말엔딩 시퀀스 시작");
         foreach (var action in ending_Normal_Sequence)
         {
