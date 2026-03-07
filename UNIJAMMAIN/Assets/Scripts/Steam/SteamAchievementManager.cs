@@ -1,37 +1,63 @@
 using UnityEngine;
 using Steamworks;
 
-// [중요] : MonoBehaviour 상속 제거!
 public class SteamAchievementManager
 {
-    // 초기화 함수 (Managers.Init() 등에서 호출해줘도 됨)
+    // Callback 대신 CallResult를 사용해야 합니다.
+    private CallResult<UserStatsReceived_t> m_UserStatsReceived;
+
     public void Init()
     {
         if (!SteamManager.Initialized)
         {
-            Debug.LogWarning("Steam Manager가 초기화되지 않았습니다.");
+            Debug.LogWarning("[Steam] Steam Manager가 초기화되지 않았습니다.");
+            return;
+        }
+
+        // 1. 비동기 호출 결과를 받을 CallResult 생성
+        m_UserStatsReceived = CallResult<UserStatsReceived_t>.Create(OnUserStatsReceived);
+
+        // 2. 현재 유저의 SteamID를 가져와 스탯 요청 (SteamAPICall_t 반환)
+        CSteamID mySteamID = SteamUser.GetSteamID();
+        SteamAPICall_t handle = SteamUserStats.RequestUserStats(mySteamID);
+
+        // 3. CallResult에 핸들 연결
+        m_UserStatsReceived.Set(handle);
+    }
+
+    private void OnUserStatsReceived(UserStatsReceived_t pCallback, bool bIOFailure)
+    {
+        // bIOFailure가 false이고, 결과가 OK일 때 성공
+        if (!bIOFailure && pCallback.m_eResult == EResult.k_EResultOK)
+        {
+            Debug.Log("[Steam] 유저 스탯/업적 정보를 성공적으로 불러왔습니다.");
+        }
+        else
+        {
+            Debug.LogError($"[Steam] 유저 스탯 정보 로드 실패. IO 오류: {bIOFailure}, 결과: {pCallback.m_eResult}");
         }
     }
 
     public void UnlockAchievement(string achievementID)
     {
-        // 1. 스팀이 초기화 안 됐으면 중단
         if (!SteamManager.Initialized) return;
 
-        // 2. [핵심 최적화] 이미 달성한 업적(true)인지 확인
         bool isAchieved = false;
         bool result = SteamUserStats.GetAchievement(achievementID, out isAchieved);
 
-        // API 호출 자체가 실패했거나(result == false), 
-        // 이미 달성한 상태(isAchieved == true)라면 여기서 끝냄! (서버 전송 안 함)
-        if (!result || isAchieved)
+        // API 호출 실패 (스탯 로딩 전이거나 ID가 잘못됨)
+        if (!result)
         {
+            Debug.LogWarning($"[Steam] 업적 상태를 확인할 수 없습니다. (ID: {achievementID}) - 스탯 로딩 전일 수 있습니다.");
             return;
         }
 
-        // 3. 달성 안 했다면 그때 비로소 서버에 전송
+        // 이미 달성한 경우 중단
+        if (isAchieved) return;
+
+        // 달성 안 했다면 서버에 전송
         SteamUserStats.SetAchievement(achievementID);
-        SteamUserStats.StoreStats(); // 여기가 비용이 드는 부분인데, 위에서 걸러져서 최초 1회만 실행됨
+        SteamUserStats.StoreStats();
 
         Debug.Log($"[Steam] 업적 신규 달성! : {achievementID}");
     }

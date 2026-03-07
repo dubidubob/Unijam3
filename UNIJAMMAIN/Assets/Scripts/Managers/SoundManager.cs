@@ -78,7 +78,7 @@ public class SoundManager
             SettingNewSceneVolume();
         }
     }
-    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f)
+    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f,bool loop = true)
     {
 
 
@@ -145,7 +145,7 @@ public class SoundManager
             }
             else
             {
-                audioSource.loop = true;
+                audioSource.loop = loop; // 전달받은 loop 값 적용
             }
 
             BGM = audioSource;
@@ -386,10 +386,10 @@ public class SoundManager
             audioSource.PlayOneShot(audioClip);
         }
     }
-    public void Play(string path, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f)
+    public void Play(string path, Define.Sound type = Define.Sound.SFX, float pitch = 1.0f,float volume = 1.0f,bool loop=true)
     {
         AudioClip audioClip = GetOrAddAudioClip(path, type);
-        Play(audioClip, type, pitch,volume);
+        Play(audioClip, type, pitch,volume,loop);
     }
     public void PlayDelayed(string path, float delay, Define.Sound type = Define.Sound.BGM, float pitch = 1.0f)
     {

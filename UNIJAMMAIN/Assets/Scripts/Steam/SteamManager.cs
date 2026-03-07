@@ -20,9 +20,7 @@ public class SteamManager : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-#if UNITY_EDITOR
-		return;
-#endif
+
 
 		if (s_Instance != null)
 		{
@@ -82,6 +80,7 @@ public class SteamManager : MonoBehaviour
 			Debug.LogError("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);
 			return;
 		}
+		Debug.Log("성공적인 Steam연결 완료");
 
 		s_EverInitialized = true;
 	}

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using Steamworks;
 
 public enum Language
 {
@@ -18,6 +19,7 @@ public static class LocalizationManager
     // key -> (langKey -> value)
     static Dictionary<string, Dictionary<Language, string>> Localization_Table = new Dictionary<string, Dictionary<Language, string>>();
     public static event Action OnLanguageChanged;
+
 
     // Load CSV from Resources (can be called at runtime or editor)
    // 기존 Load 함수 대신 LoadAll 폴더 로드 방식으로 변경
@@ -111,6 +113,55 @@ public static class LocalizationManager
         if (code.StartsWith("zh")) return Language.Chinese;
         return Language.English;
     }
+    // 스팀 설정 언어를 가져와 게임 언어로 세팅합니다. (게임 초기화 시 1회 호출 추천)
+    public static void SyncWithSteamLanguage()
+    {
+        if (!SteamManager.Initialized)
+        {
+            Debug.LogWarning("[Localization] 스팀이 초기화되지 않아 기본 언어를 사용합니다.");
+            return;
+        }
+
+        // Steam API를 통해 현재 스팀 클라이언트(또는 게임 속성)에 설정된 언어 코드를 가져옴
+        string steamLang = SteamApps.GetCurrentGameLanguage();
+        Language targetLang = Language.English; // 기본값
+
+        // Steam 언어 코드를 게임의 Language Enum으로 매핑
+        switch (steamLang)
+        {
+            case "korean": targetLang = Language.Korean; break;
+            case "japanese": targetLang = Language.Japanese; break;
+            case "schinese": // 간체
+            case "tchinese": // 번체
+                targetLang = Language.Chinese; break;
+            case "english":
+            default:
+                targetLang = Language.English; break;
+        }
+
+        Debug.Log($"[Localization] Steam 언어 감지됨: {steamLang}. 게임 언어를 {targetLang}로 설정합니다.");
+        ChangeLanguage(targetLang);
+    }
+
+    // 언어 변경 로직 중앙화 (LocaleSetting에 있던 로직을 이쪽으로 가져옴)
+    public static void ChangeLanguage(Language language)
+    {
+        string localeCode = GetCodeFromLanguage(language);
+        var targetLocale = LocalizationSettings.AvailableLocales.GetLocale(localeCode);
+
+        if (targetLocale != null)
+        {
+            LocalizationSettings.SelectedLocale = targetLocale;
+
+            // 이벤트 발생시켜 UI(LocaleSetting 등) 업데이트 유도
+            OnLanguageChanged?.Invoke();
+        }
+        else
+        {
+            Debug.LogError($"[Localization] Locale을 찾을 수 없습니다: {localeCode}");
+        }
+    }
+
 
     // 언어 변경 (UI용)
     public static void SetLanguage(Language lang)
@@ -192,6 +243,17 @@ public static class LocalizationManager
     public static bool HasKey(string key)
     {
         return Localization_Table.ContainsKey(key);
+    }
+    // Language Enum -> Locale Code 변환 헬퍼 (기존 LocaleSetting에서 이동)
+    private static string GetCodeFromLanguage(Language lang)
+    {
+        switch (lang)
+        {
+            case Language.Korean: return "ko";
+            case Language.Japanese: return "ja";
+            case Language.Chinese: return "zh-Hans";
+            case Language.English: default: return "en";
+        }
     }
 
 }

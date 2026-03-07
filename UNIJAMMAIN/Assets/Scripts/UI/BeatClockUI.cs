@@ -8,6 +8,8 @@ public class BeatClockUI : MonoBehaviour
     private Vector3 baseScale;
     private float beatDuration;
 
+    [SerializeField] private float beatSizeUpRate = 1.2f;
+
     private void Awake()
     {
         baseScale = transform.localScale;
@@ -58,7 +60,7 @@ public class BeatClockUI : MonoBehaviour
     private void BeatMoving(long __)
     {
         // 현재 크기 -> 1.2배 커지기 (전체 비트의 50% 동안)
-        transform.DOScale(baseScale * 1.2f, 0.001f).SetEase(Ease.OutCubic)
+        transform.DOScale(baseScale * beatSizeUpRate, 0.001f).SetEase(Ease.OutCubic)
             .OnComplete(() =>
             {
                 // 애니메이션이 끝난 후 원래 크기로 돌아오는 애니메이션을 실행합니다.

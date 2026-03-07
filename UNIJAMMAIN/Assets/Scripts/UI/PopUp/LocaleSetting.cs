@@ -34,7 +34,8 @@ public class LocaleSetting : MonoBehaviour
     /// </summary>
     public void ChangeLanguageByIndex(int index)
     {
-        ChangeLanguage((Language)index);
+        // 핵심 로직은 매니저에게 위임
+        LocalizationManager.ChangeLanguage((Language)index);
     }
 
     public void ChangeLanguage(Language language)
