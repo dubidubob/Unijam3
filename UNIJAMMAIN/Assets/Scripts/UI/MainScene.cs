@@ -143,6 +143,8 @@ public class MainScene : UI_Popup
 
         // 0. 초기 설정 (이미지들이 안 보이는 상태로 시작)
         Image_LogoUp.fillAmount = 0;
+        Image_LogoUp.SetNativeSize();
+        Image_LogoDown.SetNativeSize();
 
         // LogoDown은 투명하고 약간 크게 설정 (찍히기 전 상태)
         Color downColor = Image_LogoDown.color;
