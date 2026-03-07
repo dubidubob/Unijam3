@@ -132,17 +132,21 @@ public class EndingController : MonoBehaviour
         SettingClearForStart();
         ClearAllTexts();
         LoadEndingSequenceData("Localization/EndingTable");
-        PlayEndingSequence().Forget();
 
-        // PlayEndingSequence_Part2().Forget();
 
-        // PlayCase26Sequence().Forget();
+        PlayEndingSequence().Forget(); // 처음부터 시작
 
-        //PlayEndingSequence_Part2_TextAction().Forget();
+        // PlayEndingSequence_Part2().Forget(); // 영화 액션부터 시작, 하늘로 올라가기
+
+        //PlayEndingSequence_Part2_TextAction().Forget(); // 하늘로 올라가서 대화 시작 UpTalk
+
+        //NormalEnding_Sequence().Forget(); // 노말엔딩시작 // NormalEnding Talk
+
+
 
 
     }
-    
+
     private void ClearAllTexts()
     {
         // SetActive(false)로 끄지 않고 무조건 켜둡니다. 알파(투명도)로만 제어합니다.
@@ -666,8 +670,9 @@ public class EndingController : MonoBehaviour
 
         Debug.Log("Part2 모든 액션 종료");
 
-
-        if(Bool_CheckHiddenEndingEnter())
+        NormalEnding_Sequence().Forget();
+        /*
+        if (Bool_CheckHiddenEndingEnter())
         {
             HiddenEnding_Sequence().Forget();
             return;
@@ -677,6 +682,7 @@ public class EndingController : MonoBehaviour
             NormalEnding_Sequence().Forget();
             return;
         }
+        */
     }
 
 

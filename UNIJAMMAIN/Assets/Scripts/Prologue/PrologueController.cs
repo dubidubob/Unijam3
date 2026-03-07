@@ -58,6 +58,7 @@ public class PrologueController : MonoBehaviour
     private void Start()
     {
         InitializeUI();
+        LocalizationManager.LoadAll();
         LoadPrologueSequenceData("Localization/PrologueTable"); // 경로에 맞게 수정
 
         // 두 시퀀스를 병렬(Parallel)로 실행

@@ -1,0 +1,57 @@
+Key,IsNextBackGround,IsNextObject,StartPos,EndPos,Korean(ko),Chinese (Simplified)(zh-Hans),English(en),Japanese(ja),Curve,Duration,Conversion,TextColor,Speaker,,
+Prologue_Frame_0,TRUE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_1,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_2,TRUE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_3,FALSE,FALSE,,,,,,,,3000ms,,,,,"BackGround 순서
+1. 암전화면
+2.시장
+3.회색시장
+4.검은색시장
+5.흰색 긴거
+6.암전화면
+7.절배경
+
+정리 
+false,false-> 해당 상태 유지
+true,false-> 배경 변화중
+false,true -> 오브젝트 생성중"
+Prologue_Frame_4,TRUE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_5,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_6,TRUE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_7,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_8,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_9,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_10,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_11,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_12,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_13,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_14,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_15,FALSE,FALSE,,,,,,,,3000ms,,,,,"Object순서
+시트에 써놓은 순서대로임"
+Prologue_Frame_16,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_17,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_18,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_19,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_20,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_21,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_22,TRUE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_23,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_24,TRUE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_25,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_26,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_27,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_28,FALSE,TRUE,,,,,,,,3000ms,,,,,
+Prologue_Frame_29,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_30,TRUE,FALSE,,,,,,,,3000ms,,,,,
+Prologue_Frame_31,FALSE,FALSE,,,,,,,,3000ms,,,,,
+Text_Frame_0,,,,,,,,,,5000ms,0ms,,수도승,,
+Text_Frame_1,,,,,테스트1,,,,,3000ms,500ms,,수도승,,
+Text_Frame_2,,,,,,,,,,3000ms,500ms,,수도승,,
+Text_Frame_3,,,,,테스트2,,,,,3000ms,400ms,,수도승,,
+Text_Frame_4,,,,,,,,,,3000ms,300ms,,스승,,
+Text_Frame_5,,,,,테스트3,,,,,4000ms,4000ms,,스승,,
+Text_Frame_6,,,,,,,,,,5000ms,400ms,,스승,,
+Text_Frame_7,,,,,테스트4,,,,,5000ms,300ms,,수도승,,
+Text_Frame_8,,,,,,,,,,6000ms,600ms,,스승,,
+Speaker_Name_Sudo,,,,,수도승,,,,,,,,,,
+Speaker_Name_Master,,,,,스승님,,,,,,,,,,
