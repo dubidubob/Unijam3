@@ -71,6 +71,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94e99211b1647d64e8565f864059e41e
+    m_Address: Ending_Deukdo_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9eaae5d25f979cf4f80c67de9b2187cd
     m_Address: NextChapterBtn_ja
     m_ReadOnly: 1

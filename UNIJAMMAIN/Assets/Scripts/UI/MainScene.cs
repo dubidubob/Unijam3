@@ -81,55 +81,40 @@ public class MainScene : UI_Popup
     {
         // 0. 초기 설정
         CanvasGroup gamesLogoCanvasGroup = Canvas_GamesLogo;
+        Image[] logoParts = { Image_GamesLogoUp, Image_GamesLogoDown };
 
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
-
+        // 초기 상태: 모두 투명하게 시작
+        foreach (var v in logoParts)
+        {
+            v.color = new Color(1, 1, 1, 0);
+        }
         gamesLogoCanvasGroup.alpha = 1;
 
-        // 시작 스케일을 5f -> 1.8f로 줄여서 너무 멀리서 날아오지 않게 설정
-        float startScale = 1.8f;
-        Image_GamesLogoUp.transform.localScale = Vector3.one * startScale;
-        Image_GamesLogoDown.transform.localScale = Vector3.one * startScale;
-
-        Image_GamesLogoUp.color = new Color(1, 1, 1, 0);
-        Image_GamesLogoDown.color = new Color(1, 1, 1, 0);
-
-        // 1. Up 로고 박힘 (강도 1.2 - "탕!")
-        Image_GamesLogoUp.DOFade(1f, 0.05f); // 페이드는 아주 빠르게
-                                             // InExpo 대신 OutQuad를 사용하고 시간을 줄여 타격감을 높임
-        await Image_GamesLogoUp.transform.DOScale(1f, 0.12f).SetEase(Ease.OutQuad).ToUniTask();
-        Image_GamesLogoUp.transform.DOShakePosition(0.2f, 3f, 20); // 절도 있는 짧은 흔들림
-
-        await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f));
-
-        // 2. Down 로고 박힘 (강도 3.6 - "쾅!")
-        Image_GamesLogoDown.DOFade(1f, 0.05f);
-        await Image_GamesLogoDown.transform.DOScale(1f, 0.1f).SetEase(Ease.OutQuad).ToUniTask();
-        // 강도 3.6을 위해 진동 세기를 유지하면서 타격 시간을 짧게 가져감
-        Image_GamesLogoDown.transform.DOShakePosition(0.3f, 9f, 30);
-
-        await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
-
-        // 3. 심장 박동하듯이 2번 쿵쿵!
-        for (int i = 0; i < 2; i++)
+        // 1. 모든 로고 동시 페이드 인
+        Sequence fadeInSeq = DOTween.Sequence();
+        foreach (var v in logoParts)
         {
-            Sequence beatSeq = DOTween.Sequence();
-            // 박동은 0.1초 내외로 짧아야 쫄깃한 느낌이 납니다.
-            beatSeq.Join(Image_GamesLogoUp.transform.DOScale(1.1f, 0.08f).SetEase(Ease.OutSine));
-            beatSeq.Join(Image_GamesLogoDown.transform.DOScale(1.1f, 0.08f).SetEase(Ease.OutSine));
-            beatSeq.Append(Image_GamesLogoUp.transform.DOScale(1f, 0.12f).SetEase(Ease.InSine));
-            beatSeq.Join(Image_GamesLogoDown.transform.DOScale(1f, 0.12f).SetEase(Ease.InSine));
-
-            await beatSeq.ToUniTask();
-            await UniTask.Delay(System.TimeSpan.FromSeconds(0.05f));
+            // Join을 써야 모든 이미지가 '동시에' 페이드 됩니다.
+            fadeInSeq.Join(v.DOFade(1f, 0.7f));
         }
+        await fadeInSeq.ToUniTask();
 
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1.2f));
+        // 2. 로고 보여주는 대기 시간
+        await UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
 
-        // 4. 사라지기
-        await gamesLogoCanvasGroup.DOFade(0f, 1f).ToUniTask();
+        // 3. 모든 로고 동시 페이드 아웃
+        Sequence fadeOutSeq = DOTween.Sequence();
+        foreach (var v in logoParts)
+        {
+            fadeOutSeq.Join(v.DOFade(0f, 0.7f));
+        }
+        await fadeOutSeq.ToUniTask();
 
-        await UniTask.Delay(System.TimeSpan.FromSeconds(0.3f));
+        fadeInSeq.Join(gamesLogoCanvasGroup.DOFade(0, 1f));
+
+
+        // 4. 다음 단계로 넘어가기 전 짧은 대기
+        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
         // 5. 다음 로고 액션 진행
         await ActionLogo();

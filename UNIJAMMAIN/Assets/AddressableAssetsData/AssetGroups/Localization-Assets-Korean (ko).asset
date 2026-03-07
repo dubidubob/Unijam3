@@ -53,6 +53,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e5f0d67c1cbd6e4da3f0739a13c6fb4
+    m_Address: Ending_Deukdo_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6eaca38901da13a4db4639c14a96b546
     m_Address: NewRecord_ko
     m_ReadOnly: 1

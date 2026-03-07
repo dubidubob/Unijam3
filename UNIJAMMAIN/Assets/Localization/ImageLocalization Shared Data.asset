@@ -71,6 +71,10 @@ MonoBehaviour:
     m_Key: Image_Logo_Down
     m_Metadata:
       m_Items: []
+  - m_Id: 1598641282875392
+    m_Key: Image_EndingDukdo
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 3596657104847372631
@@ -171,5 +175,11 @@ MonoBehaviour:
           - ko
           - ja
           - zh-Hans
+        - m_KeyId: 1598641282875392
+          m_TableCodes:
+          - ko
+          - ja
+          - zh-Hans
+          - en
         m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
