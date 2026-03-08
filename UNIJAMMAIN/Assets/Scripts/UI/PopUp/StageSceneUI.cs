@@ -351,7 +351,9 @@ public class StageSceneUI : UI_Popup
 
         if (isAnimating) return; // 애니메이션 중에는 입력을 무시
 
-      
+        // 버튼의 컴포넌트를 가져와서 interactable 상태를 체크
+        if (upButton != null && !upButton.interactable) return;
+
 
         switch (currentPageLevel)
         {
@@ -413,7 +415,8 @@ public class StageSceneUI : UI_Popup
     {
         if (isAnimating) return; // 애니메이션 중에는 입력을 무시
 
-       
+        // 버튼의 컴포넌트를 가져와서 interactable 상태를 체크
+        if (downButton != null && !downButton.interactable) return;
 
         switch (currentPageLevel)
         {
@@ -657,16 +660,6 @@ public class StageSceneUI : UI_Popup
                 buttonImage.sprite = clickActive;
                 button.interactable = true;
                 buttonText.color = Color.white;
-                // ✨ glowingTextMaterial이 생성되었다면 적용합니다.
-                //if (glowingTextMaterial != null)
-                //{
-                //    buttonText.fontSharedMaterial = glowingTextMaterial;
-                //}
-                //else
-                //{
-                //    Debug.LogWarning("Glowing material is not set up. Make sure normalTextMaterial is assigned in the Inspector.");
-                //}
-                // Glow 효과 너무 세서 우선 아예 뻈음 - 예준
                 break;
             case ButtonState.NonClickActive:
                 buttonImage.sprite = nonClickActive;

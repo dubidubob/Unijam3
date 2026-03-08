@@ -25,7 +25,7 @@ struct RankUI {
         int randIdx = mentIndices[UnityEngine.Random.Range(0, mentIndices.Count)];
 
         // 로컬라이제이션 Key 조합 (예: GameClear_Stage0_Text0)
-        string key = $"GameClear_StageDefault_Text{randIdx}"; // TODO : chapterIdx로 받도록 수정할것.
+        string key = $"GameClear_Stage{chapterIdx}_Text{randIdx}"; // TODO : chapterIdx로 받도록 수정할것.
 
         // LocalizationManager에서 번역된 텍스트 가져오기 (키가 없을 경우 대비 fallback 추가)
         return LocalizationManager.Get(key, "멘트를 찾을 수 없습니다.");
@@ -51,29 +51,47 @@ public class ResultUI : MonoBehaviour
             Debug.LogWarning("rank ui 정보 채워넣으셈");
         resultTxt.text = "";
         newEventUnlockTxt.text = "";
+        newEventUnlockTxt.alpha = 0;
         lateUpCanvasGroup.alpha = 0;
     }
 
     public void OnClick()
     {
         Time.timeScale = 1f;                 // 혹시 일시정지 풀기
+        if(IngameData.ChapterIdx==7) // 마지막이라면 엔딩씬으로 이동
+        {
+            SceneLoadingManager.Instance.LoadScene("EndingScene");
+        }
+
         SceneLoadingManager.Instance.LoadScene("StageScene");
     }
 
     // ChangeUI의 매개변수를 가져와서 통합했습니다.
     public async UniTask RankAnimation(float score)
     {
-        // 1. 데이터 세팅 및 등급 계산 (기존 ChangeUI 로직)
-        resultScore.text = score.ToString("0.##") + "점";
+  
+        // 1. 점수를 문자열로 변환 (예: 123.45)
+        string formattedScore = score.ToString("0.##");
+
+        // 2. 번역 시트에서 키(Key)값으로 현재 언어에 맞는 텍스트를 가져옴
+        string localizedTemplate = LocalizationManager.Get("GameClear_ScoreExPression_Text");
+
+        // 3. 가져온 텍스트 안의 "{Score}" 부분을 실제 점수로 바꿔치기
+        resultScore.text = localizedTemplate.Replace("{Score}", formattedScore);
+
+        if(IngameData.ChapterIdx==7) // 7막이라면
+        {
+            resultScore.text+= LocalizationManager.Get("GameClear_Stage7_GoEndingInfo_Text");
+        }
 
         int idx;
         Define.Rank rank;
-
-        if (score >= rankUI[0].cutline) { idx = 0; rank = Define.Rank.Perfect; } // 최상
-        else if (score >= rankUI[1].cutline) { idx = 1; rank = Define.Rank.Good; }    // 상
-        else if (score >= rankUI[2].cutline) { idx = 2; rank = Define.Rank.NormalGood; } // 중상
-        else if (score >= rankUI[3].cutline) { idx = 3; rank = Define.Rank.Normal; }  // 중
-        else { idx = 4; rank = Define.Rank.Bad; }     // 하
+        if (score == rankUI[0].cutline) { idx = 0; rank = Define.Rank.Perfect; } // 100점
+        else if (score >= rankUI[1].cutline) { idx = 1; rank = Define.Rank.Perfect; } // 최상
+        else if (score >= rankUI[2].cutline) { idx = 2; rank = Define.Rank.Good; }    // 상
+        else if (score >= rankUI[3].cutline) { idx = 3; rank = Define.Rank.NormalGood; } // 중상
+        else if (score >= rankUI[4].cutline) { idx = 4; rank = Define.Rank.Normal; }  // 중
+        else { idx = 5; rank = Define.Rank.Bad; }     // 하
 
         // 2. 초기 상태 설정 (애니메이션을 위해 UI 숨기거나 제자리 배치)
         resultImg.sprite = rankUI[idx].img;
@@ -242,6 +260,7 @@ public class ResultUI : MonoBehaviour
     /// </summary>
     public void BestRecordAchieve()
     {
+        resultNewRecordImg.SetNativeSize();
         resultNewRecordImg.color = new Color(1, 1, 1, 1); // 색깔 활성화
         ImageAlphaBrightning(resultNewRecordImg).Forget();
     }
@@ -292,7 +311,11 @@ public class ResultUI : MonoBehaviour
 
     public void UI_Setting_UnlockNewEventStageInfo()
     {
-        newEventUnlockTxt.text = "새로운 이벤트 스테이지가 해금되었습니다.";
+        newEventUnlockTxt.alpha = 1; //"새로운 이벤트 스테이지가 해금되었습니다.";
+        string key = "GameClear_EventStageInfo_Text"; // TODO : chapterIdx로 받도록 수정할것.
+        newEventUnlockTxt.text = LocalizationManager.Get(key, "멘트를 찾을 수 없습니다.");
+        
+
     }
     private void OnDestroy()
     {

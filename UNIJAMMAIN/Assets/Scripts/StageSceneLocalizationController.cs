@@ -31,16 +31,18 @@ public class StageSceneLocalizationController : MonoBehaviour
             return;
         }
 
+        // 1. 맵 종류에 따라 사용할 로컬라이즈 변수(LocalizedString)를 선택합니다.
         LocalizedString eventLevelFormat = currentPageLevel == 2 ? event_City_LevelFormat : event_Winter_LevelFormat;
-
-        // 1. 맵 종류에 따라 사용할 로컬라이즈 형식을 선택합니다.
         LocalizedString selectedFormat = isEventMap ? eventLevelFormat : normalLevelFormat;
 
-        // 2. 변수(Arguments)를 설정합니다. {0} 자리에 currentPageLevel이 들어갑니다.
-        selectedFormat.Arguments = new object[] { currentPageLevel == 2 ? "?" : currentPageLevel+1 };
+        // 2. Arguments(인자) 설정 없이, 현재 언어에 맞는 순수 텍스트를 통째로 가져옵니다. 
+        // (시트 내용: "제0막", "Act 0" 등)
+        string localizedText = selectedFormat.GetLocalizedString();
 
-        // 3. 번역된 텍스트를 TMP에 적용합니다.
-        // GetLocalizedString()은 현재 설정된 언어에 맞는 텍스트를 즉시 반환합니다.
-        stageLevelInfo_TMP.text = selectedFormat.GetLocalizedString();
+        // 3. '0' 자리에 들어갈 실제 문자열을 결정합니다. (2페이지면 "?", 아니면 레벨+1)
+        string levelValue = (currentPageLevel == 2) ? "?" : (currentPageLevel + 1).ToString();
+
+        // 4. 가져온 텍스트에서 "0"을 찾아서 우리가 만든 값(levelValue)으로 바꿔치기 합니다.
+        stageLevelInfo_TMP.text = localizedText.Replace("0", levelValue);
     }
 }

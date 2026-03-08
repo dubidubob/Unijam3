@@ -283,6 +283,8 @@ public class MainScene : UI_Popup
         GetButton((int)Buttons.Members).gameObject.AddUIEvent(eventData => ButtonClicked(eventData, CanClcikState.isMemberClick, 2));
         GetButton((int)Buttons.End).gameObject.AddUIEvent(EndClicked);
         GetButton((int)Buttons.StartToClick).gameObject.AddUIEvent(EnterToStartClicked);
+        Image_LogoUp.SetNativeSize();
+        Image_LogoDown.SetNativeSize();
     }
 
     public void EnterToStartClicked(PointerEventData eventData)

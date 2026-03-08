@@ -19,10 +19,6 @@ MonoBehaviour:
     m_Key: Bold
     m_Metadata:
       m_Items: []
-  - m_Id: 170838851584
-    m_Key: Story
-    m_Metadata:
-      m_Items: []
   - m_Id: 718094860288
     m_Key: eulziro
     m_Metadata:
@@ -31,8 +27,8 @@ MonoBehaviour:
     m_Key: Ridi_JustText
     m_Metadata:
       m_Items: []
-  - m_Id: 739890355109888
-    m_Key: New Entry
+  - m_Id: 170838851584
+    m_Key: Story
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -30,6 +30,11 @@ public class StoryController : MonoBehaviour
             Destroy(currentStoryInstance);
         }
 
+        if(stageIndex>=8) // 싱크스테이지 prefab 넣어놓은걸로 인해 인덱스 하나 뺴주기
+        {
+            stageIndex--;
+        }
+
         // 유효한 인덱스인지 확인
         if (index >= 0 && index < StoryPrefabs.Length)
         {

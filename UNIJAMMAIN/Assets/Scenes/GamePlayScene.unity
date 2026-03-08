@@ -668,6 +668,7 @@ MonoBehaviour:
   leftCombo2: {fileID: 2113919999}
   scrollSpeedWeight: 2
   backGroundController: {fileID: 1878281402}
+  isHp10Down_Warning: 0
   blurImages:
   - {fileID: 1751725879}
   - {fileID: 875254908}
@@ -1562,6 +1563,7 @@ GameObject:
   - component: {fileID: 438157200}
   - component: {fileID: 438157202}
   - component: {fileID: 438157201}
+  - component: {fileID: 438157203}
   m_Layer: 5
   m_Name: ResultScore
   m_TagString: Untagged
@@ -1586,7 +1588,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -404.41995, y: -277}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 900, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &438157201
 MonoBehaviour:
@@ -1642,7 +1644,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1685,6 +1687,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438157199}
   m_CullTransparentMesh: 1
+--- !u!114 &438157203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438157199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 9208079118309785619
+  references:
+    version: 2
+    RefIds:
+    - rid: 9208079118309785619
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 438157201}
+        m_TrackedProperties:
+          items:
+          - rid: 9208079118309785620
+          - rid: 9208079118309785622
+        m_UpdateType: 0
+    - rid: 9208079118309785620
+      type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          rid: 9208079118309785621
+        m_PropertyPath: m_fontAsset
+    - rid: 9208079118309785621
+      type: {class: LocalizedTmpFont, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:b0d2aa89c1d491c4b907f1aceb42c108
+        m_TableEntryReference:
+          m_KeyId: 124886056960
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+    - rid: 9208079118309785622
+      type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          rid: 9208079118309785623
+        m_PropertyPath: m_sharedMaterial
+    - rid: 9208079118309785623
+      type: {class: LocalizedMaterial, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:b0d2aa89c1d491c4b907f1aceb42c108
+        m_TableEntryReference:
+          m_KeyId: 124886056960
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
 --- !u!1 &460754920
 GameObject:
   m_ObjectHideFlags: 0
@@ -4086,6 +4146,7 @@ GameObject:
   - component: {fileID: 1001341960}
   - component: {fileID: 1001341962}
   - component: {fileID: 1001341961}
+  - component: {fileID: 1001341963}
   m_Layer: 5
   m_Name: NewStageUnlcokInfoText
   m_TagString: Untagged
@@ -4209,6 +4270,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1001341959}
   m_CullTransparentMesh: 1
+--- !u!114 &1001341963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001341959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 9208079118309785610
+  references:
+    version: 2
+    RefIds:
+    - rid: 9208079118309785610
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 1001341961}
+        m_TrackedProperties:
+          items:
+          - rid: 9208079118309785611
+          - rid: 9208079118309785613
+        m_UpdateType: 0
+    - rid: 9208079118309785611
+      type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          rid: 9208079118309785612
+        m_PropertyPath: m_fontAsset
+    - rid: 9208079118309785612
+      type: {class: LocalizedTmpFont, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:b0d2aa89c1d491c4b907f1aceb42c108
+        m_TableEntryReference:
+          m_KeyId: 124886056960
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+    - rid: 9208079118309785613
+      type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          rid: 9208079118309785614
+        m_PropertyPath: m_sharedMaterial
+    - rid: 9208079118309785614
+      type: {class: LocalizedMaterial, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:b0d2aa89c1d491c4b907f1aceb42c108
+        m_TableEntryReference:
+          m_KeyId: 124886056960
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
 --- !u!1 &1034426164
 GameObject:
   m_ObjectHideFlags: 0
@@ -6207,33 +6326,24 @@ MonoBehaviour:
   newEventUnlockTxt: {fileID: 0}
   resultNewRecordImg: {fileID: 1944798945}
   rankUI:
-  - cutline: 98
+  - cutline: 100
     img: {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}
-    mentIndices: 0000000001000000
-  - cutline: 95
-    img: {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}
-    mentIndices: 0200000003000000
+    mentIndices: 00000000
   - cutline: 90
     img: {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}
-    mentIndices: 0400000005000000
-  - cutline: 85
-    img: {fileID: 21300000, guid: aac5fb2afe854534baf6119a9a1ad416, type: 3}
-    mentIndices: 0600000007000000
+    mentIndices: 01000000
   - cutline: 75
     img: {fileID: 21300000, guid: aac5fb2afe854534baf6119a9a1ad416, type: 3}
-    mentIndices: 0800000009000000
+    mentIndices: 02000000
   - cutline: 60
     img: {fileID: 21300000, guid: cedaf74bf935284428048f27fd600839, type: 3}
-    mentIndices: 0a0000000b000000
+    mentIndices: 03000000
   - cutline: 50
     img: {fileID: 21300000, guid: 74e717e624ccf2d449e6544c605f2385, type: 3}
-    mentIndices: 0c0000000d000000
-  - cutline: 25
-    img: {fileID: 21300000, guid: f42b5f6087645154f8e7fe8f20f2daad, type: 3}
-    mentIndices: 0e0000000f000000
+    mentIndices: 04000000
   - cutline: 0
     img: {fileID: 21300000, guid: f42b5f6087645154f8e7fe8f20f2daad, type: 3}
-    mentIndices: 1000000011000000
+    mentIndices: 0b000000
   lateUpCanvasGroup: {fileID: 808627068}
 --- !u!114 &1483870324
 MonoBehaviour:

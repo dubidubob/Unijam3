@@ -382,15 +382,16 @@ public class BeadController : MonoBehaviour
     {
         int clear = IngameData._unLockStageIndex;
 
+        Debug.Log($"{clear}값 ");
         UpdateNewBead(Bead.story_1);
         // 1 이상 → 겨울 이벤트 + 겨울맞이(스토리1)
-        if (IngameData._unLockStageIndex >= 2 || IngameData._isStoryCompleteClear)
+        if (IngameData._unLockStageIndex >= 2)
         {
             UpdateNewBead(Bead.event_Winter);
         }
 
         // 3 이상 → 도시 이벤트 + 스토리2
-        if(IngameData._unLockStageIndex >= 4 || IngameData._isStoryCompleteClear)
+        if(IngameData._unLockStageIndex >= 4)
         {
             UpdateNewBead(Bead.event_City);
             UpdateNewBead(Bead.story_2);

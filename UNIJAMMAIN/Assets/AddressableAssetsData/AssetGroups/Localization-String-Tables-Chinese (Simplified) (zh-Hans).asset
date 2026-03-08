@@ -34,6 +34,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9328d3c49a78666428e35d39590de602
     m_Address: MainScene_zh-Hans

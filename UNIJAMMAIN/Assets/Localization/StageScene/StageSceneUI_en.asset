@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 28886827008
-    m_Localized: 0. Temple Courtyard
+    m_Localized: 0. Temple Yard
     m_Metadata:
       m_Items: []
   - m_Id: 28953935872
-    m_Localized: en
+    m_Localized: The path of discipline begins. The first step is half the journey.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130176
@@ -34,11 +34,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130177
-    m_Localized: 1. Deep Forest
+    m_Localized: 1. Deep Woods
     m_Metadata:
       m_Items: []
   - m_Id: 28958130178
-    m_Localized: en
+    m_Localized: A world bereft of harmony... I dare to defy it.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130179
@@ -49,11 +49,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130180
-    m_Localized: 2. Waterfall
+    m_Localized: 2. Cascade
     m_Metadata:
       m_Items: []
   - m_Id: 28958130181
-    m_Localized: en
+    m_Localized: Beneath the crashing Cascade, I wash away my inner turmoil.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130182
@@ -68,7 +68,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130184
-    m_Localized: en
+    m_Localized: Drawn by fate to the peak... A presence awaits.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130185
@@ -79,11 +79,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130186
-    m_Localized: 4. E
+    m_Localized: 4. Prajna Dragon Boat
     m_Metadata:
       m_Items: []
   - m_Id: 28958130187
-    m_Localized: en
+    m_Localized: Leaving sorrow behind, I ascend the celestial path to my calling.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130188
@@ -98,7 +98,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130190
-    m_Localized: en
+    m_Localized: At the threshold of the heavens. The evil spirits surge relentlessly.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130191
@@ -109,11 +109,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130192
-    m_Localized: 6. E
+    m_Localized: 6. Celestial Temple
     m_Metadata:
       m_Items: []
   - m_Id: 28958130193
-    m_Localized: en
+    m_Localized: The Buddha... remains silent. My sole hope... in this chaos.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130194
@@ -124,11 +124,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130195
-    m_Localized: 7. Abyss?
+    m_Localized: 7. The Below?
     m_Metadata:
       m_Items: []
   - m_Id: 28958130196
-    m_Localized: en
+    m_Localized: The root of disharmony. Here, I sever this ill-fated tie.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130197
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130199
-    m_Localized: en
+    m_Localized: Horned spirits in red hats. Winter discipline begins!
     m_Metadata:
       m_Items: []
   - m_Id: 28958130200
@@ -154,11 +154,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130201
-    m_Localized: E2.
+    m_Localized: E2. Secular Night
     m_Metadata:
       m_Items: []
   - m_Id: 28958130202
-    m_Localized: en
+    m_Localized: Blinding lights and worldly noise. Pray, do not ask why I am here...
     m_Metadata:
       m_Items: []
   - m_Id: 28958130203
@@ -169,11 +169,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6558356299448320
-    m_Localized: E3.
+    m_Localized: E3. Moonlight Dash
     m_Metadata:
       m_Items: []
   - m_Id: 6558356349779968
-    m_Localized: en
+    m_Localized: Atop an unfamiliar iron tower piercing the clouds. Strange lights
+      all around. Where are we headed?
     m_Metadata:
       m_Items: []
   - m_Id: 6558356349779969
@@ -181,6 +182,51 @@ MonoBehaviour:
 
 
       Rank'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490368630784
+    m_Localized: Harmony shall be restored.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905472
+    m_Localized: 'Leaving the tranquil temple behind,
+
+      I stand upon the endless
+      path,
+
+      and take my first step.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905473
+    m_Localized: Choose your path of discipline.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905474
+    m_Localized: Start >
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905475
+    m_Localized: Act 0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905476
+    m_Localized: Winter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905477
+    m_Localized: City
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905478
+    m_Localized: Overture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905479
+    m_Localized: The Beyond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6184490460905480
+    m_Localized: Ill-Fated
     m_Metadata:
       m_Items: []
   references:
