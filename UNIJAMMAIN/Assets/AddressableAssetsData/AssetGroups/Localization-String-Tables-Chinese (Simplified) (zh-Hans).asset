@@ -22,12 +22,14 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7e5018c58a0375d44b77e19bacc18f39
     m_Address: StoryLevelInfo_Table_zh-Hans
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8f96e06c1d0d6e64e9a1df3f271d719d
     m_Address: StageSceneUI_zh-Hans
@@ -41,6 +43,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c0cceea5acf4d147b6d92aee888d86d
     m_Address: WinterLevelInfo_Table_zh-Hans
@@ -53,12 +56,14 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d3b481e175978f84689cd80660023ea4
     m_Address: InGameOptionTable_zh-Hans
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: b7785ec6ed7046847b65508524f2ed65, type: 2}

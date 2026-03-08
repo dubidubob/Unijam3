@@ -22,12 +22,14 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1852d50d31ee6a345941816f6e8c7235
     m_Address: Tutorial_Table_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 75aecd97872c77143bdaf141557c9217
     m_Address: WinterLevelInfo_Table_ko
@@ -47,18 +49,21 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 977c14adb9c31364e932e1a07c934b87
     m_Address: MainScene_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1d9540390e778845b269eeee73a5dcc
     m_Address: StoryLevelInfo_Table_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: b7785ec6ed7046847b65508524f2ed65, type: 2}

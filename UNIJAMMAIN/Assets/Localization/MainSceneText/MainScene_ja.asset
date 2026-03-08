@@ -41,10 +41,10 @@ MonoBehaviour:
 
       Soyeon Joo
 
-      Dahyun
-      Yoon
+      Dahyun Yoon
 
-      Minji Kim
+      Minji
+      Kim
 
       Jee-woo Kwon'
     m_Metadata:
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942147
-    m_Localized: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30E2\u30FC\u30C9"
+    m_Localized: "\u30B9\u30C8\u30FC\u30EA\u30FC"
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942145

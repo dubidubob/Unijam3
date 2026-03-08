@@ -22,30 +22,35 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77826b0deee0ca944b31bf7ba6358923
     m_Address: InGameOptionTable_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 791b1e3205829c847a44229d304a2749
     m_Address: MainScene_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 83b55799b82a0e3489b5526c5c83d019
     m_Address: Tutorial_Table_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bdcf348a083c5e74da255d79fe933b8e
     m_Address: StoryLevelInfo_Table_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d762e1587250b9a478a299b3ec6959a7
     m_Address: WinterLevelInfo_Table_en
