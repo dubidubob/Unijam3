@@ -187,6 +187,10 @@ MonoBehaviour:
     m_Key: StageScene_Level_Guide_2
     m_Metadata:
       m_Items: []
+  - m_Id: 10937680221831168
+    m_Key: Stage_PracticeMode_Text
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
