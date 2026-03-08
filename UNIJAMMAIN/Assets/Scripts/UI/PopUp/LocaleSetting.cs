@@ -7,7 +7,7 @@ using UnityEngine.Localization.Settings;
 public class LocaleSetting : MonoBehaviour
 {
     [Header("Button Settings")]
-    [SerializeField] private List<Image> langButtonImages; // 버튼들의 Image 컴포넌트를 순서대로 할당 (KO, EN, CH, JA)
+    [SerializeField] private List<Image> langButtonImages; // 버튼 순서: KO, EN, CH, JA
     [SerializeField] private Color activeColor = Color.yellow;
     [SerializeField] private Color inactiveColor = Color.gray;
 
@@ -21,34 +21,24 @@ public class LocaleSetting : MonoBehaviour
         LocalizationManager.OnLanguageChanged -= UpdateButtonVisuals;
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return LocalizationSettings.InitializationOperation;
+
+        // 현재 설정된 언어에 맞춰 버튼 색상 업데이트
         UpdateButtonVisuals();
     }
 
     /// <summary>
     /// 언어 버튼의 OnClick 이벤트 함수
-    /// public enum Language
-    ///{ Korean, English, Chinese,Japanese}
-    /// </summary>
+    /// 버튼에 매개변수로 0(KO), 1(EN), 2(CH), 3(JA)를 넣어주세요.
+    /// </summary>  
     public void ChangeLanguageByIndex(int index)
     {
-        // 핵심 로직은 매니저에게 위임
-        LocalizationManager.ChangeLanguage((Language)index);
+        // 플레이어가 직접 클릭했으므로 true를 기본값으로 넘겨 설정이 저장되게 함
+        LocalizationManager.ChangeLanguage((Language)index, true);
     }
 
-    public void ChangeLanguage(Language language)
-    {
-        string localeCode = GetCodeFromLanguage(language);
-        var targetLocale = LocalizationSettings.AvailableLocales.GetLocale(localeCode);
-
-        if (targetLocale != null)
-        {
-            LocalizationSettings.SelectedLocale = targetLocale;
-            LocalizationManager.SetLanguage(language);
-        }
-    }
+    // 중복되던 ChangeLanguage(), GetCodeFromLanguage() 제거 완료 (매니저 로직 사용)
 
     private void UpdateButtonVisuals()
     {
@@ -61,18 +51,6 @@ public class LocaleSetting : MonoBehaviour
             if (langButtonImages[i] == null) continue;
 
             langButtonImages[i].color = (i == currentIndex) ? activeColor : inactiveColor;
-        }
-    }
-
-    private string GetCodeFromLanguage(Language lang)
-    {
-        switch (lang)
-        {
-            case Language.Korean: return "ko";
-            case Language.English: return "en";
-            case Language.Japanese: return "ja";
-            case Language.Chinese: return "zh-Hans";
-            default: return "en";
         }
     }
 }

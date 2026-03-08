@@ -33,6 +33,8 @@ public class SFXController : MonoBehaviour
     /// </summary>
     public void SFXClicked()
     {
+        Managers.Steam.UnlockAchievement("ACH_SETTING_CALIBRATION");
+
         // 1. ���� �ܰ踦 ���� ���� _currentBGMVolumeStep ���� 1 ������ŵ�ϴ�.
         _currentSFXVolumeStep = (_currentSFXVolumeStep + 1) % _volumeLevels.Length;
 

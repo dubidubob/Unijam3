@@ -21,6 +21,13 @@ public static class LocalizationManager
     public static event Action OnLanguageChanged;
 
 
+    public static void Init_LocalizationManager()
+    {
+        //로컬라이제이션 준비가 끝나면 언어 설정 초기화(스팀 연동 혹은 저장된 언어 불러오기) 진행
+        LocalizationManager.InitializeLanguageSetup();
+        LoadAll();
+    }
+
     // Load CSV from Resources (can be called at runtime or editor)
    // 기존 Load 함수 대신 LoadAll 폴더 로드 방식으로 변경
     public static void LoadAll(string folderPath = "Localization")
@@ -256,4 +263,52 @@ public static class LocalizationManager
         }
     }
 
+    // 게임 시작 시 언어를 결정하는 통합 초기화 함수
+    public static void InitializeLanguageSetup()
+    {
+        // 1. 유저가 직접 언어를 변경한 기록이 있는지 확인
+        if (PlayerPrefs.GetInt("HasManualLanguageSet", 0) == 1)
+        {
+            // 2. 기록이 있다면 저장된 언어를 불러옴 (스팀 언어 무시)
+            Language savedLang = (Language)PlayerPrefs.GetInt("SavedLanguage", (int)Language.English);
+            Debug.Log($"[Localization] 저장된 유저 언어 설정 불러옴: {savedLang}");
+
+            // saveByUser를 false로 주어 불필요한 저장을 막음
+            ChangeLanguage(savedLang, false);
+        }
+        else
+        {
+            // 3. 기록이 없다면 (최초 실행 등) 스팀 언어와 동기화
+            SyncWithSteamLanguage();
+        }
+    }
+
+
+    //  언어 변경 로직 (저장 기능 추가)
+    public static void ChangeLanguage(Language language, bool saveByUser = true)
+    {
+        string localeCode = GetCodeFromLanguage(language);
+        var targetLocale = LocalizationSettings.AvailableLocales.GetLocale(localeCode);
+
+        if (targetLocale != null)
+        {
+            LocalizationSettings.SelectedLocale = targetLocale;
+
+            // 유저가 직접 버튼을 눌러 바꾼 경우에만 설정 저장
+            if (saveByUser)
+            {
+                PlayerPrefs.SetInt("HasManualLanguageSet", 1);
+                PlayerPrefs.SetInt("SavedLanguage", (int)language);
+                PlayerPrefs.Save();
+                Debug.Log($"[Localization] 유저가 직접 언어를 변경하여 저장됨: {language}");
+            }
+
+            // 이벤트 발생시켜 UI(LocaleSetting 등) 업데이트 유도
+            OnLanguageChanged?.Invoke();
+        }
+        else
+        {
+            Debug.LogError($"[Localization] Locale을 찾을 수 없습니다: {localeCode}");
+        }
+    }
 }

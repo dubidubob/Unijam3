@@ -6,6 +6,7 @@ public class SteamAchievementManager
     // Callback 대신 CallResult를 사용해야 합니다.
     private CallResult<UserStatsReceived_t> m_UserStatsReceived;
 
+
     public void Init()
     {
         if (!SteamManager.Initialized)
@@ -40,7 +41,12 @@ public class SteamAchievementManager
 
     public void UnlockAchievement(string achievementID)
     {
-        if (!SteamManager.Initialized) return;
+        // ★ 이 줄을 추가해서 데이터가 로드 안 됐으면 튕겨내게 하세요
+        if (!SteamManager.Initialized || !SteamManager.IsStatsLoaded)
+        {
+            Debug.LogWarning($"[Steam] 아직 업적 데이터가 준비되지 않았습니다. (요청 업적: {achievementID})");
+            return;
+        }
 
         bool isAchieved = false;
         bool result = SteamUserStats.GetAchievement(achievementID, out isAchieved);
@@ -53,7 +59,11 @@ public class SteamAchievementManager
         }
 
         // 이미 달성한 경우 중단
-        if (isAchieved) return;
+        if (isAchieved)
+        {
+            Debug.Log($"[Steam] 업적을 이미 달성했습니다 : {achievementID}");
+            return;
+        }
 
         // 달성 안 했다면 서버에 전송
         SteamUserStats.SetAchievement(achievementID);
@@ -61,4 +71,40 @@ public class SteamAchievementManager
 
         Debug.Log($"[Steam] 업적 신규 달성! : {achievementID}");
     }
+
+    // 스팀 업적을 다시 잠금 상태로 되돌리는 함수
+    public void ResetAchievement(string achievementID)
+    {
+        if (!SteamManager.Initialized) return;
+
+        // 업적 클리어 상태 취소
+        SteamUserStats.ClearAchievement(achievementID);
+        // 상태 서버에 저장
+        SteamUserStats.StoreStats();
+
+        Debug.Log($"[Steam] 업적 상태가 초기화되었습니다. 다시 테스트 가능합니다: {achievementID}");
+    }
+    public void ResetAllSteamAchievements()
+    {
+        if (!SteamManager.Initialized)
+        {
+            Debug.LogWarning("[Steam] 스팀이 초기화되지 않아 업적을 초기화할 수 없습니다.");
+            return;
+        }
+
+        // true를 넣으면 업적(Achievements)을 포함한 모든 스탯(Stats)을 초기화합니다.
+        bool success = SteamUserStats.ResetAllStats(true);
+
+        if (success)
+        {
+            // 서버에 즉시 반영
+            SteamUserStats.StoreStats();
+            Debug.Log("[Steam] 모든 스팀 업적 및 통계가 초기화되었습니다.");
+        }
+        else
+        {
+            Debug.LogError("[Steam] 업적 초기화 실패");
+        }
+    }
+
 }

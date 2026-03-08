@@ -130,8 +130,7 @@ public class MovingEnemy : MonoBehaviour
         // 사망 시 기존 움직임/숨기기 등은 취소하고 사망 연출만 실행
         RefreshCancellationToken();
 
-        // Steam 업적을위해 InGameData에 처치한 수 저장
-        IngameData._defeatEnemyCount++;
+       
 
         // 사망 처리 (UniTask)
         ProcessDeath(_cts.Token).Forget();

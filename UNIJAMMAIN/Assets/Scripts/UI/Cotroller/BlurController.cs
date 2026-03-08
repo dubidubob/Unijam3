@@ -37,6 +37,7 @@ public class BlurController : MonoBehaviour
     private CancellationTokenSource _fadeCts;
     private CancellationTokenSource _destroyCts;
 
+    public bool isHp10Down_Warning = false;
     private void Awake()
     {
         _destroyCts = new CancellationTokenSource();

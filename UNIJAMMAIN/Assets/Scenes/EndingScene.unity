@@ -482,6 +482,9 @@ MonoBehaviour:
   - {fileID: 1356568948}
   - {fileID: 85181767}
   - {fileID: 730131359}
+  backGroundFadeOutTime: 2.3
+  cloudUpTime: 2
+  textPosY: -500
   image_backGroundBright: {fileID: 1711587430}
   canvasGroup_NormalEnding: {fileID: 785837621}
   image_sudoSeat: {fileID: 1313157956}
@@ -1337,7 +1340,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1991468134989844488, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
   m_PrefabInstance: {fileID: 1984907739}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1984907741}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -2103,12 +2106,61 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6519520818576424315, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1261578920}
+    - targetCorrespondingSourceObject: {fileID: 2991380698438404746, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1984907742}
   m_SourcePrefab: {fileID: 100100000, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
 --- !u!224 &1984907740 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1775535608553604644, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
   m_PrefabInstance: {fileID: 1984907739}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1984907741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2991380698438404746, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
+  m_PrefabInstance: {fileID: 1984907739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1984907742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984907741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 3596657104847372930
+  references:
+    version: 2
+    RefIds:
+    - rid: 3596657104847372930
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 1298438860}
+        m_TrackedProperties:
+          items:
+          - rid: 3596657104847372931
+        m_UpdateType: 0
+    - rid: 3596657104847372931
+      type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          rid: 3596657104847372932
+        m_PropertyPath: m_Sprite
+    - rid: 3596657104847372932
+      type: {class: LocalizedSprite, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:04920eab8bb328a4cb1bb6e3a2250852
+        m_TableEntryReference:
+          m_KeyId: 1598641282875392
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
 --- !u!114 &2020479792 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3311109643807046660, guid: 4326a99e201c55847b35afcdd292a399, type: 3}

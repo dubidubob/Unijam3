@@ -105,6 +105,8 @@ public class ResultUI : MonoBehaviour
         // lateUpCanvasGroup 등장 (0.5초 동안 페이드인)
         await lateUpCanvasGroup.DOFade(1f, 0.2f).SetUpdate(true).AsyncWaitForCompletion();
 
+        
+
         // 4. 연출이 모두 끝난 후(혹은 시작 시점에 해도 됨) 데이터 저장 및 업적 체크
         SaveAndCheckAchievements(score, rank);
     }
@@ -117,6 +119,11 @@ public class ResultUI : MonoBehaviour
         if (score < IngameData.BestChapterScore)
         {
             BestRecordAchieve();
+        }
+
+        if(Managers.Game.blur.isHp10Down_Warning) // 10이하로 떨어진적이 잇다면
+        {
+            Managers.Steam.UnlockAchievement("ACH_LOW_HP_CLEAR");
         }
 
         IngameData.BestChapterScore = score;
@@ -136,6 +143,11 @@ public class ResultUI : MonoBehaviour
         {
             CheckAll100SCOREAchievement();
         }
+        if(IngameData.ChapterIdx>=9)
+        {
+            Managers.Steam.UnlockAchievement("ACH_EVENT_CLEAR");
+        }
+        Managers.Steam.UnlockAchievement($"ACH_CHAPTER_{IngameData.ChapterIdx}_CLEAR");
     }
 
 
@@ -214,7 +226,10 @@ public class ResultUI : MonoBehaviour
         {
             // 하나라도 100점이 아니면 즉시 종료
             // (float 비교이므로 확실하게 하려면 >= 100 또는 Mathf.Approximately 사용 권장)
-            if (IngameData.GetBestRankScoreForChapter(i) < 100)
+            if (IngameData.GetBestRankScoreForChapter(i) >= 100)
+            {
+            }
+            else
             {
                 return;
             }

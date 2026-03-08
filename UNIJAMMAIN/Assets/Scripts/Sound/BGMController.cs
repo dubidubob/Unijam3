@@ -34,6 +34,8 @@ public class BGMController : MonoBehaviour
     /// </summary>
     public void BGMClicked()
     {
+        Managers.Steam.UnlockAchievement("ACH_SETTING_CALIBRATION");
+
         // 1. 다음 단계를 위해 먼저 _currentBGMVolumeStep 값을 1 증가시킵니다.
         _currentBGMVolumeStep = (_currentBGMVolumeStep + 1) % _volumeLevels.Length;
 

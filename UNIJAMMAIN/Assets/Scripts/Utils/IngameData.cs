@@ -291,6 +291,11 @@ public static class IngameData
         {
             File.Delete(SaveFilePath);
         }
+        PlayerPrefs.DeleteKey("HasManualLanguageSet");
+        PlayerPrefs.DeleteKey("SavedLanguage");
+        PlayerPrefs.Save();
+
+        Managers.Steam.ResetAllSteamAchievements();
 
         ClearMemoryData();
         Debug.Log("[Steam Cloud] 데이터 파일 삭제 및 메모리 초기화 완료");

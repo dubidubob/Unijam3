@@ -16,11 +16,6 @@ public class MainGame : BaseScene
         // 씬의 모든 준비가 끝났다고 LoadingManager에게 알립니다.
         StartCoroutine(NotifyManagerWhenReady());
 
-        // GameManager의 체력 업데이트 이벤트에 LogCurrentHealth 함수를 등록합니다.
-        if (Managers.Game != null)
-        {
-            Managers.Game.HealthUpdate += LogCurrentHealth;
-        }
     }
 
     // ▼▼▼ 2. "준비 완료" 신호를 보내는 코루틴 추가 ▼▼▼
@@ -36,22 +31,8 @@ public class MainGame : BaseScene
         }
     }
 
-    // ▼▼▼ 3. 현재 체력을 콘솔에 출력하는 함수 추가 ▼▼▼
-    private void LogCurrentHealth(float currentHealth)
-    {
-        // 체력이 변경될 때마다 "현재 체력: [값]" 형식으로 로그를 출력합니다.
-        //Debug.Log($"현재 체력: {currentHealth}");
-    }
 
-    // ▼▼▼ 4. OnDestroy() 메서드 추가 (메모리 누수 방지) ▼▼▼
-    private void OnDestroy()
-    {
-        // 씬이 파괴될 때 등록했던 체력 업데이트 이벤트를 반드시 해제해야 합니다.
-        if (Managers.Game != null)
-        {
-            Managers.Game.HealthUpdate -= LogCurrentHealth;
-        }
-    }
+
 
     public override void Clear()
     {

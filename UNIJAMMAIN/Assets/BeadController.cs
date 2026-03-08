@@ -251,6 +251,7 @@ public class BeadController : MonoBehaviour
         // 클릭가능
         backGroundBlackPanel.blocksRaycasts = false;
         backGroundBlackPanel.interactable = false;
+        Managers.Steam.UnlockAchievement("ACH_EVENT_ENTER");
     }
 
 

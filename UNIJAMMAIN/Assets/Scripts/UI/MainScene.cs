@@ -73,8 +73,8 @@ public class MainScene : UI_Popup
             originalPositions[i] = buttonsTransform[i].anchoredPosition;
         }
         ActionGamesLogo().Forget();
-
        
+    
     }
 
     private async UniTask ActionGamesLogo()
@@ -165,6 +165,7 @@ public class MainScene : UI_Popup
 
         // 4. 모든 로고 연출 끝난 뒤 메인 액션 시작
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.2f));
+
         StartMainSceneAction();
     }
 
@@ -401,7 +402,7 @@ public class MainScene : UI_Popup
         }
         for (int i = index + 1; i < buttonsTransform.Length; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 150, ANIMATION_DURATION).SetEase(Ease.OutCubic);
+            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 350, ANIMATION_DURATION).SetEase(Ease.OutCubic);
         }
 
         TogglePanel(true);

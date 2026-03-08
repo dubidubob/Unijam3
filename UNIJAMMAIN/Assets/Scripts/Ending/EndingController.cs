@@ -1063,6 +1063,8 @@ public class EndingController : MonoBehaviour
         // AllBlackPanel alpha값 1로 바꾸기
         image_AllBlackPanel.DOFade(1f, 0f);
 
+        CheckFirstClearSteamAchievement();
+
         await UniTask.Delay(TimeSpan.FromSeconds(7f));
         // 씬이동
     }
@@ -1231,4 +1233,11 @@ public class EndingController : MonoBehaviour
         Debug.Log("히든엔딩 진입");
         return true; // 모든것을 통과했다면 히든엔딩으로 진입할 수 있음.
     }
+
+    // Steam 업적 
+    private void CheckFirstClearSteamAchievement()
+    {
+        Managers.Steam.UnlockAchievement($"ACH_ENDING_WATCH");
+    }
+
 }

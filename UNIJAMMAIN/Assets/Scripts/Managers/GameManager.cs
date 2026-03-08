@@ -188,6 +188,9 @@ public class GameManager
 
     public void ComboInc(int healingValue = 1)
     {
+        // Steam 업적을위해 InGameData에 처치한 수 저장
+        IngameData._defeatEnemyCount++;
+
         if (IngameData._defeatEnemyCount >= 10000)
         {
             Managers.Steam.UnlockAchievement("ACH_COMBO_TOTAL_10000");
@@ -256,6 +259,11 @@ public class GameManager
         if (Health > 0)
         {
             Health -= value;
+        }
+
+        if(Health<=10)
+        {
+            blur.isHp10Down_Warning = true;
         }
 
         HealthUpdate?.Invoke(Health);
