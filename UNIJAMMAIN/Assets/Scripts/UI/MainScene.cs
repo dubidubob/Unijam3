@@ -45,8 +45,31 @@ public class MainScene : UI_Popup
     [SerializeField] private Image drawing_Image;
     [SerializeField] private List<Image> buttons_Image;
     [SerializeField] private Image patternBackGround_Image;
-    [SerializeField] private Image Monster1;
-    [SerializeField] private Image Monster2;
+    [SerializeField] private Image image_Monster1;
+    [SerializeField] private Image image_Monster2;
+
+    [Header("엔딩 시청 후 수정해야할 것을")]
+
+    /*
+     * 엔딩에 다다르면 -> 패턴바꾸기
+     * 수도승 바꾸기
+     * brush 바꾸기
+     * YinYang Color 활성화
+     * YinYang 돌리기
+     */
+
+    [SerializeField] private Image image_Monk;
+    [SerializeField] private Image image_Brush;
+    [SerializeField] private Image image_YinYang;
+    
+
+    [SerializeField] private Sprite sprite_Ending_Pattern;
+    [SerializeField] private Sprite sprite_Ending_Monk;
+    [SerializeField] private Sprite sprite_Ending_Brush;
+    [SerializeField] private Sprite sprite_Ending_YinYang;
+    [SerializeField] private RectTransform rect_YinYangContainer;
+    [SerializeField] private Sprite sprite_Ending_Monster1;
+    [SerializeField] private Sprite sprite_Ending_Monster2;
     enum CanClcikState
     {
         isOptionClick,
@@ -73,8 +96,17 @@ public class MainScene : UI_Popup
             originalPositions[i] = buttonsTransform[i].anchoredPosition;
         }
         ActionGamesLogo().Forget();
-       
-    
+
+
+        if (IngameData._isStoryCompleteClear)
+        {
+            image_Monk.sprite = sprite_Ending_Monk;
+            image_Brush.sprite = sprite_Ending_Brush;
+            patternBackGround_Image.sprite = sprite_Ending_Pattern;
+            image_Monster1.DOFade(0, 0);
+            image_Monster2.DOFade(0, 0);
+        }
+
     }
 
     private async UniTask ActionGamesLogo()
@@ -246,8 +278,8 @@ public class MainScene : UI_Popup
         {
             // 1. Monster들의 현재(기준) 위치 기억 및 초기화 (아래로 100만큼 내림)
             // RectTransform을 사용하므로 anchoredPosition을 활용하는 것이 정확합니다.
-            RectTransform m1Rect = Monster1.rectTransform;
-            RectTransform m2Rect = Monster2.rectTransform;
+            RectTransform m1Rect = image_Monster1.rectTransform;
+            RectTransform m2Rect = image_Monster2.rectTransform;
 
             Vector2 m1TargetPos = m1Rect.anchoredPosition;
             Vector2 m2TargetPos = m2Rect.anchoredPosition;
@@ -256,19 +288,19 @@ public class MainScene : UI_Popup
             m1Rect.anchoredPosition = new Vector2(m1TargetPos.x, m1TargetPos.y - 100f);
             m2Rect.anchoredPosition = new Vector2(m2TargetPos.x, m2TargetPos.y - 100f);
 
-            Monster1.color = new Color(1f, 1f, 1f, 0f); // 투명하게 시작
-            Monster2.color = new Color(1f, 1f, 1f, 0f);
+            image_Monster1.color = new Color(1f, 1f, 1f, 0f); // 투명하게 시작
+            image_Monster2.color = new Color(1f, 1f, 1f, 0f);
 
             // 2. 새로운 시퀀스로 몬스터 등장 연출
             Sequence monsterSeq = DOTween.Sequence();
 
             // Monster 1 등장 (위로 올라오면서 Fade In)
             monsterSeq.Join(m1Rect.DOAnchorPos(m1TargetPos, 0.5f).SetEase(Ease.OutQuad));
-            monsterSeq.Join(Monster1.DOFade(1f, 0.5f));
+            monsterSeq.Join(image_Monster1.DOFade(1f, 0.5f));
 
             // Monster 2 등장 (동시에 실행)
             monsterSeq.Join(m2Rect.DOAnchorPos(m2TargetPos, 0.5f).SetEase(Ease.OutQuad));
-            monsterSeq.Join(Monster2.DOFade(1f, 0.5f));
+            monsterSeq.Join(image_Monster2.DOFade(1f, 0.5f));
         });
 
 
