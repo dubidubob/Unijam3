@@ -31,7 +31,7 @@ MonoBehaviour:
     - rid: 7504153760568705024
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 0
+        isIn: 1
         durationBeat: 10
         startDelayBeat: 2
         bpm: 102
@@ -56,7 +56,7 @@ MonoBehaviour:
     - rid: 7504153760568705025
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 0
+        isIn: 1
         durationBeat: 30
         startDelayBeat: 1
         bpm: 102
@@ -101,7 +101,7 @@ MonoBehaviour:
     - rid: 7504153833746464770
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 0
+        isIn: 1
         durationBeat: 30
         startDelayBeat: 0
         bpm: 102
@@ -145,8 +145,7 @@ MonoBehaviour:
         extensionCreateBeat: 0
         steps:
         - textContents:
-          - "\uD604\uC7AC \uC74C\uC545\uC5D0 \uB9DE\uAC8C \uC81C\uC791 \uC911\uC785\uB2C8\uB2E4.
-            (6\uB9C9, 7\uB9C9\uC740 \uAC00\uB2A5\uD569\uB2C8\uB2E4!)"
+          - "\uAE38\uC744 \uBE44\uCF1C\uB77C."
           localizedTextContents:
           - m_TableReference:
               m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
@@ -161,9 +160,7 @@ MonoBehaviour:
           characterData: {fileID: 0}
           dir: 0
         - textContents:
-          - "\uAC00\uBA74\uC545\uB839\uC774 \uC67C\uCABD\uD654\uBA74\uC744 \uAC00\uB9AC\uBA74
-            \"\uC88C\uD074\uB9AD\", \uBC18\uB300\uBA74 \"\uC6B0\uD074\uB9AD\"\uC73C\uB85C
-            \uC5C6\uC560\uC57C\uD558\uB294\uAD70!"
+          - ff
           localizedTextContents:
           - m_TableReference:
               m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
@@ -180,7 +177,7 @@ MonoBehaviour:
     - rid: 9186972795589099527
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 0
+        isIn: 1
         durationBeat: 30
         startDelayBeat: 4
         bpm: 102

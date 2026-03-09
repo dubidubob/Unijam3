@@ -37,7 +37,7 @@ MonoBehaviour:
         bpm: 88
         timeScale: 1
         preGenerateBeat: 0
-        extensionCreateBeat: 8
+        extensionCreateBeat: 16
         isFlipAD: 0
         isStretchWindow: 0
         stretchX_rate: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: XDXDXDXDX/DXDXDXDX/AXAXAXAAA/
+          WASD_Pattern: XDXDXDXDX/DXDXDXDX/AXAXAXAAA/XAXAAAXA
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 4
