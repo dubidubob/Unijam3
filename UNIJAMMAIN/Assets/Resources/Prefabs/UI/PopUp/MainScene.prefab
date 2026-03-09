@@ -3905,7 +3905,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAE40\uC608\uC900\n\uAE40\uB300\uC724\n\uC8FC\uC18C\uC5F0\n\uC724\uB2E4\uD604\n\uAE40\uBBFC\uC9C0\n\uAD8C\uC9C0\uC6B0"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a1b660ffd6b423d4f9ac7eb254b8d789, type: 2}
   m_sharedMaterial: {fileID: -8320487334739067656, guid: a1b660ffd6b423d4f9ac7eb254b8d789, type: 2}
@@ -3939,7 +3939,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
