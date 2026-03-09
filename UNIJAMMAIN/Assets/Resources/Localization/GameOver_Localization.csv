@@ -1,32 +1,40 @@
 Key,Korean(ko),Chinese (Simplified)(zh-Hans),English(en),Japanese(ja)
-Stage0_GameOverText0,"시작은 미약하오나, 끝은 창대할 것이오.",중국어!,,
-Stage0_GameOverText1,돌부리에 걸려 넘어졌소!,중국어!,,
-Stage0_GameOverText2,시작이 반이다! 시작을 못했지만..,중국어!,,
-Stage1_GameOverText0,중요한 것은 흔들리지 않는 마음이오.,중국어!,,
-Stage1_GameOverText1,다시 일어나 세상을 구원하리라,중국어!,,
-Stage1_GameOverText2,풀 숲 내음내에 취해 몸이 무거워진다.,중국어!,,
-Stage2_GameOverText0,파도에 휩쓸려버린 나의 마음..,중국어!,,
-Stage2_GameOverText1,물 소리가 저 멀리 멀어지는 듯하다.,중국어!,,
-Stage2_GameOverText2,물처럼 다시 순환하리라.,중국어!,,
-Stage3_GameOverText0,이겨내거라. 너의 신념을 믿어라,중국어!,,
-Stage3_GameOverText1,"나쁜 마음을 이겨내고, 주먹을 쥐어라",중국어!,,
-Stage3_GameOverText2,나무들의 굳건함과 산의 웅장함을 본받으리라.,중국어!,,
-Stage4_GameOverText0,뱃멀미가 너를 집어삼키는구나,중국어!,,
-Stage4_GameOverText1,중요한 것은 흔들리지 않는 마음이오.,중국어!,,
-Stage4_GameOverText2,쓰러졌지만 신념은 여전하다!,중국어!,,
-Stage5_GameOverText0,구름에 실려 흩날리는 마음.,중국어!,,
-Stage5_GameOverText1,실패는 성공의 어머니이다.,중국어!,,
-Stage5_GameOverText2,끝날때까지 끝난 것이 아니다.,중국어!,,
-Stage6_GameOverText0,이곳을 더럽힌 죄악들을 심판하리라.,,,
-Stage6_GameOverText1,일어나거라. 무엇이 너를 이곳으로 이끌었느냐?,,,
-Stage6_GameOverText2,일어나서 다시! 똑똑히 서라!,,,
-Stage7_GameOverText0,죽음이 다가온다 . . .,,,
-Stage7_GameOverText0,눈 앞이 흐려진다 . . . .,,,
-Stage7_GameOverText0,굳은 신념은 절대 무너지지 않는다.,,,
-Stage7_GameOverText0,수많은 악령의 손이 마음을 덮치는구나,,,
-Stage7_GameOverText0,무너질 것 같은 마음을 다잡고.,,,
-Stage7_GameOverText0,절대로 포기하지마라. 할 수 있다.,,,
-Stage7_GameOverText0,너의 끝은 눈부시게 찬란하리라 !!,,,
-Default_GameOverText,중요한 것은 흔들리지 않는 마음이오.,,,
-Default_GameOverDownGuideText,"클릭하면 스테이지 선택창으로 이동합니다.
-재시작은 ESC를 통해 가능합니다.",,,
+Stage0_GameOverText0,"시작은 미약하오나, 끝은 분명 창대할 것이오.",始于微末，终必辉煌。,"Humble beginnings, grand endings.",始まりは微かだが、終わりは壮大であろう。
+Stage0_GameOverText1,...문지방에 걸려서 넘어진 게요?,……是被门槛绊倒了吗？,...Tripped on the threshold?,……敷居につまづいて転んだのか？
+Stage0_GameOverText2,시작이 반이다! 시작을 못했지만...,好的开始是成功的一半！虽然你还没开始……,Well begun is half done! Though you haven't...,始めが肝心だ！始められなかったが……
+Stage1_GameOverText0,짙은 탁기(濁氣)에 길을 잃었구나.,迷失于浓重的浊气之中。,Lost in the Corrupted Qi.,濃き濁気に道を失ったか。
+Stage1_GameOverText1,"얽힌 수풀처럼, 그대의 장단도 꼬여버렸소.",如同乱草，你的律动也乱了。,Your Rhythm tangled like weeds.,絡まる草むらの如く、調べも乱れたな。
+Stage1_GameOverText2,숲 내음에 취해 몸이 무거워진 게요?,沉醉于森林气息，身子变沉了吗？,Drunk on the forest scent?,森の香りに酔い、体が重くなったのか？
+Stage2_GameOverText0,쏟아지는 물줄기에 마음이 휩쓸렸구나.,心绪被倾泻的水流冲走了啊。,Your Mind swept away by the falls.,降り注ぐ水流に心を呑まれたか。
+Stage2_GameOverText1,번뇌의 무게를 아직 씻어내지 못했군.,尚未洗净烦恼的沉重。,Still burdened by inner turmoil.,煩悩の重さを未だ洗いきれぬか。
+Stage2_GameOverText2,폭포수 아래에서 다시 수련하고 오거라!,回到瀑布下重新修炼吧！,Resume your Discipline under the falls!,滝の下で修練をやり直してこい！
+Stage3_GameOverText0,"다시 일어서서, 길을 밝혀내거라!",重新站起，照亮前路吧！,Rise again and illuminate the path!,再び立ち上がり、道を照らし出せ！
+Stage3_GameOverText1,뒤틀린 세상 속에서 결국 길을 잃고 말았는가.,终究在这扭曲的红尘中迷失了吗。,Lost in this twisted Secular World.,歪んだ濁世の中で、結局道を失ったか。
+Stage3_GameOverText2,이 궂은 비바람 너머의 절경에 취해버렸군.,沉醉于风雨之后的绝景了吗。,Drunk on the view beyond the storm.,この荒れ狂う嵐の向こうの絶景に酔いしれたか。
+Stage4_GameOverText0,뱃멀미가 너를 집어삼키는구나.,看来你被晕船给吞噬了啊。,Seasickness consumes you.,船酔いにお前が呑まれるとはな。
+Stage4_GameOverText1,거친 파도 앞에서 중심을 잃었구나.,在狂风巨浪前失去了重心。,Lost balance before the rough waves.,荒波の前で均衡を失ったな。
+Stage4_GameOverText2,흔들리는 배 위에서 마음도 뒤집혔구나.,摇晃的船上，心绪也随之翻转。,"A swaying boat, a flipped Mind.",揺れる舟の上、心まで覆されたか。
+Stage5_GameOverText0,구름에 실려 흩날리는 마음.,随云飘散的心绪。,A Mind scattered in the clouds.,雲に乗って散りゆく心。
+Stage5_GameOverText1,성역의 문턱에서 발걸음이 멈췄구나.,在圣域的门槛前停下了脚步。,Steps halted at the Sanctuary's edge.,聖域の門前で足が止まったか。
+Stage5_GameOverText2,거의 다 왔도다. 포기하지 말고 일어나거라!,就快到了。不要放弃，站起来！,Almost there. Rise and don't give up!,もう少しだ。諦めずに立ち上がれ！
+Stage6_GameOverText0,무엇이 너를 이곳으로 이끌었는지 잊었느냐.,忘了是什么将你引向此处吗？,Forgot what led you here?,何がお前をここへ導いたか忘れたか。
+Stage6_GameOverText1,성역에서 무릎을 꿇고 말 텐가!,难道要在圣域里屈膝吗！,Will you kneel in the Sanctuary?!,聖域で膝を屈するつもりか！
+Stage6_GameOverText2,다시 문턱으로 돌아가려고 그러는 게냐?,难道想退回门槛之外吗？,Trying to go back to the threshold?,再び門前へ引き返そうというのか？
+Stage7_GameOverText0,근원의 어둠에 빛을 잃었도다.,光芒在根源的黑暗中消逝了。,Light lost to The Origin's darkness.,淵源の闇に光を失ったな。
+Stage7_GameOverText1,"수많은 악령의 손이, 내 위를 덮는구나.",无数浊灵之手，正笼罩于你。,Hands of countless Dark Spirits cover you.,数多の濁霊の手が、お前を覆うか。
+Stage7_GameOverText2,지금까지의 여정을 다시 생각해보거라.,回想一下至今为止的旅途吧。,Reflect on your Journey thus far.,今までの旅を思い返すがよい。
+Stage7_GameOverText3,"끝없는 지하 속에서도, 한 줄기 빛을 생각하시오.",即使在无尽地下，也请心存一丝光明。,"Remember the light, even in this abyss.",果てなき地下の中でも、一筋の光を思い描くのだ。
+Stage7_GameOverText4,질긴 악연의 굴레에 사로잡혔구나.,终究被这顽固的宿业所困。,Ensnared by this stubborn Ill-Fated tie.,執拗な宿業の連鎖に囚われたか。
+Stage7_GameOverText5,이 모진 여정의 끝이 결코 파멸은 아닐 것이오.,这段艰辛旅途的终点，绝非毁灭。,This harsh Journey won't end in ruin.,この過酷な旅の終わりが、決して破滅ではないはずだ。
+Stage7_GameOverText6,만악의 근원 앞에서 이대로 눈을 감을 텐가!,难道要在万恶之根源前闭上双眼吗！,Will you close your eyes before The Origin?!,万悪の淵源を前に、このまま目を閉じるか！
+Default_GameOverText,중요한 것은 꺾이지 않는 마음이오.,最重要的是那颗不屈的心绪。,What matters is an unbroken Mind.,肝心なのは、折れない心だ。
+Default_GameOverDownGuideText,클릭하면 스테이지 선택창으로 이동합니다.,点击前往关卡选择界面。,Click to return to Stage Select.,クリックでステージ選択へ移動します。
+StageChristMas_GameOverText0,굴뚝으로 숨어버리려고 그러는 것이냐?,是想躲进烟囱里吗？,Trying to hide in the chimney?,煙突に隠れてしまうつもりか？
+StageChristMas_GameOverText1,눈싸움하던 어린 시절이 떠올랐나보군.,看来是想起了打雪仗的童年啊。,Reminiscing about childhood snowball fights?,雪合戦をした幼い頃を思い出したようだな。
+StageChristMas_GameOverText2,"계속 울어버리면, 선물은 없는 게다!",要是哭个不停，就没有礼物咯！,"Keep crying, and you get no gifts!",泣き続けていたら、贈り物はなしだぞ！
+StageEDM_GameOverText0,번쩍이는 빛에 정신을 차리지 못했군.,被闪烁的灯光晃得神智不清了吗。,Lost your focus to the flashing lights.,煌めく光に気を取られたか。
+StageEDM_GameOverText1,왜 여기에 있는지 내 똑똑히 물어볼 것이오.,我得好好问问你为何会在此处。,I must ask exactly why you're here.,なぜここにいるのか、後でしっかり問いただそう。
+StageEDM_GameOverText2,참으로 신비한 장단이군! 나도.. 조금 더 머무르겠소.,真是神秘的律动！我也……想多留片刻。,A mystical Rhythm! I'll... stay a bit longer.,実に神秘的な調べだ！私も……もう少し留まろう。
+StageNight_GameOverText0,밤하늘의 경치가 참으로 아름다웠나보군.,看来夜空的景色十分迷人啊。,The night sky must have been beautiful.,夜空の景色がよほど美しかったようだな。
+StageNight_GameOverText1,구름과 함께 멋지게 흩어졌구나.,随同云彩一起漂亮地飘散了呢。,Scattered beautifully with the clouds.,雲と共に見事に散ったな。
+StageNight_GameOverText2,어디를 향해 달려가는 게냐.,你究竟要奔向何方。,Where exactly are you running to?,一体どこへ向かって駆けているのだ。

@@ -19,163 +19,165 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 846767249977344
-    m_Localized: "(Though I said that... I\u2019ve never truly faced them before.)"
+    m_Localized: (I said that, but honestly, I've never faced one.)
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948864
-    m_Localized: "(Enemies from all directions\u2026 Press WASD when they get close
-      to drive them back\u2026)"
+    m_Localized: (For enemies from the four directions... press WASD to strike!)
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948865
-    m_Localized: "Following Master\u2019s words\u2026 Alright. Let\u2019s do this!"
+    m_Localized: I must follow Master's words... Alright, let's do this!
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948866
-    m_Localized: This is manageable.
+    m_Localized: I can handle this.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948867
-    m_Localized: Harder than I expected.
+    m_Localized: Harder than I thought.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948868
-    m_Localized: "Those spirits that resemble me\u2026 No way\u2026"
+    m_Localized: Those... Dark Spirits that look like me... could it be...
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948869
-    m_Localized: "The greatest trial is oneself\u2026 Wait, what did Master say at
-      times like this?"
+    m_Localized: To think the greatest trial is myself... Wait, what did Master say
+      about this?
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948870
-    m_Localized: (The moment you see a spirit trying to consume you, strike with
-      a diagonal input!)
+    m_Localized: (When a Shadow Wraith tries to consume you, strike with the diagonal
+      keys!)
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948871
-    m_Localized: "Diagonal\u2026? So upper-right means pressing Right + Up together?"
+    m_Localized: Diagonal...? For top-right, press the Up + Right arrow keys together?
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948872
-    m_Localized: "They look\u2026 unsettling."
+    m_Localized: They look rather... terrifying.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948873
-    m_Localized: I feel my mind slipping away.
+    m_Localized: I feel like I'm losing my mind.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948874
-    m_Localized: More spirits are approaching. Stay focused!
+    m_Localized: More Dark Spirits are swarming. I must stay sharp!
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948875
-    m_Localized: "I\u2019ll show you the fate of those who defy harmony."
+    m_Localized: I'll show you the fate of those who defy Harmony.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948876
-    m_Localized: "You\u2019re persistent, aren\u2019t you?"
+    m_Localized: They're relentlessly tracking me all the way here.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948877
-    m_Localized: "Wait\u2014why are they moving so fast?!"
+    m_Localized: Wait, they're moving way too fast!
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948878
-    m_Localized: "The fog thickens\u2026 and they charge again under its cover!"
+    m_Localized: The fog is thickening..! They're using the cover to swarm again.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948879
-    m_Localized: I will prove
+    m_Localized: I will prove that the weight of my Faith,
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948880
-    m_Localized: "that the weight of my conviction surpasses even my Master\u2019s."
+    m_Localized: is greater than yours, Master.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948881
-    m_Localized: Their aura is overwhelming. It takes two strikes to banish them!
-    m_Metadata:
-      m_Items: []
-  - m_Id: 846767270948882
-    m_Localized: "I can\u2019t focus. My thoughts and movements are reversed!"
+    m_Localized: Their Qi is overwhelming. It takes two strikes to dispel them.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948883
-    m_Localized: "Left is right, right is left\u2014what?!"
+    m_Localized: I shall overturn your vision with the logic of the strong.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948884
-    m_Localized: "It\u2019s returning to normal!"
+    m_Localized: Can you still illuminate the path in this reversed world?
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948885
-    m_Localized: "Toward the origin\u2014"
+    m_Localized: Toward The Origin,
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948886
-    m_Localized: I will advance until this body is shattered.
+    m_Localized: I shall press on until this body shatters.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948887
-    m_Localized: Remain there, bound by your own conviction!
+    m_Localized: Stay right there, true to your stubborn Faith!
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948888
-    m_Localized: With all my strength, I will crush every last one of you.
+    m_Localized: I'll shatter them with all my might.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948889
-    m_Localized: Currently being produced in sync with the music. (Acts 6 and 7 available!)
+    m_Localized: A false Sanctuary cannot obscure The Buddha.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948890
-    m_Localized: If the Masked Spirit covers the left side of the screen, click left.
-      If the opposite, click right!
+    m_Localized: Even if I must willingly offer my life,
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948891
-    m_Localized: Spirits dare invade sacred ground?
+    m_Localized: To think Dark Spirits would invade this sacred place...
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948892
-    m_Localized: This is not a place you may defile!
+    m_Localized: This is no place for the likes of you!
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948893
-    m_Localized: I will not fall here.
+    m_Localized: I cannot... fall here.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948894
-    m_Localized: "Come\u2026 I shall stand firm in this place."
+    m_Localized: Come... I will stand my ground and hold fast.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948895
-    m_Localized: "At the beginning of all things\u2014"
+    m_Localized: Here, where it all began,
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948896
-    m_Localized: I will bring this end to its close with my own hands.
+    m_Localized: I will bring this to an end with my own hands.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948897
-    m_Localized: I still stand, unwavering!
+    m_Localized: I am still standing strong!
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948898
-    m_Localized: Do not flee. Face me to the end!
+    m_Localized: I will sever this endless Ill-Fated tie right here.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948899
-    m_Localized: Here, I sever this long, cursed chain.
+    m_Localized: Still unbroken, even burdened by this cruel tie.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948900
-    m_Localized: "Now\u2026 face your end."
+    m_Localized: I'll show you the true nature of your Ill-Fated tie.
     m_Metadata:
       m_Items: []
   - m_Id: 849773190213632
-    m_Localized: "The beginning\u2026 is already half the battle."
+    m_Localized: Well begun is half done. I must not fear.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6953233644650496
+    m_Localized: Even in this twisted Secular World, I shall illuminate the path.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6953233707565056
+    m_Localized: I will behold the merciful Buddha.
     m_Metadata:
       m_Items: []
   references:

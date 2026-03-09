@@ -33,10 +33,10 @@ MonoBehaviour:
         m_SheetId: 0
         m_Columns:
         - rid: 7569836730642333700
+        - rid: 7569836730642333704
         - rid: 7569836730642333701
         - rid: 7569836730642333702
         - rid: 7569836730642333703
-        - rid: 7569836730642333704
         m_RemoveMissingPulledKeys: 1
     - rid: 7569836730642333700
       type: {class: KeyColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
@@ -45,28 +45,28 @@ MonoBehaviour:
     - rid: 7569836730642333701
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: C
+        m_Column: D
         m_LocaleIdentifier:
           m_Code: zh-Hans
         m_IncludeComments: 0
     - rid: 7569836730642333702
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: D
+        m_Column: E
         m_LocaleIdentifier:
           m_Code: en
         m_IncludeComments: 0
     - rid: 7569836730642333703
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: E
+        m_Column: F
         m_LocaleIdentifier:
           m_Code: ja
         m_IncludeComments: 0
     - rid: 7569836730642333704
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: F
+        m_Column: C
         m_LocaleIdentifier:
           m_Code: ko
         m_IncludeComments: 0
