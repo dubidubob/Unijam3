@@ -120,6 +120,15 @@ public class EndingController : MonoBehaviour
     [SerializeField] private Image image_AllBlackPanel;
 
     [SerializeField] private CanvasGroup canvasGroup_Sun;
+
+
+    [Header("초반 추가 부분")]
+    [SerializeField] private List<Sprite> stamina_effects;
+    [SerializeField] private Image image_stamina;
+    [SerializeField] private Text text_startUp;
+    [SerializeField] private Text text_startDown;
+
+
     private void Start()
     {
         StartInit().Forget();
