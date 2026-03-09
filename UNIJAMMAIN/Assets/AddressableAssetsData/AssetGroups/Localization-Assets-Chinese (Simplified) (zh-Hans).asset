@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37442626eb2e162458c349b0c5045aa7
+    m_Address: LeftDownKey_cn
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 59e8a754577a9b04b93a9bc280f5bb78
     m_Address: StoryInfo_zh-CN
     m_ReadOnly: 1
@@ -55,6 +61,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 75d607353c644c749941e4ef048e94b8
     m_Address: Chinese_Bold
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87cf88ac9e1e7d645a00b4964aa6641e
+    m_Address: RightUpKey_cn
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans

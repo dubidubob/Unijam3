@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using Steamworks;
+using Cysharp.Threading.Tasks;
 
 public enum Language
 {
@@ -21,10 +22,14 @@ public static class LocalizationManager
     public static event Action OnLanguageChanged;
 
 
-    public static void Init_LocalizationManager()
+    public static async UniTask Init_LocalizationManager()
     {
+        // 로컬라이제이션 초기화가 끝날 때까지 대기
+        await LocalizationSettings.InitializationOperation;
+
         //로컬라이제이션 준비가 끝나면 언어 설정 초기화(스팀 연동 혹은 저장된 언어 불러오기) 진행
         LocalizationManager.InitializeLanguageSetup();
+
         LoadAll();
     }
 
@@ -187,6 +192,7 @@ public static class LocalizationManager
             Debug.Log($"{key}를 찾을 수 없습니다. by null");
             return fallback; }
 
+        Debug.Log($"로컬라이제이션 Get key:{key}, 현재 언어 : {CurrentLanguage}");
         if (Localization_Table.TryGetValue(key, out var perLang))
         {
             if (perLang.TryGetValue(CurrentLanguage, out var val))
@@ -269,6 +275,7 @@ public static class LocalizationManager
     // 게임 시작 시 언어를 결정하는 통합 초기화 함수
     public static void InitializeLanguageSetup()
     {
+
         // 1. 유저가 직접 언어를 변경한 기록이 있는지 확인
         if (PlayerPrefs.GetInt("HasManualLanguageSet", 0) == 1)
         {

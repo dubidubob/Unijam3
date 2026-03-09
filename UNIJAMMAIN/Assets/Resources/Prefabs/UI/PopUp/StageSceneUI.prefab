@@ -2295,7 +2295,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
     m_TableEntryReference:
-      m_KeyId: 28958130198
+      m_KeyId: 28958130201
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -2448,7 +2448,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -52.823486, y: 0, z: -23.304672, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2470,7 +2470,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
     m_TableEntryReference:
-      m_KeyId: 28958130201
+      m_KeyId: 6558356299448320
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -3797,6 +3797,42 @@ MonoBehaviour:
         m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
       m_TableEntryReference:
         m_KeyId: 28958130203
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - stageMainText:
+      m_TableReference:
+        m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
+      m_TableEntryReference:
+        m_KeyId: 6558356299448320
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    stageMainSubText:
+      m_TableReference:
+        m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
+      m_TableEntryReference:
+        m_KeyId: 6558356349779968
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    stageExplain:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    levelText:
+      m_TableReference:
+        m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
+      m_TableEntryReference:
+        m_KeyId: 6558356349779969
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -7266,7 +7302,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -34.90738, y: 0, z: -45.461044, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7288,7 +7324,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:20fca0cdc91ceae4f9c3539ef8e20aae
     m_TableEntryReference:
-      m_KeyId: 28958130201
+      m_KeyId: 28958130198
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

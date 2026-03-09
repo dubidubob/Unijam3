@@ -284,6 +284,7 @@ public class StoryDialog : UI_Popup
 
             // �ؽ�Ʈ ǥ�� (Ÿ���� ȿ��)
             Text.gameObject.SetActive(true);
+            Debug.Log(scene.localizationKey);
             string full = LocalizationManager.Get(scene.localizationKey, scene.text);
             int len = full.GetTypingLength();
 
@@ -576,8 +577,9 @@ public class StoryDialog : UI_Popup
 
     private void SceneMoving()
     {
-        SceneLoadingManager.Instance.LoadScene("GamePlayScene");
         Managers.Sound.BGMFadeOut();
+        SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+       
     }
 
     #region Enimation

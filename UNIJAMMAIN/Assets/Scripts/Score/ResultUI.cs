@@ -59,6 +59,10 @@ public class ResultUI : MonoBehaviour
     [SerializeField] private TMP_Text resultTxt;
     [SerializeField] private TMP_Text resultScore;
     [SerializeField] private TMP_Text newEventUnlockTxt;
+    [SerializeField] private TMP_Text smallInfo_Text;
+ 
+   
+
     [SerializeField] private Image resultNewRecordImg;
     [Header("UI 정보 : 최상, 상, 중상, 중, 하 순으로")]
     [SerializeField] List<RankUI> rankUI;
@@ -78,19 +82,23 @@ public class ResultUI : MonoBehaviour
 
     public void OnClick()
     {
+        if (isAnimationPlaying) return;
+
         Time.timeScale = 1f;                 // 혹시 일시정지 풀기
-        if(IngameData.ChapterIdx==7) // 마지막이라면 엔딩씬으로 이동
+        if(IngameData.ChapterIdx==7&&!IngameData.boolPracticeMode) // 마지막이라면 엔딩씬으로 이동, 연습모드도 아니어야함
         {
             SceneLoadingManager.Instance.LoadScene("EndingScene");
         }
 
         SceneLoadingManager.Instance.LoadScene("StageScene");
     }
-
+    // 1. 비동기 작업 관리용 필드 추가
+    private bool isAnimationPlaying = false;
     // ChangeUI의 매개변수를 가져와서 통합했습니다.
     public async UniTask RankAnimation(float score)
     {
-  
+        isAnimationPlaying = true;
+
         // 1. 점수를 문자열로 변환 (예: 123.45)
         string formattedScore = score.ToString("0.##");
 
@@ -144,19 +152,34 @@ public class ResultUI : MonoBehaviour
         // lateUpCanvasGroup 등장 (0.5초 동안 페이드인)
         await lateUpCanvasGroup.DOFade(1f, 0.2f).SetUpdate(true).AsyncWaitForCompletion();
 
-        
+        if (IngameData.ChapterIdx == 7 && !IngameData.boolPracticeMode) // 마지막이라면 엔딩씬으로 이동, 연습모드도 아니어야함
+        {
+            smallInfo_Text.text = LocalizationManager.Get("GameClear_Stage7_SmallInfo_text", "[ESC]로 퇴장 시, 제7장을 다시 완료해야 합니다. ");
+            smallInfo_Text.DOFade(1f, 0.2f);
+            Managers.Game.blur.gameOverDownText.text = LocalizationManager.Get("GameClear_Stage7_GoEndingInfo_Text", "< 화면을 눌러 최종장으로 넘어가시오. >");
+
+        }
+        else
+
+        {
+            Managers.Game.blur.gameOverDownText.text = LocalizationManager.Get("Default_GameOverDownGuideText", "클릭하면 스테이지 선택창으로 이동합니다.");
+        }
+        Managers.Game.blur.gameOverDownText.DOFade(1f, 0.2f);
+    
 
         // 4. 연출이 모두 끝난 후(혹은 시작 시점에 해도 됨) 데이터 저장 및 업적 체크
         SaveAndCheckAchievements(score, rank);
+        isAnimationPlaying = false;
     }
 
     // 기존 ChangeUI에 있던 저장 및 업적 체크 로직을 별도 메서드로 분리하여 깔끔하게 정리했습니다.
     private void SaveAndCheckAchievements(float score, Define.Rank rank)
     {
         if (IngameData.boolPracticeMode) return;
-
-        if (score < IngameData.BestChapterScore)
+        Debug.Log($"{score}과 {IngameData.BestChapterScore}");
+        if (score >=IngameData.BestChapterScore)
         {
+
             BestRecordAchieve();
         }
 
@@ -282,7 +305,7 @@ public class ResultUI : MonoBehaviour
     public void BestRecordAchieve()
     {
         resultNewRecordImg.SetNativeSize();
-        resultNewRecordImg.color = new Color(1, 1, 1, 1); // 색깔 활성화
+        resultNewRecordImg.DOFade(1f, 0.2f);
         ImageAlphaBrightning(resultNewRecordImg).Forget();
     }
 

@@ -36,7 +36,7 @@ public class PlayerActionUI : MonoBehaviour
     [SerializeField] private const float MIN_DURATION = 0.25f;
     [SerializeField] private const float RECOVER_DELAY = 0.4f; // 기존 코드의 0.4초 유지
     private float _lastActionTime = 0f; // 마지막으로 액션(스프라이트 변경)이 일어난 시간
-    void Start()
+    void Awake()
     {   
         Managers.Game.actionUI = this;
         

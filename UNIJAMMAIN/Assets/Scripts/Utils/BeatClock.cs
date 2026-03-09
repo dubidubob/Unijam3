@@ -22,10 +22,15 @@ public class BeatClock : MonoBehaviour
 
     [SerializeField] PhaseController phase;
 
-    private void Start()
+    private void Awake()
     {
+        Managers.Game.beatClock = this;
         IngameData.ChangeBpm -= HandleBpmChange;
         IngameData.ChangeBpm += HandleBpmChange;
+      
+    }
+    private void Start()
+    {
         Managers.Game.beatClock = this;
     }
 

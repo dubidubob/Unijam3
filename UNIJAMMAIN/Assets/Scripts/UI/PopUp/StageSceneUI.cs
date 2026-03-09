@@ -713,9 +713,18 @@ public class StageSceneUI : UI_Popup
 
     private void TextSetting(int index)
     {
-        stageMainText.text = stageDataList[index].stageMainText.GetLocalizedString();
-        stageMainSubText.text = stageDataList[index].stageMainSubText.GetLocalizedString();
-        stageDifficultyLevelText.text = stageDataList[index].levelText.GetLocalizedString();
+        if (index >= 9)
+        {
+            stageMainText.text = stageDataList[index-1].stageMainText.GetLocalizedString();
+            stageMainSubText.text = stageDataList[index-1].stageMainSubText.GetLocalizedString();
+            stageDifficultyLevelText.text = stageDataList[index-1].levelText.GetLocalizedString();
+        }
+        else
+        {
+            stageMainText.text = stageDataList[index].stageMainText.GetLocalizedString();
+            stageMainSubText.text = stageDataList[index].stageMainSubText.GetLocalizedString();
+            stageDifficultyLevelText.text = stageDataList[index].levelText.GetLocalizedString();
+        }
 
     }
     #region Tool

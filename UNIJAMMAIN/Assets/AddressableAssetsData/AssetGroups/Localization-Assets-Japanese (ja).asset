@@ -29,8 +29,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 269dba06ef97a484b80e94cf762e9300
+    m_Address: RightUpKey_jp
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a630c2ec8b3fba4e83f6b351906d3e2
     m_Address: Credit_Text_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4adf3970d3e3ddc4db0e90c7c9e5d363
+    m_Address: LeftDownKey_jp
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja

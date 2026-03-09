@@ -15,7 +15,7 @@ public class MainGame : BaseScene
     {
         // 씬의 모든 준비가 끝났다고 LoadingManager에게 알립니다.
         StartCoroutine(NotifyManagerWhenReady());
-
+        IngameData._isInGame = true;
     }
 
     // ▼▼▼ 2. "준비 완료" 신호를 보내는 코루틴 추가 ▼▼▼

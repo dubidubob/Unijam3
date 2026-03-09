@@ -97,6 +97,7 @@ public class MainScene : UI_Popup
         }
         ActionGamesLogo().Forget();
 
+        Debug.Log(IngameData._isStoryCompleteClear);
 
         if (IngameData._isStoryCompleteClear)
         {

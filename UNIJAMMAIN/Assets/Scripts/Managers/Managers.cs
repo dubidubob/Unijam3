@@ -35,30 +35,34 @@ public class Managers : MonoBehaviour
 
     public static void Init()
     {
-        if(!Application.isPlaying)
-        {
-            return;
-        }
-        if (s_instance == null)
+        if (!Application.isPlaying) return;
+
+        // 혹시 모를 이중 초기화 방지용 방어코드
+        if (s_instance == null && Application.isPlaying)
         {
             GameObject go = GameObject.Find("@Manager");
             if (go == null)
             {
-
                 go = new GameObject { name = "@Manager" };
                 go.AddComponent<Managers>();
             }
-            if (Application.isPlaying)
-            {
-                DontDestroyOnLoad(go);
-            }
-            // SteamManager(플러그인)가 없으면 자동으로 붙여주기
-            if (go.GetComponent<SteamManager>() == null)
-            {
-                // SteamManager는 MonoBehaviour라 AddComponent 해야 함
-                go.AddComponent<SteamManager>();
-            }
+            DontDestroyOnLoad(go);
 
+            // if (go.GetComponent<SteamManager>() == null)
+            // {
+            //     go.AddComponent<SteamManager>();
+            // }
+            // --------------------------------------------------------
+
+            //수정된 코드: 스팀 매니저 전용 오브젝트 따로 생성
+            GameObject steamGo = GameObject.Find("SteamManager");
+            if (steamGo == null)
+            {
+                steamGo = new GameObject { name = "SteamManager" };
+                steamGo.AddComponent<SteamManager>();
+                DontDestroyOnLoad(steamGo);
+            }
+            // --------------------------------------------------------
 
             s_instance = go.GetComponent<Managers>();
             s_instance._pool.Init();
@@ -66,6 +70,7 @@ public class Managers : MonoBehaviour
             s_instance._game.Init();
             LocalizationManager.Init_LocalizationManager();
             UI.ShowAnyUI<SceneLoadingManager>("Loading");
+            Debug.Log("매니저 인잇");
         }
     }
 

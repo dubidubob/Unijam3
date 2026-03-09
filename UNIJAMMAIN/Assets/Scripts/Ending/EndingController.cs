@@ -26,6 +26,8 @@ public class EndingAction
 
 public class EndingController : MonoBehaviour
 {
+    public Ending_Start ending_Start;
+
     [Header("Image Connects")]
     [SerializeField] Image backGround;
     [SerializeField] Image lineImage;
@@ -117,20 +119,27 @@ public class EndingController : MonoBehaviour
     [SerializeField] private Image image_BackGlow;
     [SerializeField] private Image image_BelowPetal2;
     [SerializeField] private Image image_Flower;
-    [SerializeField] private Image image_AllBlackPanel;
+    [SerializeField] public Image image_AllBlackPanel;
 
     [SerializeField] private CanvasGroup canvasGroup_Sun;
 
 
-    [Header("초반 추가 부분")]
-    [SerializeField] private List<Sprite> stamina_effects;
-    [SerializeField] private Image image_stamina;
-    [SerializeField] private Text text_startUp;
-    [SerializeField] private Text text_startDown;
+    // ▼▼▼ 2. "준비 완료" 신호를 보내는 코루틴 추가 ▼▼▼
+    private IEnumerator NotifyManagerWhenReady()
+    {
+        // 씬의 모든 Start 함수가 실행되고 첫 프레임을 그릴 시간을 안전하게 확보합니다.
+        yield return null;
 
-
+        // SceneLoadingManager에게 "이제 문 열어도 돼!" 라고 신호를 보냅니다.
+        if (SceneLoadingManager.Instance != null)
+        {
+            SceneLoadingManager.Instance.NotifySceneReady();
+        }
+    }
     private void Start()
     {
+        // 씬의 모든 준비가 끝났다고 LoadingManager에게 알립니다.
+        StartCoroutine(NotifyManagerWhenReady());
         StartInit().Forget();
     }
     private async UniTask StartInit()
@@ -140,10 +149,11 @@ public class EndingController : MonoBehaviour
             particle.Stop();
         }
 
-        LocalizationManager.LoadAll();
+        // LocalizationManager.LoadAll();
         SettingClearForStart();
         ClearAllTexts();
         LoadEndingSequenceData("Localization/EndingTable");
+        LocalizationManager.LoadAll();
 
         if (SceneLoadingManager.Instance != null)
         {
@@ -151,7 +161,8 @@ public class EndingController : MonoBehaviour
             SceneLoadingManager.Instance.NotifySceneReady();
         }
 
-        PlayEndingSequence().Forget(); // 처음부터 시작
+        ending_Start.ConnectWithController(this);
+        // PlayEndingSequence().Forget(); // 처음부터 시작
 
         // PlayEndingSequence_Part2().Forget(); // 영화 액션부터 시작, 하늘로 올라가기
 
@@ -324,7 +335,7 @@ public class EndingController : MonoBehaviour
      
     }
 
-    private async UniTaskVoid PlayEndingSequence()
+    public async UniTaskVoid PlayEndingSequence()
     {
         Managers.Sound.Play("BGM/EndingTheme1", Define.Sound.BGM,1,1,false);
 
@@ -1115,13 +1126,52 @@ public class EndingController : MonoBehaviour
             await UniTask.Delay(TimeSpan.FromSeconds(delayTime));
         }
     }
-    private void SpecialAction(int index,EndingAction action)
+    private void SpecialAction(int index, EndingAction action)
     {
+
         if (index == 0)
+
         {
-            backGround.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1), 1.5f);
+
+            // 1. 텍스트들은 빠르게 페이드아웃 (0.3초)
+
+            ending_Start.textUp.DOFade(0f, 0.3f);
+
+            ending_Start.textDown.DOFade(0f, 0.3f);
+
+
+
+
+
+            // 2. image_stamina의 Sprite를 1.5초동안 List 0부터 끝까지 변환하도록
+
+            int spriteCount = ending_Start.stamina_effects.Count;
+
+            if (spriteCount > 0)
+
+            {
+
+                // DOVirtual을 사용해 0부터 마지막 인덱스까지 1.5초 동안 선형(Linear)으로 변화
+
+                DOVirtual.Float(0f, spriteCount - 0.01f, 2.5f, (v) =>
+
+                {
+                    int currentFrame = Mathf.FloorToInt(v);
+
+                    ending_Start.image_stamina.sprite = ending_Start.stamina_effects[currentFrame];
+
+                }).SetEase(Ease.Linear).OnComplete(()=> { ending_Start.image_stamina.DOFade(0, 0.4f); });
+
+            }
+
+
+
+            // 3. 이러면서 blackPanel 값도 밝아지게끔 설정 (알파값을 0으로 만들어서 암전 해제)
+            ending_Start.blackPanelBack.DOFade(0f, 3f);
+
         }
-        if(index==28)
+
+        if (index == 28)
         {
             action.speakerKey = "   ";
         }
@@ -1235,7 +1285,7 @@ public class EndingController : MonoBehaviour
     private void SettingClearForStart()
     {
         scrollTarget.DOAnchorPosY(startPosY, 0);
-        backGround.DOColor(new Color(0, 0, 0, 1), 0);
+ 
     }
 
     /// <summary>
@@ -1260,6 +1310,7 @@ public class EndingController : MonoBehaviour
     // Steam 업적 
     private void CheckFirstClearSteamAchievement()
     {
+        IngameData._isStoryCompleteClear = true;
         Managers.Steam.UnlockAchievement($"ACH_ENDING_WATCH");
     }
 
