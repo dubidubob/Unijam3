@@ -21,7 +21,7 @@ MonoBehaviour:
   MusicPath: BGM/Chapter5_V2
   StartBeat: 8
   DelayPaddingTick: 0
-  backGroundSprite: {fileID: 21300000, guid: 2275b117ee9c47542a27fdba9b27a226, type: 3}
+  backGroundSprite: {fileID: 21300000, guid: c844699d60960bb4bac5079508fdc004, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 5e73ef6a181b19145b2d248b6beed720, type: 3}
   colorPalette: {r: 0.18431373, g: 0.42352942, b: 0.62352943, a: 0.5882353}
   SinkStage: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
     - rid: 7504153760568705024
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
+        isIn: 0
         durationBeat: 10
         startDelayBeat: 2
         bpm: 102
@@ -39,6 +39,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 4
@@ -53,7 +56,7 @@ MonoBehaviour:
     - rid: 7504153760568705025
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
+        isIn: 0
         durationBeat: 30
         startDelayBeat: 1
         bpm: 102
@@ -61,6 +64,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -95,7 +101,7 @@ MonoBehaviour:
     - rid: 7504153833746464770
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
+        isIn: 0
         durationBeat: 30
         startDelayBeat: 0
         bpm: 102
@@ -103,6 +109,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 0
           monsterType: 3
@@ -171,7 +180,7 @@ MonoBehaviour:
     - rid: 9186972795589099527
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
-        isIn: 1
+        isIn: 0
         durationBeat: 30
         startDelayBeat: 4
         bpm: 102
@@ -179,6 +188,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0

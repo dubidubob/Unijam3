@@ -17,7 +17,39 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 9f78b5dbd75a3a643a45710eeae2ae44, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 30656823296
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30715543552
+    m_Localized: Restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30715543553
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30715543554
+    m_Localized: BGM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30723932160
+    m_Localized: SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30723932161
+    m_Localized: Tune the Rhythm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30723932162
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30723932163
+    m_Localized: Paused
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

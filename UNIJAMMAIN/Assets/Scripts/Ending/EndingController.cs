@@ -120,10 +120,13 @@ public class EndingController : MonoBehaviour
     [SerializeField] private Image image_AllBlackPanel;
 
     [SerializeField] private CanvasGroup canvasGroup_Sun;
-
     private void Start()
     {
-        foreach(var particle in particle_Flowers)
+        StartInit().Forget();
+    }
+    private async UniTask StartInit()
+    {
+        foreach (var particle in particle_Flowers)
         {
             particle.Stop();
         }
@@ -133,6 +136,11 @@ public class EndingController : MonoBehaviour
         ClearAllTexts();
         LoadEndingSequenceData("Localization/EndingTable");
 
+        if (SceneLoadingManager.Instance != null)
+        {
+            await UniTask.Yield(PlayerLoopTiming.Update);
+            SceneLoadingManager.Instance.NotifySceneReady();
+        }
 
         PlayEndingSequence().Forget(); // 처음부터 시작
 
@@ -1135,14 +1143,20 @@ public class EndingController : MonoBehaviour
         }
         else if (index == 8)
         {
-            // [쓰러지는 듯한 연출]
-            // 1ms(거의 즉시) EaseOut으로 어두운 배경 확대 및 뒤틀기
             if (image_UpDarkBackGround != null)
             {
-                image_UpDarkBackGround.rectTransform.DOScale(1.3f, 0.1f).SetEase(Ease.OutBack);
-                await UniTask.WaitForSeconds(0.1f);
-                image_UpDarkBackGround.rectTransform.DORotate(new Vector3(0, 0, -6.7f), 0.1f).SetEase(Ease.InCirc);
+                // 1. Pivot이 정중앙(0.5, 0.5)인지 확인하세요.
+                // 2. Scale을 1.3f보다 조금 더 크게 잡아 여백을 방지합니다.
+                var rt = image_UpDarkBackGround.rectTransform;
 
+                // 시퀀스를 사용하여 부드럽게 연결
+                var sequence = DOTween.Sequence();
+
+                // 동시에 실행
+                sequence.Join(rt.DOScale(1.4f, 0.2f).SetEase(Ease.OutQuad));
+                sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 0.2f).SetEase(Ease.OutCubic));
+
+                await sequence.AsyncWaitForCompletion();
             }
         }
         else if (index == 9)

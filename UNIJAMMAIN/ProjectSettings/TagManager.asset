@@ -48,6 +48,18 @@ TagManager:
   - name: Bluring
     uniqueID: 2803303335
     locked: 0
+  - name: EnemyBehind
+    uniqueID: 2777578083
+    locked: 0
+  - name: sudoSeung
+    uniqueID: 1476569213
+    locked: 0
   - name: Enemy
     uniqueID: 3007290161
+    locked: 0
+  - name: EnemyFront
+    uniqueID: 2973689113
+    locked: 0
+  - name: UI
+    uniqueID: 2275580075
     locked: 0

@@ -77,17 +77,17 @@ MonoBehaviour:
     - Locale-ja
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9f78b5dbd75a3a643a45710eeae2ae44
-    m_Address: Assets/Localization/InGameOptionTable Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a1b660ffd6b423d4f9ac7eb254b8d789
-    m_Address: Setting_RIDIBatang SDF
+  - m_GUID: 9adb078fbd0f73443ae0e516b3aa8545
+    m_Address: RIDIBatang SDF_TMP Pro
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
     - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f78b5dbd75a3a643a45710eeae2ae44
+    m_Address: Assets/Localization/InGameOptionTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b0d2aa89c1d491c4b907f1aceb42c108
     m_Address: Assets/Localization/FontTable Shared Data.asset

@@ -173,16 +173,24 @@ public class DiagonalMonster : MonoBehaviour
         _objectRenderer.sprite = _originSprite;
     }
 
-    public void SetDead(bool isAttackedByPlayer = true)
+    public void SetDead(bool isAttackedByPlayer = true, bool isUnPool = false)
     {
-        jumpSequence.Kill();
+        if (jumpSequence != null && jumpSequence.IsActive())
+        {
+            jumpSequence.Kill(false); // OnComplete 실행 안 함
+            jumpSequence = null;
+        }
         Managers.Sound.Play("SFX/Enemy/DiagonalSuccess_V4", Define.Sound.SFX, 1f, 2.5f);
 
         float waitForSeconds;
 
         if (!isAttackedByPlayer)
         {
-            Managers.Game.PlayerAttacked(attackValue);
+            if (!isUnPool)// 풀로 언로드하는것은 데미지 안입히게 수정
+            {
+                Managers.Game.PlayerAttacked(attackValue);
+            }
+        
             waitForSeconds = 0f;
             DoFadeAsync().Forget();
         }
@@ -196,6 +204,12 @@ public class DiagonalMonster : MonoBehaviour
             attackedEffectSpriteRenderer.DOFade(1, 0);
 
             Managers.Game.ComboInc(healingValue);
+        }
+
+        var spawner = GetComponentInParent<DiagonalMonsterSpawner>();
+        if (spawner != null)
+        {
+            spawner.RecycleMonsterIndex(diagonalT);
         }
 
         // Coroutine 대신 UniTask 호출
@@ -214,11 +228,11 @@ public class DiagonalMonster : MonoBehaviour
             await UniTask.Delay(System.TimeSpan.FromSeconds(waitSeconds), cancellationToken: _cts.Token);
         }
 
+        _isDying = false;
         attackedEffectSpriteRenderer.DOFade(1, 0);
         transform.position = _originPos;
         _objectRenderer.color = new Color(_objectRenderer.color.r, _objectRenderer.color.g, _objectRenderer.color.b, 1);
         gameObject.SetActive(false);
-        _isDying = false;
     }
 
     // IEnumerator -> async UniTaskVoid

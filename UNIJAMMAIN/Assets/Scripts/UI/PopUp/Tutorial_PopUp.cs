@@ -51,6 +51,7 @@ public class Tutorial_PopUp : UI_Popup
 
     private void Awake()
     {
+        rightCharacter.SetActive(false);
         // 초기화 시 필요한 컴포넌트 캐싱
         if (contents != null)
         {

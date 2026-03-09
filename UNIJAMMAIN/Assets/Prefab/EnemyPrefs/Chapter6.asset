@@ -26,7 +26,7 @@ MonoBehaviour:
   MusicPath: BGM/Chapter6_V2
   StartBeat: 1
   DelayPaddingTick: 0
-  backGroundSprite: {fileID: 21300000, guid: 798a6cbc05f742c4381887de2804b6c5, type: 3}
+  backGroundSprite: {fileID: 21300000, guid: 433531bf21520aa47bb83cd6140ad1bc, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 7d708994ae00951428530f186deeeae4, type: 3}
   colorPalette: {r: 0.1764706, g: 0.24313727, b: 0.24705884, a: 1}
   SinkStage: 0
@@ -44,6 +44,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -66,6 +69,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -129,6 +135,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -151,6 +160,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -225,6 +237,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -247,6 +262,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -279,6 +297,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -301,6 +322,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0

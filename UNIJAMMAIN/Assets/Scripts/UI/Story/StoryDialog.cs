@@ -452,73 +452,10 @@ public class StoryDialog : UI_Popup
                 yield return new WaitForSecondsRealtime(1.5f);
                 if (scene.leftSDAnim) KongCanvas.SetActive(true);
                 if (scene.rightSDAnim) GretCanvas.SetActive(true);
-                //bool panelTurnedOn = false;
-                //while (!panelTurnedOn)
-                //{
-
-                //    // ���콺 �ƹ� ��ư Ŭ�� ��
-                //    if (Input.GetMouseButtonDown(0))
-                //    {
-
-
-                //        if (KongCanvas != null) KongCanvas.SetActive(false);
-                //        if (GretCanvas != null) GretCanvas.SetActive(false);
-                //        if (scene.leftSDAnim)
-                //        {
-                //            foreach (var obj in leftSDAnimSet)
-                //                if (obj != null) obj.SetActive(false);
-                //            var leftAnim = leftSDCharacter.GetComponent<DOTweenAnimation>();
-                //            var leftSR = leftSDCharacter.GetComponent<SpriteRenderer>();
-                //            leftAnim.DOPlayBackwards();
-                //            leftSR.sortingOrder = -3;
-                //        }
-                //        if (scene.rightSDAnim)
-                //        {
-                //            foreach (var obj in rightSDAnimSet)
-                //                if (obj != null) obj.SetActive(false);
-                //            var rightAnim = rightSDCharacter.GetComponent<DOTweenAnimation>();
-                //            var rightSR = rightSDCharacter.GetComponent<SpriteRenderer>();
-                //            rightAnim.DOPlayBackwards();
-                //            rightSR.sortingOrder = -3;
-                //        }
-
-
-                //        if (TextPanel != null)
-                //            TextPanel.SetActive(true);
-
-                //        panelTurnedOn = true;
-                //    }
-                //    yield return null;
-                //}
-
-                // �ٷ� ���� ����!
+               
                 continue;
             }
 
-
-            //if (scene.requiredKey == KeyCode.None)
-            //{
-            //    while ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return)))
-            //    {
-            //        if (Input.GetKeyDown(KeyCode.X))
-            //        {
-            //            goto LoopEnd;
-            //        }
-
-
-            //        TestTexts[idx].text = full;
-            //        yield return null;
-            //    }
-
-            //}
-            //else
-            //{
-            //    while (!Input.GetKeyDown(scene.requiredKey))
-            //    {
-            //        TestTexts[idx].text = full;
-            //        yield return null;
-            //    }
-            //}
             if (idx < scenes.Count - 1)
             {
                 if (TextPanel != null)

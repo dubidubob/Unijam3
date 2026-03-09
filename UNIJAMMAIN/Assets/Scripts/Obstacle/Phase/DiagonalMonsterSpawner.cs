@@ -74,6 +74,12 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     // =================================================================
     public void ActivateEnemy(float moveBeat, MonsterData data, int? targetEnumIdx = null)
     {
+        if (deactivatedDiagonalIdx.Count == 0)
+        {
+            Debug.LogWarning("가용 가능한 대각선 몬스터 오브젝트가 없습니다!");
+            return;
+        }
+
         UpdateRankCnt(RankState.Spawned);
 
         int mIdx = -1;
@@ -151,9 +157,14 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         _activePatterns.Clear();
         _patternsToRemove.Clear();
 
-        foreach (var idx in activatedDiagonalIdx)
+
+        //  핵심 수정: foreach 도중 리스트가 수정되는 에러를 막기 위해 임시 복사본(tempList)을 만듭니다.
+        List<int> tempList = new List<int>(activatedDiagonalIdx);
+
+        foreach (var idx in tempList)
         {
-            diagonalDict[(DiagonalType)idx].GetComponent<DiagonalMonster>().SetDead(false);
+            // tempList를 순회하므로, 여기서 원본 activatedDiagonalIdx가 수정되어도 에러가 나지 않습니다.
+            diagonalDict[(DiagonalType)idx].GetComponent<DiagonalMonster>().SetDead(false, true);
         }
         activatedDiagonalIdx.Clear();
         deactivatedDiagonalIdx.Clear();
@@ -185,6 +196,17 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
             _patternsToRemove.Clear();
         }
     }
+    public void RecycleMonsterIndex(GamePlayDefine.DiagonalType type)
+    {
+        int t = (int)type;
+        // 활성화 리스트에 있다면 비활성화(대기) 리스트로 되돌림
+        if (activatedDiagonalIdx.Contains(t))
+        {
+            activatedDiagonalIdx.Remove(t);
+            deactivatedDiagonalIdx.Add(t);
+        }
+    }
+
 }
 
 // =======================================================================
@@ -248,11 +270,13 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
 
         while (_spawning)
         {
+            /*
             if (AudioSettings.dspTime > _lastSpawnTime)
             {
                 Stop();
                 yield break;
             }
+            */
 
             // 패턴 문자열이 있을 때만 동작
             if (!string.IsNullOrEmpty(data.WASD_Pattern))
@@ -287,4 +311,6 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
             yield return new WaitForSeconds(spawnDuration);
         }
     }
+   
+  
 }

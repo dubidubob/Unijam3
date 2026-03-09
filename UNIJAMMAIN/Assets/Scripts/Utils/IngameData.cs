@@ -38,7 +38,11 @@ public static class IngameData
     /// </summary>
     public static int _nowStageIndex = 0;
 
- 
+    /// <summary>
+    /// 프롤로그 연출을 완전히 보았는지 여부
+    /// </summary>
+    public static bool _isPrologueWatched = false;
+
 
     // [STEAM CLOUD 수정] 스팀 클라우드와 동기화될 파일의 저장 경로
     private static string SaveFilePath => Path.Combine(Application.persistentDataPath, "SteamCloudSaveData.json");
@@ -63,6 +67,7 @@ public static class IngameData
         public bool IsStoryCompleteClear;
         public int StageProgress;
         public bool[] IsFirstClearChapter;
+        public bool IsPrologueWatched;
         // 필요한 변수가 더 있다면 여기에 추가 (public이어야 저장됨)
     }
 
@@ -223,7 +228,8 @@ public static class IngameData
         data.BestChapterScore = _bestChapterScore;
         data.IsStoryCompleteClear = _isStoryCompleteClear;
         data.IsFirstClearChapter = _isFirstClearChapter;
-    
+        data.IsPrologueWatched = _isPrologueWatched;
+
 
         try
         {
@@ -255,7 +261,7 @@ public static class IngameData
                     _nowStageIndex = data.NowStoryStageIndex;
                     _isStoryCompleteClear = data.IsStoryCompleteClear;
                     StageProgress = data.StageProgress;
-
+                    _isPrologueWatched = data.IsPrologueWatched;
                     if (data.ChapterRanks != null && data.ChapterRanks.Length == TOTAL_CHAPTERS)
                         _chapterRanks = data.ChapterRanks;
 
@@ -324,6 +330,7 @@ public static class IngameData
         StageProgress = 0;
         ChapterIdx = 0;
         _isStoryCompleteClear = false;
+        _isPrologueWatched = false;
     }
 
 

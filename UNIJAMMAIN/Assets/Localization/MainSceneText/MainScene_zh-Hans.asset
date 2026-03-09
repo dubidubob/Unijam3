@@ -41,20 +41,20 @@ MonoBehaviour:
 
       Soyeon Joo
 
-      Dahyun
-      Yoon
+      Dahyeon Yoon
 
-      Minji Kim
+      Minji
+      Kim
 
       Jee-woo Kwon'
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942149
-    m_Localized: "\u6E38\u620F\u4F01\u5212\r\n\u7A0B\u5E8F\r\n\r\n\u7F8E\u672F\r\n\r\n\u97F3\u9891"
+    m_Localized: "\u7B56\u5212\n\u7A0B\u5E8F\n\n\u7F8E\u672F\n\n\u97F3\u9891"
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942148
-    m_Localized: "\u9690\u4E16\u9AD8\u50E7"
+    m_Localized: "\u9690\u4E16\u4FEE\u884C\u50E7"
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942146
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942147
-    m_Localized: "\u6545\u4E8B\u6A21\u5F0F"
+    m_Localized: "\u5F00\u542F\u65C5\u9014"
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942145

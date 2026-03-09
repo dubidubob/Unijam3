@@ -1,37 +1,79 @@
-Key,Cutline,Chinese (Simplified)(zh-Hans),English(en),Japanese (ja),Korean(ko)
-GameClear_StageDefault_Text0,98,,,,어떻게 이럴수가?
-GameClear_StageDefault_Text1,98,,,,내가 무슨짓을 한거지?
-GameClear_StageDefault_Text2,95,,,,완벽하오.
-GameClear_StageDefault_Text3,95,,,,놀랍소 !
-GameClear_StageDefault_Text4,90,,,,속세의 것을<br>완벽히 물리쳤군.
-GameClear_StageDefault_Text5,90,,,,탁월한 경지다.
-GameClear_StageDefault_Text6,85,,,,속세의 것이<br>두려워 하겠군.
-GameClear_StageDefault_Text7,85,,,,흐름을 지배했군. 
-GameClear_StageDefault_Text8,75,,,,강인한 정신이 훌륭하오.
-GameClear_StageDefault_Text9,75,,,,마음의 눈을 떴군.
-GameClear_StageDefault_Text10,60,,,,수행의 길이 보이는군.
-GameClear_StageDefault_Text11,60,,,,호흡이 깨어나고 있군.
-GameClear_StageDefault_Text12,50,,,,곧 정상에 오를 것이다.
-GameClear_StageDefault_Text13,50,,,,마음의 눈이 개안하고 있다.
-GameClear_StageDefault_Text14,25,,,,마음이 속세에 흔들렸군.
-GameClear_StageDefault_Text15,25,,,,아직 수행이<br>완전하지 않군.
-GameClear_StageDefault_Text16,0,,,,속세의 파동에<br>휘청였군.
-GameClear_StageDefault_Text17,0,,,,흔들림이 너무 깊군.
-GameClear_Stage0_Text0,98,,,,어떻게 이럴수가?
-GameClear_Stage0_Text1,98,,,,내가 무슨짓을 한거지?
-GameClear_Stage0_Text2,95,,,,완벽하오.
-GameClear_Stage0_Text3,95,,,,놀랍소 !
-GameClear_Stage0_Text4,90,,,,속세의 것을<br>완벽히 물리쳤군.
-GameClear_Stage0_Text5,90,,,,탁월한 경지다.
-GameClear_Stage0_Text6,85,,,,속세의 것이<br>두려워 하겠군.
-GameClear_Stage0_Text7,85,,,,흐름을 지배했군. 
-GameClear_Stage0_Text8,75,,,,강인한 정신이 훌륭하오.
-GameClear_Stage0_Text9,75,,,,마음의 눈을 떴군.
-GameClear_Stage0_Text10,60,,,,수행의 길이 보이는군.
-GameClear_Stage0_Text11,60,,,,호흡이 깨어나고 있군.
-GameClear_Stage0_Text12,50,,,,곧 정상에 오를 것이다.
-GameClear_Stage0_Text13,50,,,,마음의 눈이 개안하고 있다.
-GameClear_Stage0_Text14,25,,,,마음이 속세에 흔들렸군.
-GameClear_Stage0_Text15,25,,,,아직 수행이<br>완전하지 않군.
-GameClear_Stage0_Text16,0,,,,속세의 파동에<br>휘청였군.
-GameClear_Stage0_Text17,0,,,,흔들림이 너무 깊군.
+Key,Cutline,Korean(ko),English(en),Chinese (Simplified)(zh-Hans),Japanese(ja)
+GameClear_Stage0_Text0,100,처음부터 이런 실력이?,Skill of such caliber<BR>from the very first step.,初手便有此等身手。,初手からこの腕前か。
+GameClear_Stage0_Text1,90,수행의 길을 걷기에<br>충분해 보이구나.,Worthy already<BR>to walk the path of discipline.,踏上修行之路已是绰绰有余。,修行の道を歩むに十分な器よ。
+GameClear_Stage0_Text2,75,수행자의 자질이 보이는군.,The makings of a true cultivator<BR>are clear within you.,修行者的资质已然显现。,修行僧の資質が見える。
+GameClear_Stage0_Text3,60,속세의 것이<br>두려워 하겠군.,Even the mortal realm<BR>trembles at your presence.,俗世凡尘也要为之畏惧。,俗世の塵も恐れをなすであろう。
+GameClear_Stage0_Text4,50,수행의 길이<br>슬슬 보이는군.,The path of cultivation<BR>slowly reveals itself.,修行之道已渐渐明朗。,修行の道がおぼろげに見えてきたな。
+GameClear_Stage0_Text5,0,다시 절로 돌아가야겠군!,Return to the temple<BR>and temper yourself anew.,且先回寺再修行吧。,いったん寺へ戻るがよい。
+GameClear_Stage1_Text0,100,숲속의 악령들이<br>모두 도망가겠군!,The fiends of the forest<BR>scatter and flee in fear.,林中邪灵尽数仓皇而逃。,森の邪霊どもがことごとく逃げ惑うであろう。
+GameClear_Stage1_Text1,90,가히 완벽에 가까운<br>움직임이군!,Footwork so refined<BR>it nears perfection.,身法之妙已近完美之境。,まさしく完璧に迫る身のこなしよ。
+GameClear_Stage1_Text2,75,열심히 수련한 성과가 보이는군.,The fruits of harsh training<BR>now reveal themselves.,苦修成果已清晰可见。,鍛錬の成果がはっきり現れておる。
+GameClear_Stage1_Text3,60,숲의 흔들림 속에서도<br>중심을 붙들었군.,Amid swaying woods<BR>your center remains unshaken.,林涛摇曳之间仍能稳守本心。,森揺らぐ中でも体幹を失わぬとは。
+GameClear_Stage1_Text4,50,나무 뿌리에<br>잠시 발이 엇나갔소.,Snared by roots<BR>your step faltered briefly.,被树根所绊步伐一时凌乱。,木の根に足を取られ一瞬乱れたな。
+GameClear_Stage1_Text5,0,뒤엉킨 수풀에 마음이<br>길을 잃었군.,Within tangled thickets<BR>your mind lost its way.,乱林缠身心神迷失其途。,絡み合う藪に心が道を見失ったか。
+GameClear_Stage2_Text0,100,쏟아지는 물줄기마저<br>길을 비켜서는군!,Even the crashing torrent<BR>parts before you.,飞瀑洪流亦为你让道。,奔流すらも道を譲る勢いよ。
+GameClear_Stage2_Text1,90,흐름을 완전히<br>파악했군.,The flow of all things<BR>lies within your grasp.,水势流转已尽在掌握。,流れを完全に掴み取ったな。
+GameClear_Stage2_Text2,75,거센 폭포 속에서도<br>호흡을 지켜냈군.,Within the raging falls<BR>your breath endured.,狂瀑之中仍能守住呼吸。,激流の滝中でも呼吸を保ち続けたか。
+GameClear_Stage2_Text3,60,거센 폭포 속에서도<br>균형을 잃지 않았군.,Against the crushing cascade<BR>your balance held firm.,怒涛冲击之下依旧稳如磐石。,荒れ狂う瀑布の中でも体勢を崩さぬとは。
+GameClear_Stage2_Text4,50,거센 물살에 몸이<br>잠시 흔들렸군.,Swept by violent currents<BR>your stance wavered.,湍流激荡身形微微失衡。,激しき水勢に身がわずかに揺らいだな。
+GameClear_Stage2_Text5,0,집중이 흐트러졌소!<br>수행이 더 필요하오,Focus shattered<BR>further training awaits.,心神已乱仍需潜心修炼。,集中が乱れたぞさらなる修行が要る。
+GameClear_Stage3_Text0,100,정상에 선 기세가<br>천지를 압도했군!,Standing atop the summit<BR>your aura subdues heaven and earth.,立于绝顶之势气压天地之间。,頂に立つその気迫天地すら圧倒せり。
+GameClear_Stage3_Text1,90,하늘과 땅의 경계를<br>넘어섰군!,You have crossed beyond<BR>the boundary of sky and land.,已然跨越天地交界之境。,天と地の境を越えし者よ。
+GameClear_Stage3_Text2,75,높은 뜻을 품고 있군.,A spirit that harbors lofty resolve.,胸怀凌云之志。,志、高く抱いておるな。
+GameClear_Stage3_Text3,60,희박한 공기 속에서도<br>호흡을 붙들었군.,Even in thinning air<BR>your breath remained steady.,稀薄气息之中仍能稳住呼吸。,薄き気の中でも息を乱さぬとは。
+GameClear_Stage3_Text4,50,정상은 아직 멀었도다.,The true peak<BR>still lies ahead.,巅峰之路尚未抵达。,頂は未だ遠し。
+GameClear_Stage3_Text5,0,벼랑 끝에 몰려버렸군.,Driven to the brink<BR>of the precipice.,被逼至悬崖之缘。,断崖の縁へ追い詰められたな。
+GameClear_Stage4_Text0,100,구름을 가르며<br>하늘에 올랐도다!,Parting the clouds<BR>you ascend into the heavens.,破云而上直冲九天之巅。,雲を切り裂き天へと昇りゆく。
+GameClear_Stage4_Text1,90,비상하는 기세가<br>대단하군!,A soaring momentum<BR>of astonishing force.,腾空之势实属惊人。,飛翔の勢い実に見事よ。
+GameClear_Stage4_Text2,75,흔들리는 항로 위에서도 고요하도다.,Upon unstable routes<BR>your mind stays tranquil.,航路动荡之上仍守一片宁静。,揺れる航路の上でもなお静寂を保つ。
+GameClear_Stage4_Text3,60,지상을 넘어 하늘로 가세.,Leaving the earthly realm<BR>you rise toward the firmament.,脱离尘世直上天穹而去。,地を離れ天へ参らん。
+GameClear_Stage4_Text4,50,또 한 번 바람 앞에<br>흔들렸구나.,Once more before the winds<BR>your stance wavered.,再度于风中身形摇摆不定。,またも風前にて身を揺らしたな。
+GameClear_Stage4_Text5,0,지상에 미련이 남아있는가 보오,It seems worldly ties<BR>still bind your spirit.,看来仍对凡尘心存牵挂。,まだ地上に未練が残るか。
+GameClear_Stage5_Text0,100,문턱을 넘어<br>깨달음에 닿았군!,Crossing the threshold<BR>you touch awakening.,跨越门槛已触及觉悟之境。,門を越え悟りへ触れたな。
+GameClear_Stage5_Text1,90,깨달음에 다다르고 있군.,You advance steadily<BR>toward enlightenment.,正稳步迈向觉悟。,悟りへ着実に近づいておる。
+GameClear_Stage5_Text2,75,긴 수행의 성과가 있군.,Long years of discipline<BR>have borne fruit.,漫长修行终见成果。,長き修行の成果が見える。
+GameClear_Stage5_Text3,60,깨달음의 문턱 앞에 서있도다.,You stand now<BR>before the gate of awakening.,已立于觉悟之门前。,悟りの門前に立ちし者よ。
+GameClear_Stage5_Text4,50,마음이 아직<br>흐린 듯하도다.,Yet the mind remains<BR>slightly clouded.,心境似仍略有迷蒙。,心はいまだ曇りを残しておる。
+GameClear_Stage5_Text5,0,문턱을 앞에 두고<br>잡념을 떨치지 못했군.,At the very threshold<BR>stray thoughts held you back.,临门一脚却未能斩断杂念。,門前に至りながら雑念を断てぬか。
+GameClear_Stage6_Text0,100,최고 경지에 이르렀도다!,You have reached<BR>the supreme realm.,终抵至高境界。,ついに至高の境地へ到達せり。
+GameClear_Stage6_Text1,90,천상의 기운을<br>몸에 담았구나.,Celestial energies<BR>gather within your body.,天界之气已汇聚于身。,天上の気をその身に宿したな。
+GameClear_Stage6_Text2,75,수행의 흐름이 안정됐군.,The rhythm of discipline<BR>has stabilized.,修行节奏已趋于平稳。,修行の流れ安定しておる。
+GameClear_Stage6_Text3,60,강한 의지를 지니고 있군.,A spirit fortified<BR>by unwavering will.,内心蕴藏坚定意志。,強き意志を秘めておるな。
+GameClear_Stage6_Text4,50,마음의 번뇌를<br>버리지 못했구나.,Attachments of the heart<BR>remain uncast aside.,心中执念仍未彻底放下。,心の煩悩を断ち切れぬか。
+GameClear_Stage6_Text5,0,천상의 시험에 들지 못했도다.,You failed to endure<BR>the trial of the heavens.,未能承受天界试炼。,天上の試練には及ばなかったな。
+GameClear_Stage7_Text0,100,모든 장단과 물아일체되었군!,At last<BR>you attained the Dao.,终得大道之悟。,ついに得道を果たしたな。
+GameClear_Stage7_Text1,90,지옥의 업화마저<br>끝내 굴복시켰군!,Even hellfire’s karma<BR>bows before your might.,连地狱业火也被彻底镇压。,地獄の業火すらついに屈服させたか。
+GameClear_Stage7_Text2,75,거대한 심연을 넘어섰군.,You have surpassed<BR>the vast abyss.,已然跨越无尽深渊。,巨大なる深淵を越えたな。
+GameClear_Stage7_Text3,60,번뇌의 무게를 견뎌냈군,The crushing weight of affliction<BR>you withstood.,承受住烦恼之重压。,煩悩の重みに耐え抜いたか。
+GameClear_Stage7_Text4,50,심연의 어둠에 의지가<br>잠식되었군,Your will was consumed<BR>by abyssal darkness.,意志被深渊黑暗渐渐吞噬。,深淵の闇に意志が蝕まれておる。
+GameClear_Stage7_Text5,0,다시 돌아갈 수는 없소.,There is no longer<BR>a path of return.,此路已无回头之机。,もはや引き返すことは叶わぬ。
+GameClear_StageChristmas_Text0,100,축제의 리듬을 완전히 지배했군!,You command completely<BR>the rhythm of the festival.,节庆律动已被你完全掌控。,祭りの律動を完全に支配せり。
+GameClear_StageChristmas_Text1,90,아침 눈송이처럼<br>빛나는 움직임이였소.,Movements that shimmer<BR>like morning snow.,身姿闪耀如晨雪般晶莹。,朝の雪片のごとく輝く身のこなしよ。
+GameClear_StageChristmas_Text2,75,경쾌한 흐름을 잘 살렸군.,A lively tempo<BR>expressed with mastery.,轻快节奏被你演绎得淋漓尽致。,軽快なる流れを見事に活かしたな。
+GameClear_StageChristmas_Text3,60,흥겨운 흐름을<br>잘 따라갔군.,Joyful rhythms<BR>flow beneath your control.,欢腾律动也能从容驾驭。,愉快なる調べに見事乗りこなした。
+GameClear_StageChristmas_Text4,50,박자를 조금 놓쳤군.,The beat slipped<BR>but for a fleeting moment.,节拍略有些许偏差。,拍をわずかに外したな。
+GameClear_StageChristmas_Text5,0,분위기가 흐려졌소.,The atmosphere faded<BR>into slight disarray.,整体气氛略显散乱。,気配がやや乱れておる。
+GameClear_StageEDM_Text0,100,"비트의 왕, 비트의 신이도다.",Sovereign of rhythm<BR>divine master of beats.,节奏之王律动之神。,律動の王にして拍動の神なり。
+GameClear_StageEDM_Text1,90,순간 포착의 달인이오.,A master<BR>of capturing fleeting moments.,瞬息捕捉之达人。,刹那を捉える達人よ。
+GameClear_StageEDM_Text2,75,흐르는 리듬 위에 안착했소.,You settled firmly<BR>upon the flowing rhythm.,稳立于流动节拍之上。,流るる律動の上に見事着地せり。
+GameClear_StageEDM_Text3,60,거센 울림 속에서도 안정적이군.,Amid roaring resonance<BR>your stance remained steady.,强烈共鸣之中依旧稳定如初。,激しき響動の中でも揺るがぬ安定よ。
+GameClear_StageEDM_Text4,50,강한 울림에 균형이<br>잠시 무너졌군,Under thunderous vibrations<BR>your balance collapsed briefly.,震荡余波之下平衡一度崩解。,強き響きにて均衡が一瞬崩れたな。
+GameClear_StageEDM_Text5,0,어지러움 속에서 균형을 잃었군.,Within dizzying chaos<BR>you lost all balance.,混乱之中失去了身体平衡。,眩き乱れの中で均衡を失ったか。
+GameClear_StageNight_Text0,100,끝없는 야경 위에<br>의지를 새겼도다.,Across the endless nightscape<BR>your will was engraved.,无尽夜幕之上刻下你的意志。,果てなき夜景の上に意志を刻み込んだな。
+GameClear_StageNight_Text1,90,깊은 적막 속에서도<br>의지를 밝히었군.,Within profound silence<BR>your resolve still shone.,深沉寂静之中仍点燃信念之光。,深き静寂の中でも意志の灯を絶やさぬ。
+GameClear_StageNight_Text2,75,차가운 밤공기 속에서도<br>호흡을 지켜냈군.,In the frigid night air<BR>your breath endured.,寒夜气息之中依旧守住呼吸。,冷たき夜気の中でも呼吸を保ち続けたな。
+GameClear_StageNight_Text3,60,긴장 어린 공기 속<br>균형을 붙들었군.,Within tense stillness<BR>your balance held fast.,紧绷气氛之下仍稳守身体平衡。,張り詰めた気の中で均衡を守り抜いたか。
+GameClear_StageNight_Text4,50,어둠 속 반짝이는 불빛들에<br>그만 홀려버렸군.,Enchanted by lights in the dark<BR>your focus slipped away.,沉溺于夜色灯火一时失神。,闇に瞬く灯火に心奪われたか。
+GameClear_StageNight_Text5,0,어둠 속으로<br>의지가 흩어졌도다.,Your will dispersed<BR>into the swallowing darkness.,意志渐散湮没于黑暗之中。,闇の中へと意志は霧散したな。
+GameClear_EventStageInfo_Text,,염주에 기이한 푸른 빛의 구슬이 맺혔습니다.,A mystic blue bead has emerged.,念珠现出了一颗幽蓝异珠。,数珠に奇妙な青い珠が宿りました。
+GameClear_Stage7_GoEndingInfo_Text,,"
+
+    < 화면을 클릭하면, 마지막 이야기가 펼쳐집니다. >       ","
+
+    < Click to witness the final tale >","
+
+    < 点击开启最终章 >","
+
+    < クリックで終幕の物語へ >"
+GameClear_ScoreExPression_Text,,{Score}점,Score: {Score},分数 : {Score},スコア: {Score}
+,,"[ESC]로 퇴장 시, 제7장을 다시 완료해야 합니다.",[ESC] Exit: Re-clear Ch. 7 to return.,7 to return.[ESC] 退出：需重过第七章方可进入。,[ESC] 退出：再度第七章を越える必要があります。

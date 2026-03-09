@@ -67,7 +67,26 @@ public class KeyUIEffect : MonoBehaviour
                 instance1.SetActive(false);
                 perfectEffectParticle = instance1.GetComponent<ParticleSystem>();
             }
+
+
         }
+
+        // 1. getKeyParticle (몬스터 아래 - BehindMonster)
+        if (getKeyParticle != null)
+        {
+            var renderer = getKeyParticle.GetComponent<ParticleSystemRenderer>();
+            renderer.sortingLayerName = "EnemyFront";
+            renderer.sortingOrder = 0; // 필요시 순서 조절
+        }
+
+        // 2. perfectEffectParticle (몬스터 위 - AboveMonster)
+        if (perfectEffectParticle != null)
+        {
+            var renderer = perfectEffectParticle.GetComponent<ParticleSystemRenderer>();
+            renderer.sortingLayerName = "EnemyBehind";
+            renderer.sortingOrder = 0;
+        }
+
     }
 
     private void Awake()

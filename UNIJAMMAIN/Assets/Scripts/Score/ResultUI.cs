@@ -25,11 +25,32 @@ struct RankUI {
         int randIdx = mentIndices[UnityEngine.Random.Range(0, mentIndices.Count)];
 
         // 로컬라이제이션 Key 조합 (예: GameClear_Stage0_Text0)
-        string key = $"GameClear_Stage{chapterIdx}_Text{randIdx}"; // TODO : chapterIdx로 받도록 수정할것.
+       
+
+        string key = $"GameClear_Stage{ChapterStringKeyReturn(chapterIdx)}_Text{randIdx}"; // TODO : chapterIdx로 받도록 수정할것.
 
         // LocalizationManager에서 번역된 텍스트 가져오기 (키가 없을 경우 대비 fallback 추가)
         return LocalizationManager.Get(key, "멘트를 찾을 수 없습니다.");
     }
+
+    private string ChapterStringKeyReturn(int chapterIdx)
+    {
+        switch (chapterIdx)
+        {
+            case 9:
+                return "Christmas";
+            case 10:
+                return "EDM";
+                break;
+            case 11:
+                return "Night";
+                break;
+            default:
+                return chapterIdx.ToString();
+                break;
+        }
+    }
+
 }
 public class ResultUI : MonoBehaviour
 {
@@ -321,4 +342,5 @@ public class ResultUI : MonoBehaviour
     {
         
     }
+
 }

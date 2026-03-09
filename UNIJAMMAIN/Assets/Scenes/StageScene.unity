@@ -1552,6 +1552,14 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 846483294329771860, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -453
+      objectReference: {fileID: 0}
+    - target: {fileID: 846483294329771860, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1119
+      objectReference: {fileID: 0}
     - target: {fileID: 935347371009636086, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1588,6 +1596,14 @@ PrefabInstance:
       propertyPath: scoreCanvasGroup
       value: 
       objectReference: {fileID: 1510366805}
+    - target: {fileID: 2549732060367081304, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -496
+      objectReference: {fileID: 0}
+    - target: {fileID: 2549732060367081304, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1779
+      objectReference: {fileID: 0}
     - target: {fileID: 2693336593970878797, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: stageDataList.Array.size
       value: 11
@@ -1715,6 +1731,30 @@ PrefabInstance:
     - target: {fileID: 3568119610407590421, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711738029474953689, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1107
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711738029474953689, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 2270
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711738029474953689, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711738029474953689, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711738029474953689, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711738029474953689, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3748283175784367811, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Name

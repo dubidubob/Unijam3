@@ -72,9 +72,12 @@ public class StageScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        if (Test) { 
+        if (Test) {
+            IngameData._isStoryCompleteClear = true;
             IngameData._nowStageIndex = 0;
-            IngameData._unLockStageIndex = 2;
+            IngameData._unLockStageIndex = 7;
+
+
         }
         Managers.Game.Init();
     }

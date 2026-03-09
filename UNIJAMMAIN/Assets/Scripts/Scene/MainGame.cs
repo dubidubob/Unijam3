@@ -52,11 +52,6 @@ public class MainGame : BaseScene
 
     private void Update()
     {
-        if(Managers.Game.phaseController.isSinkStage)
-        {
-            escPanel.gameObject.SetActive(false);
-            return;
-        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPopUp)

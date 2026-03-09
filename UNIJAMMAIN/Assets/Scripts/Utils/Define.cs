@@ -65,7 +65,9 @@
         S1_1,
         S1_2,
         StageScene,
-        StoryScene
+        StoryScene,
+        PrologueScene,
+        EndingScene
     }
     public enum Sound
     {

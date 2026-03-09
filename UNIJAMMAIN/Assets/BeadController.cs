@@ -398,7 +398,7 @@ public class BeadController : MonoBehaviour
         }
 
         // 6 이상 → 스토리3
-        if (clear >= 6)
+        if (clear >= 7)
         {
             UpdateNewBead(Bead.story_3);
         }

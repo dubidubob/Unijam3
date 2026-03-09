@@ -332,8 +332,9 @@ public class PhaseController : MonoBehaviour
         CheckFirstClearSteamAchievement();
 
 
-        Scoreboard.RankAnimation(CalculateScore()).Forget();
         Scoreboard.gameObject.SetActive(true);
+        Scoreboard.RankAnimation(CalculateScore()).Forget();
+      
 
 
         SetStageIndex(_chapterIdx);

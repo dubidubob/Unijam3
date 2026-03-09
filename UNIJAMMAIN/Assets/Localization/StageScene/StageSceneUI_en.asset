@@ -83,7 +83,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130187
-    m_Localized: Leaving sorrow behind, I ascend the celestial path to my calling.
+    m_Localized: Leaving sorrow behind, I ascend the celestial path to my Karma.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130188
@@ -98,7 +98,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130190
-    m_Localized: At the threshold of the heavens. The evil spirits surge relentlessly.
+    m_Localized: At the threshold of the heavens. The Dark Spirits surge relentlessly.
     m_Metadata:
       m_Items: []
   - m_Id: 28958130191
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130199
-    m_Localized: Horned spirits in red hats. Winter discipline begins!
+    m_Localized: Red hats and reindeer antlers. Winter discipline begins!
     m_Metadata:
       m_Items: []
   - m_Id: 28958130200
@@ -189,16 +189,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6184490460905472
-    m_Localized: 'Leaving the tranquil temple behind,
+    m_Localized: 'Leaving the temple behind,
 
-      I stand upon the endless
-      path,
+      I stand upon the endless path,
 
-      and take my first step.'
+      and
+      take my first step.'
     m_Metadata:
       m_Items: []
   - m_Id: 6184490460905473
-    m_Localized: Choose your path of discipline.
+    m_Localized: '
+
+
+      Choose your path of discipline.'
     m_Metadata:
       m_Items: []
   - m_Id: 6184490460905474
@@ -206,7 +209,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6184490460905475
-    m_Localized: Act 0
+    m_Localized: Act {0}
     m_Metadata:
       m_Items: []
   - m_Id: 6184490460905476

@@ -301,9 +301,16 @@ public class StageSceneUI : UI_Popup
                 //Completed 설정
                 IngameData.ChapterIdx = stageIndex-1;
 
+                if(IngameData.ChapterIdx>=8)
+                {
+                    IngameData.ChapterIdx++;
+                }
+                    
+
 
                 if (IngameData.ChapterRank!=Define.Rank.Unknown)
                 {
+                    Debug.Log($"{IngameData.ChapterIdx}의 챕터랭크 {IngameData.ChapterRank}");
                     // 1. Instantiate 시 부모를 바로 지정해주는 것이 더 안정적입니다.
                     GameObject obj = Instantiate(completedObject, button.gameObject.transform);
                     RectTransform rect = obj.GetComponent<RectTransform>();
@@ -363,7 +370,7 @@ public class StageSceneUI : UI_Popup
                 if (isEventMap)
                 {
                     currentPageLevel = 2;
-                    MoveTo(yPos: -892f);
+                    MoveTo(yPos: -480f);
                     Managers.Sound.Play("SFX/UI/GoToCity_V2", Define.Sound.SFX, 1f, 5f);
                     break;
                 }
@@ -380,7 +387,7 @@ public class StageSceneUI : UI_Popup
                 if (isEventMap)
                 {
                     currentPageLevel = 2;
-                    MoveTo(yPos: -892f);
+                    MoveTo(yPos: -480f);
 
                     Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 3f);
                 }
@@ -432,7 +439,7 @@ public class StageSceneUI : UI_Popup
                 {
 
                     currentPageLevel = 0;
-                    MoveTo(yPos: 892f);
+                    MoveTo(yPos: 460f);
                     Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
                 }
                 else
@@ -448,7 +455,7 @@ public class StageSceneUI : UI_Popup
                 if (isEventMap)
                 {
                     currentPageLevel = 0;
-                    MoveTo(yPos: 892f);
+                    MoveTo(yPos: 460f);
                     Managers.Sound.Play("SFX/UI/GoToWinter_V2", Define.Sound.SFX, 1f, 5f);
                 }
                 else
@@ -526,6 +533,7 @@ public class StageSceneUI : UI_Popup
         // 이벤트스테이지는 다르게 사운드 출력
         if (isEventMap)
         {
+            IngameData.ChapterIdx++;
             switch(IngameData.ChapterIdx)
             {
                 case 9:
@@ -944,14 +952,19 @@ public class StageSceneUI : UI_Popup
 
         switch (currentPageLevel)
         {
-            case 0: targetY = 892f; targetZ = 0f; break;
+            case 0: targetY = 892f; targetZ = 0f;
+                if (isEventMap)
+                {
+                    targetY = 460;
+                }
+                break;
             case 1: targetY = -295f; targetZ = 0f; break;
             case 2:
                 targetY = 892f; targetZ = 180f; 
                 if (isEventMap)
                 { 
                     targetZ = 0f;
-                    targetY = -892f;
+                    targetY = -480;
                 }
                 break;
         }

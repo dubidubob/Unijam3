@@ -30,6 +30,7 @@ public class BlurController : MonoBehaviour
     private float imageHeight;
 
     [SerializeField] BackGroundController backGroundController;
+    [SerializeField] CanvasGroup comboCanvas;
 
     // UniTask 제어용 토큰 소스
     private CancellationTokenSource _scrollCts;
@@ -110,11 +111,7 @@ public class BlurController : MonoBehaviour
         Managers.Sound.Play("SFX/Accuracy/ComboBackGround", Define.Sound.SubBGM);
 
         IsComboEffectOn = true;
-        rightCombo1.gameObject.SetActive(true);
-        rightCombo2.gameObject.SetActive(true);
-        leftCombo1.gameObject.SetActive(true);
-        leftCombo2.gameObject.SetActive(true);
-        comboEffectbase.gameObject.SetActive(true);
+        comboCanvas.DOFade(1, 0.5f);
 
         // 기존 스크롤 작업 취소 후 새로 시작
         CancelAndDispose(ref _scrollCts);
@@ -132,12 +129,7 @@ public class BlurController : MonoBehaviour
         // 스크롤 작업 중단
         CancelAndDispose(ref _scrollCts);
 
-        rightCombo1.gameObject.SetActive(false);
-        rightCombo2.gameObject.SetActive(false);
-        leftCombo1.gameObject.SetActive(false);
-        leftCombo2.gameObject.SetActive(false);
-        comboEffectbase.gameObject.SetActive(false);
-
+        comboCanvas.DOFade(0, 0.5f);
         StopComboEffect();
     }
 

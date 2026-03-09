@@ -62,9 +62,14 @@ public class Tmp_StageSceneResultUI : MonoBehaviour, IPointerEnterHandler, IPoin
 
         // 위로 슥 올라오는 연출 (0.4초 동안)
         scoreRect.DOAnchorPos(originPos, 0.4f).SetEase(Ease.OutBack);
-
+        scoreText.text = "";
+        float score = IngameData.GetBestRankScoreForChapter(IngameData.ChapterIdx);
+        if(score<=0)
+        {
+            return;
+        }
         scoreText.text = "Score : ";
-        scoreText.text += IngameData.GetBestRankScoreForChapter(IngameData.ChapterIdx).ToString();
+        scoreText.text += score.ToString("F1");
         // 나타나는 연출 (0.3초 동안)
         scoreCanvasGroup.DOFade(1f, 0.3f);
     }

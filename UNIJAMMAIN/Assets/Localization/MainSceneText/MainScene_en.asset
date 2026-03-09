@@ -41,10 +41,10 @@ MonoBehaviour:
 
       Soyeon Joo
 
-      Dahyun
-      Yoon
+      Dahyeon Yoon
 
-      Minji Kim
+      Minji
+      Kim
 
       Jee-woo Kwon'
     m_Metadata:
@@ -54,13 +54,11 @@ MonoBehaviour:
 
       Programming
 
-      
 
       Art
 
-      
 
-      Audio'
+      Sound Design'
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942148
@@ -68,11 +66,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942146
-    m_Localized: Options
+    m_Localized: Settings
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942147
-    m_Localized: Story Mode
+    m_Localized: Begin Journey
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942145
@@ -80,7 +78,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8497189383942144
-    m_Localized: Quit
+    m_Localized: Exit
     m_Metadata:
       m_Items: []
   references:

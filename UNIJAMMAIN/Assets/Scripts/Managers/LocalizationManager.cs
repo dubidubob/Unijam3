@@ -136,7 +136,10 @@ public static class LocalizationManager
         // Steam 언어 코드를 게임의 Language Enum으로 매핑
         switch (steamLang)
         {
-            case "korean": targetLang = Language.Korean; break;
+            case "korean":  // 혹시 모르니 남겨둠
+            case "koreana": // 실제 스팀이 뱉는 값은 이거!
+                targetLang = Language.Korean;
+                break;
             case "japanese": targetLang = Language.Japanese; break;
             case "schinese": // 간체
             case "tchinese": // 번체

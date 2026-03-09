@@ -11,6 +11,8 @@ using System;
 public class PrologueAction
 {
     public string key;                 // 텍스트 키 (ID)
+    public int index;
+    public string id;
 
     // 오브젝트/배경 관련
     public bool isNextBackground;      // 다음 배경 활성화 여부
@@ -81,11 +83,22 @@ public class PrologueController : MonoBehaviour
 
     private void Start()
     {
+        StartInit().Forget();
+    }
+    private async UniTask StartInit()
+    {
         InitializeUI();
         LocalizationManager.LoadAll();
         LoadPrologueSequenceData("Localization/PrologueTable"); // 경로에 맞게 수정
 
         // 두 시퀀스를 병렬(Parallel)로 실행
+        if (SceneLoadingManager.Instance != null)
+        {
+            await UniTask.Yield(PlayerLoopTiming.Update);
+
+            SceneLoadingManager.Instance.NotifySceneReady();
+        }
+
         PlayPrologueSequence().Forget();
         PlayTextSequence().Forget();
     }
@@ -125,61 +138,71 @@ public class PrologueController : MonoBehaviour
         }
 
         string raw = csvAsset.text.Replace("\uFEFF", ""); // BOM 제거
-        using (StringReader reader = new StringReader(raw))
+
+        // 여기서 커스텀 CSV 파서 호출
+        List<List<string>> csvData = ParseCSV(raw);
+        if (csvData.Count == 0) return;
+
+        // 첫 번째 행을 헤더로 사용
+        List<string> headers = csvData[0];
+        for (int i = 0; i < headers.Count; i++) headers[i] = headers[i].ToLower(); // 소문자로 통일
+
+        int keyIdx = headers.IndexOf("key");
+        int isNextBgIdx = headers.IndexOf("isnextbackground");
+        int isNextObjIdx = headers.IndexOf("isnextobject");
+        int startPosIdx = headers.IndexOf("startpos");
+        int endPosIdx = headers.IndexOf("endpos");
+        int curveIdx = headers.IndexOf("curve");
+        int durationIdx = headers.IndexOf("duration");
+        int conversionIdx = headers.IndexOf("conversion");
+        int textColorIdx = headers.IndexOf("textcolor");
+        int nameColorIdx = headers.IndexOf("namecolor");
+        int speakerIdx = headers.IndexOf("speaker");
+
+        // 1번 인덱스(두 번째 줄)부터 데이터 읽기 시작
+        for (int i = 1; i < csvData.Count; i++)
         {
-            string headerLine = reader.ReadLine();
-            var headers = SplitCsv(headerLine);
+            var row = csvData[i];
 
-            int keyIdx = headers.FindIndex(x => x.Trim().ToLower() == "key");
-            int isNextBgIdx = headers.FindIndex(x => x.Trim().ToLower() == "isnextbackground");
-            int isNextObjIdx = headers.FindIndex(x => x.Trim().ToLower() == "isnextobject");
-            int startPosIdx = headers.FindIndex(x => x.Trim().ToLower() == "startpos");
-            int endPosIdx = headers.FindIndex(x => x.Trim().ToLower() == "endpos");
-            int curveIdx = headers.FindIndex(x => x.Trim().ToLower() == "curve");
-            int durationIdx = headers.FindIndex(x => x.Trim().ToLower() == "duration");
-            int conversionIdx = headers.FindIndex(x => x.Trim().ToLower() == "conversion");
-            int textColorIdx = headers.FindIndex(x => x.Trim().ToLower() == "textcolor");
-            int nameColorIdx = headers.FindIndex(x => x.Trim().ToLower() == "namecolor");
-            int speakerIdx = headers.FindIndex(x => x.Trim().ToLower() == "speaker");
+            // 빈 줄이거나 Key가 없으면 패스
+            if (row.Count == 0 || keyIdx < 0 || row.Count <= keyIdx || string.IsNullOrWhiteSpace(row[keyIdx])) continue;
 
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            PrologueAction action = new PrologueAction();
+            action.key = row[keyIdx];
+
+            // 오브젝트 및 배경 처리 파싱
+            action.isNextBackground = (isNextBgIdx >= 0 && row.Count > isNextBgIdx) && ParseBool(row[isNextBgIdx]);
+            action.isNextObject = (isNextObjIdx >= 0 && row.Count > isNextObjIdx) && ParseBool(row[isNextObjIdx]);
+            action.startPos = (startPosIdx >= 0 && row.Count > startPosIdx) ? ParseVector2(row[startPosIdx]) : Vector2.zero;
+            action.endPos = (endPosIdx >= 0 && row.Count > endPosIdx) ? ParseVector2(row[endPosIdx]) : Vector2.zero;
+
+            string id = action.key;
+            action.id = id;
+            string indexPart = action.id.Replace("Prologue_Frame_", "").Trim();
+            if (int.TryParse(indexPart, out int idx)) action.index = idx;
+
+            // 시간 및 커브 파싱 (이제 Duration이 정상적으로 가져와짐!)
+            action.duration = (durationIdx >= 0 && durationIdx < row.Count) ? ParseTime(row[durationIdx]) : 0f;
+            action.conversion = (conversionIdx >= 0 && conversionIdx < row.Count) ? ParseTime(row[conversionIdx]) : 0f;
+            action.easeType = (curveIdx >= 0 && curveIdx < row.Count) ? ParseEase(row[curveIdx]) : Ease.Linear;
+
+            // 텍스트 및 화자 파싱
+            action.textColor = (textColorIdx >= 0 && textColorIdx < row.Count) ? ParseColor(row[textColorIdx]) : Color.white;
+            action.nameColor = (nameColorIdx >= 0 && nameColorIdx < row.Count) ? ParseColor(row[nameColorIdx]) : Color.white;
+            action.speaker = (speakerIdx >= 0 && speakerIdx < row.Count) ? row[speakerIdx] : "";
+
+            // Key 값에 따라 실행될 시퀀스 분리
+            if (action.key.StartsWith("Prologue_Frame"))
             {
-                if (string.IsNullOrWhiteSpace(line)) continue;
-                var row = SplitCsv(line);
-
-                if (keyIdx < 0 || row.Count <= keyIdx) continue;
-
-                PrologueAction action = new PrologueAction();
-                action.key = row[keyIdx].Trim();
-
-                // 오브젝트 및 배경 처리 파싱
-                action.isNextBackground = (isNextBgIdx >= 0 && row.Count > isNextBgIdx) && ParseBool(row[isNextBgIdx]);
-                action.isNextObject = (isNextObjIdx >= 0 && row.Count > isNextObjIdx) && ParseBool(row[isNextObjIdx]);
-                action.startPos = (startPosIdx >= 0 && row.Count > startPosIdx) ? ParseVector2(row[startPosIdx]) : Vector2.zero;
-                action.endPos = (endPosIdx >= 0 && row.Count > endPosIdx) ? ParseVector2(row[endPosIdx]) : Vector2.zero;
-
-                // 시간 및 커브 파싱
-                action.duration = (durationIdx >= 0 && durationIdx < row.Count) ? ParseTime(row[durationIdx]) : 0f;
-                action.conversion = (conversionIdx >= 0 && conversionIdx < row.Count) ? ParseTime(row[conversionIdx]) : 0f;
-                action.easeType = (curveIdx >= 0 && curveIdx < row.Count) ? ParseEase(row[curveIdx]) : Ease.Linear;
-
-                // 텍스트 및 화자 파싱
-                action.textColor = (textColorIdx >= 0 && textColorIdx < row.Count) ? ParseColor(row[textColorIdx]) : Color.white;
-                action.nameColor = (nameColorIdx >= 0 && nameColorIdx < row.Count) ? ParseColor(row[nameColorIdx]) : Color.white;
-                action.speaker = (speakerIdx >= 0 && speakerIdx < row.Count) ? row[speakerIdx].Trim() : "";
-
-                // Key 값에 따라 실행될 시퀀스 분리
-                if (action.key.StartsWith("Prologue_Frame"))
-                {
-                    prologueSequence.Add(action);
-                }
-                else if (action.key.StartsWith("Text_Frame"))
-                {
-                    textSequence.Add(action);
-                }
+                prologueSequence.Add(action);
+            }
+            else if (action.key.StartsWith("Text_Frame"))
+            {
+                textSequence.Add(action);
             }
         }
+
+        // 주의: 더 이상 SplitCsv 도우미 함수는 필요하지 않으므로 삭제하셔도 됩니다.
     }
 
     // ==========================================
@@ -187,10 +210,13 @@ public class PrologueController : MonoBehaviour
     // ==========================================
     private async UniTaskVoid PlayPrologueSequence()
     {
+        Managers.Sound.Play("BGM/Prolog", Define.Sound.BGM, 1, 1, false);
         foreach (var action in prologueSequence)
         {
             List<UniTask> tasks = new List<UniTask>();
 
+            Special_Action(action.index);
+            Debug.Log(action.duration);
             if (action.isNextBackground)
             {
                 if (currentBgIndex >= 0 && currentBgIndex < backgrounds.Count)
@@ -237,6 +263,8 @@ public class PrologueController : MonoBehaviour
                 await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
             }
         }
+        IngameData._isPrologueWatched = true;
+        SceneLoadingManager.Instance.LoadScene("StageScene");
         Debug.Log("프롤로그 배경/오브젝트 시퀀스 종료!");
     }
 
@@ -301,7 +329,6 @@ public class PrologueController : MonoBehaviour
                 await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
             }
         }
-
         Debug.Log("프롤로그 텍스트 시퀀스 종료!");
     }
 
@@ -370,6 +397,83 @@ public class PrologueController : MonoBehaviour
         return Color.white;
     }
 
+    // 큰따옴표 안의 쉼표와 줄바꿈을 무시하고 정확히 셀을 나누는 커스텀 CSV 파서
+    private List<List<string>> ParseCSV(string text)
+    {
+        List<List<string>> rows = new List<List<string>>();
+        List<string> currentRow = new List<string>();
+        bool inQuotes = false;
+        string currentValue = "";
+
+        for (int i = 0; i < text.Length; i++)
+        {
+            char c = text[i];
+
+            if (inQuotes)
+            {
+                if (c == '\"')
+                {
+                    // 이스케이프된 큰따옴표("") 처리
+                    if (i + 1 < text.Length && text[i + 1] == '\"')
+                    {
+                        currentValue += '\"';
+                        i++;
+                    }
+                    else
+                    {
+                        inQuotes = false; // 따옴표 닫힘
+                    }
+                }
+                else
+                {
+                    currentValue += c; // 따옴표 안의 쉼표나 줄바꿈은 그냥 문자로 추가
+                }
+            }
+            else
+            {
+                if (c == '\"')
+                {
+                    inQuotes = true; // 따옴표 열림
+                }
+                else if (c == ',')
+                {
+                    // 셀 종료
+                    currentRow.Add(currentValue.Trim());
+                    currentValue = "";
+                }
+                else if (c == '\r')
+                {
+                    continue; // 캐리지 리턴 무시
+                }
+                else if (c == '\n')
+                {
+                    // 행 종료
+                    currentRow.Add(currentValue.Trim());
+                    rows.Add(currentRow);
+                    currentRow = new List<string>();
+                    currentValue = "";
+                }
+                else
+                {
+                    currentValue += c;
+                }
+            }
+        }
+
+        // 마지막 데이터 처리
+        if (!string.IsNullOrEmpty(currentValue) || text.EndsWith(","))
+        {
+            currentRow.Add(currentValue.Trim());
+        }
+        if (currentRow.Count > 0)
+        {
+            rows.Add(currentRow);
+        }
+
+        return rows;
+    }
+
+
     private List<string> SplitCsv(string line)
     {
         List<string> result = new List<string>();
@@ -378,19 +482,19 @@ public class PrologueController : MonoBehaviour
         return result;
     }
 
-    private void special_Action(int index)
+    private void Special_Action(int index)
     {
         Debug.Log($"{index} 스페셜 액션 시작");
         Image t = target_Image;
         switch (index)
         {
-            case 0:
+            case 1:
                 Action_StartMapMove_0(t);
                 break;
             case 7:
                 Action_StartMapMove_1(t);
                 break;
-            case 23:
+            case 25:
                 Action_StartMapMove_2(t);
                 break;
             default:
@@ -451,7 +555,7 @@ public class PrologueController : MonoBehaviour
         rect.localScale = Vector3.one * action2_StartScale;
 
         // 2. 스케일 천천히 축소 (0.5까지)
-        await rect.DOScale(action2_TargetScale, action2_Duration).SetEase(Ease.Linear).ToUniTask();
+        await rect.DOScale(action2_TargetScale, action2_Duration).SetEase(Ease.InOutExpo).ToUniTask();
 
         Debug.Log("Action_StartMapMove_2 연출 완료");
     }

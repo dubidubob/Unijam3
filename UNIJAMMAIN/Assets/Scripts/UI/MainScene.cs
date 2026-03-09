@@ -114,6 +114,7 @@ public class MainScene : UI_Popup
 
 
         // 4. 다음 단계로 넘어가기 전 짧은 대기
+        Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
         await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
         // 5. 다음 로고 액션 진행
@@ -122,7 +123,7 @@ public class MainScene : UI_Popup
 
     private async UniTask ActionLogo()
     {
-        Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
+   
 
         Managers.Sound.Play("SFX/UI/SettingCredit_V2", Define.Sound.SFX);
 
@@ -338,7 +339,14 @@ public class MainScene : UI_Popup
         if (isAnimating) return;
         TextGlow((int)Buttons.StoryMode);
         Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
-        SceneLoadingManager.Instance.LoadScene("StageScene");
+        if(IngameData._isPrologueWatched)
+        {
+            SceneLoadingManager.Instance.LoadScene("StageScene");
+        }
+        else
+        {
+            SceneLoadingManager.Instance.LoadScene("PrologueScene");
+        }
     }
 
     private void EndClicked(PointerEventData eventData)
