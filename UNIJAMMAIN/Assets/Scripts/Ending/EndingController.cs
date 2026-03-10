@@ -35,10 +35,10 @@ public class EndingController : MonoBehaviour
     [SerializeField] RectTransform downDark;
 
     [Header("Text Connect")]
-    [SerializeField] Text name;
-    [SerializeField] Text Impact_Name;
-    [SerializeField] Text content_Text;
-    [SerializeField] Text impact_Content_Text;
+    [SerializeField] TMP_Text name;
+    [SerializeField] TMP_Text Impact_Name;
+    [SerializeField] TMP_Text content_Text;
+    [SerializeField] TMP_Text impact_Content_Text;
 
     // =============== 새로 추가된 Part 2 조절용 변수들 ===============
     [Header("Ending Part 2 Settings")]
@@ -352,10 +352,10 @@ public class EndingController : MonoBehaviour
             if (localizedContent == "X" || localizedContent == "~") localizedContent = "";
 
             // [수정된 부분] SetActive(false)를 완전히 제거하고, 대상 UI 포인터만 지정합니다.
-            Text activeName;
-            Text activeContent;
-            Text inactiveName;
-            Text inactiveContent;
+            TMP_Text activeName;
+            TMP_Text activeContent;
+            TMP_Text inactiveName;
+            TMP_Text inactiveContent;
 
             if (action.isMiddleHighlight)
             {
@@ -428,8 +428,20 @@ public class EndingController : MonoBehaviour
 
                     //keepname이 false 일때만 페이드시킵니다
                     if (!isResting&&name.color.a > 0) fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
-                   
-                    if (content_Text.color.a > 0) fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+
+                    if (content_Text.color.a > 0)
+                    {
+                        if (action.index == 33)
+                        {
+                            fadeTasks.Add(content_Text.DOFade(0f, 3f).SetEase(action.easeType).ToUniTask());
+                        }
+
+                        else
+                        {
+                            fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                        }
+                            
+                    }
                     if (!isResting && Impact_Name.color.a > 0) fadeTasks.Add(Impact_Name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
                     if (impact_Content_Text.color.a > 0) fadeTasks.Add(impact_Content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
                     if (wasImpactOn&&!action.isMiddleHighlight) fadeTasks.Add(backGround.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1),action.conversion).SetEase(action.easeType).ToUniTask());// 화면이 바로전 변화된적이 있다면
@@ -457,7 +469,8 @@ public class EndingController : MonoBehaviour
                     name.text = "";
                     Impact_Name.text = "";
                 }
-                content_Text.text = "";
+                if (action.index != 33)
+                { content_Text.text = ""; }
                 impact_Content_Text.text = "";
                 wasImpactOn = false;
             }
@@ -481,7 +494,6 @@ public class EndingController : MonoBehaviour
         float fadeTime = 1.0f; // 페이드 아웃 시간 설정
 
         if (name.color.a > 0) finalFadeTasks.Add(name.DOFade(0f, fadeTime).ToUniTask());
-        if (content_Text.color.a > 0) finalFadeTasks.Add(content_Text.DOFade(0f, fadeTime).ToUniTask());
         if (Impact_Name.color.a > 0) finalFadeTasks.Add(Impact_Name.DOFade(0f, fadeTime).ToUniTask());
         if (impact_Content_Text.color.a > 0) finalFadeTasks.Add(impact_Content_Text.DOFade(0f, fadeTime).ToUniTask());
 
@@ -491,7 +503,8 @@ public class EndingController : MonoBehaviour
        
         impact_Content_Text.text = "";
         wasImpactOn = false;
-        content_Text.DOFade(1f, 0).OnComplete(()=> { content_Text.text = ""; });
+
+        
         name.DOFade(1f, 0);
 
 
@@ -503,9 +516,7 @@ public class EndingController : MonoBehaviour
         Debug.Log("엔딩 시퀀스 2 시작!");
         content_Text.GetComponent<RectTransform>().DOAnchorPosY(textPosY, 0);
 
-        SetAlpha(name, 1f);
-        SetAlpha(content_Text, 1f);
-
+       
         // 영화 위 아래에서 검은색 내려오는 액션
         var tasks = new List<UniTask>();
 
@@ -597,6 +608,12 @@ public class EndingController : MonoBehaviour
         {
             Debug.LogWarning("cloudObject에 RectTransform 또는 Image 컴포넌트가 없습니다.");
         }
+
+        name.text = "";
+        SetAlpha(name, 1f);
+        content_Text.text = "";
+        SetAlpha(content_Text, 1f);
+
 
         // 영화 레터박스가 사라지는 효과와 구름이 올라오는 효과를 동시에 실행하고 대기
         await UniTask.WhenAll(tasks2);
@@ -966,8 +983,7 @@ public class EndingController : MonoBehaviour
                 // 음악 재생 (프로젝트 내 SoundManager 등의 호출부 필요)
                 Managers.Sound.Play("BGM/EndingTheme2",Define.Sound.SFX,1,1,false);
 
-                content_Text.alignment = TextAnchor.MiddleCenter;
-
+                content_Text.alignment = TextAlignmentOptions.Midline;
                 // 수도승 애니메이션 시작 (기본 속도 1f부터)
                 SeatAnimation(0.5f).Forget();
                 // 화면 페이드인 Linear로
@@ -1094,6 +1110,7 @@ public class EndingController : MonoBehaviour
         CheckFirstClearSteamAchievement();
 
         await UniTask.Delay(TimeSpan.FromSeconds(7f));
+        SceneLoadingManager.Instance.LoadScene("MainTitle");
         // 씬이동
     }
     // =========================================================================
@@ -1213,7 +1230,7 @@ public class EndingController : MonoBehaviour
 
                 // 동시에 실행
                 sequence.Join(rt.DOScale(1.4f, 0.2f).SetEase(Ease.OutQuad));
-                sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 0.2f).SetEase(Ease.OutCubic));
+                sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 0.2f).SetEase(Ease.OutBack));
 
                 await sequence.AsyncWaitForCompletion();
             }
@@ -1222,10 +1239,11 @@ public class EndingController : MonoBehaviour
         {
             // [최종 연출: 확대 + 눈 감기]
 
+            await UniTask.WaitForSeconds(0.3f);
             // 1. 16.3초 동안 화면이 점점 Linear 확대되는 애니메이션
             if (image_UpDarkBackGround != null)
             {
-                image_UpDarkBackGround.rectTransform.DOScale(1.7f, 16.3f).SetEase(Ease.Linear);
+                image_UpDarkBackGround.rectTransform.DOScale(1.8f, 16.3f).SetEase(Ease.Linear);
             }
 
             // 2. 12초 대기 후 남은 4.3초 동안 눈 감는 연출 시작

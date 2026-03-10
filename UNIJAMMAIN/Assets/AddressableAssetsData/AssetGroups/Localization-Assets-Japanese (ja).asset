@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 20c110d9fdc3d344293190258e85d148
   m_SerializeEntries:
+  - m_GUID: 0bc61a574dc6e224abbd0f6138e3fcc3
+    m_Address: Japanese_RIDI
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 226eb589fb85ba648b044e59278d4180
     m_Address: Ready_3_ja
     m_ReadOnly: 1

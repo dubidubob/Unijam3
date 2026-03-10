@@ -13,8 +13,8 @@ public class Ending_Start : MonoBehaviour
 {
     EndingController endingController;
 
-    [SerializeField] public Text textUp;
-    [SerializeField] public Text textDown;
+    [SerializeField] public TMP_Text textUp;
+    [SerializeField] public TMP_Text textDown;
     [SerializeField] public List<Sprite> stamina_effects;
     [SerializeField] public Image image_stamina;
     [SerializeField] public Image blackPanelBack;
@@ -83,9 +83,8 @@ public class Ending_Start : MonoBehaviour
         await UniTask.WhenAll(fadeUpi,fadeUp); // 두 페이드인 애니메이션이 끝날 때까지 동시 대기
 
         textDown.text = LocalizationManager.Get("Ending_Start_3");
-        var fadeDown = textDown.DOFade(1f, 0.5f).ToUniTask();
-        await UniTask.WhenAll(fadeDown);
-        // 7. OnClick 가능하게끔 설정
+        textDown.DOFade(1f, 0.5f).ToUniTask();
+
         isClickable = true;
     }
 }
