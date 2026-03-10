@@ -47,12 +47,13 @@ MonoBehaviour:
   - extraBackGroundLists: []
     animationBackGroundSprites: []
   - extraBackGroundLists:
+    - {fileID: 21300000, guid: 3f2adc4573236ed4d9be7d74c596a119, type: 3}
     - {fileID: 21300000, guid: 4fd296de0ac5a9846a03f27629df73f5, type: 3}
     - {fileID: 21300000, guid: e9636f553cb273d4dad48e1e46816fa2, type: 3}
-    - {fileID: 21300000, guid: 3f2adc4573236ed4d9be7d74c596a119, type: 3}
+    - {fileID: 21300000, guid: 6540aefe6a957c34c8e08233e17e0e42, type: 3}
     - {fileID: 21300000, guid: d2d07713f673cc842a964db6cc89d9f3, type: 3}
     - {fileID: 21300000, guid: 4415a4f346c1bdb44a91a6ad2084e1bb, type: 3}
-    - {fileID: 21300000, guid: 8a143c00189a9904cbd81d420960e788, type: 3}
+    - {fileID: 21300000, guid: dfe914584ec75b44594f4abd81123303, type: 3}
     - {fileID: 21300000, guid: 23d280c0a5ac1c24d92b571fde1b454f, type: 3}
     animationBackGroundSprites:
     - {fileID: 21300000, guid: 8a143c00189a9904cbd81d420960e788, type: 3}
