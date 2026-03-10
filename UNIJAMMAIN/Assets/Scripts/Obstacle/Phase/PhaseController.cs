@@ -95,7 +95,7 @@ public class PhaseController : MonoBehaviour
         Managers.Game.GameStart();
 
 
-        // EndChapter();//씬넘어가기테스트
+        //EndChapter();//씬넘어가기테스트
         // UniTask 실행 (Start는 void이므로 async void 대신 Forget() 패턴 사용 권장)
         RunChapter().Forget();
        

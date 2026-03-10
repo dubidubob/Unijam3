@@ -351,7 +351,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -210}
+  m_AnchoredPosition: {x: 0, y: -260}
   m_SizeDelta: {x: 890, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &171860590
@@ -980,7 +980,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -240}
+  m_AnchoredPosition: {x: 0, y: -265}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &377542469
@@ -1281,17 +1281,17 @@ MonoBehaviour:
   scrollEase: 18
   startPosY: 4747
   targetPosY1: 3100
-  duration1: 2.35
+  duration1: 3.4
   targetPosY2: 1200
-  duration2: 2.42
+  duration2: 3.4
   targetPosY3: -600
-  duration3: 2.31
+  duration3: 3.4
   targetPosY4: -2200
-  duration4: 2.45
+  duration4: 3.4
   targetPosY5: -3680
-  duration5: 4.8
+  duration5: 3.4
   endPosY: -4747
-  durationEnd: 2.37
+  durationEnd: 3
   waitingTime: 1.5
   cloudObject: {fileID: 339558740}
   image_UpEye: {fileID: 373453309}
@@ -1305,7 +1305,7 @@ MonoBehaviour:
   - {fileID: 730131359}
   backGroundFadeOutTime: 2.3
   cloudUpTime: 2
-  textPosY: -500
+  textPosY: -400
   image_backGroundBright: {fileID: 1711587430}
   canvasGroup_NormalEnding: {fileID: 785837621}
   image_sudoSeat: {fileID: 1313157956}
@@ -2278,7 +2278,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -315, y: -245}
+  m_AnchoredPosition: {x: -334, y: -245}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1190639194
@@ -2930,8 +2930,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -410}
-  m_SizeDelta: {x: 1700, y: 220}
+  m_AnchoredPosition: {x: 0, y: -450}
+  m_SizeDelta: {x: 1268.04, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590620094
 MonoBehaviour:
@@ -3046,7 +3046,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
