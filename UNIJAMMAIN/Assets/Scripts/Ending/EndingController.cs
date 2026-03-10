@@ -155,6 +155,7 @@ public class EndingController : MonoBehaviour
         LoadEndingSequenceData("Localization/EndingTable");
         LocalizationManager.LoadAll();
 
+
         if (SceneLoadingManager.Instance != null)
         {
             await UniTask.Yield(PlayerLoopTiming.Update);
@@ -992,7 +993,7 @@ public class EndingController : MonoBehaviour
         {
             case 16:
                 // 음악 재생 (프로젝트 내 SoundManager 등의 호출부 필요)
-                Managers.Sound.Play("BGM/EndingTheme2",Define.Sound.SFX,1,1,false);
+                Managers.Sound.Play("BGM/EndingTheme2_V2",Define.Sound.SFX,1,1,false);
 
                 content_Text.alignment = TextAlignmentOptions.Midline;
                 // 수도승 애니메이션 시작 (기본 속도 1f부터)
