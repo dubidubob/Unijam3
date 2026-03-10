@@ -191,7 +191,7 @@ public class PrologueController : MonoBehaviour
 
             string id = action.key;
             action.id = id;
-            string indexPart = action.id.Replace("Prologue_Frame_", "").Trim();
+            string indexPart = action.id.Replace("Prologue_Frame_", "").Replace("Text_Frame_", "").Trim();
             if (int.TryParse(indexPart, out int idx)) action.index = idx;
 
             // 시간 및 커브 파싱 (이제 Duration이 정상적으로 가져와짐!)
@@ -288,6 +288,21 @@ public class PrologueController : MonoBehaviour
     {
         foreach (var action in textSequence)
         {
+            if (action.index == 22)
+            {
+                // 1. RectTransform 컴포넌트를 가져옵니다.
+                RectTransform rect = content_Text.rectTransform;
+
+                // 2. 위치를 (0, 0)으로 변경
+                rect.anchoredPosition = Vector2.zero; // new Vector2(0, 0)과 같습니다.
+
+                // 3. Width를 1400으로 변경 (Height는 기존 값 유지)
+                rect.sizeDelta = new Vector2(1400f, rect.sizeDelta.y);
+
+                // 4. 텍스트 정렬을 정중앙(Middle Center)으로 변경
+                content_Text.alignment = TextAnchor.MiddleCenter;
+            }
+
             string localizedContent = string.IsNullOrEmpty(action.key) ? "" : LocalizationManager.Get(action.key);
 
             // 화자 매핑
