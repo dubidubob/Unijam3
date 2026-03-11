@@ -585,7 +585,7 @@ public class EndingController : MonoBehaviour
 
             // 5구간 및 엔딩 (사운드 없음)
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY5, duration5).SetEase(scrollEase));
-            scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(Ease.OutSine));
+            scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(scrollEase));
 
             // 암전 해제 (Join은 이전 Append와 동시에 실행됨)
             scrollSequence.Join(upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 0), durationEnd).SetEase(Ease.InOutQuad));
