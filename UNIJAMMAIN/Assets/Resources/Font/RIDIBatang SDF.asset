@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: RIDIBatang SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -1595617704
   material: {fileID: -3313008584938927592}
-  materialHashCode: 0
+  materialHashCode: -1761416328
   m_Version: 1.1.0
   m_SourceFontFileGUID: 4af639907b749c544972741da7bbc605
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 4af639907b749c544972741da7bbc605, type: 3}
@@ -196,7 +196,8 @@ MonoBehaviour:
   m_FontFeatureTable:
     m_GlyphPairAdjustmentRecords: []
   fallbackFontAssets: []
-  m_FallbackFontAssetTable: []
+  m_FallbackFontAssetTable:
+  - {fileID: 11400000, guid: 754e113d2dad6ad40b3cce397e55b82e, type: 2}
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: 4af639907b749c544972741da7bbc605

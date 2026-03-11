@@ -20,14 +20,14 @@ Stage5_GameOverText2,거의 다 왔도다. 포기하지 말고 일어나거라!,
 Stage6_GameOverText0,무엇이 너를 이곳으로 이끌었는지 잊었느냐.,忘了是什么将你引向此处吗？,Forgot what led you here?,何がお前をここへ導いたか忘れたか。
 Stage6_GameOverText1,성역에서 무릎을 꿇고 말 텐가!,难道要在圣域里屈膝吗！,Will you kneel in the Sanctuary?!,聖域で膝を屈するつもりか！
 Stage6_GameOverText2,다시 문턱으로 돌아가려고 그러는 게냐?,难道想退回门槛之外吗？,Trying to go back to the threshold?,再び門前へ引き返そうというのか？
-Stage7_GameOverText0,근원의 어둠에 빛을 잃었도다.,光芒在根源的黑暗中消逝了。,Light lost to The Origin's darkness.,淵源の闇に光を失ったな。
-Stage7_GameOverText1,"수많은 악령의 손이, 내 위를 덮는구나.",无数浊灵之手，正笼罩于你。,Hands of countless Dark Spirits cover you.,数多の濁霊の手が、お前を覆うか。
+Stage7_GameOverText0,근원의 어둠에 빛을 잃었도다.,光芒在根源的黑暗中消逝了。,Light lost to The Origin's darkness.,根源の闇に光を失ったな。
+Stage7_GameOverText1,"심연의 검은 손들이, 네 위를 덮는구나.",九幽的漆黑之手，将你彻底吞没。,The black hands of the Abyss engulf you.,奈落の黒き手が、お前を覆い尽くすか。
 Stage7_GameOverText2,지금까지의 여정을 다시 생각해보거라.,回想一下至今为止的旅途吧。,Reflect on your Journey thus far.,今までの旅を思い返すがよい。
 Stage7_GameOverText3,"끝없는 지하 속에서도, 한 줄기 빛을 생각하시오.",即使在无尽地下，也请心存一丝光明。,"Remember the light, even in this abyss.",果てなき地下の中でも、一筋の光を思い描くのだ。
 Stage7_GameOverText4,질긴 악연의 굴레에 사로잡혔구나.,终究被这顽固的宿业所困。,Ensnared by this stubborn Ill-Fated tie.,執拗な宿業の連鎖に囚われたか。
 Stage7_GameOverText5,이 모진 여정의 끝이 결코 파멸은 아닐 것이오.,这段艰辛旅途的终点，绝非毁灭。,This harsh Journey won't end in ruin.,この過酷な旅の終わりが、決して破滅ではないはずだ。
-Stage7_GameOverText6,만악의 근원 앞에서 이대로 눈을 감을 텐가!,难道要在万恶之根源前闭上双眼吗！,Will you close your eyes before The Origin?!,万悪の淵源を前に、このまま目を閉じるか！
-Default_GameOverText,중요한 것은 꺾이지 않는 마음이오.,最重要的是那颗不屈的心绪。,What matters is an unbroken Mind.,肝心なのは、折れない心だ。
+Stage7_GameOverText6,만악의 근원 앞에서 이대로 눈을 감을 텐가!,难道要在万恶之根源前闭上双眼吗！,Will you close your eyes before The Origin?!,万悪の根源を前に、このまま目を閉じるか！
+Default_GameOverText,중요한 것은 꺾이지 않는 마음이오.,最重要的是那颗不屈的心。,What matters is an unbroken Mind.,肝心なのは、折れない心だ。
 Default_GameOverDownGuideText,클릭하면 스테이지 선택창으로 이동합니다.,点击前往关卡选择界面。,Click to return to Stage Select.,クリックでステージ選択へ移動します。
 StageChristMas_GameOverText0,굴뚝으로 숨어버리려고 그러는 것이냐?,是想躲进烟囱里吗？,Trying to hide in the chimney?,煙突に隠れてしまうつもりか？
 StageChristMas_GameOverText1,눈싸움하던 어린 시절이 떠올랐나보군.,看来是想起了打雪仗的童年啊。,Reminiscing about childhood snowball fights?,雪合戦をした幼い頃を思い出したようだな。

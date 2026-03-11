@@ -191,12 +191,20 @@ MonoBehaviour:
     m_Key: CHEDM_Intro_02
     m_Metadata:
       m_Items: []
+  - m_Id: 7777608321073152
+    m_Key: CHEDM_Intro_03
+    m_Metadata:
+      m_Items: []
   - m_Id: 6953233707565061
     m_Key: CHNight_Intro_01
     m_Metadata:
       m_Items: []
   - m_Id: 6953233707565062
     m_Key: CHNight_Intro_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7777608396570624
+    m_Key: CHNight_Intro_03
     m_Metadata:
       m_Items: []
   m_Metadata:
