@@ -1054,6 +1054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrackedObjects:
   - rid: 3596657104847372394
+  - rid: 9208079150420066440
   references:
     version: 2
     RefIds:
@@ -1065,6 +1066,7 @@ MonoBehaviour:
           items:
           - rid: 3596657104847372395
           - rid: 3596657104847372399
+          - rid: 9208079150420066442
         m_UpdateType: 0
     - rid: 3596657104847372395
       type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
@@ -1098,6 +1100,47 @@ MonoBehaviour:
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
+    - rid: 9208079150420066440
+      type: {class: TrackedRectTransform, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 1516819530}
+        m_TrackedProperties:
+          items:
+          - rid: 9208079150420066441
+    - rid: 9208079150420066441
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_AnchoredPosition.x
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: 365
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: 230
+        - localeIdentifier:
+            m_Code: ja
+          value: 245
+        - localeIdentifier:
+            m_Code: ko
+          value: 230
+    - rid: 9208079150420066442
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_fontSize
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: 92
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: 148
+        - localeIdentifier:
+            m_Code: ja
+          value: 148
+        - localeIdentifier:
+            m_Code: ko
+          value: 148
 --- !u!114 &1059273068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,7 +1709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2953486296990010154, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_text
-      value: "\uC81C 1 \uC7A5"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2953486296990010154, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_wordSpacing
@@ -2003,6 +2046,14 @@ PrefabInstance:
     - target: {fileID: 7532017388182476662, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641234315462779855, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641234315462779855, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSize
+      value: 148
       objectReference: {fileID: 0}
     - target: {fileID: 7665633904951842853, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Sprite
@@ -2762,6 +2813,11 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!224 &1516819530 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6687462368669383685, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+  m_PrefabInstance: {fileID: 1496663460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1587941446 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2693336593970878797, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
