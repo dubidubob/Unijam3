@@ -593,4 +593,19 @@ public class SoundManager
         }
     }
 
+    // ==========================================
+    // [추가된 부분] 외부에서 DOTween 페이드 등을 위해 AudioSource를 가져가는 함수
+    // ==========================================
+    public AudioSource GetAudioSource(Define.Sound type)
+    {
+        // 혹시 아직 초기화가 안 되어 있다면 강제로 초기화
+        if (_audioSources == null || _audioSources.Length == 0)
+        {
+            Init();
+        }
+
+        // 요청한 타입(BGM, SFX 등)에 맞는 AudioSource 반환
+        return _audioSources[(int)type];
+    }
+
 }

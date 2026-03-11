@@ -242,33 +242,33 @@ public class EndingController : MonoBehaviour
 
                 int caseType = 0;
 
-              
-                if(id.StartsWith("Ending_Talk_"))
+
+                if (id.StartsWith("Ending_Talk_"))
                 {
                     caseType = 1;
                 }
-                else if(id.StartsWith("Ending_UpTalk_"))
+                else if (id.StartsWith("Ending_UpTalk_"))
                 {
                     caseType = 2;
                 }
-                else if(id.StartsWith("Ending_Normal_"))
+                else if (id.StartsWith("Ending_Normal_"))
                 {
                     caseType = 3;
                 }
-                else if(id.StartsWith("Ending_Hidden_"))
+                else if (id.StartsWith("Ending_Hidden_"))
                 {
                     caseType = 4;
                 }
 
 
-             
+
                 EndingAction action = new EndingAction();
                 action.id = id;
 
                 // 인덱스 파싱
-                string indexPart= null;
+                string indexPart = null;
 
-                switch(caseType)
+                switch (caseType)
                 {
                     case 1:
                         indexPart = id.Replace("Ending_Talk_", "").Trim();
@@ -311,7 +311,7 @@ public class EndingController : MonoBehaviour
                 string curveStr = (curveIdx >= 0 && curveIdx < row.Count) ? row[curveIdx] : "";
                 action.easeType = ParseEase(curveStr);
 
-              
+
 
                 switch (caseType)
                 {
@@ -333,12 +333,29 @@ public class EndingController : MonoBehaviour
             }
         }
 
-     
+
     }
 
     public async UniTaskVoid PlayEndingSequence()
     {
-        Managers.Sound.Play("BGM/EndingTheme1", Define.Sound.BGM,1,1,false);
+        // 1. 일단 음악을 재생합니다. (매니저 내부에서 볼륨을 1로 세팅할 수 있음)
+        Managers.Sound.Play("BGM/EndingTheme1", Define.Sound.BGM, 1, 1, false);
+
+        // 2. 해당 BGM의 AudioSource를 가져옵니다.
+        AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+        if (bgmSource != null)
+        {
+            bgmSource.DOKill();         // 혹시 실행 중인 다른 페이드가 있다면 취소
+
+            float targetVolume = BGMController.CurrentVolumeBGM;
+
+            bgmSource.volume = 0f;      // 볼륨을 0으로 초기화 (안 하면 처음에 '쾅!' 하고 크게 들릴 수 있음)
+
+            // [수정] 1f 대신 targetVolume으로 3초간 서서히 올리기
+            bgmSource.DOFade(targetVolume, 3.0f).SetEase(Ease.InOutQuad);
+
+        }
+
 
         foreach (var action in endingSequence)
         {
@@ -350,8 +367,8 @@ public class EndingController : MonoBehaviour
             if (action.index == 33)
             {
                 // action.conversion 시간(예: 2.5초) 동안 박스가 내려오고 배경이 꺼집니다.
-                upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 200f), action.conversion).SetEase(Ease.OutQuad);
-                downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 200f), action.conversion).SetEase(Ease.OutQuad);
+                upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 300f), action.conversion).SetEase(Ease.OutQuad);
+                downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 300f), action.conversion).SetEase(Ease.OutQuad);
                 backGround.DOFade(0, action.conversion).SetEase(Ease.OutQuad);
                 lineImage.DOFade(0, action.conversion);
             }
@@ -384,7 +401,7 @@ public class EndingController : MonoBehaviour
                 inactiveName = Impact_Name;
                 inactiveContent = impact_Content_Text;
             }
-      
+
 
             if (!string.IsNullOrEmpty(localizedContent))
             {
@@ -414,7 +431,7 @@ public class EndingController : MonoBehaviour
                     var t1 = activeName.DOColor(action.nameColor, action.conversion).SetEase(action.easeType);
                     var t2 = activeContent.DOColor(action.textColor, action.conversion).SetEase(action.easeType);
 
-       
+
 
                     await UniTask.WhenAll(t1.ToUniTask(), t2.ToUniTask());
                 }
@@ -424,8 +441,8 @@ public class EndingController : MonoBehaviour
                     activeContent.color = action.textColor;
                 }
 
-              
-               
+
+
             }
             else
             {
@@ -440,7 +457,7 @@ public class EndingController : MonoBehaviour
                     var fadeTasks = new List<UniTask>();
 
                     //keepname이 false 일때만 페이드시킵니다
-                    if (!isResting&&name.color.a > 0) fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                    if (!isResting && name.color.a > 0) fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
 
                     if (content_Text.color.a > 0)
                     {
@@ -451,13 +468,13 @@ public class EndingController : MonoBehaviour
 
                         //else
                         //{
-                            fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                        fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
                         //}
-                            
+
                     }
                     if (!isResting && Impact_Name.color.a > 0) fadeTasks.Add(Impact_Name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
                     if (impact_Content_Text.color.a > 0) fadeTasks.Add(impact_Content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
-                    if (wasImpactOn&&!action.isMiddleHighlight) fadeTasks.Add(backGround.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1),action.conversion).SetEase(action.easeType).ToUniTask());// 화면이 바로전 변화된적이 있다면
+                    if (wasImpactOn && !action.isMiddleHighlight) fadeTasks.Add(backGround.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1), action.conversion).SetEase(action.easeType).ToUniTask());// 화면이 바로전 변화된적이 있다면
                     if (wasImpactOn && !action.isMiddleHighlight) fadeTasks.Add(lineImage.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1), action.conversion).SetEase(action.easeType).ToUniTask());
                     // middleHighLight가 ture라면원래대로 복구하지 않아야함.
                     // color와 관련된것은 default값을 따르고있음.
@@ -493,13 +510,14 @@ public class EndingController : MonoBehaviour
                 backGround.DOColor(new Color(100f / 255f, 100f / 255f, 100f / 255f, 255f / 255f), action.conversion);
                 lineImage.DOColor(new Color(100f / 255f, 100f / 255f, 100f / 255f, 255f / 255f), action.conversion);
                 wasImpactOn = true;
-            }   
+            }
 
             if (action.duration > 0f)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
             }
         }
+
         Debug.Log("엔딩 시퀀스 1 종료!");
 
         // [수정] 마지막에 남아있는 텍스트들을 부드럽게 지워주는 연출 추가
@@ -513,15 +531,17 @@ public class EndingController : MonoBehaviour
 
         name.text = "";
         Impact_Name.text = "";
-       
+
         impact_Content_Text.text = "";
         wasImpactOn = false;
 
-        
+
         name.DOFade(1f, 0);
 
 
         PlayEndingSequence_Part2().Forget();
+
+
     }
 
     public async UniTask PlayEndingSequence_Part2()
@@ -564,8 +584,8 @@ public class EndingController : MonoBehaviour
             Sequence scrollSequence = DOTween.Sequence();
 
             upDark.DOKill(); downDark.DOKill();
-            upDark.sizeDelta = new Vector2(upDark.sizeDelta.x, 200f);
-            downDark.sizeDelta = new Vector2(downDark.sizeDelta.x, 200f);
+            upDark.sizeDelta = new Vector2(upDark.sizeDelta.x, 300f);
+            downDark.sizeDelta = new Vector2(downDark.sizeDelta.x, 300f);
 
             // 1구간
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY1, duration1).SetEase(Ease.OutQuart));
@@ -603,7 +623,7 @@ public class EndingController : MonoBehaviour
         }
 
         Debug.Log("끝까지 도착했습니다!");
-  
+
         // 영화 효과 다시 사라지기
         var tasks2 = new List<UniTask>();
 
@@ -620,7 +640,7 @@ public class EndingController : MonoBehaviour
                 .SetEase(Ease.OutQuad) // 도착할 때 부드럽게 감속
                 .ToUniTask());
 
-        
+
         }
         else
         {
@@ -638,7 +658,7 @@ public class EndingController : MonoBehaviour
 
         Debug.Log("대화 연출 시작!");
 
-        
+
 
         // 대화시작! 
         Debug.Log(ending_Up_Sequence.Count);
@@ -733,6 +753,18 @@ public class EndingController : MonoBehaviour
 
         Debug.Log("Part2 모든 액션 종료");
 
+        // =========================================================
+        // [추가] 다음 씬으로 넘어가기 전, 현재 BGM 2초 페이드아웃 대기
+        // =========================================================
+        AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+        if (bgmSource != null && bgmSource.isPlaying)
+        {
+            bgmSource.DOKill();
+            // 2초 동안 볼륨을 0으로 내릴 때까지(await) 기다립니다.
+            await bgmSource.DOFade(0f, 2.0f).SetEase(Ease.InOutQuad).ToUniTask();
+            bgmSource.Stop();
+        }
+
         NormalEnding_Sequence().Forget();
         /*
         if (Bool_CheckHiddenEndingEnter())
@@ -752,7 +784,20 @@ public class EndingController : MonoBehaviour
     private async UniTask NormalEnding_Sequence()
     {
         // 대화시작! 
-        Managers.Sound.Play("BGM/Exhaust", Define.Sound.BGM,1,1,false);
+        // =========================================================
+        // [추가] 1. Exhaust BGM 3초 페이드 인
+        // =========================================================
+        Managers.Sound.Play("BGM/Exhaust", Define.Sound.BGM, 1, 1, false);
+        AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+        if (bgmSource != null)
+        {
+            bgmSource.DOKill();
+            float targetVolume = BGMController.CurrentVolumeBGM;
+
+            bgmSource.volume = 0f; // 0에서 시작
+            bgmSource.DOFade(targetVolume, 3.0f).SetEase(Ease.InOutQuad);
+        }
+
         Debug.Log("노말엔딩 시퀀스 시작");
         foreach (var action in ending_Normal_Sequence)
         {
@@ -763,7 +808,7 @@ public class EndingController : MonoBehaviour
             string localizedContent = LocalizationManager.Get(action.id);
 
             if (localizedContent == "X" || localizedContent == "~") localizedContent = "";
-           
+
 
             if (!string.IsNullOrEmpty(localizedContent))
             {
@@ -837,6 +882,18 @@ public class EndingController : MonoBehaviour
                 await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
             }
         }
+
+        //// =========================================================
+        //// [추가] 2. 모든 대사가 끝난 후 Exhaust BGM 2초 페이드 아웃
+        //// =========================================================
+        //if (bgmSource != null)
+        //{
+        //    bgmSource.DOKill();
+        //    bgmSource.DOFade(0f, 2.0f).SetEase(Ease.InOutQuad).OnComplete(() =>
+        //    {
+        //        bgmSource.Stop();
+        //    });
+        //}
 
     }
 
@@ -951,6 +1008,8 @@ public class EndingController : MonoBehaviour
             case "easeout": return Ease.OutQuad;
             case "easeinout": return Ease.InOutQuad;
             case "linear": return Ease.Linear;
+            case "easeinsine": return Ease.InSine;
+
             default:
                 if (Enum.TryParse(curveStr, true, out Ease result)) return result;
                 return Ease.OutQuad;
@@ -987,7 +1046,7 @@ public class EndingController : MonoBehaviour
             {
                 cur.Append(c);
             }
-        }   
+        }
         result.Add(cur.ToString());
         return result;
     }
@@ -995,30 +1054,98 @@ public class EndingController : MonoBehaviour
     private void SpecialAction_NormalEnding(int index, EndingAction action)
     {
         Debug.Log($"{index} 노말 엔딩 액션 시작");
+
+        // 커브(Ease)는 시트에서 그대로 가져옵니다.
+        Ease curve = action.easeType;
+
         switch (index)
         {
             case 16:
-                // 음악 재생 (프로젝트 내 SoundManager 등의 호출부 필요)
-                Managers.Sound.Play("BGM/EndingTheme2_V2",Define.Sound.SFX,1,1,false);
+                //// =======================================================
+                //// [16번 프레임] 암전 -> 기본 노란색 배경 (음악 시작)
+                //// 예외 룰: 시트의 Duration 값을 연출 시간으로 사용
+                //// =======================================================
+                //float effectTime16 = action.duration > 0f ? action.duration : 6f;
 
+                //// 1. 음악 재생
+                //Managers.Sound.Play("BGM/EndingTheme2_V2", Define.Sound.BGM, 1, 1, false);
+                //AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+                //if (bgmSource != null)
+                //{
+                //    bgmSource.DOKill();
+
+                //    float targetVolume = BGMController.CurrentVolumeBGM;
+                //    bgmSource.volume = 0f;
+                //    bgmSource.DOFade(targetVolume, effectTime16).SetEase(action.easeType); // 유저 볼륨까지만!
+                //}
+
+                // [설정] 16번 연출 시간
+                float effectTime16 = action.duration > 0f ? action.duration : 6f;
+
+                // =======================================================
+                // [음악 연출 전용 로직] 기존 곡 페이드아웃 -> 정적 -> 새 곡 시작
+                // =======================================================
+                async UniTask PlayMusicWithGap()
+                {
+                    AudioSource currentBgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+
+                    if (currentBgm != null && currentBgm.isPlaying)
+                    {
+                        // 1. 기존 곡(Exhaust)을 2초 동안 부드럽게 끕니다.
+                        await currentBgm.DOFade(0f, 2.0f).SetEase(Ease.Linear).ToUniTask();
+                        currentBgm.Stop();
+                    }
+
+                    // 2. [핵심] 완전한 적막 시간 (여운) 부여
+                    // 이 시간을 늘리면 곡 사이의 텀이 더 길어집니다.
+                    await UniTask.Delay(TimeSpan.FromSeconds(2.5f));
+
+                    // 3. 이제 새 음악을 재생합니다.
+                    Managers.Sound.Play("BGM/EndingTheme2_V2", Define.Sound.BGM, 1, 1, false);
+                    AudioSource nextBgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+                    if (nextBgm != null)
+                    {
+                        nextBgm.DOKill();
+                        float targetVol = BGMController.CurrentVolumeBGM;
+                        nextBgm.volume = 0f;
+                        // 4. 새 곡이 시트 설정 시간(effectTime16) 동안 서서히 커집니다.
+                        nextBgm.DOFade(targetVol, effectTime16).SetEase(action.easeType);
+                    }
+                }
+
+                // 음악 시퀀스 실행 (비동기로 실행하여 다음 코드들이 멈추지 않게 함)
+                PlayMusicWithGap().Forget();
+
+                // -------------------------------------------------------
+                // [화면/애니메이션 연출]
+                // -------------------------------------------------------
                 content_Text.alignment = TextAlignmentOptions.Midline;
-                // 수도승 애니메이션 시작 (기본 속도 1f부터)
                 SeatAnimation(0.5f).Forget();
-                // 화면 페이드인 Linear로
-                // action.conversion 시간(데이터에 정의된 시간)만큼 캔버스 그룹 알파를 1로 올림
-                float fadeTime = action.conversion > 0f ? action.conversion : 2f;
-                canvasGroup_NormalEnding.DOFade(1f, fadeTime*1f).SetEase(Ease.Linear);
-                canvasGroup_Sun.DOFade(1f, fadeTime * 1.5f).SetEase(Ease.Linear );
 
+                // 2. 화면 페이드 인 (기본 배경 & 태양)
+                canvasGroup_NormalEnding.DOKill();
+                canvasGroup_Sun.DOKill();
+
+                canvasGroup_NormalEnding.DOFade(1f, effectTime16).SetEase(action.easeType);
+                canvasGroup_Sun.DOFade(1f, effectTime16 * 1.5f).SetEase(action.easeType);
                 break;
+
+            //    image_backGroundBright.DOFade(1f, effectTime17).SetEase(curve);
 
             case 17:
-                image_backGroundBright.DOFade(1f, 14f).SetEase(Ease.Linear);
-                
-               
+                // =======================================================
+                // [17번 프레임] 기본 노란색 -> 더 밝은 노란색
+                // 예외 룰: 프레임 진입 후 14초 대기 -> 시트의 Duration(10초) 동안 Linear 연출
+                // =======================================================
+                float effectTime17 = action.duration > 0f ? action.duration : 10f; // 시트에 10000ms(10초)로 적혀있을 값
+
+                image_backGroundBright.DOKill();
+                image_backGroundBright.DOFade(1f, effectTime17)
+                                      .SetDelay(14f)          // 프레임 시작점부터 정확히 14초 대기
+                                      .SetEase(Ease.Linear);  // 무조건 Linear 연출
                 break;
 
-            case 19:    
+            case 19:
                 // 연꽃 애니메이션 시작
                 // 26번 케이스에서 이어지기 위해 기초값 세팅 및 등장 처리
                 image_Flower.gameObject.SetActive(true);
@@ -1034,7 +1161,7 @@ public class EndingController : MonoBehaviour
                 // 텍스트 위치 및 여러가지 조정
                 // 예: 텍스트의 부모나 자신의 앵커 위치를 DOTween으로 부드럽게 이동
                 // content_Text.rectTransform.DOAnchorPosY(-200f, 2f).SetEase(Ease.OutQuad);
-                
+
 
                 break;
 
@@ -1047,13 +1174,13 @@ public class EndingController : MonoBehaviour
                 {
                     image_BackGlow2.DOFade(1f, 2f);
                     // 완전히 끝나면 BackGlow의 Rotation Z값 돌아가기 (계속 무한반복)
-                    image_BackGlow.rectTransform.DORotate(new Vector3(0, 0, 360f),70f, RotateMode.FastBeyond360)
+                    image_BackGlow.rectTransform.DORotate(new Vector3(0, 0, 360f), 70f, RotateMode.FastBeyond360)
                         .SetEase(Ease.Linear)
                         .SetLoops(-1, LoopType.Restart); // -1은 무한 반복
                 });
                 SeatAnimation(1f).Forget();
-                
-             
+
+
                 break;
 
             case 22:
@@ -1080,7 +1207,7 @@ public class EndingController : MonoBehaviour
     private async UniTaskVoid PlayCase26Sequence()
     {
         // 시작 시점: Flower가 1400, 1400 / rotate z -38 (Case 19에서 이미 세팅됨)
-        foreach(var particle in particle_Flowers)
+        foreach (var particle in particle_Flowers)
         {
             particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
@@ -1095,7 +1222,7 @@ public class EndingController : MonoBehaviour
         canvasGroup_Sun.DOFade(0, 4.4f);
 
         image_Flower.rectTransform.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.Linear).OnComplete(
-        ()=>
+        () =>
         {
             image_sudoSeat.color = new Color(0, 0, 0, 0);
             // 그리고 다시 -1400, -1400 으로 사라짐, 이때까지 rotateZ는 -12까지 변화함
@@ -1106,7 +1233,7 @@ public class EndingController : MonoBehaviour
         );
 
 
-       
+
 
         // 사라지는데 걸리는 3초 + 추가 6초 대기 = 총 9초 대기
         // (만약 애니메이션 시작 직후부터 6초 대기라면 6초만 적절히 조절하세요)
@@ -1124,6 +1251,7 @@ public class EndingController : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(7f));
 
         image_AllBlackPanel.DOFade(1f, 7.0f).SetEase(Ease.InOutQuad);
+
         //// AllBlackPanel alpha값 1로 바꾸기
         //image_AllBlackPanel.DOFade(1f, 0f);
         await UniTask.Delay(TimeSpan.FromSeconds(2.5f));
@@ -1248,7 +1376,7 @@ public class EndingController : MonoBehaviour
 
     private async UniTask SpecialAction_Up(int index, EndingAction action)
     {
-        if(index ==0)
+        if (index == 0)
         {
             // 2. 구름 오브젝트 Alpha(투명도) 1로 변환하면서 나타나기
             cloudObject.GetComponent<Image>().DOFade(1f, cloudUpTime)
@@ -1313,7 +1441,7 @@ public class EndingController : MonoBehaviour
         }
     }
 
-   
+
     private async UniTaskVoid PlayEyeClosingSequence(float delay, float duration)
     {
         // 12초 대기
@@ -1353,7 +1481,8 @@ public class EndingController : MonoBehaviour
         eyeSeq.Join(downEye.DOAnchorPosY(-210f, 2.5f).SetEase(Ease.InOutSine));
 
         // 6. 완전히 감긴 후 암전 처리 (선택 사항)
-        eyeSeq.OnComplete(() => {
+        eyeSeq.OnComplete(() =>
+        {
 
             Debug.Log("눈을 완전히 감았습니다.");
             // 필요 시 추가적인 엔딩 크레딧이나 페이드 아웃 처리
@@ -1365,7 +1494,7 @@ public class EndingController : MonoBehaviour
     private void SettingClearForStart()
     {
         scrollTarget.DOAnchorPosY(startPosY, 0);
- 
+
     }
 
     /// <summary>
@@ -1374,9 +1503,9 @@ public class EndingController : MonoBehaviour
     private bool Bool_CheckHiddenEndingEnter()
     {
         // 모든 챕터의 랭크가 최상일때 
-        for(int i=0;i<IngameData.TOTAL_STORY_CHAPTERS;i++)//모든 스토리 챕터에 대해
+        for (int i = 0; i < IngameData.TOTAL_STORY_CHAPTERS; i++)//모든 스토리 챕터에 대해
         {
-            if(IngameData._bestChapterRanks[i]!=Define.Rank.Perfect) // 최고 랭크가 아니라면
+            if (IngameData._bestChapterRanks[i] != Define.Rank.Perfect) // 최고 랭크가 아니라면
             {
 
                 Debug.Log("노말엔딩 진입");
@@ -1393,5 +1522,4 @@ public class EndingController : MonoBehaviour
         IngameData._isStoryCompleteClear = true;
         Managers.Steam.UnlockAchievement($"ACH_ENDING_WATCH");
     }
-
 }

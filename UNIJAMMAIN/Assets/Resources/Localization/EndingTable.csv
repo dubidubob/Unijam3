@@ -3,83 +3,83 @@ Ending_Name_Nidus,근원,근원,The Origin,根源,根源,,,,,,
 Ending_Name_Monk,수도승,,,,,,,,,,
 Ending_Talk_0,X,,,,,0ms,Ease out,0ms,,,FALSE
 Ending_Talk_1,X,,,,,0ms,Ease out,3500ms,,,FALSE
-Ending_Talk_2,근원,... 어리석은 중생이여.,...Foolish mortals.,……愚蠢的众生。,……愚かな衆生よ。,500ms,Ease out,2000ms,B20000,C0C0C0,FALSE
+Ending_Talk_2,근원,... 어리석은 중생이여.,...Foolish mortals.,……愚蠢的众生。,……愚かな衆生よ。,500ms,easein,2000ms,B20000,C0C0C0,FALSE
 Ending_Talk_3,~,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_4,근원,"전쟁이 끝난 뒤 찾아온 평화가, 인간에게 무엇을 심었는지 아느냐?","What has peace sown in the hearts of men, now that the wars are over?",你可知战后的和平，在人心之中种下了什么？,戦が終わった後の平和が、人間に何を植え付けたか知っているか？,400ms,Ease out,3000ms,B20000,C0C0C0,FALSE
+Ending_Talk_4,근원,"전쟁이 끝난 뒤 찾아온 평화가, 인간에게 무엇을 심었는지 아느냐?","What has peace sown in the hearts of men, now that the wars are over?",你可知战后的和平，在人心之中种下了什么？,戦が終わった後の平和が、人間に何を植え付けたか知っているか？,400ms,easein,3000ms,B20000,C0C0C0,FALSE
 Ending_Talk_5,~,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_6,근원,그것은 바로 ‘더 갖고자 하는 마음’이었다.,It was the desire for more.,那是“贪婪”。,それは、『飽くなき欲』だった。,400ms,Ease out,2000ms,B20000,C0C0C0,FALSE
+Ending_Talk_6,근원,그것은 바로 ‘더 갖고자 하는 마음’이었다.,It was the desire for more.,那是“贪婪”。,それは、『飽くなき欲』だった。,400ms,easein,2000ms,B20000,C0C0C0,FALSE
 Ending_Talk_7,X,,,,,400ms,Ease out,1000ms,,,TRUE
-Ending_Talk_8,근원,"평온함은 지루함을 낳고, 지루함은 욕망을 부르지.","Tranquility breeds boredom, and boredom begets desire.",安逸生倦怠，而倦怠勾起欲望。,平穏は退屈を生み、退屈は欲望を呼ぶのだ。,400ms,Ease out,3000ms,B20000,C0C0C0,TRUE
+Ending_Talk_8,근원,"평온함은 지루함을 낳고, 지루함은 욕망을 부르지.","Tranquility breeds boredom, and boredom begets desire.",安逸生倦怠，而倦怠勾起欲望。,平穏は退屈を生み、退屈は欲望を呼ぶのだ。,400ms,easein,3000ms,B20000,C0C0C0,TRUE
 Ending_Talk_9,~,,,,,400ms,Ease out,1000ms,,,TRUE
-Ending_Talk_10,근원,"물이 아래로 흐르듯, 인간이 욕심을 내는 것은 거스를 수 없는 순리(順理)였다.","As water flows down, so greed flows through man—an undeniable law of nature.",水往低处流，贪欲亦是人之天理。,水が低きに流れるが如く、人の欲もまた抗えぬ理なのだ。,400ms,Ease out,3000ms,B20000,C0C0C0,TRUE
+Ending_Talk_10,근원,"물이 아래로 흐르듯, 인간이 욕심을 내는 것은 거스를 수 없는 순리(順理)였다.","As water flows down, so greed flows through man—an undeniable law of nature.",水往低处流，贪欲亦是人之天理。,水が低きに流れるが如く、人の欲もまた抗えぬ理なのだ。,400ms,easein,3000ms,B20000,C0C0C0,TRUE
 Ending_Talk_11,X,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_12,수도승,... 흐르는 것만이 능사라 생각하는가?,...Is yielding to the current the only answer?,……你以为顺流而下便是唯一的出路吗？,……流されることだけが、最善だとでも思うのか？,500ms,Ease out,2000ms,EEEEB9,FFFFFF,FALSE
+Ending_Talk_12,수도승,... 흐르는 것만이 능사라 생각하는가?,...Is yielding to the current the only answer?,……你以为顺流而下便是唯一的出路吗？,……流されることだけが、最善だとでも思うのか？,500ms,easein,2000ms,EEEEB9,FFFFFF,FALSE
 Ending_Talk_13,~,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_14,수도승,"범람하는 강물은 둑을 쌓아 막아야, 비로소 대지를 적시는 법.",Only when a raging river is dammed can it truly nourish the earth.,唯有筑堤截流，泛滥之水方能滋润大地。,溢れ出る奔流は堤で堰き止めてこそ、はじめて大地を潤すものだ。,400ms,Ease out,3000ms,EEEEB9,FFFFFF,FALSE
+Ending_Talk_14,수도승,"범람하는 강물은 둑을 쌓아 막아야, 비로소 대지를 적시는 법.",Only when a raging river is dammed can it truly nourish the earth.,唯有筑堤截流，泛滥之水方能滋润大地。,溢れ出る奔流は堤で堰き止めてこそ、はじめて大地を潤すものだ。,400ms,easein,3000ms,EEEEB9,FFFFFF,FALSE
 Ending_Talk_15,X,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_16,근원,둑은 언젠가 무너진다. 억누른 본성이 터져 나올 때...,Dams eventually collapse. When suppressed nature bursts forth...,堤坝终会崩塌。当被压抑的天性爆发时……,堤はいずれ崩れる。抑えつけた本性が弾け飛ぶ時……,500ms,Ease out,2000ms,B20000,C0C0C0,FALSE
+Ending_Talk_16,근원,둑은 언젠가 무너진다. 억누른 본성이 터져 나올 때...,Dams eventually collapse. When suppressed nature bursts forth...,堤坝终会崩塌。当被压抑的天性爆发时……,堤はいずれ崩れる。抑えつけた本性が弾け飛ぶ時……,500ms,easein,2000ms,B20000,C0C0C0,FALSE
 Ending_Talk_17,~,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_18,근원,네놈이 말하는 그 알량한 질서가 버틸 수 있겠느냐?,Can that fragile order of yours truly withstand the flood?,你口中那微不足道的秩序，当真守得住吗？,貴様の言うそのちっぽけな秩序とやらが、耐えきれるかな？,400ms,Ease out,3000ms,B20000,C0C0C0,FALSE
+Ending_Talk_18,근원,네놈이 말하는 그 알량한 질서가 버틸 수 있겠느냐?,Can that fragile order of yours truly withstand the flood?,你口中那微不足道的秩序，当真守得住吗？,貴様の言うそのちっぽけな秩序とやらが、耐えきれるかな？,400ms,easein,3000ms,B20000,C0C0C0,FALSE
 Ending_Talk_19,X,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_20,수도승,버티는 것이 아니다. 다스리는 것이다.,We do not merely withstand it. We master it.,并非固守，而是治驭。,耐えるのではない。御するのだ。,500ms,Ease out,2000ms,EEEEB9,FFFFFF,FALSE
+Ending_Talk_20,수도승,버티는 것이 아니다. 다스리는 것이다.,We do not merely withstand it. We master it.,并非固守，而是治驭。,耐えるのではない。御するのだ。,500ms,easein,2000ms,EEEEB9,FFFFFF,FALSE
 Ending_Talk_21,~,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_22,수도승,인간에게 욕망은 있으나... 그것을 자제하고 조화를 찾으려는 의지.,Humans possess desires... yet also the will to restrain them and seek harmony.,人虽有欲……却也有克制欲望、寻求调和之意志。,人には欲がある……だが、それを律し調和を見出さんとする意志もある。,400ms,Ease out,3000ms,EEEEB9,FFFFFF,FALSE
+Ending_Talk_22,수도승,인간에게 욕망은 있으나... 그것을 자제하고 조화를 찾으려는 의지.,Humans possess desires... yet also the will to restrain them and seek harmony.,人虽有欲……却也有克制欲望、寻求调和之意志。,人には欲がある……だが、それを律し調和を見出さんとする意志もある。,400ms,easein,3000ms,EEEEB9,FFFFFF,FALSE
 Ending_Talk_23,~,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_24,수도승,"그 치열한 균형만이, 짐승과 다른 세상으로 우리를 이끌어왔다.",That fierce balance alone has led us to a world beyond that of beasts.,唯有那份微妙的平衡，才使人世区别于禽兽之境。,その苛烈な均衡こそが、我らを獣とは違う世界へ導いてきたのだ。,400ms,Ease out,3000ms,EEEEB9,FFFFFF,FALSE
+Ending_Talk_24,수도승,"그 치열한 균형만이, 짐승과 다른 세상으로 우리를 이끌어왔다.",That fierce balance alone has led us to a world beyond that of beasts.,唯有那份微妙的平衡，才使人世区别于禽兽之境。,その苛烈な均衡こそが、我らを獣とは違う世界へ導いてきたのだ。,400ms,easein,3000ms,EEEEB9,FFFFFF,FALSE
 Ending_Talk_25,X,,,,,400ms,Ease out,1000ms,,,TRUE
-Ending_Talk_26,근원,... 본성을 거스르는 자제라.,...Restraint that defies nature itself.,……违背天性的自律吗。,……本性に抗う自制か。,500ms,Ease out,2000ms,B20000,C0C0C0,TRUE
+Ending_Talk_26,근원,... 본성을 거스르는 자제라.,...Restraint that defies nature itself.,……违背天性的自律吗。,……本性に抗う自制か。,500ms,easein,2000ms,B20000,C0C0C0,TRUE
 Ending_Talk_27,X,,,,,400ms,Ease out,1000ms,,,TRUE
-Ending_Talk_28,근원,그것이 네놈이 깨달은... 인간의 길인가.,So this is... the Way of Humanity you have found.,这便是你所悟出的……人之道吗。,それが貴様の悟った……人の道か。,400ms,Ease out,3000ms,B20000,790000,TRUE
+Ending_Talk_28,근원,그것이 네놈이 깨달은... 인간의 길인가.,So this is... the Way of Humanity you have found.,这便是你所悟出的……人之道吗。,それが貴様の悟った……人の道か。,400ms,easein,3000ms,B20000,790000,TRUE
 Ending_Talk_29,X,,,,,400ms,Ease out,1000ms,,,TRUE
-Ending_Talk_30,수도승,욕망에 휘둘리지 않고 중심을 잡는 것.,To hold one's ground without being swayed by desire.,不为欲念所动，守住本心。,欲に振り回されず、芯を保つこと。,500ms,Ease out,2000ms,EEEEB9,FFFFFF,FALSE
+Ending_Talk_30,수도승,욕망에 휘둘리지 않고 중심을 잡는 것.,To hold one's ground without being swayed by desire.,不为欲念所动，守住本心。,欲に振り回されず、芯を保つこと。,500ms,easein,2000ms,EEEEB9,FFFFFF,FALSE
 Ending_Talk_31,~,,,,,400ms,Ease out,1000ms,,,FALSE
-Ending_Talk_32,수도승,나는 그 길을... 계속해서 두드려 나갈 뿐이다.,I shall forge this path... that is all.,我将在这条道路上……不断砥砺，仅此而已。,私はその道を……ただ切り拓いていくのみ。,400ms,Ease out,3000ms,EEEEB9,FFFFFF,FALSE
+Ending_Talk_32,수도승,나는 그 길을... 계속해서 두드려 나갈 뿐이다.,I shall forge this path... that is all.,我将在这条道路上……不断砥砺，仅此而已。,私はその道を……ただ切り拓いていくのみ。,400ms,easein,3000ms,EEEEB9,FFFFFF,FALSE
 Ending_Talk_33,X,,,,,2500ms,Ease out,1000ms,,,FALSE
-Ending_UpTalk_0,X,,,,,0ms,Ease out,0ms,,,
-Ending_UpTalk_1,X,,,,,0ms,Ease out,4000ms,,,
-Ending_UpTalk_2,수도승,저 아래의 소란조차... 이곳에서는 한 폭의 아득한 풍경이로구나.,Even the faint echoes of the world below... are but a distant landscape from here.,凡尘微响，在此处听来，也不过是融进风景的一丝余音。,下界の微かな響きさえ……ここでは遠く霞む景色の一部に過ぎぬ。,500ms,Ease out,2000ms,EEEEB9,4A4A4A,
+Ending_UpTalk_0,X,,,,,0ms,Ease out,2000ms,,,
+Ending_UpTalk_1,X,,,,,0ms,Ease out,2000ms,,,
+Ending_UpTalk_2,수도승,저 아래의 소란조차... 이곳에서는 한 폭의 아득한 풍경이로구나.,Even the faint echoes of the world below... are but a distant landscape from here.,凡尘微响，在此处听来，也不过是融进风景的一丝余音。,下界の微かな響きさえ……ここでは遠く霞む景色の一部に過ぎぬ。,500ms,easein,2000ms,EEEEB9,4A4A4A,
 Ending_UpTalk_3,~,,,,,400ms,Ease out,1000ms,,,
-Ending_UpTalk_4,수도승,이 거대한 흐름에 둑을 쌓으려... 나는 그토록 핏대를 세웠던가.,"Did I strain so fiercely... just to stem this vast, eternal flow?",曾试图阻挡这宏大的洪流……我竟是如此地执迷不悟。,この巨大な流れを堰き止めようと……私はあんなにも躍起になっていたのか。,400ms,Ease out,3000ms,EEEEB9,4A4A4A,
+Ending_UpTalk_4,수도승,이 거대한 흐름에 둑을 쌓으려... 나는 그토록 핏대를 세웠던가.,"Did I strain so fiercely... just to stem this vast, eternal flow?",曾试图阻挡这宏大的洪流……我竟是如此地执迷不悟。,この巨大な流れを堰き止めようと……私はあんなにも躍起になっていたのか。,400ms,easein,3000ms,EEEEB9,4A4A4A,
 Ending_UpTalk_5,~,,,,,400ms,Ease out,1000ms,,,
-Ending_UpTalk_6,수도승,참으로 아둔하고 뜨거웠던 생(生). 명분이 다하니 비로소 육신이 허물어지는구나.,"A foolish, fervent life. My cause is at an end. My mortal shell finally withers.",痴愚而热烈的一生。大义已尽，肉身终散。,愚かしくも熱き生。大義は尽き、ようやくこの身も朽ち果てる。,400ms,Ease out,3000ms,EEEEB9,4A4A4A,
+Ending_UpTalk_6,수도승,참으로 아둔하고 뜨거웠던 생(生). 명분이 다하니 비로소 육신이 허물어지는구나.,"A foolish, fervent life. My cause is at an end. My mortal shell finally withers.",痴愚而热烈的一生。大义已尽，肉身终散。,愚かしくも熱き生。大義は尽き、ようやくこの身も朽ち果てる。,400ms,easein,3000ms,EEEEB9,4A4A4A,
 Ending_UpTalk_7,X,,,,,400ms,Ease out,00ms,,,
-Ending_UpTalk_8,X,,,,,2000ms,Ease out,00ms,,,
-Ending_UpTalk_9,X,,,,,1000ms,Ease out,100ms,,,
-Ending_UpTalk_10,수도승,. . .,. . .,……,……,500ms,Ease out,2000ms,EEEEB9,FFFFFF,
+Ending_UpTalk_8,X,,,,,00ms,Ease out,2000ms,,,
+Ending_UpTalk_9,X,,,,,00ms,Ease out,1100ms,,,
+Ending_UpTalk_10,수도승,. . .,. . .,……,……,500ms,easein,2000ms,EEEEB9,FFFFFF,
 Ending_UpTalk_11,~,,,,,400ms,Ease out,1000ms,,,
-Ending_UpTalk_12,수도승,부질없이 흩어지는구나. 나의 소임이여.,My Calling scatters into nothingness.,终是随风而逝了。我的使命。,儚く散りゆくのだな、我が役目よ。,400ms,Ease out,2000ms,EEEEB9,FFFFFF,
+Ending_UpTalk_12,수도승,부질없이 흩어지는구나. 나의 소임이여.,My Calling scatters into nothingness.,终是随风而逝了。我的使命。,儚く散りゆくのだな、我が役目よ。,400ms,easein,2000ms,EEEEB9,FFFFFF,
 Ending_UpTalk_13,~,,,,,400ms,Ease out,1000ms,,,
-Ending_UpTalk_14,수도승,". . . 이제야, 꽉 쥐었던 두 손을 놓겠군.",". . . At last, I can release these clenched hands. ",……终于，可以松开紧握的双拳了。,……ようやく、握りしめた両手を放せる。,400ms,Ease out,2000ms,EEEEB9,FFFFFF,
+Ending_UpTalk_14,수도승,". . . 이제야, 꽉 쥐었던 두 손을 놓겠군.",". . . At last, I can release these clenched hands. ",……终于，可以松开紧握的双拳了。,……ようやく、握りしめた両手を放せる。,400ms,easein,2000ms,EEEEB9,FFFFFF,
 Ending_UpTalk_15,~,,,,,400ms,Ease out,1000ms,,,
-Ending_UpTalk_16,수도승,"참으로 고단하고도, 아름다운 수행이었다.","It was a weary, yet beautiful discipline.",真是一场艰辛而又凄美的修行。,実に過酷で、美しい修行であった。,400ms,Ease out,2000ms,EEEEB9,FFFFFF,
-Ending_UpTalk_17,X,,,,,500ms,Ease out,6000ms,,,
-Ending_Normal_0,수도승,껍데기를 벗고서야... 이리도 완벽한 무(無)에 닿는구나.,Only after shedding this shell... do I reach such perfect void.,蜕去皮囊，方能触及这完美的虚无。,抜け殻を脱ぎ捨ててようやく……これほど完璧な“無”に届くのだな。,600ms,Ease out,3000ms,EEEEB9,FFFFFF,
-Ending_Normal_1,~,,,,,400ms,Ease out,1000ms,,,
-Ending_Normal_2,수도승,"장단이 멎은 고요 속에서야, 내 주먹에 겹쳐 있던 낯선 여음(餘音)을 비로소 깨닫소.","Only in this silence, where the Rhythm fades, do I finally perceive the strange resonance overlapping with my fists. ",当律动止息，我才察觉到叠合在拳尖上的那一抹异样余韵。,律動が止んだ静寂の中で、我が拳に重なっていた見知らぬ余韻に、ようやく気づいた。,600ms,Ease out,3000ms,EEEEB9,FFFFFF,
-Ending_Normal_3,~,,,,,400ms,Ease out,1000ms,,,
-Ending_Normal_4,수도승,누군가 이 적막 너머에서 듣고 있을지 모르겠으나... 허공에나마 이 말을 남기오.,I know not if someone listens beyond this stillness... but I leave these words to the void.,不知寂静彼端是否有人倾听……权且向虚空留下这番话语。,この静寂の向こうで誰かが聞いているかは分からぬが……虚空にせめて、この言葉を残そう。,600ms,Ease out,3000ms,EEEEB9,FFFFFF,
-Ending_Normal_5,~,,,,,400ms,Ease out,1000ms,,,
-Ending_Normal_6,수도승,"아득한 곳에서, 기어코 나와 끝까지 합(合)을 맞추어주신 분이여.","To you, who matched my breath until the very end from afar. ",在那遥远彼方，始终与我合拍共鸣之人。,遥か遠き場所で、私と最期まで“合”を合わせてくれた御仁よ。,600ms,Ease out,3000ms,EEEEB9,FFFFFF,
-Ending_Normal_7,~,,,,,400ms,Ease out,1000ms,,,
-Ending_Normal_8,수도승,"그대가 짚어준 단단한 호흡이 아니었다면, 나는 진작 탁류에 휩쓸렸을 것이오.","Had it not been for the steady breath you guided, I would have been swept away by the turbid currents long ago. ",若无你指引的沉稳气息，我早已被卷入浊流之中。,貴殿が導いてくれた確かな呼吸がなければ、私は疾うに濁流へと飲み込まれていただろう。,600ms,Ease out,3000ms,EEEEB9,FFFFFF,
-Ending_Normal_9,~,,,,,400ms,Ease out,1000ms,,,
-Ending_Normal_10,수도승,나의 육신은 이 공허 속에 영원히 흩어지나...,Though my physical form scatters forever into this void...,纵使我的肉身永远消散于虚无……,我が肉体はこの虚空へと永遠に散りゆくが……,600ms,Ease out,3000ms,EEEEB9,FFFFFF,
-Ending_Normal_11,~,,,,,400ms,Ease out,1000ms,,,
-Ending_Normal_12,수도승,"그대의 손끝에 남은, 치열하게 부딪혀 온 이 울림만큼은 잊히지 않기를 바라오.",I hope that the resonance of our fierce clash remains at your fingertips.,愿你指尖残留的、那份激烈碰撞的余震，永不磨灭。,貴殿の指先に残る、熾烈にぶつかり合ったこの響きだけは、忘れぬよう願いたい。,600ms,Ease out,3000ms,EEEEB9,FFFFFF,
-Ending_Normal_13,~,,,,,400ms,Ease out,1000ms,,,
-Ending_Normal_14,수도승, . . . 참으로 고마웠소. 보이지 않는 동행자(同行者)여.,"...My deepest thanks to you, my unseen companion. ",……万分感谢。我那素未谋面的同行者。,……実に感謝している。目に見えぬ同行者よ。,2000ms,Ease out,3000ms,EEEEB9,FFFFFF,
-Ending_Normal_15,X,,,,,1ms,Ease out,5000ms,,,
-Ending_Normal_16,X,,,,,6000ms,Ease out,00ms,,,
-Ending_Normal_17,X,,,,,600ms,Ease out,7000ms,,,
-Ending_Normal_18,수도승,마침내 만물이 하나의 숨결로 이어지니...,"Finally, all things connect in a single breath. ",万物终归一息。,ついに万物が一つの息吹で繋がる。,600ms,Ease out,2500ms,EEEEB9,4A4A4A,
+Ending_UpTalk_16,수도승,"참으로 고단하고도, 아름다운 수행이었다.","It was a weary, yet beautiful discipline.",真是一场艰辛而又凄美的修行。,実に過酷で、美しい修行であった。,400ms,easein,2000ms,EEEEB9,FFFFFF,
+Ending_UpTalk_17,X,,,,,400ms,Ease out,6000ms,,,
+Ending_Normal_0,수도승,껍데기를 벗고서야... 이리도 완벽한 무(無)에 닿는구나.,Only after shedding this shell... do I reach such perfect void.,蜕去皮囊，方能触及这完美的虚无。,抜け殻を脱ぎ捨ててようやく……これほど完璧な“無”に届くのだな。,500ms,easein,3000ms,EEEEB9,FFFFFF,
+Ending_Normal_1,~,,,,,600ms,Ease out,1000ms,,,
+Ending_Normal_2,수도승,"장단이 멎은 고요 속에서야, 내 주먹에 겹쳐 있던 낯선 여음(餘音)을 비로소 깨닫소.","Only in this silence, where the Rhythm fades, do I finally perceive the strange resonance overlapping with my fists. ",当律动止息，我才察觉到叠合在拳尖上的那一抹异样余韵。,律動が止んだ静寂の中で、我が拳に重なっていた見知らぬ余韻に、ようやく気づいた。,400ms,easein,3000ms,EEEEB9,FFFFFF,
+Ending_Normal_3,~,,,,,600ms,Ease out,1000ms,,,
+Ending_Normal_4,수도승,누군가 이 적막 너머에서 듣고 있을지 모르겠으나... 허공에나마 이 말을 남기오.,I know not if someone listens beyond this stillness... but I leave these words to the void.,不知寂静彼端是否有人倾听……权且向虚空留下这番话语。,この静寂の向こうで誰かが聞いているかは分からぬが……虚空にせめて、この言葉を残そう。,400ms,easein,3000ms,EEEEB9,FFFFFF,
+Ending_Normal_5,~,,,,,600ms,Ease out,1000ms,,,
+Ending_Normal_6,수도승,"아득한 곳에서, 기어코 나와 끝까지 합(合)을 맞추어주신 분이여.","To you, who matched my breath until the very end from afar. ",在那遥远彼方，始终与我合拍共鸣之人。,遥か遠き場所で、私と最期まで“合”を合わせてくれた御仁よ。,400ms,easein,3000ms,EEEEB9,FFFFFF,
+Ending_Normal_7,~,,,,,600ms,Ease out,1000ms,,,
+Ending_Normal_8,수도승,"그대가 짚어준 단단한 호흡이 아니었다면, 나는 진작 탁류에 휩쓸렸을 것이오.","Had it not been for the steady breath you guided, I would have been swept away by the turbid currents long ago. ",若无你指引的沉稳气息，我早已被卷入浊流之中。,貴殿が導いてくれた確かな呼吸がなければ、私は疾うに濁流へと飲み込まれていただろう。,400ms,easein,3000ms,EEEEB9,FFFFFF,
+Ending_Normal_9,~,,,,,600ms,Ease out,1000ms,,,
+Ending_Normal_10,수도승,나의 육신은 이 공허 속에 영원히 흩어지나...,Though my physical form scatters forever into this void...,纵使我的肉身永远消散于虚无……,我が肉体はこの虚空へと永遠に散りゆくが……,400ms,easein,3000ms,EEEEB9,FFFFFF,
+Ending_Normal_11,~,,,,,600ms,Ease out,1000ms,,,
+Ending_Normal_12,수도승,"그대의 손끝에 남은, 치열하게 부딪혀 온 이 울림만큼은 잊히지 않기를 바라오.",I hope that the resonance of our fierce clash remains at your fingertips.,愿你指尖残留的、那份激烈碰撞的余震，永不磨灭。,貴殿の指先に残る、熾烈にぶつかり合ったこの響きだけは、忘れぬよう願いたい。,400ms,easein,3000ms,EEEEB9,FFFFFF,
+Ending_Normal_13,~,,,,,600ms,Ease out,1000ms,,,
+Ending_Normal_14,수도승, . . . 참으로 고마웠소. 보이지 않는 동행자(同行者)여.,"...My deepest thanks to you, my unseen companion. ",……万分感谢。我那素未谋面的同行者。,……実に感謝している。目に見えぬ同行者よ。,400ms,easein,3000ms,EEEEB9,FFFFFF,
+Ending_Normal_15,X,,,,,2000ms,Ease out,5000ms,,,
+Ending_Normal_16,X,,,,,00ms,Ease out,6000ms,,,
+Ending_Normal_17,X,,,,,00ms,Ease out,7000ms,,,
+Ending_Normal_18,수도승,마침내 만물이 하나의 숨결로 이어지니...,"Finally, all things connect in a single breath. ",万物终归一息。,ついに万物が一つの息吹で繋がる。,600ms,easein,2500ms,EEEEB9,4A4A4A,
 Ending_Normal_19,~,,,,,600ms,Ease out,1000ms,,,
-Ending_Normal_20,수도승,"온전한 조화를 품고자 했던 그 오랜 염원이,","That long-held desire to embrace complete harmony, ",那份渴望拥抱纯粹调和的夙愿，,純然たる調和を抱かんとした、あの長き祈りが、,600ms,Ease out,2000ms,EEEEB9,4A4A4A,
+Ending_Normal_20,수도승,"온전한 조화를 품고자 했던 그 오랜 염원이,","That long-held desire to embrace complete harmony, ",那份渴望拥抱纯粹调和的夙愿，,純然たる調和を抱かんとした、あの長き祈りが、,600ms,easein,2000ms,EEEEB9,4A4A4A,
 Ending_Normal_21,~,,,,,600ms,Ease out,1000ms,,,
-Ending_Normal_22,수도승,이토록 찬란한 극락으로 만개하는구나.,Blooms into such a radiant Pure Land.,竟绽放出如此灿烂的极乐。,これほどまでに燦然たる極楽へと咲き誇るのだな。,600ms,Ease out,2000ms,EEEEB9,4A4A4A,
+Ending_Normal_22,수도승,이토록 찬란한 극락으로 만개하는구나.,Blooms into such a radiant Pure Land.,竟绽放出如此灿烂的极乐。,これほどまでに燦然たる極楽へと咲き誇るのだな。,600ms,easein,2000ms,EEEEB9,4A4A4A,
 Ending_Normal_23,~,,,,,600ms,Ease out,2000ms,,,
-Ending_Normal_24,수도승,나마저 비워내어... 저 조화 속으로 흩어지리라.,Emptying even my soul... I shall flow into that harmony.,我亦将自空而去……散入那调和之中。,私さえも空となり……あの調和の中へと散りゆこう。,1500ms,Ease out,3000ms,EEEEB9,303030,
-Ending_Normal_25,X,,,,,1000ms,Ease out,0ms,,,
-Ending_Normal_26,X,,,,,1ms,Ease out,23000ms,,,
+Ending_Normal_24,수도승,나마저 비워내어... 저 조화 속으로 흩어지리라.,Emptying even my soul... I shall flow into that harmony.,我亦将自空而去……散入那调和之中。,私さえも空となり……あの調和の中へと散りゆこう。,600ms,easein,3000ms,EEEEB9,303030,
+Ending_Normal_25,X,,,,,1500ms,Ease out,0ms,,,
+Ending_Normal_26,X,,,,,1000ms,Ease out,23500ms,,,
 Ending_Start_0,,"이곳을 끝으로,","Here, at last...",此地，便是终点……,ここを最後に、,,,,,,
 Ending_Start_1,,모든 악연의 근원을 베어냈다.,Severed The Origin of all Ill-Fated ties.,斩断了所有宿业的根源。,全ての宿業の根源を断ち切った。,,,,,,
 Ending_Start_2,,이제 끝을 맞이하자.,"Now, let us embrace the end.",迎接终局吧。,さあ、終わりを迎えよう。,,,,,,
