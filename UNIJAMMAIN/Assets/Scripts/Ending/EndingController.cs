@@ -563,8 +563,12 @@ public class EndingController : MonoBehaviour
             // Ease.InOutQuad 속성은 시작할때 느림 -> 중간 빠름 -> 끝날때 느림 을 적용하여 주석의 움직임을 완벽히 모방합니다.
             Sequence scrollSequence = DOTween.Sequence();
 
+            upDark.DOKill(); downDark.DOKill();
+            upDark.sizeDelta = new Vector2(upDark.sizeDelta.x, 200f);
+            downDark.sizeDelta = new Vector2(downDark.sizeDelta.x, 200f);
+
             // 1구간
-            scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY1, duration1).SetEase(scrollEase));
+            scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY1, duration1).SetEase(Ease.OutQuart));
             scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName"));
 
             // 2구간
@@ -581,7 +585,7 @@ public class EndingController : MonoBehaviour
 
             // 5구간 및 엔딩 (사운드 없음)
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY5, duration5).SetEase(scrollEase));
-            scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(scrollEase));
+            scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(Ease.OutSine));
 
             // 암전 해제 (Join은 이전 Append와 동시에 실행됨)
             scrollSequence.Join(upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 0), durationEnd).SetEase(Ease.InOutQuad));
@@ -591,6 +595,8 @@ public class EndingController : MonoBehaviour
             // 시퀀스가 끝날 때까지 대기
             await scrollSequence.ToUniTask();
         }
+
+
         else
         {
             Debug.LogWarning("인스펙터 창에서 Scroll Target이 비어있어 상승 연출을 재생할 수 없습니다.");
@@ -1109,16 +1115,18 @@ public class EndingController : MonoBehaviour
         Managers.Sound.Play("SFX/Ending/Deukdo");
         await UniTask.Delay(TimeSpan.FromSeconds(2f));
 
+
+
         // HighLightLogo alpha값 1로 바꾸기 
-        
         image_HighLightLogo.DOFade(1f, 0f);
 
         // 잠시 대기 (예: 2초)
         await UniTask.Delay(TimeSpan.FromSeconds(7f));
 
-        // AllBlackPanel alpha값 1로 바꾸기
-        image_AllBlackPanel.DOFade(1f, 0f);
-
+        image_AllBlackPanel.DOFade(1f, 7.0f).SetEase(Ease.InOutQuad);
+        //// AllBlackPanel alpha값 1로 바꾸기
+        //image_AllBlackPanel.DOFade(1f, 0f);
+        await UniTask.Delay(TimeSpan.FromSeconds(2.5f));
         CheckFirstClearSteamAchievement();
 
         await UniTask.Delay(TimeSpan.FromSeconds(7f));

@@ -38,11 +38,11 @@ Ending_Talk_33,X,,,,,2500ms,Ease out,1000ms,,,FALSE,->34,34프레임부터 20초
 Ending_UpTalk_0,X,,,,,0ms,Ease out,0ms,,,,->1,"텍스트 가독성을 위한, 큰 구름이 화면 밖에서,
 화면 하단 구역으로 올라가는 장면(->1)"
 Ending_UpTalk_1,X,,,,,0ms,Ease out,4000ms,,,,->2,
-Ending_UpTalk_2,수도승,구름 위에서 내려다본 세상은 이토록 고요하구나.,How silent the world looks from above the clouds.,云端之下的世界竟如此寂静。,雲の上から見下ろす世界は、これほどまでに静かなのだな。,500ms,Ease out,2000ms,EEEEB9,4A4A4A,,->3,
+Ending_UpTalk_2,수도승,저 아래의 소란조차... 이곳에서는 한 폭의 아득한 풍경이로구나.,Even the faint echoes of the world below... are but a distant landscape from here.,凡尘微响，在此处听来，也不过是融进风景的一丝余音。,下界の微かな響きさえ……ここでは遠く霞む景色の一部に過ぎぬ。,500ms,Ease out,2000ms,EEEEB9,4A4A4A,,->3,
 Ending_UpTalk_3,~,,,,,400ms,Ease out,1000ms,,,,->4,
-Ending_UpTalk_4,수도승,"세상을 뒤덮던 부조화도, 결국 저 거대한 침묵 속의 작은 파음이었을 뿐.",Even the Disharmony that shrouded the world was but a faint dissonance within this vast silence.,曾笼罩世间的“不调和”，终究不过是这宏大沉静中的一丝微弱破音。,世を覆っていた“不調和”も、結局はこの広大な沈黙の中に響く小さな破音に過ぎなかった。,400ms,Ease out,3000ms,EEEEB9,4A4A4A,,->5,
+Ending_UpTalk_4,수도승,이 거대한 흐름에 둑을 쌓으려... 나는 그토록 핏대를 세웠던가.,"Did I strain so fiercely... just to stem this vast, eternal flow?",曾试图阻挡这宏大的洪流……我竟是如此地执迷없悟。,この巨大な流れを堰き止めようと……私はあんなにも躍起になっていたのか。,400ms,Ease out,3000ms,EEEEB9,4A4A4A,,->5,
 Ending_UpTalk_5,~,,,,,400ms,Ease out,1000ms,,,,->6,
-Ending_UpTalk_6,수도승,"이토록 덧없이 흘러갈 것들을... 인간들은, 아니 나조차도 왜 그리 꽉 쥐고 놓지 못했던가.","Why did humans—nay, even I—grasp so tightly onto things that flow so fleetingly? ",如此转瞬即逝之物……世人、乃至我，为何曾死死攥住不愿放手？,これほど儚く流れゆくものを……人々は、いや私でさえ、なぜあんなにも握りしめて離せなかったのか。,400ms,Ease out,3000ms,EEEEB9,4A4A4A,,->7,
+Ending_UpTalk_6,수도승,참으로 아둔하고 뜨거웠던 생. 이제 그 명분이 다하니 비로소 육신이 허물어지는구나.,"A life so foolish, yet so fervent. Now that my Calling is fulfilled, my mortal shell finally withers.",真是愚钝而又热烈的一生。如今使命已尽，这具肉身终归要消散了。,"実にもどかしく、熱き生であった。使命を果たし, ようやくこの身も朽ちていくのだな。",400ms,Ease out,3000ms,EEEEB9,4A4A4A,,->7,
 Ending_UpTalk_7,X,,,,,400ms,Ease out,00ms,,,,->8,"구름 내려가면서, 어두운 화면 페이드인"
 Ending_UpTalk_8,X,,,,,2000ms,Ease out,00ms,,,,->9,"[뒤틀리는 연출]
 1000ms에 걸쳐서, Ease Out으로
