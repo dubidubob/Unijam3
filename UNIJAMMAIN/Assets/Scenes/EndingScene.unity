@@ -1278,7 +1278,7 @@ MonoBehaviour:
   content_Text: {fileID: 172155723}
   impact_Content_Text: {fileID: 1590620095}
   scrollTarget: {fileID: 1062570298}
-  scrollEase: 18
+  scrollEase: 4
   startPosY: 4747
   targetPosY1: 3100
   duration1: 3.4

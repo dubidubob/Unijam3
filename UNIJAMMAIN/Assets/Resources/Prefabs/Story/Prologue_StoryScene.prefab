@@ -1222,6 +1222,26 @@ PrefabInstance:
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 1256673207610943137, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256673207610943137, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256673207610943137, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
+      propertyPath: m_Color.b
+      value: 0.49803925
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256673207610943137, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
+      propertyPath: m_Color.g
+      value: 0.49803925
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256673207610943137, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
+      propertyPath: m_Color.r
+      value: 0.49803925
+      objectReference: {fileID: 0}
     - target: {fileID: 1775535608553604644, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1316,7 +1336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2630843551951615991, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
       propertyPath: m_Name
-      value: Ending_StoryCanvas Variant
+      value: Prologue_StoryScene
       objectReference: {fileID: 0}
     - target: {fileID: 2718885073153714106, guid: 4326a99e201c55847b35afcdd292a399, type: 3}
       propertyPath: m_LocalScale.x
