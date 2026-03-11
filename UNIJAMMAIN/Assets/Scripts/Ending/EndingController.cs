@@ -524,7 +524,7 @@ public class EndingController : MonoBehaviour
         PlayEndingSequence_Part2().Forget();
     }
 
-    private async UniTask PlayEndingSequence_Part2()
+    public async UniTask PlayEndingSequence_Part2()
     {
         Debug.Log("엔딩 시퀀스 2 시작!");
         content_Text.GetComponent<RectTransform>().DOAnchorPosY(textPosY, 0);

@@ -89,13 +89,23 @@ public class MainScene : UI_Popup
 
     private void Start()
     {
+        // ★ 1. 이전 씬에서 일시정지(0)된 상태로 넘어왔을 수 있으므로 무조건 1로 초기화!
+        Time.timeScale = 1f;
         originalMaterial = tmpText[0].fontSharedMaterial;
         originalPositions = new Vector2[buttonsTransform.Length];
         for (int i = 0; i < buttonsTransform.Length; i++)
         {
             originalPositions[i] = buttonsTransform[i].anchoredPosition;
         }
-        ActionGamesLogo().Forget();
+        if (IngameData._wastSceneName == "StageScene"||IngameData._wastSceneName=="EndingScene")
+        {
+            Debug.Log("로고스킵");
+            ActionLogo().Forget();
+        }
+        else
+        {
+            ActionGamesLogo().Forget();
+        }
 
         Debug.Log(IngameData._isStoryCompleteClear);
 
@@ -156,7 +166,12 @@ public class MainScene : UI_Popup
 
     private async UniTask ActionLogo()
     {
-   
+        // ★ 핵심 추가: UI 캔버스가 레이아웃을 계산할 수 있도록 딱 한 프레임만 대기!
+        await UniTask.Yield(PlayerLoopTiming.Update);
+
+        StartCoroutine(NotifyManagerWhenReady());
+      
+
 
         Managers.Sound.Play("SFX/UI/SettingCredit_V2", Define.Sound.SFX);
 
@@ -211,7 +226,7 @@ public class MainScene : UI_Popup
         // PlayBrushFillAnimation();
         AnimateToStartText();
 
-        StartCoroutine(NotifyManagerWhenReady());
+      
     }
 
     private IEnumerator NotifyManagerWhenReady()
@@ -319,6 +334,7 @@ public class MainScene : UI_Popup
         GetButton((int)Buttons.StartToClick).gameObject.AddUIEvent(EnterToStartClicked);
         Image_LogoUp.SetNativeSize();
         Image_LogoDown.SetNativeSize();
+
     }
 
     public void EnterToStartClicked(PointerEventData eventData)

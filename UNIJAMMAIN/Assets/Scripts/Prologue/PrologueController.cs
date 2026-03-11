@@ -6,7 +6,7 @@ using DG.Tweening;
 using Cysharp.Threading.Tasks;
 using System.IO;
 using System;
-
+using TMPro;
 // 프롤로그/텍스트 데이터 한 줄을 담을 클래스
 public class PrologueAction
 {
@@ -34,8 +34,8 @@ public class PrologueAction
 public class PrologueController : MonoBehaviour
 {
     [Header("UI Connects")]
-    [SerializeField] private Text speakerName_Text; // 화자 이름 텍스트
-    [SerializeField] private Text content_Text;     // 프롤로그 대사 텍스트
+    [SerializeField] private TMP_Text speakerName_Text; // 화자 이름 텍스트
+    [SerializeField] private TMP_Text content_Text;     // 프롤로그 대사 텍스트
     [SerializeField] private Image dimmenel_Panel;
 
     [Header("Sequences (Inspector에서 할당)")]
@@ -52,6 +52,7 @@ public class PrologueController : MonoBehaviour
     {
         { "수도승", "Speaker_Name_Sudo" },
         { "스승님", "Speaker_Name_Master" },
+        {"상인","Speaker_Name_Merchant" },
         // 필요에 따라 화자를 계속 추가하세요.
     };
 
@@ -299,15 +300,15 @@ public class PrologueController : MonoBehaviour
                 // 3. Width를 1400으로 변경 (Height는 기존 값 유지)
                 rect.sizeDelta = new Vector2(1400f, rect.sizeDelta.y);
 
-                // 4. 텍스트 정렬을 정중앙(Middle Center)으로 변경
-                content_Text.alignment = TextAnchor.MiddleCenter;
+                // 4. 텍스트 정렬을 정중앙(Center)으로 변경 (TextMeshPro 기준)
+                content_Text.alignment = TextAlignmentOptions.Center;
             }
 
             string localizedContent = string.IsNullOrEmpty(action.key) ? "" : LocalizationManager.Get(action.key);
 
             // 화자 매핑
             string locSpeakerKey = speakerKeyMap.ContainsKey(action.speaker) ? speakerKeyMap[action.speaker] : "";
-            string localizedName = string.IsNullOrEmpty(locSpeakerKey) ? "" : LocalizationManager.Get(locSpeakerKey);
+            string localizedName = LocalizedStringKey(action);
 
             bool isTextEmpty = string.IsNullOrWhiteSpace(localizedContent) || localizedContent == "X" || localizedContent == "~";
 
@@ -588,5 +589,38 @@ public class PrologueController : MonoBehaviour
         Debug.Log("Action_StartMapMove_2 연출 완료");
     }
     #endregion
+
+
+    private string LocalizedStringKey(PrologueAction action)
+    {
+        // 1. 공백이나 숨겨진 문자 완벽 제거
+        string originalSpeaker = action.speaker != null ? action.speaker.Trim() : "";
+        string locSpeakerKey = "";
+        Debug.Log($"말하는사람 -> {action.speaker}");
+
+        // 2. 한글 이름에 맞춰 로컬라이즈 키값 수동 매핑 (원하시는 직관적인 방식)
+        switch (originalSpeaker)
+        {
+            case "수도승":
+                locSpeakerKey = "Speaker_Name_Sudo";
+                break;
+            case "스승님":
+            case "스승": // 기획 데이터 오타 대비
+                locSpeakerKey = "Speaker_Name_Master";
+                break;
+            case "상인":
+                locSpeakerKey = "Speaker_Name_Merchant";
+                break;
+            default:
+                // 매핑되지 않은 값이면 빈칸 처리하거나 그대로 둠
+                locSpeakerKey = originalSpeaker;
+                break;
+        }
+
+        Debug.Log($"로컬된 키 -> {locSpeakerKey}");
+        // 3. 변환된 키값으로 LocalizationManager 호출
+        string localizedName = string.IsNullOrEmpty(locSpeakerKey) ? "" : LocalizationManager.Get(locSpeakerKey);
+        return localizedName;
+    }
     #endregion
 }

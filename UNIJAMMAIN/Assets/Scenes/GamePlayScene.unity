@@ -7562,6 +7562,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 210544442}
     - target: {fileID: 4639520216720240912, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1321278183
+      objectReference: {fileID: 0}
+    - target: {fileID: 4639520216720240912, guid: 86d92bf7dce7eb04195cabf019f04b91, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}

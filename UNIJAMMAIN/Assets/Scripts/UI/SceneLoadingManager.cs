@@ -68,8 +68,9 @@ public class SceneLoadingManager : UI_Base
     {
         // 만약 이미 로딩 중이라면, 또 LoadScene을 실행하지 않고 즉시 종료합니다.
         if (IsLoading) return;
-
-
+        IngameData._wastSceneName = IngameData._currentSceneName;
+        IngameData._currentSceneName = sceneName;
+    
         // 씬이 이동할때마다 데이터 저장
         IngameData.SaveGameData();
         // UniTask 비동기 실행 (Fire and Forget)

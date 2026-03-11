@@ -15,6 +15,8 @@ public static class IngameData
     [Range(-0.2f, 0.2f)] public static float sinkTimer =0; // 노래를 빨리 재생시키거나 늦게재생시키는 타이머, 늦게 재생시키면 몬스터가 더 빨리옴.
 
 
+    public static string _currentSceneName;
+    public static string _wastSceneName;
     public static bool Pause { set; get; }
     private static double beatInterval;
     public static bool IsStart = false;

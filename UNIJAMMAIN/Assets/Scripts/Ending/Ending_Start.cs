@@ -28,7 +28,9 @@ public class Ending_Start : MonoBehaviour
         if (!isClickable) return; // 연출이 끝  나야 클릭 가능
         isClickable = false;      // 한 번 클릭되면 다시 클릭되지 않도록 처리
 
+
         endingController.PlayEndingSequence().Forget();
+        //  endingController.PlayEndingSequence_Part2().Forget();
     }
 
     public void ConnectWithController(EndingController controller)
