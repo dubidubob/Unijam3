@@ -34,7 +34,7 @@ Ending_Talk_29,X,,,,,400ms,Ease out,1000ms,,,TRUE
 Ending_Talk_30,수도승,욕망에 휘둘리지 않고 중심을 잡는 것.,To hold one's ground without being swayed by desire.,不为欲念所动，守住本心。,欲に振り回されず、芯を保つこと。,500ms,easein,2000ms,EEEEB9,FFFFFF,FALSE
 Ending_Talk_31,~,,,,,400ms,Ease out,1000ms,,,FALSE
 Ending_Talk_32,수도승,나는 그 길을... 계속해서 두드려 나갈 뿐이다.,I shall forge this path... that is all.,我将在这条道路上……不断砥砺，仅此而已。,私はその道を……ただ切り拓いていくのみ。,400ms,easein,3000ms,EEEEB9,FFFFFF,FALSE
-Ending_Talk_33,X,,,,,4000ms,Ease out,1000ms,,,FALSE
+Ending_Talk_33,X,,,,,3800ms,Ease out,1000ms,,,FALSE
 Ending_UpTalk_0,X,,,,,0ms,Ease out,2000ms,,,
 Ending_UpTalk_1,X,,,,,0ms,Ease out,2000ms,,,
 Ending_UpTalk_2,수도승,저 아래의 소란조차... 이곳에서는 한 폭의 아득한 풍경이로구나.,Even the faint echoes of the world below... are but a distant landscape from here.,凡尘微响，在此处听来，也不过是融进风景的一丝余音。,下界の微かな響きさえ……ここでは遠く霞む景色の一部に過ぎぬ。,500ms,easein,2000ms,EEEEB9,4A4A4A,

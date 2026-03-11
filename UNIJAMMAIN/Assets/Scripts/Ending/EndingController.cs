@@ -154,10 +154,6 @@ public class EndingController : MonoBehaviour
         {
             // 1. 일단 새로운 입자 생성을 중단 (StopEmitting)
             particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-
-            // 2. [선택 사항] 이미 화면에 있는 입자들을 서서히 투명하게 만들고 싶다면 아래 로직 추가
-            // 만약 파티클 메테리얼이 지원한다면, DOTween으로 통째로 알파를 깎을 수도 있지만
-            // 보통은 StopEmitting만 해도 남은 입자들이 수명이 다해 자연스럽게 사라집니다.
         }
 
         // 만약 '뚝' 끊기는 느낌이 강하다면, 
@@ -381,11 +377,34 @@ public class EndingController : MonoBehaviour
             // [여기에 추가하세요!] 33번 프레임 진입 즉시 영화 연출 시작
             if (action.index == 33)
             {
-                // action.conversion 시간(예: 2.5초) 동안 박스가 내려오고 배경이 꺼집니다.
-                upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 300f), action.conversion).SetEase(Ease.OutQuad);
-                downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 300f), action.conversion).SetEase(Ease.OutQuad);
-                backGround.DOFade(0, action.conversion).SetEase(Ease.OutQuad);
+                // 1. 배경은 즉시 밝아지기 시작 (action.conversion 시간 동안)
+                backGround.DOKill();
+                backGround.DOFade(0, action.conversion).SetEase(Ease.InOutQuad); // Linear로 은은하게
+
+                lineImage.DOKill();
                 lineImage.DOFade(0, action.conversion);
+
+                // 2. [핵심] 박스는 배경이 어느 정도 밝아진 '후에' 내려오기 시작
+                // 예: 전체 시간의 40%가 지났을 때부터 박스가 움직입니다.
+                float boxDelay = action.conversion * 0.4f;
+                float boxDuration = action.conversion - boxDelay; // 남은 시간 동안 빠르게 챡!
+
+                upDark.DOKill();
+                downDark.DOKill();
+
+                upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 300f), boxDuration)
+                      .SetDelay(boxDelay) // 여기서 '조금 이따가'를 구현합니다
+                      .SetEase(Ease.OutQuad);
+
+                downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 300f), boxDuration)
+                        .SetDelay(boxDelay)
+                        .SetEase(Ease.OutQuad);
+
+                //// action.conversion 시간(예: 2.5초) 동안 박스가 내려오고 배경이 꺼집니다.
+                //upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 300f), action.conversion).SetEase(Ease.OutQuad);
+                //downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 300f), action.conversion).SetEase(Ease.OutQuad);
+                //backGround.DOFade(0, action.conversion).SetEase(Ease.OutQuad);
+                //lineImage.DOFade(0, action.conversion);
             }
             // =========================================================
 
@@ -618,9 +637,10 @@ public class EndingController : MonoBehaviour
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY4, duration4).SetEase(scrollEase));
             scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName"));
 
+
             // 5구간 및 엔딩 (사운드 없음)
-            scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY5, duration5).SetEase(scrollEase));
-            scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(scrollEase));
+            scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY5, duration5).SetEase(Ease.InOutQuad));
+            scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(Ease.InOutQuad));
 
             // 암전 해제 (Join은 이전 Append와 동시에 실행됨)
             scrollSequence.Join(upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 0), durationEnd).SetEase(Ease.InOutQuad));
@@ -1122,14 +1142,14 @@ public class EndingController : MonoBehaviour
                     // [음악 시작]
                     Managers.Sound.Play("BGM/EndingTheme2_V2", Define.Sound.BGM, 1, 1, false);
                     AudioSource nextBgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
-                    if (nextBgm != null)
-                    {
-                        nextBgm.DOKill();
-                        float targetVol = BGMController.CurrentVolumeBGM;
-                        nextBgm.volume = 0f; // 0에서 시작해서
-                        // 화면과 똑같이 effectTime16 동안 페이드인
-                        nextBgm.DOFade(targetVol, effectTime16).SetEase(Ease.InOutQuad);
-                    }
+                    //if (nextBgm != null)
+                    //{
+                    //    nextBgm.DOKill();
+                    //    float targetVol = BGMController.CurrentVolumeBGM;
+                    //    nextBgm.volume = 0f; // 0에서 시작해서
+                    //    // 화면과 똑같이 effectTime16 동안 페이드인
+                    //    nextBgm.DOFade(targetVol, effectTime16).SetEase(Ease.InOutQuad);
+                    //}
 
                     // [화면 시작] 음악과 동시에 실행되도록 await 없이 바로 아래 배치
                     canvasGroup_NormalEnding.DOKill();
@@ -1398,10 +1418,28 @@ public class EndingController : MonoBehaviour
     {
         if (index == 0)
         {
-            // 2. 구름 오브젝트 Alpha(투명도) 1로 변환하면서 나타나기
-            cloudObject.GetComponent<Image>().DOFade(1f, cloudUpTime)
-                 .SetEase(Ease.OutQuad);
-            content_Text.GetComponent<RectTransform>().DOAnchorPosY(-400, 0);
+            // === [구름 나타나며 올라오기] ===
+            RectTransform cloudRect = cloudObject.GetComponent<RectTransform>();
+            Image cloudImg = cloudObject.GetComponent<Image>();
+
+            if (cloudRect != null && cloudImg != null)
+            {
+                // 1. 초기 위치 설정 (화면 아래)
+                cloudRect.anchoredPosition = new Vector2(cloudRect.anchoredPosition.x, -1500f);
+
+                // 2. 투명도 0에서 1로 (이미 투명하다면 생략 가능)
+                cloudImg.color = new Color(1, 1, 1, 0);
+                cloudImg.DOFade(1f, cloudUpTime).SetEase(Ease.OutQuad);
+
+                // 3. 위로 올라오기 (인스펙터의 cloudUpTime 사용)
+                // 목표 위치는 -1100f 혹은 적절한 위치로 설정
+                await cloudRect.DOAnchorPosY(-1180f, cloudUpTime)
+                    .SetEase(Ease.OutQuad)
+                    .ToUniTask();
+            }
+
+            // 4. 텍스트 위치 설정 (인스펙터의 textPosY 사용)
+            content_Text.GetComponent<RectTransform>().DOAnchorPosY(textPosY, 0);
         }
 
         if (index == 7)
@@ -1421,35 +1459,71 @@ public class EndingController : MonoBehaviour
         {
             if (image_UpDarkBackGround != null)
             {
-                // 1. Pivot이 정중앙(0.5, 0.5)인지 확인하세요.
-                // 2. Scale을 1.3f보다 조금 더 크게 잡아 여백을 방지합니다.
                 var rt = image_UpDarkBackGround.rectTransform;
+                var mainSequence = DOTween.Sequence();
 
-                // 시퀀스를 사용하여 부드럽게 연결
-                var sequence = DOTween.Sequence();
+                // 설정하신 최종 목적지 값
+                float finalScale = 1.3f;
+                float finalRotate = -6.7f; // 뒤틀리는 방향에 따라 6.7f 또는 -6.7f 선택
 
-                // 1. 시간을 0.2f에서 1.0f(1000ms)로 대폭 늘립니다.
-                // 2. Ease.OutBack을 사용하여 목표치보다 살짝 더 커졌다가 '탱~' 하고 돌아오는 탄성을 줍니다.
-                // 3. 회전과 확대를 동시에 진행하여 "뒤틀리며 빨려 들어가는" 느낌을 줍니다.
+                // --- 1. 스케일 체인 (총 1.0초) ---
+                var scaleChain = DOTween.Sequence();
+                scaleChain.Append(rt.DOScale(new Vector3(1.4f, 1.4f, 1f), 0.35f).SetEase(Ease.OutQuart)); // 1.3보다 크게 팍!
+                scaleChain.Append(rt.DOScale(new Vector3(1.25f, 1.25f, 1f), 0.30f).SetEase(Ease.InOutQuad)); // 반탄력으로 작게 튕김
+                scaleChain.Append(rt.DOScale(new Vector3(finalScale, finalScale, 1f), 0.35f).SetEase(Ease.OutCubic)); // 1.3으로 안착
 
-                sequence.Join(rt.DOScale(new Vector3(1.35f, 1.35f, 1f), 1.0f)
-                    .SetEase(Ease.OutBack)); // 쫀득한 확대
+                // --- 2. 회전 체인 (총 1.0초) ---
+                var rotateChain = DOTween.Sequence();
+                rotateChain.Append(rt.DORotate(new Vector3(0, 0, finalRotate * 1.4f), 0.35f).SetEase(Ease.OutQuart)); // 6.7도보다 더 돌림
+                rotateChain.Append(rt.DORotate(new Vector3(0, 0, finalRotate * 0.8f), 0.30f).SetEase(Ease.InOutQuad)); // 반대 방향 튕김
+                rotateChain.Append(rt.DORotate(new Vector3(0, 0, finalRotate), 0.35f).SetEase(Ease.OutCubic)); // 6.7도로 안착
 
-                sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 1.0f)
-                    .SetEase(Ease.OutBack)); // 쫀득한 회전
+                // === 병렬 실행 ===
+                mainSequence.Join(scaleChain);
+                mainSequence.Join(rotateChain);
 
-                //// 동시에 실행
-                //sequence.Join(rt.DOScale(1.4f, 0.2f).SetEase(Ease.OutQuad));
-                //sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 0.2f).SetEase(Ease.OutBack));
-
-                await sequence.AsyncWaitForCompletion();
+                await mainSequence.AsyncWaitForCompletion();
             }
+
+            //if (image_UpDarkBackGround != null)
+            //{
+            //    // 1. Pivot이 정중앙(0.5, 0.5)인지 확인하세요.
+            //    // 2. Scale을 1.3f보다 조금 더 크게 잡아 여백을 방지합니다.
+            //    var rt = image_UpDarkBackGround.rectTransform;
+
+            //    // 시퀀스를 사용하여 부드럽게 연결
+            //    var sequence = DOTween.Sequence();
+
+            //    // 1. 확대는 즉시 시작
+            //    sequence.Join(rt.DOScale(new Vector3(1.35f, 1.35f, 1f), 1.0f).SetEase(Ease.OutBack));
+
+            //    // 2. 회전은 0.1초 뒤에 시작 (SetDelay 사용)
+            //    sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 1.0f)
+            //        .SetEase(Ease.OutBack)
+            //        .SetDelay(0.1f)); // 이 짧은 차이가 '뒤틀림'의 손맛을 만듭니다.
+
+            //    // 1. 시간을 0.2f에서 1.0f(1000ms)로 대폭 늘립니다.
+            //    // 2. Ease.OutBack을 사용하여 목표치보다 살짝 더 커졌다가 '탱~' 하고 돌아오는 탄성을 줍니다.
+            //    // 3. 회전과 확대를 동시에 진행하여 "뒤틀리며 빨려 들어가는" 느낌을 줍니다.
+
+            //    //sequence.Join(rt.DOScale(new Vector3(1.35f, 1.35f, 1f), 1.0f)
+            //    //    .SetEase(Ease.OutBack)); // 쫀득한 확대
+
+            //    //sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 1.0f)
+            //    //    .SetEase(Ease.OutBack)); // 쫀득한 회전
+
+            //    //// 동시에 실행
+            //    //sequence.Join(rt.DOScale(1.4f, 0.2f).SetEase(Ease.OutQuad));
+            //    //sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 0.2f).SetEase(Ease.OutBack));
+
+            //    await sequence.AsyncWaitForCompletion();
+            //}
         }
         else if (index == 9)
         {
             // [최종 연출: 확대 + 눈 감기]
 
-            await UniTask.WaitForSeconds(0.3f);
+            //await UniTask.WaitForSeconds(0.3f);
             // 1. 16.3초 동안 화면이 점점 Linear 확대되는 애니메이션
             if (image_UpDarkBackGround != null)
             {
