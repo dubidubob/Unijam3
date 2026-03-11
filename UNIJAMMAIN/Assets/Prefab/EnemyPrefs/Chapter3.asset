@@ -62,7 +62,7 @@ MonoBehaviour:
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 3
-          characterData: {fileID: 0}
+          characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
           dir: 0
         - textContents:
           - "\uC2A4\uC2B9\uB2D8\uBCF4\uB2E4 \uBB34\uAC81\uB2E4\uB294 \uAC83\uC744
@@ -78,7 +78,7 @@ MonoBehaviour:
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 5
-          characterData: {fileID: 0}
+          characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
           dir: 0
     - rid: 8813260913744019459
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
@@ -91,6 +91,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -113,6 +116,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -159,7 +165,7 @@ MonoBehaviour:
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
-          characterData: {fileID: 0}
+          characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
           dir: 0
         - textContents:
           - "\uC2DC\uC791\uC774.. \uBC18\uC774\uC57C. \uB450\uB824\uC6CC\uD558\uC9C0
@@ -175,7 +181,7 @@ MonoBehaviour:
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 3
-          characterData: {fileID: 0}
+          characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
           dir: 0
     - rid: 8813261245056811011
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
@@ -188,6 +194,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -220,6 +229,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -253,24 +265,7 @@ MonoBehaviour:
         extensionCreateBeat: 0
         steps:
         - textContents:
-          - "\uC815\uC2E0\uC744 \uBABB \uCC28\uB9AC\uACA0\uC5B4. \uC0DD\uAC01\uACFC
-            \uB3D9\uC791\uC774 \uBC18\uB300\uB85C \uC6C0\uC9C1\uC5EC! "
-          localizedTextContents:
-          - m_TableReference:
-              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
-            m_TableEntryReference:
-              m_KeyId: 846767270948882
-              m_Key: 
-            m_FallbackState: 0
-            m_WaitForCompletion: 0
-            m_LocalVariables: []
-          monsterCutline: 0
-          delayBeat: 3
-          characterData: {fileID: 0}
-          dir: 0
-        - textContents:
-          - "\uC67C\uCABD\uC774 \uC624\uB978\uCABD, \uC624\uB978\uCABD\uC774 \uC67C\uCABD!
-            \uC5B4?"
+          - "\uAC15\uC790\uC758 \uC774\uCE58\uB85C \uB124 \uB208\uC55E\uC744 \uB4A4\uC9D1\uC5B4\uC8FC\uB9C8."
           localizedTextContents:
           - m_TableReference:
               m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
@@ -281,9 +276,25 @@ MonoBehaviour:
             m_WaitForCompletion: 0
             m_LocalVariables: []
           monsterCutline: 0
+          delayBeat: 3
+          characterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
+          dir: 1
+        - textContents:
+          - "\uC88C\uC6B0\uAC00 \uB4A4\uBC14\uB010 \uC138\uC0C1 \uC18D\uC5D0\uC11C\uB3C4
+            \uAE38\uC744 \uBC1D\uD790 \uC218 \uC788\uACA0\uB290\uB0D0?"
+          localizedTextContents:
+          - m_TableReference:
+              m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
+            m_TableEntryReference:
+              m_KeyId: 846767270948884
+              m_Key: 
+            m_FallbackState: 0
+            m_WaitForCompletion: 0
+            m_LocalVariables: []
+          monsterCutline: 0
           delayBeat: 4
-          characterData: {fileID: 0}
-          dir: 0
+          characterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
+          dir: 1
     - rid: 8813261245056811018
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -295,6 +306,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas: []
     - rid: 9186972792796479490
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
@@ -313,14 +327,14 @@ MonoBehaviour:
           - m_TableReference:
               m_TableCollectionName: GUID:f68a5f249762c2b4a9833b0311d64148
             m_TableEntryReference:
-              m_KeyId: 846767270948884
+              m_KeyId: 6953233644650496
               m_Key: 
             m_FallbackState: 0
             m_WaitForCompletion: 0
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
-          characterData: {fileID: 0}
+          characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
           dir: 0
     - rid: 9186972792796479491
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
@@ -333,6 +347,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -355,6 +372,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -377,6 +397,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -399,6 +422,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas: []
     - rid: 9186972794462404612
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
@@ -411,6 +437,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 1
@@ -433,6 +462,9 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
+        isStretchWindow: 0
+        stretchX_rate: 0
+        stretchY_rate: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0

@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.4392157}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3103,6 +3103,8 @@ MonoBehaviour:
   sprite_Ending_Brush: {fileID: 21300000, guid: 2e567d20fdd14244791b9fdc4a07795e, type: 3}
   sprite_Ending_YinYang: {fileID: 21300000, guid: ed9bcbf4179094541a8e656eaba14d85, type: 3}
   rect_YinYangContainer: {fileID: 6902756341131225376}
+  sprite_Ending_Monster1: {fileID: 0}
+  sprite_Ending_Monster2: {fileID: 0}
 --- !u!114 &8198784162413686288
 MonoBehaviour:
   m_ObjectHideFlags: 0

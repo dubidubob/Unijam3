@@ -1673,6 +1673,7 @@ MonoBehaviour:
   resultTxt: {fileID: 907363134}
   resultScore: {fileID: 600977480}
   newEventUnlockTxt: {fileID: 0}
+  smallInfo_Text: {fileID: 0}
   resultNewRecordImg: {fileID: 0}
   rankUI:
   - cutline: 95

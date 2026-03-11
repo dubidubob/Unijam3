@@ -93,6 +93,9 @@ public class PhaseController : MonoBehaviour
 
         SetStageTimerInitialize();
         Managers.Game.GameStart();
+
+
+        //EndChapter();//씬넘어가기테스트
         // UniTask 실행 (Start는 void이므로 async void 대신 Forget() 패턴 사용 권장)
         RunChapter().Forget();
        
@@ -116,9 +119,10 @@ public class PhaseController : MonoBehaviour
     {   
         // 토큰 획득 (이 스크립트가 파괴되면 await 중인 작업들이 캔슬됨)
         var token = this.GetCancellationTokenOnDestroy();
-
-        // 게임 안정화 로딩
-        await GameInitLoading(token);
+        try
+        {
+            // 게임 안정화 로딩
+            await GameInitLoading(token);
 
        
         IngameData.IsStart = true;
@@ -280,6 +284,17 @@ public class PhaseController : MonoBehaviour
         await UniTask.WaitUntil(() => beatClock._tick >= targetTick, cancellationToken: token);
 
         EndChapter();
+        }
+        catch (OperationCanceledException)
+        {
+            // 씬이 넘어가거나 오브젝트가 파괴되어 정상적으로 취소된 경우
+            Debug.Log("RunChapter 캔슬됨 (정상적인 씬 이동 등)");
+        }
+        catch (Exception ex)
+        {
+            // ★ UniTaskVoid가 조용히 삼켜버리던 에러를 강제로 뱉어냄
+            Debug.LogError($"[RunChapter 알 수 없는 에러로 진행 멈춤] : {ex.Message}\n{ex.StackTrace}");
+        }
     }
 
     private void HandleFlipKeyEvent(PhaseEvent phaseEvent, float delaySec)
@@ -401,14 +416,16 @@ public class PhaseController : MonoBehaviour
 
     private void SetStageIndex(int index)
     {
+        if(IngameData.boolPracticeMode) // 연습모드라면 나간다
+        {
+            return;
+        }
+
         if(IngameData.isEventStage) // 이벤트 스테이지라면 갱신하지 않는다.
         {
             return;
         }
-        if(IngameData._nowStageIndex==7)
-        {
-            IngameData._isStoryCompleteClear = true;
-        }
+
         
 
         int minMaxStage_nowStageIndexPlus = Mathf.Min(IngameData._nowStageIndex+1, 7); // 7보다 초과되면(최대스테이지라면) 7로
@@ -673,6 +690,8 @@ public class PhaseController : MonoBehaviour
         // 오디오/물리 엔진이 안정화될 때까지 짧게 대기 
         //    ignoreTimeScale: true로 설정하여 퍼즈 상태에서도 흐르게 함
         await UniTask.Delay(TimeSpan.FromSeconds(0.5f), ignoreTimeScale: true, cancellationToken: token);
+        Debug.LogWarning($"{Managers.Game} 과 {Managers.Game.beatClock}");
+ 
 
         PauseManager.ControlTime(false);
 

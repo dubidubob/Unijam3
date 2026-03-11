@@ -27,6 +27,9 @@ public class Knockback
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
 {
+    // [추가] 커스텀 이동(DOTween)이 끝났는지 체크하는 플래그
+    private bool _isCustomMoveFinished = false;
+
     private GamePlayDefine.WASDType enemyType;
 
     private Vector3 playerPos = Vector3.zero;
@@ -73,7 +76,7 @@ public class MovingEnemy : MonoBehaviour
         isKnockbacked = false;
         isDead = false;
         isKnockbackActive = false; // 넉백 상태 초기화 필수
-
+        _isCustomMoveFinished = false; // [추가] 스폰 시 이동 미완료 상태로 초기화
         if (monsterImg != null) // 몬스터의 색깔 조정
         {
            
@@ -136,11 +139,13 @@ public class MovingEnemy : MonoBehaviour
         ProcessDeath(_cts.Token).Forget();
     }
 
+    // [수정] KillingDO 메서드
     private void KillingDO()
     {
         DOTween.Kill(transform, "FIFO");
         DOTween.Kill(transform, "Speeding");
-        // Hiding 트윈도 킬
+        DOTween.Kill(transform, "FIFOSlow");
+        DOTween.Kill(transform, "3Tempo"); // [추가] 3템포 트윈 킬
         monsterImg.DOKill();
     }
 
@@ -229,6 +234,13 @@ public class MovingEnemy : MonoBehaviour
             case Define.MonsterType.WASD_SmoothDash:
                 EnableSmoothDash(_cts.Token).Forget();
                 break;
+            case Define.MonsterType.WASDFIFO_Slow:
+                EnableFIFOSlow(_cts.Token).Forget(); // [추가] 메서드 연결
+                break;
+            // [추가] 3템포 몬스터 추가
+            case Define.MonsterType.WASD3Tempo:
+                Enable3Tempo(_cts.Token).Forget();
+                break;
             // 일반 몬스터나 기타 타입은 추가 행동 없음
             default:
                 break;
@@ -244,6 +256,90 @@ public class MovingEnemy : MonoBehaviour
         knockback.OnKnockback(true);
         // 스프라이트는 이미 SetVariance -> SettingSprite에서 설정됨
     }
+    private async UniTaskVoid Enable3Tempo(CancellationToken token)
+    {
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+
+        // [거리 분할] 목표 거리를 3번으로 나누어 이동합니다.
+        // (현재 임의로 전체 거리의 20%, 50%, 100% 지점으로 설정했습니다. 느낌에 맞게 조절하세요!)
+        Vector3 pos1 = Vector3.Lerp(startPos, targetPos, 0.2f);
+        Vector3 pos2 = Vector3.Lerp(startPos, targetPos, 0.5f);
+
+        // [시간 & 대기 설정] 
+        // 요청하신 0.2, 0.1 등의 수치를 기본 이동 시간(movingDuration)에 곱해서 비율로 적용합니다.
+        // (만약 저 수치들이 절대적인 '초(sec)'를 의미한다면 * movingDuration을 지워주시면 됩니다)
+        float move1Time = movingDuration * 0.2f;
+        int wait1Time = (int)(movingDuration * 0.1f * 1000); // UniTask.Delay는 밀리초(ms) 단위라 1000을 곱함
+
+        float move2Time = movingDuration * 0.3f;
+        int wait2Time = (int)(movingDuration * 0.1f * 1000);
+
+        float move3Time = movingDuration * 0.9f;
+        int wait3Time = (int)(movingDuration * 0.1f * 1000);
+
+        // 1단계: 0.2 이동 -> 0.1 대기
+        await transform.DOMove(pos1, move1Time)
+                       .SetEase(Ease.OutQuad) // 멈출 때 자연스럽게 감속
+                       .SetId("3Tempo")
+                       .SetLink(gameObject)
+                       .ToUniTask(cancellationToken: token);
+        await UniTask.Delay(wait1Time, cancellationToken: token);
+
+        // 2단계: 0.3 이동 -> 0.1 대기
+        await transform.DOMove(pos2, move2Time)
+                       .SetEase(Ease.OutQuad)
+                       .SetId("3Tempo")
+                       .SetLink(gameObject)
+                       .ToUniTask(cancellationToken: token);
+        await UniTask.Delay(wait2Time, cancellationToken: token);
+
+        // 3단계: 0.9 이동 (남은 목표까지) -> 0.1 대기
+        await transform.DOMove(targetPos, move3Time)
+                       .SetEase(Ease.OutQuad)
+                       .SetId("3Tempo")
+                       .SetLink(gameObject)
+                       .ToUniTask(cancellationToken: token);
+        await UniTask.Delay(wait3Time, cancellationToken: token);
+
+        // [완료] 모든 템포가 끝났으므로 제한을 풀고 Update의 Move()를 따르게 함
+        _isCustomMoveFinished = true;
+    }
+
+
+    // [추가] FIFO Slow 행동 정의
+    private async UniTaskVoid EnableFIFOSlow(CancellationToken token)
+    {
+        Vector3 startPos = transform.position;
+        // 기존 FIFO와 동일한 타겟 위치 계산 방식 적용
+        Vector3 targetPos = transform.position + CalculateNormalVector() * movingDistanceTmp;
+
+        // 1. [빠른 접근 구간] 
+        // 목표: 전체 거리의 40% 지점까지 단숨에 도달 (더 일찍 느려지게 만듦)
+        // 시간: 전체 시간의 20%만 사용 (매우 빠름)
+        float fastDuration = movingDuration * 0.2f;
+        Vector3 midPos = Vector3.Lerp(startPos, targetPos, 0.4f);
+
+        await transform.DOMove(midPos, fastDuration)
+                       .SetEase(Ease.OutQuad) // 초반에 훅 들어옴
+                       .SetId("FIFOSlow")
+                       .SetLink(gameObject)
+                       .ToUniTask(cancellationToken: token);
+
+        // 2. [긴 감속 구간]
+        // 목표: 나머지 60%의 거리를 긴 시간동안 아주 천천히 관성으로 밀려오듯 이동
+        // 시간: 남은 80% 시간 사용
+        float slowDuration = movingDuration * 0.8f;
+
+        await transform.DOMove(targetPos, slowDuration)
+                       .SetEase(Ease.OutSine) // 끝으로 갈수록 서서히 더 느려짐
+                       .SetId("FIFOSlow")
+                       .SetLink(gameObject)
+                       .ToUniTask(cancellationToken: token);
+        // [추가] Tween 이동이 모두 끝났으므로 플래그 변경! 이제부터 Update의 Move()가 작동합니다.
+        _isCustomMoveFinished = true;
+    }
+
 
     private void EnableSpeeding()
     {
@@ -579,13 +675,11 @@ public class MovingEnemy : MonoBehaviour
 
     private void Move()
     {
-        // 넉백 중일 때는 일반 이동 로직을 태우지 않음 (위치가 튀는 현상 방지)
         if (isKnockbackActive) return;
 
-        // 커스텀 이동 로직을 가진 애들은 기본 이동(Move)을 막음
-        if (IsCustomMovementType(_monsterType)) return;
+        // [수정] 커스텀 이동 타입이더라도 '이동이 끝났다면(!_isCustomMoveFinished)' 무시하고 지나감 -> Move 정상 작동
+        if (IsCustomMovementType(_monsterType) && !_isCustomMoveFinished) return;
 
-        // 단순 Transform 이동이므로 Update에서 실행
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }
@@ -683,6 +777,9 @@ public class MovingEnemy : MonoBehaviour
 
     #region Tool
 
+  
+
+
     async UniTaskVoid GarbageClean(CancellationToken token)
     {
         // 30초 대기 (Delay는 기본적으로 Time.timeScale의 영향을 받음)
@@ -694,23 +791,34 @@ public class MovingEnemy : MonoBehaviour
 
     private void SettingSprite(Define.MonsterType monsterType)
     {
+        // 1. 스프라이트 가져오기
         monsterImg.sprite = Managers.Game.monster.GetSprite(monsterType);
         orginSprite = monsterImg.sprite;
 
-        if (IngameData.ChapterIdx == 10) // Chapter10에서는 색깔이 다름
+        // 2. SO에서 몬스터 전용 색상 가져오기
+        Color monsterColor = Managers.Game.monster.GetColor(monsterType);
+
+        // 3. 색상 적용 (챕터 10 예외 처리 포함)
+        if (IngameData.ChapterIdx == 10)
         {
+            // 챕터 10일 때는 클럽 조명 색상으로 덮어씌움
             monsterImg.color = BackGroundEffect_10.CurrentClubColor;
         }
-       
+        else
+        {
+            // 그 외의 챕터에서는 SO에 등록된 몬스터 고유의 색상 적용
+            monsterImg.color = monsterColor;
+        }
     }
     #endregion
 
     #region tool
+    // [수정] tool 영역 안의 IsCustomMovementType 메서드
     private bool IsCustomMovementType(Define.MonsterType type)
     {
         return type == Define.MonsterType.WASD_EDM_Normal ||
-               type == Define.MonsterType.WASD_EDM_Normal 
-               ;
+               type == Define.MonsterType.WASDFIFO_Slow ||
+               type == Define.MonsterType.WASD3Tempo; // [추가] 3템포도 기본 Update 이동 제외
     }
 
     #endregion

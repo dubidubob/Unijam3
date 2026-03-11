@@ -42,6 +42,7 @@ public class BlurController : MonoBehaviour
     private void Awake()
     {
         _destroyCts = new CancellationTokenSource();
+        Managers.Game.blur = this;
     }
 
     private void Start()
@@ -55,7 +56,7 @@ public class BlurController : MonoBehaviour
         }
         damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
 
-        Managers.Game.blur = this;
+       
 
         // 콤보 이펙트 관련 
         // 기준 이미지의 높이 측정 (두 세트 모두 같은 높이라고 가정)

@@ -355,8 +355,8 @@ MonoBehaviour:
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 7
-          characterData: {fileID: 0}
-          dir: 0
+          characterData: {fileID: 11400000, guid: 6fe687df23df05e41b6485c560f6ce69, type: 2}
+          dir: 1
         - textContents:
           - "\uADF8 \uACB0\uB9D0\uC744 \uC774\uC81C \uB9DE\uC774\uD574\uB77C."
           localizedTextContents:
@@ -370,8 +370,8 @@ MonoBehaviour:
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 7
-          characterData: {fileID: 0}
-          dir: 0
+          characterData: {fileID: 11400000, guid: fee0b54818bf4f14c977c29bff81ab91, type: 2}
+          dir: 1
     - rid: 7504154199782588419
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:

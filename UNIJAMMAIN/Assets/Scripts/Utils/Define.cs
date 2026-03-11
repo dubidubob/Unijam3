@@ -94,6 +94,8 @@
         WASD_Blink,
         WASD_Spiral,
         WASD_SmoothDash,
+        WASDFIFO_Slow,
+        WASD3Tempo,
         MaxCount
     }
 

@@ -1,130 +1,148 @@
-Key,Korean(ko),Chinese (Simplified)(zh-Hans),English(en),Japanese (ja)
-NAME_transparent,ㅤ,ㅇㅇ,,
-NAME_monk,수도승,ㅇㅇ,,
-NAME_master,스승님,ㅇㅇ,,
-NAME_wasd_default,악령,ㅇㅇ,,
-NAME_monk_expression,수도승,ㅇㅇ,,
-NAME_wasd_default_expression,악령,ㅇㅇ,,
-NAME_shadow_monster,그림자 혼령,ㅇㅇ,,
-NAME_wasd_dash,재빠른 악령,ㅇㅇ,,
-NAME_wasd_dash_expression,재빠른 악령,ㅇㅇ,,
-NAME_fallen_master,타락한 스승,ㅇㅇ,,
-NAME_wasd_fifo,교활한 악령,ㅇㅇ,,
-NAME_mouse_monster,가면악령,ㅇㅇ,,
-NAME_mouse_monster_expression,가면악령,ㅇㅇ,,
-NAME_mouse_boss,근원,ㅇㅇ,,
-NAME_mouse_boss_expression,근원,ㅇㅇ,,
-STORY_0_StoryCanvas_000,절을 나와 세상과 마주한 첫 걸음.,ㅇㅇ,,
-STORY_0_StoryCanvas_001,세상은 내가 듣고 배운 세상과 많이 다르구나. 정말..,ㅇㅇ,,
-STORY_0_StoryCanvas_002,나는 스승님의 가르침을 떠올리기 시작했다.,ㅇㅇ,,
-STORY_0_StoryCanvas_003,세상에는 훨씬 더 많은 두려움만 있거늘. 이래서야..,ㅇㅇ,,
-STORY_0_StoryCanvas_004,네 스승처럼 겁도 없게 세상 밖으로 나오다니.,ㅇㅇ,,
-STORY_0_StoryCanvas_005,...!! (정말 악령이... 세상을...),ㅇㅇ,,
-STORY_0_StoryCanvas_006,"그래, 시작이 곧 반이다! 어느 하나 두렵지 않다.",ㅇㅇ,,
-STORY_0_StoryCanvas_007,"반은 커녕, 네놈의 시작이 곧 끝이다!",ㅇㅇ,,
-STORY_0_StoryCanvas_008,시끄러운 네놈부터 손을 봐줘야겠군.,ㅇㅇ,,
-STORY_0_StoryCanvas_009,시작이 곧 반이다! 네 안에 있는 두려움을 이겨내야 한다.,ㅇㅇ,,
-STORY_1_StoryCanvas_000,절을 나와 마주한 절망적인 세상.,ㅇㅇ,,
-STORY_1_StoryCanvas_001,"세상은 정말 조화를 잃었고, 모두가 악한 기운만 흘리고 있었다.",ㅇㅇ,,
-STORY_1_StoryCanvas_002,고작 절간에 숨어있던 중놈이 뭘 안다고.,ㅇㅇ,,
-STORY_1_StoryCanvas_003,이것이 본래 세상의 모습이다.,ㅇㅇ,,
-STORY_1_StoryCanvas_004,조화가 깨진 세상이라면... 결국... 바로잡힐 뿐.,ㅇㅇ,,
-STORY_1_StoryCanvas_005,세상이 나를 시험에 들게 하는구나.,ㅇㅇ,,
-STORY_1_StoryCanvas_006,가여운 것. 네 스승과 똑같은 실수를 저지르는군.,ㅇㅇ,,
-STORY_1_StoryCanvas_007,네놈 또한 이 세상의 일부가 될 것이다.,ㅇㅇ,,
-STORY_2_StoryCanvas_000,"세상의 참상에 흔들린 마음을 다잡기 위해, 수도승은 폭포 아래에 섰다.",ㅇㅇ,,
-STORY_2_StoryCanvas_001,그는 조용히 눈을 감고 스승님의 목소리를 떠올렸다.,ㅇㅇ,,
-STORY_2_StoryCanvas_002,세상의 소란함에.. 네 마음까지 흔들려서는 결코 안 된다.,ㅇㅇ,,
-STORY_2_StoryCanvas_003,수도승은 쏟아지는 물줄기 속에서 잡념을 씻어낸다.,ㅇㅇ,,
-STORY_2_StoryCanvas_004,"흐트러진 마음으로는 아무것도 지킬 수 없다. 다시, 의지를 벼린다.",ㅇㅇ,,
-STORY_2_StoryCanvas_005,"그때, 폭포수 너머로 재빠른 형체들이 나타난다.",ㅇㅇ,,
-STORY_2_StoryCanvas_006,수도승의 앞을 재빠른 악령들과 그림자 혼령들이 가로막았다.,ㅇㅇ,,
-STORY_2_StoryCanvas_007,"호오, 결의를 다진 눈이군.",ㅇㅇ,,
-STORY_2_StoryCanvas_008,그 단단한 눈빛이 절망으로 바뀌는 건 한순간이지.,ㅇㅇ,,
-STORY_2_StoryCanvas_009,"네 마음이 흔들릴수록, 우리의 그림자는 더욱 짙어지는 법이다.",ㅇㅇ,,
-STORY_2_StoryCanvas_010,너희들은 오로지 내 앞에서 옅어질 일만 남았다.,ㅇㅇ,,
-STORY_3_StoryCanvas_000,폭포수 아래 굳게 다진 결의. 하지만 어디로 나아가야 할까.,ㅇㅇ,,
-STORY_3_StoryCanvas_001,"다잡았던 의지는, 끝없이 이어지는 악령과의 싸움에 점차 무뎌져 갔다.",ㅇㅇ,,
-STORY_3_StoryCanvas_002,"(이대로 모든 것을 등지고, 홀로 숨어버릴까.)",ㅇㅇ,,
-STORY_3_StoryCanvas_003,마음 속에서 떨쳐낼 수 없는 나약한 속삭임이 계속 울려퍼졌다.,ㅇㅇ,,
-STORY_3_StoryCanvas_004,스승님.. 오래 전 세상을 구하겠다며 출가하시고 연락이 끊긴 지 오래였다.,ㅇㅇ,,
-STORY_3_StoryCanvas_005,스승님께서도... 이 길의 끝에서 같은 절망을 마주했던 것일까.,ㅇㅇ,,
-STORY_3_StoryCanvas_006,"이 질문의 답이라도 찾으려는 듯, 마지막 기억이 서린 산 정상으로 발걸음을 옮겼다.",ㅇㅇ,,
-STORY_3_StoryCanvas_007,"그곳에, 뜻밖에도 익숙한 뒷모습의 승려가 앉아 있었다.",ㅇㅇ,,
-STORY_3_StoryCanvas_008,...스승님? 어찌하여 스승님이 이곳에...,ㅇㅇ,,
-STORY_3_StoryCanvas_009,"천천히, 아주 천천히 그는 나를 돌아봤다.",ㅇㅇ,,
-STORY_3_StoryCanvas_010,그러나 그의 눈은 여하 백성들처럼 공허에 빠진 눈이었다.,ㅇㅇ,,
-STORY_3_StoryCanvas_011,스승...님?,ㅇㅇ,,
-STORY_3_StoryCanvas_012,"그래. 네가 올 줄 알고 있었다. 길을 잃은 자가 마지막으로 향하는 곳은, 언제나 시작점이지.",ㅇㅇ,,
-STORY_3_StoryCanvas_013,"그동안 어디 계셨던 겁니까! 아니, 우선 모습이 왜 이렇게...",ㅇㅇ,,
-STORY_3_StoryCanvas_014,조화와 균형이라는 어리석음만 좇아왔으니. 그 외길의 끝에서 정신을 차리지 못했구나.,ㅇㅇ,,
-STORY_3_StoryCanvas_015,... 그건 그동안 스승님께서 지금까지 가르쳐주신 길이었습니다!,ㅇㅇ,,
-STORY_3_StoryCanvas_016,가장 먼저 깨져야 할 어리석은 가르침이었지. 본래는 약한 쪽이 강한 쪽에 부셔저 흡수되는 것.,ㅇㅇ,,
-STORY_3_StoryCanvas_017,그것이야말고 가장 완벽한 조화다.,ㅇㅇ,,
-STORY_3_StoryCanvas_018,그건.. 그저 지배와 부조화의 논리일 뿐입니다!,ㅇㅇ,,
-STORY_3_StoryCanvas_019,부조화라... 늑대가 양을 사냥하는 것이 부조화더냐? 그것이 자연의 이치고 조화다.,ㅇㅇ,,
-STORY_3_StoryCanvas_020,"그것은 짐승의 이치일 뿐, 약자를 짓밟는 힘은 조화가 아닌 지배입니다!",ㅇㅇ,,
-STORY_3_StoryCanvas_021,"... 스승님께서 등지신 조화의 길을, 제자가 바로 세워보겠습니다.",ㅇㅇ,,
-STORY_3_StoryCanvas_022,스승님.,ㅇㅇ,,
-STORY_3_StoryCanvas_023,좋다. 그렇다면 증명해 보아라. 네가 믿는 그 반듯한 조화가.,ㅇㅇ,,
-STORY_3_StoryCanvas_024,모든 것이 완벽한 이 '조화' 속에서도 길을 밝힐 수 있는지.,ㅇㅇ,,
-STORY_4_StoryCanvas_000,스승은 고요히 흩어지듯 눈을 감았다. 더 이상 그를 잠식하던 부조화는 보이지 않았다.,ㅇㅇ,,
-STORY_4_StoryCanvas_001,스승님.. 이것이 스승님의 진정한 뜻이 아님을 압니다.,ㅇㅇ,,
-STORY_4_StoryCanvas_002,대체 무엇이... 무엇이 스승님을 이리 만드셨습니까.,ㅇㅇ,,
-STORY_4_StoryCanvas_003,답 없는 질문만이 공허하게 맴돌았다. 수도승은 그렇게 걸터 앉아 눈을 감고 고뇌에 잠겼다.,ㅇㅇ,,
-STORY_4_StoryCanvas_004,...멈출 수는 없습니다.,ㅇㅇ,,
-STORY_4_StoryCanvas_005,"스승님. 그동안 감사했습니다. 이것이 제게 주어진 길이라면, 기꺼이 걷겠습니다.",ㅇㅇ,,
-STORY_4_StoryCanvas_006,"그는 자리에서 일어나, 스승이 사라진 곳을 향해 예를 갖춰 묵례했다.",ㅇㅇ,,
-STORY_4_StoryCanvas_007,"그리고 미련 없이 등을 돌려, 자신의 길을 걷기 시작했다.",ㅇㅇ,,
-STORY_4_StoryCanvas_008,그로부터 홀로 몇 년이 지났을까.,ㅇㅇ,,
-STORY_4_StoryCanvas_009,"그의 오랜 발걸음에 보답하듯, 구름바다를 가르며 거대한 용선이 스스로 모습을 드러냈다.",ㅇㅇ,,
-STORY_4_StoryCanvas_010,수도승은 기다렸다는 듯 망설임 없이 용선에 오른다.,ㅇㅇ,,
-STORY_4_StoryCanvas_011,"부조화를 만들어낸, 아니 악의 근원을 항해.",ㅇㅇ,,
-STORY_4_StoryCanvas_012,. . . !,ㅇㅇ,,
-STORY_4_StoryCanvas_013,(가여운 것 주제에 목숨이 참 길군.),ㅇㅇ,,
-STORY_4_StoryCanvas_014,충분히 주제를 넘었다. 그만 돌아가라.,ㅇㅇ,,
-STORY_4_StoryCanvas_015,네가 발버둥친다고 세상이 바뀔 것 같으냐?,ㅇㅇ,,
-STORY_4_StoryCanvas_016,"이 곳에 온 이상, 앞으로 내 있는 힘을 다해 네가 있는 곳 족족 모두 부술 것이다.",ㅇㅇ,,
-STORY_4_StoryCanvas_017,(그리고 네 신념까지도..),ㅇㅇ,,
-STORY_4_StoryCanvas_018,"네 아무리 잘났다지만, 그 분과는 대적도 못 할 것이다!",ㅇㅇ,,
-STORY_4_StoryCanvas_019,". . . 너 또한 그렇듯, 나도 내 사명을 다하겠다.",ㅇㅇ,,
-STORY_5_StoryCanvas_000,마침내 도착한 천상의 문턱. 하지만 문 앞은 셀 수 없이 많은 악령들이 가로막고 있었다.,ㅇㅇ,,
-STORY_5_StoryCanvas_001,"여기까지 용케 왔구나, 오만한 수행자여. 네 끈질김은 칭찬해주마.",ㅇㅇ,,
-STORY_5_StoryCanvas_002,"길을 비켜라. 네놈들 따위 모두 상대해주고, 부처님을 뵈어야겠다.",ㅇㅇ,,
-STORY_5_StoryCanvas_003,"스승님을 잠식하고, 세상을 어지럽히는 네놈들에게 부디..",ㅇㅇ,,
-STORY_5_StoryCanvas_004,네 스승? 그는 스스로 그 길을 택했다! 그놈의 제자인 네도 안타깝기 그지없구나.,ㅇㅇ,,
-STORY_5_StoryCanvas_005,"...스승님의 진실이 무엇이든, 내가 모두 가져가야 할 업보일 뿐이다.",ㅇㅇ,,
-STORY_5_StoryCanvas_006,"건방진! 네놈의 운명도, 그 어리석은 신념도 끝을 보여주지.",ㅇㅇ,,
-STORY_5_StoryCanvas_007,"그렇기에, 이 문을 더럽히는 너희를 내가 용서할 수 없구나.",ㅇㅇ,,
-STORY_5_StoryCanvas_008,네 아끼는 스승님 곁으로 후회없게 보내주지.,ㅇㅇ,,
-STORY_5_StoryCanvas_009,우리가 세운 진실된 천당에 발도 들일 생각 하지 말아라!,ㅇㅇ,,
-STORY_6_StoryCanvas_000,치열한 싸움 끝에 들어선 천당. 그곳에는 고요한 침묵만이 흘렀다.,ㅇㅇ,,
-STORY_6_StoryCanvas_001,"저 멀리, 자비로운 모습의 부처님이 앉아 계셨다.",ㅇㅇ,,
-STORY_6_StoryCanvas_002,부처님... 제 스승님께 무슨 일이.. 도대체 세상에 왜 이러한 일이 있던 것입니까.,ㅇㅇ,,
-STORY_6_StoryCanvas_003,부디... 진실을 알려주십시오.,ㅇㅇ,,
-STORY_6_StoryCanvas_004,. . .,ㅇㅇ,,
-STORY_6_StoryCanvas_005,...부처님?,ㅇㅇ,,
-STORY_6_StoryCanvas_006,...아무 말씀이 없으시다.,ㅇㅇ,,
-STORY_6_StoryCanvas_007,"아니, 저것은...",ㅇㅇ,,
-STORY_7_StoryCanvas_000,"어서 와라, 마지막 수행자여. 진리를 찾아 여기까지 왔구나.",ㅇㅇ,,
-STORY_7_StoryCanvas_001,"아직도 가엾은 자를 추종하기는, 굳세보이지만 속은 불안해보이는군.",ㅇㅇ,,
-STORY_7_StoryCanvas_002,"네 실력은 내 인정하겠다. 그러나, 이 세상에 굴복하는 것이 낫겠다.",ㅇㅇ,,
-STORY_7_StoryCanvas_003,"여기는, 모든 것이 조화롭고, 또 모든 것이 시작되는 곳이다.",ㅇㅇ,,
-STORY_7_StoryCanvas_004,네놈이.. 바로 이 모든 혼란의 근원이구나.,ㅇㅇ,,
-STORY_7_StoryCanvas_005,"나는 그저 세상의 본질을 일깨웠을 뿐. 강함과 약함, 다툼과 지배. 그것이 자연스러운 조화거늘.",ㅇㅇ,,
-STORY_7_StoryCanvas_006,"약자의 두려움 위에 세워진 질서는, 조화가 아니라 공포로 쌓은 탑에 불과하다.",ㅇㅇ,,
-STORY_7_StoryCanvas_007,조화란 약자들이 만들어낸 찰나의 환상이다.,ㅇㅇ,,
-STORY_7_StoryCanvas_008,고작 그 환상을 지키려 발버둥 치는 네 모습이 가련하구나.,ㅇㅇ,,
-STORY_7_StoryCanvas_009,"그 찰나의 환상이, 만물이 만들어지고 숨쉬는 이유다.",ㅇㅇ,,
-STORY_7_StoryCanvas_010,"...네 스승도, 처음에는 그런 말을 했었지.",ㅇㅇ,,
-STORY_7_StoryCanvas_011,하지만 결국 깨달았을 것이다.,ㅇㅇ,,
-STORY_7_StoryCanvas_012,진실의 무게 앞에서 환상은 얼마나 쉽게 무너지는지를.,ㅇㅇ,,
-STORY_7_StoryCanvas_013,가련한 것. 내 또 한 번 보여주마!,ㅇㅇ,,
-STORY_7_StoryCanvas_014,(수도승은 한동안 아무 말도 하지 않았다.),ㅇㅇ,,
-STORY_7_StoryCanvas_015,...,ㅇㅇ,,
-STORY_7_StoryCanvas_016,"...스승님의 마지막을 봤었지. 스승님은 진실을 저버린 것이 아닌,",ㅇㅇ,,
-STORY_7_StoryCanvas_017,그저 본인 스스로의 절망에게 졌을 뿐.,ㅇㅇ,,
-STORY_7_StoryCanvas_018,너의 그 어리석은 생각으로는 절대 이 세상을 굴복시킬 수 없다.,ㅇㅇ,,
-STORY_7_StoryCanvas_019,보여주마. 조화를 거스른 자의 결말이 무엇인지.,ㅇㅇ,,
-STORY_7_StoryCanvas_020,...,ㅇㅇ,,
-STORY_7_StoryCanvas_021,너도 곧 같은 결과를 알게 될 것이다!,,,
+Key,Korean(ko),English(en),Chinese (Simplified)(zh-Hans),Japanese(ja),Speaker
+NAME_transparent,ㅤ,,,,
+NAME_monk,수도승,Monk,修行僧,修行僧,
+NAME_master,스승님,Master,师父,師匠,
+NAME_wasd_default,악령,Dark Spirit,浊灵,濁霊,
+NAME_monk_expression,수도승,Monk,修行僧,修行僧,
+NAME_wasd_default_expression,악령,Dark Spirit,浊灵,濁霊,
+NAME_shadow_monster,그림자 혼령,Shadow Wraith,心魔之影,影亡霊,
+NAME_wasd_dash,재빠른 악령,Swift Dark Spirit,疾风浊灵,疾風の濁霊,
+NAME_wasd_dash_expression,재빠른 악령,Swift Dark Spirit,疾风浊灵,疾風の濁霊,
+NAME_fallen_master,타락한 스승,Fallen Master,堕落师父,堕ちた師匠,
+NAME_wasd_fifo,교활한 악령,Sly Dark Spirit,狡诈浊灵,狡猾な濁霊,
+NAME_mouse_monster,가면악령,Masked Wraith,假面浊灵,仮面濁霊 ,
+NAME_mouse_monster_expression,가면악령,Masked Wraith,假面浊灵,仮面濁霊 ,
+NAME_mouse_boss,근원,The Origin,根源,淵源,
+NAME_mouse_boss_expression,근원,The Origin,根源,淵源,
+STORY_0_StoryCanvas_000,절을 나와 세상과 마주한 첫 걸음.,"My first step into the Secular World, leaving the temple behind.",踏出寺庙，面对红尘的第一步。,寺を出て、俗世と向き合う最初の一歩。,나레이션(수도승)
+STORY_0_StoryCanvas_001,세상은 내가 듣고 배운 세상과 많이 다르구나. 정말..,This world... is vastly different from what I was taught. Truly...,这世间，与我所听所学大相径庭。真是……,俗世は、私が聞き学んだものとは大きく異なるのだな。本当に……,수도승
+STORY_0_StoryCanvas_002,나는 스승님의 가르침을 떠올리기 시작했다.,I reflect upon my Master's teachings.,我开始回想起师父的教诲。,私は師匠の教えを思い返し始めた。,나레이션(수도승)
+STORY_0_StoryCanvas_003,세상에는 훨씬 더 많은 두려움만 있거늘. 이래서야..,The world is filled with naught but fear. At this rate...,世间徒留无尽的恐惧。就凭你……,濁世にははるかに多くの恐怖が満ちているというのに。これでは……,스승님
+STORY_0_StoryCanvas_004,네 스승처럼 겁도 없게 세상 밖으로 나오다니.,"Foolish enough to step into the world, just like your Master.",竟敢像你师父那样，不知天高地厚地踏入红尘。,貴様の師匠のように、恐れも知らず俗世へ出てくるとはな。,악령
+STORY_0_StoryCanvas_005,...!! (정말 악령이... 세상을...),...!! (Dark spirits really have... this world...),……！！（浊灵真的……将这红尘……）,……！！（本当に濁霊が……俗世を……）,수도승
+STORY_0_StoryCanvas_006,"그래, 시작이 곧 반이다! 어느 하나 두렵지 않다.","Yes, the first step is half the journey! I fear nothing.",是啊，踏出一步便已半途！我无所畏惧。,そうだ、第一歩が半ばなり！恐れるものなど何もない。,수도승
+STORY_0_StoryCanvas_007,"반은 커녕, 네놈의 시작이 곧 끝이다!",Half the journey? Your first step is your last!,还半途？你这一步便是终点！,半ばだと？その一歩が貴様の最後だ！,악령
+STORY_0_StoryCanvas_008,시끄러운 네놈부터 손을 봐줘야겠군.,I will silence you first.,那就先拿你这大言不惭的妖孽开刀。,まずはその喧しい口から塞いでやろう。,수도승
+STORY_0_StoryCanvas_009,시작이 곧 반이다! 네 안에 있는 두려움을 이겨내야 한다.,The first step is half the journey! You must conquer the fear within.,踏出一步便已半途！你必须战胜内心的恐惧。,第一歩が半ばなり！己の中にある恐怖に打ち勝つのだ。,스승님
+STORY_1_StoryCanvas_000,절을 나와 마주한 절망적인 세상.,"Stepping out of the temple, I face a world of despair.",踏出寺庙，面对这令人绝望的红尘。,寺を出て直面した、絶望に満ちた俗世。,나레이션
+STORY_1_StoryCanvas_001,"세상은 정말 조화를 잃었고, 모두가 탁한 기운만 흘리고 있었다.",This world is truly bereft of harmony; only corrupted Qi flows through it.,世间果真失去了调和，四处只流淌着浊气。,俗世は真に調和を失い、ただ濁気のみが淀み流れていた。,나레이션
+STORY_1_StoryCanvas_002,고작 절간에 숨어있던 중놈이 뭘 안다고.,"What could a lowly monk, cowering in a temple, possibly understand?",躲在寺庙里的区区秃驴，又懂得什么。,寺に引きこもっていただけの小坊主が、何を分かろうというのだ。,악령
+STORY_1_StoryCanvas_003,이것이 본래 세상의 모습이다.,This is the true nature of the world.,这才是世间本来的面貌。,これこそが、俗世の本来の姿よ。,악령
+STORY_1_StoryCanvas_004,조화가 깨진 세상이라면... 결국... 바로잡힐 뿐.,A world stripped of harmony... must eventually... be righted.,既然世间失去了调和……最终……唯有将其拨乱反正。,調和が崩れ去った世界など……結局は……正される運命にある。,수도승
+STORY_1_StoryCanvas_005,세상이 나를 시험에 들게 하는구나.,The Secular World is testing my resolve.,这红尘，是在考验我啊。,この俗世が、私を試練にかけているのだな。,수도승
+STORY_1_StoryCanvas_006,가여운 것. 네 스승과 똑같은 실수를 저지르는군.,Pitiful creature. Making the exact same mistake as your Master.,可怜的家伙。犯下了与你师父一模一样的错。,哀れな奴め。貴様の師匠と全く同じ過ちを犯すとは。,악령
+STORY_1_StoryCanvas_007,네놈 또한 이 세상의 일부가 될 것이다.,"You, too, shall be subsumed into this disharmony.",你也终将化作这乱世的浊气。,貴様もまた、この不調和なる濁世の一部となるのだ。,그림자 혼령
+STORY_2_StoryCanvas_000,"세상의 참상에 흔들린 마음을 다잡기 위해, 수도승은 폭포 아래에 섰다.","To steady his Mind shaken by the Secular World's tragedy, the Monk stood beneath the cascade.",为了平复因红尘惨状而动摇的心绪，修行僧站到了瀑布之下。,俗世の惨状に揺れる心を静めるため、修行僧は滝の下に立った。,나레이션
+STORY_2_StoryCanvas_001,그는 조용히 눈을 감고 스승님의 목소리를 떠올렸다.,He quietly closed his eyes and recalled his Master's voice.,他静静闭上双眼，回想起了师父的声音。,彼は静かに目を閉じ、師匠の声を思い返した。,나레이션
+STORY_2_StoryCanvas_002,세상의 소란함에.. 네 마음까지 흔들려서는 결코 안 된다.,Do not let the tumult of the world... shake your mind.,绝不可让世间的喧嚣……动摇你的心绪。,俗世の喧騒に……己の心まで揺らしては決してならぬ。,스승님
+STORY_2_StoryCanvas_003,수도승은 쏟아지는 물줄기 속에서 잡념을 씻어낸다.,The Monk washes away his Inner turmoil beneath the pouring waters.,修行僧在倾泻的瀑布中洗去烦恼。,修行僧は降り注ぐ水流の中で煩悩を洗い流す。,나레이션
+STORY_2_StoryCanvas_004,"흐트러진 마음으로는 아무것도 지킬 수 없다. 다시, 의지를 벼린다.","With a scattered mind, nothing can be protected. Once again, he tempers his will.",心绪不宁则一无所护。他再次磨砺自己的意志。,乱れた心では何も守れぬ。再び、意志を鍛え上げる。,수도승
+STORY_2_StoryCanvas_005,"그때, 폭포수 너머로 재빠른 형체들이 나타난다.","Just then, swift figures appear beyond the cascade.",就在这时，瀑布后方现出了敏捷的身影。,その時、滝の向こうに素早い人影が現れる。,나레이션
+STORY_2_StoryCanvas_006,수도승의 앞을 재빠른 악령들과 그림자 혼령들이 가로막았다.,Swift Dark Spirits and Shadow Wraiths blocked the Monk's path.,疾风浊灵与心魔之影挡住了修行僧的去路。,修行僧の行く手を、疾風の濁霊と影亡霊が阻んだ。,나레이션
+STORY_2_StoryCanvas_007,"호오, 결의를 다진 눈이군.","Oho, eyes filled with newfound resolve.",呵，好一双透着决意的眼睛。,ほう、決意を固めた目をしているな。,재빠른 악령
+STORY_2_StoryCanvas_008,그 단단한 눈빛이 절망으로 바뀌는 건 한순간이지.,It only takes an instant for that steadfast gaze to turn to despair.,可那坚定的目光化为绝望，也不过是一瞬之间。,その確固たる眼差しが絶望に変わるのは、一瞬のことよ。,재빠른 악령
+STORY_2_StoryCanvas_009,"네 마음이 흔들릴수록, 우리의 그림자는 더욱 짙어지는 법이다.","The more your mind wavers, the darker our shadows grow.",你的心绪越是动摇，我们的影子就越是深邃。,貴様の心が揺れるほど、我らの影はさらに濃くなるのだ。,그림자 혼령
+STORY_2_StoryCanvas_010,너희들은 오로지 내 앞에서 옅어질 일만 남았다.,Your only fate is to fade away before me.,你们唯一的下场，便是从我面前灰飞烟灭。,貴様らはただ、私の前で薄れゆくのみだ。,수도승
+STORY_3_StoryCanvas_000,폭포수 아래 굳게 다진 결의. 하지만 어디로 나아가야 할까.,Resolve hardened beneath the cascade. But where must I go?,瀑布下坚定的决意。然而，又该走向何方。,滝の下で固めた決意。だが、どこへ進むべきか。,나레이션
+STORY_3_StoryCanvas_001,"다잡았던 의지는, 끝없이 이어지는 악령과의 싸움에 점차 무뎌져 갔다.",The tempered will gradually dulled against endless battles with Dark Spirits.,重铸的意志，在与浊灵无休止的战斗中逐渐变得迟钝。,取り戻した意志は、果てしなく続く濁霊との戦いに次第に鈍っていった。,나레이션
+STORY_3_StoryCanvas_002,"(이대로 모든 것을 등지고, 홀로 숨어버릴까.)",(Should I turn my back on it all and hide away alone?),（要不就这样抛下一切，独自隐居吧。）,（このまま全てに背を向け、一人隠れ潜んでしまおうか。）,수도승
+STORY_3_StoryCanvas_003,마음 속에서 떨쳐낼 수 없는 나약한 속삭임이 계속 울려퍼졌다.,Weak whispers I could not shake off echoed constantly within my mind.,心中无法摆脱的怯弱低语，一直在回荡。,心の中で振り払えぬ弱い囁きが、絶えず響き渡っていた。,나레이션
+STORY_3_StoryCanvas_004,스승님.. 오래 전 세상을 구하겠다며 출가하시고 연락이 끊긴 지 오래였다.,"Master... It has been long since he left to save the world, and longer since he was last heard from.",师父……他很久以前为了拯救世间而出走，早已断了音信。,師匠……遠い昔、世を救うと出立されてから、消息を絶って久しかった。,나레이션
+STORY_3_StoryCanvas_005,스승님께서도... 이 길의 끝에서 같은 절망을 마주했던 것일까.,Did the Master... also face this same despair at the end of his path?,师父他……是否也在这条路的尽头，面对过同样的绝望？,師匠もまた……この道の果てで同じ絶望に直面したのだろうか。,수도승
+STORY_3_StoryCanvas_006,"이 질문의 답이라도 찾으려는 듯, 마지막 기억이 서린 산 정상으로 발걸음을 옮겼다.","As if to find the answer, I turned my steps toward the mountain peak, where my last memories lingered.",仿佛为了寻找答案，我迈步走向那留存着最后记忆的山巅。,その答えを探すかのように、最後の記憶が宿る山頂へと足を向けた。,나레이션
+STORY_3_StoryCanvas_007,"그곳에, 뜻밖에도 익숙한 뒷모습의 승려가 앉아 있었다.","There, unexpectedly, sat a monk with a familiar silhouette.",在那里，竟坐着一个背影熟悉的僧人。,そこには、思いがけず見覚えのある後ろ姿の僧が座っていた。,나레이션
+STORY_3_StoryCanvas_008,...스승님? 어찌하여 스승님이 이곳에...,...Master? Why are you here...?,……师父？您为何会在这里……,……師匠？なぜ師匠がここに……,수도승
+STORY_3_StoryCanvas_009,"천천히, 아주 천천히 그는 나를 돌아봤다.","Slowly, very slowly, he turned to look at me.",慢慢地，他极其缓慢地转过头看向我。,ゆっくりと、ひどくゆっくりと、彼は私を振り返った。,나레이션
+STORY_3_StoryCanvas_010,그러나 그의 눈은 여하 백성들처럼 공허에 빠진 눈이었다.,"But his eyes were lost in the void, just like those of the common folk.",然而他的双眼，却如天下苍生一般深陷空洞。,だがその目は、他の民草のように虚無に呑まれた目であった。,나레이션
+STORY_3_StoryCanvas_011,스승...님?,Mas...ter?,师……父？,師……匠？,수도승
+STORY_3_StoryCanvas_012,"그래. 네가 올 줄 알고 있었다. 길을 잃은 자가 마지막으로 향하는 곳은, 언제나 시작점이지.",Yes. I knew you would come. The place a lost wanderer ultimately seeks is always the origin of your path.,是啊。我就知道你会来。迷失方向之人最终前往的地方，永远缘起之地。,ああ。お前が来ることは分かっていた。道に迷った者が最後に向かう場所は、いつだって修業の原点だ。,타락한 스승
+STORY_3_StoryCanvas_013,"그동안 어디 계셨던 겁니까! 아니, 우선 모습이 왜 이렇게...","Where have you been all this time! No, first of all, why do you look so...",您这段时间都去哪儿了！不，首先您的样子为何这般……,今までどこにおられたのですか！いや、まずはそのお姿がなぜ……,수도승
+STORY_3_StoryCanvas_014,조화와 균형이라는 어리석음만 좇아왔으니. 그 외길의 끝에서 정신을 차리지 못했구나.,You have only chased the folly of harmony and balance. It seems you lost your senses at the end of that solitary path.,只因你一直追逐着所谓调和与平衡的愚行。在那条孤道的尽头，你连神智都未曾清醒啊。,調和と均衡という愚かさばかりを追い求めてきたからな。その一本道の果てで、正気を失ったか。,타락한 스승
+STORY_3_StoryCanvas_015,... 그건 그동안 스승님께서 지금까지 가르쳐주신 길이었습니다!,"...But that is the path you have taught me all this time, Master!",……那可是师父您一直以来教导我的道路啊！,……それは、これまで師匠が教えてくださった道ではありませんか！,수도승
+STORY_3_StoryCanvas_016,가장 먼저 깨져야 할 어리석은 가르침이었지. 본래는 약한 쪽이 강한 쪽에 부셔저 흡수되는 것.,"It was a foolish teaching that needed to be shattered first. In truth, the weak are broken and absorbed by the strong.",那是最该被最先打破的愚蠢教诲。万物本源，便是弱者被粉碎，融入强者之中。,真っ先に打ち砕かれるべき愚かな教えだったのさ。本来、弱き者は強き者に砕かれ、吸収されるもの。,타락한 스승
+STORY_3_StoryCanvas_017,그것이야말고 가장 완벽한 조화다.,That alone is the most perfect Harmony.,那才是最完美的调和。,それこそが最も完璧な調和だ。,타락한 스승
+STORY_3_StoryCanvas_018,그건.. 그저 지배와 부조화의 논리일 뿐입니다!,That is... nothing but the logic of domination and disharmony!,那……不过是支配与不调和的谬论！,それは……単なる支配と不調和の論理に過ぎません！,수도승
+STORY_3_StoryCanvas_019,부조화라... 늑대가 양을 사냥하는 것이 부조화더냐? 그것이 자연의 이치고 조화다.,"Disharmony, you say... Is a wolf hunting a sheep disharmony? That is the order of nature, and that is Harmony.",不调和吗……狼捕食羊，难道是不调和吗？那便是自然之理，便是调和。,不調和だと……狼が羊を狩るのが不調和か？それこそが自然の理であり、調和だ。,타락한 스승
+STORY_3_StoryCanvas_020,"그것은 짐승의 이치일 뿐, 약자를 짓밟는 힘은 조화가 아닌 지배입니다!","That is merely the logic of beasts! The power to trample the weak is not harmony, but domination!",那只是禽兽的道理，践踏弱者的力量不是调和，而是支配！,それは獣の理に過ぎません。弱者を踏みにじる力は調和ではなく、支配です！,수도승
+STORY_3_StoryCanvas_021,"... 스승님께서 등지신 조화의 길을, 제자가 바로 세워보겠습니다.",The path of harmony that you have turned your back on... this disciple will set it right.,……弟子定会将您背弃的调和之路，重新导正。,……貴殿が背を向けた調和の道を、この弟子が正してみせます。,수도승
+STORY_3_StoryCanvas_022,스승님.,Master.,师父。,師匠。,수도승
+STORY_3_StoryCanvas_023,좋다. 그렇다면 증명해 보아라. 네가 믿는 그 반듯한 조화가.,"Very well. Prove it, then. Let us see if this righteous harmony you believe in...",很好。那就证明给我看吧。你所坚信的那端正的调和。,よかろう。ならば証明してみせよ。お前が信じる、そのまっすぐな調和が。,타락한 스승
+STORY_3_StoryCanvas_024,모든 것이 완벽한 이 '조화' 속에서도 길을 밝힐 수 있는지.,...can illuminate the path even within this 'Harmony' where all things are perfect.,在这万事万物皆完美的“调和”之中，是否还能照亮前路。,全てが完璧なこの『調和』の中でも、道を照らせるのかを。,타락한 스승
+STORY_4_StoryCanvas_000,스승은 고요히 흩어지듯 눈을 감았다. 더 이상 그를 잠식하던 부조화는 보이지 않았다.,The Master quietly closed his eyes as if fading away. The disharmony that once consumed him was nowhere to be seen.,师父静静地闭上双眼，仿佛随风消散。那曾吞噬他的不调和，已然不见踪影。,師匠は静かに散りゆくように目を閉じた。もはや彼を蝕んでいた不調和の姿はなかった。,나레이션
+STORY_4_StoryCanvas_001,스승님.. 이것이 스승님의 진정한 뜻이 아님을 압니다.,Master... I know this was not your true will.,师父……我知道，这并非您的本意。,師匠……これがあなたの真の意志ではないと分かっています。,수도승
+STORY_4_StoryCanvas_002,대체 무엇이... 무엇이 스승님을 이리 만드셨습니까.,What in the world... what could have driven you to this?,究竟是什么……是什么将您变成了这副模样？,一体何が……何があなたをこのように変えてしまったのですか。,수도승
+STORY_4_StoryCanvas_003,답 없는 질문만이 공허하게 맴돌았다. 수도승은 그렇게 걸터 앉아 눈을 감고 고뇌에 잠겼다.,"Only unanswered questions echoed in the void. The monk sat there, eyes closed in deep anguish.",只有无解的疑问在虚空中回荡。修行僧就这样坐着，闭上双眼陷入苦思。,答えのない問いだけが虚しく響き渡った。修行僧はそうして腰を下ろし、目を閉じて苦悩に沈んだ。,나레이션
+STORY_4_StoryCanvas_004,...멈출 수는 없습니다.,...I cannot stop now.,……我不能停下。,……立ち止まるわけにはいきません。,수도승
+STORY_4_StoryCanvas_005,"스승님. 그동안 감사했습니다. 이것이 제게 주어진 길이라면, 기꺼이 걷겠습니다.","Master. I shall forever honor your teachings. If this is the path laid before me, I will gladly walk it.",师父。您的授业之恩，弟子铭记于心。若这便是赐予我的道路，我定欣然前行。,師匠。これまでの御恩、決して忘れませぬ。これが私に与えられた道ならば、喜んで歩みましょう。,수도승
+STORY_4_StoryCanvas_006,"그는 자리에서 일어나, 스승이 사라진 곳을 향해 예를 갖춰 묵례했다.",He stood up and bowed respectfully toward the place where the Master had vanished.,他站起身，朝着师父消失的地方，恭敬地行了默礼。,彼は立ち上がり、師匠が消え去った場所に向かって深く一礼した。,나레이션
+STORY_4_StoryCanvas_007,"그리고 미련 없이 등을 돌려, 자신의 길을 걷기 시작했다.","Then, without lingering regrets, he turned his back and began to walk his own path.",随后没有一丝留恋地转过身，开始走上属于自己的道路。,そして未練なく背を向け、自らの道を歩み始めた。,나레이션
+STORY_4_StoryCanvas_008,그로부터 홀로 몇 년이 지났을까.,I know not how many years have passed in solitude since that day.,自那以后，不知独自度过了多少个春秋。,あれから一人、どれほどの歳月が流れたことか。,나레이션
+STORY_4_StoryCanvas_009,"그의 오랜 발걸음에 보답하듯, 구름바다를 가르며 거대한 용선이 스스로 모습을 드러냈다.","As if to reward his long journey, the Prajna Dragon Boat revealed itself, parting the sea of clouds.",仿佛是为了回报他长久以来的跋涉，一艘巨大的般若龙船破开云海，自行显现了身姿。,彼の長き歩みに報いるかのように、雲海を裂いて巨大な般若龍船が自ら姿を現した。,나레이션
+STORY_4_StoryCanvas_010,수도승은 기다렸다는 듯 망설임 없이 용선에 오른다.,"The monk boarded the boat without hesitation, as if he had been waiting for it.",似乎早有预料，修行僧毫不犹豫地登上了龙船。,待っていたかのように、修行僧は躊躇いなく龍船に乗り込む。,나레이션
+STORY_4_StoryCanvas_011,"부조화를 만들어낸, 아니 악의 근원을 향해.","Toward the creator of disharmony... no, toward The Origin of all evil.",驶向那制造了不调和的，不，是万恶的根源。,不調和を生み出した、いや、悪の淵源に向けて。,수도승
+STORY_4_StoryCanvas_012,. . . !,. . . !,. . . !,. . . !,교활한 악령
+STORY_4_StoryCanvas_013,(가여운 것 주제에 목숨이 참 길군.),"(For a pitiful wretch, you cling tightly to your life.)",（区区可怜虫，命倒挺长。）,（哀れな奴のくせに、随分としぶとい命だ。）,가면악령
+STORY_4_StoryCanvas_014,충분히 주제를 넘었다. 그만 돌아가라.,You have overstepped your bounds enough. Turn back now.,你已太不自量力。趁早滚回去吧。,十分に身の程をわきまえぬ真似をしたな。もう引き返せ。,가면악령
+STORY_4_StoryCanvas_015,네가 발버둥친다고 세상이 바뀔 것 같으냐?,Do you really think your struggles will change the world?,你以为凭你这般挣扎，就能改变这世间吗？,貴様が足掻いたところで、この世が変わるとでも思っているのか？,가면악령
+STORY_4_StoryCanvas_016,"이 곳에 온 이상, 앞으로 내 있는 힘을 다해 네가 있는 곳 족족 모두 부술 것이다.","Now that I am here, I will use every ounce of my strength to shatter wherever you stand.",既然来到这里，今后我将倾尽全力，将你所在之处尽数粉碎。,ここへ来たからには、今後私の全力を懸けて、貴様のいる場所をことごとく砕いてやる。,가면악령
+STORY_4_StoryCanvas_017,(그리고 네 신념까지도..),(And your faith as well...),（连同你的信念一起……）,（そして、貴様の信念までも……）,가면악령
+STORY_4_StoryCanvas_018,"네 아무리 잘났다지만, 그 분과는 대적도 못 할 것이다!","No matter how great you think you are, you could never match Him!",纵使你再怎么狂妄，也绝对无法与那位大人抗衡！,貴様がどれほど己を過信しようと、あの方には到底敵わぬ！,가면악령
+STORY_4_StoryCanvas_019,". . . 너 또한 그렇듯, 나도 내 사명을 다하겠다.","...Just as you do, I too shall fulfill my Calling.",……正如你一样，我也将践行我的使命。,……お前がそうであるように、私も我が使命を全うする。,수도승
+STORY_5_StoryCanvas_000,마침내 도착한 천상의 문턱. 하지만 문 앞은 셀 수 없이 많은 악령들이 가로막고 있었다.,"At last, the threshold of the Celestial Temple. But the gates were blocked by countless Dark Spirits.",终于抵达了天界寺庙的门前。然而大门外，却有数不清的浊灵拦住了去路。,ついに辿り着いた天界の寺院の入り口。だが、門の前には数え切れないほどの濁霊が立ち塞がっていた。,나레이션
+STORY_5_StoryCanvas_001,"여기까지 용케 왔구나, 오만한 수행자여. 네 끈질김은 칭찬해주마.","You have done well to make it this far, arrogant monk. I will praise your tenacity.",亏你能来到这里，傲慢的修行僧啊。你的顽强倒值得夸奖。,よくぞここまで辿り着いたな、傲慢な修行僧よ。そのしぶとさだけは褒めてやろう。,가면악령
+STORY_5_StoryCanvas_002,"길을 비켜라. 네놈들 따위 모두 상대해주고, 부처님을 뵈어야겠다.","Step aside. I will deal with the likes of you all, then I must see The Buddha.",让开。解决掉你们这些喽啰后，我还要去面见佛祖。,道を空けろ。貴様らなど全て片付けて、御仏にお会いせねばならぬ。,수도승
+STORY_5_StoryCanvas_003,"스승님을 잠식하고, 세상을 어지럽히는 네놈들에게 부디..","To you who consumed my Master and threw the world into chaos, I pray...",吞噬了师父、搅乱这世间的你们，愿你们……,師匠を蝕み、この世を乱す貴様らに、どうか……,수도승
+STORY_5_StoryCanvas_004,네 스승? 그는 스스로 그 길을 택했다! 그놈의 제자인 너도 안타깝기 그지없구나.,"Your Master? He chose that path himself! As his disciple, you are equally pathetic.",你的师父？那条路是他自己选的！身为他的弟子，你也真是可悲至极。,貴様の師匠だと？奴は自らあの道を選んだのだ！その弟子である貴様も哀れでならんな。,가면악령
+STORY_5_StoryCanvas_005,"...스승님의 진실이 무엇이든, 내가 모두 가져가야 할 업보일 뿐이다.","...Whatever the truth of my Master may be, it is but the karma I must bear.",……无论师父的真相如何，那都只是我必须背负的宿业罢了。,……師匠の真実が何であれ、それは私が背負うべき宿業に過ぎない。,수도승
+STORY_5_StoryCanvas_006,"건방진! 네놈의 운명도, 그 어리석은 신념도 끝을 보여주지.","Insolent fool! I will show you the end of your fate, and that foolish faith of yours!",狂妄！我现在就让你那可笑的命运，还有愚蠢的信念，一同走到尽头。,生意気な！貴様の宿命も、その愚かな信念も、ここで終わらせてやる。,가면악령
+STORY_5_StoryCanvas_007,"그렇기에, 이 문을 더럽히는 너희를 내가 용서할 수 없구나.",That is precisely why I cannot forgive you for defiling these gates.,正因如此，我绝不能饶恕玷污了这扇大门的你们。,だからこそ、この門を汚すお前たちを私は許せないのだ。,수도승
+STORY_5_StoryCanvas_008,네 아끼는 스승님 곁으로 후회없게 보내주지.,I will send you to your precious Master without a single regret.,我这就大发慈悲，送你去见你最敬爱的师父。,貴様が慕う師匠の元へ、後悔なく送ってやろう。,가면악령
+STORY_5_StoryCanvas_009,우리가 세운 진실된 천당에 발도 들일 생각 하지 말아라!,Do not even think of setting foot in the true Sanctuary we have built!,休想踏入我们所建立的真正圣域半步！,我らが築き上げた真の聖域に、足を踏み入れることなど叶わぬと思え！,가면악령
+STORY_6_StoryCanvas_000,치열한 싸움 끝에 들어선 천당. 그곳에는 고요한 침묵만이 흘렀다.,Entering the Celestial Temple after a fierce battle. Only a serene silence flowed within.,历经激战，终于踏入天界寺庙。那里只有一片死寂。,熾烈な戦いの末に足を踏み入れた天界の寺院。そこにはただ、静寂だけが流れていた。,나레이션
+STORY_6_StoryCanvas_001,"저 멀리, 자비로운 모습의 부처님이 앉아 계셨다.",In the distance sat the merciful Buddha.,远处，端坐着面容慈悲的佛祖。,遥か彼方に、慈悲深きお姿の御仏が座しておられた。,나레이션
+STORY_6_StoryCanvas_002,부처님... 제 스승님께 무슨 일이.. 도대체 세상에 왜 이러한 일이 있던 것입니까.,The Buddha... what happened to my Master... why has such tragedy befallen the world?,佛祖……我的师父到底遭遇了什么……这世间为何会发生这般惨剧？,御仏よ……我が師匠に何が……一体なぜ、世にこのような事が起きたのですか。,수도승
+STORY_6_StoryCanvas_003,부디... 진실을 알려주십시오.,Please... tell me the truth.,求您……告诉我真相。,どうか……真実をお教えください。,수도승
+STORY_6_StoryCanvas_004,. . .,. . .,. . .,. . .,나레이션
+STORY_6_StoryCanvas_005,...부처님?,...The Buddha?,……佛祖？,……御仏？,수도승
+STORY_6_StoryCanvas_006,...아무 말씀이 없으시다.,...He speaks not a word.,……他一言不发。,……何も仰らない。,나레이션
+STORY_6_StoryCanvas_007,"아니, 저것은...","No, that is...",不，那是……,いや、あれは……,수도승
+STORY_7_StoryCanvas_000,"어서 와라, 마지막 수행자여. 진리를 찾아 여기까지 왔구나.","Welcome, last monk. You have come this far seeking the truth.",欢迎，最后的修行者。为了寻找真理，你竟来到了这里。,よく来た、最後の修行者よ。真理を求めてここまで来たか。,근원
+STORY_7_StoryCanvas_001,"아직도 가엾은 자를 추종하기는, 굳세보이지만 속은 불안해보이는군.","Still following that pitiful fool. You look steadfast, but your mind betrays your anxiety.",还在追随那个可悲的家伙，你表面看似坚强，内心的动摇却逃不过我的眼睛。,未だあの哀れな者を追従するとは。屈強に見えて、その内は不安に揺れているようだな。,근원
+STORY_7_StoryCanvas_002,"네 실력은 내 인정하겠다. 그러나, 이 세상에 굴복하는 것이 낫겠다.","I will acknowledge your strength. However, it is better for you to yield to this world.",你的实力我予以认可。然而，你还是向这世间屈服为好。,貴様の実力は認めよう。だが、この世に屈した方が身のためだ。,근원
+STORY_7_StoryCanvas_003,"여기는, 모든 것이 조화롭고, 또 모든 것이 시작되는 곳이다.","This is the place where everything is in Harmony, and where all things begin.",这里，是万物皆处于调和、且是一切诞生之所。,ここは、全てが調和し、また全てが始まる場所だ。,근원
+STORY_7_StoryCanvas_004,네놈이.. 바로 이 모든 혼란의 근원이구나.,So you are... The Origin of all this chaos.,你这家伙……便是这一切混乱的根源。,貴様が……この全ての混乱の淵源なのだな。,수도승
+STORY_7_StoryCanvas_005,"나는 그저 세상의 본질을 일깨웠을 뿐. 강함과 약함, 다툼과 지배. 그것이 자연스러운 조화거늘.","I merely awakened the true nature of the world. Strength and weakness, conflict and domination. That is natural Harmony.",我只是唤醒了世间的本质。弱肉强食、纷争与支配。那才是顺应自然的调和。,私はただ、世の本質を呼び覚ましたに過ぎぬ。強さと弱さ、争いと支配。それこそが自然なる調和なのだ。,근원
+STORY_7_StoryCanvas_006,"약자의 두려움 위에 세워진 질서는, 조화가 아니라 공포로 쌓은 탑에 불과하다.","An order built upon the fear of the weak is not harmony, but a tower of terror.",建立在弱者恐惧之上的秩序，并非调和，不过是一座用恐惧堆砌的高塔。,弱者の恐怖の上に築かれた秩序など、調和ではなく、恐怖で積み上げた塔に過ぎない。,수도승
+STORY_7_StoryCanvas_007,조화란 약자들이 만들어낸 찰나의 환상이다.,Your harmony is but a fleeting illusion crafted by the weak.,所谓的调和，不过是弱者们编织出的刹那幻象。,その調和とやらも、弱者たちが作り出した刹那の幻に過ぎぬ。,근원
+STORY_7_StoryCanvas_008,고작 그 환상을 지키려 발버둥 치는 네 모습이 가련하구나.,It is pitiful to see you struggle to protect such a mere illusion.,看着你为了守护那种幻象而拼命挣扎的模样，真是可怜啊。,たかがその幻を守るために足掻く貴様の姿、哀れでならんな。,근원
+STORY_7_StoryCanvas_009,"그 찰나의 환상이, 만물이 만들어지고 숨쉬는 이유다.",That fleeting illusion is the very reason all things are born and breathe.,正是那刹那的幻象，才是万物诞生与呼吸的理由。,その刹那の幻こそが、万物が生まれ、息づく理由だ。,수도승
+STORY_7_StoryCanvas_010,"...네 스승도, 처음에는 그런 말을 했었지.",...Your Master said the same thing at first.,……你的师父，起初也是这么说的。,……貴様の師匠も、初めはそう言っていた。,근원
+STORY_7_StoryCanvas_011,하지만 결국 깨달았을 것이다.,"But in the end, he surely realized it.",但他最终一定也领悟到了。,だが、結局は悟ったはずだ。,근원
+STORY_7_StoryCanvas_012,진실의 무게 앞에서 환상은 얼마나 쉽게 무너지는지를.,How easily an illusion crumbles before the weight of truth.,在真实的重量面前，幻象是何等的不堪一击。,真実の重みを前にして、幻がいかに脆く崩れ去るかを。,근원
+STORY_7_StoryCanvas_013,가련한 것. 내 또 한 번 보여주마!,Pitiful fool. I will show you once again!,可悲的家伙。我这就再让你见识一次！,哀れな奴め。今一度、見せてやろう！,근원
+STORY_7_StoryCanvas_014,(수도승은 한동안 아무 말도 하지 않았다.),(The Monk remained silent for a while.),（修行僧沉默了良久。）,（修行僧はしばらく何も言わなかった。）,나레이션
+STORY_7_StoryCanvas_015,...,...,...,...,수도승
+STORY_7_StoryCanvas_016,"...스승님의 마지막을 봤었지. 스승님은 진실을 저버린 것이 아닌,",...I saw my Master's end. Master did not forsake the truth;,……我亲眼见证了师父的最后一刻。师父他并非背弃了真实，,……師匠の最期を見た。師匠は真実を捨てたのではない、,수도승
+STORY_7_StoryCanvas_017,그저 본인 스스로의 절망에게 졌을 뿐.,he simply succumbed to his own despair.,只是败给了他自身的绝望而已。,ただ己自身の絶望に負けたに過ぎない。,수도승
+STORY_7_StoryCanvas_018,너의 그 어리석은 생각으로는 절대 이 세상을 굴복시킬 수 없다.,"With your foolish thoughts, you will never subjugate this world.",就凭你那愚不可及的想法，绝对无法让这世间屈服。,貴様のその愚かな考えで、この世を屈服させることなど絶対にできない。,수도승
+STORY_7_StoryCanvas_019,보여주마. 조화를 거스른 자의 결말이 무엇인지.,I will show you. The fate of one who defies harmony.,让你见识一下吧。违背了调和之人的下场。,見せてやろう。調和に逆らった者の結末がどのようなものかを。,수도승
+STORY_7_StoryCanvas_020,...,...,...,...,근원
+STORY_7_StoryCanvas_021,너도 곧 같은 결과를 알게 될 것이다!,"You, too, will soon know the same fate!",你很快也会步他的后尘！,貴様もすぐに同じ結末を知ることになる！,근원
+STORY_Christmas_StoryCanvas_000,0,0,0,0,
+STORY_Christmas_StoryCanvas_001,1,1,1,1,
+STORY_Christmas_StoryCanvas_002,2,2,2,2,
+STORY_Christmas_StoryCanvas_003,3,3,3,3,
+STORY_Christmas_StoryCanvas_004,4,4,4,4,
+STORY_Christmas_StoryCanvas_005,5,5,5,5,
+STORY_EDM_StoryCanvas_000,0,0,0,0,
+STORY_EDM_StoryCanvas_001,1,1,1,1,
+STORY_EDM_StoryCanvas_002,2,2,2,2,
+STORY_EDM_StoryCanvas_003,3,3,3,3,
+STORY_EDM_StoryCanvas_004,4,4,4,4,
+STORY_EDM_StoryCanvas_005,5,5,5,5,
+STORY_Night_StoryCanvas_000,0,0,0,0,
+STORY_Night_StoryCanvas_001,1,1,1,1,
+STORY_Night_StoryCanvas_002,2,2,2,2,
+STORY_Night_StoryCanvas_003,3,3,3,3,
+STORY_Night_StoryCanvas_004,4,4,4,4,
+STORY_Night_StoryCanvas_005,5,5,5,5,

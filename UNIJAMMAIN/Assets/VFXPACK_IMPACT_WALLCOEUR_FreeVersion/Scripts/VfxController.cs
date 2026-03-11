@@ -11,7 +11,7 @@ namespace Assets.VFXPACK_IMPACT_WALLCOEUR.Scripts
 
         GameObject _currentVfx;
 
-        private void Start()
+        private void Awake()
         {
             Managers.Game.vfxController = this;
 

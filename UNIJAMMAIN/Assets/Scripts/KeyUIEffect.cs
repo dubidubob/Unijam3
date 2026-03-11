@@ -44,6 +44,7 @@ public class KeyUIEffect : MonoBehaviour
     {
         // 0.4초 리얼타임 대기 (이 오브젝트가 파괴되면 자동 취소됨)
         await UniTask.Delay(TimeSpan.FromSeconds(0.4f), ignoreTimeScale: true, cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.WaitUntil(() => Managers.Game != null && Managers.Game.vfxController != null, cancellationToken: this.GetCancellationTokenOnDestroy());
 
         // 조건문 정리 (중복 제거)
         if (getKeyParticle == null && type2 == GamePlayDefine.DiagonalType.MaxCnt)

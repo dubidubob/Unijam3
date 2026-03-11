@@ -36,6 +36,8 @@ public class LocaleSetting : MonoBehaviour
     {
         // 플레이어가 직접 클릭했으므로 true를 기본값으로 넘겨 설정이 저장되게 함
         LocalizationManager.ChangeLanguage((Language)index, true);
+
+        Application.Quit();
     }
 
     // 중복되던 ChangeLanguage(), GetCodeFromLanguage() 제거 완료 (매니저 로직 사용)

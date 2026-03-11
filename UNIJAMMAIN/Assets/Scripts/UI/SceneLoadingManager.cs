@@ -21,6 +21,7 @@ public class SceneLoadingManager : UI_Base
 
     [SerializeField] private Image leftPanel;
     [SerializeField] private Image rightPanel;
+    [SerializeField] private Image blackPanel;
 
     [Header("Animation Settings")]
     [Tooltip("문이 열려있을 때의 X 좌표 (예: 1490)")]
@@ -67,8 +68,9 @@ public class SceneLoadingManager : UI_Base
     {
         // 만약 이미 로딩 중이라면, 또 LoadScene을 실행하지 않고 즉시 종료합니다.
         if (IsLoading) return;
-
-
+        IngameData._wastSceneName = IngameData._currentSceneName;
+        IngameData._currentSceneName = sceneName;
+    
         // 씬이 이동할때마다 데이터 저장
         IngameData.SaveGameData();
         // UniTask 비동기 실행 (Fire and Forget)
@@ -85,15 +87,35 @@ public class SceneLoadingManager : UI_Base
         IsLoading = true;
 
         // ▼▼▼ 2. 코루틴 시작 시 준비 상태를 false로 초기화 ▼▼▼
-        isSceneReadyToDisplay = false;  
+        isSceneReadyToDisplay = false;
 
-        // 1. 문 닫기 애니메이션
-        Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
-        leftPanel.gameObject.SetActive(true);
-        rightPanel.gameObject.SetActive(true);
+        //특정 조건: 챕터 7, 연습 모드가 아님, 인게임 상태일 때 암전 효과 사용
+        bool useFadeTransition = (IngameData.ChapterIdx == 7 && !IngameData.boolPracticeMode && IngameData._isInGame);
 
-        // 문 닫기 대기
-        await AnimatePanels(true, token);
+        if (useFadeTransition)
+        {
+            // [1. 암전 연출]
+            blackPanel.gameObject.SetActive(true);
+
+            // 초기 알파값을 0(투명)으로 확실하게 설정
+            Color color = blackPanel.color;
+            color.a = 0f;
+            blackPanel.color = color;
+
+            // DOTween을 사용하여 천천히 암전 (TimeScale 무시하도록 SetUpdate(true) 설정)
+            await blackPanel.DOFade(1f, animationDuration).SetUpdate(true).ToUniTask(cancellationToken: token);
+        }
+        else
+        {
+            // 1. 문 닫기 애니메이션
+            Managers.Sound.Play("SFX/UI/StorySelect_V1", Define.Sound.SFX);
+            leftPanel.gameObject.SetActive(true);
+            rightPanel.gameObject.SetActive(true);
+            // 문 닫기 대기
+            await AnimatePanels(true, token);
+        }
+
+      
 
         // 2. 닫힌 상태에서 잠시 대기 (Realtime)
         await UniTask.Delay(TimeSpan.FromSeconds(waitDuration), ignoreTimeScale: true, cancellationToken: token);
@@ -132,16 +154,23 @@ public class SceneLoadingManager : UI_Base
             AspectRatioEnforcer.Instance.RestoreDisplayState();
         }
 
-        Managers.Sound.Play("SFX/UI/DoorOpen_V1", Define.Sound.SFX);
+        if (useFadeTransition)
+        {
+            // [암전 해제 연출]
+            await blackPanel.DOFade(0f, animationDuration).SetUpdate(true).ToUniTask(cancellationToken: token);
+            blackPanel.gameObject.SetActive(false);
+        }
+        else
+        {
+            // [기본 문 열기 애니메이션]
+            Managers.Sound.Play("SFX/UI/DoorOpen_V1", Define.Sound.SFX);
+            await AnimatePanels(false, token); // false = 열기
 
-        // 5. 새로운 씬이 준비되면 문 열기 애니메이션 시작
-        await AnimatePanels(false, token); // false = 열기
-
-        // 잠시 후 패널 비활성화 (선택 사항)
-        await UniTask.Delay(TimeSpan.FromSeconds(0.1f), ignoreTimeScale: true, cancellationToken: token);
-
-        leftPanel.gameObject.SetActive(false);
-        rightPanel.gameObject.SetActive(false);
+            // 잠시 후 패널 비활성화
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f), ignoreTimeScale: true, cancellationToken: token);
+            leftPanel.gameObject.SetActive(false);
+            rightPanel.gameObject.SetActive(false);
+        }
         Managers.Sound.SettingNewSceneVolume();
 
         // 모든 로딩 과정이 완전히 끝나면 false로 설정

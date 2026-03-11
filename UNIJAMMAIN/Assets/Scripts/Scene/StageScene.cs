@@ -79,6 +79,7 @@ public class StageScene : BaseScene
 
 
         }
+        IngameData._isInGame = false;
         Managers.Game.Init();
     }
 }

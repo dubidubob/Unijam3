@@ -35,6 +35,7 @@ MonoBehaviour:
     m_Items:
     - rid: 3596657104847372300
     - rid: 3596657104847372635
+    - rid: 9208079150420066356
   m_KeyGenerator:
     rid: 3596657104847372293
   references:
@@ -56,10 +57,10 @@ MonoBehaviour:
           - ja
         - m_KeyId: 170838851584
           m_TableCodes:
-          - zh-Hans
           - ko
           - ja
           - en
+          - zh-Hans
         - m_KeyId: 718094860288
           m_TableCodes:
           - zh-Hans
@@ -79,4 +80,13 @@ MonoBehaviour:
           - ja
           - zh-Hans
         m_TypeString: UnityEngine.Font, UnityEngine.TextRenderingModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    - rid: 9208079150420066356
+      type: {class: AssetTypeMetadata, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries:
+        - m_KeyId: 170838851584
+          m_TableCodes:
+          - ko
+        m_TypeString: UnityEngine.Material, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null

@@ -6,7 +6,7 @@ using DG.Tweening;
 using Cysharp.Threading.Tasks;
 using System.IO;
 using System;
-
+using TMPro;
 // 프롤로그/텍스트 데이터 한 줄을 담을 클래스
 public class PrologueAction
 {
@@ -34,8 +34,8 @@ public class PrologueAction
 public class PrologueController : MonoBehaviour
 {
     [Header("UI Connects")]
-    [SerializeField] private Text speakerName_Text; // 화자 이름 텍스트
-    [SerializeField] private Text content_Text;     // 프롤로그 대사 텍스트
+    [SerializeField] private TMP_Text speakerName_Text; // 화자 이름 텍스트
+    [SerializeField] private TMP_Text content_Text;     // 프롤로그 대사 텍스트
     [SerializeField] private Image dimmenel_Panel;
 
     [Header("Sequences (Inspector에서 할당)")]
@@ -52,6 +52,7 @@ public class PrologueController : MonoBehaviour
     {
         { "수도승", "Speaker_Name_Sudo" },
         { "스승님", "Speaker_Name_Master" },
+        {"상인","Speaker_Name_Merchant" },
         // 필요에 따라 화자를 계속 추가하세요.
     };
 
@@ -80,15 +81,28 @@ public class PrologueController : MonoBehaviour
     [SerializeField] private float action2_StartScale = 1f;         // 시작 스케일
     [SerializeField] private float action2_TargetScale = 0.5f;      // 목표 스케일
     [SerializeField] private float action2_Duration = 2f;           // 연출 시간
+                                                                    // ▼▼▼ 2. "준비 완료" 신호를 보내는 코루틴 추가 ▼▼▼
+    private IEnumerator NotifyManagerWhenReady()
+    {
+        // 씬의 모든 Start 함수가 실행되고 첫 프레임을 그릴 시간을 안전하게 확보합니다.
+        yield return null;
 
+        // SceneLoadingManager에게 "이제 문 열어도 돼!" 라고 신호를 보냅니다.
+        if (SceneLoadingManager.Instance != null)
+        {
+            SceneLoadingManager.Instance.NotifySceneReady();
+        }
+    }
     private void Start()
     {
+        // 씬의 모든 준비가 끝났다고 LoadingManager에게 알립니다.
+        StartCoroutine(NotifyManagerWhenReady());
         StartInit().Forget();
     }
     private async UniTask StartInit()
     {
         InitializeUI();
-        LocalizationManager.LoadAll();
+        //LocalizationManager.LoadAll();
         LoadPrologueSequenceData("Localization/PrologueTable"); // 경로에 맞게 수정
 
         // 두 시퀀스를 병렬(Parallel)로 실행
@@ -178,7 +192,7 @@ public class PrologueController : MonoBehaviour
 
             string id = action.key;
             action.id = id;
-            string indexPart = action.id.Replace("Prologue_Frame_", "").Trim();
+            string indexPart = action.id.Replace("Prologue_Frame_", "").Replace("Text_Frame_", "").Trim();
             if (int.TryParse(indexPart, out int idx)) action.index = idx;
 
             // 시간 및 커브 파싱 (이제 Duration이 정상적으로 가져와짐!)
@@ -275,11 +289,26 @@ public class PrologueController : MonoBehaviour
     {
         foreach (var action in textSequence)
         {
+            if (action.index == 22)
+            {
+                // 1. RectTransform 컴포넌트를 가져옵니다.
+                RectTransform rect = content_Text.rectTransform;
+
+                // 2. 위치를 (0, 0)으로 변경
+                rect.anchoredPosition = Vector2.zero; // new Vector2(0, 0)과 같습니다.
+
+                // 3. Width를 1400으로 변경 (Height는 기존 값 유지)
+                rect.sizeDelta = new Vector2(1400f, rect.sizeDelta.y);
+
+                // 4. 텍스트 정렬을 정중앙(Center)으로 변경 (TextMeshPro 기준)
+                content_Text.alignment = TextAlignmentOptions.Center;
+            }
+
             string localizedContent = string.IsNullOrEmpty(action.key) ? "" : LocalizationManager.Get(action.key);
 
             // 화자 매핑
             string locSpeakerKey = speakerKeyMap.ContainsKey(action.speaker) ? speakerKeyMap[action.speaker] : "";
-            string localizedName = string.IsNullOrEmpty(locSpeakerKey) ? "" : LocalizationManager.Get(locSpeakerKey);
+            string localizedName = LocalizedStringKey(action);
 
             bool isTextEmpty = string.IsNullOrWhiteSpace(localizedContent) || localizedContent == "X" || localizedContent == "~";
 
@@ -560,5 +589,38 @@ public class PrologueController : MonoBehaviour
         Debug.Log("Action_StartMapMove_2 연출 완료");
     }
     #endregion
+
+
+    private string LocalizedStringKey(PrologueAction action)
+    {
+        // 1. 공백이나 숨겨진 문자 완벽 제거
+        string originalSpeaker = action.speaker != null ? action.speaker.Trim() : "";
+        string locSpeakerKey = "";
+        Debug.Log($"말하는사람 -> {action.speaker}");
+
+        // 2. 한글 이름에 맞춰 로컬라이즈 키값 수동 매핑 (원하시는 직관적인 방식)
+        switch (originalSpeaker)
+        {
+            case "수도승":
+                locSpeakerKey = "Speaker_Name_Sudo";
+                break;
+            case "스승님":
+            case "스승": // 기획 데이터 오타 대비
+                locSpeakerKey = "Speaker_Name_Master";
+                break;
+            case "상인":
+                locSpeakerKey = "Speaker_Name_Merchant";
+                break;
+            default:
+                // 매핑되지 않은 값이면 빈칸 처리하거나 그대로 둠
+                locSpeakerKey = originalSpeaker;
+                break;
+        }
+
+        Debug.Log($"로컬된 키 -> {locSpeakerKey}");
+        // 3. 변환된 키값으로 LocalizationManager 호출
+        string localizedName = string.IsNullOrEmpty(locSpeakerKey) ? "" : LocalizationManager.Get(locSpeakerKey);
+        return localizedName;
+    }
     #endregion
 }

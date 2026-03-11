@@ -75,6 +75,14 @@ MonoBehaviour:
     m_Key: Image_EndingDukdo
     m_Metadata:
       m_Items: []
+  - m_Id: 2382617173950464
+    m_Key: Image_DiagonalRU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2382669833437184
+    m_Key: Image_DiagonalLD
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 3596657104847372631
@@ -181,5 +189,17 @@ MonoBehaviour:
           - ja
           - zh-Hans
           - en
+        - m_KeyId: 2382617173950464
+          m_TableCodes:
+          - en
+          - ja
+          - zh-Hans
+          - ko
+        - m_KeyId: 2382669833437184
+          m_TableCodes:
+          - en
+          - ja
+          - zh-Hans
+          - ko
         m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null

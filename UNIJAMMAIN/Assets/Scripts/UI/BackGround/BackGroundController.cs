@@ -53,10 +53,7 @@ public class BackGroundController : MonoBehaviour
     //---- 각 챕터에 대한 정보 저장용 ---- //
     private Action currentChapterAction;
 
-    private void Start()
-    {
-        Managers.Game.backGroundController = this;
-    }
+  
     private void OnDestroy()
     {
         IngameData.ChangeBpm -= Init;
@@ -66,7 +63,7 @@ public class BackGroundController : MonoBehaviour
     }
     private void Awake()
     {
-
+        Managers.Game.backGroundController = this;
         IngameData.ChangeBpm -= Init;
         IngameData.ChangeBpm += Init;
       
