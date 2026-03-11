@@ -53,14 +53,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 315c3108e711594458dead04d790c64a
+    m_Address: "EBS\uC8FC\uC2DC\uACBDM SDF 1"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3e5f0d67c1cbd6e4da3f0739a13c6fb4
     m_Address: Ending_Deukdo_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53027ca2874e0804f9c8022a8fc6e514
+    m_Address: BMEULJIROTTF SDF
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6eaca38901da13a4db4639c14a96b546
     m_Address: NewRecord_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7094019eae9335345b523db75f94d12b
+    m_Address: main_credits_kr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
@@ -79,6 +97,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 884cd338ff865af4cbe86791bf655935
     m_Address: StoryInfo_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9adb078fbd0f73443ae0e516b3aa8545
+    m_Address: RIDIBatang SDF_TMP Pro
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko

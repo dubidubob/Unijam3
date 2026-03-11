@@ -47,6 +47,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c440a45be5d53f4fa6ffa0d6f619718
+    m_Address: English_EULJIRO
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e28ec4fec8e8bc4f8befe52a912f577
     m_Address: StoryInfo_en
     m_ReadOnly: 1
@@ -79,6 +85,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7fe08990ca120294fbd0a43d68607449
     m_Address: NextChapterBtn_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5293321b483dc84ab1ff8ce8689a96e
+    m_Address: main_credits_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

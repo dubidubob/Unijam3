@@ -1706,16 +1706,16 @@ MonoBehaviour:
         m_Target: {fileID: 438157201}
         m_TrackedProperties:
           items:
-          - rid: 9208079118309785620
-          - rid: 9208079118309785622
+          - rid: 9208079150420066424
+          - rid: 9208079150420066426
         m_UpdateType: 0
-    - rid: 9208079118309785620
+    - rid: 9208079150420066424
       type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
         m_Localized:
-          rid: 9208079118309785621
+          rid: 9208079150420066425
         m_PropertyPath: m_fontAsset
-    - rid: 9208079118309785621
+    - rid: 9208079150420066425
       type: {class: LocalizedTmpFont, ns: UnityEngine.Localization, asm: Unity.Localization}
       data:
         m_TableReference:
@@ -1725,13 +1725,13 @@ MonoBehaviour:
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
-    - rid: 9208079118309785622
+    - rid: 9208079150420066426
       type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
         m_Localized:
-          rid: 9208079118309785623
+          rid: 9208079150420066427
         m_PropertyPath: m_sharedMaterial
-    - rid: 9208079118309785623
+    - rid: 9208079150420066427
       type: {class: LocalizedMaterial, ns: UnityEngine.Localization, asm: Unity.Localization}
       data:
         m_TableReference:
@@ -4279,7 +4279,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: effwe
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
   m_sharedMaterial: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
@@ -4379,16 +4379,16 @@ MonoBehaviour:
         m_Target: {fileID: 1001341961}
         m_TrackedProperties:
           items:
-          - rid: 9208079118309785611
-          - rid: 9208079118309785613
+          - rid: 9208079150420066428
+          - rid: 9208079150420066430
         m_UpdateType: 0
-    - rid: 9208079118309785611
+    - rid: 9208079150420066428
       type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
         m_Localized:
-          rid: 9208079118309785612
+          rid: 9208079150420066429
         m_PropertyPath: m_fontAsset
-    - rid: 9208079118309785612
+    - rid: 9208079150420066429
       type: {class: LocalizedTmpFont, ns: UnityEngine.Localization, asm: Unity.Localization}
       data:
         m_TableReference:
@@ -4398,13 +4398,13 @@ MonoBehaviour:
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
-    - rid: 9208079118309785613
+    - rid: 9208079150420066430
       type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
         m_Localized:
-          rid: 9208079118309785614
+          rid: 9208079150420066431
         m_PropertyPath: m_sharedMaterial
-    - rid: 9208079118309785614
+    - rid: 9208079150420066431
       type: {class: LocalizedMaterial, ns: UnityEngine.Localization, asm: Unity.Localization}
       data:
         m_TableReference:

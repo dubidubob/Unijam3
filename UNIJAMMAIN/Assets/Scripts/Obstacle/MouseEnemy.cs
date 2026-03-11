@@ -181,6 +181,7 @@ public class MouseEnemy : MonoBehaviour
         }
     }
     */
+    /*
     private void Update()
     {
         /*
@@ -201,9 +202,9 @@ public class MouseEnemy : MonoBehaviour
             Managers.Game.ComboInc(healingValue);
             gameObject.SetActive(false);
         }
-        */
+        
     }
-    /*
+    
     private void StopBlinking()
     {
         if (blinkTweener != null && blinkTweener.IsActive())
@@ -216,6 +217,7 @@ public class MouseEnemy : MonoBehaviour
         image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
         
     }
+    
     */
     private void OnDisable()
     {

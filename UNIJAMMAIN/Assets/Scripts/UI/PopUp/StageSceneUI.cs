@@ -666,19 +666,23 @@ public class StageSceneUI : UI_Popup
                 buttonImage.sprite = deActive;
                 button.interactable = false;
                 buttonText.color = new Color32(194, 194, 194, 255);
-                buttonText.fontSharedMaterial = normalTextMaterial;
+                // ❌ buttonText.fontSharedMaterial = normalTextMaterial; (삭제)
                 break;
+
             case ButtonState.ClickActive:
                 buttonImage.sprite = clickActive;
                 button.interactable = true;
                 buttonText.color = Color.white;
+                // 💡 만약 여기에 glowingTextMaterial을 쓰려면 로컬라이제이션 대응이 추가로 필요합니다.
                 break;
+
             case ButtonState.NonClickActive:
                 buttonImage.sprite = nonClickActive;
                 button.interactable = true;
                 buttonText.color = new Color32(194, 194, 194, 255);
-                buttonText.fontSharedMaterial = normalTextMaterial;
+                // ❌ buttonText.fontSharedMaterial = normalTextMaterial; (삭제)
                 break;
+
             case ButtonState.Hover:
                 if (button != _selectedButton)
                 {

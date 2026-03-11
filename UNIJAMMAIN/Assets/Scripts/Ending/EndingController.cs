@@ -552,7 +552,7 @@ public class EndingController : MonoBehaviour
             }
         }
 
-        Debug.Log("엔딩 시퀀스 1 종료!");
+        // Debug.Log("엔딩 시퀀스 1 종료!");
 
         // [수정] 마지막에 남아있는 텍스트들을 부드럽게 지워주는 연출 추가
         var finalFadeTasks = new List<UniTask>();
@@ -580,7 +580,7 @@ public class EndingController : MonoBehaviour
 
     public async UniTask PlayEndingSequence_Part2()
     {
-        Debug.Log("엔딩 시퀀스 2 시작!");
+        //Debug.Log("엔딩 시퀀스 2 시작!");
         content_Text.GetComponent<RectTransform>().DOAnchorPosY(textPosY, 0);
 
 
@@ -1308,7 +1308,7 @@ public class EndingController : MonoBehaviour
         // 1. 타 함수에서 이 함수를 다른 스피드로 호출하면 속도 변수만 업데이트되게 처리
         currentSeatAnimSpeed = speed;
 
-        // 2. 만약 이미 애니메이션이 루프 중이라면 새로 실행하지 않고 종료 (속도만 바뀐 채로 기존 루프가 돌아감)
+        // 2. 만약 이미 애니메이션이 루프 중이라면 새로 실행하지 않고 종료
         if (isSeatAnimPlaying) return;
 
         if (sprites_sudoSeat == null || sprites_sudoSeat.Count == 0 || image_sudoSeat == null)
@@ -1320,17 +1320,36 @@ public class EndingController : MonoBehaviour
         isSeatAnimPlaying = true;
         int spriteIndex = 0;
 
-        // 3. 계속 수도승의 애니메이션 진행 (리스트 내의 이미지 순환)
-        while (isSeatAnimPlaying)
-        {
-            image_sudoSeat.sprite = sprites_sudoSeat[spriteIndex];
-            spriteIndex = (spriteIndex + 1) % sprites_sudoSeat.Count; // 끝에 도달하면 0으로 롤백
+        // 이 오브젝트가 파괴될 때 작동하는 취소 토큰 발급
+        var cancellationToken = this.GetCancellationTokenOnDestroy();
 
-            // 4. 스피드가 높아질수록 딜레이 시간이 짧아져서 애니메이션이 빨라짐 (1f일 때 프레임당 0.1초 기준 예시)
-            float delayTime = 0.1f / currentSeatAnimSpeed;
-            await UniTask.Delay(TimeSpan.FromSeconds(delayTime));
+        try
+        {
+            // 3. 계속 수도승의 애니메이션 진행
+            while (isSeatAnimPlaying)
+            {
+                // 이중 안전장치: 이미지가 파괴되었으면 즉시 루프 탈출
+                if (image_sudoSeat == null) break;
+
+                image_sudoSeat.sprite = sprites_sudoSeat[spriteIndex];
+                spriteIndex = (spriteIndex + 1) % sprites_sudoSeat.Count;
+
+                // 4. 딜레이 적용
+                float delayTime = 0.1f / currentSeatAnimSpeed;
+
+                // : Delay에 토큰을 전달하여, 파괴 시 대기 상태를 즉시 취소함
+                await UniTask.Delay(TimeSpan.FromSeconds(delayTime), cancellationToken: cancellationToken);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // 씬 전환이나 오브젝트 파괴로 인해 Delay가 강제 취소되었을 때 이곳으로 들어옵니다.
+            // 에러를 띄우지 않고 자연스럽게 함수를 종료합니다.
+            isSeatAnimPlaying = false;
+            // Debug.Log("SeatAnimation이 안전하게 종료되었습니다."); // 확인용 로그 (필요시 삭제)
         }
     }
+
     private void SpecialAction(int index, EndingAction action)
     {
 
@@ -1578,7 +1597,7 @@ public class EndingController : MonoBehaviour
         eyeSeq.OnComplete(() =>
         {
 
-            Debug.Log("눈을 완전히 감았습니다.");
+            // Debug.Log("눈을 완전히 감았습니다.");
             // 필요 시 추가적인 엔딩 크레딧이나 페이드 아웃 처리
         });
     }
@@ -1602,11 +1621,11 @@ public class EndingController : MonoBehaviour
             if (IngameData._bestChapterRanks[i] != Define.Rank.Perfect) // 최고 랭크가 아니라면
             {
 
-                Debug.Log("노말엔딩 진입");
+                //Debug.Log("노말엔딩 진입");
                 return false; // 노말 엔딩으로 진입
             }
         }
-        Debug.Log("히든엔딩 진입");
+        //Debug.Log("히든엔딩 진입");
         return true; // 모든것을 통과했다면 히든엔딩으로 진입할 수 있음.
     }
 

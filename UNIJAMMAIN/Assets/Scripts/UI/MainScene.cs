@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using TMPro;
 using Cysharp.Threading.Tasks;
-
+using UnityEngine.Localization.Settings;
 public class MainScene : UI_Popup
 {
     // --- UI 요소 및 애니메이션 설정 변수 ---
@@ -87,27 +87,27 @@ public class MainScene : UI_Popup
         StartToClick
     }
 
+   
+    // 씬 로딩이 완료된 직후에 호출해 줍니다.
+    public void ForceRefreshLocalization()
+    {
+        if (LocalizationSettings.SelectedLocale != null)
+        {
+            // 현재 언어를 자기 자신으로 다시 덮어씌움 (이러면 모든 Localize Event가 강제로 새로고침됨)
+            LocalizationSettings.SelectedLocale = LocalizationSettings.SelectedLocale;
+        }
+    }
     private void Start()
     {
-        // ★ 1. 이전 씬에서 일시정지(0)된 상태로 넘어왔을 수 있으므로 무조건 1로 초기화!
+        // 기본 초기화 세팅
         Time.timeScale = 1f;
         originalMaterial = tmpText[0].fontSharedMaterial;
         originalPositions = new Vector2[buttonsTransform.Length];
+        Canvas_GamesLogo.alpha = 1;
         for (int i = 0; i < buttonsTransform.Length; i++)
         {
             originalPositions[i] = buttonsTransform[i].anchoredPosition;
         }
-        if (IngameData._wastSceneName == "StageScene"||IngameData._wastSceneName=="EndingScene")
-        {
-            Debug.Log("로고스킵");
-            ActionLogo().Forget();
-        }
-        else
-        {
-            ActionGamesLogo().Forget();
-        }
-
-        Debug.Log(IngameData._isStoryCompleteClear);
 
         if (IngameData._isStoryCompleteClear)
         {
@@ -118,6 +118,29 @@ public class MainScene : UI_Popup
             image_Monster2.DOFade(0, 0);
         }
 
+        //  로컬라이제이션 완료 대기 후 로고 액션 시작
+        StartGameSequenceAsync().Forget();
+    }
+
+    private async UniTask StartGameSequenceAsync()
+    {
+        //  로컬라이제이션 시스템이 완전히 로드될 때까지 대기
+        await LocalizationSettings.InitializationOperation;
+
+        // 이제 로컬라이제이션 준비가 끝났으므로 강제 새로고침 실행
+        ForceRefreshLocalization();
+
+        // 기존의 로고 분기 처리
+        if (IngameData._wastSceneName == "StageScene" || IngameData._wastSceneName == "EndingScene")
+        {
+            Debug.Log("로고스킵");
+            Canvas_GamesLogo.alpha = 0;
+            await ActionLogo();
+        }
+        else
+        {
+            await ActionGamesLogo();
+        }
     }
 
     private async UniTask ActionGamesLogo()
@@ -131,7 +154,7 @@ public class MainScene : UI_Popup
         {
             v.color = new Color(1, 1, 1, 0);
         }
-        gamesLogoCanvasGroup.alpha = 1;
+
 
         // 1. 모든 로고 동시 페이드 인
         Sequence fadeInSeq = DOTween.Sequence();
@@ -461,7 +484,7 @@ public class MainScene : UI_Popup
         }
         for (int i = index + 1; i < buttonsTransform.Length; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 350, ANIMATION_DURATION).SetEase(Ease.OutCubic);
+            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 320, ANIMATION_DURATION).SetEase(Ease.OutCubic);
         }
 
         TogglePanel(true);

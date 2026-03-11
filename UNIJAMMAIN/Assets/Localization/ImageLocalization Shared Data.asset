@@ -83,6 +83,10 @@ MonoBehaviour:
     m_Key: Image_DiagonalLD
     m_Metadata:
       m_Items: []
+  - m_Id: 3127733522137088
+    m_Key: Image_MainScene_Credits
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 3596657104847372631
@@ -201,5 +205,11 @@ MonoBehaviour:
           - ja
           - zh-Hans
           - ko
+        - m_KeyId: 3127733522137088
+          m_TableCodes:
+          - ko
+          - ja
+          - en
+          - zh-Hans
         m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
