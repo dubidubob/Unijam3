@@ -1,6 +1,6 @@
 Key,speaker,Korean(ko),English(en),Chinese (Simplified)(zh-Hans),Japanese(ja),Conversion,Curve,Duration,NameColor,TextColor,MiddleHighLight
 Ending_Name_Nidus,근원,근원,The Origin,根源,根源,,,,,,
-Ending_Name_Monk,수도승,수도승,Monk,修行僧,修行僧,,,,,,
+Ending_Name_Monk,수도승,,,,,,,,,,
 Ending_Talk_0,X,,,,,0ms,Ease out,0ms,,,FALSE
 Ending_Talk_1,X,,,,,0ms,Ease out,3500ms,,,FALSE
 Ending_Talk_2,근원,... 어리석은 중생이여.,...Foolish mortals.,……愚蠢的众生。,……愚かな衆生よ。,500ms,Ease out,2000ms,B20000,C0C0C0,FALSE
