@@ -350,8 +350,8 @@ public class EndingController : MonoBehaviour
             if (action.index == 33)
             {
                 // action.conversion 시간(예: 2.5초) 동안 박스가 내려오고 배경이 꺼집니다.
-                upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 200f), action.conversion).SetEase(Ease.OutQuad);
-                downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 200f), action.conversion).SetEase(Ease.OutQuad);
+                upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 400f), action.conversion).SetEase(Ease.OutQuad);
+                downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 400f), action.conversion).SetEase(Ease.OutQuad);
                 backGround.DOFade(0, action.conversion).SetEase(Ease.OutQuad);
                 lineImage.DOFade(0, action.conversion);
             }
@@ -564,8 +564,8 @@ public class EndingController : MonoBehaviour
             Sequence scrollSequence = DOTween.Sequence();
 
             upDark.DOKill(); downDark.DOKill();
-            upDark.sizeDelta = new Vector2(upDark.sizeDelta.x, 200f);
-            downDark.sizeDelta = new Vector2(downDark.sizeDelta.x, 200f);
+            upDark.sizeDelta = new Vector2(upDark.sizeDelta.x, 400f);
+            downDark.sizeDelta = new Vector2(downDark.sizeDelta.x, 400f);
 
             // 1구간
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY1, duration1).SetEase(Ease.OutQuart));
