@@ -144,10 +144,25 @@ public class EndingController : MonoBehaviour
     }
     private async UniTask StartInit()
     {
+        //foreach (var particle in particle_Flowers)
+        //{
+        //    particle.Stop();
+        //}
+
+        // [수정된 부분] 파티클이 뚝 끊기지 않고 자연스럽게 사라지도록 처리
         foreach (var particle in particle_Flowers)
         {
-            particle.Stop();
+            // 1. 일단 새로운 입자 생성을 중단 (StopEmitting)
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
+            // 2. [선택 사항] 이미 화면에 있는 입자들을 서서히 투명하게 만들고 싶다면 아래 로직 추가
+            // 만약 파티클 메테리얼이 지원한다면, DOTween으로 통째로 알파를 깎을 수도 있지만
+            // 보통은 StopEmitting만 해도 남은 입자들이 수명이 다해 자연스럽게 사라집니다.
         }
+
+        // 만약 '뚝' 끊기는 느낌이 강하다면, 
+        // 입자들이 다 사라질 때까지의 '최소 수명'만큼은 기다려준 뒤 다음 연출을 하는 것이 좋습니다.
+        await UniTask.Delay(TimeSpan.FromSeconds(1.0f));
 
         // LocalizationManager.LoadAll();
         SettingClearForStart();
@@ -352,7 +367,7 @@ public class EndingController : MonoBehaviour
             bgmSource.volume = 0f;      // 볼륨을 0으로 초기화 (안 하면 처음에 '쾅!' 하고 크게 들릴 수 있음)
 
             // [수정] 1f 대신 targetVolume으로 3초간 서서히 올리기
-            bgmSource.DOFade(targetVolume, 3.0f).SetEase(Ease.InOutQuad);
+            bgmSource.DOFade(targetVolume, 5.0f).SetEase(Ease.InOutQuad);
 
         }
 
@@ -883,17 +898,17 @@ public class EndingController : MonoBehaviour
             }
         }
 
-        //// =========================================================
-        //// [추가] 2. 모든 대사가 끝난 후 Exhaust BGM 2초 페이드 아웃
-        //// =========================================================
-        //if (bgmSource != null)
-        //{
-        //    bgmSource.DOKill();
-        //    bgmSource.DOFade(0f, 2.0f).SetEase(Ease.InOutQuad).OnComplete(() =>
-        //    {
-        //        bgmSource.Stop();
-        //    });
-        //}
+        // =========================================================
+        // [추가] 2. 모든 대사가 끝난 후 Exhaust BGM 2초 페이드 아웃
+        // =========================================================
+        if (bgmSource != null)
+        {
+            bgmSource.DOKill();
+            bgmSource.DOFade(0f, 2.0f).SetEase(Ease.InOutQuad).OnComplete(() =>
+            {
+                bgmSource.Stop();
+            });
+        }
 
     }
 
@@ -1078,57 +1093,62 @@ public class EndingController : MonoBehaviour
                 //    bgmSource.volume = 0f;
                 //    bgmSource.DOFade(targetVolume, effectTime16).SetEase(action.easeType); // 유저 볼륨까지만!
                 //}
-
-                // [설정] 16번 연출 시간
+                // [설정] 시트의 연출 시간
                 float effectTime16 = action.duration > 0f ? action.duration : 6f;
 
-                // =======================================================
-                // [음악 연출 전용 로직] 기존 곡 페이드아웃 -> 정적 -> 새 곡 시작
-                // =======================================================
-                async UniTask PlayMusicWithGap()
+                async UniTask TransitionSequence()
                 {
-                    AudioSource currentBgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+                    AudioSource bgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
 
-                    if (currentBgm != null && currentBgm.isPlaying)
+                    // 1. [Exhaust 페이드아웃] 새 음악 틀기 '전에' 실행되어야 함
+                    if (bgm != null && bgm.isPlaying)
                     {
-                        // 1. 기존 곡(Exhaust)을 2초 동안 부드럽게 끕니다.
-                        await currentBgm.DOFade(0f, 2.0f).SetEase(Ease.Linear).ToUniTask();
-                        currentBgm.Stop();
+                        // 1초 동안 빠르게 페이드아웃하고 완전히 꺼질 때까지 기다림(await)
+                        bgm.DOKill();
+                        await bgm.DOFade(0f, 3.0f).SetEase(Ease.Linear).ToUniTask();
+                        bgm.Stop();
                     }
 
-                    // 2. [핵심] 완전한 적막 시간 (여운) 부여
-                    // 이 시간을 늘리면 곡 사이의 텀이 더 길어집니다.
-                    await UniTask.Delay(TimeSpan.FromSeconds(2.5f));
+                    // -------------------------------------------------------
+                    // 2. [대기] 완전한 정적 (유저님이 원하는 여운의 시간)
+                    // -------------------------------------------------------
+                    // 예: 2초 동안 정막 유지 (시간은 원하시는 대로 조절하세요)
+                    await UniTask.Delay(TimeSpan.FromSeconds(2.0f));
 
-                    // 3. 이제 새 음악을 재생합니다.
+                    // -------------------------------------------------------
+                    // 3. [동시작동] 화면 밝아짐 + 음악 페이드인 시작!
+                    // -------------------------------------------------------
+
+                    // [음악 시작]
                     Managers.Sound.Play("BGM/EndingTheme2_V2", Define.Sound.BGM, 1, 1, false);
                     AudioSource nextBgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
                     if (nextBgm != null)
                     {
                         nextBgm.DOKill();
                         float targetVol = BGMController.CurrentVolumeBGM;
-                        nextBgm.volume = 0f;
-                        // 4. 새 곡이 시트 설정 시간(effectTime16) 동안 서서히 커집니다.
-                        nextBgm.DOFade(targetVol, effectTime16).SetEase(action.easeType);
+                        nextBgm.volume = 0f; // 0에서 시작해서
+                        // 화면과 똑같이 effectTime16 동안 페이드인
+                        nextBgm.DOFade(targetVol, effectTime16).SetEase(Ease.InOutQuad);
                     }
+
+                    // [화면 시작] 음악과 동시에 실행되도록 await 없이 바로 아래 배치
+                    canvasGroup_NormalEnding.DOKill();
+                    canvasGroup_Sun.DOKill();
+
+                    // 화면도 effectTime16 동안 Linear하게 밝아짐
+                    canvasGroup_NormalEnding.DOFade(1f, effectTime16).SetEase(Ease.InOutQuad);
+                    canvasGroup_Sun.DOFade(1f, effectTime16 * 1.5f).SetEase(Ease.InOutQuad);
                 }
 
-                // 음악 시퀀스 실행 (비동기로 실행하여 다음 코드들이 멈추지 않게 함)
-                PlayMusicWithGap().Forget();
+                // 전체 시퀀스 실행
+                TransitionSequence().Forget();
 
-                // -------------------------------------------------------
-                // [화면/애니메이션 연출]
-                // -------------------------------------------------------
+                // 텍스트 정렬 및 수도승 애니메이션은 즉시 처리
                 content_Text.alignment = TextAlignmentOptions.Midline;
                 SeatAnimation(0.5f).Forget();
-
-                // 2. 화면 페이드 인 (기본 배경 & 태양)
-                canvasGroup_NormalEnding.DOKill();
-                canvasGroup_Sun.DOKill();
-
-                canvasGroup_NormalEnding.DOFade(1f, effectTime16).SetEase(action.easeType);
-                canvasGroup_Sun.DOFade(1f, effectTime16 * 1.5f).SetEase(action.easeType);
                 break;
+
+
 
             //    image_backGroundBright.DOFade(1f, effectTime17).SetEase(curve);
 
