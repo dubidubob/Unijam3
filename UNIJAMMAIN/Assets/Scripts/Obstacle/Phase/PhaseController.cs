@@ -348,17 +348,33 @@ public class PhaseController : MonoBehaviour
 
     private float perfectWeight = 1.0f;
     private float goodWeight = 0.5f;
+    private float missPenalty = 0.25f; // 놓쳤을 때의 감점!
+
     private float CalculateScore()
     {
         float perfectCnt = IngameData.PerfectMobCnt;
         float goodCnt = IngameData.GoodMobCnt;
-        float rate = (perfectCnt * perfectWeight + goodCnt * goodWeight);
         float totalCnt = IngameData.TotalMobCnt;
-        float total = totalCnt;
 
+        //놓친몬스터수
+        float missCnt = totalCnt - perfectCnt - goodCnt;
 
-        return (rate / total) * 100f;
+ 
+        float baseRate = (perfectCnt * perfectWeight) + (goodCnt * goodWeight) - (missCnt * missPenalty);
+        baseRate = UnityEngine.Mathf.Max(0, baseRate); // 점수가 0 밑으로 떨어지는 것 방지
+
+        // 기본 점수를 90점만점 스케일링
+        float baseScore = (baseRate / totalCnt) * 90f;
+
+        // 콤보 보너스 계산 (최대치: 10점 만점)
+
+        float maxCombo = IngameData.MaxCombo; 
+        float comboBonus = (maxCombo / totalCnt) * 10f;
+
+        // 풀콤보(MaxCombo == totalCnt)라면 10점 획득, 중간에 끊겼다면 비율에 따라 획득
+        return baseScore + comboBonus;
     }
+
 
     #region Setting
 

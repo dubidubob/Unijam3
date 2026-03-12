@@ -194,10 +194,14 @@ public static class IngameData
     public static int WrongInputCnt { get; private set; }
     public static int AttackedMobCnt { get; private set; }
 
+    public static int MaxCombo { get; private set; }
+
+    public static int NowCombo =0 ;
+    public static void IncMaxCombo() { NowCombo++;MaxCombo = Mathf.Max(MaxCombo, NowCombo); }
     public static void IncPerfect() { PerfectMobCnt++; OnRankUpdate?.Invoke(RankType.Perfect); }
     public static void IncGood() { GoodMobCnt++; OnRankUpdate?.Invoke(RankType.Good); }
-    public static void IncWrong() { WrongInputCnt++; OnRankUpdate?.Invoke(RankType.Miss); }
-    public static void IncAttacked() { AttackedMobCnt++; OnRankUpdate?.Invoke(RankType.Miss); }
+    public static void IncWrong() { WrongInputCnt++; OnRankUpdate?.Invoke(RankType.Miss); IngameData.NowCombo = 0; }
+    public static void IncAttacked() { AttackedMobCnt++; OnRankUpdate?.Invoke(RankType.Miss); IngameData.NowCombo = 0; }
 
     public static void ActionPerfectEffect(WASDType wasdType) { OnPerfectEffect?.Invoke(wasdType); }
 
@@ -209,6 +213,8 @@ public static class IngameData
         GoodMobCnt = 0;
         WrongInputCnt = 0;
         AttackedMobCnt = 0;
+        NowCombo = 0;
+        MaxCombo = 0;
     }
 
     // 세이브로드
