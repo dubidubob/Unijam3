@@ -18,8 +18,8 @@ MonoBehaviour:
   - rid: 7096144961525252105
   - rid: 7096144961525252106
   MusicPath: BGM/ChapterChristmas_V1
-  StartBeat: 6
-  DelayPaddingTick: 12
+  StartBeat: 10
+  DelayPaddingTick: 16
   backGroundSprite: {fileID: 21300000, guid: 3f3c4561bb27c9b4cbea34b94e1d2981, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 01e0d901559d3fa4c8a3117305ed3453, type: 3}
   colorPalette: {r: 0.3115279, g: 0.4943396, b: 0.07741541, a: 0}
@@ -32,7 +32,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 0
-        startDelayBeat: 8
+        startDelayBeat: 10
         bpm: 156
         timeScale: 1
         preGenerateBeat: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
             m_WaitForCompletion: 0
             m_LocalVariables: []
           monsterCutline: 0
-          delayBeat: 4
+          delayBeat: 6
           characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
           dir: 0
         - textContents:
@@ -74,7 +74,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 52
+        durationBeat: 54
         startDelayBeat: 0
         bpm: 156
         timeScale: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
           WASD_Pattern: AXAXAXXXAXAXAXXXAXAXAXXAAXXXXXXXAXAXAXAXAXAXAXAXAXAXAXAXAXXXAXXXAXAXAXXXAXAXAXXXAXAXAXXAAXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
-          moveBeat: 8
+          moveBeat: 6
           hiding: 0
           dir: 0
           cameraActionDuration: 0
@@ -112,9 +112,9 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 7
-          WASD_Pattern: AXAXAXAXAXAXAXAXAXAXAXAXAXXXXXXXAXAXAXAXAXXXXXXXAXAXAXAXAXXXXXXAAXAXAXAXAXXXXXXXAXAXAXAXAXXXAXXXAXAXAXAXAXXXXXXAAXAXAXAXAXXXXXXAAXAXAXAXAXAXAXAXAXAXAXAXAXXXXXXXAXAXAXAXAXXXXXXXAXAXAXAXAXXXXXXAAXAXAXAXAXXXXXXXAXAXAXAXAXXXAXXXAXAXAXAXAXXXXXXAAXAXAXAXAXXXXXXAAXAXAXAXAXAXAXAXAXAXAXAXAXXX(AD)XXX
+          WASD_Pattern: AXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXXXXXAXXXXXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXXXXXAXXXXXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXXXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXAXXXXXXX
           speedUpRate: 1
-          spawnBeat: 0.5
+          spawnBeat: 0.25
           moveBeat: 4
           hiding: 0
           dir: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
         startDelayBeat: 0
         bpm: 172
         timeScale: 1
-        preGenerateBeat: 4
+        preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
         isStretchWindow: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 8
-          WASD_Pattern: /AXAXAXXAAXXXAXXXAXAXAXAXAXAXAXAXAXAXAXAXAXXXAXXXAXAXAXXXAXAXAXXXAXAXAXXAAXXXAXXXAXAXAXAXAXAXAXAXAXAXAXAXAXXXAXXX/AXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXX/AXXXXXXXXXXXXXXXXXXXXXXX
+          WASD_Pattern: 'AXAXAXXAAXXX/(AD)XXXAXAXAXAXAXAXAXAXAXAXAXAXAXXX/(AD)XXXAXAXAXXXAXAXAXXXAXAXAXXAAXXX/(AD)XXXAXAXAXAXAXAXAXAXAXAXAXAXAXXX/(ASD)XXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXXXXXXXXXXXXXXXXX '
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 8
