@@ -9,7 +9,7 @@ using System.Threading;      // CancellationToken 추가
 
 public class BlurController : MonoBehaviour
 {
-    [SerializeField] GameOverTextSO gameOverTextSO;  
+    [SerializeField] GameOverTextSO gameOverTextSO;
 
     public Image damageImage;
     bool isCoolDown;
@@ -56,7 +56,7 @@ public class BlurController : MonoBehaviour
         }
         damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
 
-       
+
 
         // 콤보 이펙트 관련 
         // 기준 이미지의 높이 측정 (두 세트 모두 같은 높이라고 가정)
@@ -158,11 +158,14 @@ public class BlurController : MonoBehaviour
         }
     }
 
-    // ===== 오른쪽 세트 (아래로 스크롤) =====
+    // 수정 후
     void MoveImageDown(Image img, float move)
     {
         var rt = img.rectTransform;
-        rt.anchoredPosition -= new Vector2(0, move);
+        // 기존 구조체를 수정하는 방식으로 변경
+        Vector2 pos = rt.anchoredPosition;
+        pos.y -= move;
+        rt.anchoredPosition = pos;
     }
 
     void ResetIfOffScreenDown(Image current, Image other)
@@ -427,7 +430,7 @@ public class BlurController : MonoBehaviour
             .OnComplete(() =>
             {
                 // [해결책] 무조건 5f로 가는 게 아니라, 현재 카메라가 잠겨있다면 잠긴 값을 유지!
-            float recoverSize = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
+                float recoverSize = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
                 Camera.main.DOOrthoSize(recoverSize, 0.4f).SetEase(Ease.OutSine);
             });
     }
@@ -464,17 +467,8 @@ public class BlurController : MonoBehaviour
 
     public void PlayComboEffect()
     {
-        if (shiningImages == null || shiningImages.Length == 0 || comboShiningSprites == null || comboShiningSprites.Length == 0)
-        {
-            Debug.LogWarning("콤보 이펙트 설정이 누락되었습니다.");
-            return;
-        }
 
-        // [개선] 배열을 순회하며 모든 이미지를 활성화
-        foreach (Image img in shiningImages)
-        {
-            if (img != null) img.gameObject.SetActive(true);
-        }
+
 
         // 기존 샤인 애니메이션 취소 및 새 시작
         CancelAndDispose(ref _shineCts);
@@ -502,25 +496,23 @@ public class BlurController : MonoBehaviour
     /// </summary>
     private async UniTaskVoid AnimateComboShine(CancellationToken token)
     {
-        // TimeSpan 캐싱 (GC 감소)
         var delay = System.TimeSpan.FromSeconds(animationFrameDelay);
+        int spriteLength = comboShiningSprites.Length; // 캐싱
 
         while (!token.IsCancellationRequested)
         {
-            // [개선] 배열의 모든 이미지를 순회하며 각각 무작위 스프라이트 할당
-            foreach (Image img in shiningImages)
+            for (int i = 0; i < shiningImages.Length; i++)
             {
-                if (img != null)
+                if (shiningImages[i] != null)
                 {
-                    int randomIndex = Random.Range(0, comboShiningSprites.Length);
-                    img.sprite = comboShiningSprites[randomIndex];
+                    // Random.Range 대신 더 가벼운 방식이나 미리 캐싱된 인덱스를 쓸 수도 있지만, 
+                    // 빈도수가 높지 않다면 유지해도 괜찮습니다.
+                    shiningImages[i].sprite = comboShiningSprites[Random.Range(0, spriteLength)];
                 }
             }
-
-            // WaitForSeconds -> UniTask.Delay
             await UniTask.Delay(delay, cancellationToken: token);
         }
-    }
 
-    #endregion
+        #endregion
+    }
 }
