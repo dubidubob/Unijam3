@@ -151,7 +151,7 @@ public class PhaseController : MonoBehaviour
         var _event = chapters[_chapterIdx].Phases[0];
         if (_event is PhaseEvent _parsingEvent)
         {
-            // Phase의 0 부터 끝까지
+            // Phase의 0 부터 끝까지  
             // _parsingEvent.MonsterData[0] 부터 끝까지 MonsterData[i].WASD_Pattern <- string 에 대해 
             // 미리 파싱해두기 
             // GetOrParsePattern 을 타 함수(datainitialize 하는 타 코드에서) 실행할것임.
@@ -680,7 +680,7 @@ public class PhaseController : MonoBehaviour
 
         // 오디오/물리 엔진이 안정화될 때까지 짧게 대기 
         //    ignoreTimeScale: true로 설정하여 퍼즈 상태에서도 흐르게 함
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5f), ignoreTimeScale: true, cancellationToken: token);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f), ignoreTimeScale: true, cancellationToken: token); // 추후 1.5->0.5로 원래값으로수정
         Debug.LogWarning($"{Managers.Game} 과 {Managers.Game.beatClock}");
  
 

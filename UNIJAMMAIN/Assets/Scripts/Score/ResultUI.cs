@@ -108,10 +108,6 @@ public class ResultUI : MonoBehaviour
         // 3. 가져온 텍스트 안의 "{Score}" 부분을 실제 점수로 바꿔치기
         resultScore.text = localizedTemplate.Replace("{Score}", formattedScore);
 
-        if(IngameData.ChapterIdx==7) // 7막이라면
-        {
-            resultScore.text+= LocalizationManager.Get("GameClear_Stage7_GoEndingInfo_Text");
-        }
 
         int idx;
         Define.Rank rank;

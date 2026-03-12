@@ -445,7 +445,7 @@ public class SoundManager
         if(isPlay)
         {
             // ESC 정지 시에 음악 필요 없을 것 같아서, 일단 주석 처리함.
-            //Managers.Sound.Play("BGM/ESCPressed_V1", Define.Sound.SubBGM,1,2);
+            Managers.Sound.Play("BGM/ESCPressed_V1", Define.Sound.SubBGM,1,2);
         }
         else
         {
