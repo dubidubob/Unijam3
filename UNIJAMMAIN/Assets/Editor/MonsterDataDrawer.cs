@@ -12,7 +12,7 @@ public class MonsterDataDrawer : PropertyDrawer
         float spacing = EditorGUIUtility.standardVerticalSpacing;
         float currentY = position.y;
 
-        // 1. 기본 필드 그리기 (isIn, monsterType)
+        // 1. 공통 기본 필드 (isIn, monsterType)
         var isInProp = property.FindPropertyRelative("isIn");
         var monsterTypeProp = property.FindPropertyRelative("monsterType");
 
@@ -30,12 +30,12 @@ public class MonsterDataDrawer : PropertyDrawer
         // 조건 1: MouseClick이 "아닐 때" (WASD_Pattern)
         if (selectedType != Define.MonsterType.MouseClick)
         {
-            var bossNameProp = property.FindPropertyRelative("WASD_Pattern");
-            Rect bossNameRect = new Rect(position.x, currentY, position.width, singleLineHeight);
-            EditorGUI.PropertyField(bossNameRect, bossNameProp);
+            var wasdProp = property.FindPropertyRelative("WASD_Pattern");
+            Rect wasdRect = new Rect(position.x, currentY, position.width, singleLineHeight);
+            EditorGUI.PropertyField(wasdRect, wasdProp);
             currentY += singleLineHeight + spacing;
         }
-        // 조건 2: MouseClick "일 때" (dir, cameraActionDuration, floatDuration)
+        // 조건 2: MouseClick "일 때"
         else
         {
             // 2-1. dir
@@ -50,15 +50,20 @@ public class MonsterDataDrawer : PropertyDrawer
             EditorGUI.PropertyField(cameraActionRect, cameraActionProp);
             currentY += singleLineHeight + spacing;
 
-            // 2-3. [추가됨] floatDuration
-            // MonsterData 클래스에 'floatDuration' 변수가 선언되어 있어야 합니다.
+            // 2-3. floatDuration
             var floatDurationProp = property.FindPropertyRelative("floatDuration");
             Rect floatDurationRect = new Rect(position.x, currentY, position.width, singleLineHeight);
             EditorGUI.PropertyField(floatDurationRect, floatDurationProp);
             currentY += singleLineHeight + spacing;
+
+            // 2-4. [신규 추가] waitForRespondBeat
+            var waitBeatProp = property.FindPropertyRelative("waitForRespondBeat");
+            Rect waitBeatRect = new Rect(position.x, currentY, position.width, singleLineHeight);
+            EditorGUI.PropertyField(waitBeatRect, waitBeatProp);
+            currentY += singleLineHeight + spacing;
         }
 
-        // 2. 나머지 공통 필드 그리기
+        // 3. 나머지 공통 필드
         var speedUpRateProp = property.FindPropertyRelative("speedUpRate");
         Rect speedUpRateRect = new Rect(position.x, currentY, position.width, singleLineHeight);
         EditorGUI.PropertyField(speedUpRateRect, speedUpRateProp);
@@ -86,7 +91,7 @@ public class MonsterDataDrawer : PropertyDrawer
         float singleLineHeight = EditorGUIUtility.singleLineHeight;
         float spacing = EditorGUIUtility.standardVerticalSpacing;
 
-        // 기본 필드 6개 (isIn, monsterType, speedUpRate, spawnBeat, moveBeat, hiding)
+        // 기본 공통 필드 개수 (isIn, monsterType, speedUpRate, spawnBeat, moveBeat, hiding) = 6개
         int fieldCount = 6;
 
         var monsterTypeProp = property.FindPropertyRelative("monsterType");
@@ -96,14 +101,13 @@ public class MonsterDataDrawer : PropertyDrawer
 
             if (selectedType != Define.MonsterType.MouseClick)
             {
-                // MouseClick이 아니면: WASD_Pattern (1개 추가)
+                // WASD_Pattern (1개)
                 fieldCount += 1;
             }
             else
             {
-                // MouseClick 이면: dir + cameraActionDuration + floatDuration (3개 추가)
-                // 여기서 숫자를 3으로 해줘야 UI가 겹치지 않습니다.
-                fieldCount += 3;
+                // dir, cameraActionDuration, floatDuration, waitForRespondBeat (총 4개)
+                fieldCount += 4;
             }
         }
 
