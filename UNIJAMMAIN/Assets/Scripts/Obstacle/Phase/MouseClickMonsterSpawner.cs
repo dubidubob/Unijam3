@@ -177,6 +177,7 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
     private float threshold = 2f;
     // 카메라 원본 회전값 저장용 (복귀를 위해)
     private Quaternion _defaultCameraRot;
+    private Vector3 _defaultCameraPos; // [추가] 카메라 원본 위치 저장용
     private Coroutine _sequenceCoroutine;
 
     private MouseSequenceData _seqData; // 위에서 정의한 설정값
@@ -186,8 +187,8 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
         _data = data;
         _seqData = seqData;
         _spawning = true;
-
         _defaultCameraRot = Camera.main.transform.rotation;
+        _defaultCameraPos = Camera.main.transform.position; //
         // [MOVED] SetLastSpawnTime 로직을 인스턴스 생성 시 처리
         if (IngameData.PhaseDurationSec == 0)
         {
@@ -225,6 +226,8 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
 
     private async UniTaskVoid RunSequence(CancellationToken token, MonsterData data)
     {
+
+
         MouseEnemy myEnemy = null;
         bool sizeChanged = false;
 
@@ -274,8 +277,11 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
     {
         Camera.main.transform.DOKill();
         Camera.main.DOKill();
-
+        // 회전 복구
         Camera.main.transform.DORotate(Vector3.zero, 0.5f).SetEase(Ease.OutSine);
+
+        // [추가] 위치 복구 (저장해둔 초기 위치로)
+        Camera.main.transform.DOMove(_defaultCameraPos, 0.5f).SetEase(Ease.OutSine);
         Camera.main.DOOrthoSize(5f, 0.5f).SetEase(Ease.OutSine).OnComplete(()=>
         {
             CameraController.SetMonsterMode(false); // 카메라 액션까지 모두 끝나면 이제 원래대로 받기

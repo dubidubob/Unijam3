@@ -11,4 +11,5 @@ public struct MonsterData
     public MouseEnemy.Dir dir;
     public float cameraActionDuration;
     public float floatDuration;
+    public float waitForRespondBeat; // 이 줄을 추가하세요!
 }
