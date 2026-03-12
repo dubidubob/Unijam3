@@ -53,6 +53,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504153760568705025
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -70,7 +71,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXXWXWXADXX
+          WASD_Pattern: WWWWWWWWWWWWWWWWW
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 1
@@ -78,7 +79,8 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
-        - isIn: 1
+          waitForRespondBeat: 0
+        - isIn: 0
           monsterType: 1
           WASD_Pattern: (WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)
           speedUpRate: 1
@@ -88,6 +90,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 0
           monsterType: 3
           WASD_Pattern: (WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)(WASD)
@@ -98,6 +101,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504153833746464770
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -123,6 +127,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 5
           WASD_Pattern: WDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)XWDWDASAS(WD)X(AS)X
@@ -133,6 +138,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 9186972795589099526
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -214,6 +220,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 3
           WASD_Pattern: 
@@ -224,3 +231,4 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
