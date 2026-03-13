@@ -67,16 +67,18 @@ public class BeatClock : MonoBehaviour
     {
         if (!_running || IngameData.Pause) return;
 
-        // [삭제됨] BGM 재생 로직 및 초기화 로직은 SetStartTime과 PhaseController로 이동했습니다.
+        // 프레임 시간에 의존하는 Math.Floor 계산을 삭제
+        // 현재 BeatClock이 가리키고 있는 _tick을 그대로 새 BPM의 기준 틱
+        long currentTick = _tick;
 
-        double now = AudioSettings.dspTime;
+  
+        double exactCurrentTickTime = ScheduledTime(currentTick);
 
-        // 현재 시점까지의 틱을 확정 짓고, 기준점(앵커)을 현재로 갱신
-        long currentTick = _lastBpmChangeTick + (long)Math.Floor((now - _lastBpmChangeDspTime) / _beatInterval);
-
-        _lastBpmChangeDspTime = now;
+        _lastBpmChangeDspTime = exactCurrentTickTime;
         _lastBpmChangeTick = currentTick;
         _beatInterval = IngameData.BeatInterval;
+
+       
     }
 
     void Update()

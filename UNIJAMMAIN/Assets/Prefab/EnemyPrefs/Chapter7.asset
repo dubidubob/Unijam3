@@ -74,6 +74,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154169424216065
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -140,6 +141,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 6
           WASD_Pattern: AWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -150,6 +152,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 012301230123012301230123
@@ -160,6 +163,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154192467460096
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -185,6 +189,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 1
@@ -195,6 +200,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154192467460097
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -220,6 +226,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154192467460098
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -245,6 +252,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154192467460099
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -270,6 +278,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -280,6 +289,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154199782588416
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -305,6 +315,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154199782588417
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -330,6 +341,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154199782588418
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -397,6 +409,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154199782588420
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -422,6 +435,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 0
           monsterType: 1
           WASD_Pattern: SXXDXXWXAXXSXXDXWXXAXXSXDXXWXXAX
@@ -432,6 +446,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154199782588421
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -457,6 +472,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 0
           monsterType: 1
           WASD_Pattern: AXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)X
@@ -467,6 +483,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154239622971392
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -492,6 +509,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: WXXWXXWX(AD)XX(AD)XX(AD)X(AWD)XX(AWD)XX(AWD)X(ASD)XX(ASD)XX(ASD)X
@@ -502,6 +520,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154239622971393
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -527,6 +546,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154239622971394
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -552,6 +572,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154239622971395
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -577,6 +598,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 15
           WASD_Pattern: (AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XX
@@ -587,6 +609,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154239622971396
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -612,6 +635,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154239622971397
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -629,7 +653,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: "DXXXDDXD\tDXXXXXXX\tAXXXAAXA\tAXXXXXXXXXX"
+          WASD_Pattern: "XDXXXDDXD\tDXXXXXXX\tAXXXAAXA\tAXXXXXXXXXX"
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -637,6 +661,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154239622971398
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -662,6 +687,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 0101010101010101010101
@@ -672,6 +698,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 7504154239622971399
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -689,7 +716,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: "DXXXDDXD\tDXXXXXXX\tAXXXAAXA\tAXXXXXXXXXX"
+          WASD_Pattern: "XDXXXDDXD\tDXXXXXXX\tAXXXAAXA\tAXXXXXXXXXX"
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -697,6 +724,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 0
@@ -707,6 +735,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 9186972795589099540
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -773,6 +802,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 9186972795589099542
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -798,6 +828,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 9186972795589099543
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -823,6 +854,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0
     - rid: 9186972795589099544
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -848,3 +880,4 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          waitForRespondBeat: 0

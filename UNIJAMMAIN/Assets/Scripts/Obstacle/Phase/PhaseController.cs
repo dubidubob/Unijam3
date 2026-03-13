@@ -220,7 +220,7 @@ public class PhaseController : MonoBehaviour
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
                 float delaySec = delayBeats * (float)IngameData.BeatInterval;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
-                HandleStretchWindowEvent(phaseEvent, delaySec);
+                //HandleStretchWindowEvent(phaseEvent, delaySec);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
@@ -344,11 +344,11 @@ public class PhaseController : MonoBehaviour
 
 
         SetStageIndex(_chapterIdx);
-    }
+    }   
 
     private float perfectWeight = 1.0f;
     private float goodWeight = 0.5f;
-    private float missPenalty = 0.25f; // 놓쳤을 때의 감점!
+    private float missPenalty = 0.15f; // 놓쳤을 때의 감점!
 
     private float CalculateScore()
     {
@@ -371,8 +371,8 @@ public class PhaseController : MonoBehaviour
         float maxCombo = IngameData.MaxCombo; 
         float comboBonus = (maxCombo / totalCnt) * 10f;
 
-        // 풀콤보(MaxCombo == totalCnt)라면 10점 획득, 중간에 끊겼다면 비율에 따라 획득
-        return baseScore + comboBonus;
+        // 최종 점수 (반올림하여 정수로 만드는 것을 추천)
+        return Mathf.Round(baseScore + comboBonus);
     }
 
 

@@ -98,9 +98,8 @@ public class ResultUI : MonoBehaviour
     public async UniTask RankAnimation(float score)
     {
         isAnimationPlaying = true;
-
-        // 1. 점수를 문자열로 변환 (예: 123.45)
-        string formattedScore = score.ToString("0.##");
+        // 또는
+        string formattedScore = score.ToString("F0");
 
         // 2. 번역 시트에서 키(Key)값으로 현재 언어에 맞는 텍스트를 가져옴
         string localizedTemplate = LocalizationManager.Get("GameClear_ScoreExPression_Text");

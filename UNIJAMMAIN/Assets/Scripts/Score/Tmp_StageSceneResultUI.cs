@@ -69,7 +69,7 @@ public class Tmp_StageSceneResultUI : MonoBehaviour, IPointerEnterHandler, IPoin
             return;
         }
         scoreText.text = "Score : ";
-        scoreText.text += score.ToString("F1");
+        scoreText.text += score.ToString("F0");
         // 나타나는 연출 (0.3초 동안)
         scoreCanvasGroup.DOFade(1f, 0.3f);
     }
