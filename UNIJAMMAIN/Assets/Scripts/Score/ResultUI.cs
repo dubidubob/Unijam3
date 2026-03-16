@@ -118,9 +118,13 @@ public class ResultUI : MonoBehaviour
         else { idx = 5; rank = Define.Rank.Bad; }     // 하
 
         // 2. 초기 상태 설정 (애니메이션을 위해 UI 숨기거나 제자리 배치)
+
+        resultImg.DOFade(0, 0);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f), ignoreTimeScale: true);
+
+        resultImg.DOFade(1f, 0);
         resultImg.sprite = rankUI[idx].img;
         resultImg.SetNativeSize();
-
         RectTransform imgRect = resultImg.GetComponent<RectTransform>();
         imgRect.anchoredPosition = new Vector2(0f, imgRect.anchoredPosition.y); // resultImg PosX = 0 에 두기
 
@@ -137,6 +141,8 @@ public class ResultUI : MonoBehaviour
 
         // PosX -222.6으로 이동 (0.6초 동안 부드럽게 감속하며 이동)
         await imgRect.DOAnchorPosX(-222.6f, 1.5f).SetEase(Ease.OutCubic).SetUpdate(true).AsyncWaitForCompletion();
+
+        await UniTask.Delay(TimeSpan.FromSeconds(0.4f), ignoreTimeScale: true);
 
         // resultTxt 출력 (DOText를 이용해 0.5초 동안 타자 치듯 출력)
         await resultTxt.DOText(targetMent, 0.5f).SetUpdate(true).AsyncWaitForCompletion();

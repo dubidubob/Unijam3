@@ -234,6 +234,7 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
         try
         {
             float secPerBeat = 60f / (float)IngameData.GameBpm;
+            
             await UniTask.Delay(TimeSpan.FromSeconds(_data.spawnBeat * secPerBeat), cancellationToken: token);
 
             _parent.ActivateEnemyForSequence(data.dir == MouseEnemy.Dir.Left);
@@ -253,14 +254,14 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
                 Camera.main.transform.DORotate(new Vector3(0, 0, _seqData.tiltAngle * leftOrRight), 0.15f).SetEase(Ease.OutBack);
                 Camera.main.transform.DOShakePosition(0.4f, 1.5f, 10);
             };
-            myEnemy.PlaySlamAction(_seqData.slamAnimDuration, slamImpactAction);
+            myEnemy.PlaySlamAction((float)IngameData.BeatInterval * _data.slamAnimationDuration, slamImpactAction);
 
             // [확대 상태 고정]
             Camera.main.DOKill(false);
-            Camera.main.DOOrthoSize(CameraController.TargetBaseSize, _seqData.slamAnimDuration * 0.3f).SetEase(Ease.OutQuad);
+            Camera.main.DOOrthoSize(CameraController.TargetBaseSize, (float)IngameData.BeatInterval * _data.slamAnimationDuration * 0.3f).SetEase(Ease.OutQuad);
 
             // [핵심] 지정된 duration 동안 아무도 카메라를 건드리지 못하게 대기
-            await UniTask.Delay(TimeSpan.FromSeconds(_seqData.slamAnimDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval * _data.slamAnimationDuration), cancellationToken: token);
             await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval * data.cameraActionDuration), cancellationToken: token);
         }
         catch (OperationCanceledException) { }
@@ -275,17 +276,20 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
 
     public void CameraOriginalAction()
     {
+        // [수정됨] DOKill로 인해 OnComplete가 씹히는 현상을 방지하기 위해 가장 먼저 Lock을 풉니다.
+        CameraController.SetMonsterMode(false);
+
         Camera.main.transform.DOKill();
         Camera.main.DOKill();
+
         // 회전 복구
         Camera.main.transform.DORotate(Vector3.zero, 0.5f).SetEase(Ease.OutSine);
 
-        // [추가] 위치 복구 (저장해둔 초기 위치로)
+        // 위치 복구 (저장해둔 초기 위치로)
         Camera.main.transform.DOMove(_defaultCameraPos, 0.5f).SetEase(Ease.OutSine);
-        Camera.main.DOOrthoSize(5f, 0.5f).SetEase(Ease.OutSine).OnComplete(()=>
-        {
-            CameraController.SetMonsterMode(false); // 카메라 액션까지 모두 끝나면 이제 원래대로 받기
-        });
+
+        // OnComplete 제거: 이미 위에서 Lock을 풀었으므로 단순히 5f로 돌아가기만 하면 됩니다.
+        Camera.main.DOOrthoSize(5f, 0.5f).SetEase(Ease.OutSine);
     }
 
     /* 이 인스턴스를 중지합니다.
@@ -353,7 +357,7 @@ public class MouseSequenceData
     public int tiltHoldBeats = 24;    // 화면이 기울어진 상태 유지 시간 (박자)
 
     [Header("Timings (Fixed Seconds)")]
-    public float slamAnimDuration = 2f;   // 내리찍는 애니메이션 시간 (초)
+    // public float slamAnimDuration = 2f;   // 내리찍는 애니메이션 시간 (초)
     public float recoverDuration = 1.0f;    // 카메라가 원래대로 돌아오는 시간 (초)
 
     [Header("Settings")]

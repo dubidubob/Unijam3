@@ -57,7 +57,7 @@ public class MonsterDataDrawer : PropertyDrawer
             currentY += singleLineHeight + spacing;
 
             // 2-4. [신규 추가] waitForRespondBeat
-            var waitBeatProp = property.FindPropertyRelative("waitForRespondBeat");
+            var waitBeatProp = property.FindPropertyRelative("slamAnimationDuration");
             Rect waitBeatRect = new Rect(position.x, currentY, position.width, singleLineHeight);
             EditorGUI.PropertyField(waitBeatRect, waitBeatProp);
             currentY += singleLineHeight + spacing;

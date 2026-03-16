@@ -10443,7 +10443,6 @@ MonoBehaviour:
   sequenceSettings:
     floatBeats: 8
     tiltHoldBeats: 24
-    slamAnimDuration: 1
     recoverDuration: 1
     tiltAngle: 6
     enlargementSize: 4
@@ -10507,7 +10506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 1
-  TestStageIndex: 11
+  TestStageIndex: 6
   isSinkStage: 0
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}
