@@ -99,6 +99,15 @@ public class SoundManager
             // Yejun - Skips if the requested BGM is already playing.
             if (audioSource.isPlaying && audioSource.clip == audioClip)
             {
+
+                // [추가된 방어 코드] 
+                // 같은 씬 안에서 Play가 중복 호출된 경우 무시하고 기존 BGM 유지!
+                if (_currentSceneName == newSceneName)
+                {
+                    Debug.Log("같은 씬 중복 호출 방어! BGM을 그대로 유지합니다.");
+                    return;
+                }
+
                 bool isSharedBGMPair =
                 (_currentSceneName == "MainTitle" && newSceneName == "StageScene") ||
                 (_currentSceneName == "StageScene" && newSceneName == "MainTitle");

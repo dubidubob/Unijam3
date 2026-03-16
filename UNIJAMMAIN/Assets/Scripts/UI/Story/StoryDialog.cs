@@ -585,19 +585,19 @@ public class StoryDialog : UI_Popup
 
     private IEnumerator SceneMovingCoroutine()
     {
-        // 1. 모든 시각적 연출이 다 끝난 뒤, 게임 씬 넘어가기 '직전'에 페이드아웃 시작
-        // (원하시는 페이드아웃 시간(초)을 넣어주세요. 예: 1.5초)
-        float fadeTime = 1.5f;
+        // [핵심 포인트] X키로 스킵했으면 아주 짧게(0.3초), 다 봤으면 여운 있게 길게(2.5초)
+        float fadeTime = skipAllRequested ? 1f : 2f;
+
+        // 정해진 시간 동안 브금 페이드아웃
         Managers.Sound.BGMFadeOut(fadeTime);
 
-        // 2. 사운드가 서서히 줄어들 동안 씬 이동을 잠깐 홀딩하고 대기합니다.
-        // (이때 화면은 이미 연출이 끝나서 까매진 상태로 사운드만 스무스하게 꺼지게 됩니다)
+        // 사운드가 서서히 줄어들 동안 대기 (스킵 시 0.3초만 대기함)
         yield return new WaitForSecondsRealtime(fadeTime);
 
-        // 3. 완전히 소리 재생 끄기 (게임 씬에서 1초 찔끔 들리는 버그 원천 차단)
+        // 오디오 확실히 정지
         Managers.Sound.StopBGM();
 
-        // 4. 모든 사운드 정리가 끝났으니 진짜로 씬 로딩 시작
+        // 씬 이동
         SceneLoadingManager.Instance.LoadScene("GamePlayScene");
     }
 
