@@ -500,7 +500,7 @@ public class StoryDialog : UI_Popup
 
 
         LoopEnd:
-        Managers.Sound.BGMFadeOut();
+        //Managers.Sound.BGMFadeOut();
         // --- ▼▼▼ 수정된 LoopEnd 로직 ▼▼▼ ---
         Sprite finalBackground = null;         // 최종 배경 저장용
         Coroutine backgroundFadeCoroutine = null; // 배경 페이드 코루틴 저장용
@@ -575,21 +575,40 @@ public class StoryDialog : UI_Popup
 
         // 6. 모든 것이 끝나면 씬 이동
         Debug.Log("All fades completed. Moving scene.");
-        SceneMoving();
+        //SceneMoving();
         // --- ▲▲▲ 수정 끝 ▲▲▲ ---
+        StartCoroutine(SceneMovingCoroutine());
 
         //StartCoroutine(LastOutAnimation());
 
     }
 
-
-    private void SceneMoving()
+    private IEnumerator SceneMovingCoroutine()
     {
+        // 1. 모든 시각적 연출이 다 끝난 뒤, 게임 씬 넘어가기 '직전'에 페이드아웃 시작
+        // (원하시는 페이드아웃 시간(초)을 넣어주세요. 예: 1.5초)
+        float fadeTime = 1.5f;
+        Managers.Sound.BGMFadeOut(fadeTime);
+
+        // 2. 사운드가 서서히 줄어들 동안 씬 이동을 잠깐 홀딩하고 대기합니다.
+        // (이때 화면은 이미 연출이 끝나서 까매진 상태로 사운드만 스무스하게 꺼지게 됩니다)
+        yield return new WaitForSecondsRealtime(fadeTime);
+
+        // 3. 완전히 소리 재생 끄기 (게임 씬에서 1초 찔끔 들리는 버그 원천 차단)
         Managers.Sound.StopBGM();
-        //Managers.Sound.BGMFadeOut();
+
+        // 4. 모든 사운드 정리가 끝났으니 진짜로 씬 로딩 시작
         SceneLoadingManager.Instance.LoadScene("GamePlayScene");
-       
     }
+
+
+    //private void SceneMoving()
+    //{
+    //    Managers.Sound.StopBGM();
+    //    //Managers.Sound.BGMFadeOut();
+    //    SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+
+    //}
 
     #region Enimation
 
@@ -614,8 +633,10 @@ public class StoryDialog : UI_Popup
 
         yield return new WaitForSecondsRealtime(0.6f);
         //currentStoryBackground = null;
-        SceneMoving();
-        
+        //SceneMoving();
+        StartCoroutine(SceneMovingCoroutine());
+
+
     }
     #endregion
 
