@@ -117,7 +117,7 @@ public class MainScene : UI_Popup
             image_Brush.sprite = sprite_Ending_Brush;
             patternBackGround_Image.sprite = sprite_Ending_Pattern;
             image_Monster1.sprite = sprite_Ending_Monster1;
-            image_Monster1.color = new Color(0, 0, 0);
+   
             image_Monster2.sprite = sprite_Ending_Monster2;
             image_Monster1.SetNativeSize();
             image_Monster2.SetNativeSize();
