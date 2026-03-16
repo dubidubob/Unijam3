@@ -81,6 +81,8 @@ public class BlurController : MonoBehaviour
                 _cachedCumulativeBoundaries[i] = sum;
             }
         }
+        ScrollComboImages(this.GetCancellationTokenOnDestroy()).Forget();
+        AnimateComboShine(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     private void OnDestroy()
@@ -109,22 +111,21 @@ public class BlurController : MonoBehaviour
 
     public void ComboEffectOn()
     {
-        Managers.Sound.Play("SFX/Accuracy/ComboBackGround", Define.Sound.SubBGM);
+        if (IsComboEffectOn) return; // 이미 켜져 있다면 중복 실행 방지
+        // Managers.Sound.Play("SFX/Accuracy/ComboBackGround", Define.Sound.SubBGM);
 
         IsComboEffectOn = true;
+
         comboCanvas.DOFade(1, 0.5f);
 
-        // 기존 스크롤 작업 취소 후 새로 시작
-        CancelAndDispose(ref _scrollCts);
-        _scrollCts = new CancellationTokenSource();
-        ScrollComboImages(_scrollCts.Token).Forget();
+        ScrollComboImages(this.GetCancellationTokenOnDestroy()).Forget();
 
         PlayComboEffect();
     }
 
     public void ComboEffectOff()
     {
-        Managers.Sound.SubBGMFadeOut(1.0f);
+        //Managers.Sound.SubBGMFadeOut(1.0f);
         IsComboEffectOn = false;
 
         // 스크롤 작업 중단
@@ -137,7 +138,7 @@ public class BlurController : MonoBehaviour
     // Update() 대신 비동기 루프 사용
     private async UniTaskVoid ScrollComboImages(CancellationToken token)
     {
-        while (!token.IsCancellationRequested)
+        while (IsComboEffectOn && !token.IsCancellationRequested)
         {
             float move = scrollSpeedWeight * Time.deltaTime * (float)IngameData.GameBpm;
 
@@ -153,8 +154,9 @@ public class BlurController : MonoBehaviour
             ResetIfOffScreenUp(leftCombo1, leftCombo2);
             ResetIfOffScreenUp(leftCombo2, leftCombo1);
 
-            // 다음 프레임 대기 (Update 타이밍)
-            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
+            // [개선] 취소 시 내부 Exception 발생을 막아 GC 스파이크 방지
+            bool isCanceled = await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token).SuppressCancellationThrow();
+            if (isCanceled) return;
         }
     }
 
@@ -328,6 +330,8 @@ public class BlurController : MonoBehaviour
 
         seq.OnComplete(() => isSaturationSeqCool = false);
     }
+    // [추가] 쉐이크 트윈만 따로 관리하기 위한 변수
+    private Tween _damageShakeTween;
 
     public void ShowDamageEffect()
     {
@@ -335,18 +339,23 @@ public class BlurController : MonoBehaviour
 
         isCoolDown = true;
         damageImage.DOKill();
-        camera.transform.DOKill(); // 이전 흔들림 중단
+
+        // 💥 [원흉 제거] 모든 카메라 트윈을 죽이는 무식한 코드 삭제!
+        // camera.transform.DOKill(); 
+
+        // 🎯 [해결] 이전에 실행 중이던 데미지 흔들림이 있다면 그것만 깔끔하게 완료(Complete)시킴
+        // Complete()를 쓰면 흔들림이 중간에 멈춰서 카메라가 어긋나는 것을 방지하고 정위치로 돌아갑니다.
+        _damageShakeTween?.Complete();
 
         // 피해 효과 UI 페이드 
         Sequence seq = DOTween.Sequence();
         seq.Append(damageImage.DOFade(1f, 0.15f));
         seq.Append(damageImage.DOFade(0f, 0.15f));
 
-
         PlayRandomHurtSound();
 
-        // 카메라 흔들림 효과 추가
-        camera.transform.DOShakePosition(
+        // 🎯 [해결] 카메라 흔들림 효과를 실행하고 트윈 변수에 저장
+        _damageShakeTween = camera.transform.DOShakePosition(
             duration: shakeDuration,
             strength: shakeStrength,
             vibrato: 8, // 흔들리는 횟수
@@ -419,19 +428,21 @@ public class BlurController : MonoBehaviour
     }
     public void ComboEffect()
     {
-        // 몬스터 액션 중이라면 줌인만 하고, 복귀는 몬스터가 정한 TargetBaseSize로 한다.
         Camera.main.DOKill(false);
 
-        float currentBase = Camera.main.orthographicSize; // 현재 사이즈에서
-        float punchSize = currentBase * 0.9f; // 살짝만 펀치
+        // [수정됨] 현재 실시간 orthographicSize를 가져오면 트윈 도중의 이상한 값을 가져올 수 있습니다.
+        // 목표 상태에 따른 명확한 기준값을 설정하세요.
+        float currentBase = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
+        float punchSize = currentBase * 0.9f;
 
         Camera.main.DOOrthoSize(punchSize, 0.4f)
             .SetEase(Ease.OutQuad)
+            .SetLink(Camera.main.gameObject)
             .OnComplete(() =>
             {
-                // [해결책] 무조건 5f로 가는 게 아니라, 현재 카메라가 잠겨있다면 잠긴 값을 유지!
+                // IsLocked 상태에 맞게 안전하게 복구됩니다.
                 float recoverSize = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
-                Camera.main.DOOrthoSize(recoverSize, 0.4f).SetEase(Ease.OutSine);
+                Camera.main.DOOrthoSize(recoverSize, 0.4f).SetEase(Ease.OutSine).SetLink(Camera.main.gameObject);
             });
     }
 
@@ -467,13 +478,7 @@ public class BlurController : MonoBehaviour
 
     public void PlayComboEffect()
     {
-
-
-
-        // 기존 샤인 애니메이션 취소 및 새 시작
-        CancelAndDispose(ref _shineCts);
-        _shineCts = new CancellationTokenSource();
-        AnimateComboShine(_shineCts.Token).Forget();
+        AnimateComboShine(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     public void StopComboEffect()
@@ -486,7 +491,7 @@ public class BlurController : MonoBehaviour
         {
             foreach (Image img in shiningImages)
             {
-                if (img != null) img.gameObject.SetActive(false);
+                if (img != null) img.enabled = false;
             }
         }
     }
@@ -499,7 +504,7 @@ public class BlurController : MonoBehaviour
         var delay = System.TimeSpan.FromSeconds(animationFrameDelay);
         int spriteLength = comboShiningSprites.Length; // 캐싱
 
-        while (!token.IsCancellationRequested)
+        while (IsComboEffectOn && !token.IsCancellationRequested)
         {
             for (int i = 0; i < shiningImages.Length; i++)
             {
@@ -510,7 +515,9 @@ public class BlurController : MonoBehaviour
                     shiningImages[i].sprite = comboShiningSprites[Random.Range(0, spriteLength)];
                 }
             }
-            await UniTask.Delay(delay, cancellationToken: token);
+            // [개선] 취소 시 내부 Exception 발생을 막아 GC 스파이크 방지
+            bool isCanceled = await UniTask.Delay(delay, cancellationToken: token).SuppressCancellationThrow();
+            if (isCanceled) return;
         }
 
         #endregion

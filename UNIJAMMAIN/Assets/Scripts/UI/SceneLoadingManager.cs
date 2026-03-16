@@ -136,7 +136,7 @@ public class SceneLoadingManager : UI_Base
             DOTween.Kill(enemy.dyingEffectObject);
             GameObject.Destroy(enemy.gameObject);
         }
-
+        Time.timeScale = 1f;
         Managers.Clear();
 
         // 4. 씬 활성화 (아직 문은 닫혀있음)
