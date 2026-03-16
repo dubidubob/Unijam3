@@ -120,9 +120,11 @@ public class ResultUI : MonoBehaviour
         // 2. 초기 상태 설정 (애니메이션을 위해 UI 숨기거나 제자리 배치)
 
         resultImg.DOFade(0, 0);
+        Managers.Sound.Play("SFX/Results/1Result");
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f), ignoreTimeScale: true);
 
         resultImg.DOFade(1f, 0);
+        RankImpactSoundPlay(rank);
         resultImg.sprite = rankUI[idx].img;
         resultImg.SetNativeSize();
         RectTransform imgRect = resultImg.GetComponent<RectTransform>();
@@ -140,17 +142,20 @@ public class ResultUI : MonoBehaviour
         // (TimeScale이 0일 경우를 대비해 SetUpdate(true)를 넣어주는 것이 안전합니다)
 
         // PosX -222.6으로 이동 (0.6초 동안 부드럽게 감속하며 이동)
+        Managers.Sound.Play("SFX/Results/3RankMove");
         await imgRect.DOAnchorPosX(-222.6f, 1.5f).SetEase(Ease.OutCubic).SetUpdate(true).AsyncWaitForCompletion();
 
         await UniTask.Delay(TimeSpan.FromSeconds(0.4f), ignoreTimeScale: true);
 
         // resultTxt 출력 (DOText를 이용해 0.5초 동안 타자 치듯 출력)
+        Managers.Sound.Play("SFX/Results/4Description");
         await resultTxt.DOText(targetMent, 0.5f).SetUpdate(true).AsyncWaitForCompletion();
 
         // 아주 약간 대기 (0.3초)
         await UniTask.Delay(TimeSpan.FromSeconds(0.7f), ignoreTimeScale: true);
 
         // lateUpCanvasGroup 등장 (0.5초 동안 페이드인)
+        Managers.Sound.Play("SFX/Results/5Info");
         await lateUpCanvasGroup.DOFade(1f, 0.2f).SetUpdate(true).AsyncWaitForCompletion();
 
         if (IngameData.ChapterIdx == 7 && !IngameData.boolPracticeMode) // 마지막이라면 엔딩씬으로 이동, 연습모드도 아니어야함
@@ -362,6 +367,22 @@ public class ResultUI : MonoBehaviour
         
 
     }
+    private void RankImpactSoundPlay(Define.Rank rank)
+    {
+        string impactPath = "";
+        if (rank == Define.Rank.Perfect) { impactPath = "4"; } // 100점
+        else if (rank == Define.Rank.Perfect) { impactPath = "4"; } // 최상
+        else if (rank == Define.Rank.Perfect) { impactPath = "3"; }    // 상
+        else if (rank == Define.Rank.Perfect) { impactPath = "2"; } // 중상
+        else if (rank == Define.Rank.Perfect) { impactPath = "1"; }  // 중
+        else
+        {
+            impactPath = "0"; //Bad }
+        }
+        Managers.Sound.Play($"SFX/Results/2RankImpact_{impactPath}");
+        
+    }
+
     private void OnDestroy()
     {
         

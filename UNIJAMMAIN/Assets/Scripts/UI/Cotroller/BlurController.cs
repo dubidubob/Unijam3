@@ -81,6 +81,8 @@ public class BlurController : MonoBehaviour
                 _cachedCumulativeBoundaries[i] = sum;
             }
         }
+        ScrollComboImages(this.GetCancellationTokenOnDestroy()).Forget();
+        AnimateComboShine(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     private void OnDestroy()
@@ -109,22 +111,21 @@ public class BlurController : MonoBehaviour
 
     public void ComboEffectOn()
     {
-        Managers.Sound.Play("SFX/Accuracy/ComboBackGround", Define.Sound.SubBGM);
+        if (IsComboEffectOn) return; // 이미 켜져 있다면 중복 실행 방지
+        // Managers.Sound.Play("SFX/Accuracy/ComboBackGround", Define.Sound.SubBGM);
 
         IsComboEffectOn = true;
+
         comboCanvas.DOFade(1, 0.5f);
 
-        // 기존 스크롤 작업 취소 후 새로 시작
-        CancelAndDispose(ref _scrollCts);
-        _scrollCts = new CancellationTokenSource();
-        ScrollComboImages(_scrollCts.Token).Forget();
+        ScrollComboImages(this.GetCancellationTokenOnDestroy()).Forget();
 
         PlayComboEffect();
     }
 
     public void ComboEffectOff()
     {
-        Managers.Sound.SubBGMFadeOut(1.0f);
+        //Managers.Sound.SubBGMFadeOut(1.0f);
         IsComboEffectOn = false;
 
         // 스크롤 작업 중단
@@ -137,7 +138,7 @@ public class BlurController : MonoBehaviour
     // Update() 대신 비동기 루프 사용
     private async UniTaskVoid ScrollComboImages(CancellationToken token)
     {
-        while (!token.IsCancellationRequested)
+        while (IsComboEffectOn && !token.IsCancellationRequested)
         {
             float move = scrollSpeedWeight * Time.deltaTime * (float)IngameData.GameBpm;
 
@@ -153,8 +154,9 @@ public class BlurController : MonoBehaviour
             ResetIfOffScreenUp(leftCombo1, leftCombo2);
             ResetIfOffScreenUp(leftCombo2, leftCombo1);
 
-            // 다음 프레임 대기 (Update 타이밍)
-            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
+            // [개선] 취소 시 내부 Exception 발생을 막아 GC 스파이크 방지
+            bool isCanceled = await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token).SuppressCancellationThrow();
+            if (isCanceled) return;
         }
     }
 
@@ -428,7 +430,6 @@ public class BlurController : MonoBehaviour
     {
         Camera.main.DOKill(false);
 
-        Debug.Log(Camera.main.name);
         // [수정됨] 현재 실시간 orthographicSize를 가져오면 트윈 도중의 이상한 값을 가져올 수 있습니다.
         // 목표 상태에 따른 명확한 기준값을 설정하세요.
         float currentBase = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
@@ -477,13 +478,7 @@ public class BlurController : MonoBehaviour
 
     public void PlayComboEffect()
     {
-
-
-
-        // 기존 샤인 애니메이션 취소 및 새 시작
-        CancelAndDispose(ref _shineCts);
-        _shineCts = new CancellationTokenSource();
-        AnimateComboShine(_shineCts.Token).Forget();
+        AnimateComboShine(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     public void StopComboEffect()
@@ -496,7 +491,7 @@ public class BlurController : MonoBehaviour
         {
             foreach (Image img in shiningImages)
             {
-                if (img != null) img.gameObject.SetActive(false);
+                if (img != null) img.enabled = false;
             }
         }
     }
@@ -509,7 +504,7 @@ public class BlurController : MonoBehaviour
         var delay = System.TimeSpan.FromSeconds(animationFrameDelay);
         int spriteLength = comboShiningSprites.Length; // 캐싱
 
-        while (!token.IsCancellationRequested)
+        while (IsComboEffectOn && !token.IsCancellationRequested)
         {
             for (int i = 0; i < shiningImages.Length; i++)
             {
@@ -520,7 +515,9 @@ public class BlurController : MonoBehaviour
                     shiningImages[i].sprite = comboShiningSprites[Random.Range(0, spriteLength)];
                 }
             }
-            await UniTask.Delay(delay, cancellationToken: token);
+            // [개선] 취소 시 내부 Exception 발생을 막아 GC 스파이크 방지
+            bool isCanceled = await UniTask.Delay(delay, cancellationToken: token).SuppressCancellationThrow();
+            if (isCanceled) return;
         }
 
         #endregion
