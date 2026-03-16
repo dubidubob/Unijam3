@@ -172,7 +172,7 @@ public class StoryDialog : UI_Popup
 
                     // 이름 TMP 적용
                     TextPanel.GetComponentInChildren<TMP_Text>().text = localizedName;
-
+                    TextPanel.GetComponentInChildren<TMP_Text>().ForceMeshUpdate();
                     StandingImage[0].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[0].gameObject.SetActive(true);
 
@@ -226,7 +226,7 @@ public class StoryDialog : UI_Popup
 
                     // 이름 TMP 적용
                     TextPanel.GetComponentInChildren<TMP_Text>().text = localizedName;
-
+                    TextPanel.GetComponentInChildren<TMP_Text>().ForceMeshUpdate();
 
                     StandingImage[1].sprite = scene.overrideSprite != null ? scene.overrideSprite : scene.speakingCharacterData.CharacterImage;
                     StandingImage[1].gameObject.SetActive(true);
@@ -298,6 +298,7 @@ public class StoryDialog : UI_Popup
                     break;
                 }
                 Text.text = full.Typing(i);
+                Text.ForceMeshUpdate();
                 yield return new WaitForSecondsRealtime(0.02f);
 
             }
@@ -305,6 +306,12 @@ public class StoryDialog : UI_Popup
             // 타이핑이 끝나거나 스킵되면, 항상 전체 텍스트를 확실히 표시
             Text.text = full;
 
+            // ============ [마무리 폭격 콤보] ============
+            Text.ForceMeshUpdate();
+            // 만약 Content Size Fitter(말풍선 자동 크기 조절)를 쓴다면 레이아웃도 강제 새로고침 해야 합니다.
+            LayoutRebuilder.ForceRebuildLayoutImmediate(Text.GetComponent<RectTransform>());
+            LayoutRebuilder.ForceRebuildLayoutImmediate(panelRect);
+            Canvas.ForceUpdateCanvases();
             // 2. 다음으로 넘어가기 위한 대기
             inputRequested = false; // 방금 사용한 스킵 입력을 초기화
             yield return null;      // 입력이 중복 처리되는 것을 막기 위해 한 프레임 대기
@@ -403,7 +410,7 @@ public class StoryDialog : UI_Popup
                 //        TestTexts[idx].text = full;
                 //        yield return null;
                 //    }
-                //}
+                //} 
 
                 // �Է¹����� TextPanel ����
                 if (idx < scenes.Count - 1)

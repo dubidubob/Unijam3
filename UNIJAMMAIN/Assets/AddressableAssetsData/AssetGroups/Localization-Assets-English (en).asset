@@ -53,6 +53,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49913315f7d1c2748914f575d86da946
+    m_Address: Ridi_English
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e28ec4fec8e8bc4f8befe52a912f577
     m_Address: StoryInfo_en
     m_ReadOnly: 1
@@ -97,6 +103,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: be7c32de8f1264e48838fbbc5986c8d1
     m_Address: Deukdo_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c52dd0e1c89423c45b4317a0c1ee1ec1
+    m_Address: Ridi_English_FallBack
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

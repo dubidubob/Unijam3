@@ -840,6 +840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrackedObjects:
   - rid: 3596657104847372401
+  - rid: 9208079295597510687
   references:
     version: 2
     RefIds:
@@ -851,6 +852,7 @@ MonoBehaviour:
           items:
           - rid: 3596657104847372402
           - rid: 3596657104847372404
+          - rid: 9208079295597510682
         m_UpdateType: 0
     - rid: 3596657104847372402
       type: {class: LocalizedAssetProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
@@ -884,6 +886,119 @@ MonoBehaviour:
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
+    - rid: 9208079295597510682
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_lineSpacing
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: 0
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: 0
+        - localeIdentifier:
+            m_Code: ja
+          value: 0
+        - localeIdentifier:
+            m_Code: ko
+          value: 0
+    - rid: 9208079295597510687
+      type: {class: TrackedRectTransform, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 1640535083}
+        m_TrackedProperties:
+          items:
+          - rid: 9208079295597510688
+          - rid: 9208079295597510689
+          - rid: 9208079295597510690
+          - rid: 9208079295597510691
+          - rid: 9208079295597510692
+    - rid: 9208079295597510688
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_AnchoredPosition.x
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: -130
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: -38.99994
+        - localeIdentifier:
+            m_Code: ja
+          value: -38.99994
+        - localeIdentifier:
+            m_Code: ko
+          value: -38.99994
+    - rid: 9208079295597510689
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_AnchoredPosition.y
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: -80
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: -36.00001
+        - localeIdentifier:
+            m_Code: ja
+          value: -36.00001
+        - localeIdentifier:
+            m_Code: ko
+          value: -36.00001
+    - rid: 9208079295597510690
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_SizeDelta.x
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: 300
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: 100
+        - localeIdentifier:
+            m_Code: ja
+          value: 100
+        - localeIdentifier:
+            m_Code: ko
+          value: 100
+    - rid: 9208079295597510691
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_SizeDelta.y
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: 10
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: 50
+        - localeIdentifier:
+            m_Code: ja
+          value: 50
+        - localeIdentifier:
+            m_Code: ko
+          value: 50
+    - rid: 9208079295597510692
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_LocalRotation.z
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: 0.5
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: -0.2588191
+        - localeIdentifier:
+            m_Code: ko
+          value: -0.2588191
+        - localeIdentifier:
+            m_Code: ja
+          value: -0.2588191
 --- !u!114 &828903975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,6 +1013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrackedObjects:
   - rid: 3596657104847372436
+  - rid: 9208079295597510680
   references:
     version: 2
     RefIds:
@@ -942,6 +1058,30 @@ MonoBehaviour:
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
+    - rid: 9208079295597510680
+      type: {class: TrackedRectTransform, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 972226362}
+        m_TrackedProperties:
+          items:
+          - rid: 9208079295597510681
+    - rid: 9208079295597510681
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_AnchoredPosition.x
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: 10
+        - localeIdentifier:
+            m_Code: ko
+          value: -10
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: -10
+        - localeIdentifier:
+            m_Code: ja
+          value: -10
 --- !u!114 &836904002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1040,6 +1180,16 @@ MonoBehaviour:
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
+--- !u!224 &972226361 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3041508556842472729, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+  m_PrefabInstance: {fileID: 1496663460}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &972226362 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1398460184770759005, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+  m_PrefabInstance: {fileID: 1496663460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1020164364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1721,7 +1871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3041508556842472729, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -20
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 3059520221782347320, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -1943,6 +2093,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 4856763248078507625, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4930025569074939287, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -2006,6 +2160,28 @@ PrefabInstance:
     - target: {fileID: 5866366202332533129, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067911702863615586, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_text
+      value: '
+
+        retniW'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067911702863615586, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSize
+      value: 59
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067911702863615586, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 59
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067911702863615586, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_isRightToLeft
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067911702863615586, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_characterSpacing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6161215082293006843, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -2843,6 +3019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrackedObjects:
   - rid: 3596657104847372431
+  - rid: 9208079295597510678
   references:
     version: 2
     RefIds:
@@ -2887,6 +3064,35 @@ MonoBehaviour:
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
+    - rid: 9208079295597510678
+      type: {class: TrackedRectTransform, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 972226361}
+        m_TrackedProperties:
+          items:
+          - rid: 9208079295597510679
+    - rid: 9208079295597510679
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_AnchoredPosition.x
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: -60
+        - localeIdentifier:
+            m_Code: ko
+          value: -60
+        - localeIdentifier:
+            m_Code: ja
+          value: -60
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: -60
+--- !u!224 &1640535083 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4856763248078507625, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+  m_PrefabInstance: {fileID: 1496663460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1665305060
 MonoBehaviour:
   m_ObjectHideFlags: 0
