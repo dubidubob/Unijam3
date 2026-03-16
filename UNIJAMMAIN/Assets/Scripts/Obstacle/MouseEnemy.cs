@@ -122,7 +122,7 @@ public class MouseEnemy : MonoBehaviour
             if (_waveTransform != null)
             {
                 _waveTransform.gameObject.SetActive(false);
-                 Managers.Sound.Play("SFX/Enemy/MaskSmash");
+                 //Managers.Sound.Play("SFX/Enemy/MaskSmash");
             }
         });
 
@@ -132,6 +132,8 @@ public class MouseEnemy : MonoBehaviour
         _slamSequence.Join(image.DOColor(Color.red, slamTime));
         _slamSequence.OnComplete(() =>
         {
+            Managers.Sound.Play("SFX/Enemy/MaskSmash");
+
             onImpact?.Invoke();
 
             // 자연스럽게 사라지기
