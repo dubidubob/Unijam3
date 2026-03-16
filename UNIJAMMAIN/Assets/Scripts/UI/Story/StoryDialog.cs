@@ -500,6 +500,7 @@ public class StoryDialog : UI_Popup
 
 
         LoopEnd:
+        Managers.Sound.BGMFadeOut();
         // --- ▼▼▼ 수정된 LoopEnd 로직 ▼▼▼ ---
         Sprite finalBackground = null;         // 최종 배경 저장용
         Coroutine backgroundFadeCoroutine = null; // 배경 페이드 코루틴 저장용
@@ -584,7 +585,8 @@ public class StoryDialog : UI_Popup
 
     private void SceneMoving()
     {
-        Managers.Sound.BGMFadeOut();
+        Managers.Sound.StopBGM();
+        //Managers.Sound.BGMFadeOut();
         SceneLoadingManager.Instance.LoadScene("GamePlayScene");
        
     }
