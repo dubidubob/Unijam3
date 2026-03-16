@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phases:
   - rid: 9186972795589099526
-  - rid: 7096145065167552514
   - rid: 7504153760568705025
-  - rid: 7096145065167552515
-  - rid: 7096145065167552517
-  - rid: 7096145065167552516
+  - rid: 7096145072561848326
   MusicPath: BGM/Chapter5_V2
   StartBeat: 8
   DelayPaddingTick: 0
@@ -29,41 +26,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7096145065167552514
+    - rid: 7096145072561848326
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 0
-        startDelayBeat: 2
-        bpm: 102
-        timeScale: 1
-        preGenerateBeat: 0
-        extensionCreateBeat: 0
-        isFlipAD: 1
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
-        monsterDatas: []
-    - rid: 7096145065167552515
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 0
-        startDelayBeat: 1.375
-        bpm: 102
-        timeScale: 1
-        preGenerateBeat: 0
-        extensionCreateBeat: 0
-        isFlipAD: 0
-        isStretchWindow: 1
-        stretchX_rate: 1.25
-        stretchY_rate: 0
-        monsterDatas: []
-    - rid: 7096145065167552516
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 80
+        durationBeat: 35
         startDelayBeat: 0
         bpm: 102
         timeScale: 1
@@ -76,48 +43,44 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WWWWWWWWWWWWWWWWWWWWWWWW
+          WASD_Pattern: AXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
           speedUpRate: 1
-          spawnBeat: 1
-          moveBeat: 4
+          spawnBeat: 0.125
+          moveBeat: 2.5
           hiding: 0
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
           slamAnimationDuration: 0
-    - rid: 7096145065167552517
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: AXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          speedUpRate: 1
+          spawnBeat: 0
+          moveBeat: 0
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 1
+          floatDuration: 10
+          slamAnimationDuration: 1
+    - rid: 7504153760568705025
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 4
+        durationBeat: 16.5
         startDelayBeat: 0
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 1
-        stretchX_rate: 0
-        stretchY_rate: 1.4
-        monsterDatas: []
-    - rid: 7504153760568705025
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 17.625
-        startDelayBeat: 0
-        bpm: 102
-        timeScale: 1
-        preGenerateBeat: 0
-        extensionCreateBeat: 0
-        isFlipAD: 1
         isStretchWindow: 0
         stretchX_rate: 0
         stretchY_rate: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 2
-          WASD_Pattern: AXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXDXXXXXXXAXXXXXXXDXXXXXXXAXXXXXXXDXXXX
+          monsterType: 0
+          WASD_Pattern: AXXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXDXXXXXX
           speedUpRate: 1
           spawnBeat: 0.125
           moveBeat: 3
@@ -131,7 +94,7 @@ MonoBehaviour:
       data:
         isIn: 1
         durationBeat: 0
-        startDelayBeat: 11
+        startDelayBeat: 13
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
@@ -150,7 +113,7 @@ MonoBehaviour:
             m_WaitForCompletion: 0
             m_LocalVariables: []
           monsterCutline: 0
-          delayBeat: 4
+          delayBeat: 5
           characterData: {fileID: 0}
           dir: 0
         - textContents:
@@ -181,6 +144,6 @@ MonoBehaviour:
             m_WaitForCompletion: 0
             m_LocalVariables: []
           monsterCutline: 0
-          delayBeat: 4
+          delayBeat: 5
           characterData: {fileID: 11400000, guid: dbbc103488b074646b286ca21de98382, type: 2}
           dir: 0
