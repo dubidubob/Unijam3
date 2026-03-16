@@ -38,6 +38,18 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform D_Enemytransform;
     [SerializeField] Transform W_Enemytransform;
     [SerializeField] Transform S_Enemytransform;
+    private void Awake()
+    {
+        // [추가] 씬 시작 시 static 변수 반드시 초기화
+        IsLocked = false;
+        TargetBaseSize = 5f;
+
+        if (_camera == null) _camera = GetComponent<Camera>();
+
+        // 시작할 때 카메라 사이즈를 즉시 5로 초기화
+        _camera.orthographicSize = 5f;
+    }
+
     public static void SetMonsterMode(bool isActive, float size = 4f)
     {
         IsLocked = isActive;

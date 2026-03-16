@@ -234,7 +234,7 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
         try
         {
             float secPerBeat = 60f / (float)IngameData.GameBpm;
-            
+
             await UniTask.Delay(TimeSpan.FromSeconds(_data.spawnBeat * secPerBeat), cancellationToken: token);
 
             _parent.ActivateEnemyForSequence(data.dir == MouseEnemy.Dir.Left);
@@ -243,7 +243,7 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
 
 
             myEnemy.PlayFloatAction();
-            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval *_data.floatDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval * _data.floatDuration), cancellationToken: token);
             CameraController.SetMonsterMode(true, _seqData.enlargementSize);
 
             System.Action slamImpactAction = () =>
@@ -254,6 +254,7 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
                 Camera.main.transform.DORotate(new Vector3(0, 0, _seqData.tiltAngle * leftOrRight), 0.15f).SetEase(Ease.OutBack);
                 Camera.main.transform.DOShakePosition(0.4f, 1.5f, 10);
             };
+            Debug.Log($"{CameraController.TargetBaseSize}");
             myEnemy.PlaySlamAction((float)IngameData.BeatInterval * _data.slamAnimationDuration, slamImpactAction);
 
             // [확대 상태 고정]
@@ -267,46 +268,60 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
         catch (OperationCanceledException) { }
         finally
         {
+            bool isCancelled = token.IsCancellationRequested;
             // 이 인스턴스가 끝날 때 몬스터가 더 이상 없다면 잠금 해제
             // (만약 멀티 몬스터라면 별도의 카운팅이 필요하지만, 현재는 이 시퀀스 종료 시점에 맞춰 복구)
-            CameraOriginalAction();
+            CameraOriginalAction(isCancelled);
             Stop();
         }
     }
-
-    public void CameraOriginalAction()
+    // 매개변수 isInstant 추가 (기본값 false)
+    public void CameraOriginalAction(bool isInstant = false)
     {
-        // [수정됨] DOKill로 인해 OnComplete가 씹히는 현상을 방지하기 위해 가장 먼저 Lock을 풉니다.
         CameraController.SetMonsterMode(false);
+
+        // [핵심 추가] 씬 전환 등으로 카메라가 이미 파괴되었다면 더 이상 진행하지 않음
+        if (Camera.main == null) return;
 
         Camera.main.transform.DOKill();
         Camera.main.DOKill();
 
+        // 취소된 상황(씬 재시작)이면 애니메이션 시간(duration)을 0으로 줘서 즉시 적용
+        float duration = isInstant ? 0f : 0.5f;
+
         // 회전 복구
-        Camera.main.transform.DORotate(Vector3.zero, 0.5f).SetEase(Ease.OutSine);
+        Camera.main.transform.DORotate(Vector3.zero, duration).SetEase(Ease.OutSine);
 
         // 위치 복구 (저장해둔 초기 위치로)
-        Camera.main.transform.DOMove(_defaultCameraPos, 0.5f).SetEase(Ease.OutSine);
+        Camera.main.transform.DOMove(_defaultCameraPos, duration).SetEase(Ease.OutSine);
 
-        // OnComplete 제거: 이미 위에서 Lock을 풀었으므로 단순히 5f로 돌아가기만 하면 됩니다.
-        Camera.main.DOOrthoSize(5f, 0.5f).SetEase(Ease.OutSine);
+        // 원래 사이즈로 복구
+        Camera.main.DOOrthoSize(5f, duration).SetEase(Ease.OutSine);
     }
 
     /* 이 인스턴스를 중지합니다.
     */
     public void Stop()
     {
-        // 1. UniTask 취소
-        if (_cts != null)
-        {
-            _cts.Cancel();
-            _cts.Dispose();
-            _cts = null;
-        }
+        // 1. 이미 null이라면(재진입되었거나 이미 중지되었다면) 안전하게 무시
+        if (_cts == null) return;
 
-      
+        // 2. 지역 변수에 담고, 원본은 즉시 null 처리 (핵심: 무한 루프 및 재진입 방지)
+        var ctsToDispose = _cts;
+        _cts = null;
+
+        // 3. 이제 안전하게 Cancel과 Dispose 호출
+        if (!ctsToDispose.IsCancellationRequested)
+        {
+            ctsToDispose.Cancel();
+        }
+        ctsToDispose.Dispose();
+
         // 4. 리스트에서 제거
-        _parent.RemovePattern(this);
+        if (_parent != null)
+        {
+            _parent.RemovePattern(this);
+        }
     }
 
     public void PauseForWhile(bool isStop, double dspTime)

@@ -428,6 +428,7 @@ public class BlurController : MonoBehaviour
     {
         Camera.main.DOKill(false);
 
+        Debug.Log(Camera.main.name);
         // [수정됨] 현재 실시간 orthographicSize를 가져오면 트윈 도중의 이상한 값을 가져올 수 있습니다.
         // 목표 상태에 따른 명확한 기준값을 설정하세요.
         float currentBase = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
@@ -435,11 +436,12 @@ public class BlurController : MonoBehaviour
 
         Camera.main.DOOrthoSize(punchSize, 0.4f)
             .SetEase(Ease.OutQuad)
+            .SetLink(Camera.main.gameObject)
             .OnComplete(() =>
             {
                 // IsLocked 상태에 맞게 안전하게 복구됩니다.
                 float recoverSize = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
-                Camera.main.DOOrthoSize(recoverSize, 0.4f).SetEase(Ease.OutSine);
+                Camera.main.DOOrthoSize(recoverSize, 0.4f).SetEase(Ease.OutSine).SetLink(Camera.main.gameObject);
             });
     }
 
