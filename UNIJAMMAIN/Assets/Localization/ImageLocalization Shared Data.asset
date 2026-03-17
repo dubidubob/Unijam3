@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Metadata:
     m_Items:
     - rid: 3596657104847372631
+    - rid: 7096145088389578812
   m_KeyGenerator:
     rid: 3596657104847372630
   references:
@@ -215,10 +216,10 @@ MonoBehaviour:
           - ko
         - m_KeyId: 3127733522137088
           m_TableCodes:
-          - ko
           - ja
-          - en
+          - ko
           - zh-Hans
+          - en
         - m_KeyId: 5094910230257664
           m_TableCodes:
           - zh-Hans
@@ -232,4 +233,13 @@ MonoBehaviour:
           - ko
           - zh-Hans
         m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    - rid: 7096145088389578812
+      type: {class: AssetTypeMetadata, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries:
+        - m_KeyId: 3127733522137088
+          m_TableCodes:
+          - en
+        m_TypeString: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null

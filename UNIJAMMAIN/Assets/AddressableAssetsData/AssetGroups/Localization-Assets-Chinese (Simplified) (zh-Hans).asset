@@ -107,6 +107,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f5bdeca268c81748b546c5a487880a4
+    m_Address: DeukdoBeat_Logo_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a7415bcffde09b24a9876fd0d83bf2c1
     m_Address: Ready_3_zh-CN
     m_ReadOnly: 1

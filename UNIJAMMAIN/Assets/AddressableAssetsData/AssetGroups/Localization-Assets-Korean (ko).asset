@@ -119,6 +119,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7d45d58795cd7149872452be47fcc99
+    m_Address: DeukdoBeat_Logo_ko 1
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c153a21c3391c8842904e28a5fb7926e
     m_Address: MainCredits_ko
     m_ReadOnly: 1

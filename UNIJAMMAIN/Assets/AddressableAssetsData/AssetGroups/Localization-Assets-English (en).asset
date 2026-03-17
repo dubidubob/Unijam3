@@ -89,6 +89,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6515731e2d908ba4fab819da2b770bf9
+    m_Address: DeukdoBeat_Logo_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 70dfff4d21a01624587fec063b3dd98f
     m_Address: Beat_en
     m_ReadOnly: 1
