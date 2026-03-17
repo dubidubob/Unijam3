@@ -156,7 +156,7 @@ MonoBehaviour:
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
-        extensionCreateBeat: 0
+        extensionCreateBeat: 2
         isFlipAD: 0
         isStretchWindow: 0
         stretchX_rate: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: AXXXXXXXSXXXXXXXSXXXDXXXWXXXXXXXWXXXXXXXAXXXSXXXDXXXXXXXDXXXDXXXDXXXXXXXDXXXSXXXWXXXXXXXWXXXWXXXWXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXX
+          WASD_Pattern: AXXXXXXXSXXXXXXXSXXXAXXXWXXXXXXXWXXXXXXXAXXXSXXXDXXXXXXXDXXXDXXXDXXXXXXXDXXXSXXXWXXXXXXXWXXXWXXXWXXXXXXXWXXXXXXXAXXXAXXXAXXXAXXX
           speedUpRate: 1
           spawnBeat: 0.125
           moveBeat: 3
@@ -189,11 +189,33 @@ MonoBehaviour:
         stretchY_rate: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 6
-          WASD_Pattern: 
+          monsterType: 5
+          WASD_Pattern: XXXXXXXXWXXXXXXXDXXXSXXXAXXXXXXXXXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXSXXXDXXXWXXXXXXWXWXXXXXXWXXXXXXXXXXXXXXXAXXXXXXXSXXXXXXXSXXXDXXXWXXXXXXXWXXXXXXXDXXXSXXXAXXXXXXXXXXXXXXXAXXXXXXXAXXXSXXXWXXXXXXXWXXXWXXXWXXXXXXXXXXXXXXXDXXXDXXXDXXXDXXX
           speedUpRate: 1
           spawnBeat: 0.125
           moveBeat: 3
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 15
+          WASD_Pattern: SXXXDXXXW
+          speedUpRate: 1
+          spawnBeat: 0.125
+          moveBeat: 2
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: XXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX2XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX4XXXXXXXXXXXXXXXXXXXXXXX
+          speedUpRate: 1
+          spawnBeat: 0.125
+          moveBeat: 2
           hiding: 0
           dir: 0
           cameraActionDuration: 0
