@@ -348,7 +348,7 @@ public class MainScene : UI_Popup
             // 몬스터 등장까지 끝난 후, 모든 캐릭터 유영 시작
             monsterSeq.OnComplete(() =>
             {
-                StartFloatingAnimation(image_Monk.rectTransform, 10f, 2.5f);     // 수도승
+                StartFloatingAnimation(image_Monk.rectTransform, 15f, 2.5f);     // 수도승
                 StartFloatingAnimation(image_Monster1.rectTransform, 25f, 3.0f); // 몬스터1 (좀 더 느리고 크게)
                 StartFloatingAnimation(image_Monster2.rectTransform, 20f, 2.2f); // 몬스터2 (좀 더 빠르고 작게)
             });
