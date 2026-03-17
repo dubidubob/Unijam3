@@ -42,20 +42,6 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6515731e2d908ba4fab819da2b770bf9
-    m_Address: DeukdoBeat_Logo_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    - Locale-ko
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7bb46ed568bd5744d8b5e9f7a10ba9e0
-    m_Address: DeukdoBeat_Logo_ja
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ja
-    - Locale-zh-Hans
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9f78b5dbd75a3a643a45710eeae2ae44
     m_Address: Assets/Localization/InGameOptionTable Shared Data.asset
     m_ReadOnly: 1

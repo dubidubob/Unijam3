@@ -187,7 +187,8 @@ public class MainScene : UI_Popup
 
 
         // 4. 다음 단계로 넘어가기 전 짧은 대기
-        Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
+        //Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
+        Managers.Sound.Play("BGM/MainTitleogg", Define.Sound.BGM);
         await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
         // 5. 다음 로고 액션 진행

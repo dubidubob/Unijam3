@@ -77,14 +77,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6eaca38901da13a4db4639c14a96b546
-    m_Address: NewRecord_ko
+  - m_GUID: 65ad17ce5fff1b741ac581c49f3f361b
+    m_Address: RightUpKey_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7094019eae9335345b523db75f94d12b
-    m_Address: main_credits_kr
+  - m_GUID: 6eaca38901da13a4db4639c14a96b546
+    m_Address: NewRecord_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
@@ -119,14 +119,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c4eaf556d075de948b4495f7693542d7
-    m_Address: RightUpKey
+  - m_GUID: b7d45d58795cd7149872452be47fcc99
+    m_Address: DeukdoBeat_Logo_ko 1
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e6a00bd5614c5c34c912f77374f77bf2
-    m_Address: LeftDownKey
+  - m_GUID: c153a21c3391c8842904e28a5fb7926e
+    m_Address: MainCredits_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0e1d4888d90c1844b445e500fc42764
+    m_Address: LeftDownKey_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
