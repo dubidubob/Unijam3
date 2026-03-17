@@ -70,18 +70,83 @@ public class BeadController : MonoBehaviour
             blackPanel.alpha = 0f;
             blackPanel.blocksRaycasts = false;
         }
-
         if (uiCamera == null) uiCamera = Camera.main;
 
-
-        map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -4000);
+        // ❌ (삭제) 기존에 무조건 겨울맵을 밖으로 치우던 코드는 삭제합니다.
+        // map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -4000); 
 
         CacheBackgroundBounds();
         LoadBeadStateActive(); // 구슬 활성화
+
+        // 🌟 [추가] 씬에 진입했을 때, 비드를 클릭한 상태로 즉시(Instant) 복구합니다.
+        RestoreCurrentMapStateInstant();
+
         WindMoveAction().Forget();
-        // container들 움직이기 시작
     }
 
+    // 🌟 [새로 추가하는 함수] 씬 로딩 시 현재 스테이지 데이터를 읽어 즉시 맵과 카메라를 맞춥니다.
+    public void RestoreCurrentMapStateInstant()
+    {
+        int chapterIdx = IngameData._nowStageIndex;
+        Debug.Log($"현재 스테이지 인덱스 : {IngameData._nowStageIndex}" );
+        bool isEvent = IngameData.isEventStage;
+
+        RectTransform targetRectToZoom = null;
+        int beadIndex = 0;
+
+        // 1. 현재 모드에 따라 목표 비드 인덱스와 타겟 스프라이트/맵 판별
+        if (!isEvent)
+        {
+            // 스토리 맵 판별 (기존 Up/Down 버튼 로직에 맞춤)
+            if (chapterIdx <= 3) beadIndex = 0;
+            else if (chapterIdx <= 6) beadIndex = 1;
+            else beadIndex = 2;
+
+            if (beadIndex == 2)
+            {
+                dooroo_targetSprite = stageSceneUI.doroDarkSprite;
+                pattern_targetSprite = stageSceneUI.backGroundDarkSprite;
+            }
+            else
+            {
+                dooroo_targetSprite = dooroo_Original;
+                pattern_targetSprite = pattern_Original;
+            }
+            targetRect = storyRect;
+            targetMapObject = map_MainStory;
+            isEventMap = false;
+
+            if (storyBeads != null && beadIndex < storyBeads.Count)
+                targetRectToZoom = storyBeads[beadIndex].GetComponent<RectTransform>();
+        }
+        else
+        {
+            // 이벤트 맵 판별 (예: 8=겨울, 9=도시 등 상황에 맞게)
+            if (chapterIdx <= 9) beadIndex = 0; // 겨울
+            else beadIndex = 2; // 도시
+
+            dooroo_targetSprite = dooroo_Winter;
+            pattern_targetSprite = pattern_Winter;
+            targetRect = eventWinterRect;
+            targetMapObject = map_EventWinter;
+            isEventMap = true;
+
+            if (eventBeads != null && beadIndex < eventBeads.Count)
+                targetRectToZoom = eventBeads[beadIndex].GetComponent<RectTransform>();
+        }
+
+        // 2. 맵 오브젝트 즉시 교체 (보이는 맵은 제자리, 안 보이는 맵은 밖으로)
+        if (map_MainStory != null) map_MainStory.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -3000);
+        if (map_EventWinter != null) map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -3000);
+        if (targetMapObject != null) targetMapObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, default_MapPositionY);
+
+        // 3. StageSceneUI에 타겟을 전달하고, 동기화(SyncMapVisuals) 강제 실행
+        stageSceneUI.MapTargetRectChange(targetRect);
+        stageSceneUI.MapSetting(isEventMap, beadIndex); // 알아서 currentPageLevel과 Y, Z 회전값을 즉시 맞춥니다.
+        NewSpriteSetting(); // 두루마리 배경 세팅
+
+     
+    }
     private async UniTask WindMoveAction()
     {
         // 취소 토큰 (오브젝트가 파괴될 때 루프를 멈추기 위함)
