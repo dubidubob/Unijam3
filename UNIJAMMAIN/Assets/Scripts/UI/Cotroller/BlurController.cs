@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using Cysharp.Threading.Tasks; // UniTask 추가
 using System.Threading;      // CancellationToken 추가
+using System;
 
 public class BlurController : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class BlurController : MonoBehaviour
     private CancellationTokenSource _shineCts;
     private CancellationTokenSource _fadeCts;
     private CancellationTokenSource _destroyCts;
+
+    [SerializeField] private Image image_PracticeMode_Alert;
+    [SerializeField] private Image image_PractoceMode_Info;
 
     public bool isHp10Down_Warning = false;
     private void Awake()
@@ -81,6 +85,11 @@ public class BlurController : MonoBehaviour
                 _cachedCumulativeBoundaries[i] = sum;
             }
         }
+        if(IngameData.boolPracticeMode)
+        {
+            PracticeModeInfoOn().Forget();
+        }
+
         ScrollComboImages(this.GetCancellationTokenOnDestroy()).Forget();
         AnimateComboShine(this.GetCancellationTokenOnDestroy()).Forget();
     }
@@ -94,6 +103,43 @@ public class BlurController : MonoBehaviour
         CancelAndDispose(ref _shineCts);
         CancelAndDispose(ref _fadeCts);
         CancelAndDispose(ref _destroyCts);
+    }
+
+    private async UniTask PracticeModeInfoOn()
+    {
+        await UniTask.WaitForSeconds(0.5f); // 로딩대기
+        // 안전한 비동기 처리를 위해 CancellationToken 가져오기
+        CancellationToken ct = this.GetCancellationTokenOnDestroy();
+
+        // 애니메이션 설정값 (필요에 따라 시간 조절)
+        float moveAndFadeDuration = 0.5f; // 올라오면서 페이드되는 시간
+        float waitTime = 2.0f;            // 대기 시간
+        float fadeOutDuration = 0.5f;     // 사라지는 시간
+
+        // 1. image_PractoceMode__Info: 진입하는 즉시 Color 투명도 1로 설정
+        Color infoColor = image_PractoceMode_Info.color;
+        infoColor.a = 1f;
+        image_PractoceMode_Info.color = infoColor;
+
+        // 2. image_PracticeMode_Alert: 초기 상태 세팅 (PosY 150, 투명도 0)
+        RectTransform alertRect = image_PracticeMode_Alert.rectTransform;
+        alertRect.anchoredPosition = new Vector2(alertRect.anchoredPosition.x, 150f);
+
+        Color alertColor = image_PracticeMode_Alert.color;
+        alertColor.a = 0f;
+        image_PracticeMode_Alert.color = alertColor;
+
+        // 3. PosY 250까지 올라가면서 Fade 1로 만들기
+        await UniTask.WhenAll(
+            alertRect.DOAnchorPosY(250f, moveAndFadeDuration).ToUniTask(cancellationToken: ct),
+            image_PracticeMode_Alert.DOFade(1f, moveAndFadeDuration).ToUniTask(cancellationToken: ct)
+        );
+
+        // 4. 잠시 대기
+        await UniTask.Delay(TimeSpan.FromSeconds(waitTime), cancellationToken: ct);
+
+        // 5. FadeOut (투명도 0으로)
+        await image_PracticeMode_Alert.DOFade(0f, fadeOutDuration).ToUniTask(cancellationToken: ct);
     }
 
     // 토큰 정리 헬퍼 함수
@@ -451,7 +497,7 @@ public class BlurController : MonoBehaviour
     private void PlayRandomHurtSound()
     {
         // 0 또는 1을 무작위로 선택
-        int randomIndex = Random.Range(0, 2);
+        int randomIndex = UnityEngine.Random.Range(0, 2);
 
         if (randomIndex == 0)
         {
@@ -512,7 +558,7 @@ public class BlurController : MonoBehaviour
                 {
                     // Random.Range 대신 더 가벼운 방식이나 미리 캐싱된 인덱스를 쓸 수도 있지만, 
                     // 빈도수가 높지 않다면 유지해도 괜찮습니다.
-                    shiningImages[i].sprite = comboShiningSprites[Random.Range(0, spriteLength)];
+                    shiningImages[i].sprite = comboShiningSprites[UnityEngine.Random.Range(0, spriteLength)];
                 }
             }
             // [개선] 취소 시 내부 Exception 발생을 막아 GC 스파이크 방지

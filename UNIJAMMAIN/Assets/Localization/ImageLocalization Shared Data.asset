@@ -87,6 +87,14 @@ MonoBehaviour:
     m_Key: Image_MainScene_Credits
     m_Metadata:
       m_Items: []
+  - m_Id: 5094910230257664
+    m_Key: Image_PracticeMode_Info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5095265278091264
+    m_Key: Image_PracticeMode_Alert
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 3596657104847372631
@@ -210,6 +218,18 @@ MonoBehaviour:
           - ko
           - ja
           - en
+          - zh-Hans
+        - m_KeyId: 5094910230257664
+          m_TableCodes:
+          - zh-Hans
+          - ja
+          - en
+          - ko
+        - m_KeyId: 5095265278091264
+          m_TableCodes:
+          - en
+          - ja
+          - ko
           - zh-Hans
         m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null

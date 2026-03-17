@@ -965,7 +965,7 @@ public class StageSceneUI : UI_Popup
 
         // 2. 레벨에 따른 목표 좌표 설정
         float targetY = 892f;
-        float targetZ = 0f;
+        float targetZ = 0f; 
 
         switch (currentPageLevel)
         {

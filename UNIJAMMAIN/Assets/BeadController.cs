@@ -113,8 +113,22 @@ public class BeadController : MonoBehaviour
     {
         if (storyBeads != null && index < storyBeads.Count)
         {
+            if (index == 0)
+            {
+                Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 3f);
+            }
+            else if (index == 1)
+            {
+                Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 3f);
+            }
+            else if(index==2)
+            {
+                Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 3f);
+            }
+
+
             // GetComponentInChildren 대신 바로 GetComponent 사용 (상황에 맞춰 조정)
-            if (stageSceneUI.storedStoryLevel == 2) // 지옥스테이지라면 특별 타깃 스프라이트로 지정
+            if (index == 2) // 지옥스테이지라면 특별 타깃 스프라이트로 지정
             {
                 dooroo_targetSprite = stageSceneUI.doroDarkSprite;
                 pattern_targetSprite = stageSceneUI.backGroundDarkSprite;
