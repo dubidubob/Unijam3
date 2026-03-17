@@ -35,26 +35,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 269dba06ef97a484b80e94cf762e9300
-    m_Address: RightUpKey_jp
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ja
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a630c2ec8b3fba4e83f6b351906d3e2
     m_Address: Credit_Text_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4adf3970d3e3ddc4db0e90c7c9e5d363
-    m_Address: LeftDownKey_jp
+  - m_GUID: 4bb89a2c22e3e2440a4e02ff61cc4c6a
+    m_Address: YujiSyuku-Regular
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4bb89a2c22e3e2440a4e02ff61cc4c6a
-    m_Address: YujiSyuku-Regular
+  - m_GUID: 4ee651c858c281a45a31290467085969
+    m_Address: MainCredits_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
@@ -67,12 +61,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6a284c3f56f63e74b98a1c3dce0d9449
     m_Address: Japanese_Bold
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ja
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6b8d571292a1bc7499d72824735d2fdf
-    m_Address: main_credits_jp
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
@@ -113,6 +101,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95ddb116304e0c842bcb666e1f35f6a9
+    m_Address: LeftDownKey_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9eaae5d25f979cf4f80c67de9b2187cd
     m_Address: NextChapterBtn_ja
     m_ReadOnly: 1
@@ -133,6 +127,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d193abc9b41431d498483f3e766de1dd
     m_Address: Ready_Start_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6759c99e38f35b449f86da6a1fccbbb
+    m_Address: RightUpKey_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
