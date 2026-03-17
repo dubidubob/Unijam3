@@ -110,6 +110,7 @@ public class MainScene : UI_Popup
         }
         image_Monster1.DOFade(0, 0); //투명
         image_Monster2.DOFade(0, 0); //투명
+        image_YinYang.DOFade(0, 0);
 
         if (IngameData._isStoryCompleteClear)
         {
@@ -121,6 +122,7 @@ public class MainScene : UI_Popup
             image_Monster2.sprite = sprite_Ending_Monster2;
             image_Monster1.SetNativeSize();
             image_Monster2.SetNativeSize();
+            image_YinYang.DOFade(0.6f, 0);
         }
 
         //  로컬라이제이션 완료 대기 후 로고 액션 시작

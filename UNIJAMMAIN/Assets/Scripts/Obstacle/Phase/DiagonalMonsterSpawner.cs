@@ -132,7 +132,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         if (activatedDiagonalIdx.Contains((int)attackType))
         {
             activatedDiagonalIdx.Remove((int)attackType);
-            deactivatedDiagonalIdx.Add((int)attackType);
+            // deactivatedDiagonalIdx.Add((int)attackType);
             UpdateRankCnt(RankState.Success);
             diagonalDict[attackType].GetComponent<DiagonalMonster>().SetDead();
         }
@@ -163,8 +163,10 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
         foreach (var idx in tempList)
         {
-            // tempList를 순회하므로, 여기서 원본 activatedDiagonalIdx가 수정되어도 에러가 나지 않습니다.
-            diagonalDict[(DiagonalType)idx].GetComponent<DiagonalMonster>().SetDead(false, true);
+            var mob = diagonalDict[(DiagonalType)idx].GetComponent<DiagonalMonster>();
+            mob.SetDead(false, true);
+            // [추가] 즉시 비활성화시켜 OnDisable()을 유도하고 잔여 UniTask를 취소시킴
+            mob.gameObject.SetActive(false);
         }
         activatedDiagonalIdx.Clear();
         deactivatedDiagonalIdx.Clear();
@@ -179,6 +181,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
             pattern.PauseForWhile(isStop, dspTime);
         }
     }
+
 
     public void RemovePattern(DiagonalPatternInstance pattern)
     {
@@ -196,13 +199,18 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
             _patternsToRemove.Clear();
         }
     }
+    // 2-2. RecycleMonsterIndex 함수 수정: 중복 추가 방지
     public void RecycleMonsterIndex(GamePlayDefine.DiagonalType type)
     {
         int t = (int)type;
-        // 활성화 리스트에 있다면 비활성화(대기) 리스트로 되돌림
         if (activatedDiagonalIdx.Contains(t))
         {
             activatedDiagonalIdx.Remove(t);
+        }
+
+        // [수정] 대기열에 없을 때만 추가 (안전장치)
+        if (!deactivatedDiagonalIdx.Contains(t))
+        {
             deactivatedDiagonalIdx.Add(t);
         }
     }

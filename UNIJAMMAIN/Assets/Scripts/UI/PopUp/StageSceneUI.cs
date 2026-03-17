@@ -119,22 +119,40 @@ public class StageSceneUI : UI_Popup
     }
 
 
-      private void Awake()
+    private void Awake()
     {
-        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
+        currentStageIndex = IngameData._nowStageIndex + 1; // 현재 스테이지
+        int nowChapterIdx = currentStageIndex - 1;
 
+        // 🌟 [추가] 씬에 들어올 때 변수 동기화를 확실히 해줍니다.
+        isEventMap = IngameData.isEventStage;
 
-        // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
+        if (!isEventMap)
+        {
+            if (nowChapterIdx <= 3) { currentPageLevel = 0; }
+            else if (nowChapterIdx <= 6) { currentPageLevel = 1; }
+            else { currentPageLevel = 2; }
+        }
+        else
+        {
+            if (nowChapterIdx <= 9) { currentPageLevel = 0; }
+            else { currentPageLevel = 2; }
+        }
+
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap);
+
         if (normalTextMaterial != null)
         {
-            // Material(Material source) 생성자를 사용해 복사본을 만듭니다.
             glowingTextMaterial = new Material(normalTextMaterial);
             SetupGlowMaterial(glowingTextMaterial);
         }
-        currentStageIndex = IngameData._nowStageIndex+1; // 현재 스테이지
+
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
 
-        SetupMapStageByNowChapterIndex();
+        // 🌟 [삭제/주석 처리] 여기서 불확실한 상태의 맵을 강제로 옮기지 않습니다.
+        // BeadController의 Start()에 추가된 RestoreCurrentMapStateInstant()가 
+        // 타겟 맵을 올바르게 할당한 뒤 동기화 시켜줄 것입니다.
+        // SetupMapStageByNowChapterIndex(); 
     }
 
     private void OnDestroy()
@@ -153,19 +171,7 @@ public class StageSceneUI : UI_Popup
     {
         // 1. 현재 스테이지 인덱스를 기반으로 목표 페이지 레벨(0, 1, 2) 계산
         // (가정: 1~3스테이지=Level0, 4~6스테이지=Level1, 7스테이지=Level2)
-        int nowChapterIdx = currentStageIndex-1;
-        if (nowChapterIdx <= 3)
-        {
-            currentPageLevel = 0;
-        }
-        else if (nowChapterIdx <= 6)
-        {
-            currentPageLevel = 1;
-        }
-        else
-        {
-            currentPageLevel = 2;
-        }
+      
 
         // 2. 해당 레벨에 맞는 좌표와 회전값 설정 (애니메이션 없이 즉시 이동)
         float targetY = 892f;   // Level 0 기본값

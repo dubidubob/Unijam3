@@ -443,7 +443,7 @@ public class PhaseController : MonoBehaviour
 
 
             // 새로운 스테이지가 해금되었음.
-            if(IngameData._unLockStageIndex==1|| IngameData._unLockStageIndex == 3)
+            if(IngameData._unLockStageIndex==2|| IngameData._unLockStageIndex == 4)
             {
                 if (IngameData._isFirstClearChapter[IngameData._nowStageIndex]!=true) // 처음들어온 스테이지가 아니라면
                 {
