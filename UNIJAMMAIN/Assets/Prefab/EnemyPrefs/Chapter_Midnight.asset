@@ -22,7 +22,7 @@ MonoBehaviour:
   - rid: 9208079206175997994
   - rid: 9208079206175997995
   - rid: 9208079206175997996
-  MusicPath: BGM/ChapterMidnight_V2
+  MusicPath: BGM/ChapterMidnight_V1
   StartBeat: 24
   DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: f7d2a813792d14f42bdb2669213530ee, type: 3}

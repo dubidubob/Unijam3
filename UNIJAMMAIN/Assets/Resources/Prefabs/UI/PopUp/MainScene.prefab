@@ -187,10 +187,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD654\uBA74\uC744 \uD074\uB9AD\uD574 \uC2DC\uC791\uD558\uC138\uC694"
+  m_text: "\uD654\uBA74\uC744 \uB20C\uB7EC \uC2DC\uC791\uD558\uC2DC\uC624"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1b660ffd6b423d4f9ac7eb254b8d789, type: 2}
-  m_sharedMaterial: {fileID: -8320487334739067656, guid: a1b660ffd6b423d4f9ac7eb254b8d789, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9adb078fbd0f73443ae0e516b3aa8545, type: 2}
+  m_sharedMaterial: {fileID: 838817816838146757, guid: 9adb078fbd0f73443ae0e516b3aa8545, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1387,7 +1387,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 70dfff4d21a01624587fec063b3dd98f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7ce5ac5208a98c48bb5807eae9abce3, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2132,7 +2132,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC2A4\uD1A0\uB9AC \uBAA8\uB4DC"
+  m_text: "\uC5EC\uC815 \uC2DC\uC791"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
   m_sharedMaterial: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
@@ -3137,7 +3137,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: be7c32de8f1264e48838fbbc5986c8d1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 809843fe563989748b337e2fec8ef3c8, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3372,7 +3372,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC635 \uC158"
+  m_text: "\uC124 \uC815"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
   m_sharedMaterial: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
@@ -3894,7 +3894,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -160, y: -23}
+  m_AnchoredPosition: {x: -160, y: -32.4}
   m_SizeDelta: {x: 933, y: 1106}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6221792471532852323
@@ -4004,8 +4004,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC18C\uB9AC\uC5D0 \uC9D1\uC911\uD558\uC2DC\uC624.."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
+  m_sharedMaterial: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4177,6 +4177,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5656868119839113228}
     m_Modifications:
+    - target: {fileID: 2461586851378460755, guid: 014855f5b51004a479ed5c1f89e70917, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
+    - target: {fileID: 2461586851378460755, guid: 014855f5b51004a479ed5c1f89e70917, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
     - target: {fileID: 2745379500850385800, guid: 014855f5b51004a479ed5c1f89e70917, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4747,6 +4755,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4579436989071857621, guid: be0a8b0c8c727ee468b897bdad262d25, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 315c3108e711594458dead04d790c64a, type: 2}
+    - target: {fileID: 4579436989071857621, guid: be0a8b0c8c727ee468b897bdad262d25, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
