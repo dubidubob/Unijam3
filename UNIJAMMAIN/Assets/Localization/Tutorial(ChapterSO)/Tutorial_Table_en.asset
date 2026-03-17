@@ -129,11 +129,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948891
-    m_Localized: To think Dark Spirits would invade this sacred place...
+    m_Localized: To dare trespass upon this sacred ground...
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948892
-    m_Localized: This is no place for the likes of you!
+    m_Localized: Prepare to face your reckoning.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948893
@@ -210,6 +210,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7777608396570624
     m_Localized: All Qi flows as one. I shall gladly entrust myself to this current.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9631275076681728
+    m_Localized: Oh? For a mere human, such fearsome resolve.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9631275135401984
+    m_Localized: Yet, this is no place for you to dare look upon!
     m_Metadata:
       m_Items: []
   references:

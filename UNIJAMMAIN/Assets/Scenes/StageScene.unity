@@ -964,7 +964,7 @@ MonoBehaviour:
           value: 100
         - localeIdentifier:
             m_Code: ko
-          value: 100
+          value: 200
     - rid: 9208079295597510691
       type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
@@ -2091,7 +2091,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 573a722a97f4ae442a427d5be76b3b69, type: 3}
     - target: {fileID: 4856763248078507625, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4856763248078507625, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_LocalRotation.z

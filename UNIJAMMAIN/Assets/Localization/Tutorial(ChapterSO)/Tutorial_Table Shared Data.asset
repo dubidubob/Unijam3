@@ -135,6 +135,14 @@ MonoBehaviour:
     m_Key: CH5_Intro_03
     m_Metadata:
       m_Items: []
+  - m_Id: 9631275076681728
+    m_Key: CH5_Intro_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9631275135401984
+    m_Key: CH5_Intro_05
+    m_Metadata:
+      m_Items: []
   - m_Id: 846767270948891
     m_Key: CH6_Intro_01
     m_Metadata:
