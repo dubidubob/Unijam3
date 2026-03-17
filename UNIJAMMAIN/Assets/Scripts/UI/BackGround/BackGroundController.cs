@@ -366,7 +366,7 @@ public class BackGroundController : MonoBehaviour
                 // Base Scale: 1.0 (평소)
                 // Target Scale: 1.5 (커졌을 때)
                 // -------------------------------------------------------
-                Vector3 targetScale = Vector3.one * 1.3f;
+                Vector3 targetScale = Vector3.one * 1.15f;
 
                 // [단계 A] Kick: 1.0 -> 1.5 (팍! 하고 커짐)
                 // beatDuration의 15% 시간 동안 빠르게 팽창
