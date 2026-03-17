@@ -500,6 +500,7 @@ public class StoryDialog : UI_Popup
 
 
         LoopEnd:
+        //Managers.Sound.BGMFadeOut();
         // --- ▼▼▼ 수정된 LoopEnd 로직 ▼▼▼ ---
         Sprite finalBackground = null;         // 최종 배경 저장용
         Coroutine backgroundFadeCoroutine = null; // 배경 페이드 코루틴 저장용
@@ -574,20 +575,40 @@ public class StoryDialog : UI_Popup
 
         // 6. 모든 것이 끝나면 씬 이동
         Debug.Log("All fades completed. Moving scene.");
-        SceneMoving();
+        //SceneMoving();
         // --- ▲▲▲ 수정 끝 ▲▲▲ ---
+        StartCoroutine(SceneMovingCoroutine());
 
         //StartCoroutine(LastOutAnimation());
 
     }
 
-
-    private void SceneMoving()
+    private IEnumerator SceneMovingCoroutine()
     {
-        Managers.Sound.BGMFadeOut();
+        // [핵심 포인트] X키로 스킵했으면 아주 짧게(0.3초), 다 봤으면 여운 있게 길게(2.5초)
+        float fadeTime = skipAllRequested ? 1f : 2f;
+
+        // 정해진 시간 동안 브금 페이드아웃
+        Managers.Sound.BGMFadeOut(fadeTime);
+
+        // 사운드가 서서히 줄어들 동안 대기 (스킵 시 0.3초만 대기함)
+        yield return new WaitForSecondsRealtime(fadeTime);
+
+        // 오디오 확실히 정지
+        Managers.Sound.StopBGM();
+
+        // 씬 이동
         SceneLoadingManager.Instance.LoadScene("GamePlayScene");
-       
     }
+
+
+    //private void SceneMoving()
+    //{
+    //    Managers.Sound.StopBGM();
+    //    //Managers.Sound.BGMFadeOut();
+    //    SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+
+    //}
 
     #region Enimation
 
@@ -612,8 +633,10 @@ public class StoryDialog : UI_Popup
 
         yield return new WaitForSecondsRealtime(0.6f);
         //currentStoryBackground = null;
-        SceneMoving();
-        
+        //SceneMoving();
+        StartCoroutine(SceneMovingCoroutine());
+
+
     }
     #endregion
 

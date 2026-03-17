@@ -489,12 +489,20 @@ public class StageSceneUI : UI_Popup
         if (_selectedButton != null)
         {
             Time.timeScale = 1.0f;
-            if(IngameData.ChapterIdx>=9) // 이벤트 스테이지는 스토리씬으로안가고 바로 게임으로
+
+            // 1. 문이 닫히는 시간(예: 1.0초)에 맞춰서 브금 페이드아웃 시작!
+            float doorAnimTime = 1.0f; // 문 닫히는 시간에 맞게 숫자를 조절하세요
+            Managers.Sound.BGMFadeOut(doorAnimTime);
+
+            // 이벤트 스테이지는 스토리씬 안가고, 바로 게임플레이씬으로. (이후에 스토리씬 추가되면 수정)
+            if (IngameData.ChapterIdx >= 9)
             {
                 SceneLoadingManager.Instance.LoadScene("GamePlayScene");
             }
-
-            SceneLoadingManager.Instance.LoadScene("StoryScene");
+            else
+            {
+                SceneLoadingManager.Instance.LoadScene("StoryScene");
+            }
         }
         else
         {
