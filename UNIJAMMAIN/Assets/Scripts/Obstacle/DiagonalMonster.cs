@@ -206,12 +206,6 @@ public class DiagonalMonster : MonoBehaviour
             Managers.Game.ComboInc(healingValue);
         }
 
-        var spawner = GetComponentInParent<DiagonalMonsterSpawner>();
-        if (spawner != null)
-        {
-            spawner.RecycleMonsterIndex(diagonalT);
-        }
-
         // Coroutine 대신 UniTask 호출
         PoolOutGoAsync(waitForSeconds).Forget();
     }
@@ -233,6 +227,12 @@ public class DiagonalMonster : MonoBehaviour
         transform.position = _originPos;
         _objectRenderer.color = new Color(_objectRenderer.color.r, _objectRenderer.color.g, _objectRenderer.color.b, 1);
         gameObject.SetActive(false);
+        // [추가] 오브젝트가 완전히 꺼진 후 스포너의 가용 큐(대기열)에 반환
+        var spawner = GetComponentInParent<DiagonalMonsterSpawner>();
+        if (spawner != null)
+        {
+            spawner.RecycleMonsterIndex(diagonalT);
+        }
     }
 
     // IEnumerator -> async UniTaskVoid
