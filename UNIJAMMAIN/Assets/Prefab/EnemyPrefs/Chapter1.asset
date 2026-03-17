@@ -58,6 +58,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7460641668082171905
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -83,6 +84,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7460641668082171906
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -108,6 +110,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7460641668082171907
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -133,6 +136,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -143,6 +147,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7460641668082171908
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -168,6 +173,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8480390322059476994
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -193,6 +199,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8480390322059476995
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -218,6 +225,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -228,6 +236,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8480390322059476996
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -253,6 +262,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8813260913744019457
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -305,3 +315,4 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0

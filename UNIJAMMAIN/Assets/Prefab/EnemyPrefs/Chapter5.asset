@@ -318,9 +318,9 @@ MonoBehaviour:
           moveBeat: 0
           hiding: 0
           dir: 0
-          cameraActionDuration: 10
+          cameraActionDuration: 12
           floatDuration: 4
-          slamAnimationDuration: 3
+          slamAnimationDuration: 4
         - isIn: 1
           monsterType: 3
           WASD_Pattern: SXXXXXXXSXXXXXXXSXXXDXXXWXXXXXXXWXXXXXXXDXXXDXXXWXXXXXXXXXXXXXXXSXXXDXXXWXXXXXXXXXXXXWXXXXXXWXXXWXXXDXXXXXXXDXXXDXXXSXXXXXXXSXXXSXXXXXXXSXXXXXXXXXXXXXXXWXXXXXXXWXXXXXXXDXXXXXXXDXXXXXXXSXXXXXXXSXXXXXXXDXXXXXXXDXXXWXXXWXXXXXXXWXXXXXXXDXXXDXXXS
@@ -329,7 +329,7 @@ MonoBehaviour:
           moveBeat: 0
           hiding: 0
           dir: 1
-          cameraActionDuration: 10
+          cameraActionDuration: 12
           floatDuration: 4
           slamAnimationDuration: 3
     - rid: 7096145088389578824
@@ -470,7 +470,7 @@ MonoBehaviour:
           hiding: 0
           dir: 0
           cameraActionDuration: 3
-          floatDuration: 0.25
+          floatDuration: 0.5
           slamAnimationDuration: 0.5
     - rid: 7504153760568705025
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
