@@ -501,7 +501,7 @@ MonoBehaviour:
           slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 
+          WASD_Pattern: 123412341XXXXXXXX
           speedUpRate: 1
           spawnBeat: 4
           moveBeat: 2
