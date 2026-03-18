@@ -4425,6 +4425,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC5B8\uC5B4"
       objectReference: {fileID: 0}
+    - target: {fileID: 6091397495499120544, guid: 363e7d03300a547448e880293d81810e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 700
+      objectReference: {fileID: 0}
     - target: {fileID: 6318877707923101362, guid: 363e7d03300a547448e880293d81810e, type: 3}
       propertyPath: m_Name
       value: LanguageSettingPanel
@@ -4542,6 +4546,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5365735624105609856}
   m_SourcePrefab: {fileID: 100100000, guid: 363e7d03300a547448e880293d81810e, type: 3}
+--- !u!224 &947246773795188182 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6091397495499120544, guid: 363e7d03300a547448e880293d81810e, type: 3}
+  m_PrefabInstance: {fileID: 6462021510803468918}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1016863092366877892 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6318877707923101362, guid: 363e7d03300a547448e880293d81810e, type: 3}
@@ -4606,6 +4615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrackedObjects:
   - rid: 3596657104847372382
+  - rid: 9208079295597510929
   references:
     version: 2
     RefIds:
@@ -4650,6 +4660,30 @@ MonoBehaviour:
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
+    - rid: 9208079295597510929
+      type: {class: TrackedRectTransform, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 947246773795188182}
+        m_TrackedProperties:
+          items:
+          - rid: 9208079295597510930
+    - rid: 9208079295597510930
+      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_PropertyPath: m_SizeDelta.x
+        m_VariantData:
+        - localeIdentifier:
+            m_Code: en
+          value: 700
+        - localeIdentifier:
+            m_Code: zh-Hans
+          value: 700
+        - localeIdentifier:
+            m_Code: ja
+          value: 700
+        - localeIdentifier:
+            m_Code: ko
+          value: 700
 --- !u!224 &4591451575963668748 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7355973248244736890, guid: 363e7d03300a547448e880293d81810e, type: 3}
