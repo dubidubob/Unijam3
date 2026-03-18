@@ -190,12 +190,8 @@ public class GameManager
     {
         // Steam 업적을위해 InGameData에 처치한 수 저장
         IngameData._defeatEnemyCount++;
-
-        if (IngameData._defeatEnemyCount >= 10000)
-        {
-            Managers.Steam.UnlockAchievement("ACH_COMBO_TOTAL_10000");
-        }
-
+        Debug.Log(IngameData._defeatEnemyCount);
+       
         Combo++;
         IncHealth(healingValue);
 
@@ -222,7 +218,7 @@ public class GameManager
 
     private void HandleComboEffects()
     {
-        if (Combo >= 30 && !isComboEffect)
+        if (Combo >= 50 && !isComboEffect)
         {
             blur.ComboEffectOn();
             isComboEffect = true;

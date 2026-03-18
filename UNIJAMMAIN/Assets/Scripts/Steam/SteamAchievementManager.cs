@@ -38,7 +38,7 @@ public class SteamAchievementManager
             Debug.LogError($"[Steam] 유저 스탯 정보 로드 실패. IO 오류: {bIOFailure}, 결과: {pCallback.m_eResult}");
         }
     }
-
+        
     public void UnlockAchievement(string achievementID)
     {
         // ★ 이 줄을 추가해서 데이터가 로드 안 됐으면 튕겨내게 하세요
@@ -106,5 +106,14 @@ public class SteamAchievementManager
             Debug.LogError("[Steam] 업적 초기화 실패");
         }
     }
+
+    public void SetStat(string statName, int value)
+    {
+        // 스팀 통계 값 설정
+        Steamworks.SteamUserStats.SetStat(statName, value);
+        // 설정한 값을 서버로 전송 (이걸 호출해야 스팀 오버레이에 즉각 반영됨)
+        Steamworks.SteamUserStats.StoreStats();
+    }
+
 
 }
