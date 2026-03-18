@@ -384,7 +384,7 @@ MonoBehaviour:
         bpm: 110
         timeScale: 1
         preGenerateBeat: 0
-        extensionCreateBeat: 0
+        extensionCreateBeat: 2
         isFlipAD: 0
         isMovieAction: 0
         movieDuration: 0
@@ -393,9 +393,9 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: SS(AD)XWW(AD)XSS(AD)XWW(ASD)XSS(AWD)XWW(AWD)XSS(ASD)
+          WASD_Pattern: SXSX(AD)XXXWXWX(AD)XXXSXSX(AD)XXSDXWX(WAD)XXXWXWX(ASD)XXXSXSX(WAD)XXXWXWX
           speedUpRate: 1
-          spawnBeat: 1
+          spawnBeat: 0.5
           moveBeat: 4
           hiding: 0
           dir: 0
@@ -501,7 +501,7 @@ MonoBehaviour:
           slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 123412341XXXXXXXX
+          WASD_Pattern: 1234123XXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 4
           moveBeat: 2
