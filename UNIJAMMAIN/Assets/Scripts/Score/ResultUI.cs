@@ -225,7 +225,7 @@ public class ResultUI : MonoBehaviour
     // Steam: 모든 스테이지의 등급이 최상(Perfect)인지 확인
     private void CheckAllPerfectSteamAchievement()
     {
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i <= 7; i++)
         {
             // 하나라도 Perfect가 아니면 즉시 종료
             if (IngameData.GetBestRankForChapter(i) != Define.Rank.Perfect)
