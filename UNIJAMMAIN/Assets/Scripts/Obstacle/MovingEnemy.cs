@@ -35,7 +35,7 @@ public class MovingEnemy : MonoBehaviour
     private Vector3 playerPos = Vector3.zero;
     private float speed, movingDuration;
     private float _elapsedTime;
-    private Knockback knockback;
+    private Knockback knockback = new Knockback(); // 선언과 동시에 1번만 할당
     public SpriteRenderer monsterImg;
     public GameObject dyingEffectObject;
     private Vector3 origin;
@@ -72,7 +72,7 @@ public class MovingEnemy : MonoBehaviour
         RefreshCancellationToken();
 
         _elapsedTime = 0f;
-        knockback = new Knockback();
+        knockback.OnKnockback(false); // 어차피 ApplyMonsterTypeBehavior에서 다시 설정함
         isKnockbacked = false;
         isDead = false;
         isKnockbackActive = false; // 넉백 상태 초기화 필수
@@ -148,7 +148,7 @@ public class MovingEnemy : MonoBehaviour
         DOTween.Kill(transform, "3Tempo"); // [추가] 3템포 트윈 킬
         monsterImg.DOKill();
     }
-
+    private bool _isDefaultMoveType;
     public void SetVariance(float distance, MonsterData monster, Vector2 sizeDiffRate, Vector3 playerPos, GamePlayDefine.WASDType wasdType, Define.MonsterType monsterType,float timeOffset)
     {
         this._monsterType = monsterType;
@@ -186,7 +186,7 @@ public class MovingEnemy : MonoBehaviour
         }
 
         ApplyMonsterTypeBehavior(monsterType);
-
+        _isDefaultMoveType = !IsCustomMovementType(monsterType);
     }
 
     private void ApplyMonsterTypeBehavior(Define.MonsterType monsterType)
@@ -673,9 +673,11 @@ public class MovingEnemy : MonoBehaviour
     {
         if (isKnockbackActive) return;
 
-        // [수정] 커스텀 이동 타입이더라도 '이동이 끝났다면(!_isCustomMoveFinished)' 무시하고 지나감 -> Move 정상 작동
-        if (IsCustomMovementType(_monsterType) && !_isCustomMoveFinished) return;
+        // [수정 후] 미리 계산해둔 불리언(bool) 값만 확인(압도적으로 빠름)
 
+        if (!_isDefaultMoveType && !_isCustomMoveFinished) return;
+
+        
         Vector3 newPosition = Vector3.MoveTowards(transform.position, playerPos, speed * Time.deltaTime);
         transform.position = newPosition;
     }

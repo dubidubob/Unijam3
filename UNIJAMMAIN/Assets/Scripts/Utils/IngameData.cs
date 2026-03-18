@@ -226,6 +226,16 @@ public static class IngameData
 
     public static void SaveGameData()
     {
+
+        Managers.Steam.SetStat("STAT_COMBO_TOTAL", IngameData._defeatEnemyCount);
+
+        // 3. 업적 언락 (통계가 1만 달성 시 스팀 백엔드에서 자동 언락하게 설정할 수도 있지만, 안전을 위해 코드에 남겨둬도 무방합니다)
+        if (IngameData._defeatEnemyCount >= 10000)
+        {
+            Managers.Steam.UnlockAchievement("ACH_COMBO_TOTAL_10000");
+        }
+
+
         SaveDataContainer data = new SaveDataContainer();
 
         // 현재 데이터 매핑
@@ -281,7 +291,7 @@ public static class IngameData
                     if (data.BestChapterScore != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
                         _bestChapterScore = data.BestChapterScore;
 
-                    if (data.IsFirstClearChapter != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
+                    if (data.IsFirstClearChapter != null && data.IsFirstClearChapter.Length == TOTAL_CHAPTERS)
                         _isFirstClearChapter = data.IsFirstClearChapter;
 
 

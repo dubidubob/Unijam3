@@ -255,7 +255,7 @@ MonoBehaviour:
         isFlipAD: 0
         isMovieAction: 1
         movieDuration: 28
-        movieWaitForStartDuration: 0
+        movieWaitForStartDuration: 2
         style: 2
         monsterDatas:
         - isIn: 1
