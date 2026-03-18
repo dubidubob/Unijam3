@@ -91,9 +91,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -105,6 +106,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8813260913744019467
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -116,9 +118,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -130,6 +133,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -140,6 +144,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8813261245056811010
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -194,9 +199,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -208,6 +214,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -218,6 +225,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8813261245056811014
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -229,9 +237,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -243,6 +252,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -253,6 +263,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8813261245056811015
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -277,7 +288,7 @@ MonoBehaviour:
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 3
-          characterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
+          characterData: {fileID: 11400000, guid: 5a3a054275c883244856667e09c7f31d, type: 2}
           dir: 1
         - textContents:
           - "\uC88C\uC6B0\uAC00 \uB4A4\uBC14\uB010 \uC138\uC0C1 \uC18D\uC5D0\uC11C\uB3C4
@@ -293,7 +304,7 @@ MonoBehaviour:
             m_LocalVariables: []
           monsterCutline: 0
           delayBeat: 4
-          characterData: {fileID: 11400000, guid: 9146f04ac861e8d40b11026785e4596f, type: 2}
+          characterData: {fileID: 11400000, guid: 5a3a054275c883244856667e09c7f31d, type: 2}
           dir: 1
     - rid: 8813261245056811018
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
@@ -306,9 +317,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas: []
     - rid: 9186972792796479490
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
@@ -347,9 +359,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -361,6 +374,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972794462404608
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -372,9 +386,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -386,6 +401,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972794462404610
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -397,9 +413,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 2
@@ -411,6 +428,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972794462404611
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -422,9 +440,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas: []
     - rid: 9186972794462404612
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
@@ -437,9 +456,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 1
@@ -451,6 +471,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972794462404613
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -462,9 +483,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 1
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -476,6 +498,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -486,3 +509,4 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0

@@ -79,6 +79,10 @@ MonoBehaviour:
     m_Key: CH2_Mid_03
     m_Metadata:
       m_Items: []
+  - m_Id: 10177057345372160
+    m_Key: CH2_Mid_04
+    m_Metadata:
+      m_Items: []
   - m_Id: 846767270948879
     m_Key: CH3_Intro_01
     m_Metadata:
