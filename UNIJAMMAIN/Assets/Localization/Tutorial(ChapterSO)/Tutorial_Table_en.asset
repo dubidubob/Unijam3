@@ -81,7 +81,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948878
-    m_Localized: The fog is thickening..! They're using the cover to swarm again.
+    m_Localized: Nimbler than I thought. I shall draw down the fog to hide.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948879
@@ -218,6 +218,11 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9631275135401984
     m_Localized: Yet, this is no place for you to dare look upon!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10177057345372160
+    m_Localized: ...The fog descends. Yet, even in this dense fog, the path remains
+      visible.
     m_Metadata:
       m_Items: []
   references:
