@@ -215,12 +215,8 @@ public class MovingEnemy : MonoBehaviour
                 EnableSpeeding();
                 break;
 
-            case Define.MonsterType.WASD_EDM_Normal:
-                EnableZigZag(_cts.Token).Forget();
-                break;
-
             case Define.MonsterType.WASD_EDM_Dash:
-                EnableSpin();
+                EnableSpeeding();
                 break;
             case Define.MonsterType.WASD_STOPANDGO:
                 EnableStopAndGo(_cts.Token).Forget();
@@ -816,7 +812,7 @@ public class MovingEnemy : MonoBehaviour
     // [수정] tool 영역 안의 IsCustomMovementType 메서드
     private bool IsCustomMovementType(Define.MonsterType type)
     {
-        return type == Define.MonsterType.WASD_EDM_Normal ||
+        return 
                type == Define.MonsterType.WASDFIFO_Slow ||
                type == Define.MonsterType.WASD3Tempo; // [추가] 3템포도 기본 Update 이동 제외
     }

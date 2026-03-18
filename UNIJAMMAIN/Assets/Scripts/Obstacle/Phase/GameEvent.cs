@@ -16,21 +16,27 @@ public abstract class GameEvent
     public int extensionCreateBeat;
 }
 
+
 // 리듬 게임 페이즈를 위한 이벤트
 [System.Serializable]
 public class PhaseEvent : GameEvent
 {
     public bool isFlipAD;
     // NaughtyAttributes 에셋을 사용할 경우의 예시
-    public bool isStretchWindow;
+    public bool isMovieAction;
 
-    [ShowIf("isStretchWindow")] // isStretchWindow가 true일 때만 인스펙터에 표시됨!
+    [ShowIf("isMovieAction")] // isStretchWindow가 true일 때만 인스펙터에 표시됨!
     [AllowNesting]
-    public float stretchX_rate;
+    public float movieDuration;
 
-    [ShowIf("isStretchWindow")]
+    [ShowIf("isMovieAction")]
     [AllowNesting]
-    public float stretchY_rate;
+    public float movieWaitForStartDuration;
+
+
+    [ShowIf("isMovieAction")]
+    [AllowNesting]
+    public Define.MovieStyle style;
     [SerializeField] public List<MonsterData> monsterDatas;
     public IReadOnlyList<MonsterData> MonsterDatas => monsterDatas;
 }

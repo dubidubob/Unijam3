@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using DG.Tweening;
-using System.Runtime.InteropServices;
 
 public class CameraController : MonoBehaviour
 {
@@ -18,26 +19,15 @@ public class CameraController : MonoBehaviour
 
     private CancellationTokenSource _shakeCTS;
 
-    [Header("Window Stretch Settings")]
-    [SerializeField] private bool _useWindowStretch = true;
-    [SerializeField] private int _stretchIntensityX = 100; // 가로로 늘어날 픽셀 양
-    [SerializeField] private int _stretchIntensityY = 100;   // 세로로 늘어날 픽셀 양 (필요 시)
+    // 무비 액션 취소 관리를 위한 CTS
+    private CancellationTokenSource _movieCTS;
 
-    // 설정 변수들 
-    [SerializeField] float expandTime = 1f;  // 커지는 데 걸리는 시간
-    [SerializeField] float holdTime = 0.5f;    // 커진 상태로 유지되는 시간
-    [SerializeField] float shrinkTime = 1f;  // 다시 원래대로 돌아오는 시간
+    [Header("MovieAction")]
+    [SerializeField] Image image_MovieUp;
+    [SerializeField] Image image_MovieDown;
+    [SerializeField] Image image_MovieLeft;
+    [SerializeField] Image image_MovieRight;
 
-
-    [Header("CanvasGroup")]
-    [SerializeField] private CanvasGroup backGroundCanvas;
-
-
-    [Header("Enemy Transform")]
-    [SerializeField] Transform A_Enemytransform;
-    [SerializeField] Transform D_Enemytransform;
-    [SerializeField] Transform W_Enemytransform;
-    [SerializeField] Transform S_Enemytransform;
     private void Awake()
     {
         // [추가] 씬 시작 시 static 변수 반드시 초기화
@@ -48,6 +38,9 @@ public class CameraController : MonoBehaviour
 
         // 시작할 때 카메라 사이즈를 즉시 5로 초기화
         _camera.orthographicSize = 5f;
+
+        // 초기 상태 모두 fillAmount 0으로 세팅
+        ResetAllMovieImages();
     }
 
     public static void SetMonsterMode(bool isActive, float size = 4f)
@@ -57,196 +50,115 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary>
-    /// durationBeat 박자만큼 쿵짝거리는 카메라 액션을 실행합니다.
+    /// 타입에 따라 다른 무비액션
     /// </summary>
-    /// <param name="durationBeat">몇 박자 동안 지속할지 (예: 4.0f)</param>
-    public async UniTask RythmCameraAction(float durationBeat)
+    public void MovieAction(float duration,float waitDuration,Define.MovieStyle style)
     {
-        // 1. 기존에 실행 중인 카메라 액션이 있다면 취소
-        if (_shakeCTS != null)
-        {
-            _shakeCTS.Cancel();
-            _shakeCTS.Dispose();
-        }
-        _shakeCTS = new CancellationTokenSource();
+        // 기존 진행 중인 무비 액션이 있다면 캔슬하여 중복/버그 방지
+        CancelMovieAction();
+        _movieCTS = new CancellationTokenSource();
 
-        // 2. 현재 BPM 가져오기 (Managers.Beat.BPM이 있다고 가정, 없으면 기본값 120)
-        // 실제 프로젝트의 BPM 변수로 교체하세요.
-        float currentBPM = 120f;
-        try { currentBPM = IngameData.GameBpm; } catch { }
+        // 파괴될 때(OnDestroy) 안전하게 멈추도록 연결된 토큰 생성
+        var linkedCTS = CancellationTokenSource.CreateLinkedTokenSource(
+            _movieCTS.Token,
+            this.GetCancellationTokenOnDestroy()
+        );
 
-        float secPerBeat = 60f / currentBPM; // 1박자당 시간(초)
-        int totalBeats = Mathf.FloorToInt(durationBeat); // 총 반복 횟수
+        // 성능을 위해 UniTaskVoid로 실행
+        PlayMovieActionTask(duration,waitDuration, style, linkedCTS.Token).Forget();
+    }
 
-        // 안전 장치: 부모 객체 파괴 시 취소되도록 토큰 연결
-        var token = CancellationTokenSource.CreateLinkedTokenSource(_shakeCTS.Token, this.GetCancellationTokenOnDestroy()).Token;
+    private async UniTaskVoid PlayMovieActionTask(float duration,float waitDruation, Define.MovieStyle style, CancellationToken token)
+    {
+        // 애니메이션이 확! 들어오는/나가는 시간 (duration이 너무 짧을 경우를 대비한 방어코드)
+        float fadeTime = 0.25f;
+        float waitTime = duration;
 
+        await UniTask.WaitForSeconds(waitDruation); 
         try
         {
-            // 3. 박자 수만큼 반복 (쿵-짝-쿵-짝)
-            for (int i = 0; i < totalBeats; i++)
+            Sequence inSeq = DOTween.Sequence();
+
+            // 1. FillAmount 1로 확 가는 함수 (타임스케일 자동 영향 받음)
+            switch (style)
             {
-                // 홀수/짝수에 따라 회전 방향 결정 (오른쪽 -> 왼쪽 -> 오른쪽...)
-                // i가 0부터 시작하므로 첫 박자는 왼쪽(-1) 혹은 오른쪽(1) 취향껏 설정
-                float dir = (i % 2 == 0) ? -1f : 1f;
+                case Define.MovieStyle.Hide_UpDown:
+                    image_MovieUp.fillAmount = 0f; image_MovieDown.fillAmount = 0f;
+                    inSeq.Join(image_MovieUp.DOFillAmount(1f, fadeTime).SetEase(Ease.OutCubic));
+                    inSeq.Join(image_MovieDown.DOFillAmount(1f, fadeTime).SetEase(Ease.OutCubic));
+                    break;
 
-                float timer = 0f;
+                case Define.MovieStyle.Hide_Left:
+                    image_MovieLeft.fillAmount = 0f;
+                    inSeq.Join(image_MovieLeft.DOFillAmount(1f, fadeTime).SetEase(Ease.OutCubic));
+                    break;
 
-                // --- [단일 비트 루프] ---
-                // 한 박자 시간 동안 (강하게 줌인/회전 했다가 -> 서서히 원상복구)
-                while (timer < secPerBeat)
-                {
-                    timer += Time.deltaTime;
-                    float t = timer / secPerBeat; // 0.0 ~ 1.0 진행도
-
-                    // EaseOutCubic: 처음에 확 변했다가 천천히 돌아오는 느낌
-                    // 1에서 0으로 줄어드는 값 (Bounce Factor)
-                    float punch = 1f - Mathf.Pow(t, 3);
-
-                    // A. 회전 처리 (원래 각도(0) + 펀치 * 방향 * 각도)
-                    float currentZ = punch * dir * _rotateAngle;
-                    _camera.transform.rotation = Quaternion.Euler(0, 0, currentZ);
-
-                    // B. 줌 처리 (원래 사이즈 - 펀치 * 강도)
-                    // * TargetBaseSize는 외부에서 모드가 바뀌어도 반영되도록 실시간 참조
-                    float currentSize = TargetBaseSize - (punch * _zoomIntensity);
-                    _camera.orthographicSize = currentSize;
-
-                    await UniTask.Yield(PlayerLoopTiming.Update, token);
-                }
+                case Define.MovieStyle.Hide_Right:
+                    image_MovieRight.fillAmount = 0f;
+                    inSeq.Join(image_MovieRight.DOFillAmount(1f, fadeTime).SetEase(Ease.OutCubic));
+                    break;
             }
-        }
-        catch (System.OperationCanceledException)
-        {
-            // 취소되었을 때 처리 (필요시)
-        }
-        finally
-        {
-            // 4. 액션이 끝나거나 취소되면 카메라를 깔끔하게 원상복구
-            _camera.transform.rotation = Quaternion.identity;
-            _camera.orthographicSize = TargetBaseSize;
 
-            _shakeCTS.Dispose();
-            _shakeCTS = null;
+            Managers.Sound.Play("SFX/InkSplash",Define.Sound.SFX,1,0.7f);
+            // DOTween Task에 토큰을 묶어 게임 오버시 즉시 캔슬되게 설정
+            await inSeq.WithCancellation(token);
+
+            // 2. duration까지 지속 (timeScale의 영향을 받기 위해 delayTiming을 기본값으로 사용)
+            await UniTask.Delay(TimeSpan.FromSeconds(waitTime), ignoreTimeScale: false, cancellationToken: token);
+
+            // 3. 끝날 때 쯤 FadeOut
+            Sequence outSeq = DOTween.Sequence();
+            switch (style)
+            {
+                case Define.MovieStyle.Hide_UpDown:
+                    outSeq.Join(image_MovieUp.DOFillAmount(0f, fadeTime).SetEase(Ease.InCubic));
+                    outSeq.Join(image_MovieDown.DOFillAmount(0f, fadeTime).SetEase(Ease.InCubic));
+                    break;
+
+                case Define.MovieStyle.Hide_Left:
+                    outSeq.Join(image_MovieLeft.DOFillAmount(0f, fadeTime).SetEase(Ease.InCubic));
+                    break;
+
+                case Define.MovieStyle.Hide_Right:
+                    outSeq.Join(image_MovieRight.DOFillAmount(0f, fadeTime).SetEase(Ease.InCubic));
+                    break;
+            }
+
+            await outSeq.WithCancellation(token);
+        }
+        catch (OperationCanceledException)
+        {
+            // [중요] 게임 오버 등으로 인해 캔슬이 발생했을 때 안전하게 원상복구
+            ResetAllMovieImages();
         }
     }
 
     /// <summary>
-    /// 창모드로 게임시작하여 적용될 수 있는 좌우로 OS화면을 넓히는 코드
+    /// 외부(예: 게임 매니저)에서 게임 오버 시 직접 호출하여 멈출 수 있는 메서드
     /// </summary>
-    /// <param name="delaySec">확장하는 데 걸리는 시간 (초)</param>
-    /// <param name="durationBeat">확장 상태를 유지할 박자 수</param>
-    /// <param name="stretchX_rate">가로 확장 비율</param>
-    /// <param name="stretchY_rate">세로 확장 비율</param>
-    async public UniTask WindowStretchAction(float delaySec, float durationBeat, float stretchX_rate = 0, float stretchY_rate = 0)
+    public void CancelMovieAction()
     {
-        // [변화한 부분] 1. 초기 해상도 및 전체화면 여부 저장
-        bool wasFullScreen = Screen.fullScreen;
-        int originalWidth = Screen.width;
-        int originalHeight = Screen.height;
-
-        // [변화한 부분] 몬스터들의 원래 로컬 좌표 기억해두기
-        Vector3 origPosA = A_Enemytransform.localPosition;
-        Vector3 origPosS = S_Enemytransform.localPosition;
-        Vector3 origPosD = D_Enemytransform.localPosition;
-        Vector3 origPosW = W_Enemytransform.localPosition;
-
-
-        AspectRatioEnforcer.Instance.isCameraAction = true;
-        await backGroundCanvas.DOFade(0, 1f);
-
-        // [변화한 부분] 2. 화면 정가운데 배치를 위한 베이스 창모드 전환
-        // 1920x1080 모니터에서 늘어나는 것을 보여주기 위해 1280x720 같은 여유 있는 베이스 사이즈로 1차 전환합니다.
-        int baseWidth = 1280;
-        int baseHeight = 720;
-        Screen.SetResolution(baseWidth, baseHeight, FullScreenMode.Windowed);
-
-        // 해상도가 적용되고 창이 중앙으로 이동할 수 있도록 아주 짧은 프레임 대기
-        await UniTask.DelayFrame(3);
-
-        // [변화한 부분] 몬스터 이동 로직: rate에 비례하여 거리를 계산하고, delaySec 동안 부드럽게 이동시킴
-        // DOLocalMove이므로 position이 아닌 localPosition을 참조해야 위치가 튀지 않습니다.
-        float targetMoveRateX = 1f + stretchX_rate;
-        float targetMoveRateY = 1f + stretchY_rate;
-
-        A_Enemytransform.DOLocalMoveX(A_Enemytransform.localPosition.x * targetMoveRateX, delaySec).SetEase(Ease.OutExpo);
-        S_Enemytransform.DOLocalMoveY(S_Enemytransform.localPosition.y * targetMoveRateY, delaySec).SetEase(Ease.OutExpo);
-        D_Enemytransform.DOLocalMoveX(D_Enemytransform.localPosition.x * targetMoveRateX, delaySec).SetEase(Ease.OutExpo);
-        W_Enemytransform.DOLocalMoveY(W_Enemytransform.localPosition.y * targetMoveRateY, delaySec).SetEase(Ease.OutExpo);
-
-        // 3. 늘어날 양 계산
-        int stretchX = (int)(baseWidth * stretchX_rate);
-        int stretchY = (int)(baseHeight * stretchY_rate);
-
-        float currentBPM = 120f;
-        try { currentBPM = IngameData.GameBpm; } catch { }
-        float secPerBeat = 60f / currentBPM;
-
-        // [변화한 부분] delaySec를 확장 시간으로 사용하고, shrinkDuration도 에러가 안 나게 정의
-        float expandDuration = delaySec;
-        float holdDuration = (secPerBeat * durationBeat);
-        float shrinkDuration = secPerBeat * 2f; // 축소 시간 임의 지정 (원하시는 박자 수로 수정 가능)
-
-        var token = this.GetCancellationTokenOnDestroy();
-
-        try
+        if (_movieCTS != null)
         {
-            // A. 확장 (delaySec 동안 창모드 변환 후 점진적 늘리기)
-            await DOVirtual.Float(0, 1, expandDuration, value =>
-            {
-                int targetWidth = baseWidth + (int)(value * stretchX);
-                int targetHeight = baseHeight + (int)(value * stretchY);
-                Screen.SetResolution(targetWidth, targetHeight, FullScreenMode.Windowed);
-            }).SetEase(Ease.OutExpo).ToUniTask(cancellationToken: token);
-
-            // B. 유지 (Hold)
-            if (holdDuration > 0)
-            {
-                await UniTask.Delay(System.TimeSpan.FromSeconds(holdDuration), cancellationToken: token);
-            }
-
-            // C. 축소 (1 -> 0)
-            await DOVirtual.Float(1, 0, shrinkDuration, value =>
-            {
-                int targetWidth = baseWidth + (int)(value * stretchX);
-                int targetHeight = baseHeight + (int)(value * stretchY);
-                Screen.SetResolution(targetWidth, targetHeight, FullScreenMode.Windowed);
-                A_Enemytransform.DOLocalMove(origPosA, shrinkDuration).SetEase(Ease.InOutSine);
-                S_Enemytransform.DOLocalMove(origPosS, shrinkDuration).SetEase(Ease.InOutSine);
-                D_Enemytransform.DOLocalMove(origPosD, shrinkDuration).SetEase(Ease.InOutSine);
-                W_Enemytransform.DOLocalMove(origPosW, shrinkDuration).SetEase(Ease.InOutSine);
-
-            }).SetEase(Ease.InOutSine).ToUniTask(cancellationToken: token); // 자연스러운 축소를 위해 Ease 변경
-        }
-        catch (System.OperationCanceledException) { }
-        finally
-        {
-            // [변화한 부분] 기존의 창모드 크기 or 전체화면 모드였다면 원래대로 완벽하게 복귀
-            FullScreenMode targetMode = wasFullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-            Screen.SetResolution(originalWidth, originalHeight, targetMode);
-
-            await backGroundCanvas.DOFade(1, 1f);
-            A_Enemytransform.localPosition = origPosA;
-            S_Enemytransform.localPosition = origPosS;
-            D_Enemytransform.localPosition = origPosD;
-            W_Enemytransform.localPosition = origPosW;
-
-            AspectRatioEnforcer.Instance.isCameraAction = false;
+            _movieCTS.Cancel();
+            _movieCTS.Dispose();
+            _movieCTS = null;
         }
     }
 
-    [Header("Render Texture Setup")]
-    [SerializeField] private Canvas _overlayCanvas; // 최상위 Canvas (Constant Pixel Size 권장)
-    [SerializeField] private UnityEngine.UI.RawImage _renderDisplay; // 게임 화면을 보여줄 RawImage
-
-  
-    /// <summary>
-    /// t값(0~1)에 따라 해상도를 실시간으로 적용하는 헬퍼 함수
-    /// </summary>
-    private void ApplyResolution(int baseW, int baseH, float t)
+    private void ResetAllMovieImages()
     {
-        int targetWidth = baseW + (int)(t * _stretchIntensityX);
-        int targetHeight = baseH + (int)(t * _stretchIntensityY);
-        Screen.SetResolution(targetWidth, targetHeight, FullScreenMode.Windowed);
+        // DOTween 킬링 후 초기화 (null 체크로 에러 방지)
+        if (image_MovieUp != null) { image_MovieUp.DOKill(); image_MovieUp.fillAmount = 0f; }
+        if (image_MovieDown != null) { image_MovieDown.DOKill(); image_MovieDown.fillAmount = 0f; }
+        if (image_MovieLeft != null) { image_MovieLeft.DOKill(); image_MovieLeft.fillAmount = 0f; }
+        if (image_MovieRight != null) { image_MovieRight.DOKill(); image_MovieRight.fillAmount = 0f; }
+    }
+
+    private void OnDestroy()
+    {
+        CancelMovieAction();
+        _shakeCTS?.Cancel();
+        _shakeCTS?.Dispose();
     }
 }
