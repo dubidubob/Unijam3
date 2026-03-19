@@ -224,12 +224,17 @@ public class PrologueController : MonoBehaviour
     // ==========================================
     private async UniTaskVoid PlayPrologueSequence()
     {
-        Managers.Sound.Play("BGM/Prolog", Define.Sound.BGM, 1, 1, false);
-        AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
-        if(bgmSource!=null)
-        {
-            await UniTask.WaitUntil(() => bgmSource.isPlaying);
-        }
+        // 1. 현재 오디오 엔진 시간에서 0.5초(혹은 1초) 뒤를 시작 시간으로 설정합니다.
+        // 이 짧은 대기 시간 동안 오디오 파일 로딩 및 버퍼링이 안전하게 끝납니다.
+        double musicStartTime = AudioSettings.dspTime + 0.5f;
+
+        // 2. 사운드 매니저를 통해 "musicStartTime에 정확히 재생하라"고 예약합니다.
+        // (PhaseController에 쓰신 Managers.Sound.PlayScheduled를 그대로 사용)
+        Managers.Sound.PlayScheduled("BGM/Prolog", musicStartTime, Define.Sound.BGM);
+
+        // 3. 프레임이 아닌, 절대적인 오디오 시간이 시작 시간이 될 때까지 대기합니다.
+
+        await UniTask.WaitUntil(() => AudioSettings.dspTime >= musicStartTime);
         foreach (var action in prologueSequence)
         {
             List<UniTask> tasks = new List<UniTask>();
