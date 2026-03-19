@@ -99,9 +99,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -226,13 +227,14 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 13
+          WASD_Pattern: 13XX
           speedUpRate: 1
           spawnBeat: 8
           moveBeat: 2
@@ -303,9 +305,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
