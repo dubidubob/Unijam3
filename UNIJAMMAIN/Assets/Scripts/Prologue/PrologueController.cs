@@ -373,6 +373,7 @@ public class PrologueController : MonoBehaviour
             }
         }
         Debug.Log("프롤로그 텍스트 시퀀스 종료!");
+        Managers.Sound.StopBGM();
     }
 
 
