@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: RIDIBatang SDF 1
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1834076233
   material: {fileID: -3477115061824687801}
-  materialHashCode: 0
+  materialHashCode: 1761091785
   m_Version: 1.1.0
   m_SourceFontFileGUID: 4af639907b749c544972741da7bbc605
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 4af639907b749c544972741da7bbc605, type: 3}
