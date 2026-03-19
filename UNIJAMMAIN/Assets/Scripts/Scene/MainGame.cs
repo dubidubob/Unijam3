@@ -50,6 +50,7 @@ public class MainGame : BaseScene
         PauseManager.ControlTime(false);
         Init();
         Managers.Init();
+        Managers.Sound.StopBGM();
     }
 
     private void Update()

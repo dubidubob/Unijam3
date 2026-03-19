@@ -225,6 +225,11 @@ public class PrologueController : MonoBehaviour
     private async UniTaskVoid PlayPrologueSequence()
     {
         Managers.Sound.Play("BGM/Prolog", Define.Sound.BGM, 1, 1, false);
+        AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+        if(bgmSource!=null)
+        {
+            await UniTask.WaitUntil(() => bgmSource.isPlaying);
+        }
         foreach (var action in prologueSequence)
         {
             List<UniTask> tasks = new List<UniTask>();

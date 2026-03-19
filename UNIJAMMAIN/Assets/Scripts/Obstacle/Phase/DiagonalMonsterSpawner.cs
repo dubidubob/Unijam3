@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static GamePlayDefine;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using System;
 
 /**
  * [수정됨]
@@ -104,7 +107,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         // 2. 랜덤 로직 (기존)
         else
         {
-            int idx = Random.Range(0, deactivatedDiagonalIdx.Count);
+            int idx = UnityEngine.Random.Range(0, deactivatedDiagonalIdx.Count);
 
             if (IngameData.ChapterIdx == 0 && spawnedDiagonalMobCnt < 2)
             {
@@ -231,6 +234,7 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
     private double _pauseStartTime;
     private float threshold = 0.4f;
     private int _patternIdx = 0;
+    private CancellationTokenSource _spawnCts;
 
     public DiagonalPatternInstance(DiagonalMonsterSpawner parent, MonsterData data)
     {
@@ -249,7 +253,14 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
     public void StartSpawning(MonsterData data)
     {
         float spawnDuration = (float)IngameData.BeatInterval * _data.spawnBeat;
-        _spawnCoroutine = _parent.StartCoroutine(DoSpawn(spawnDuration, data));
+
+        // 기존 실행 중인 Task가 있다면 취소
+        _spawnCts?.Cancel();
+        _spawnCts?.Dispose();
+        _spawnCts = new CancellationTokenSource();
+
+        // 코루틴 대신 UniTask 호출 (Fire and Forget)
+        DoSpawn(spawnDuration, data, _spawnCts.Token).Forget();
     }
 
     public void Stop()
@@ -269,50 +280,61 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
         }
     }
 
-    private IEnumerator DoSpawn(float spawnDuration, MonsterData data)
+    private async UniTaskVoid DoSpawn(float spawnDuration, MonsterData data, CancellationToken token)
     {
-        yield return new WaitForSeconds((float)IngameData.BeatInterval * 0.45f);
+        double nextSpawnTime = AudioSettings.dspTime + ((float)IngameData.BeatInterval * 0.45f);
 
-        while (_spawning)
+        try
         {
-            if (!string.IsNullOrEmpty(data.WASD_Pattern))
+            while (_spawning)
             {
-                if (_patternIdx >= data.WASD_Pattern.Length) _patternIdx = 0;
-
-                // 현재 패턴의 문자 가져오기
-                char currentPatternChar = data.WASD_Pattern[_patternIdx];
-
-                // [수정] 'X' 문자이거나 'x'일 경우 스폰 건너뜀
-                if (currentPatternChar == 'X' || currentPatternChar == 'x')
+                // Delay를 쓰지 않고 dspTime을 기준으로 다음 목표 시간까지 매 프레임 대기
+                while (AudioSettings.dspTime < nextSpawnTime)
                 {
-                    // 아무것도 하지 않고 인덱스만 넘김
+                    // 취소 요청이 들어오면 루프 즉시 탈출
+                    token.ThrowIfCancellationRequested();
+
+                    // yield return null 과 완벽히 동일한 역할 (GC 없음)
+                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                }
+
+                // --- 몬스터 스폰 로직 ---
+                if (!string.IsNullOrEmpty(data.WASD_Pattern))
+                {
+                    if (_patternIdx >= data.WASD_Pattern.Length) _patternIdx = 0;
+
+                    char currentPatternChar = data.WASD_Pattern[_patternIdx];
+                    if (currentPatternChar == 'X' || currentPatternChar == 'x')
+                    {
+                        // 스킵
+                    }
+                    else
+                    {
+                        int inputNum = currentPatternChar - '0';
+                        if (inputNum >= 0 && inputNum < _parent.PatternToEnumMap.Length)
+                        {
+                            int mappedEnumIdx = _parent.PatternToEnumMap[inputNum];
+                            if (mappedEnumIdx != -1)
+                            {
+                                _parent.ActivateEnemy(_moveBeat, data, mappedEnumIdx);
+                            }
+                        }
+                    }
+                    _patternIdx++;
                 }
                 else
                 {
-                    // 1. char를 int(0~9)로 변환
-                    int inputNum = currentPatternChar - '0';
-
-                    // 2. 유효 범위 체크 및 룩업 테이블 참조
-                    if (inputNum >= 0 && inputNum < _parent.PatternToEnumMap.Length)
-                    {
-                        int mappedEnumIdx = _parent.PatternToEnumMap[inputNum];
-
-                        // mappedEnumIdx가 -1이 아니면(쉼이 아니면) 활성화
-                        if (mappedEnumIdx != -1)
-                        {
-                            _parent.ActivateEnemy(_moveBeat, data, mappedEnumIdx);
-                        }
-                    }
+                    _parent.ActivateEnemy(_moveBeat, data, null);
                 }
 
-                _patternIdx++;
+                // 다음 스폰 목표 시간 갱신 (오차 누적 방지)
+                nextSpawnTime += spawnDuration;
             }
-            else
-            {
-                _parent.ActivateEnemy(_moveBeat, data, null);
-            }
-
-            yield return new WaitForSeconds(spawnDuration);
+        }
+        catch (OperationCanceledException)
+        {
+            // Stop()에 의해 정상적으로 취소된 경우 예외를 잡아줍니다.
+            // 필요하다면 여기서 정리 작업을 할 수 있습니다.
         }
     }
 
