@@ -284,7 +284,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 61
+        durationBeat: 60
         startDelayBeat: 0
         bpm: 135
         timeScale: 1
