@@ -40,12 +40,13 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 6
+          monsterType: 15
           WASD_Pattern: AXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXWXXXXXXXWXXXXXXXWXXXXXXXWXXXXXXXWXXXXXXXWXXXXXXXDXXXXXXX/DXXXDXXXDXXXXXXXXXXX/XDXXXXDXXXXXDXXXDXXXDXXXXXXXXXXXXAXXXXAXXXXXAXXXAXXXAXXXXXXXXXXX/XDXXXXDXXXXXDXXXDXXXDX/XXXXXXXXXX/XAXXXXAXXXXXAXXXAXXXAX/XXXXXXXXXX/XDXXXXDXXXXXDXXXDXXXDX/XXXXXXXXXX/XAXXXXAXXXXXAXXXAXXXAX/XXXXXXXXXX/XSXXXXSXXXXXSXXXSXXXSX/XXXXXXXXXX/XWXXXXWXXXXXWXXXWXXXWX/XXXXXXXXXXXXXXAXXXXXXXSXXXXXXX(AD)XXXXXXXXXXXXXXXSXXXXXXXXXXXXXXXDXXXXXXXSXXXAXXXXXXXWXXXXXXXXXXX(AD)XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXWXXXXXXXXXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXXXXXXXXXSXXXXXXXXXXXXXXXDXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXWXXXXXXXXXXXXXXXWXXXXXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.125
@@ -101,9 +102,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 1
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 5
@@ -160,12 +162,13 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 8
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 6
+          monsterType: 15
           WASD_Pattern: WXXXXXXXAXXXXXXXSXXXXXXXXXXXXXDXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXXXXXXXXXSXXXXXXXSXXXXXXXXXXXXXDXXXXXXXXXWXXXXXXXAXXXXXXXXXXXSXXXSXXXXXXXSXXXDXXXWXXXXXXXXXXXXXAXXXXXXXXXWXXXXXXXAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.125
@@ -208,9 +211,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -234,9 +238,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 4
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 5

@@ -170,7 +170,7 @@ MonoBehaviour:
         style: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 6
+          monsterType: 15
           WASD_Pattern: AXXXXXXXSXXXXXXXSXXXAXXXWXXXXXXXWXXXXXXXAXXXSXXXDXXXXXXXDXXXDXXXDXXXXDXXDXXXSXXXWXXXXXXXWXXXWXXXWXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXD
           speedUpRate: 1
           spawnBeat: 0.125
