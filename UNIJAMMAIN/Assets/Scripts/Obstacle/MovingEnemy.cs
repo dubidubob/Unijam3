@@ -599,7 +599,7 @@ public class MovingEnemy : MonoBehaviour
     {
         AttackedAnimation();
 
-        if (knockback.CheckKnockback())
+        if (knockback.CheckKnockback()) //죽을 수 없다면
         {
             if (this.isActiveAndEnabled)
             {
@@ -610,7 +610,7 @@ public class MovingEnemy : MonoBehaviour
             isKnockbacked = true;
             return false;
         }
-        else
+        else // 죽을 수 있다면
         {
             return true;
         }
