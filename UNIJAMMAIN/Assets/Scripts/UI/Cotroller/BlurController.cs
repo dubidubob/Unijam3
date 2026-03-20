@@ -60,7 +60,11 @@ public class BlurController : MonoBehaviour
         }
         damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
 
-
+        if (backGroundController != null && backGroundController.sharedMaterial != null)
+        {
+            backGroundController.sharedMaterial.DOKill(); // 진행 중인 트윈이 있다면 취소
+            backGroundController.sharedMaterial.SetFloat("_Saturation", 1f);
+        }
 
         // 콤보 이펙트 관련 
         // 기준 이미지의 높이 측정 (두 세트 모두 같은 높이라고 가정)
@@ -97,6 +101,11 @@ public class BlurController : MonoBehaviour
     private void OnDestroy()
     {
         transform.DOKill();
+        if (backGroundController != null && backGroundController.sharedMaterial != null)
+        {
+            backGroundController.sharedMaterial.DOKill();
+            backGroundController.sharedMaterial.SetFloat("_Saturation", 1f);
+        }
 
         // 실행 중인 모든 토큰 취소 및 정리
         CancelAndDispose(ref _scrollCts);
