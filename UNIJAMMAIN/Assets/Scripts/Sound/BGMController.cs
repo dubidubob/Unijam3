@@ -24,7 +24,7 @@ public class BGMController : MonoBehaviour
         {
             // 임시 배열을 만들어 현재 볼륨을 반환합니다.
             // (readonly 멤버는 static 메소드/프로퍼티에서 직접 접근이 안되기 때문)
-            float[] tempLevels = { 0.0f , 0.25f, 0.5f, 0.75f, 1.0f };
+            float[] tempLevels = { 0.0f, 0.1f, 0.2f, 0.3f, 0.5f, 0.7f };
             return tempLevels[_currentBGMVolumeStep];
         }
     }

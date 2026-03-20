@@ -24,7 +24,7 @@ public class SFXController : MonoBehaviour
         {
             // �ӽ� �迭�� ����� ���� ������ ��ȯ�մϴ�.
             // (readonly ����� static �޼ҵ�/������Ƽ���� ���� ������ �ȵǱ� ����)
-            float[] tempLevels = { 0.0f,0.25f, 0.5f, 0.75f, 1.0f };
+            float[] tempLevels = { 0.0f, 0.1f, 0.2f, 0.3f, 0.5f, 0.7f };
             return tempLevels[_currentSFXVolumeStep];
         }
     }
