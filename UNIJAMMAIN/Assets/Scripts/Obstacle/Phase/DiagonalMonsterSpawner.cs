@@ -235,6 +235,8 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
     private float threshold = 0.4f;
     private int _patternIdx = 0;
     private CancellationTokenSource _spawnCts;
+    // [핵심 1] DoSpawn 내부의 지역변수를 멤버 변수로 끌어올립니다.
+    private double _nextSpawnTime;
 
     public DiagonalPatternInstance(DiagonalMonsterSpawner parent, MonsterData data)
     {
@@ -272,24 +274,34 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
 
     public void PauseForWhile(bool isStop, double dspTime)
     {
-        if (isStop) _pauseStartTime = dspTime;
+        if (isStop)
+        {
+            _pauseStartTime = dspTime;
+        }
         else if (_pauseStartTime > 0)
         {
-            _lastSpawnTime += (dspTime - _pauseStartTime);
+            // 일시정지 해제 시, 쉬었던 시간만큼 다음 스폰 타겟 시간도 뒤로 밀어줍니다.
+            double pausedDuration = dspTime - _pauseStartTime;
+            _lastSpawnTime += pausedDuration;
+
+            // [핵심 2] 스폰 타이머 보정
+            _nextSpawnTime += pausedDuration;
+
             _pauseStartTime = 0;
         }
     }
 
     private async UniTaskVoid DoSpawn(float spawnDuration, MonsterData data, CancellationToken token)
     {
-        double nextSpawnTime = AudioSettings.dspTime + ((float)IngameData.BeatInterval * 0.45f);
+        // 여기수정됨! : 지역변수 선언 대신 멤버 변수 _nextSpawnTime에 초기 스폰 목표 시간을 할당합니다.
+        _nextSpawnTime = AudioSettings.dspTime + ((float)IngameData.BeatInterval * 0.45f);
 
         try
         {
             while (_spawning)
             {
                 // Delay를 쓰지 않고 dspTime을 기준으로 다음 목표 시간까지 매 프레임 대기
-                while (AudioSettings.dspTime < nextSpawnTime)
+                while (AudioSettings.dspTime < _nextSpawnTime || IngameData.Pause)
                 {
                     // 취소 요청이 들어오면 루프 즉시 탈출
                     token.ThrowIfCancellationRequested();
@@ -328,7 +340,7 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
                 }
 
                 // 다음 스폰 목표 시간 갱신 (오차 누적 방지)
-                nextSpawnTime += spawnDuration;
+                _nextSpawnTime += spawnDuration;
             }
         }
         catch (OperationCanceledException)

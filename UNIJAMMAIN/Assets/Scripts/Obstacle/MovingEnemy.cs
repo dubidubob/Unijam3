@@ -607,6 +607,7 @@ public class MovingEnemy : MonoBehaviour
                 // 여기서는 단순히 실행
                 ExecuteKnockback(_cts.Token).Forget();
             }
+            Managers.Sound.Play("SFX/Accuracy/Attack",Define.Sound.SFX,1,1.4f);
             isKnockbacked = true;
             return false;
         }
