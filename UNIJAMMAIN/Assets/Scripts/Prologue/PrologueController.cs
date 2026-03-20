@@ -60,6 +60,7 @@ public class PrologueController : MonoBehaviour
     private int currentBgIndex = -1;
     private int currentObjIndex = -1;
     private Image target_Image;
+    private bool isTextFinished = false;
 
     [Header("Special Action 0 Settings")]
     [SerializeField] private float action0_waitDeleayStart = 0f;
@@ -71,7 +72,7 @@ public class PrologueController : MonoBehaviour
     [SerializeField] private float action0_Duration_Step2 = 1.5f;   // 2단계 연출 시간
 
     [Header("Special Action 1 Settings")]
-    [SerializeField] private float action1_waitDeleayStart = 0f;
+    [SerializeField] private float action1_waitDeleayStart = 0.5f;
     [SerializeField] private float action1_StartPosX = 200f;        // 시작 X 위치
     [SerializeField] private float action1_TargetPosX = -200f;      // 목표 X 위치
     [SerializeField] private float action1_Duration = 3f;           // 연출 시간
@@ -80,7 +81,7 @@ public class PrologueController : MonoBehaviour
     [SerializeField] private float action2_waitDeleayStart = 0f;
     [SerializeField] private float action2_StartScale = 1f;         // 시작 스케일
     [SerializeField] private float action2_TargetScale = 0.5f;      // 목표 스케일
-    [SerializeField] private float action2_Duration = 2f;           // 연출 시간
+    [SerializeField] private float action2_Duration = 4f;           // 연출 시간
                                                                     // ▼▼▼ 2. "준비 완료" 신호를 보내는 코루틴 추가 ▼▼▼
     private IEnumerator NotifyManagerWhenReady()
     {
@@ -237,29 +238,58 @@ public class PrologueController : MonoBehaviour
     // ==========================================
     private async UniTaskVoid PlayPrologueSequence()
     {
-    
         foreach (var action in prologueSequence)
         {
             List<UniTask> tasks = new List<UniTask>();
-
             Special_Action(action.index);
-            Debug.Log(action.duration);
+
+            // 1. [배경 & 오브젝트 정리 로직]
             if (action.isNextBackground)
             {
+                // 배경 페이드 아웃
                 if (currentBgIndex >= 0 && currentBgIndex < backgrounds.Count)
                 {
+                    backgrounds[currentBgIndex].DOKill();
                     tasks.Add(backgrounds[currentBgIndex].DOFade(0f, action.duration).SetEase(action.easeType).ToUniTask());
                 }
 
+                // [수정] 마지막 암전 프레임(30번)이 아닐 때만 오브젝트를 치웁니다!
+                // 30번 프레임에서는 악령과 그림자가 사라지지 않고 화면에 남습니다.
+                if (action.index != 30)
+                {
+                    float objFadeDuration = action.duration * 0.5f;
+                    for (int i = 0; i <= currentObjIndex; i++)
+                    {
+                        if (i < objects.Count && objects[i].gameObject.activeSelf)
+                        {
+                            Image objImg = objects[i].GetComponent<Image>();
+                            if (objImg != null)
+                            {
+                                objImg.DOKill();
+                                tasks.Add(objImg.DOFade(0f, objFadeDuration).SetEase(Ease.OutCubic).ToUniTask());
+
+                                int tempIdx = i;
+                                DOVirtual.DelayedCall(objFadeDuration, () => {
+                                    if (objects[tempIdx] != null) objects[tempIdx].gameObject.SetActive(false);
+                                });
+                            }
+                        }
+                    }
+                }
+
+                // 배경 페이드 인
                 currentBgIndex++;
                 if (currentBgIndex < backgrounds.Count)
                 {
-                    tasks.Add(backgrounds[currentBgIndex].DOFade(1f, action.duration).SetEase(action.easeType).ToUniTask());
+                    Image nextBg = backgrounds[currentBgIndex];
+                    nextBg.DOKill();
+                    Color c = nextBg.color; c.a = 0f; nextBg.color = c;
+                    tasks.Add(nextBg.DOFade(1f, action.duration).SetEase(action.easeType).ToUniTask());
+                    target_Image = nextBg;
                 }
-
-                target_Image = backgrounds[currentBgIndex];
             }
 
+            // 2. [오브젝트 생성/이동 로직]
             if (action.isNextObject)
             {
                 currentObjIndex++;
@@ -270,17 +300,19 @@ public class PrologueController : MonoBehaviour
 
                     objRect.gameObject.SetActive(true);
                     objRect.anchoredPosition = action.startPos;
-
+                    objRect.DOKill();
                     tasks.Add(objRect.DOAnchorPos(action.endPos, action.duration).SetEase(action.easeType).ToUniTask());
 
                     if (objImage != null)
                     {
+                        objImage.DOKill();
                         SetAlpha(objImage, 0f);
                         tasks.Add(objImage.DOFade(1f, action.duration).SetEase(action.easeType).ToUniTask());
                     }
                 }
             }
 
+            // 3. 연출 대기
             if (tasks.Count > 0)
             {
                 await UniTask.WhenAll(tasks);
@@ -289,10 +321,31 @@ public class PrologueController : MonoBehaviour
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
             }
+
+            // 4. [마지막 암전 전용 추가 연출]
+            // 만약 30번 프레임(마지막) 연출이 끝났다면, 
+            // 남아있는 악령들까지 한꺼번에 덮어버릴 수 있게 Dim 패널을 서서히 올립니다.
+            if (action.index == 30)
+            {
+                // 배경이 다 어두워졌을 때(혹은 검은 배경이 떴을 때) 
+                // 최종적으로 모든 것을 덮는 암전 패널을 1.5초 동안 올립니다.
+                await dimmenel_Panel.DOFade(1f, 1.5f).SetEase(Ease.InQuad).ToUniTask();
+            }
         }
+
+        // [수정 2] 씬 전환부: 매니저가 없어도 강제로 넘어가게 fallback 추가
+        Debug.Log("--- 모든 연출 종료! 씬 전환 시도 ---");
         IngameData._isPrologueWatched = true;
-        SceneLoadingManager.Instance.LoadScene("StageScene");
-        Debug.Log("프롤로그 배경/오브젝트 시퀀스 종료!");
+
+        if (SceneLoadingManager.Instance != null)
+        {
+            SceneLoadingManager.Instance.LoadScene("StageScene");
+        }
+        else
+        {
+            // 매니저가 없으면 유니티 기본 기능으로라도 강제 이동! (안전장치)
+            UnityEngine.SceneManagement.SceneManager.LoadScene("StageScene");
+        }
     }
 
     // ==========================================
@@ -302,80 +355,64 @@ public class PrologueController : MonoBehaviour
     {
         foreach (var action in textSequence)
         {
-            if (action.index == 22)
-            {
-                content_Text.text = "";
-                // 1. RectTransform 컴포넌트를 가져옵니다.
-                RectTransform rect = content_Text.rectTransform;
-
-                // 2. 위치를 (0, 0)으로 변경
-                rect.anchoredPosition = Vector2.zero; // new Vector2(0, 0)과 같습니다.
-
-                // 3. Width를 1400으로 변경 (Height는 기존 값 유지)
-                rect.sizeDelta = new Vector2(1400f, rect.sizeDelta.y);
-
-                // 4. 텍스트 정렬을 정중앙(Center)으로 변경 (TextMeshPro 기준)
-                content_Text.alignment = TextAlignmentOptions.Center;
-            }
+            // [1. 수정] 여기서 index == 22 체크하던 정렬 변경 로직을 삭제했습니다. (아래로 이동)
 
             string localizedContent = string.IsNullOrEmpty(action.key) ? "" : LocalizationManager.Get(action.key);
-
-            // 화자 매핑
-            string locSpeakerKey = speakerKeyMap.ContainsKey(action.speaker) ? speakerKeyMap[action.speaker] : "";
             string localizedName = LocalizedStringKey(action);
-
-            bool isTextEmpty = string.IsNullOrWhiteSpace(localizedContent) || localizedContent == "X" || localizedContent == "~";
-
-            List<UniTask> fadeTasks = new List<UniTask>();
+            // 키값이 그대로 들어오는 경우(로컬라이징 실패)도 빈 것으로 처리
+            bool isTextEmpty = string.IsNullOrWhiteSpace(localizedContent) ||
+                               localizedContent == "X" || localizedContent == "~" ||
+                               localizedContent == action.key;
 
             if (isTextEmpty)
             {
-                // [텍스트가 없어지는 경우] - Conversion 시간 동안 Fade Out
+                // [2. 수정] 22번 프레임처럼 비어있는 경우
                 if (content_Text.color.a > 0f)
                 {
-                    fadeTasks.Add(speakerName_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
-                    fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
-                    fadeTasks.Add(dimmenel_Panel.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                    // 21번 대사를 먼저 '그 자리에서' 페이드 아웃 시킵니다.
+                    await UniTask.WhenAll(
+                        speakerName_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask(),
+                        content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask(),
+                        dimmenel_Panel.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask()
+                    );
+                }
+                speakerName_Text.text = "";
+                content_Text.text = "";
+
+                // [핵심] 21번이 완전히 사라진 '후'에 정렬을 중앙으로 바꿉니다. 그래야 안 튑니다!
+                if (action.index == 22)
+                {
+                    RectTransform rect = content_Text.rectTransform;
+                    rect.anchoredPosition = Vector2.zero;
+                    rect.sizeDelta = new Vector2(1400f, rect.sizeDelta.y);
+                    content_Text.alignment = TextAlignmentOptions.Center;
                 }
             }
             else
             {
-                // [텍스트가 생기는 경우]
+                // [3. 수정] 23번 대사처럼 내용이 있는 경우
+                // 번쩍임 방지를 위해 시작 색상을 알파 0으로 강제 세팅
+                Color textColor = action.textColor; textColor.a = 0f;
+                content_Text.color = textColor;
+
                 speakerName_Text.text = localizedName;
                 content_Text.text = localizedContent;
 
-                if (content_Text.color.a <= 0.05f)
-                {
-                    // 아예 꺼져있었다면 완전히 투명한 상태에서 Fade In 시작
-                    Color startNameColor = action.nameColor; startNameColor.a = 0f;
-                    Color startTextColor = action.textColor; startTextColor.a = 0f;
-
-                    speakerName_Text.color = startNameColor;
-                    content_Text.color = startTextColor;
-                }
-
-                // Conversion 시간 동안 컬러/알파값 Fade In (또는 변경)
-                fadeTasks.Add(speakerName_Text.DOColor(action.nameColor, action.conversion).SetEase(action.easeType).ToUniTask());
-                fadeTasks.Add(content_Text.DOColor(action.textColor, action.conversion).SetEase(action.easeType).ToUniTask());
-                fadeTasks.Add(dimmenel_Panel.DOFade(1,action.conversion).SetEase(action.easeType).ToUniTask());
+                await UniTask.WhenAll(
+                    speakerName_Text.DOColor(action.nameColor, action.conversion).SetEase(action.easeType).ToUniTask(),
+                    content_Text.DOColor(action.textColor, action.conversion).SetEase(action.easeType).ToUniTask(),
+                    dimmenel_Panel.DOFade(1, action.conversion).SetEase(action.easeType).ToUniTask()
+                );
             }
 
-            // 페이드 인/아웃(Conversion) 대기
-            if (fadeTasks.Count > 0)
-            {
-                await UniTask.WhenAll(fadeTasks);
-            }
-
-            // Duration 시간 동안 해당 텍스트 상태 유지 (대기)
             if (action.duration > 0f)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
             }
         }
-        Debug.Log("프롤로그 텍스트 시퀀스 종료!");
+
         Managers.Sound.StopBGM();
     }
-
 
     #region Helpers (파싱 및 유틸)
     private void SetAlpha(Graphic graphic, float alpha)

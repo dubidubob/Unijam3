@@ -4,11 +4,11 @@ using UnityEngine.UI;
 public class BGMController : MonoBehaviour
 {
     // A static variable holds the state across all scenes and instances
-    private static int _currentBGMVolumeStep = 1;
+    private static int _currentBGMVolumeStep = 2;
     public Image image;
     // Define the volume levels. Note that Unity uses 0.0f to 1.0f for volume.
     // Sequence: 25% -> 50% -> 75% -> 100% -> 0%
-    private readonly float[] _volumeLevels = { 0.0f, 0.1f, 0.2f, 0.3f, 0.5f, 0.7f };
+    private readonly float[] _volumeLevels = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
     [SerializeField] private Sprite[] sprite;
 
     private void Awake()
@@ -24,7 +24,7 @@ public class BGMController : MonoBehaviour
         {
             // 임시 배열을 만들어 현재 볼륨을 반환합니다.
             // (readonly 멤버는 static 메소드/프로퍼티에서 직접 접근이 안되기 때문)
-            float[] tempLevels = { 0.0f, 0.1f, 0.2f, 0.3f, 0.5f, 0.7f };
+            float[] tempLevels = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
             return tempLevels[_currentBGMVolumeStep];
         }
     }

@@ -12,12 +12,12 @@ Duration_Step 1 : 8500ms
 waitDelayStart : 0ms
 Target Pos Y_Step_2 : 634
 Curve : Ease in and out
-Duration_Step 2 : 6000ms",26000ms,,,
+Duration_Step 2 : 6000ms",26500ms,,,
 Prologue_Frame_2,TRUE,FALSE,,,,,,,Ease out,,0.5초에 걸쳐 2.시장 ->  3.회색시장을 수행,500ms,,,
 Prologue_Frame_3,FALSE,FALSE,,,,,,,,,3.8초 동안 3.회색시장 유지,3800ms,,,
 Prologue_Frame_4,TRUE,FALSE,,,,,,,Ease out,,0.5초에 걸쳐 3.회색시장 ->  4.검은색시장을 수행,500ms,,,
-Prologue_Frame_5,FALSE,FALSE,,,,,,,,,6초 동안 4.검은색시장 유지 ,6000ms,,,
-Prologue_Frame_6,TRUE,FALSE,,,,,,,Ease out,,0.5초에 걸쳐 4.검은색시장 -> 5.흰색긴거 수행,500ms,,,
+Prologue_Frame_5,FALSE,FALSE,,,,,,,,,6초 동안 4.검은색시장 유지 ,4500ms,,,
+Prologue_Frame_6,TRUE,FALSE,,,,,,,Ease out,,0.5초에 걸쳐 4.검은색시장 -> 5.흰색긴거 수행,1000ms,,,
 Prologue_Frame_7,FALSE,FALSE,,,,,,,,,"Action 1 시작
 
 waitDelayStart : 0ms
@@ -25,23 +25,23 @@ Start Pos X : 200
 Target Pos X : -200
 Curve : Linear
 Duration : 20000ms
-(영상처럼 천천히 슬라이딩되기만 하면 됨.)",500ms,,,
+(영상처럼 천천히 슬라이딩되기만 하면 됨.)",100ms,,,
 Prologue_Frame_8,FALSE,TRUE,,,,,,,Ease out,,YinPerson_3 페이드인,500ms,,,
-Prologue_Frame_9,FALSE,FALSE,,,,,,,,,2초간 유지,2000ms,,,
+Prologue_Frame_9,FALSE,FALSE,,,,,,,,,2초간 유지,2400ms,,,
 Prologue_Frame_10,FALSE,TRUE,-200/0,0/0,,,,,Ease out,,YinPerson_1 좌측에서 슬라이딩,500ms,,,
 Prologue_Frame_11,FALSE,FALSE,,,,,,,,,0.8초간 유지,800ms,,,
 Prologue_Frame_12,FALSE,TRUE,-200/0,0/0,,,,,Ease out,,YinPerson_2 좌측에서 슬라이딩,500ms,,,
 Prologue_Frame_13,FALSE,FALSE,,,,,,,,,0.6초간 유지,600ms,,,
 Prologue_Frame_14,FALSE,TRUE,200/0,0/0,,,,,Ease out,,YinPerson_4 우측에서 슬라이딩,500ms,,,
-Prologue_Frame_15,FALSE,FALSE,,,,,,,,,0.5초간 유지,500ms,,,
+Prologue_Frame_15,FALSE,FALSE,,,,,,,,,0.5초간 유지,1200ms,,,
 Prologue_Frame_16,FALSE,TRUE,0/-70,0/0,,,,,Ease out,,YinSpirit_1 아래에서 위로 올라가며 페이드인,500ms,,,
-Prologue_Frame_17,FALSE,FALSE,,,,,,,,,3.5초간 유지,3500ms,,,
+Prologue_Frame_17,FALSE,FALSE,,,,,,,,,3.5초간 유지,3600ms,,,
 Prologue_Frame_18,FALSE,TRUE,0/-70,0/0,,,,,Ease out,,YinSpirit_2 아래에서 위로 올라가며 페이드인,500ms,,,
-Prologue_Frame_19,FALSE,FALSE,,,,,,,,,1.8초간 유지,1800ms,,,
+Prologue_Frame_19,FALSE,FALSE,,,,,,,,,1.8초간 유지,1700ms,,,
 Prologue_Frame_20,FALSE,TRUE,0/-70,0/0,,,,,Ease out,,YinSpirit_3 아래에서 위로 올라가며 페이드인,500ms,,,
-Prologue_Frame_21,FALSE,FALSE,,,,,,,,,1.7초간 유지,1700ms,,,
+Prologue_Frame_21,FALSE,FALSE,,,,,,,,,1.7초간 유지,2000ms,,,
 Prologue_Frame_22,TRUE,FALSE,,,,,,,Instant,,즉시 5.흰색긴거 -> 6. 암전화면 수행,0ms,,,
-Prologue_Frame_23,FALSE,FALSE,,,,,,,,,암전화면에서 1초 유지,1000ms,,,
+Prologue_Frame_23,FALSE,FALSE,,,,,,,,,암전화면에서 1초 유지,2000ms,,,
 Prologue_Frame_24,TRUE,FALSE,,,,,,,Ease out,,6. 암전화면 -> 7. 절 배경 페이드인,2000ms,,,
 Prologue_Frame_25,FALSE,FALSE,,,,,,,,,"Action 2 시작
 
@@ -49,13 +49,13 @@ waitDelayStart : 1000ms
 Start Scale : 1
 Target Scale : 0.5
 Curve : Ease in and out
-Duration : 8000ms",10500ms,,,
+Duration : 4000ms",9500ms,,,
 Prologue_Frame_26,FALSE,TRUE,-300/-300,0/0,,,,,Ease out,,WASDEvil 왼쪽에서 오른쪽으로 슬라이딩,1000ms,,,
 Prologue_Frame_27,FALSE,FALSE,,,,,,,,,0.6초간 대기,600ms,,,
 Prologue_Frame_28,FALSE,TRUE,300/-300,0/0,,,,,Ease out,,ShadowEvil 오른쪽에서 왼쪽으로 슬라이딩,1500ms,,,
 Prologue_Frame_29,FALSE,FALSE,,,,,,,,,1.2초간 대기,1200ms,,,
 Prologue_Frame_30,TRUE,FALSE,,,,,,,Ease out,,7. 절 배경 -> 8. 암전화면 페이드인,2000ms,,,
-Prologue_Frame_31,FALSE,FALSE,,,,,,,,,4.8초간 대기,4800ms,,,
+Prologue_Frame_31,FALSE,FALSE,,,,,,,,,4.8초간 대기,5300ms,,,
 Prologue_Frame_32,FALSE,FALSE,,,,,,,Ease out,,8. 암전화면 -> 9. StageScene 로드,2000ms,,,
 Text_Frame_0,,,,,,,,,Ease out,,없는 채 유지 ->,6000ms,,,
 Text_Frame_1,,,,,"오랜 전란이 멎고, 세상에 태평성대가 깃든 적이 있었지.",旷日持久的战乱平息，世间曾迎来过太平盛世 。,"The long wars ceased, and an era of great peace once settled upon the world.",永き戦乱が止み、太平の世が訪れたことがあった。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,2000ms,845600,FFFFFF,스승님
@@ -67,15 +67,15 @@ Text_Frame_6,,,,,,,,,Ease out,400ms,<- 유지된 텍스트 FadeOut / 없는 채 
 Text_Frame_7,,,,,비워진 손을 마주 잡으며 온기를 다 함께 누리던 참으로 좋은 시절이었지.,是大家携手共赏温存的美好时光。,a truly golden age where warmth was felt in every joined hand.,手を取り合い温もりを分かち合った、真に良き時代であった。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,2500ms,,FFFFFF,
 Text_Frame_8,,,,,,,,,Ease out,400ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,3200ms,,,
 Text_Frame_9,,,,,"허나 그 따뜻한 평온 속에서도, 다가올 앞날을 위해 제 몫을 쥐려는 것은 탓할 수 없는 본능인 것을.",然而，在这份安宁之中，为了未雨绸缪而紧握私欲，终究是无可厚非的天性。,"Yet, even within that tranquil peace, the instinct to grasp one's own share for the days to come was undeniable.",だが、その平穏の中でも、来るべき明日のために己の分を握りしめようとするのは、責められぬ本能。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,2500ms,,FFFFFF,
-Text_Frame_10,,,,,,,,,Ease out,900ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,500ms,,,
+Text_Frame_10,,,,,,,,,Ease out,900ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,1000ms,,,
 Text_Frame_11,,,,,"전란 끝에 맛본 풍요가 도리어 독이 된 게지. 다시 잃을까 두려워, 점차 타인을 불신하며 담장을 높이더구나.",战后的丰饶反成剧毒。因畏惧失去，人们筑起高墙，渐生猜忌。,"The abundance tasted after the war turned to poison. Fearing loss, people built high walls and grew to distrust one another.",戦の果てに味わった豊かさは、かえって毒となったのだ。失うことを恐れ、人々は不信の垣根を高く築いていった。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,3000ms,,FFFFFF,
 Text_Frame_12,,,,,,,,,Ease out,400ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,600ms,,,
-Text_Frame_13,,,,,"나눔이 멈춰 기운이 고여버리니, 만물을 품어 길러야 할 음(陰)의 본성마저 지독한 탁기(濁氣)로 썩어버린 게야.",施予止，则气息滞。本应孕育万物的‘阴’之本性，竟也腐化成了彻骨的浊气 。,"As sharing ceased, the Qi stagnated, and even the nurturing nature of Yin rotted into foul Corrupted Qi.",分かち合いが止まり気が淀むと、万物を育むべき‘陰’の本性までもが、忌まわしき濁気へと朽ち果てた 。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,3000ms,,FFFFFF,
-Text_Frame_14,,,,,,,,,Ease out,400ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,3600ms,,,
-Text_Frame_15,,,,,"세상에 온기가 싹 말라버렸어... 활기도, 희망도, 이제 다 끝이야...",世间温情已尽……生机与希望，皆成泡影。,All warmth has withered... vitality and hope are no more.,世から温もりが消え失せた……活気も、希望も、もはやこれまで。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,1500ms,454545,D5D5D5,상인
+Text_Frame_13,,,,,"나눔이 멈춰 기운이 고여버리니, 만물을 품어 길러야 할 음(<size=80%>陰</size>)의 본성마저 지독한 탁기(<size=80%>濁氣</size>)로 썩어버린 게야.",施予止，则气息滞。本应孕育万物的‘阴’之本性，竟也腐化成了彻骨的浊气 。,"As sharing ceased, the Qi stagnated, and even the nurturing nature of Yin rotted into foul Corrupted Qi.",分かち合いが止まり気が淀むと、万物を育むべき‘陰’の本性までもが、忌まわしき濁気へと朽ち果てた 。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,3000ms,,FFFFFF,
+Text_Frame_14,,,,,,,,,Ease out,400ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,2500ms,,,
+Text_Frame_15,,,,,"세상에 온기가 싹 말라버렸어... 활기도, 희망도, 이제 다 끝이야...",世间温情已尽……生机与希望，皆成泡影。,All warmth has withered... vitality and hope are no more.,世から温もりが消え失せた……活気も、希望も、もはやこれまで。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,2500ms,454545,D5D5D5,상인
 Text_Frame_16,,,,,,,,,Ease out,400ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,500ms,,,
-Text_Frame_17,,,,,"이 탁기의 찌꺼기가, 기어코 세상을 극음(極陰)으로 물들이고 있는 악령이 된 것이란다.",这些滞留的残渣，终究幻化成了让世界染上极阴之色的浊灵 。,"The dregs of this stagnation have finally manifested as Dark Spirits, staining the Secular World with the extreme chill of Yin.",この淀みの残滓が、ついに世を極陰へと染め上げる濁霊となったのだ 。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,2000ms,,FFFFFF,
-Text_Frame_18,,,,,,,,,Ease out,400ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,12700ms,,,
+Text_Frame_17,,,,,"이 탁기의 찌꺼기가, 기어코 세상을 극음(<size=80%>極陰</size>)으로 물들이고 있는 악령이 된 것이란다.",这些滞留的残渣，终究幻化成了让世界染上极阴之色的浊灵 。,"The dregs of this stagnation have finally manifested as Dark Spirits, staining the Secular World with the extreme chill of Yin.",この淀みの残滓が、ついに世を極陰へと染め上げる濁霊となったのだ 。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,4000ms,,FFFFFF,
+Text_Frame_18,,,,,,,,,Ease out,2000ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,8900ms,,,
 Text_Frame_19,,,,,"...스승님께선 잃어버린 조화를 되찾겠다며, 홀로 저 험한 세상으로 오래 전 떠나셨다.",……师父为了找回失去的调和，早已独自前往那险恶的红尘 。,"...My Master left for that harsh world long ago, seeking to restore the lost Harmony.",……師匠は失われた調和を取り戻すと、独りあの険しき俗世へと旅立たれた 。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,3000ms,,FFFFFF,
 Text_Frame_20,,,,,,,,,Ease out,400ms,<- 유지된 텍스트 FadeOut / 없는 채 유지 ->,1000ms,,,
 Text_Frame_21,,,,,"... 기어코 이곳까지 스며든 탁기의 한기를 보니, 더는 스승님의 귀환만을 기다릴 수 없구나.",如今，眼见浊气的寒意已侵蚀至此，我已无法坐等师父归来 。,"Witnessing the frost of Corrupted Qi seeping even here,  ...I can no longer merely wait for my Master's return.",ついにここまで染み出した濁気の寒気を見るに、もはや師匠の帰還を待ってはいられぬ 。,Ease out,400ms,<- 텍스트 Fadein / 텍스트 유지 ->,2800ms,,FFFFFF,

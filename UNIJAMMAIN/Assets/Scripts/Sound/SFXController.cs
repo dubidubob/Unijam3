@@ -4,11 +4,11 @@ using UnityEngine.UI;
 public class SFXController : MonoBehaviour
 {
     // A static variable holds the state across all scenes and instances
-    public static int _currentSFXVolumeStep = 1;
+    public static int _currentSFXVolumeStep = 2;
     public Image image;
     // Define the volume levels. Note that Unity uses 0.0f to 1.0f for volume.
     // Sequence: 25% -> 50% -> 75% -> 100% -> 0%
-    private readonly float[] _volumeLevels = { 0.0f, 0.1f, 0.2f, 0.3f, 0.5f,0.7f };
+    private readonly float[] _volumeLevels = { 0.0f, 0.15f, 0.3f, 0.45f, 0.6f, 0.75f };
     [SerializeField] private Sprite[] sprite;
 
     private void Awake()
@@ -24,7 +24,7 @@ public class SFXController : MonoBehaviour
         {
             // �ӽ� �迭�� ����� ���� ������ ��ȯ�մϴ�.
             // (readonly ����� static �޼ҵ�/������Ƽ���� ���� ������ �ȵǱ� ����)
-            float[] tempLevels = { 0.0f, 0.1f, 0.2f, 0.3f, 0.5f, 0.7f };
+            float[] tempLevels = { 0.0f, 0.15f, 0.3f, 0.45f, 0.6f, 0.75f };
             return tempLevels[_currentSFXVolumeStep];
         }
     }
