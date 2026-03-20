@@ -358,6 +358,11 @@ public class PhaseController : MonoBehaviour
         float perfectCnt = IngameData.PerfectMobCnt;
         float goodCnt = IngameData.GoodMobCnt;
         float totalCnt = IngameData.TotalMobCnt;
+        if (perfectCnt >= totalCnt)
+        {
+            Debug.Log("Perfect진입");
+            return 100f;
+        }
 
         //놓친몬스터수
         float missCnt = totalCnt - perfectCnt - goodCnt;

@@ -103,6 +103,7 @@ public class BlurController : MonoBehaviour
         CancelAndDispose(ref _shineCts);
         CancelAndDispose(ref _fadeCts);
         CancelAndDispose(ref _destroyCts);
+        CancelAndDispose(ref _gameOverInputCts);
     }
 
     private async UniTask PracticeModeInfoOn()
@@ -454,14 +455,17 @@ public class BlurController : MonoBehaviour
             .SetEase(Ease.InCirc)
             .SetUpdate(UpdateType.Normal, true);
     }
-
+    private CancellationTokenSource _gameOverInputCts;
     public void WaitForGameOver()
     {
-        // 클릭 이벤트를 정의합니다.
+        // 1. 클릭 이벤트를 정의합니다.
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerClick;
         entry.callback.AddListener((eventData) =>
         {
+            // 👇 클릭하면 F5 대기 작업을 취소(중단)합니다.
+            CancelAndDispose(ref _gameOverInputCts);
+
             // 클릭 시 스테이지 씬으로 이동
             SceneLoadingManager.Instance.LoadScene("StageScene");
             Time.timeScale = 1f; // 타임스케일 원상 복구
@@ -471,6 +475,42 @@ public class BlurController : MonoBehaviour
         var eventTrigger = gameOverBlack.gameObject.GetOrAddComponent<EventTrigger>();
         // EventTrigger에 이벤트를 추가합니다.
         eventTrigger.triggers.Add(entry);
+
+        // 2. F5 키 입력을 대기하는 UniTask 실행
+        CancelAndDispose(ref _gameOverInputCts); // 혹시 모를 이전 토큰 초기화
+        _gameOverInputCts = new CancellationTokenSource();
+
+        // 씬 변경 등으로 오브젝트가 파괴될 때를 대비해 파괴 토큰과 연결 (안전장치)
+        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_gameOverInputCts.Token, this.GetCancellationTokenOnDestroy());
+
+        // F5 대기 비동기 루프 실행
+        WaitForF5KeyAsync(linkedCts.Token).Forget();
+    }
+
+    /// <summary>
+    /// F5 키 입력을 비동기로 기다리는 UniTask
+    /// </summary>
+    private async UniTaskVoid WaitForF5KeyAsync(CancellationToken token)
+    {
+        // 토큰이 취소되지 않은 동안 무한 루프 (Update문 역할)
+        while (!token.IsCancellationRequested)
+        {
+            // F5 키를 눌렀을 때
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                Managers.Sound.StopBGM();
+
+                SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+             
+
+                return; // 씬 로드 후 함수 즉시 종료
+            }
+
+            // 매 프레임 한 번씩 쉬어줌 (Update 주기와 동일)
+            // SuppressCancellationThrow()를 사용하여 취소 시 에러 로그가 남는 것을 방지
+            bool isCanceled = await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token).SuppressCancellationThrow();
+            if (isCanceled) return;
+        }
     }
     public void ComboEffect()
     {
