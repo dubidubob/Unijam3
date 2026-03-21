@@ -179,7 +179,7 @@ public class GameManager
     private void HandleMiss(WASDType key)
     {
         RankUpdate?.Invoke(new RankNode(EvaluateType.Wrong, key, null));
-        DecHealth(7);
+        DecHealth(2);
     }
 
     // ==================================================================================

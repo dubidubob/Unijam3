@@ -139,9 +139,9 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
             UpdateRankCnt(RankState.Success);
             diagonalDict[attackType].GetComponent<DiagonalMonster>().SetDead();
         }
-        else
+        else // 키를 잘못 입력하였다면
         {
-            Managers.Game.PlayerAttacked(attackValue);
+            Managers.Game.PlayerAttacked(2);
         }
     }
 
