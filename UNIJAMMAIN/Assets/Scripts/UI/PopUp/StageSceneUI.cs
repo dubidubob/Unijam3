@@ -377,14 +377,14 @@ public class StageSceneUI : UI_Popup
                 {
                     currentPageLevel = 2;
                     MoveTo(yPos: -480f);
-                    Managers.Sound.Play("SFX/UI/GoToCity_V2", Define.Sound.SFX, 1f, 5f);
+                    Managers.Sound.Play("SFX/UI/GoToCity_V2", Define.Sound.SFX, 1f, 1f);
                     break;
                 }
                 else
                 {
                     currentPageLevel = 1;
                     MoveTo(yPos: -295f);
-                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 1f);
                     break;
                 }
 
@@ -395,14 +395,14 @@ public class StageSceneUI : UI_Popup
                     currentPageLevel = 2;
                     MoveTo(yPos: -480f);
 
-                    Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 3f);
+                    Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 1f);
                 }
                 else
                 {
                     // [Level 1 -> 2] : z축 180도 회전, y좌표 892으로 이동
                     currentPageLevel = 2;
                     RotateAndMoveTo(zRot: 180f, yPos: 892f);
-                    Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 3f);
+                    Managers.Sound.Play("SFX/UI/GoToFinalStage_V1", Define.Sound.SFX, 1f, 1f);
                 }
                 
 
@@ -446,14 +446,14 @@ public class StageSceneUI : UI_Popup
 
                     currentPageLevel = 0;
                     MoveTo(yPos: 460f);
-                    Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 1f);
                 }
                 else
                 {
                     currentPageLevel = 0;
                     MoveTo(yPos: 892f);
 
-                    Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    Managers.Sound.Play("SFX/UI/GoTo123Stage_V1", Define.Sound.SFX, 1f, 1f);
                 }
                 break;
 
@@ -462,14 +462,14 @@ public class StageSceneUI : UI_Popup
                 {
                     currentPageLevel = 0;
                     MoveTo(yPos: 460f);
-                    Managers.Sound.Play("SFX/UI/GoToWinter_V2", Define.Sound.SFX, 1f, 5f);
+                    Managers.Sound.Play("SFX/UI/GoToWinter_V2", Define.Sound.SFX, 1f, 1f);
                 }
                 else
                 {
                     // [Level 2 -> 1] : z축 0도로 복귀, y좌표 -295으로
                     currentPageLevel = 1;
                     RotateAndMoveTo(zRot: 0f, yPos: -295f);
-                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 5f);
+                    Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 1f);
                 }
 
                
@@ -574,7 +574,7 @@ public class StageSceneUI : UI_Popup
         {
             path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";
         }
-        Managers.Sound.Play(path, Define.Sound.SFX, 1f, 5f);
+        Managers.Sound.Play(path, Define.Sound.SFX, 1f, 1f);
        
         _selectedButton = button;
         _hoveredButton = null;
