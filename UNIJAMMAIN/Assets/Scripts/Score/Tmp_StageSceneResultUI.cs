@@ -15,7 +15,7 @@ public class Tmp_StageSceneResultUI : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] private RectTransform scoreRect;      // 위치 이동을 위해 필요
 
     private Vector2 originPos; // 원래 위치 저장용
-
+    private Material customMaterial; // 복사해서 사용할 전용 머티리얼 저장 변수
     private void Start()
     {
         sp = GetComponent<Image>();
@@ -23,6 +23,19 @@ public class Tmp_StageSceneResultUI : MonoBehaviour, IPointerEnterHandler, IPoin
         // 초기 세팅: 투명도를 0으로 만들고 원래 위치 저장
         if (scoreCanvasGroup != null) scoreCanvasGroup.alpha = 0;
         originPos = scoreRect.anchoredPosition;
+
+        // [중요] 시작할 때 전용 머티리얼을 복사하여 생성합니다.
+        // scoreText.fontMaterial을 호출하는 순간 인스턴스화되어 독립된 머티리얼이 됩니다.
+        customMaterial = scoreText.fontMaterial;
+
+        // 요청하신 Dilate 0.1, Thickness 0.3 적용
+        // TMP 쉐이더의 내부 변수명을 정확히 사용해야 합니다.
+        customMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, 0.1f);
+        customMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.3f);
+
+        // 외곽선 색상이 투명할 수 있으므로 검은색 등으로 설정 (필요시)
+        customMaterial.SetColor(ShaderUtilities.ID_OutlineColor, Color.black);
+
     }
 
     /// <summary>
@@ -70,6 +83,7 @@ public class Tmp_StageSceneResultUI : MonoBehaviour, IPointerEnterHandler, IPoin
         }
         scoreText.text = "Score : ";
         scoreText.text += score.ToString("F0");
+        scoreText.fontMaterial = customMaterial;
         // 나타나는 연출 (0.3초 동안)
         scoreCanvasGroup.DOFade(1f, 0.3f);
     }

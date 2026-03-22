@@ -44,13 +44,14 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXDXXXXXXXDXXXXXXXXDXXXXXXXDXXXXXXXWXXXXXXXWXXXXXXXWXXXXXXWXXXXXXXXXXX/WXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXD/XXXXXXXXXXXXXXXXXXX(AD)XXXXXXX(AD)XXXXXXX(AD)XXXXXXXXXXXXXXXXWXXXXXXXXXXXXXX(AD)XXXXXXXXXXXXXXXXXXXXXXX(ASD)XXXXXXX(ASD)XXXXXXXXXXX
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXDXXXXXXXDXXXXXXXXDXXXXXXXDXXXXXXXWXXXXXXXWXXXXXXXWXXXXXXWXXXXXXXXXXX/WXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXD/XXXXXXXXXXXXXXXXXXX(AD)XXXXXXX(AD)XXXXXXX(AD)XXXXXXXXXXXXXXXXWXXXXXXXXXXXXXX(AD)XXXXXXXXXXXXXXXXXXXXXXX(ASD)XXXXXXX(ASD)XXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.125
           moveBeat: 2
@@ -81,9 +82,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -159,9 +161,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 15
@@ -218,9 +221,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
@@ -297,9 +301,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -378,9 +383,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
@@ -415,13 +421,14 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: XWXAXSXDXWXAXSXDXWXAXSXDXWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASD
+          WASD_Pattern: XWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXWXAXSXDXXX
           speedUpRate: 1
           spawnBeat: 0.3
           moveBeat: 2
@@ -452,9 +459,10 @@ MonoBehaviour:
         preGenerateBeat: 0
         extensionCreateBeat: 0
         isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
+        isMovieAction: 0
+        movieDuration: 0
+        movieWaitForStartDuration: 0
+        style: 0
         monsterDatas:
         - isIn: 1
           monsterType: 0
