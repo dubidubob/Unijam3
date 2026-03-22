@@ -49,6 +49,7 @@ public class DiagonalMonster : MonoBehaviour
     private void OnDestroy()
     {
         PauseManager.IsPaused -= PauseForWhile;
+
         _cts?.Dispose();
     }
 
@@ -159,6 +160,12 @@ public class DiagonalMonster : MonoBehaviour
 
         float delay = 0.2f;
 
+        // [수정] SuppressCancellationThrow()를 사용하여 취소 시 에러 로그 방지
+        bool isCanceled = await UniTask.Delay((int)(delay * 1000), cancellationToken: _cts.Token).SuppressCancellationThrow();
+
+        // [수정] 취소되었거나, 오브젝트가 파괴되었다면 이후 로직 실행 중단
+        if (isCanceled || this == null) return;
+
         // 딜레이 (취소 토큰 적용)
         await UniTask.Delay((int)(delay * 1000), cancellationToken: _cts.Token);
 
@@ -170,7 +177,9 @@ public class DiagonalMonster : MonoBehaviour
 
     private void ChangeToOriginal()
     {
-        _objectRenderer.sprite = _originSprite;
+        // 여기 수정했어요! -> 렌더러가 파괴되지 않고 살아있을 때만 접근하도록 안전장치를 걸었어요.
+        if (_objectRenderer != null)
+            _objectRenderer.sprite = _originSprite;
     }
 
     public void SetDead(bool isAttackedByPlayer = true, bool isUnPool = false)
@@ -180,7 +189,8 @@ public class DiagonalMonster : MonoBehaviour
             jumpSequence.Kill(false); // OnComplete 실행 안 함
             jumpSequence = null;
         }
-        Managers.Sound.Play("SFX/Enemy/DiagonalSuccess_V4", Define.Sound.SFX, 1f, 2.5f);
+        if (this != null && gameObject.activeInHierarchy)
+            Managers.Sound.Play("SFX/Enemy/DiagonalSuccess_V4", Define.Sound.SFX, 1f, 2.5f);
 
         float waitForSeconds;
 
@@ -219,10 +229,18 @@ public class DiagonalMonster : MonoBehaviour
         // WaitForSeconds 대체
         if (waitSeconds > 0)
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(waitSeconds), cancellationToken: _cts.Token);
+            // [수정] 취소 에러 방지
+            bool isCanceled = await UniTask.Delay(System.TimeSpan.FromSeconds(waitSeconds), cancellationToken: _cts.Token).SuppressCancellationThrow();
+            // [수정] 취소되거나 파괴되었으면 리턴
+            if (isCanceled || this == null) return;
         }
 
         _isDying = false;
+
+        // 여기 수정했어요! -> 각각의 컴포넌트가 파괴되지 않고 남아있는지 확인하고 초기화합니다.
+        if (attackedEffectSpriteRenderer != null)
+            attackedEffectSpriteRenderer.DOFade(1, 0);
+
         attackedEffectSpriteRenderer.DOFade(1, 0);
         transform.position = _originPos;
         _objectRenderer.color = new Color(_objectRenderer.color.r, _objectRenderer.color.g, _objectRenderer.color.b, 1);
@@ -240,12 +258,15 @@ public class DiagonalMonster : MonoBehaviour
     {
         if (_cts == null) return;
 
-        // 15초 대기
-        await UniTask.Delay(System.TimeSpan.FromSeconds(15f), cancellationToken: _cts.Token);
+        // 여기 수정했어요! -> 15초를 기다리는 동안 몬스터가 파괴되었을 때 나는 에러를 막았습니다.
+        bool isCanceled = await UniTask.Delay(System.TimeSpan.FromSeconds(15f), cancellationToken: _cts.Token).SuppressCancellationThrow();
 
-        jumpSequence.Kill();
+        // 여기 수정했어요! -> 파괴되었거나 취소되었으면 멈춥니다.
+        if (isCanceled || this == null) return;
 
-        // PoolOutGoAsync 호출 (대기 시간 0)
+        // 여기 수정했어요! -> 혹시 jumpSequence가 비어있을 경우를 대비해 ?(널 체크)를 추가했어요.
+        jumpSequence?.Kill();
+
         PoolOutGoAsync(0).Forget();
     }
 }
