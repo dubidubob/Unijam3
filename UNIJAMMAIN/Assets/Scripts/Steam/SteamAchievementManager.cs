@@ -9,9 +9,6 @@ public class SteamAchievementManager
 
     public void Init()
     {
-#if UNITY_EDITOR
-        return;
-#endif
         if (!SteamManager.Initialized)
         {
             Debug.LogWarning("[Steam] Steam Manager가 초기화되지 않았습니다.");
@@ -44,9 +41,6 @@ public class SteamAchievementManager
         
     public void UnlockAchievement(string achievementID)
     {
-#if UNITY_EDITOR
-        return;
-#endif
         // ★ 이 줄을 추가해서 데이터가 로드 안 됐으면 튕겨내게 하세요
         if (!SteamManager.Initialized || !SteamManager.IsStatsLoaded)
         {
@@ -115,9 +109,6 @@ public class SteamAchievementManager
 
     public void SetStat(string statName, int value)
     {
-#if UNITY_EDITOR
-        return;
-#endif
         // 스팀 통계 값 설정
         Steamworks.SteamUserStats.SetStat(statName, value);
         // 설정한 값을 서버로 전송 (이걸 호출해야 스팀 오버레이에 즉각 반영됨)

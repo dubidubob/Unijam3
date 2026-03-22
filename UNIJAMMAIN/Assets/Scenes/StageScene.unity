@@ -983,10 +983,6 @@ PrefabInstance:
       propertyPath: managedReferences[9208079295597510923].m_VariantData.Array.data[3].localeIdentifier.m_Code
       value: zh-Hans
       objectReference: {fileID: 0}
-    - target: {fileID: 2730492546759213630, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
     - target: {fileID: 3748283175784367811, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Name
       value: StageSceneUI
@@ -1146,34 +1142,6 @@ PrefabInstance:
     - target: {fileID: 5476776670802910794, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510911].m_VariantData.Array.data[3].localeIdentifier.m_Code
       value: zh-Hans
-      objectReference: {fileID: 0}
-    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 53027ca2874e0804f9c8022a8fc6e514, type: 2}
-    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_fontStyle
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_fontColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_overflowMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -7793487522434086522, guid: 53027ca2874e0804f9c8022a8fc6e514, type: 2}
-    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6886757758367720398, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510910]
@@ -1394,10 +1362,6 @@ PrefabInstance:
     - target: {fileID: 6952080701677757736, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510915].m_VariantData.Array.data[3].localeIdentifier.m_Code
       value: ko
-      objectReference: {fileID: 0}
-    - target: {fileID: 8224308322900043313, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
-      propertyPath: m_Alpha
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8682831738735595492, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510688].m_VariantData.Array.data[3].value

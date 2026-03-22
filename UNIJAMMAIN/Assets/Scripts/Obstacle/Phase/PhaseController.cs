@@ -301,7 +301,7 @@ public class PhaseController : MonoBehaviour
         else
         {
             Managers.Game.SetADReverse(false);
-            ChangeKey?.Invoke(-2f);
+            ChangeKey?.Invoke(-1f);
         }
     }
 
@@ -350,8 +350,8 @@ public class PhaseController : MonoBehaviour
     }   
 
     private float perfectWeight = 1.0f;
-    private float goodWeight = 0.35f;
-    private float missPenalty = 2; // 놓쳤을 때의 감점!
+    private float goodWeight = 0.5f;
+    private float missPenalty = 0.15f; // 놓쳤을 때의 감점!
 
     private float CalculateScore()
     {

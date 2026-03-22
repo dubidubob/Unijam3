@@ -23,10 +23,6 @@ public class SteamManager : MonoBehaviour
 
     protected virtual void Awake()
     {
-#if UNITY_EDITOR
-        return;
-#endif
-
         if (s_Instance != null)
         {
             Destroy(gameObject);
@@ -86,10 +82,6 @@ public class SteamManager : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-#if UNITY_EDITOR
-        return;
-#endif
-
         if (s_Instance == null)
         {
             s_Instance = this;

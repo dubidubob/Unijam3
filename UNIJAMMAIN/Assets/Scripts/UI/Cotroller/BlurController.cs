@@ -60,7 +60,11 @@ public class BlurController : MonoBehaviour
         }
         damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
 
-     
+        if (backGroundController != null && backGroundController.sharedMaterial != null)
+        {
+            backGroundController.sharedMaterial.DOKill(); // 진행 중인 트윈이 있다면 취소
+            backGroundController.sharedMaterial.SetFloat("_Saturation", 1f);
+        }
 
         // 콤보 이펙트 관련 
         // 기준 이미지의 높이 측정 (두 세트 모두 같은 높이라고 가정)
@@ -476,11 +480,6 @@ public class BlurController : MonoBehaviour
             Time.timeScale = 1f; // 타임스케일 원상 복구
         });
 
-        
-
-
-
-
         // 화면에 클릭 가능한 EventTrigger 컴포넌트를 추가합니다.
         var eventTrigger = gameOverBlack.gameObject.GetOrAddComponent<EventTrigger>();
         // EventTrigger에 이벤트를 추가합니다.
@@ -510,24 +509,11 @@ public class BlurController : MonoBehaviour
             {
                 Managers.Sound.StopBGM();
 
-                CancelAndDispose(ref _gameOverInputCts);
                 SceneLoadingManager.Instance.LoadScene("GamePlayScene");
              
 
                 return; // 씬 로드 후 함수 즉시 종료
             }
-
-            // F5 키를 눌렀을 때
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Managers.Sound.StopBGM();
-                CancelAndDispose(ref _gameOverInputCts);
-                SceneLoadingManager.Instance.LoadScene("StageScene");
-
-
-                return; // 씬 로드 후 함수 즉시 종료
-            }
-
 
             // 매 프레임 한 번씩 쉬어줌 (Update 주기와 동일)
             // SuppressCancellationThrow()를 사용하여 취소 시 에러 로그가 남는 것을 방지
@@ -631,5 +617,4 @@ public class BlurController : MonoBehaviour
 
         #endregion
     }
-
 }

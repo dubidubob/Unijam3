@@ -66,9 +66,7 @@ public class BackGroundController : MonoBehaviour
         Managers.Game.backGroundController = this;
         IngameData.ChangeBpm -= Init;
         IngameData.ChangeBpm += Init;
-
-        sharedMaterial.DOKill(); // 진행 중인 트윈이 있다면 취소
-        sharedMaterial.SetFloat("_Saturation", 1f);
+      
     }
    
     private void Init()

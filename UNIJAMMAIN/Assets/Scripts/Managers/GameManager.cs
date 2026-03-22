@@ -190,7 +190,7 @@ public class GameManager
     {
         // Steam 업적을위해 InGameData에 처치한 수 저장
         IngameData._defeatEnemyCount++;
-       
+        Debug.Log(IngameData._defeatEnemyCount);
        
         Combo++;
         IncHealth(healingValue);
@@ -312,10 +312,10 @@ public class GameManager
         if (beatClock != null)
         {
             double playTime = beatClock.GetCurrentPlayTime();
-            if (playTime <= 22.0d)
+            if (playTime <= 15.0d)
             {
                 Managers.Steam.UnlockAchievement("ACH_DEATH_INSTANT");
-                Debug.Log($"[Steam] 22초 내 사망 업적 달성! (기록: {playTime:F2}초)");
+                Debug.Log($"[Steam] 15초 내 사망 업적 달성! (기록: {playTime:F2}초)");
             }
         }
     }

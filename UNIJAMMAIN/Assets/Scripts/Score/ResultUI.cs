@@ -172,8 +172,6 @@ public class ResultUI : MonoBehaviour
 
             // 4. 연출이 모두 끝난 후 데이터 저장 및 업적 체크
             SaveAndCheckAchievements(score, rank);
-            StartWaitingForInput();
-
         }
         catch (OperationCanceledException)
         {
@@ -331,68 +329,5 @@ public class ResultUI : MonoBehaviour
     private void OnDestroy()
     {
         // 필요시 해제 로직 추가 (SetLink와 CancellationToken 덕분에 강제 해제 불필요)
-        CancelAndDispose(ref _gameOverInputCts);
     }
-
-    private void StartWaitingForInput()
-    {
-        // 이미 실행 중인 토큰이 있다면 정리 (중복 실행 방지)
-        CancelAndDispose(ref _gameOverInputCts);
-
-        // 새로운 토큰 소스 생성
-        _gameOverInputCts = new CancellationTokenSource();
-
-        // 이 오브젝트가 Destroy될 때 자동으로 취소되도록 연결(Link)
-        CancellationToken linkedToken = CancellationTokenSource.CreateLinkedTokenSource(
-            _gameOverInputCts.Token,
-            this.GetCancellationTokenOnDestroy()
-        ).Token;
-
-        // 비동기 입력 대기 시작
-        WaitForInputAsync(linkedToken).Forget();
-    }
-
-    private CancellationTokenSource _gameOverInputCts;
-
-    // 🚨 핵심 수정 3: 메서드 이름 변경 및 구조 단순화 (F5 뿐만 아니라 Space도 처리하므로 이름 범용적으로 변경)
-    private async UniTaskVoid WaitForInputAsync(CancellationToken token)
-    {
-        // 토큰이 취소되면 반복문이 종료됩니다.
-        while (!token.IsCancellationRequested)
-        {
-            // F5 키를 눌렀을 때 (게임 재시작)
-            if (Input.GetKeyDown(KeyCode.F5))
-            {
-                Managers.Sound.StopBGM();
-                CancelAndDispose(ref _gameOverInputCts);
-                SceneLoadingManager.Instance.LoadScene("GamePlayScene");
-                return; // 함수 종료
-            }
-
-            // Space 키를 눌렀을 때 (스테이지 선택씬으로 이동)
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Managers.Sound.StopBGM();
-                CancelAndDispose(ref _gameOverInputCts);
-                SceneLoadingManager.Instance.LoadScene("StageScene");
-                return; // 함수 종료
-            }
-
-            // 매 프레임 대기. 취소(Cancel) 요청이 들어오면 루프를 빠져나갑니다.
-            bool isCanceled = await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token).SuppressCancellationThrow();
-            if (isCanceled) return;
-        }
-    }
-
-    // 토큰 정리 헬퍼 함수
-    private void CancelAndDispose(ref CancellationTokenSource cts)
-    {
-        if (cts != null)
-        {
-            cts.Cancel();
-            cts.Dispose();
-            cts = null;
-        }
-    }
-
 }
