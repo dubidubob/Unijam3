@@ -45,6 +45,8 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     {
         Managers.Input.InputDiagonal -= DeactivateDiagonal;
         PauseManager.IsPaused -= PauseForWhile;
+
+        UnSpawnAll();
     }
 
     // --- (기존 로직 유지) ---
@@ -77,6 +79,9 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
     // =================================================================
     public void ActivateEnemy(float moveBeat, MonsterData data, int? targetEnumIdx = null)
     {
+        // [추가된 부분] 게임 오브젝트가 파괴되었는지 확인하여 에러 방지
+        if (this == null || gameObject == null) return;
+
         if (deactivatedDiagonalIdx.Count == 0)
         {
             Debug.LogWarning("가용 가능한 대각선 몬스터 오브젝트가 없습니다!");
@@ -269,6 +274,15 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
     {
         _spawning = false;
         if (_spawnCoroutine != null && _parent != null) _parent.StopCoroutine(_spawnCoroutine);
+
+        // [추가된 부분] UniTask를 즉시 중단시키고 메모리 해제
+        if (_spawnCts != null)
+        {
+            _spawnCts.Cancel();
+            _spawnCts.Dispose();
+            _spawnCts = null;
+        }
+
         _parent.RemovePattern(this);
     }
 
