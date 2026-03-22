@@ -987,10 +987,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 2730492546759213630, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -145
+      objectReference: {fileID: 0}
+    - target: {fileID: 2730492546759213630, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 195
+      objectReference: {fileID: 0}
     - target: {fileID: 3748283175784367811, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Name
       value: StageSceneUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4406977470014970859, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 365d70c641b1b464d87f672836271f01, type: 3}
     - target: {fileID: 4407148592500585965, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1148,6 +1160,12 @@ PrefabInstance:
       value: zh-Hans
       objectReference: {fileID: 0}
     - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_text
+      value: 'Score : 100
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 53027ca2874e0804f9c8022a8fc6e514, type: 2}
@@ -1170,6 +1188,10 @@ PrefabInstance:
     - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6204057772959132643, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_hasFontAssetChanged
