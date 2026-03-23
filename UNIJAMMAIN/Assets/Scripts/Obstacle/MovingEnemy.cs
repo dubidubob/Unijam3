@@ -27,6 +27,10 @@ public class Knockback
 [RequireComponent(typeof(Poolable))]
 public class MovingEnemy : MonoBehaviour
 {
+
+    // [추가] 몬스터들의 렌더링 순서를 관리할 공유 카운터
+    private static int _globalSortingOrder = 0;
+
     // [추가] 커스텀 이동(DOTween)이 끝났는지 체크하는 플래그
     private bool _isCustomMoveFinished = false;
 
@@ -84,6 +88,7 @@ public class MovingEnemy : MonoBehaviour
             
             monsterImg.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
             monsterImg.transform.localScale = origin; // 크기 초기화 안전장치
+
         }
 
         if (dyingEffectObject != null)
@@ -169,6 +174,14 @@ public class MovingEnemy : MonoBehaviour
             monsterImg.flipX = true;
         else
             monsterImg.flipX = false;
+
+        if(wasdType==GamePlayDefine.WASDType.W)
+
+            monsterImg.sortingOrder = --_globalSortingOrder;
+        else
+
+            monsterImg.sortingOrder = ++_globalSortingOrder;
+
 
         if (timeOffset > 0)
         {
