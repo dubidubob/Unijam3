@@ -31,7 +31,7 @@ public class StageSceneUI : UI_Popup
 
     // 맵 이동관련
     public int currentPageLevel = 0;
-    private bool isAnimating = false;
+    public bool isAnimating = false;
     public Ease moveEase = Ease.OutCubic; // 이동 애니메이션의 Ease 효과
     public float rotateDuration = 1f; // 회전에 걸리는 시간
     public RectTransform mapImage;
@@ -39,7 +39,7 @@ public class StageSceneUI : UI_Popup
     private float moveDuration = 1.6f;
 
     private int currentStageIndex = 2;
-    private List<Button> stageButtons = new List<Button>();
+    public List<Button> stageButtons = new List<Button>();
 
     public TMP_Text startButtonText;
 
@@ -585,6 +585,7 @@ public class StageSceneUI : UI_Popup
 
     private void UpdateStageButtons()
     {
+        /*
         if (_selectedButton == null)
         {
             if (IngameData._unLockStageIndex + 1 > 0 && IngameData._unLockStageIndex + 1 <= stageButtons.Count)
@@ -592,6 +593,8 @@ public class StageSceneUI : UI_Popup
                 _selectedButton = stageButtons[IngameData._unLockStageIndex];
             }
         }
+        */
+
         for (int i = 0; i < stageButtons.Count; i++)
         {
             var button = stageButtons[i];
@@ -1050,7 +1053,8 @@ public class StageSceneUI : UI_Popup
         transform.localScale = Vector3.one* 0.009259259f;
     }
 
-    private bool IsStageUnlocked(int index)
+    #region 키보드액션 관련 함수
+    public bool IsStageUnlocked(int index)
     {
         // 0~7: 일반 스토리 스테이지 (Stage 1~8)
         if (index < 8)
@@ -1070,5 +1074,21 @@ public class StageSceneUI : UI_Popup
         return false;
     }
 
+    public void ClearStageSelection()
+    {
+        _selectedButton = null; // 선택 해제
 
+        // 시작 버튼(Start)도 숨김 처리
+        var startButton = GetButton((int)Buttons.StartButton);
+        if (startButton != null) startButton.gameObject.SetActive(false);
+
+        UpdateStageButtons(); // UI 갱신 (선택된 게 없으므로 모두 NonClickActive 처리됨)
+    }
+
+    public Button GetSelectedButton()
+    {
+        return _selectedButton;
+    }
+
+    #endregion
 }
