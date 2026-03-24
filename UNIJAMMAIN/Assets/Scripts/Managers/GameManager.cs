@@ -130,7 +130,6 @@ public class GameManager
     {
         if (currentPlayerState == PlayerState.Die) return;
 
-
         // 키 반전 로직
         if (isADReverse)
         {
@@ -291,7 +290,7 @@ public class GameManager
         currentPlayerState = PlayerState.Die;
         IngameData.Pause = true;
         PauseManager.ControlTime(true);
-
+     
         if (actionUI != null) actionUI.GameOverAnimation();
         if (blur != null)
         {
@@ -305,6 +304,7 @@ public class GameManager
         Managers.Sound.Play("BGM/GameOver_V1");
 
         Time.timeScale = 0;
+        Debug.Log($"게임오버가 진입되었는지?{IngameData.Pause}");
     }
 
     private void CheckGameOverAchievements()

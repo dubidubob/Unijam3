@@ -63,3 +63,9 @@ TagManager:
   - name: UI
     uniqueID: 2275580075
     locked: 0
+  - name: KeyBoardInfoLayer
+    uniqueID: 2682867505
+    locked: 0
+  - name: KeyBoardFrontLayer
+    uniqueID: 3118338777
+    locked: 0
