@@ -98,7 +98,7 @@ public class KeyboardStageSceneUIController : MonoBehaviour
                 NavigateVertical(1);
             }
             // 오른쪽(RightArrow 또는 D): 시작 버튼 활성화
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)||Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.KeypadEnter))
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)||Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return))
             {
                 lastSelectedStageIndex = stageSceneUI.stageButtons.IndexOf(currentBtn);
                 SetStartButtonFocus(true);
