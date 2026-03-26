@@ -3924,9 +3924,11 @@ MonoBehaviour:
   nonClickActive: {fileID: 21300000, guid: a11af0eec4cf47e4a8e6ceef66f08590, type: 3}
   normalTextMaterial: {fileID: -7676367356666784292, guid: 315c3108e711594458dead04d790c64a, type: 2}
   currentPageLevel: 0
+  isAnimating: 0
   moveEase: 9
   rotateDuration: 1
   mapImage: {fileID: 5353428060422201689}
+  stageButtons: []
   startButtonText: {fileID: 5527089971464411152}
   mycanvas: {fileID: 8565910677778262950}
   stageDataList:
@@ -7846,13 +7848,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6161288130001183881}
-  m_LocalRotation: {x: -0, y: -0, z: 0.49056736, w: 0.8714032}
+  m_LocalRotation: {x: 0, y: 0, z: 0.47742248, w: 0.87867385}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7827700088799822229}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -38.99994, y: -36.000008}
@@ -8160,16 +8162,16 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 0.5
+          value: 0.052335896
         - localeIdentifier:
             m_Code: zh-Hans
-          value: -0.2588191
+          value: -0.25206944
         - localeIdentifier:
             m_Code: ko
-          value: -0.2588191
+          value: -0.25206944
         - localeIdentifier:
             m_Code: ja
-          value: -0.2588191
+          value: -0.25206944
 --- !u!1 &6225448619134843154
 GameObject:
   m_ObjectHideFlags: 0
