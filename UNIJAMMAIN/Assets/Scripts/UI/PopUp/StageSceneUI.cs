@@ -334,6 +334,8 @@ public class StageSceneUI : UI_Popup
     public void OnPointerEnter(Button button)
     {
         if (_selectedButton == button || !button.interactable) return;
+        Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX);
+
         _hoveredButton = button;
         SetButtonState(button, ButtonState.Hover);
     }
@@ -531,6 +533,8 @@ public class StageSceneUI : UI_Popup
         // 해금 판별 함수를 사용해 클릭 여부를 결정합니다.
         if (!IsStageUnlocked(stageIndex - 1))
         {
+            Managers.Sound.Play("SFX/UI/StageBlocked", Define.Sound.SFX);
+
             ClearStageSelection();
             return;
         }
