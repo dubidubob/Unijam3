@@ -94,7 +94,16 @@ public class StageLevelSceneUI : MonoBehaviour
         yield return tmpText.transform.DOScale(1.5f, 0.2f).SetEase(Ease.OutBack).WaitForCompletion();
 
         yield return new WaitForSeconds(0.4f);
-        tmpText.rectTransform.DOAnchorPosX(-200f, 0.7f); // (O) �ν������� Pos X ����
+
+        float targetPosX = -200f;
+
+        if (UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocale.Identifier.Code == "en")
+        {
+            targetPosX = -350f; // 영어일 경우 텍스트를 더 왼쪽으로 보냅니다! (-350f는 원하는 수치로 조절하세요)
+        }
+
+        tmpText.rectTransform.DOAnchorPosX(targetPosX, 0.7f); // (O) �ν������� Pos X ����
+
         // 4. ��� ��ٸ�
         yield return new WaitForSeconds(1.3f);
 
