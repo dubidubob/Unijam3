@@ -95,34 +95,51 @@ public class StageLevelSceneUI : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
 
-        float targetPosX = -200f;
 
-        if (UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocale.Identifier.Code == "en")
-        {
-            targetPosX = -350f; // 영어일 경우 텍스트를 더 왼쪽으로 보냅니다! (-350f는 원하는 수치로 조절하세요)
-        }
+        // ------------------------------------------------------------------------
+        // [동적 그룹 중앙 정렬 계산] 
 
-        tmpText.rectTransform.DOAnchorPosX(targetPosX, 0.7f); // (O) �ν������� Pos X ����
+        // 1. 나타날 텍스트 세팅
+        int textIndex = nowStageLevel;
+        string nextExtraString = stageSceneUI.localizationController.levelGuide_localizedString[textIndex].GetLocalizedString();
+        // .Trim()을 붙여서 번역 데이터 앞뒤의 쓸데없는 띄어쓰기(공백)를 모두 날려버립니다!
+        extraText.text = nextExtraString.Trim();
+        extraText.text = stageSceneUI.localizationController.levelGuide_localizedString[textIndex].GetLocalizedString();
+        extraText.color = new Color(extraText.color.r, extraText.color.g, extraText.color.b, 0f);
 
-        // 4. ��� ��ٸ�
+        // 2. TMP 메시 즉시 업데이트 강제
+        tmpText.ForceMeshUpdate(true);
+        extraText.ForceMeshUpdate(true);
+
+        // 3. ✨핵심✨ rect.width가 아닌 preferredWidth 사용! (딜레이 없이 즉시 실제 텍스트 길이 가져옴)
+        float tmpWidth = tmpText.preferredWidth * tmpText.transform.localScale.x;
+        float extraWidth = extraText.preferredWidth * extraText.transform.localScale.x;
+        float spacing = 60f; // 두 텍스트 사이를 벌려줄 간격 (원하는 만큼 늘리세요!)
+
+        // 4. 두 텍스트 + 간격을 합친 '가상 그룹'의 전체 길이 계산
+        float totalGroupWidth = tmpWidth + spacing + extraWidth;
+
+        // 5. 정중앙(X=0)을 기준으로 양옆으로 쫙 벌어질 타겟 좌표 계산
+        float tmpTextTargetX = (-totalGroupWidth / 2f) + (tmpWidth / 2f);
+        float extraTextTargetX = (totalGroupWidth / 2f) - (extraWidth / 2f);
+
+        // 6. 오른쪽 텍스트(ExtraText)를 벌어진 위치(extraTextTargetX)에 세팅
+        extraText.rectTransform.anchoredPosition = new Vector2(extraTextTargetX, extraText.rectTransform.anchoredPosition.y);
+
+        // 7. 왼쪽 텍스트(Text)는 벌어질 위치(tmpTextTargetX)로 스르륵 이동!
+        tmpText.rectTransform.DOAnchorPosX(tmpTextTargetX, 0.7f).SetEase(Ease.OutCubic);
+        // ------------------------------------------------------------------------
+
+        // 4. 텍스트가 이동할 때까지 잠깐 기다림
         yield return new WaitForSeconds(1.3f);
 
-        // 5. tmpText.text �� ���� ���ڿ� extraText[nowStageLevel] �� �����ִ� ���ڸ� ���ʷ� ��
+        // 5. 드디어 ExtraText를 스르륵 나타나게 합니다. (Fade In)
+        extraText.DOFade(1f, 0.5f);
 
-        // nowStageLevel�� 1���� �����ϴ� ���� ���̹Ƿ�, ����Ʈ �ε����δ� -1�� ���ݴϴ�.
-        int textIndex = nowStageLevel;
-
-        // ����Ʈ ���� üũ
-
-
-        extraText.text = stageSceneUI.localizationController.levelGuide_localizedString[textIndex].GetLocalizedString(); // 로컬라이제이션 적용
-        // extraText.text = extraTextString[textIndex];
-       
-
-        // 6. ��ô���ϰ�
+        // 6. 연출 감상 시간
         yield return new WaitForSeconds(1.5f);
 
-        // 7. SetOffStageLevelSceneUI ����
+        // 7. 종료 코루틴 실행
         StartCoroutine(SetOffStageLevelSceneUI());
     }
 
