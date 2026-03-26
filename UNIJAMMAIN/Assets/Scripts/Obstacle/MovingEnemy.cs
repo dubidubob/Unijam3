@@ -28,8 +28,11 @@ public class Knockback
 public class MovingEnemy : MonoBehaviour
 {
 
-    // [추가] 몬스터들의 렌더링 순서를 관리할 공유 카운터
-    private static int _globalSortingOrder = 0;
+    // [추가] 렌더링 순서를 관리할 타입별 공유 카운터 및 안전 범위 설정
+    // Unity의 sortingOrder는 short 자료형 한계(-32768 ~ 32767)를 가지므로 범위 지정이 좋습니다.
+    private static int _adSortingCounter = 20000; // A, D는 무조건 최상단 (20000대)
+    private static int _sSortingCounter = 0;      // S는 점점 증가 (0 ~ 10000)
+    private static int _wSortingCounter = 0;      // W는 점점 감소 (-1 ~ -10000)
 
     // [추가] 커스텀 이동(DOTween)이 끝났는지 체크하는 플래그
     private bool _isCustomMoveFinished = false;
@@ -168,6 +171,7 @@ public class MovingEnemy : MonoBehaviour
         speed = distance / this.movingDuration;
         type = monsterType;
 
+        UpdateSortingOrder();
         SettingSprite(type);
 
         if (wasdType == GamePlayDefine.WASDType.A || wasdType == GamePlayDefine.WASDType.W)
@@ -175,12 +179,7 @@ public class MovingEnemy : MonoBehaviour
         else
             monsterImg.flipX = false;
 
-        if(wasdType==GamePlayDefine.WASDType.W)
-
-            monsterImg.sortingOrder = --_globalSortingOrder;
-        else
-
-            monsterImg.sortingOrder = ++_globalSortingOrder;
+        
 
 
         if (timeOffset > 0)
@@ -832,6 +831,40 @@ public class MovingEnemy : MonoBehaviour
                type == Define.MonsterType.WASDFIFO_Slow ||
                type == Define.MonsterType.WASD3Tempo; // [추가] 3템포도 기본 Update 이동 제외
     }
+
+    /// <summary>
+    /// [핵심 추가] 몬스터 타입(enemyType)이 결정된 직후 반드시 호출해야 하는 함수
+    /// </summary>
+    public void UpdateSortingOrder()
+    {
+        if (monsterImg == null) return;
+
+        switch (enemyType)
+        {
+            case GamePlayDefine.WASDType.A:
+            case GamePlayDefine.WASDType.D:
+                // A, D: 무조건 맨 앞. 값을 증가시키되 상한선을 두어 오버플로우 방지
+                _adSortingCounter++;
+                if (_adSortingCounter > 30000) _adSortingCounter = 20000;
+                monsterImg.sortingOrder = _adSortingCounter;
+                break;
+
+            case GamePlayDefine.WASDType.S:
+                // S: 먼저 나온게 아래로 -> 나중에 나온게 위로 (값 증가)
+                _sSortingCounter++;
+                if (_sSortingCounter > 10000) _sSortingCounter = 0;
+                monsterImg.sortingOrder = _sSortingCounter;
+                break;
+
+            case GamePlayDefine.WASDType.W:
+                // W: 먼저 나온게 위로 -> 나중에 나온게 아래로 (값 감소)
+                _wSortingCounter--;
+                if (_wSortingCounter < -10000) _wSortingCounter = 0;
+                monsterImg.sortingOrder = _wSortingCounter;
+                break;
+        }
+    }
+
 
     #endregion
 }

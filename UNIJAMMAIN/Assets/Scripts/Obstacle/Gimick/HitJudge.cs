@@ -33,7 +33,10 @@ public class HitJudge
 
     public void UpdateRankCnt(RankNode rankNode, Vector2 target)
     {
-
+        if(Managers.Game.currentPlayerState==GameManager.PlayerState.Ready) // 시작전이라면 받지않기
+        {
+            return;
+        }
         switch (rankNode.RankT)
         {
             case EvaluateType.Attacked:

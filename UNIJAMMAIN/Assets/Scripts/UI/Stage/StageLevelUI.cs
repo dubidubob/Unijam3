@@ -64,6 +64,7 @@ public class StageLevelSceneUI : MonoBehaviour
 
         canvasGroup.blocksRaycasts = true;
         isMoving = true;
+        stageSceneUI.isAnimating = true;
         // 0. �ؽ�Ʈ �ʱ�ȭ
         tmpText.text = "";
         tmpText.transform.localScale = Vector3.zero; // ũ�� �ʱ�ȭ
@@ -130,5 +131,6 @@ public class StageLevelSceneUI : MonoBehaviour
         tmpText.rectTransform.anchoredPosition = new Vector2(0, 0);
         tmpText.transform.localScale = Vector3.zero; // ������ ���� ũ�⵵ ����
         isMoving = false;
+        stageSceneUI.isAnimating = false;
     }
 }
