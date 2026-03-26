@@ -16,7 +16,6 @@ MonoBehaviour:
   - rid: 9186972795589099526
   - rid: 7504153760568705025
   - rid: 7096145072561848326
-  - rid: 7096145076374470676
   - rid: 7096145076374470671
   - rid: 7096145076374470677
   - rid: 7096145076374470678
@@ -38,13 +37,13 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 35
+        durationBeat: 37
         startDelayBeat: 0
         bpm: 102
         timeScale: 1
         preGenerateBeat: 0
         extensionCreateBeat: 0
-        isFlipAD: 1
+        isFlipAD: 0
         isMovieAction: 0
         movieDuration: 0
         movieWaitForStartDuration: 0
@@ -52,10 +51,10 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 5
-          WASD_Pattern: AXXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          WASD_Pattern: AXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.125
-          moveBeat: 3
+          moveBeat: 2.875
           hiding: 0
           dir: 0
           cameraActionDuration: 0
@@ -73,11 +72,11 @@ MonoBehaviour:
           floatDuration: 10
           slamAnimationDuration: 1
         - isIn: 1
-          monsterType: 2
-          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXX
+          monsterType: 5
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.125
-          moveBeat: 3
+          moveBeat: 2.875
           hiding: 0
           dir: 0
           cameraActionDuration: 1
@@ -137,22 +136,6 @@ MonoBehaviour:
           delayBeat: 6
           characterData: {fileID: 11400000, guid: 74f5cf71fced8124faf9545eee7560f8, type: 2}
           dir: 1
-    - rid: 7096145076374470676
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 2
-        startDelayBeat: 0
-        bpm: 102
-        timeScale: 1
-        preGenerateBeat: 0
-        extensionCreateBeat: 0
-        isFlipAD: 0
-        isMovieAction: 0
-        movieDuration: 0
-        movieWaitForStartDuration: 0
-        style: 0
-        monsterDatas: []
     - rid: 7096145076374470677
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -171,10 +154,10 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 15
-          WASD_Pattern: AXXXXXXXSXXXXXXXSXXXAXXXWXXXXXXXWXXXXXXXAXXXSXXXDXXXXXXXDXXXDXXXDXXXXDXXDXXXSXXXWXXXXXXXWXXXWXXXWXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXD
+          WASD_Pattern: XXXXXXXX/AXXXXXXXSXXXXXXXSXXXAXXXWXXXXXXXWXXXXXXXAXXXSXXXDXXXXXXXDXXXDXXXDXXXXDXXDXXXSXXXWXXXXXXXWXXXWXXXWXXXXXXXXXXXXXXXAXXXAXXXAXXXAXXXD
           speedUpRate: 1
           spawnBeat: 0.125
-          moveBeat: 3
+          moveBeat: 2
           hiding: 0
           dir: 0
           cameraActionDuration: 0
@@ -490,7 +473,7 @@ MonoBehaviour:
         timeScale: 1
         preGenerateBeat: 0
         extensionCreateBeat: 3
-        isFlipAD: 1
+        isFlipAD: 0
         isMovieAction: 0
         movieDuration: 0
         movieWaitForStartDuration: 0
@@ -498,7 +481,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 2
-          WASD_Pattern: AXXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXDXXXXXX
+          WASD_Pattern: AXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXAXXXXXXXXXXXXXXXDXXXXXXXXXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXDXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.125
           moveBeat: 3
