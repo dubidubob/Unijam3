@@ -531,6 +531,7 @@ public class StageSceneUI : UI_Popup
         // 해금 판별 함수를 사용해 클릭 여부를 결정합니다.
         if (!IsStageUnlocked(stageIndex - 1))
         {
+            ClearStageSelection();
             return;
         }
 
@@ -538,6 +539,12 @@ public class StageSceneUI : UI_Popup
         if (startButton != null)
         {
             startButton.gameObject.SetActive(true);
+        }
+        // [수정] 정상적으로 해금된 스테이지를 클릭했을 때 PracticeMode 버튼 표시
+        var practiceButton = GetButton((int)Buttons.PracticeModeButton);
+        if (practiceButton != null)
+        {
+            practiceButton.gameObject.SetActive(true);
         }
 
         StartButtonAnimation();
@@ -1081,6 +1088,15 @@ public class StageSceneUI : UI_Popup
         // 시작 버튼(Start)도 숨김 처리
         var startButton = GetButton((int)Buttons.StartButton);
         if (startButton != null) startButton.gameObject.SetActive(false);
+
+        // [추가] 연습 모드(Practice) 버튼 숨김 처리 및 상태 초기화
+        var practiceButton = GetButton((int)Buttons.PracticeModeButton);
+        if (practiceButton != null) practiceButton.gameObject.SetActive(false);
+
+        // [추가] 켜져 있던 Practice 모드 설정 끄기
+        IngameData.boolPracticeMode = false;
+        practiveModeButtonisClicked = false;
+        if (checkObject != null) checkObject.SetActive(false);
 
         UpdateStageButtons(); // UI 갱신 (선택된 게 없으므로 모두 NonClickActive 처리됨)
     }

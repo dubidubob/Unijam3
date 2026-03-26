@@ -529,4 +529,32 @@ public class BeadController : MonoBehaviour
 
         return new Vector3(clampedX, clampedY, targetPos.z);
     }
+
+    // =======================================================
+    // [Alt+Tab 버그 수정] 화면 포커스 감지 및 레이아웃 갱신
+    // =======================================================
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        // 현재 BeadController가 켜져 있고(씬 활성화), 화면이 다시 포커스를 얻었을 때 (Alt+Tab 복귀 시)
+        if (hasFocus)
+        {
+            // 캔버스와 해상도가 정상적으로 재계산될 수 있도록 아주 짧은 딜레이를 주고 갱신합니다.
+            Invoke(nameof(RefreshLayoutAfterAltTab), 0.1f);
+        }
+    }
+
+    private void RefreshLayoutAfterAltTab()
+    {
+        // 1. 해상도 변경/Alt-Tab으로 인해 틀어진 UI 레이아웃 강제 갱신
+        Canvas.ForceUpdateCanvases();
+
+        // 2. 카메라가 나가지 않게 막아주는 백그라운드의 월드 좌표 바운드 다시 캐싱
+        CacheBackgroundBounds();
+
+        // 3. 현재 맵과 카메라 상태를 제자리로 강제 복구 (기존에 만들어두신 함수 활용)
+        RestoreCurrentMapStateInstant();
+
+        Debug.Log("[BeadController] Alt+Tab 복귀 후 레이아웃 및 확대 지점 재설정 완료");
+    }
 }
