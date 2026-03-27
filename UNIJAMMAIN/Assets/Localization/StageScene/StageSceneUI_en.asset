@@ -38,7 +38,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130178
-    m_Localized: "A world bereft of harmony.\LI dare to defy it."
+    m_Localized: "Harmony is lost.\LI dare to begin\Lmy defiance."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130179
@@ -98,7 +98,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130190
-    m_Localized: At the threshold of the heavens. The Dark Spirits surge relentlessly.
+    m_Localized: "After countless trials,\Lat the Celestial threshold.\LDark Spirits
+      surge."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130191
@@ -128,7 +129,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130196
-    m_Localized: "The root of disharmony.\LHere, I sever\Lthis ill-fated tie."
+    m_Localized: "The root of disharmony.\LHere, at the final stand,\LI sever this
+      ill-fated tie."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130197
