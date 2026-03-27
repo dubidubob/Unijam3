@@ -122,6 +122,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &31403137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4648185042080805252, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+  m_PrefabInstance: {fileID: 1496663460}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &31403142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31403137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!223 &31403143
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31403137}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &312954704
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,6 +624,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 3000
   m_TargetDisplay: 0
+--- !u!114 &1186339523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186339511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1226504603
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,6 +779,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 6000
   m_TargetDisplay: 0
+--- !u!114 &1467397497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467397487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1001 &1496663460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1063,11 +1142,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1802204553983891179, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Interactable
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1802204553983891179, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_BlocksRaycasts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2654496017827857035, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_TrackedObjects.Array.size
@@ -1631,6 +1710,10 @@ PrefabInstance:
       propertyPath: managedReferences[9208079295597510910].m_VariantData.Array.data[3].localeIdentifier.m_Code
       value: zh-Hans
       objectReference: {fileID: 0}
+    - target: {fileID: 6916178350450136745, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6952080701677757736, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_TrackedObjects.Array.size
       value: 2
@@ -1798,6 +1881,10 @@ PrefabInstance:
     - target: {fileID: 6952080701677757736, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510915].m_VariantData.Array.data[3].localeIdentifier.m_Code
       value: ko
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391841358820626490, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7522590711916745220, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Color.b
@@ -2103,6 +2190,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3734971881127339350, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2078814551}
+    - targetCorrespondingSourceObject: {fileID: 4648185042080805252, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 31403143}
+    - targetCorrespondingSourceObject: {fileID: 4648185042080805252, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 31403142}
     - targetCorrespondingSourceObject: {fileID: 6161288130001183881, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1686113823}
@@ -2115,9 +2208,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 695100455917508836, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1186339517}
+    - targetCorrespondingSourceObject: {fileID: 695100455917508836, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1186339523}
     - targetCorrespondingSourceObject: {fileID: 432949469954039780, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1467397492}
+    - targetCorrespondingSourceObject: {fileID: 432949469954039780, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1467397497}
   m_SourcePrefab: {fileID: 100100000, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
 --- !u!224 &1496663461 stripped
 RectTransform:

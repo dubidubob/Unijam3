@@ -237,6 +237,7 @@ public class BeadController : MonoBehaviour
 
     private void CameraZoominAndBlackOut(RectTransform targetRect,int idx =0)
     {
+        stageSceneUI.isAnimating = true;
         backGroundBlackPanel.blocksRaycasts = true;
         backGroundBlackPanel.interactable = true;
         StartCoroutine(CoZoomAndFade(targetRect,idx));
@@ -334,6 +335,10 @@ public class BeadController : MonoBehaviour
         if (isEventMap)
         {
             Managers.Steam.UnlockAchievement("ACH_EVENT_ENTER");
+        }
+        if (!stageSceneUI.stageLevelSceneUI.isMoving)
+        {
+            stageSceneUI.isAnimating = false;
         }
     }
 

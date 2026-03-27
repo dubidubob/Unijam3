@@ -56,7 +56,7 @@ public class StageSceneUI : UI_Popup
 
     [SerializeField] GameObject completedObject;
     [SerializeField] GameObject checkObject;
-    [SerializeField] StageLevelSceneUI stageLevelSceneUI;
+    [SerializeField] public StageLevelSceneUI stageLevelSceneUI;
     [SerializeField] GameObject darkupObject;
     [SerializeField] Image dooroImage;
     [SerializeField] Image patternBackGround;
@@ -369,7 +369,7 @@ public class StageSceneUI : UI_Popup
         // 버튼의 컴포넌트를 가져와서 interactable 상태를 체크
         if (upButton != null && !upButton.interactable) return;
 
-
+        ClearStageSelection(); 
         switch (currentPageLevel)
         {
             case 0:
@@ -432,6 +432,8 @@ public class StageSceneUI : UI_Popup
 
         // 버튼의 컴포넌트를 가져와서 interactable 상태를 체크
         if (downButton != null && !downButton.interactable) return;
+
+        ClearStageSelection();
 
         switch (currentPageLevel)
         {
@@ -521,14 +523,7 @@ public class StageSceneUI : UI_Popup
     bool isFirst = true;
     public void StageButtonClicked(Button button, int stageIndex)
     {
-        if(isFirst)
-        {
-            CanvasGroup canvas = checkObject.GetComponentInParent<CanvasGroup>();
-            canvas.alpha = 1;
-            canvas.interactable = true;
-            isFirst = false;
-            canvas.blocksRaycasts = true;
-        }
+     
 
         // 해금 판별 함수를 사용해 클릭 여부를 결정합니다.
         if (!IsStageUnlocked(stageIndex - 1))
@@ -544,12 +539,7 @@ public class StageSceneUI : UI_Popup
         {
             startButton.gameObject.SetActive(true);
         }
-        // [수정] 정상적으로 해금된 스테이지를 클릭했을 때 PracticeMode 버튼 표시
-        var practiceButton = GetButton((int)Buttons.PracticeModeButton);
-        if (practiceButton != null)
-        {
-            practiceButton.gameObject.SetActive(true);
-        }
+        
 
         StartButtonAnimation();
       
@@ -586,7 +576,22 @@ public class StageSceneUI : UI_Popup
             path = $"SFX/UI/StageClick{IngameData.ChapterIdx}_V1";
         }
         Managers.Sound.Play(path, Define.Sound.SFX, 1f, 1f);
-       
+
+        var practiceButton = GetButton((int)Buttons.PracticeModeButton);
+        if (practiceButton != null)
+        {
+            // 버튼 본인 또는 부모에 있는 CanvasGroup을 찾아 확실하게 켜줍니다.
+            CanvasGroup canvas = practiceButton.GetComponent<CanvasGroup>();
+            if (canvas == null) canvas = practiceButton.GetComponentInParent<CanvasGroup>(true);
+
+            if (canvas != null)
+            {
+                canvas.alpha = 1f;
+                canvas.interactable = true;
+                canvas.blocksRaycasts = true;
+            }
+        }
+
         _selectedButton = button;
         _hoveredButton = null;
         UpdateStageButtons();
@@ -596,15 +601,7 @@ public class StageSceneUI : UI_Popup
 
     private void UpdateStageButtons()
     {
-        /*
-        if (_selectedButton == null)
-        {
-            if (IngameData._unLockStageIndex + 1 > 0 && IngameData._unLockStageIndex + 1 <= stageButtons.Count)
-            {
-                _selectedButton = stageButtons[IngameData._unLockStageIndex];
-            }
-        }
-        */
+
 
         for (int i = 0; i < stageButtons.Count; i++)
         {
@@ -779,7 +776,10 @@ public class StageSceneUI : UI_Popup
                 .SetEase(moveEase)
                 .OnComplete(() =>
                 {
-                    isAnimating = false;
+                    if (!stageLevelSceneUI.isMoving) // 레벨을 띄우고있지않을때만 animating false로
+                    {
+                        isAnimating = false;
+                    }
                     UpdateNavigationButtons();
                 });
         
@@ -913,6 +913,7 @@ public class StageSceneUI : UI_Popup
     /// </summary>
     public void MapSetting(bool _isEventMap, int idx=0)
     {
+        ClearStageSelection();
         // 1. 현재 사용 중이던 맵의 상태(위치, 회전)를 먼저 저장합니다.
         if (isEventMap)
         {
@@ -1093,9 +1094,19 @@ public class StageSceneUI : UI_Popup
         var startButton = GetButton((int)Buttons.StartButton);
         if (startButton != null) startButton.gameObject.SetActive(false);
 
-        // [추가] 연습 모드(Practice) 버튼 숨김 처리 및 상태 초기화
+        // 🌟 [수정 1] SetActive(false) 대신 원래 의도대로 CanvasGroup으로 끄기
         var practiceButton = GetButton((int)Buttons.PracticeModeButton);
-        if (practiceButton != null) practiceButton.gameObject.SetActive(false);
+        if (practiceButton != null)
+        {
+            // practiceButton의 부모(또는 본인)에 있는 CanvasGroup을 가져옵니다.
+            CanvasGroup canvas = practiceButton.GetComponentInParent<CanvasGroup>();
+            if (canvas != null)
+            {
+                canvas.alpha = 0f;
+                canvas.interactable = false;
+                canvas.blocksRaycasts = false;
+            }
+        }
 
         // [추가] 켜져 있던 Practice 모드 설정 끄기
         IngameData.boolPracticeMode = false;
