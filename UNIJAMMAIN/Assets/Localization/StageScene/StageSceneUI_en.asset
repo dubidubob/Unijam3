@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28953935872
-    m_Localized: The path of discipline begins. The first step is half the journey.
+    m_Localized: "Discipline begins.\LAs Master taught,\Lwell begun is half done."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130176
@@ -38,7 +38,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130178
-    m_Localized: A world bereft of harmony... I dare to defy it.
+    m_Localized: "A world bereft of harmony.\LI dare to defy it."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130179
@@ -68,7 +68,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130184
-    m_Localized: Drawn by fate to the peak... A presence awaits.
+    m_Localized: "Drawn by fate\Lto the peak...\LA presence awaits."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130185
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130187
-    m_Localized: Leaving sorrow behind, I ascend the celestial path to my Karma.
+    m_Localized: "Leaving sorrow behind,\LI ascend the celestial path to my Karma."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130188
@@ -113,7 +113,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130193
-    m_Localized: The Buddha... remains silent. My sole hope... in this chaos.
+    m_Localized: "The Buddha... remains silent. My sole hope...\Lin this chaos."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130194
@@ -128,7 +128,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130196
-    m_Localized: The root of disharmony. Here, I sever this ill-fated tie.
+    m_Localized: "The root of disharmony.\LHere, I sever\Lthis ill-fated tie."
     m_Metadata:
       m_Items: []
   - m_Id: 28958130197
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28958130199
-    m_Localized: Red hats and reindeer antlers. Winter discipline begins!
+    m_Localized: "Red hats and\Lreindeer antlers.\LWinter discipline begins!"
     m_Metadata:
       m_Items: []
   - m_Id: 28958130200
@@ -173,8 +173,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6558356349779968
-    m_Localized: Atop an unfamiliar iron tower piercing the clouds. Strange lights
-      all around. Where are we headed?
+    m_Localized: "Atop an unfamiliar iron tower piercing the clouds.\LStrange lights
+      all around.\LWhere are we headed?"
     m_Metadata:
       m_Items: []
   - m_Id: 6558356349779969
@@ -189,19 +189,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6184490460905472
-    m_Localized: 'Leaving the temple behind,
+    m_Localized: 'Leaving the quiet temple,
 
-      I stand upon the endless path,
+      I face the endless path,
 
       and
-      take my first step.'
+      step forward.'
     m_Metadata:
       m_Items: []
   - m_Id: 6184490460905473
-    m_Localized: '
-
-
-      Choose your path of discipline.'
+    m_Localized: Choose your path of discipline.
     m_Metadata:
       m_Items: []
   - m_Id: 6184490460905474

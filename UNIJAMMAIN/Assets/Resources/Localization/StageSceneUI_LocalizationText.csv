@@ -1,6 +1,7 @@
 Key,Id,Chinese (Simplified)(zh-Hans),English(en),Japanese(ja),Korean(ko)
 ST_0_Data_StageMainText,,0. 山寺前,0. Temple Yard,0. 山寺の庭,0. 절 앞
-ST_0_Data_StageMainSubText,,,,,수련의 시작. 스승님께서는 항상 시작이 곧 반이라 하셨지.
+ST_0_Data_StageMainSubText,,,,,수련의 시작.
+스승님께서는 항상 시작이 곧 반이라 하셨지.
 ST_0_Data_LevelText,,"难度: 入门 (下)
 
 评级","Difficulty: Easy
@@ -11,7 +12,8 @@ Rank","難易度: 入門 (下)
 
 활약치"
 ST_1_Data_StageMainText,,1. 幽深密林,1. Deep Woods,1. 深き森,1. 산속
-ST_1_Data_StageMainSubText,,,,,"조화를 잃은 세상, 내 감히 대적을 시작하리."
+ST_1_Data_StageMainSubText,,,,,"조화를 잃은 세상,
+내 감히 대적을 시작하리."
 ST_1_Data_LevelText,,"难度: 入门 (下)
 
 评级","Difficulty: Easy
@@ -33,7 +35,8 @@ Rank","難易度: 修練 (中)
 
 활약치"
 ST_3_Data_StageMainText,,3. 顶峰,3. The Peak,3. 山頂,3. 산 정상
-ST_3_Data_StageMainSubText,,,,,운명처럼 이끌린 산 정상. ...나를 기다리고 있었다.
+ST_3_Data_StageMainSubText,,,,,운명처럼 이끌린 산 정상.
+...나를 기다리고 있었다.
 ST_3_Data_LevelText,,"难度: 达人 (中上)
 
 评级","Difficulty: Hard
@@ -44,7 +47,9 @@ Rank","難易度: 達人 (中上)
 
 활약치"
 ST_4_Data_StageMainText,,4. 般若龙船,4. Prajna Dragon Boat,4. 般若龍船,4. 반야용선
-ST_4_Data_StageMainSubText,,,,,"슬픔을 뒤로 하고, 나의 사명을 향해 하늘길에 오른다."
+ST_4_Data_StageMainSubText,,,,,"슬픔을 뒤로 하고,
+나의 사명을 향해
+하늘길에 오른다."
 ST_4_Data_LevelText,,"难度: 达人 (中上)
 
 评级","Difficulty: Hard
@@ -55,7 +60,9 @@ Rank","難易度: 達人 (中上)
 
 활약치"
 ST_5_Data_StageMainText,,5. 天界之门,5. The Celestial Gates,5. 天界の門,5. 천당 앞
-ST_5_Data_StageMainSubText,,,,,"수많은 시련 끝에, 마침내 천상의 문턱에 섰다. 악령들이 더 몰아치는군."
+ST_5_Data_StageMainSubText,,,,,"수많은 시련 끝에,
+마침내 천상의 문턱에 섰다.
+악령들이 더 몰아치는군."
 ST_5_Data_LevelText,,"难度: 道士 (上)
 
 评级","Difficulty: Master
@@ -66,7 +73,9 @@ Rank","難易度: 道士 (上)
 
 활약치"
 ST_6_Data_StageMainText,,6. 天界寺庙,6. Celestial Temple,6. 天界の寺院,6. 천당
-ST_6_Data_StageMainSubText,,,,,부처님께서는... 아무 말씀이 없으셨다. 혼란 속 유일했던... 희망.
+ST_6_Data_StageMainSubText,,,,,부처님께서는...
+아무 말씀이 없으셨다.
+혼란 속 유일했던... 희망.
 ST_6_Data_LevelText,,"难度: 道士 (上)
 
 评级","Difficulty: Master
@@ -77,7 +86,9 @@ Rank","難易度: 道士 (上)
 
 활약치"
 ST_7_Data_StageMainText,,7. 九幽?,7. The Below?,7. 奈落?,7. 지하?
-ST_7_Data_StageMainSubText,,,,,"혼란의 시작과 끝. 이 결전의 장소에서, 악연의 종지부를 찍는다."
+ST_7_Data_StageMainSubText,,,,,"혼란의 시작과 끝.
+이 결전의 장소에서,
+악연의 종지부를 찍는다."
 ST_7_Data_LevelText,,"难度: 神仙 (最上)
 
 评级","Difficulty: Grandmaster

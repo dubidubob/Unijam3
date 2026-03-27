@@ -1249,9 +1249,57 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 195
       objectReference: {fileID: 0}
+    - target: {fileID: 3591954167521034253, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSize
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 3591954167521034253, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_margin.w
+      value: 756.4713
+      objectReference: {fileID: 0}
+    - target: {fileID: 3591954167521034253, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_margin.z
+      value: 56.112427
+      objectReference: {fileID: 0}
+    - target: {fileID: 3591954167521034253, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 3591954167521034253, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 3591954167521034253, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3748283175784367811, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_Name
       value: StageSceneUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089383583512907318, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089383583512907318, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_margin.w
+      value: 587.6985
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089383583512907318, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_margin.z
+      value: 59.64685
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089383583512907318, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089383583512907318, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089383583512907318, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4228319057972476167, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1393,6 +1441,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5468443465826089757, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 390.1964
+      objectReference: {fileID: 0}
+    - target: {fileID: 5468443465826089757, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 364.53827
+      objectReference: {fileID: 0}
     - target: {fileID: 5476776670802910794, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510911]
       value: Unity.Localization UnityEngine.Localization.PropertyVariants.TrackedProperties.FloatTrackedProperty
@@ -1447,11 +1503,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6067911702863615586, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_lineSpacing
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6067911702863615586, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: m_characterSpacing
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073260835081670986, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073260835081670986, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073260835081670986, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073260835081670986, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6195301911104700096, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079150420066442].m_VariantData.Array.data[0].value
@@ -1869,7 +1941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8682831738735595492, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510682].m_VariantData.Array.data[1].value
-      value: 30
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8682831738735595492, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510682].m_VariantData.Array.data[2].value
@@ -1877,7 +1949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8682831738735595492, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510682].m_VariantData.Array.data[3].value
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8682831738735595492, guid: ed45dc2b87e8520489446110c10f8a3e, type: 3}
       propertyPath: managedReferences[9208079295597510688].m_VariantData.Array.data[0].value
