@@ -2106,6 +2106,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2021895989036286336, guid: 1c5dd20d4dd0ffa4cb5fc6424beae046, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021895989036286336, guid: 1c5dd20d4dd0ffa4cb5fc6424beae046, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2361028422082906487, guid: 1c5dd20d4dd0ffa4cb5fc6424beae046, type: 3}
       propertyPath: m_RenderMode
       value: 0
@@ -11557,7 +11565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 1
-  TestStageIndex: 0
+  TestStageIndex: 3
   isSinkStage: 0
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}

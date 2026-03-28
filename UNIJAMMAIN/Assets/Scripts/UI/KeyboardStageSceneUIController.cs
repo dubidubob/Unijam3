@@ -61,8 +61,8 @@ public class KeyboardStageSceneUIController : MonoBehaviour
             {
                 SetStartButtonFocus(false);
             }
-            // 시작 실행(Space 또는 Enter)
-            else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            // 시작 실행 (기존 Start, Enter + RightArrow, D 추가!)
+            else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
                 stageSceneUI.StartButtonClicked(null);
             }
