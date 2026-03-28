@@ -334,7 +334,19 @@ public class StageSceneUI : UI_Popup
     public void OnPointerEnter(Button button)
     {
         if (_selectedButton == button || !button.interactable) return;
-        Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX);
+        // [추가/수정] 마우스가 올라간 버튼이 '시작하기' 버튼인지 확인
+        var startBtn = GetButton((int)Buttons.StartButton);
+
+        if (button == startBtn)
+        {
+            // 시작 버튼에 마우스를 올렸을 때 나는 소리
+            Managers.Sound.Play("SFX/UI/StageHover3", Define.Sound.SFX, 1f, 2f);
+        }
+        else
+        {
+            // 일반 스테이지 버튼에 마우스를 올렸을 때 나는 소리
+            Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX);
+        }
 
         _hoveredButton = button;
         SetButtonState(button, ButtonState.Hover);
@@ -768,7 +780,7 @@ public class StageSceneUI : UI_Popup
         mapImage.DOKill(); // 진행 중인 모든 애니메이션을 즉시 중지
 
         Vector2 targetPos = new Vector2(mapImage.anchoredPosition.x, yPos);
-        if(!isEventMap) // 이벤트맵이 아닐때만 출력하자
+        if (!isEventMap) // 이벤트맵이 아닐때만 출력하자
         {
             StartCoroutine(stageLevelSceneUI.SetStageLevelSceneUI(currentPageLevel));
         }
@@ -776,13 +788,13 @@ public class StageSceneUI : UI_Popup
                 .SetEase(moveEase)
                 .OnComplete(() =>
                 {
-                    if (!stageLevelSceneUI.isMoving) // 레벨을 띄우고있지않을때만 animating false로
-                    {
-                        isAnimating = false;
-                    }
+                    //if (!stageLevelSceneUI.isMoving) // 레벨을 띄우고있지않을때만 animating false로
+                    //{
+                    isAnimating = false;
+                    //}
                     UpdateNavigationButtons();
                 });
-        
+
     }
 
     private bool isRotated = false;

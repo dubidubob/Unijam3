@@ -61,10 +61,22 @@ public class KeyboardStageSceneUIController : MonoBehaviour
             {
                 SetStartButtonFocus(false);
             }
-            // 시작 실행 (기존 Start, Enter + RightArrow, D 추가!)
-            else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            // 시작 실행 (기존 조건 + RightArrow, D 추가!)
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
             {
                 stageSceneUI.StartButtonClicked(null);
+            }
+            // 위쪽 이동 (UpArrow 또는 W) 추가!
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            {
+                SetStartButtonFocus(false); // 1. 시작 버튼 포커스 즉시 해제 (<- 누른 효과)
+                NavigateVertical(1);        // 2. 바로 위쪽 스테이지로 이동
+            }
+            // 아래쪽 이동 (DownArrow 또는 S) 추가!
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
+                SetStartButtonFocus(false); // 1. 시작 버튼 포커스 즉시 해제 (<- 누른 효과)
+                NavigateVertical(-1);       // 2. 바로 아래쪽 스테이지로 이동
             }
             return;
         }
@@ -124,6 +136,11 @@ public class KeyboardStageSceneUIController : MonoBehaviour
     private void SetStartButtonFocus(bool focus)
     {
         if (startButton == null || startButton.image == null) return;
+
+        if (focus && !isStartButtonFocused)
+        {
+            Managers.Sound.Play("SFX/UI/StageHover3", Define.Sound.SFX, 1f, 2f);
+        }
 
         isStartButtonFocused = focus;
         Button currentBtn = stageSceneUI.GetSelectedButton();
