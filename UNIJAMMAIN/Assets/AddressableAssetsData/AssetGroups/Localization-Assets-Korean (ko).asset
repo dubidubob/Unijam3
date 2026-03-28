@@ -65,12 +65,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3e5f0d67c1cbd6e4da3f0739a13c6fb4
-    m_Address: Ending_Deukdo_ko
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ko
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 53027ca2874e0804f9c8022a8fc6e514
     m_Address: BMEULJIROTTF SDF
     m_ReadOnly: 1
@@ -89,12 +83,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 809843fe563989748b337e2fec8ef3c8
-    m_Address: Deukdo_ko
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ko
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 855b624132f04f74fb062dea1aaf4f9b
     m_Address: Credit_Text_ko
     m_ReadOnly: 1
@@ -107,14 +95,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9adb078fbd0f73443ae0e516b3aa8545
-    m_Address: RIDIBatang SDF_TMP Pro
+  - m_GUID: 8df3070293fe106419ebab6bb25ce981
+    m_Address: Beat_V3_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a7ce5ac5208a98c48bb5807eae9abce3
-    m_Address: Beat_ko
+  - m_GUID: 9adb078fbd0f73443ae0e516b3aa8545
+    m_Address: RIDIBatang SDF_TMP Pro
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
@@ -131,8 +119,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7fa3963520e74b44b8d54f7e64acfda
+    m_Address: Ending_Deukdo_V2_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d0e1d4888d90c1844b445e500fc42764
     m_Address: LeftDownKey_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e38a974fee5e83644b3e320436f8b5fb
+    m_Address: Deukdo_V3_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko

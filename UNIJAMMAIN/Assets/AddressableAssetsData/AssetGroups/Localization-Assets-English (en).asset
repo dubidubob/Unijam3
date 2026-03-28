@@ -35,6 +35,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18d423707beb75d46ae8f026e1273e5f
+    m_Address: Deukdo_V2_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 20b9190f8e5f773418e9d525e0484c3e
     m_Address: Credit_Text_en
     m_ReadOnly: 1
@@ -95,8 +101,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 70dfff4d21a01624587fec063b3dd98f
-    m_Address: Beat_en
+  - m_GUID: 696782de84ca30e4f8d5e0332f735c7f
+    m_Address: Ending_Deukdo_V2_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
@@ -125,12 +131,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: be7c32de8f1264e48838fbbc5986c8d1
-    m_Address: Deukdo_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c52dd0e1c89423c45b4317a0c1ee1ec1
     m_Address: Ridi_English_FallBack
     m_ReadOnly: 1
@@ -143,8 +143,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ca7bc94842fc1f240b053fe4707e03c9
-    m_Address: Ending_Deukdo_en
+  - m_GUID: cc78bbc323898e943a23bf15c2c76f64
+    m_Address: Beat_V2_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
