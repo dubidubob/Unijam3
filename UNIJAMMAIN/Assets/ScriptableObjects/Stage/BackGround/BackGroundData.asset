@@ -42,7 +42,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 61de3e5c4a832a847bd75d000899c75a, type: 3}
   - extraBackGroundLists:
     - {fileID: 21300000, guid: 7466ea724856f7840827c6ddb61e09eb, type: 3}
-    - {fileID: 21300000, guid: d669cbf10f0de6446b2e4b678db31a33, type: 3}
+    - {fileID: 21300000, guid: 202e55985bb18e746b5275c8cb985da4, type: 3}
   extraBackGroundDatas:
   - extraBackGroundLists: []
     animationBackGroundSprites: []
