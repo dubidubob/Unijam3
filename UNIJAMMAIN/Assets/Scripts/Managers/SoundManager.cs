@@ -99,6 +99,15 @@ public class SoundManager
             // Yejun - Skips if the requested BGM is already playing.
             if (audioSource.isPlaying && audioSource.clip == audioClip)
             {
+
+                // [추가된 방어 코드] 
+                // 같은 씬 안에서 Play가 중복 호출된 경우 무시하고 기존 BGM 유지!
+                if (_currentSceneName == newSceneName)
+                {
+                    Debug.Log("같은 씬 중복 호출 방어! BGM을 그대로 유지합니다.");
+                    return;
+                }
+
                 bool isSharedBGMPair =
                 (_currentSceneName == "MainTitle" && newSceneName == "StageScene") ||
                 (_currentSceneName == "StageScene" && newSceneName == "MainTitle");
@@ -445,7 +454,7 @@ public class SoundManager
         if(isPlay)
         {
             // ESC 정지 시에 음악 필요 없을 것 같아서, 일단 주석 처리함.
-            //Managers.Sound.Play("BGM/ESCPressed_V1", Define.Sound.SubBGM,1,2);
+            Managers.Sound.Play("BGM/ESCPressed_V1", Define.Sound.SubBGM,1,2);
         }
         else
         {
@@ -591,6 +600,21 @@ public class SoundManager
             SFX.volume = volume * SFXController.CurrentVolumeSFX;
             SFX.PlayScheduled(dspTime);
         }
+    }
+
+    // ==========================================
+    // [추가된 부분] 외부에서 DOTween 페이드 등을 위해 AudioSource를 가져가는 함수
+    // ==========================================
+    public AudioSource GetAudioSource(Define.Sound type)
+    {
+        // 혹시 아직 초기화가 안 되어 있다면 강제로 초기화
+        if (_audioSources == null || _audioSources.Length == 0)
+        {
+            Init();
+        }
+
+        // 요청한 타입(BGM, SFX 등)에 맞는 AudioSource 반환
+        return _audioSources[(int)type];
     }
 
 }

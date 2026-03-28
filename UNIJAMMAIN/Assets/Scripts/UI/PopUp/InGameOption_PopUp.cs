@@ -91,7 +91,10 @@ public class InGameOption_PopUp : UI_Popup
     public void ContinuesButtonClicked(PointerEventData eventData=null)
     {
         // PauseManager를 호출하여 게임 시간을 재개합니다.
-       
+
+        Managers.Sound.PlayInOptionSoundMusic(false);
+
+
         main.isPopUp = false;
         // 팝업 UI를 닫습니다.
         ClosePopUPUI();

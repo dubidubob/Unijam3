@@ -63,9 +63,9 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 51fa2d235fb83bc49b730ecfe543fe89, type: 3}
     attackedSprite: {fileID: 21300000, guid: 2fdb9603cc8ca1a4295038474f14d742, type: 3}
   - monsterType: 15
-    color: {r: 1, g: 0.5636635, b: 0.216981, a: 1}
-    sprite: {fileID: 21300000, guid: 51fa2d235fb83bc49b730ecfe543fe89, type: 3}
-    attackedSprite: {fileID: 21300000, guid: 7d84970aded513d46a6263e36a3f1e1f, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    sprite: {fileID: 21300000, guid: f0f5d35cf87e9e644815d0cdf430835c, type: 3}
+    attackedSprite: {fileID: 21300000, guid: 504069912f1a3b24c864ceb3e576bbc2, type: 3}
   - monsterType: 16
     color: {r: 0.028509855, g: 1, b: 0, a: 1}
     sprite: {fileID: 21300000, guid: 51fa2d235fb83bc49b730ecfe543fe89, type: 3}

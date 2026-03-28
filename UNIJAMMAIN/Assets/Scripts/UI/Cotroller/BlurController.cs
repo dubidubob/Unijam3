@@ -6,10 +6,11 @@ using TMPro;
 using UnityEngine.EventSystems;
 using Cysharp.Threading.Tasks; // UniTask 추가
 using System.Threading;      // CancellationToken 추가
+using System;
 
 public class BlurController : MonoBehaviour
 {
-    [SerializeField] GameOverTextSO gameOverTextSO;  
+    [SerializeField] GameOverTextSO gameOverTextSO;
 
     public Image damageImage;
     bool isCoolDown;
@@ -38,6 +39,9 @@ public class BlurController : MonoBehaviour
     private CancellationTokenSource _fadeCts;
     private CancellationTokenSource _destroyCts;
 
+    [SerializeField] private Image image_PracticeMode_Alert;
+    [SerializeField] private Image image_PractoceMode_Info;
+
     public bool isHp10Down_Warning = false;
     private void Awake()
     {
@@ -56,7 +60,7 @@ public class BlurController : MonoBehaviour
         }
         damageImage.color = new Color(damageImage.color.r, damageImage.color.g, damageImage.color.b, 0); // 초기 알파 0
 
-       
+
 
         // 콤보 이펙트 관련 
         // 기준 이미지의 높이 측정 (두 세트 모두 같은 높이라고 가정)
@@ -81,6 +85,13 @@ public class BlurController : MonoBehaviour
                 _cachedCumulativeBoundaries[i] = sum;
             }
         }
+        if(IngameData.boolPracticeMode)
+        {
+            PracticeModeInfoOn().Forget();
+        }
+
+        ScrollComboImages(this.GetCancellationTokenOnDestroy()).Forget();
+        AnimateComboShine(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     private void OnDestroy()
@@ -92,6 +103,43 @@ public class BlurController : MonoBehaviour
         CancelAndDispose(ref _shineCts);
         CancelAndDispose(ref _fadeCts);
         CancelAndDispose(ref _destroyCts);
+    }
+
+    private async UniTask PracticeModeInfoOn()
+    {
+        await UniTask.WaitForSeconds(0.5f); // 로딩대기
+        // 안전한 비동기 처리를 위해 CancellationToken 가져오기
+        CancellationToken ct = this.GetCancellationTokenOnDestroy();
+
+        // 애니메이션 설정값 (필요에 따라 시간 조절)
+        float moveAndFadeDuration = 0.5f; // 올라오면서 페이드되는 시간
+        float waitTime = 2.0f;            // 대기 시간
+        float fadeOutDuration = 0.5f;     // 사라지는 시간
+
+        // 1. image_PractoceMode__Info: 진입하는 즉시 Color 투명도 1로 설정
+        Color infoColor = image_PractoceMode_Info.color;
+        infoColor.a = 1f;
+        image_PractoceMode_Info.color = infoColor;
+
+        // 2. image_PracticeMode_Alert: 초기 상태 세팅 (PosY 150, 투명도 0)
+        RectTransform alertRect = image_PracticeMode_Alert.rectTransform;
+        alertRect.anchoredPosition = new Vector2(alertRect.anchoredPosition.x, 150f);
+
+        Color alertColor = image_PracticeMode_Alert.color;
+        alertColor.a = 0f;
+        image_PracticeMode_Alert.color = alertColor;
+
+        // 3. PosY 250까지 올라가면서 Fade 1로 만들기
+        await UniTask.WhenAll(
+            alertRect.DOAnchorPosY(250f, moveAndFadeDuration).ToUniTask(cancellationToken: ct),
+            image_PracticeMode_Alert.DOFade(1f, moveAndFadeDuration).ToUniTask(cancellationToken: ct)
+        );
+
+        // 4. 잠시 대기
+        await UniTask.Delay(TimeSpan.FromSeconds(waitTime), cancellationToken: ct);
+
+        // 5. FadeOut (투명도 0으로)
+        await image_PracticeMode_Alert.DOFade(0f, fadeOutDuration).ToUniTask(cancellationToken: ct);
     }
 
     // 토큰 정리 헬퍼 함수
@@ -109,22 +157,21 @@ public class BlurController : MonoBehaviour
 
     public void ComboEffectOn()
     {
-        Managers.Sound.Play("SFX/Accuracy/ComboBackGround", Define.Sound.SubBGM);
+        if (IsComboEffectOn) return; // 이미 켜져 있다면 중복 실행 방지
+        // Managers.Sound.Play("SFX/Accuracy/ComboBackGround", Define.Sound.SubBGM);
 
         IsComboEffectOn = true;
+
         comboCanvas.DOFade(1, 0.5f);
 
-        // 기존 스크롤 작업 취소 후 새로 시작
-        CancelAndDispose(ref _scrollCts);
-        _scrollCts = new CancellationTokenSource();
-        ScrollComboImages(_scrollCts.Token).Forget();
+        ScrollComboImages(this.GetCancellationTokenOnDestroy()).Forget();
 
         PlayComboEffect();
     }
 
     public void ComboEffectOff()
     {
-        Managers.Sound.SubBGMFadeOut(1.0f);
+        //Managers.Sound.SubBGMFadeOut(1.0f);
         IsComboEffectOn = false;
 
         // 스크롤 작업 중단
@@ -137,7 +184,7 @@ public class BlurController : MonoBehaviour
     // Update() 대신 비동기 루프 사용
     private async UniTaskVoid ScrollComboImages(CancellationToken token)
     {
-        while (!token.IsCancellationRequested)
+        while (IsComboEffectOn && !token.IsCancellationRequested)
         {
             float move = scrollSpeedWeight * Time.deltaTime * (float)IngameData.GameBpm;
 
@@ -153,16 +200,20 @@ public class BlurController : MonoBehaviour
             ResetIfOffScreenUp(leftCombo1, leftCombo2);
             ResetIfOffScreenUp(leftCombo2, leftCombo1);
 
-            // 다음 프레임 대기 (Update 타이밍)
-            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
+            // [개선] 취소 시 내부 Exception 발생을 막아 GC 스파이크 방지
+            bool isCanceled = await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token).SuppressCancellationThrow();
+            if (isCanceled) return;
         }
     }
 
-    // ===== 오른쪽 세트 (아래로 스크롤) =====
+    // 수정 후
     void MoveImageDown(Image img, float move)
     {
         var rt = img.rectTransform;
-        rt.anchoredPosition -= new Vector2(0, move);
+        // 기존 구조체를 수정하는 방식으로 변경
+        Vector2 pos = rt.anchoredPosition;
+        pos.y -= move;
+        rt.anchoredPosition = pos;
     }
 
     void ResetIfOffScreenDown(Image current, Image other)
@@ -325,6 +376,8 @@ public class BlurController : MonoBehaviour
 
         seq.OnComplete(() => isSaturationSeqCool = false);
     }
+    // [추가] 쉐이크 트윈만 따로 관리하기 위한 변수
+    private Tween _damageShakeTween;
 
     public void ShowDamageEffect()
     {
@@ -332,18 +385,23 @@ public class BlurController : MonoBehaviour
 
         isCoolDown = true;
         damageImage.DOKill();
-        camera.transform.DOKill(); // 이전 흔들림 중단
+
+        // 💥 [원흉 제거] 모든 카메라 트윈을 죽이는 무식한 코드 삭제!
+        // camera.transform.DOKill(); 
+
+        // 🎯 [해결] 이전에 실행 중이던 데미지 흔들림이 있다면 그것만 깔끔하게 완료(Complete)시킴
+        // Complete()를 쓰면 흔들림이 중간에 멈춰서 카메라가 어긋나는 것을 방지하고 정위치로 돌아갑니다.
+        _damageShakeTween?.Complete();
 
         // 피해 효과 UI 페이드 
         Sequence seq = DOTween.Sequence();
         seq.Append(damageImage.DOFade(1f, 0.15f));
         seq.Append(damageImage.DOFade(0f, 0.15f));
 
-
         PlayRandomHurtSound();
 
-        // 카메라 흔들림 효과 추가
-        camera.transform.DOShakePosition(
+        // 🎯 [해결] 카메라 흔들림 효과를 실행하고 트윈 변수에 저장
+        _damageShakeTween = camera.transform.DOShakePosition(
             duration: shakeDuration,
             strength: shakeStrength,
             vibrato: 8, // 흔들리는 횟수
@@ -416,19 +474,21 @@ public class BlurController : MonoBehaviour
     }
     public void ComboEffect()
     {
-        // 몬스터 액션 중이라면 줌인만 하고, 복귀는 몬스터가 정한 TargetBaseSize로 한다.
         Camera.main.DOKill(false);
 
-        float currentBase = Camera.main.orthographicSize; // 현재 사이즈에서
-        float punchSize = currentBase * 0.9f; // 살짝만 펀치
+        // [수정됨] 현재 실시간 orthographicSize를 가져오면 트윈 도중의 이상한 값을 가져올 수 있습니다.
+        // 목표 상태에 따른 명확한 기준값을 설정하세요.
+        float currentBase = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
+        float punchSize = currentBase * 0.9f;
 
         Camera.main.DOOrthoSize(punchSize, 0.4f)
             .SetEase(Ease.OutQuad)
+            .SetLink(Camera.main.gameObject)
             .OnComplete(() =>
             {
-                // [해결책] 무조건 5f로 가는 게 아니라, 현재 카메라가 잠겨있다면 잠긴 값을 유지!
-            float recoverSize = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
-                Camera.main.DOOrthoSize(recoverSize, 0.4f).SetEase(Ease.OutSine);
+                // IsLocked 상태에 맞게 안전하게 복구됩니다.
+                float recoverSize = CameraController.IsLocked ? CameraController.TargetBaseSize : 5f;
+                Camera.main.DOOrthoSize(recoverSize, 0.4f).SetEase(Ease.OutSine).SetLink(Camera.main.gameObject);
             });
     }
 
@@ -437,7 +497,7 @@ public class BlurController : MonoBehaviour
     private void PlayRandomHurtSound()
     {
         // 0 또는 1을 무작위로 선택
-        int randomIndex = Random.Range(0, 2);
+        int randomIndex = UnityEngine.Random.Range(0, 2);
 
         if (randomIndex == 0)
         {
@@ -464,22 +524,7 @@ public class BlurController : MonoBehaviour
 
     public void PlayComboEffect()
     {
-        if (shiningImages == null || shiningImages.Length == 0 || comboShiningSprites == null || comboShiningSprites.Length == 0)
-        {
-            Debug.LogWarning("콤보 이펙트 설정이 누락되었습니다.");
-            return;
-        }
-
-        // [개선] 배열을 순회하며 모든 이미지를 활성화
-        foreach (Image img in shiningImages)
-        {
-            if (img != null) img.gameObject.SetActive(true);
-        }
-
-        // 기존 샤인 애니메이션 취소 및 새 시작
-        CancelAndDispose(ref _shineCts);
-        _shineCts = new CancellationTokenSource();
-        AnimateComboShine(_shineCts.Token).Forget();
+        AnimateComboShine(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     public void StopComboEffect()
@@ -492,7 +537,7 @@ public class BlurController : MonoBehaviour
         {
             foreach (Image img in shiningImages)
             {
-                if (img != null) img.gameObject.SetActive(false);
+                if (img != null) img.enabled = false;
             }
         }
     }
@@ -502,25 +547,25 @@ public class BlurController : MonoBehaviour
     /// </summary>
     private async UniTaskVoid AnimateComboShine(CancellationToken token)
     {
-        // TimeSpan 캐싱 (GC 감소)
         var delay = System.TimeSpan.FromSeconds(animationFrameDelay);
+        int spriteLength = comboShiningSprites.Length; // 캐싱
 
-        while (!token.IsCancellationRequested)
+        while (IsComboEffectOn && !token.IsCancellationRequested)
         {
-            // [개선] 배열의 모든 이미지를 순회하며 각각 무작위 스프라이트 할당
-            foreach (Image img in shiningImages)
+            for (int i = 0; i < shiningImages.Length; i++)
             {
-                if (img != null)
+                if (shiningImages[i] != null)
                 {
-                    int randomIndex = Random.Range(0, comboShiningSprites.Length);
-                    img.sprite = comboShiningSprites[randomIndex];
+                    // Random.Range 대신 더 가벼운 방식이나 미리 캐싱된 인덱스를 쓸 수도 있지만, 
+                    // 빈도수가 높지 않다면 유지해도 괜찮습니다.
+                    shiningImages[i].sprite = comboShiningSprites[UnityEngine.Random.Range(0, spriteLength)];
                 }
             }
-
-            // WaitForSeconds -> UniTask.Delay
-            await UniTask.Delay(delay, cancellationToken: token);
+            // [개선] 취소 시 내부 Exception 발생을 막아 GC 스파이크 방지
+            bool isCanceled = await UniTask.Delay(delay, cancellationToken: token).SuppressCancellationThrow();
+            if (isCanceled) return;
         }
-    }
 
-    #endregion
+        #endregion
+    }
 }

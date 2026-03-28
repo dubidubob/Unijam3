@@ -43,6 +43,7 @@ public class HitJudge
                 IngameData.IncWrong();
                 break;
             case EvaluateType.Success:
+                IngameData.IncMaxCombo();
                 if (CalculatePerfect(rankNode.Pos, target, rankNode.WASDT))
                 {
                     IngameData.IncPerfect();

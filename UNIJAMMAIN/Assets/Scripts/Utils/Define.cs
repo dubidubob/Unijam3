@@ -99,6 +99,12 @@
         MaxCount
     }
 
+    public enum MovieStyle
+    {
+        Hide_UpDown,
+        Hide_Left,
+        Hide_Right
+    }
     public enum Rank
     {
         Unknown,

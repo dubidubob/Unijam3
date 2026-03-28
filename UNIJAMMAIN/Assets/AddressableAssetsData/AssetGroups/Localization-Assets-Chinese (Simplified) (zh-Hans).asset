@@ -47,8 +47,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 37442626eb2e162458c349b0c5045aa7
-    m_Address: LeftDownKey_cn
+  - m_GUID: 3ad64b1cdb8402a42951ac317ca0a221
+    m_Address: LeftDownKey_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d066d4b1211b4f4db76513c24300744
+    m_Address: PracticeMode_Alert_zh-CN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
@@ -67,12 +73,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 75d607353c644c749941e4ef048e94b8
     m_Address: Chinese_Bold
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-zh-Hans
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 87cf88ac9e1e7d645a00b4964aa6641e
-    m_Address: RightUpKey_cn
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
@@ -107,8 +107,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f5bdeca268c81748b546c5a487880a4
+    m_Address: DeukdoBeat_Logo_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a7415bcffde09b24a9876fd0d83bf2c1
     m_Address: Ready_3_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acc7743c5c249cf4dacab101bb2c01c5
+    m_Address: MainCredits_zh-CN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
@@ -119,8 +131,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0a6158a6426c6e43a58cba1e6f66a3f
+    m_Address: PracticeMode_Info_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b170d798dd742cc4fad55c6057065f8c
     m_Address: PrevChapterBtn_zh-CN
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf0aa1d544915534182fed88ed838efa
+    m_Address: RightUpKey_zh-CN
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans

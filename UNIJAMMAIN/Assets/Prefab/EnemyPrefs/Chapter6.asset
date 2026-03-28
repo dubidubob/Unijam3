@@ -24,7 +24,7 @@ MonoBehaviour:
   - rid: 7504153760568705026
   - rid: 7504153760568705027
   MusicPath: BGM/Chapter6_V2
-  StartBeat: 1
+  StartBeat: 7
   DelayPaddingTick: 0
   backGroundSprite: {fileID: 21300000, guid: 433531bf21520aa47bb83cd6140ad1bc, type: 3}
   backGroundGraySprite: {fileID: 21300000, guid: 7d708994ae00951428530f186deeeae4, type: 3}
@@ -50,19 +50,31 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: WXWXAXAX/AXSXSXDX/DXDXWWWW/AAAASSSS/DDDDWWWW/AAAASSSS/DDDDWWWW/AAAASSSS/DDDDWWWW/WASDWASD/XXXX
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXDXXXXXXXDXXXXXXXXDXXXXXXXDXXXXXXXWXXXXXXXWXXXXXXXWXXXXXXWXXXXXXXXXXX/WXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXDXXWXXAXXSXXD/XXXXXXXXXXXXXXXXXXX(AD)XXXXXXX(AD)XXXXXXX(AD)XXXXXXXXXXXXXXXXWXXXXXXXXXXXXXX(AD)XXXXXXXXXXXXXXXXXXXXXXX(ASD)XXXXXXX(ASD)XXXXXXXXXXX
           speedUpRate: 1
-          spawnBeat: 0.5
-          moveBeat: 1
+          spawnBeat: 0.125
+          moveBeat: 2
           hiding: 0
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 0
+          monsterType: 1
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX2XXXXXX1XXXXXXXX3XXXXXX4XXXXXXX2XXXXXXX1XXXXXXX3XXXXXX4XXXXXXXX1XXXXXXX2XXXXXXX1XXXXXXX3XXXXXXX4XXXXXXX2XXXXXXX1XXXXXXX4XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          speedUpRate: 1
+          spawnBeat: 0.125
+          moveBeat: 1
+          hiding: 0
+          dir: 1
+          cameraActionDuration: 40
+          floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504153760568705027
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 36
+        durationBeat: 37
         startDelayBeat: 0
         bpm: 104
         timeScale: 1
@@ -75,14 +87,26 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: (WAD)(WAD)(WAD)(WAD)/X(WAS)(WAS)(WAS)/X(ASD)(ASD)(ASD)/X(AWD)(AWD)(AWD)/W/XW/ASXD/XX/DSAW/XXX(WASD)/XXXX
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXAXXXXXXXDXXXXXXX(AD)XXXXXXXXXXXXXXX(WAD)XXXXXXXXXXXXXX(AD)XXXXXXXXXXXXXXXXXXXXXXXXSXXXXXXX(ASD)XXXXXXXXXXXXXXXXXXXXXX(AD)XXXXXXXX(WAD)XXXXXXXXXXXXXXXDXXXXXXWXXXXXXXXXAXXXXXXXXXXXXXXSXXXXXXXXXXXXXXXXXXXXXXX(WAS)XXXXXX(ASD)XXXXXXX(WSD)XXXXXXX(WAD)XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX(WASD)XXXXXXXXXXXXXXXXXXX
           speedUpRate: 1
-          spawnBeat: 1
+          spawnBeat: 0.125
           moveBeat: 2
           hiding: 0
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX2XXXXXX3XXXXXXX4XXXXXX2XXXXXXX3XXXXXXX4XXXXXXXX1XXXXXX2XXXXXXX3XXXXXXX4XXXXXXX2XXXXXXX1XXXXXXX4XXXXXX3XXXXXXX2XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          speedUpRate: 1
+          spawnBeat: 0.125
+          moveBeat: 2
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504153760568705028
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -140,15 +164,49 @@ MonoBehaviour:
         stretchY_rate: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 0
-          WASD_Pattern: WW(AD)(AD)/WW(AD)(AD)/WW(AD)(AD)/WW(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)
+          monsterType: 15
+          WASD_Pattern: XWW(AD)(AD)/WW(AD)(AD)/WW(AD)(AD)/WW(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)
           speedUpRate: 1
           spawnBeat: 1
-          moveBeat: 1
+          moveBeat: 2
           hiding: 0
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: WW(AD)(AD)/WW(AD)(AD)/WW(AD)(AD)/WW(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)
+          speedUpRate: 1
+          spawnBeat: 0
+          moveBeat: 2
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 13
+          floatDuration: 0
+          slamAnimationDuration: 1.43
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: WW(AD)(AD)/WW(AD)(AD)/WW(AD)(AD)/WW(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)/SS(AD)(AD)
+          speedUpRate: 1
+          spawnBeat: 15
+          moveBeat: 2
+          hiding: 0
+          dir: 1
+          cameraActionDuration: 15
+          floatDuration: 0
+          slamAnimationDuration: 1.43
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: 043210432104321043210432104321
+          speedUpRate: 1
+          spawnBeat: 1
+          moveBeat: 1
+          hiding: 0
+          dir: 1
+          cameraActionDuration: 15
+          floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154327444881408
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -166,7 +224,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: AAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXX
+          WASD_Pattern: XAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXXAAXXDDXX
           speedUpRate: 1
           spawnBeat: 0.25
           moveBeat: 1
@@ -174,9 +232,10 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 
+          WASD_Pattern: 12341234123412341234
           speedUpRate: 1
           spawnBeat: 4
           moveBeat: 2
@@ -184,6 +243,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972795589099532
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -243,14 +303,70 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: XXXX/XXXX/WASD/WASD/WASD/WASS/WASD/WASD/WASD/WASS/WASD/WASD/WASD/WASS/WASD/WASD/WASD/W
+          WASD_Pattern: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXWXXXXXXXAXXXXXXXSXXXXXXXDXXXXXXXWXXXXXXXAXXXXXXX
           speedUpRate: 1
-          spawnBeat: 0.5
+          spawnBeat: 0.125
           moveBeat: 2
           hiding: 1
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: 0000123412341234123412341234123441234
+          speedUpRate: 1
+          spawnBeat: 2
+          moveBeat: 2
+          hiding: 1
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: 000012341234123412341234123400000
+          speedUpRate: 1
+          spawnBeat: 2
+          moveBeat: 2
+          hiding: 1
+          dir: 0
+          cameraActionDuration: 25
+          floatDuration: 5
+          slamAnimationDuration: 1.43
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: 000012341234123412341234123400000
+          speedUpRate: 1
+          spawnBeat: 2
+          moveBeat: 2
+          hiding: 1
+          dir: 1
+          cameraActionDuration: 25
+          floatDuration: 5
+          slamAnimationDuration: 1.43
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: 000012341234123412341234123400000
+          speedUpRate: 1
+          spawnBeat: 12
+          moveBeat: 2
+          hiding: 1
+          dir: 0
+          cameraActionDuration: 10
+          floatDuration: 2
+          slamAnimationDuration: 1.43
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: 000012341234123412341234123400000
+          speedUpRate: 1
+          spawnBeat: 24
+          moveBeat: 2
+          hiding: 1
+          dir: 1
+          cameraActionDuration: 10
+          floatDuration: 2
+          slamAnimationDuration: 2.86
     - rid: 9186972795589099534
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -268,7 +384,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: DDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXAAXXAAXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXAAXXAAXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XX(AD)(AD)XXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXXDDXX
+          WASD_Pattern: DDXXDDXXAAXXAAXXWWXXWWXXW(AD)XXW(AD)XXDDXXDDXXAAXXAAXX(AD)(AD)XX(AD)(AD)XXW(AD)XXW(AD)XXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.25
           moveBeat: 1
@@ -276,9 +392,10 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 
+          WASD_Pattern: 0000123401234012340123401234123412340
           speedUpRate: 1
           spawnBeat: 4
           moveBeat: 1
@@ -286,6 +403,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972795589099536
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -303,14 +421,26 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: WASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASD
+          WASD_Pattern: XWXAXSXDXWXAXSXDXWXAXSXDXWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASDWASD
           speedUpRate: 1
-          spawnBeat: 0.5
+          spawnBeat: 0.3
           moveBeat: 2
           hiding: 0
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: 00001234012340123401234012340123401234
+          speedUpRate: 1
+          spawnBeat: 2
+          moveBeat: 2
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972795589099537
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -328,11 +458,34 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: XAXAXXX(WAD)/XAXAXXX(WAD)/XAXAXXX(WAD)/XAXAXXX(WAD)/XSXSXXX(WAD)/XSXSXXX(WAD)/XSXSXXX(ASD)/XSXSXXX(ASD)/XSSSSXX(ASD)/XSSSSXX(ASD)/XWWWWXX(AWD)/XWWWWXX(AWD)/XAAAAXX(ASD)/XAAAAXX(ASD)/XDDDDXX(ASD)/XDDDDXXX/
+          WASD_Pattern: XXXXXXXXXXXXXXXXXDXDXDXDXXXXXXXXXDXDXAXAXXXXXXXXXAXAXDXDXXXXXXXXXWXWXWXWXXXXXXXXXWXSXWXSXXXXXXXXXSXSXSXSXXXXXXXXXSXWXSXWXXXXXXXXXX(AD)X(AD)X(AD)X(AD)XXXXXXXXWXWXWXWXXXXXXXXX(AD)X(AD)X(AD)X(AD)XXXXXXXXXWXAXSXDXXXXXXXXXWXAXSXDXXXXXXXXXWXAXSXDXXXXXXXXXWXAXSXDXXXXXXXXXWXAXSXDXXXX
           speedUpRate: 1
-          spawnBeat: 0.5
+          spawnBeat: 0.25
           moveBeat: 1
           hiding: 0
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: XX1XXX2XXXXXXXXXXX3XXX4XXXXXXXXXXXX2XXX1XXXXXXXXXX2XXX1XXXXXXXXXXX2XXX1XXXXXXXXXXXX2XX1XXXXXXXXXXX2XXX1XXXXXXXXXXX2XXX1XXXXXXXXXXXX3XX4XXXXXXXXXXXX3XX4XXXXXXXXXXX3XXX4XXXXXXXXXXX3XX1XXXXXXXXXXXX4XXX2XXXXXXXXXXX3XXX1XXXXXXXXXXX2XXX1XXXXXXXXXXXXX
+          speedUpRate: 1
+          spawnBeat: 0.25
+          moveBeat: 2
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 3
+          WASD_Pattern: XXXXXXXXXX1XXX2XXXXXXXXXXX3XXX4XXXXXXXXXXXX2XXX1XXXXXXXXXX2XXX1XXXXXXXXXXX2XXX1XXXXXXXXXXXX2XX1XXXXXXXXXXX2XXX1XXXXXXXXXXX2XXX1XXXXXXXXXXXX3XX4XXXXXXXXXXXX3XX4XXXXXXXXXXX3XXX4XXXXXXXXXXX3XX1XXXXXXXXXXXX4XXX2XXXXXXXXXXX3XXX1XXXXXXXXXXX2XXX1XXXXXXXXXXXXX
+          speedUpRate: 1
+          spawnBeat: 45
+          moveBeat: 2
+          hiding: 0
+          dir: 1
+          cameraActionDuration: 15
+          floatDuration: 0
+          slamAnimationDuration: 1.43

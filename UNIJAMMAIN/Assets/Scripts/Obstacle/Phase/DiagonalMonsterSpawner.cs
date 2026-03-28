@@ -132,7 +132,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
         if (activatedDiagonalIdx.Contains((int)attackType))
         {
             activatedDiagonalIdx.Remove((int)attackType);
-            deactivatedDiagonalIdx.Add((int)attackType);
+            // deactivatedDiagonalIdx.Add((int)attackType);
             UpdateRankCnt(RankState.Success);
             diagonalDict[attackType].GetComponent<DiagonalMonster>().SetDead();
         }
@@ -163,8 +163,10 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
 
         foreach (var idx in tempList)
         {
-            // tempList를 순회하므로, 여기서 원본 activatedDiagonalIdx가 수정되어도 에러가 나지 않습니다.
-            diagonalDict[(DiagonalType)idx].GetComponent<DiagonalMonster>().SetDead(false, true);
+            var mob = diagonalDict[(DiagonalType)idx].GetComponent<DiagonalMonster>();
+            mob.SetDead(false, true);
+            // [추가] 즉시 비활성화시켜 OnDisable()을 유도하고 잔여 UniTask를 취소시킴
+            mob.gameObject.SetActive(false);
         }
         activatedDiagonalIdx.Clear();
         deactivatedDiagonalIdx.Clear();
@@ -179,6 +181,7 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
             pattern.PauseForWhile(isStop, dspTime);
         }
     }
+
 
     public void RemovePattern(DiagonalPatternInstance pattern)
     {
@@ -196,13 +199,18 @@ public class DiagonalMonsterSpawner : MonoBehaviour, ISpawnable
             _patternsToRemove.Clear();
         }
     }
+    // 2-2. RecycleMonsterIndex 함수 수정: 중복 추가 방지
     public void RecycleMonsterIndex(GamePlayDefine.DiagonalType type)
     {
         int t = (int)type;
-        // 활성화 리스트에 있다면 비활성화(대기) 리스트로 되돌림
         if (activatedDiagonalIdx.Contains(t))
         {
             activatedDiagonalIdx.Remove(t);
+        }
+
+        // [수정] 대기열에 없을 때만 추가 (안전장치)
+        if (!deactivatedDiagonalIdx.Contains(t))
+        {
             deactivatedDiagonalIdx.Add(t);
         }
     }
@@ -261,42 +269,39 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
         }
     }
 
-    // =================================================================
-    // [핵심 수정] DoSpawn: 배열 참조(O(1))로 분기문 제거
-    // =================================================================
     private IEnumerator DoSpawn(float spawnDuration, MonsterData data)
     {
         yield return new WaitForSeconds((float)IngameData.BeatInterval * 0.45f);
 
         while (_spawning)
         {
-            /*
-            if (AudioSettings.dspTime > _lastSpawnTime)
-            {
-                Stop();
-                yield break;
-            }
-            */
-
-            // 패턴 문자열이 있을 때만 동작
             if (!string.IsNullOrEmpty(data.WASD_Pattern))
             {
                 if (_patternIdx >= data.WASD_Pattern.Length) _patternIdx = 0;
 
-                // 1. char를 int(0~9)로 변환
-                int inputNum = data.WASD_Pattern[_patternIdx] - '0';
+                // 현재 패턴의 문자 가져오기
+                char currentPatternChar = data.WASD_Pattern[_patternIdx];
 
-                // 2. 유효 범위(0~4) 체크
-                // 배열 인덱스 접근이므로 범위 체크는 필수지만, 조건문 1회라 매우 빠름
-                if (inputNum >= 0 && inputNum < _parent.PatternToEnumMap.Length)
+                // [수정] 'X' 문자이거나 'x'일 경우 스폰 건너뜀
+                if (currentPatternChar == 'X' || currentPatternChar == 'x')
                 {
-                    // 3. 룩업 테이블에서 실제 Enum Index 가져오기
-                    int mappedEnumIdx = _parent.PatternToEnumMap[inputNum];
+                    // 아무것도 하지 않고 인덱스만 넘김
+                }
+                else
+                {
+                    // 1. char를 int(0~9)로 변환
+                    int inputNum = currentPatternChar - '0';
 
-                    // mappedEnumIdx가 -1이면 '쉼(0)'이므로 아무것도 안함
-                    if (mappedEnumIdx != -1)
+                    // 2. 유효 범위 체크 및 룩업 테이블 참조
+                    if (inputNum >= 0 && inputNum < _parent.PatternToEnumMap.Length)
                     {
-                        _parent.ActivateEnemy(_moveBeat, data, mappedEnumIdx);
+                        int mappedEnumIdx = _parent.PatternToEnumMap[inputNum];
+
+                        // mappedEnumIdx가 -1이 아니면(쉼이 아니면) 활성화
+                        if (mappedEnumIdx != -1)
+                        {
+                            _parent.ActivateEnemy(_moveBeat, data, mappedEnumIdx);
+                        }
                     }
                 }
 
@@ -304,13 +309,11 @@ public class DiagonalPatternInstance : ISpawnable.ISpawnInstance
             }
             else
             {
-                // 패턴 없으면 랜덤 모드 (null 전달)
                 _parent.ActivateEnemy(_moveBeat, data, null);
             }
 
             yield return new WaitForSeconds(spawnDuration);
         }
     }
-   
-  
+
 }

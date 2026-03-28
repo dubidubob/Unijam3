@@ -177,6 +177,7 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
     private float threshold = 2f;
     // 카메라 원본 회전값 저장용 (복귀를 위해)
     private Quaternion _defaultCameraRot;
+    private Vector3 _defaultCameraPos; // [추가] 카메라 원본 위치 저장용
     private Coroutine _sequenceCoroutine;
 
     private MouseSequenceData _seqData; // 위에서 정의한 설정값
@@ -186,8 +187,8 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
         _data = data;
         _seqData = seqData;
         _spawning = true;
-
         _defaultCameraRot = Camera.main.transform.rotation;
+        _defaultCameraPos = Camera.main.transform.position; //
         // [MOVED] SetLastSpawnTime 로직을 인스턴스 생성 시 처리
         if (IngameData.PhaseDurationSec == 0)
         {
@@ -225,12 +226,15 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
 
     private async UniTaskVoid RunSequence(CancellationToken token, MonsterData data)
     {
+
+
         MouseEnemy myEnemy = null;
         bool sizeChanged = false;
 
         try
         {
             float secPerBeat = 60f / (float)IngameData.GameBpm;
+
             await UniTask.Delay(TimeSpan.FromSeconds(_data.spawnBeat * secPerBeat), cancellationToken: token);
 
             _parent.ActivateEnemyForSequence(data.dir == MouseEnemy.Dir.Left);
@@ -239,7 +243,7 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
 
 
             myEnemy.PlayFloatAction();
-            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval *_data.floatDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval * _data.floatDuration), cancellationToken: token);
             CameraController.SetMonsterMode(true, _seqData.enlargementSize);
 
             System.Action slamImpactAction = () =>
@@ -250,53 +254,74 @@ public class MouseClickPatternInstance : ISpawnable.ISpawnInstance
                 Camera.main.transform.DORotate(new Vector3(0, 0, _seqData.tiltAngle * leftOrRight), 0.15f).SetEase(Ease.OutBack);
                 Camera.main.transform.DOShakePosition(0.4f, 1.5f, 10);
             };
-            myEnemy.PlaySlamAction(_seqData.slamAnimDuration, slamImpactAction);
+            Debug.Log($"{CameraController.TargetBaseSize}");
+            myEnemy.PlaySlamAction((float)IngameData.BeatInterval * _data.slamAnimationDuration, slamImpactAction);
 
             // [확대 상태 고정]
             Camera.main.DOKill(false);
-            Camera.main.DOOrthoSize(CameraController.TargetBaseSize, _seqData.slamAnimDuration * 0.3f).SetEase(Ease.OutQuad);
+            Camera.main.DOOrthoSize(CameraController.TargetBaseSize, (float)IngameData.BeatInterval * _data.slamAnimationDuration * 0.3f).SetEase(Ease.OutQuad);
 
             // [핵심] 지정된 duration 동안 아무도 카메라를 건드리지 못하게 대기
-            await UniTask.Delay(TimeSpan.FromSeconds(_seqData.slamAnimDuration), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval * _data.slamAnimationDuration), cancellationToken: token);
             await UniTask.Delay(TimeSpan.FromSeconds((float)IngameData.BeatInterval * data.cameraActionDuration), cancellationToken: token);
         }
         catch (OperationCanceledException) { }
         finally
         {
+            bool isCancelled = token.IsCancellationRequested;
             // 이 인스턴스가 끝날 때 몬스터가 더 이상 없다면 잠금 해제
             // (만약 멀티 몬스터라면 별도의 카운팅이 필요하지만, 현재는 이 시퀀스 종료 시점에 맞춰 복구)
-            CameraOriginalAction();
+            CameraOriginalAction(isCancelled);
             Stop();
         }
     }
-
-    public void CameraOriginalAction()
+    // 매개변수 isInstant 추가 (기본값 false)
+    public void CameraOriginalAction(bool isInstant = false)
     {
+        CameraController.SetMonsterMode(false);
+
+        // [핵심 추가] 씬 전환 등으로 카메라가 이미 파괴되었다면 더 이상 진행하지 않음
+        if (Camera.main == null) return;
+
         Camera.main.transform.DOKill();
         Camera.main.DOKill();
 
-        Camera.main.transform.DORotate(Vector3.zero, 0.5f).SetEase(Ease.OutSine);
-        Camera.main.DOOrthoSize(5f, 0.5f).SetEase(Ease.OutSine).OnComplete(()=>
-        {
-            CameraController.SetMonsterMode(false); // 카메라 액션까지 모두 끝나면 이제 원래대로 받기
-        });
+        // 취소된 상황(씬 재시작)이면 애니메이션 시간(duration)을 0으로 줘서 즉시 적용
+        float duration = isInstant ? 0f : 0.5f;
+
+        // 회전 복구
+        Camera.main.transform.DORotate(Vector3.zero, duration).SetEase(Ease.OutSine);
+
+        // 위치 복구 (저장해둔 초기 위치로)
+        Camera.main.transform.DOMove(_defaultCameraPos, duration).SetEase(Ease.OutSine);
+
+        // 원래 사이즈로 복구
+        Camera.main.DOOrthoSize(5f, duration).SetEase(Ease.OutSine);
     }
 
     /* 이 인스턴스를 중지합니다.
     */
     public void Stop()
     {
-        // 1. UniTask 취소
-        if (_cts != null)
-        {
-            _cts.Cancel();
-            _cts.Dispose();
-            _cts = null;
-        }
+        // 1. 이미 null이라면(재진입되었거나 이미 중지되었다면) 안전하게 무시
+        if (_cts == null) return;
 
-      
+        // 2. 지역 변수에 담고, 원본은 즉시 null 처리 (핵심: 무한 루프 및 재진입 방지)
+        var ctsToDispose = _cts;
+        _cts = null;
+
+        // 3. 이제 안전하게 Cancel과 Dispose 호출
+        if (!ctsToDispose.IsCancellationRequested)
+        {
+            ctsToDispose.Cancel();
+        }
+        ctsToDispose.Dispose();
+
         // 4. 리스트에서 제거
-        _parent.RemovePattern(this);
+        if (_parent != null)
+        {
+            _parent.RemovePattern(this);
+        }
     }
 
     public void PauseForWhile(bool isStop, double dspTime)
@@ -347,7 +372,7 @@ public class MouseSequenceData
     public int tiltHoldBeats = 24;    // 화면이 기울어진 상태 유지 시간 (박자)
 
     [Header("Timings (Fixed Seconds)")]
-    public float slamAnimDuration = 2f;   // 내리찍는 애니메이션 시간 (초)
+    // public float slamAnimDuration = 2f;   // 내리찍는 애니메이션 시간 (초)
     public float recoverDuration = 1.0f;    // 카메라가 원래대로 돌아오는 시간 (초)
 
     [Header("Settings")]

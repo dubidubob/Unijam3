@@ -19,7 +19,6 @@ MonoBehaviour:
   - rid: 8855663901085794308
   - rid: 8855663901085794310
   - rid: 8855663901085794311
-  - rid: 8855663901085794312
   MusicPath: BGM/Chapter0_V3
   StartBeat: 16
   DelayPaddingTick: 0
@@ -114,6 +113,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8855663901085794307
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -240,6 +240,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 8855663901085794310
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -295,7 +296,7 @@ MonoBehaviour:
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 29
+        durationBeat: 70
         startDelayBeat: 3
         bpm: 100
         timeScale: 1
@@ -308,42 +309,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WASDWASDWASDD
-          speedUpRate: 1
-          spawnBeat: 2
-          moveBeat: 4
-          hiding: 0
-          dir: 0
-          cameraActionDuration: 0
-          floatDuration: 0
-        - isIn: 1
-          monsterType: 1
-          WASD_Pattern: 
-          speedUpRate: 1
-          spawnBeat: 8
-          moveBeat: 2
-          hiding: 0
-          dir: 0
-          cameraActionDuration: 0
-          floatDuration: 0
-    - rid: 8855663901085794312
-      type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
-      data:
-        isIn: 1
-        durationBeat: 32
-        startDelayBeat: 3
-        bpm: 100
-        timeScale: 1
-        preGenerateBeat: 0
-        extensionCreateBeat: 0
-        isFlipAD: 0
-        isStretchWindow: 0
-        stretchX_rate: 0
-        stretchY_rate: 0
-        monsterDatas:
-        - isIn: 1
-          monsterType: 0
-          WASD_Pattern: WWAASSDDWWAASSDDWWAASSDDWASDD
+          WASD_Pattern: WXAXSXDXSXDXWXXXWXAXSXDXSXDXWXXXWWAASSDDWWAASSXXWWAADDAASSDDWXXXWXXXXXXX
           speedUpRate: 1
           spawnBeat: 1
           moveBeat: 4
@@ -351,13 +317,15 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 
+          WASD_Pattern: XXXXXXXXXXXXXXXX1XXXXXXXXXXXXXXX2XXXXXXXXXXXXXXXX3XXXXXXXXXXXXXXXXXXXXXXXX
           speedUpRate: 1
-          spawnBeat: 8
+          spawnBeat: 1
           moveBeat: 2
           hiding: 0
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0

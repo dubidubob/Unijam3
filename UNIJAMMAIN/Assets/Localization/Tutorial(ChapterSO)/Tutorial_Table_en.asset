@@ -31,7 +31,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948866
-    m_Localized: I can handle this.
+    m_Localized: I think I've got this.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948867
@@ -81,7 +81,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948878
-    m_Localized: The fog is thickening..! They're using the cover to swarm again.
+    m_Localized: Nimbler than I thought. I shall draw down the fog to hide.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948879
@@ -129,11 +129,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948891
-    m_Localized: To think Dark Spirits would invade this sacred place...
+    m_Localized: To dare trespass upon this sacred ground...
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948892
-    m_Localized: This is no place for the likes of you!
+    m_Localized: Prepare to face your reckoning.
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948893
@@ -178,6 +178,51 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6953233707565056
     m_Localized: I will behold the merciful Buddha.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6953233707565057
+    m_Localized: Guided by the prayer beads, the chimes of Another Realm echo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6953233707565058
+    m_Localized: ...Do not ask about my attire!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6953233707565059
+    m_Localized: This bizarre rhythm stirs up endless secular turmoil.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6953233707565060
+    m_Localized: ...Perhaps my words were a bit much.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7777608321073152
+    m_Localized: (...Keep my presence here strictly between us!)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6953233707565061
+    m_Localized: Tall iron towers and bright cascading lights all around...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6953233707565062
+    m_Localized: This too, is a grand rhythm woven by the secular world.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7777608396570624
+    m_Localized: All Qi flows as one. I shall gladly entrust myself to this current.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9631275076681728
+    m_Localized: Oh? For a mere human, such fearsome resolve.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9631275135401984
+    m_Localized: Yet, this is no place for you to dare look upon!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10177057345372160
+    m_Localized: ...The fog descends. Yet, even in this dense fog, the path remains
+      visible.
     m_Metadata:
       m_Items: []
   references:

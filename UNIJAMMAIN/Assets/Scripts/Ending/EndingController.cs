@@ -144,10 +144,21 @@ public class EndingController : MonoBehaviour
     }
     private async UniTask StartInit()
     {
+        //foreach (var particle in particle_Flowers)
+        //{
+        //    particle.Stop();
+        //}
+
+        // [수정된 부분] 파티클이 뚝 끊기지 않고 자연스럽게 사라지도록 처리
         foreach (var particle in particle_Flowers)
         {
-            particle.Stop();
+            // 1. 일단 새로운 입자 생성을 중단 (StopEmitting)
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
+
+        // 만약 '뚝' 끊기는 느낌이 강하다면, 
+        // 입자들이 다 사라질 때까지의 '최소 수명'만큼은 기다려준 뒤 다음 연출을 하는 것이 좋습니다.
+        await UniTask.Delay(TimeSpan.FromSeconds(1.0f));
 
         // LocalizationManager.LoadAll();
         SettingClearForStart();
@@ -242,33 +253,33 @@ public class EndingController : MonoBehaviour
 
                 int caseType = 0;
 
-              
-                if(id.StartsWith("Ending_Talk_"))
+
+                if (id.StartsWith("Ending_Talk_"))
                 {
                     caseType = 1;
                 }
-                else if(id.StartsWith("Ending_UpTalk_"))
+                else if (id.StartsWith("Ending_UpTalk_"))
                 {
                     caseType = 2;
                 }
-                else if(id.StartsWith("Ending_Normal_"))
+                else if (id.StartsWith("Ending_Normal_"))
                 {
                     caseType = 3;
                 }
-                else if(id.StartsWith("Ending_Hidden_"))
+                else if (id.StartsWith("Ending_Hidden_"))
                 {
                     caseType = 4;
                 }
 
 
-             
+
                 EndingAction action = new EndingAction();
                 action.id = id;
 
                 // 인덱스 파싱
-                string indexPart= null;
+                string indexPart = null;
 
-                switch(caseType)
+                switch (caseType)
                 {
                     case 1:
                         indexPart = id.Replace("Ending_Talk_", "").Trim();
@@ -311,7 +322,7 @@ public class EndingController : MonoBehaviour
                 string curveStr = (curveIdx >= 0 && curveIdx < row.Count) ? row[curveIdx] : "";
                 action.easeType = ParseEase(curveStr);
 
-              
+
 
                 switch (caseType)
                 {
@@ -333,12 +344,29 @@ public class EndingController : MonoBehaviour
             }
         }
 
-     
+
     }
 
     public async UniTaskVoid PlayEndingSequence()
     {
-        Managers.Sound.Play("BGM/EndingTheme1", Define.Sound.BGM,1,1,false);
+        // 1. 일단 음악을 재생합니다. (매니저 내부에서 볼륨을 1로 세팅할 수 있음)
+        Managers.Sound.Play("BGM/EndingTheme1", Define.Sound.BGM, 1, 1, false);
+
+        // 2. 해당 BGM의 AudioSource를 가져옵니다.
+        AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+        if (bgmSource != null)
+        {
+            bgmSource.DOKill();         // 혹시 실행 중인 다른 페이드가 있다면 취소
+
+            float targetVolume = BGMController.CurrentVolumeBGM;
+
+            bgmSource.volume = 0f;      // 볼륨을 0으로 초기화 (안 하면 처음에 '쾅!' 하고 크게 들릴 수 있음)
+
+            // [수정] 1f 대신 targetVolume으로 3초간 서서히 올리기
+            bgmSource.DOFade(targetVolume, 5.0f).SetEase(Ease.Linear);
+
+        }
+
 
         foreach (var action in endingSequence)
         {
@@ -349,11 +377,34 @@ public class EndingController : MonoBehaviour
             // [여기에 추가하세요!] 33번 프레임 진입 즉시 영화 연출 시작
             if (action.index == 33)
             {
-                // action.conversion 시간(예: 2.5초) 동안 박스가 내려오고 배경이 꺼집니다.
-                upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 200f), action.conversion).SetEase(Ease.OutQuad);
-                downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 200f), action.conversion).SetEase(Ease.OutQuad);
-                backGround.DOFade(0, action.conversion).SetEase(Ease.OutQuad);
+                // 1. 배경은 즉시 밝아지기 시작 (action.conversion 시간 동안)
+                backGround.DOKill();
+                backGround.DOFade(0, action.conversion).SetEase(Ease.InOutQuad); // Linear로 은은하게
+
+                lineImage.DOKill();
                 lineImage.DOFade(0, action.conversion);
+
+                // 2. [핵심] 박스는 배경이 어느 정도 밝아진 '후에' 내려오기 시작
+                // 예: 전체 시간의 40%가 지났을 때부터 박스가 움직입니다.
+                float boxDelay = action.conversion * 0.4f;
+                float boxDuration = action.conversion - boxDelay; // 남은 시간 동안 빠르게 챡!
+
+                upDark.DOKill();
+                downDark.DOKill();
+
+                upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 300f), boxDuration)
+                      .SetDelay(boxDelay) // 여기서 '조금 이따가'를 구현합니다
+                      .SetEase(Ease.OutQuad);
+
+                downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 300f), boxDuration)
+                        .SetDelay(boxDelay)
+                        .SetEase(Ease.OutQuad);
+
+                //// action.conversion 시간(예: 2.5초) 동안 박스가 내려오고 배경이 꺼집니다.
+                //upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 300f), action.conversion).SetEase(Ease.OutQuad);
+                //downDark.DOSizeDelta(new Vector2(downDark.sizeDelta.x, 300f), action.conversion).SetEase(Ease.OutQuad);
+                //backGround.DOFade(0, action.conversion).SetEase(Ease.OutQuad);
+                //lineImage.DOFade(0, action.conversion);
             }
             // =========================================================
 
@@ -384,7 +435,7 @@ public class EndingController : MonoBehaviour
                 inactiveName = Impact_Name;
                 inactiveContent = impact_Content_Text;
             }
-      
+
 
             if (!string.IsNullOrEmpty(localizedContent))
             {
@@ -414,7 +465,7 @@ public class EndingController : MonoBehaviour
                     var t1 = activeName.DOColor(action.nameColor, action.conversion).SetEase(action.easeType);
                     var t2 = activeContent.DOColor(action.textColor, action.conversion).SetEase(action.easeType);
 
-       
+
 
                     await UniTask.WhenAll(t1.ToUniTask(), t2.ToUniTask());
                 }
@@ -424,8 +475,8 @@ public class EndingController : MonoBehaviour
                     activeContent.color = action.textColor;
                 }
 
-              
-               
+
+
             }
             else
             {
@@ -440,7 +491,7 @@ public class EndingController : MonoBehaviour
                     var fadeTasks = new List<UniTask>();
 
                     //keepname이 false 일때만 페이드시킵니다
-                    if (!isResting&&name.color.a > 0) fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                    if (!isResting && name.color.a > 0) fadeTasks.Add(name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
 
                     if (content_Text.color.a > 0)
                     {
@@ -451,13 +502,13 @@ public class EndingController : MonoBehaviour
 
                         //else
                         //{
-                            fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
+                        fadeTasks.Add(content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
                         //}
-                            
+
                     }
                     if (!isResting && Impact_Name.color.a > 0) fadeTasks.Add(Impact_Name.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
                     if (impact_Content_Text.color.a > 0) fadeTasks.Add(impact_Content_Text.DOFade(0f, action.conversion).SetEase(action.easeType).ToUniTask());
-                    if (wasImpactOn&&!action.isMiddleHighlight) fadeTasks.Add(backGround.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1),action.conversion).SetEase(action.easeType).ToUniTask());// 화면이 바로전 변화된적이 있다면
+                    if (wasImpactOn && !action.isMiddleHighlight) fadeTasks.Add(backGround.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1), action.conversion).SetEase(action.easeType).ToUniTask());// 화면이 바로전 변화된적이 있다면
                     if (wasImpactOn && !action.isMiddleHighlight) fadeTasks.Add(lineImage.DOColor(new Color(180f / 255f, 180f / 255f, 180f / 255f, 1), action.conversion).SetEase(action.easeType).ToUniTask());
                     // middleHighLight가 ture라면원래대로 복구하지 않아야함.
                     // color와 관련된것은 default값을 따르고있음.
@@ -493,14 +544,15 @@ public class EndingController : MonoBehaviour
                 backGround.DOColor(new Color(100f / 255f, 100f / 255f, 100f / 255f, 255f / 255f), action.conversion);
                 lineImage.DOColor(new Color(100f / 255f, 100f / 255f, 100f / 255f, 255f / 255f), action.conversion);
                 wasImpactOn = true;
-            }   
+            }
 
             if (action.duration > 0f)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
             }
         }
-        Debug.Log("엔딩 시퀀스 1 종료!");
+
+        // Debug.Log("엔딩 시퀀스 1 종료!");
 
         // [수정] 마지막에 남아있는 텍스트들을 부드럽게 지워주는 연출 추가
         var finalFadeTasks = new List<UniTask>();
@@ -513,20 +565,22 @@ public class EndingController : MonoBehaviour
 
         name.text = "";
         Impact_Name.text = "";
-       
+
         impact_Content_Text.text = "";
         wasImpactOn = false;
 
-        
+
         name.DOFade(1f, 0);
 
 
         PlayEndingSequence_Part2().Forget();
+
+
     }
 
     public async UniTask PlayEndingSequence_Part2()
     {
-        Debug.Log("엔딩 시퀀스 2 시작!");
+        //Debug.Log("엔딩 시퀀스 2 시작!");
         content_Text.GetComponent<RectTransform>().DOAnchorPosY(textPosY, 0);
 
 
@@ -564,28 +618,38 @@ public class EndingController : MonoBehaviour
             Sequence scrollSequence = DOTween.Sequence();
 
             upDark.DOKill(); downDark.DOKill();
-            upDark.sizeDelta = new Vector2(upDark.sizeDelta.x, 200f);
-            downDark.sizeDelta = new Vector2(downDark.sizeDelta.x, 200f);
+            upDark.sizeDelta = new Vector2(upDark.sizeDelta.x, 300f);
+            downDark.sizeDelta = new Vector2(downDark.sizeDelta.x, 300f);
 
-            // 1구간
+            // 1구간 (맨 바닥에서 올라갈 때-> 예준으로)
+            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName", Define.Sound.SFX, 1.0f, 1.0f));
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY1, duration1).SetEase(Ease.OutQuart));
-            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName"));
 
-            // 2구간
+            // 2구간 (기획 -> 플머)
+            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName", Define.Sound.SFX, 1.0f, 1.0f));
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY2, duration2).SetEase(scrollEase));
-            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName"));
 
-            // 3구간
+            // 3구간 (플머 -> 아트)
+            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName", Define.Sound.SFX, 1.0f, 1.0f));
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY3, duration3).SetEase(scrollEase));
-            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName"));
 
-            // 4구간
+            // 4구간 (아트 -> 사운드)
+            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName", Define.Sound.SFX, 1.0f, 1.0f));
             scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY4, duration4).SetEase(scrollEase));
-            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName"));
 
-            // 5구간 및 엔딩 (사운드 없음)
-            scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY5, duration5).SetEase(scrollEase));
-            scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(scrollEase));
+
+            // 5구간 (사운드 -> 그리고 당신)
+            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName", Define.Sound.SFX, 1.0f, 0.5f));
+            scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY5, duration5).SetEase(Ease.InOutQuad));
+
+
+            scrollSequence.AppendInterval(1.0f);
+
+            // 엔딩 (그리고 당신 -> 맨 위)
+            //scrollSequence.Append(scrollTarget.DOAnchorPosY(targetPosY5 + 10f, 1.0f).SetEase(Ease.Linear));
+            scrollSequence.AppendCallback(() => Managers.Sound.Play("SFX/Ending/CreditName", Define.Sound.SFX, 1.0f, 0.25f));
+            scrollSequence.Append(scrollTarget.DOAnchorPosY(endPosY, durationEnd).SetEase(Ease.InOutQuad));
+
 
             // 암전 해제 (Join은 이전 Append와 동시에 실행됨)
             scrollSequence.Join(upDark.DOSizeDelta(new Vector2(upDark.sizeDelta.x, 0), durationEnd).SetEase(Ease.InOutQuad));
@@ -603,7 +667,7 @@ public class EndingController : MonoBehaviour
         }
 
         Debug.Log("끝까지 도착했습니다!");
-  
+
         // 영화 효과 다시 사라지기
         var tasks2 = new List<UniTask>();
 
@@ -620,7 +684,7 @@ public class EndingController : MonoBehaviour
                 .SetEase(Ease.OutQuad) // 도착할 때 부드럽게 감속
                 .ToUniTask());
 
-        
+
         }
         else
         {
@@ -638,7 +702,7 @@ public class EndingController : MonoBehaviour
 
         Debug.Log("대화 연출 시작!");
 
-        
+
 
         // 대화시작! 
         Debug.Log(ending_Up_Sequence.Count);
@@ -733,6 +797,18 @@ public class EndingController : MonoBehaviour
 
         Debug.Log("Part2 모든 액션 종료");
 
+        // =========================================================
+        // [추가] 다음 씬으로 넘어가기 전, 현재 BGM 2초 페이드아웃 대기
+        // =========================================================
+        AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+        if (bgmSource != null && bgmSource.isPlaying)
+        {
+            bgmSource.DOKill();
+            // 2초 동안 볼륨을 0으로 내릴 때까지(await) 기다립니다.
+            await bgmSource.DOFade(0f, 2.0f).SetEase(Ease.InOutQuad).ToUniTask();
+            bgmSource.Stop();
+        }
+
         NormalEnding_Sequence().Forget();
         /*
         if (Bool_CheckHiddenEndingEnter())
@@ -752,7 +828,20 @@ public class EndingController : MonoBehaviour
     private async UniTask NormalEnding_Sequence()
     {
         // 대화시작! 
-        Managers.Sound.Play("BGM/Exhaust", Define.Sound.BGM,1,1,false);
+        // =========================================================
+        // [추가] 1. Exhaust BGM 3초 페이드 인
+        // =========================================================
+        Managers.Sound.Play("BGM/Exhaust", Define.Sound.BGM, 1, 1, false);
+        AudioSource bgmSource = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+        if (bgmSource != null)
+        {
+            bgmSource.DOKill();
+            float targetVolume = BGMController.CurrentVolumeBGM;
+
+            bgmSource.volume = 0f; // 0에서 시작
+            bgmSource.DOFade(targetVolume, 3.0f).SetEase(Ease.InOutQuad);
+        }
+
         Debug.Log("노말엔딩 시퀀스 시작");
         foreach (var action in ending_Normal_Sequence)
         {
@@ -763,7 +852,7 @@ public class EndingController : MonoBehaviour
             string localizedContent = LocalizationManager.Get(action.id);
 
             if (localizedContent == "X" || localizedContent == "~") localizedContent = "";
-           
+
 
             if (!string.IsNullOrEmpty(localizedContent))
             {
@@ -836,6 +925,18 @@ public class EndingController : MonoBehaviour
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(action.duration));
             }
+        }
+
+        // =========================================================
+        // [추가] 2. 모든 대사가 끝난 후 Exhaust BGM 2초 페이드 아웃
+        // =========================================================
+        if (bgmSource != null)
+        {
+            bgmSource.DOKill();
+            bgmSource.DOFade(0f, 2.0f).SetEase(Ease.InOutQuad).OnComplete(() =>
+            {
+                bgmSource.Stop();
+            });
         }
 
     }
@@ -951,6 +1052,8 @@ public class EndingController : MonoBehaviour
             case "easeout": return Ease.OutQuad;
             case "easeinout": return Ease.InOutQuad;
             case "linear": return Ease.Linear;
+            case "easeinsine": return Ease.InSine;
+
             default:
                 if (Enum.TryParse(curveStr, true, out Ease result)) return result;
                 return Ease.OutQuad;
@@ -987,7 +1090,7 @@ public class EndingController : MonoBehaviour
             {
                 cur.Append(c);
             }
-        }   
+        }
         result.Add(cur.ToString());
         return result;
     }
@@ -995,30 +1098,132 @@ public class EndingController : MonoBehaviour
     private void SpecialAction_NormalEnding(int index, EndingAction action)
     {
         Debug.Log($"{index} 노말 엔딩 액션 시작");
+
+        // 커브(Ease)는 시트에서 그대로 가져옵니다.
+        Ease curve = action.easeType;
+
         switch (index)
         {
             case 16:
-                // 음악 재생 (프로젝트 내 SoundManager 등의 호출부 필요)
-                Managers.Sound.Play("BGM/EndingTheme2_V2",Define.Sound.SFX,1,1,false);
+                float effectTime16 = action.duration > 0f ? action.duration : 6f;
+
+                async UniTask TransitionSequence()
+                {
+                    AudioSource bgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+
+                    // 1. 이전 음악 페이드아웃 (이건 전환을 위해 유지)
+                    if (bgm != null && bgm.isPlaying)
+                    {
+                        bgm.DOKill();
+                        await bgm.DOFade(0f, 2.0f).SetEase(Ease.Linear).ToUniTask();
+                        bgm.Stop();
+                    }
+
+                    // 2. 아주 짧은 정적 후 바로 시작
+                    await UniTask.Delay(TimeSpan.FromSeconds(4f));
+
+                    // [음악 재생]
+                    Managers.Sound.Play("BGM/EndingTheme2_V2", Define.Sound.BGM, 1, 1, false);
+
+                    // [초기화] 셋 다 투명하게
+                    canvasGroup_NormalEnding.alpha = 0f;
+                    canvasGroup_Sun.alpha = 0f;
+
+                    // -------------------------------------------------------
+                    //  여기서부터 "완전 동시" 시작! 
+                    // -------------------------------------------------------
+
+                    // 1) 배경 페이드인 시작
+                    canvasGroup_NormalEnding.DOFade(1f, effectTime16).SetEase(Ease.InOutSine);
+
+                    // 2) 해(연꽃) 페이드인 시작 (기다림 없이 바로!)
+                    canvasGroup_Sun.DOFade(1f, effectTime16).SetEase(Ease.InOutSine);
+
+                    // 3) 수도승 애니메이션 시작 (기다림 없이 바로!)
+                    SeatAnimation(0.5f).Forget();
+
+                    // 연출 시간 동안 대기 (인덱스 유지용)
+                    await UniTask.Delay(TimeSpan.FromSeconds(effectTime16));
+                }
+
+                TransitionSequence().Forget();
 
                 content_Text.alignment = TextAlignmentOptions.Midline;
-                // 수도승 애니메이션 시작 (기본 속도 1f부터)
-                SeatAnimation(0.5f).Forget();
-                // 화면 페이드인 Linear로
-                // action.conversion 시간(데이터에 정의된 시간)만큼 캔버스 그룹 알파를 1로 올림
-                float fadeTime = action.conversion > 0f ? action.conversion : 2f;
-                canvasGroup_NormalEnding.DOFade(1f, fadeTime*1f).SetEase(Ease.Linear);
-                canvasGroup_Sun.DOFade(1f, fadeTime * 1.5f).SetEase(Ease.Linear );
-
                 break;
+
+            //case 16:
+            //    float effectTime16 = action.duration > 0f ? action.duration : 6f;
+
+            //    async UniTask TransitionSequence()
+            //    {
+            //        AudioSource bgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+
+            //        // 1. [Exhaust 페이드아웃] 새 음악 틀기 '전에' 실행되어야 함
+            //        if (bgm != null && bgm.isPlaying)
+            //        {
+            //            // 1초 동안 빠르게 페이드아웃하고 완전히 꺼질 때까지 기다림(await)
+            //            bgm.DOKill();
+            //            await bgm.DOFade(0f, 3.0f).SetEase(Ease.Linear).ToUniTask();
+            //            bgm.Stop();
+            //        }
+
+            //        // -------------------------------------------------------
+            //        // 2. [대기] 완전한 정적 (유저님이 원하는 여운의 시간)
+            //        // -------------------------------------------------------
+            //        // 예: 2초 동안 정막 유지 (시간은 원하시는 대로 조절하세요)
+            //        await UniTask.Delay(TimeSpan.FromSeconds(2.0f));
+
+            //        // -------------------------------------------------------
+            //        // 3. [동시작동] 화면 밝아짐 + 음악 페이드인 시작!
+            //        // -------------------------------------------------------
+
+            //        // [음악 시작]
+            //        Managers.Sound.Play("BGM/EndingTheme2_V2", Define.Sound.BGM, 1, 1, false);
+            //        AudioSource nextBgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+            //        //if (nextBgm != null)
+            //        //{
+            //        //    nextBgm.DOKill();
+            //        //    float targetVol = BGMController.CurrentVolumeBGM;
+            //        //    nextBgm.volume = 0f; // 0에서 시작해서
+            //        //    // 화면과 똑같이 effectTime16 동안 페이드인
+            //        //    nextBgm.DOFade(targetVol, effectTime16).SetEase(Ease.InOutQuad);
+            //        //}
+
+            //        // [화면 시작] 음악과 동시에 실행되도록 await 없이 바로 아래 배치
+            //        canvasGroup_NormalEnding.DOKill();
+            //        canvasGroup_Sun.DOKill();
+
+            //        // 화면도 effectTime16 동안 Linear하게 밝아짐
+            //        canvasGroup_NormalEnding.DOFade(1f, effectTime16).SetEase(Ease.InSine);
+            //        canvasGroup_Sun.DOFade(1f, effectTime16).SetEase(Ease.InSine);
+            //    }
+
+            //    // 전체 시퀀스 실행
+            //    TransitionSequence().Forget();
+
+            //    // 텍스트 정렬 및 수도승 애니메이션은 즉시 처리
+            //    content_Text.alignment = TextAlignmentOptions.Midline;
+            //    SeatAnimation(0.5f).Forget();
+            //    break;
+
+
+
+            //    image_backGroundBright.DOFade(1f, effectTime17).SetEase(curve);
 
             case 17:
-                image_backGroundBright.DOFade(1f, 14f).SetEase(Ease.Linear);
-                
-               
+                // =======================================================
+                // [17번 프레임] 기본 노란색 -> 더 밝은 노란색
+                // 예외 룰: 프레임 진입 후 14초 대기 -> 시트의 Duration(10초) 동안 Linear 연출
+                // =======================================================
+                float effectTime17 = action.duration > 0f ? action.duration : 10f; // 시트에 10000ms(10초)로 적혀있을 값
+
+                image_backGroundBright.DOKill();
+                image_backGroundBright.DOFade(1f, effectTime17)
+                                      .SetDelay(14f)          // 프레임 시작점부터 정확히 14초 대기
+                                      .SetEase(Ease.Linear);  // 무조건 Linear 연출
                 break;
 
-            case 19:    
+            case 19:
                 // 연꽃 애니메이션 시작
                 // 26번 케이스에서 이어지기 위해 기초값 세팅 및 등장 처리
                 image_Flower.gameObject.SetActive(true);
@@ -1034,27 +1239,49 @@ public class EndingController : MonoBehaviour
                 // 텍스트 위치 및 여러가지 조정
                 // 예: 텍스트의 부모나 자신의 앵커 위치를 DOTween으로 부드럽게 이동
                 // content_Text.rectTransform.DOAnchorPosY(-200f, 2f).SetEase(Ease.OutQuad);
-                
+
 
                 break;
 
             case 21:
-                // Petal2와 BackGlow alpha값 1로 천천히 올리기
-                float duration21 = action.conversion > 0f ? action.conversion : 3f;
+                // 시트에서 값을 가져오거나, 기본값을 5초로 늘려서 '더 천천히' 뜨게 만듭니다.
+                float duration21 = action.conversion > 0f ? action.conversion : 5f;
 
-                image_BelowPetal2.DOFade(1f, duration21);
-                image_BackGlow.DOFade(1f, duration21).OnComplete(() =>
-                {
-                    image_BackGlow2.DOFade(1f, 2f);
-                    // 완전히 끝나면 BackGlow의 Rotation Z값 돌아가기 (계속 무한반복)
-                    image_BackGlow.rectTransform.DORotate(new Vector3(0, 0, 360f),70f, RotateMode.FastBeyond360)
-                        .SetEase(Ease.Linear)
-                        .SetLoops(-1, LoopType.Restart); // -1은 무한 반복
-                });
+                // 1. Petal2 페이드인
+                image_BelowPetal2.DOFade(1f, 2f);
+
+                // 2. 만다라(BackGlow1) 페이드인
+                image_BackGlow.DOFade(1f, 2f).SetEase(Ease.InOutSine);
+
+                // [핵심] 회전을 OnComplete 밖으로 뺐습니다! 
+                // 이제 투명도가 0일 때부터 이미 서서히 돌기 시작하며 나타납니다.
+                image_BackGlow.rectTransform.DORotate(new Vector3(0, 0, 360f), 70f, RotateMode.FastBeyond360)
+                    .SetEase(Ease.Linear)
+                    .SetLoops(-1, LoopType.Restart);
+
+                // 3. 만다라 뒤의 Glow(BackGlow2) 처리
+                // 기존처럼 만다라가 '다 뜬 다음'이 아니라, 만다라가 '절반쯤 떴을 때' 
+                // 스르륵 겹쳐서 나오게 만들면 공간감이 훨씬 깊어집니다.
+                image_BackGlow2.DOFade(1f, 2.5f).SetDelay(1f).SetEase(Ease.InOutSine);
+
                 SeatAnimation(1f).Forget();
-                
-             
                 break;
+                //// Petal2와 BackGlow alpha값 1로 천천히 올리기
+                //float duration21 = action.conversion > 0f ? action.conversion : 3f;
+
+                //image_BelowPetal2.DOFade(1f, duration21);
+                //image_BackGlow.DOFade(1f, duration21).OnComplete(() =>
+                //{
+                //    image_BackGlow2.DOFade(1f, 2f);
+                //    // 완전히 끝나면 BackGlow의 Rotation Z값 돌아가기 (계속 무한반복)
+                //    image_BackGlow.rectTransform.DORotate(new Vector3(0, 0, 360f), 70f, RotateMode.FastBeyond360)
+                //        .SetEase(Ease.Linear)
+                //        .SetLoops(-1, LoopType.Restart); // -1은 무한 반복
+                //});
+                //SeatAnimation(1f).Forget();
+
+
+            //break;
 
             case 22:
                 particle_Flowers[2].Play();
@@ -1080,7 +1307,7 @@ public class EndingController : MonoBehaviour
     private async UniTaskVoid PlayCase26Sequence()
     {
         // 시작 시점: Flower가 1400, 1400 / rotate z -38 (Case 19에서 이미 세팅됨)
-        foreach(var particle in particle_Flowers)
+        foreach (var particle in particle_Flowers)
         {
             particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
@@ -1095,7 +1322,7 @@ public class EndingController : MonoBehaviour
         canvasGroup_Sun.DOFade(0, 4.4f);
 
         image_Flower.rectTransform.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.Linear).OnComplete(
-        ()=>
+        () =>
         {
             image_sudoSeat.color = new Color(0, 0, 0, 0);
             // 그리고 다시 -1400, -1400 으로 사라짐, 이때까지 rotateZ는 -12까지 변화함
@@ -1106,7 +1333,7 @@ public class EndingController : MonoBehaviour
         );
 
 
-       
+
 
         // 사라지는데 걸리는 3초 + 추가 6초 대기 = 총 9초 대기
         // (만약 애니메이션 시작 직후부터 6초 대기라면 6초만 적절히 조절하세요)
@@ -1124,6 +1351,7 @@ public class EndingController : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(7f));
 
         image_AllBlackPanel.DOFade(1f, 7.0f).SetEase(Ease.InOutQuad);
+
         //// AllBlackPanel alpha값 1로 바꾸기
         //image_AllBlackPanel.DOFade(1f, 0f);
         await UniTask.Delay(TimeSpan.FromSeconds(2.5f));
@@ -1140,7 +1368,7 @@ public class EndingController : MonoBehaviour
         // 1. 타 함수에서 이 함수를 다른 스피드로 호출하면 속도 변수만 업데이트되게 처리
         currentSeatAnimSpeed = speed;
 
-        // 2. 만약 이미 애니메이션이 루프 중이라면 새로 실행하지 않고 종료 (속도만 바뀐 채로 기존 루프가 돌아감)
+        // 2. 만약 이미 애니메이션이 루프 중이라면 새로 실행하지 않고 종료
         if (isSeatAnimPlaying) return;
 
         if (sprites_sudoSeat == null || sprites_sudoSeat.Count == 0 || image_sudoSeat == null)
@@ -1152,17 +1380,36 @@ public class EndingController : MonoBehaviour
         isSeatAnimPlaying = true;
         int spriteIndex = 0;
 
-        // 3. 계속 수도승의 애니메이션 진행 (리스트 내의 이미지 순환)
-        while (isSeatAnimPlaying)
-        {
-            image_sudoSeat.sprite = sprites_sudoSeat[spriteIndex];
-            spriteIndex = (spriteIndex + 1) % sprites_sudoSeat.Count; // 끝에 도달하면 0으로 롤백
+        // 이 오브젝트가 파괴될 때 작동하는 취소 토큰 발급
+        var cancellationToken = this.GetCancellationTokenOnDestroy();
 
-            // 4. 스피드가 높아질수록 딜레이 시간이 짧아져서 애니메이션이 빨라짐 (1f일 때 프레임당 0.1초 기준 예시)
-            float delayTime = 0.1f / currentSeatAnimSpeed;
-            await UniTask.Delay(TimeSpan.FromSeconds(delayTime));
+        try
+        {
+            // 3. 계속 수도승의 애니메이션 진행
+            while (isSeatAnimPlaying)
+            {
+                // 이중 안전장치: 이미지가 파괴되었으면 즉시 루프 탈출
+                if (image_sudoSeat == null) break;
+
+                image_sudoSeat.sprite = sprites_sudoSeat[spriteIndex];
+                spriteIndex = (spriteIndex + 1) % sprites_sudoSeat.Count;
+
+                // 4. 딜레이 적용
+                float delayTime = 0.1f / currentSeatAnimSpeed;
+
+                // : Delay에 토큰을 전달하여, 파괴 시 대기 상태를 즉시 취소함
+                await UniTask.Delay(TimeSpan.FromSeconds(delayTime), cancellationToken: cancellationToken);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // 씬 전환이나 오브젝트 파괴로 인해 Delay가 강제 취소되었을 때 이곳으로 들어옵니다.
+            // 에러를 띄우지 않고 자연스럽게 함수를 종료합니다.
+            isSeatAnimPlaying = false;
+            // Debug.Log("SeatAnimation이 안전하게 종료되었습니다."); // 확인용 로그 (필요시 삭제)
         }
     }
+
     private void SpecialAction(int index, EndingAction action)
     {
 
@@ -1248,12 +1495,30 @@ public class EndingController : MonoBehaviour
 
     private async UniTask SpecialAction_Up(int index, EndingAction action)
     {
-        if(index ==0)
+        if (index == 0)
         {
-            // 2. 구름 오브젝트 Alpha(투명도) 1로 변환하면서 나타나기
-            cloudObject.GetComponent<Image>().DOFade(1f, cloudUpTime)
-                 .SetEase(Ease.OutQuad);
-            content_Text.GetComponent<RectTransform>().DOAnchorPosY(-400, 0);
+            // === [구름 나타나며 올라오기] ===
+            RectTransform cloudRect = cloudObject.GetComponent<RectTransform>();
+            Image cloudImg = cloudObject.GetComponent<Image>();
+
+            if (cloudRect != null && cloudImg != null)
+            {
+                // 1. 초기 위치 설정 (화면 아래)
+                cloudRect.anchoredPosition = new Vector2(cloudRect.anchoredPosition.x, -1400f);
+
+                // 2. 투명도 0에서 1로 (이미 투명하다면 생략 가능)
+                cloudImg.color = new Color(1, 1, 1, 0);
+                cloudImg.DOFade(1f, cloudUpTime).SetEase(Ease.OutQuad);
+
+                // 3. 위로 올라오기 (인스펙터의 cloudUpTime 사용)
+                // 목표 위치는 -1100f 혹은 적절한 위치로 설정
+                await cloudRect.DOAnchorPosY(-1180f, cloudUpTime)
+                    .SetEase(Ease.OutQuad)
+                    .ToUniTask();
+            }
+
+            // 4. 텍스트 위치 설정 (인스펙터의 textPosY 사용)
+            content_Text.GetComponent<RectTransform>().DOAnchorPosY(textPosY, 0);
         }
 
         if (index == 7)
@@ -1273,48 +1538,54 @@ public class EndingController : MonoBehaviour
         {
             if (image_UpDarkBackGround != null)
             {
-                // 1. Pivot이 정중앙(0.5, 0.5)인지 확인하세요.
-                // 2. Scale을 1.3f보다 조금 더 크게 잡아 여백을 방지합니다.
                 var rt = image_UpDarkBackGround.rectTransform;
+                Vector2 originPos = rt.anchoredPosition;
+                var faintingSeq = DOTween.Sequence();
 
-                // 시퀀스를 사용하여 부드럽게 연결
-                var sequence = DOTween.Sequence();
+                // [수치 설정]
+                float fadeTime = 1.0f;      // 배경 페이드인 (기존 유지)
+                float fallTime = 1.38f;     // [핵심] 낙하 애니메이션 '자체' 시간만 1.38초!
 
-                // 1. 시간을 0.2f에서 1.0f(1000ms)로 대폭 늘립니다.
-                // 2. Ease.OutBack을 사용하여 목표치보다 살짝 더 커졌다가 '탱~' 하고 돌아오는 탄성을 줍니다.
-                // 3. 회전과 확대를 동시에 진행하여 "뒤틀리며 빨려 들어가는" 느낌을 줍니다.
+                float targetScale = 1.5f;  // 모서리 안 보이게 충분히 확대
+                float finalRot = -6.0f;    // 꺾이는 각도
+                float settleTime = 0.47f;   // (1.0 + 1.38 + 0.15 + 0.47 = 총 3.0초 유지)
 
-                sequence.Join(rt.DOScale(new Vector3(1.35f, 1.35f, 1f), 1.0f)
-                    .SetEase(Ease.OutBack)); // 쫀득한 확대
+                // 1. 배경 페이드인 (1.0초)
+                image_UpDarkBackGround.DOKill();
+                image_UpDarkBackGround.color = new Color(1, 1, 1, 0);
+                faintingSeq.Append(image_UpDarkBackGround.DOFade(1f, fadeTime).SetEase(Ease.Linear));
 
-                sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 1.0f)
-                    .SetEase(Ease.OutBack)); // 쫀득한 회전
+                // 2. [낙하 시작] 여기서부터 정확히 1.38초 동안 가속하며 쓰러짐
+                // Append로 연결했으니 페이드가 끝나자마자 바로 시작합니다.
+                faintingSeq.Append(rt.DOScale(new Vector3(targetScale, targetScale, 1f), fallTime).SetEase(Ease.InCubic));
+                faintingSeq.Join(rt.DORotate(new Vector3(0, 0, finalRot), fallTime).SetEase(Ease.InCubic));
+                faintingSeq.Join(rt.DOAnchorPos(originPos, fallTime).SetEase(Ease.InCubic));
 
-                //// 동시에 실행
-                //sequence.Join(rt.DOScale(1.4f, 0.2f).SetEase(Ease.OutQuad));
-                //sequence.Join(rt.DORotate(new Vector3(0, 0, -6.7f), 0.2f).SetEase(Ease.OutBack));
+                // 3. [충돌] 1.38초 낙하가 끝나는 시점에 "퍽!" (위아래 반동)
+                faintingSeq.Append(rt.DOPunchAnchorPos(new Vector2(0, 15f), 0.15f, 1, 0.5f));
 
-                await sequence.AsyncWaitForCompletion();
+                // 4. 여운 (남은 시간만큼 정지)
+                faintingSeq.AppendInterval(settleTime);
+
+                await faintingSeq.AsyncWaitForCompletion();
             }
         }
+
+
         else if (index == 9)
         {
             // [최종 연출: 확대 + 눈 감기]
-
-            await UniTask.WaitForSeconds(0.3f);
-            // 1. 16.3초 동안 화면이 점점 Linear 확대되는 애니메이션
             if (image_UpDarkBackGround != null)
             {
-                image_UpDarkBackGround.rectTransform.DOScale(1.8f, 16.3f).SetEase(Ease.Linear);
+                image_UpDarkBackGround.rectTransform.DOScale(1.7f, 14.3f).SetEase(Ease.Linear);
             }
 
-            // 2. 12초 대기 후 남은 4.3초 동안 눈 감는 연출 시작
-            PlayEyeClosingSequence(12f, 4.3f).Forget();
+            // [핵심 보정] Index 8이 정확히 3초 걸리므로, 눈 감는 대기 시간은 11.5초로 세팅합니다!
+            PlayEyeClosingSequence(10.5f, 4.3f).Forget();
         }
     }
 
-   
-    private async UniTaskVoid PlayEyeClosingSequence(float delay, float duration)
+        private async UniTaskVoid PlayEyeClosingSequence(float delay, float duration)
     {
         // 12초 대기
         await UniTask.Delay(TimeSpan.FromSeconds(delay));
@@ -1353,9 +1624,10 @@ public class EndingController : MonoBehaviour
         eyeSeq.Join(downEye.DOAnchorPosY(-210f, 2.5f).SetEase(Ease.InOutSine));
 
         // 6. 완전히 감긴 후 암전 처리 (선택 사항)
-        eyeSeq.OnComplete(() => {
+        eyeSeq.OnComplete(() =>
+        {
 
-            Debug.Log("눈을 완전히 감았습니다.");
+            // Debug.Log("눈을 완전히 감았습니다.");
             // 필요 시 추가적인 엔딩 크레딧이나 페이드 아웃 처리
         });
     }
@@ -1365,7 +1637,7 @@ public class EndingController : MonoBehaviour
     private void SettingClearForStart()
     {
         scrollTarget.DOAnchorPosY(startPosY, 0);
- 
+
     }
 
     /// <summary>
@@ -1374,16 +1646,16 @@ public class EndingController : MonoBehaviour
     private bool Bool_CheckHiddenEndingEnter()
     {
         // 모든 챕터의 랭크가 최상일때 
-        for(int i=0;i<IngameData.TOTAL_STORY_CHAPTERS;i++)//모든 스토리 챕터에 대해
+        for (int i = 0; i < IngameData.TOTAL_STORY_CHAPTERS; i++)//모든 스토리 챕터에 대해
         {
-            if(IngameData._bestChapterRanks[i]!=Define.Rank.Perfect) // 최고 랭크가 아니라면
+            if (IngameData._bestChapterRanks[i] != Define.Rank.Perfect) // 최고 랭크가 아니라면
             {
 
-                Debug.Log("노말엔딩 진입");
+                //Debug.Log("노말엔딩 진입");
                 return false; // 노말 엔딩으로 진입
             }
         }
-        Debug.Log("히든엔딩 진입");
+        //Debug.Log("히든엔딩 진입");
         return true; // 모든것을 통과했다면 히든엔딩으로 진입할 수 있음.
     }
 
@@ -1393,5 +1665,4 @@ public class EndingController : MonoBehaviour
         IngameData._isStoryCompleteClear = true;
         Managers.Steam.UnlockAchievement($"ACH_ENDING_WATCH");
     }
-
 }

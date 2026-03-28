@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using TMPro;
 using Cysharp.Threading.Tasks;
-
+using UnityEngine.Localization.Settings;
 public class MainScene : UI_Popup
 {
     // --- UI 요소 및 애니메이션 설정 변수 ---
@@ -87,37 +87,67 @@ public class MainScene : UI_Popup
         StartToClick
     }
 
+   
+    // 씬 로딩이 완료된 직후에 호출해 줍니다.
+    public void ForceRefreshLocalization()
+    {
+        if (LocalizationSettings.SelectedLocale != null)
+        {
+            // 현재 언어를 자기 자신으로 다시 덮어씌움 (이러면 모든 Localize Event가 강제로 새로고침됨)
+            LocalizationSettings.SelectedLocale = LocalizationSettings.SelectedLocale;
+        }
+    }
     private void Start()
     {
-        // ★ 1. 이전 씬에서 일시정지(0)된 상태로 넘어왔을 수 있으므로 무조건 1로 초기화!
+        // 기본 초기화 세팅
         Time.timeScale = 1f;
         originalMaterial = tmpText[0].fontSharedMaterial;
         originalPositions = new Vector2[buttonsTransform.Length];
+        Canvas_GamesLogo.alpha = 1;
         for (int i = 0; i < buttonsTransform.Length; i++)
         {
             originalPositions[i] = buttonsTransform[i].anchoredPosition;
         }
-        if (IngameData._wastSceneName == "StageScene"||IngameData._wastSceneName=="EndingScene")
-        {
-            Debug.Log("로고스킵");
-            ActionLogo().Forget();
-        }
-        else
-        {
-            ActionGamesLogo().Forget();
-        }
-
-        Debug.Log(IngameData._isStoryCompleteClear);
+        image_Monster1.DOFade(0, 0); //투명
+        image_Monster2.DOFade(0, 0); //투명
+        image_YinYang.DOFade(0, 0);
 
         if (IngameData._isStoryCompleteClear)
         {
             image_Monk.sprite = sprite_Ending_Monk;
             image_Brush.sprite = sprite_Ending_Brush;
             patternBackGround_Image.sprite = sprite_Ending_Pattern;
-            image_Monster1.DOFade(0, 0);
-            image_Monster2.DOFade(0, 0);
+            image_Monster1.sprite = sprite_Ending_Monster1;
+   
+            image_Monster2.sprite = sprite_Ending_Monster2;
+            image_Monster1.SetNativeSize();
+            image_Monster2.SetNativeSize();
+            image_YinYang.DOFade(0.6f, 0);
         }
 
+        //  로컬라이제이션 완료 대기 후 로고 액션 시작
+        StartGameSequenceAsync().Forget();
+    }
+
+    private async UniTask StartGameSequenceAsync()
+    {
+        //  로컬라이제이션 시스템이 완전히 로드될 때까지 대기
+        await LocalizationSettings.InitializationOperation;
+
+        // 이제 로컬라이제이션 준비가 끝났으므로 강제 새로고침 실행
+        ForceRefreshLocalization();
+
+        // 기존의 로고 분기 처리
+        if (IngameData._wastSceneName == "StageScene" || IngameData._wastSceneName == "EndingScene")
+        {
+            Debug.Log("로고스킵");
+            Canvas_GamesLogo.alpha = 0;
+            await ActionLogo();
+        }
+        else
+        {
+            await ActionGamesLogo();
+        }
     }
 
     private async UniTask ActionGamesLogo()
@@ -131,7 +161,7 @@ public class MainScene : UI_Popup
         {
             v.color = new Color(1, 1, 1, 0);
         }
-        gamesLogoCanvasGroup.alpha = 1;
+
 
         // 1. 모든 로고 동시 페이드 인
         Sequence fadeInSeq = DOTween.Sequence();
@@ -157,7 +187,8 @@ public class MainScene : UI_Popup
 
 
         // 4. 다음 단계로 넘어가기 전 짧은 대기
-        Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
+        //Managers.Sound.Play("BGM/MainTitle_V3", Define.Sound.BGM);
+        Managers.Sound.Play("BGM/MainTitleogg", Define.Sound.BGM);
         await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
         // 5. 다음 로고 액션 진행
@@ -304,9 +335,7 @@ public class MainScene : UI_Popup
             m1Rect.anchoredPosition = new Vector2(m1TargetPos.x, m1TargetPos.y - 100f);
             m2Rect.anchoredPosition = new Vector2(m2TargetPos.x, m2TargetPos.y - 100f);
 
-            image_Monster1.color = new Color(1f, 1f, 1f, 0f); // 투명하게 시작
-            image_Monster2.color = new Color(1f, 1f, 1f, 0f);
-
+         
             // 2. 새로운 시퀀스로 몬스터 등장 연출
             Sequence monsterSeq = DOTween.Sequence();
 
@@ -317,6 +346,15 @@ public class MainScene : UI_Popup
             // Monster 2 등장 (동시에 실행)
             monsterSeq.Join(m2Rect.DOAnchorPos(m2TargetPos, 0.5f).SetEase(Ease.OutQuad));
             monsterSeq.Join(image_Monster2.DOFade(1f, 0.5f));
+
+            // 몬스터 등장까지 끝난 후, 모든 캐릭터 유영 시작
+            monsterSeq.OnComplete(() =>
+            {
+                StartFloatingAnimation(image_Monk.rectTransform, 15f, 2.5f);     // 수도승
+                StartFloatingAnimation(image_Monster1.rectTransform, 25f, 3.0f); // 몬스터1 (좀 더 느리고 크게)
+                StartFloatingAnimation(image_Monster2.rectTransform, 20f, 2.2f); // 몬스터2 (좀 더 빠르고 작게)
+            });
+
         });
 
 
@@ -461,7 +499,7 @@ public class MainScene : UI_Popup
         }
         for (int i = index + 1; i < buttonsTransform.Length; i++)
         {
-            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 350, ANIMATION_DURATION).SetEase(Ease.OutCubic);
+            buttonsTransform[i].DOAnchorPosY(originalPositions[i].y - 320, ANIMATION_DURATION).SetEase(Ease.OutCubic);
         }
 
         TogglePanel(true);
@@ -527,4 +565,25 @@ public class MainScene : UI_Popup
             });
         }
     }
+    /// <summary>
+    /// UI 요소를 위아래로 부드럽게 유영(Floating)시키는 공용 메서드
+    /// </summary>
+    /// <param name="target">움직일 RectTransform</param>
+    /// <param name="amplitude">움직임 범위 (픽셀)</param>
+    /// <param name="duration">한 번 왕복하는 시간</param>
+    private void StartFloatingAnimation(RectTransform target, float amplitude, float duration)
+    {
+        if (target == null) return;
+
+        // 기존에 혹시 돌아가고 있을지 모를 트윈 제거 (안전성)
+        target.DOKill();
+
+        // 현재 위치를 기준으로 위아래 반복
+        // SetRelative(true)를 써서 현재 anchoredPosition 기준 상대적으로 움직이게 설정
+        target.DOAnchorPosY(amplitude, duration)
+            .SetRelative(true)
+            .SetEase(Ease.InOutSine) // 부드러운 가속/감속
+            .SetLoops(-1, LoopType.Yoyo); // 무한 반복 (왔다갔다)
+    }
+
 }

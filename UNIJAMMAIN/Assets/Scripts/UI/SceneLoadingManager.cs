@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks; // UniTask 필수 네임스페이스
 using System.Threading; // CancellationToken
 using DG.Tweening;
+using UnityEngine.Localization.Settings;
 
 public class SceneLoadingManager : UI_Base
 {
@@ -135,7 +136,7 @@ public class SceneLoadingManager : UI_Base
             DOTween.Kill(enemy.dyingEffectObject);
             GameObject.Destroy(enemy.gameObject);
         }
-
+        Time.timeScale = 1f;
         Managers.Clear();
 
         // 4. 씬 활성화 (아직 문은 닫혀있음)
@@ -148,6 +149,7 @@ public class SceneLoadingManager : UI_Base
         // ▼▼▼ 3. 신호를 받을 때까지 무한 대기 (WaitUntil 사용) ▼▼▼
         // NotifySceneReady()가 호출되어 true가 될 때까지 대기
         await UniTask.WaitUntil(() => isSceneReadyToDisplay, cancellationToken: token);
+        ForceRefreshLocalization();
 
         if (AspectRatioEnforcer.Instance != null)
         {
@@ -183,6 +185,15 @@ public class SceneLoadingManager : UI_Base
         await UniTask.Delay(TimeSpan.FromSeconds(0.1f), ignoreTimeScale: true, cancellationToken: this.GetCancellationTokenOnDestroy());
         Managers.Sound.SettingNewSceneVolume();
         IsLoading = false;
+    }
+    // 씬 로딩이 완료된 직후에 호출해 줍니다.
+    public void ForceRefreshLocalization()
+    {
+        if (LocalizationSettings.SelectedLocale != null)
+        {
+            // 현재 언어를 자기 자신으로 다시 덮어씌움 (이러면 모든 Localize Event가 강제로 새로고침됨)
+            LocalizationSettings.SelectedLocale = LocalizationSettings.SelectedLocale;
+        }
     }
 
     public void NotifySceneReady()

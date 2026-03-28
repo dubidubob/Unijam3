@@ -194,10 +194,14 @@ public static class IngameData
     public static int WrongInputCnt { get; private set; }
     public static int AttackedMobCnt { get; private set; }
 
+    public static int MaxCombo { get; private set; }
+
+    public static int NowCombo =0 ;
+    public static void IncMaxCombo() { NowCombo++;MaxCombo = Mathf.Max(MaxCombo, NowCombo); }
     public static void IncPerfect() { PerfectMobCnt++; OnRankUpdate?.Invoke(RankType.Perfect); }
     public static void IncGood() { GoodMobCnt++; OnRankUpdate?.Invoke(RankType.Good); }
-    public static void IncWrong() { WrongInputCnt++; OnRankUpdate?.Invoke(RankType.Miss); }
-    public static void IncAttacked() { AttackedMobCnt++; OnRankUpdate?.Invoke(RankType.Miss); }
+    public static void IncWrong() { WrongInputCnt++; OnRankUpdate?.Invoke(RankType.Miss); IngameData.NowCombo = 0; }
+    public static void IncAttacked() { AttackedMobCnt++; OnRankUpdate?.Invoke(RankType.Miss); IngameData.NowCombo = 0; }
 
     public static void ActionPerfectEffect(WASDType wasdType) { OnPerfectEffect?.Invoke(wasdType); }
 
@@ -209,6 +213,8 @@ public static class IngameData
         GoodMobCnt = 0;
         WrongInputCnt = 0;
         AttackedMobCnt = 0;
+        NowCombo = 0;
+        MaxCombo = 0;
     }
 
     // 세이브로드
@@ -220,6 +226,16 @@ public static class IngameData
 
     public static void SaveGameData()
     {
+
+        Managers.Steam.SetStat("STAT_COMBO_TOTAL", IngameData._defeatEnemyCount);
+
+        // 3. 업적 언락 (통계가 1만 달성 시 스팀 백엔드에서 자동 언락하게 설정할 수도 있지만, 안전을 위해 코드에 남겨둬도 무방합니다)
+        if (IngameData._defeatEnemyCount >= 10000)
+        {
+            Managers.Steam.UnlockAchievement("ACH_COMBO_TOTAL_10000");
+        }
+
+
         SaveDataContainer data = new SaveDataContainer();
 
         // 현재 데이터 매핑
@@ -275,7 +291,7 @@ public static class IngameData
                     if (data.BestChapterScore != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
                         _bestChapterScore = data.BestChapterScore;
 
-                    if (data.IsFirstClearChapter != null && data.BestChapterScore.Length == TOTAL_CHAPTERS)
+                    if (data.IsFirstClearChapter != null && data.IsFirstClearChapter.Length == TOTAL_CHAPTERS)
                         _isFirstClearChapter = data.IsFirstClearChapter;
 
 

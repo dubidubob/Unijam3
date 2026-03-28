@@ -11,4 +11,7 @@ public struct MonsterData
     public MouseEnemy.Dir dir;
     public float cameraActionDuration;
     public float floatDuration;
+    public float slamAnimationDuration;
+
+   
 }

@@ -122,7 +122,7 @@ public class MouseEnemy : MonoBehaviour
             if (_waveTransform != null)
             {
                 _waveTransform.gameObject.SetActive(false);
-                 Managers.Sound.Play("SFX/Enemy/MaskSmash");
+                 //Managers.Sound.Play("SFX/Enemy/MaskSmash");
             }
         });
 
@@ -132,6 +132,8 @@ public class MouseEnemy : MonoBehaviour
         _slamSequence.Join(image.DOColor(Color.red, slamTime));
         _slamSequence.OnComplete(() =>
         {
+            Managers.Sound.Play("SFX/Enemy/MaskSmash");
+
             onImpact?.Invoke();
 
             // 자연스럽게 사라지기
@@ -181,6 +183,7 @@ public class MouseEnemy : MonoBehaviour
         }
     }
     */
+    /*
     private void Update()
     {
         /*
@@ -201,9 +204,9 @@ public class MouseEnemy : MonoBehaviour
             Managers.Game.ComboInc(healingValue);
             gameObject.SetActive(false);
         }
-        */
+        
     }
-    /*
+    
     private void StopBlinking()
     {
         if (blinkTweener != null && blinkTweener.IsActive())
@@ -216,6 +219,7 @@ public class MouseEnemy : MonoBehaviour
         image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
         
     }
+    
     */
     private void OnDisable()
     {

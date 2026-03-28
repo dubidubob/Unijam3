@@ -70,10 +70,10 @@ public class PhaseController : MonoBehaviour
         IngameData.RankInit();
         Managers.Game.monster = monsterDatabase;
 
-       
-       
 
-        
+
+
+
 
         _chapterIdx = Mathf.Min(IngameData.ChapterIdx, chapters.Count() - 1);
         if (isTest)
@@ -95,10 +95,10 @@ public class PhaseController : MonoBehaviour
         Managers.Game.GameStart();
 
 
-        //EndChapter();//씬넘어가기테스트
+        // EndChapter();//씬넘어가기테스트
         // UniTask 실행 (Start는 void이므로 async void 대신 Forget() 패턴 사용 권장)
         RunChapter().Forget();
-       
+
     }
 
     private void OnDestroy()
@@ -116,15 +116,14 @@ public class PhaseController : MonoBehaviour
 
     // async UniTask로 변경
     private async UniTaskVoid RunChapter()
-    {   
+    {
         // 토큰 획득 (이 스크립트가 파괴되면 await 중인 작업들이 캔슬됨)
         var token = this.GetCancellationTokenOnDestroy();
-        try
-        {
-            // 게임 안정화 로딩
-            await GameInitLoading(token);
 
-       
+        // 게임 안정화 로딩
+        await GameInitLoading(token);
+
+
         IngameData.IsStart = true;
 
 
@@ -150,9 +149,9 @@ public class PhaseController : MonoBehaviour
             IngameData.ChangeBpm?.Invoke();
         }
         var _event = chapters[_chapterIdx].Phases[0];
-        if(_event is PhaseEvent _parsingEvent)
+        if (_event is PhaseEvent _parsingEvent)
         {
-            // Phase의 0 부터 끝까지
+            // Phase의 0 부터 끝까지  
             // _parsingEvent.MonsterData[0] 부터 끝까지 MonsterData[i].WASD_Pattern <- string 에 대해 
             // 미리 파싱해두기 
             // GetOrParsePattern 을 타 함수(datainitialize 하는 타 코드에서) 실행할것임.
@@ -169,23 +168,25 @@ public class PhaseController : MonoBehaviour
         // DelayPadding의 Tick의 Second 만큼 대기 ( 몬스터를 미리 소환하고 노래를 늦게 재생 ) 
         // sinkTimer추가, sinkTimer만큼 노래가 늦게 재생되거나 빨리재생됨
         // 노래가 빨리 재생된다는것(SinTimer가 + 라는것은 몹이 늦게 도착한다는 뜻이다)
-        double waitSecondTarget = (long)chapters[_chapterIdx].DelayPaddingTick * IngameData.BeatInterval+IngameData.sinkTimer;
+        double waitSecondTarget = (long)chapters[_chapterIdx].DelayPaddingTick * IngameData.BeatInterval + IngameData.sinkTimer;
         Managers.Sound.PlayScheduled(bgmPath, musicStartTime + waitSecondTarget, Define.Sound.BGM);
 
         // BeatClock에게도 "게임 시작 시간은 startTime이다"라고 알려줍니다.
         //    BeatClock은 이제 Update에서 (dspTime - startTime)을 통해 틱을 계산해야 합니다.
         beatClock.SetStartTime(musicStartTime);
-        
+
         //  BGM이 시작될 때까지(1초간) 대기
         //    이렇게 하면 "소리가 나는 순간"과 "로직이 시작되는 순간"이 맞음.
         await UniTask.WaitUntil(() => AudioSettings.dspTime >= musicStartTime, cancellationToken: token);
 
         // 주석처리하면 윈도우 스트레치 꺼짐
         //cameraController.WindowStretchAction(60,2,0).Forget();
-       // cameraController.WindowRythmContinueStretchAction(60).Forget();
+        // cameraController.WindowRythmContinueStretchAction(60).Forget();
         for (int i = 0; i < chapters[_chapterIdx].Phases.Count; i++)
         {
+          
             var gameEvent = chapters[_chapterIdx].Phases[i];
+           
             if (!gameEvent.isIn) continue;
 
             float durationSec = gameEvent.durationBeat * beatInterval;
@@ -195,6 +196,7 @@ public class PhaseController : MonoBehaviour
             // "스포너가 초 단위(dspTime)로 작동하니까, 연장할 비트만큼 시간을 더해주는 것"입니다.
             if (gameEvent is PhaseEvent pEvent)
             {
+                HandleMovieAction(pEvent);
                 // 연장할 비트(extensionCreateBeat)가 있다면, 
                 // 그만큼의 시간(beatInterval 곱하기)을 더해줍니다.
                 float extensionSec = pEvent.extensionCreateBeat * beatInterval;
@@ -221,7 +223,7 @@ public class PhaseController : MonoBehaviour
                 Managers.Game.CurrentState = GameManager.GameState.Battle;
                 float delaySec = delayBeats * (float)IngameData.BeatInterval;
                 HandleFlipKeyEvent(phaseEvent, delaySec);
-                HandleStretchWindowEvent(phaseEvent, delaySec);
+                //HandleStretchWindowEvent(phaseEvent, delaySec);
             }
             else if (gameEvent is TutorialEvent tutorialEvent)
             {
@@ -242,7 +244,7 @@ public class PhaseController : MonoBehaviour
             // Delay 직후 로직 실행
             if (gameEvent is PhaseEvent phaseEventAfterDelay)
             {
-                SpawnMonsters(phaseEventAfterDelay, targetTick+phaseEventAfterDelay.extensionCreateBeat);
+                SpawnMonsters(phaseEventAfterDelay, targetTick + phaseEventAfterDelay.extensionCreateBeat);
             }
             else if (gameEvent is TutorialEvent tutorialEventAfterDelay)
             {
@@ -284,18 +286,10 @@ public class PhaseController : MonoBehaviour
         await UniTask.WaitUntil(() => beatClock._tick >= targetTick, cancellationToken: token);
 
         EndChapter();
-        }
-        catch (OperationCanceledException)
-        {
-            // 씬이 넘어가거나 오브젝트가 파괴되어 정상적으로 취소된 경우
-            Debug.Log("RunChapter 캔슬됨 (정상적인 씬 이동 등)");
-        }
-        catch (Exception ex)
-        {
-            // ★ UniTaskVoid가 조용히 삼켜버리던 에러를 강제로 뱉어냄
-            Debug.LogError($"[RunChapter 알 수 없는 에러로 진행 멈춤] : {ex.Message}\n{ex.StackTrace}");
-        }
     }
+
+
+
 
     private void HandleFlipKeyEvent(PhaseEvent phaseEvent, float delaySec)
     {
@@ -311,11 +305,11 @@ public class PhaseController : MonoBehaviour
         }
     }
 
-    private void HandleStretchWindowEvent(PhaseEvent phaseEvent, float delaySec)
+    private void HandleMovieAction(PhaseEvent phaseEvent)
     {
-        if(phaseEvent.isStretchWindow)
+        if(phaseEvent.isMovieAction)
         {
-            cameraController.WindowStretchAction(delaySec,phaseEvent.durationBeat,phaseEvent.stretchX_rate,phaseEvent.stretchY_rate).Forget();
+            cameraController.MovieAction(phaseEvent.movieDuration*(float)IngameData.BeatInterval,phaseEvent.movieWaitForStartDuration*(float)IngameData.BeatInterval, phaseEvent.style);
         }
     }
 
@@ -353,21 +347,37 @@ public class PhaseController : MonoBehaviour
 
 
         SetStageIndex(_chapterIdx);
-    }
+    }   
 
     private float perfectWeight = 1.0f;
     private float goodWeight = 0.5f;
+    private float missPenalty = 0.15f; // 놓쳤을 때의 감점!
+
     private float CalculateScore()
     {
         float perfectCnt = IngameData.PerfectMobCnt;
         float goodCnt = IngameData.GoodMobCnt;
-        float rate = (perfectCnt * perfectWeight + goodCnt * goodWeight);
         float totalCnt = IngameData.TotalMobCnt;
-        float total = totalCnt;
 
+        //놓친몬스터수
+        float missCnt = totalCnt - perfectCnt - goodCnt;
 
-        return (rate / total) * 100f;
+ 
+        float baseRate = (perfectCnt * perfectWeight) + (goodCnt * goodWeight) - (missCnt * missPenalty);
+        baseRate = UnityEngine.Mathf.Max(0, baseRate); // 점수가 0 밑으로 떨어지는 것 방지
+
+        // 기본 점수를 90점만점 스케일링
+        float baseScore = (baseRate / totalCnt) * 90f;
+
+        // 콤보 보너스 계산 (최대치: 10점 만점)
+
+        float maxCombo = IngameData.MaxCombo; 
+        float comboBonus = (maxCombo / totalCnt) * 10f;
+
+        // 최종 점수 (반올림하여 정수로 만드는 것을 추천)
+        return Mathf.Round(baseScore + comboBonus);
     }
+
 
     #region Setting
 
@@ -379,7 +389,7 @@ public class PhaseController : MonoBehaviour
 
         if (wasdSpawner == null)
         {
-            Debug.LogWarning("WASD 스포너를 찾을 수 없어 프리로딩을 건너뜁니다.");
+            
             return;
         }
 
@@ -436,7 +446,7 @@ public class PhaseController : MonoBehaviour
 
 
             // 새로운 스테이지가 해금되었음.
-            if(IngameData._unLockStageIndex==1|| IngameData._unLockStageIndex == 3)
+            if(IngameData._unLockStageIndex==2|| IngameData._unLockStageIndex == 4)
             {
                 if (IngameData._isFirstClearChapter[IngameData._nowStageIndex]!=true) // 처음들어온 스테이지가 아니라면
                 {
@@ -689,7 +699,7 @@ public class PhaseController : MonoBehaviour
 
         // 오디오/물리 엔진이 안정화될 때까지 짧게 대기 
         //    ignoreTimeScale: true로 설정하여 퍼즈 상태에서도 흐르게 함
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5f), ignoreTimeScale: true, cancellationToken: token);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f), ignoreTimeScale: true, cancellationToken: token); // 추후 1.5->0.5로 원래값으로수정
         Debug.LogWarning($"{Managers.Game} 과 {Managers.Game.beatClock}");
  
 

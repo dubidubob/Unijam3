@@ -119,22 +119,40 @@ public class StageSceneUI : UI_Popup
     }
 
 
-      private void Awake()
+    private void Awake()
     {
-        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap); // 레벨 표현 업데이트
+        currentStageIndex = IngameData._nowStageIndex + 1; // 현재 스테이지
+        int nowChapterIdx = currentStageIndex - 1;
 
+        // 🌟 [추가] 씬에 들어올 때 변수 동기화를 확실히 해줍니다.
+        isEventMap = IngameData.isEventStage;
 
-        // normalTextMaterial이 있다면, 이를 기반으로 빛나는 머티리얼을 생성합니다.
+        if (!isEventMap)
+        {
+            if (nowChapterIdx <= 3) { currentPageLevel = 0; }
+            else if (nowChapterIdx <= 6) { currentPageLevel = 1; }
+            else { currentPageLevel = 2; }
+        }
+        else
+        {
+            if (nowChapterIdx <= 9) { currentPageLevel = 0; }
+            else { currentPageLevel = 2; }
+        }
+
+        localizationController.RefreshLevelInfoUI(stageLevelInfo_TMP, currentPageLevel, isEventMap);
+
         if (normalTextMaterial != null)
         {
-            // Material(Material source) 생성자를 사용해 복사본을 만듭니다.
             glowingTextMaterial = new Material(normalTextMaterial);
             SetupGlowMaterial(glowingTextMaterial);
         }
-        currentStageIndex = IngameData._nowStageIndex+1; // 현재 스테이지
+
         digitalGlitch = FindFirstObjectByType<DigitalGlitch>();
 
-        SetupMapStageByNowChapterIndex();
+        // 🌟 [삭제/주석 처리] 여기서 불확실한 상태의 맵을 강제로 옮기지 않습니다.
+        // BeadController의 Start()에 추가된 RestoreCurrentMapStateInstant()가 
+        // 타겟 맵을 올바르게 할당한 뒤 동기화 시켜줄 것입니다.
+        // SetupMapStageByNowChapterIndex(); 
     }
 
     private void OnDestroy()
@@ -153,19 +171,7 @@ public class StageSceneUI : UI_Popup
     {
         // 1. 현재 스테이지 인덱스를 기반으로 목표 페이지 레벨(0, 1, 2) 계산
         // (가정: 1~3스테이지=Level0, 4~6스테이지=Level1, 7스테이지=Level2)
-        int nowChapterIdx = currentStageIndex-1;
-        if (nowChapterIdx <= 3)
-        {
-            currentPageLevel = 0;
-        }
-        else if (nowChapterIdx <= 6)
-        {
-            currentPageLevel = 1;
-        }
-        else
-        {
-            currentPageLevel = 2;
-        }
+      
 
         // 2. 해당 레벨에 맞는 좌표와 회전값 설정 (애니메이션 없이 즉시 이동)
         float targetY = 892f;   // Level 0 기본값
@@ -489,12 +495,20 @@ public class StageSceneUI : UI_Popup
         if (_selectedButton != null)
         {
             Time.timeScale = 1.0f;
-            if(IngameData.ChapterIdx>=9) // 이벤트 스테이지는 스토리씬으로안가고 바로 게임으로
+
+            // 1. 문이 닫히는 시간(예: 1.0초)에 맞춰서 브금 페이드아웃 시작!
+            float doorAnimTime = 1.0f; // 문 닫히는 시간에 맞게 숫자를 조절하세요
+            Managers.Sound.BGMFadeOut(doorAnimTime);
+
+            // 이벤트 스테이지는 스토리씬 안가고, 바로 게임플레이씬으로. (이후에 스토리씬 추가되면 수정)
+            if (IngameData.ChapterIdx >= 9)
             {
                 SceneLoadingManager.Instance.LoadScene("GamePlayScene");
             }
-
-            SceneLoadingManager.Instance.LoadScene("StoryScene");
+            else
+            {
+                SceneLoadingManager.Instance.LoadScene("StoryScene");
+            }
         }
         else
         {
@@ -666,19 +680,23 @@ public class StageSceneUI : UI_Popup
                 buttonImage.sprite = deActive;
                 button.interactable = false;
                 buttonText.color = new Color32(194, 194, 194, 255);
-                buttonText.fontSharedMaterial = normalTextMaterial;
+                // ❌ buttonText.fontSharedMaterial = normalTextMaterial; (삭제)
                 break;
+
             case ButtonState.ClickActive:
                 buttonImage.sprite = clickActive;
                 button.interactable = true;
                 buttonText.color = Color.white;
+                // 💡 만약 여기에 glowingTextMaterial을 쓰려면 로컬라이제이션 대응이 추가로 필요합니다.
                 break;
+
             case ButtonState.NonClickActive:
                 buttonImage.sprite = nonClickActive;
                 button.interactable = true;
                 buttonText.color = new Color32(194, 194, 194, 255);
-                buttonText.fontSharedMaterial = normalTextMaterial;
+                // ❌ buttonText.fontSharedMaterial = normalTextMaterial; (삭제)
                 break;
+
             case ButtonState.Hover:
                 if (button != _selectedButton)
                 {
@@ -961,7 +979,7 @@ public class StageSceneUI : UI_Popup
 
         // 2. 레벨에 따른 목표 좌표 설정
         float targetY = 892f;
-        float targetZ = 0f;
+        float targetZ = 0f; 
 
         switch (currentPageLevel)
         {

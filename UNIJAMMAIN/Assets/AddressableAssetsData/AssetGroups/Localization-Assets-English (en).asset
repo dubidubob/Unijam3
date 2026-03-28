@@ -47,6 +47,30 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 252d5e5243e62a446a3bad33ba1ffa77
+    m_Address: LeftDownKey_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a47c2de01560484b9b0c2e7278e9c85
+    m_Address: RightUpKey_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c440a45be5d53f4fa6ffa0d6f619718
+    m_Address: English_EULJIRO
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49913315f7d1c2748914f575d86da946
+    m_Address: Ridi_English
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e28ec4fec8e8bc4f8befe52a912f577
     m_Address: StoryInfo_en
     m_ReadOnly: 1
@@ -65,8 +89,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6515731e2d908ba4fab819da2b770bf9
+    m_Address: DeukdoBeat_Logo_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 70dfff4d21a01624587fec063b3dd98f
     m_Address: Beat_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 756f31364c7c1b943a5c33d6f24e0991
+    m_Address: PracticeMode_Info_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
@@ -83,8 +119,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83308e8764829a544ac831273da1c5df
+    m_Address: MainCredits_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: be7c32de8f1264e48838fbbc5986c8d1
     m_Address: Deukdo_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c52dd0e1c89423c45b4317a0c1ee1ec1
+    m_Address: Ridi_English_FallBack
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
@@ -101,14 +149,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cedb0783661bb2d419e368281d3414e7
-    m_Address: LeftDownKey_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f892cea6c3557ec42a31f9206a54bf04
-    m_Address: RightUpKey_en
+  - m_GUID: d1368e8f73cf1304cb2e9f795254204b
+    m_Address: PracticeMode_Alert_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

@@ -291,6 +291,7 @@ public class PrologueController : MonoBehaviour
         {
             if (action.index == 22)
             {
+                content_Text.text = "";
                 // 1. RectTransform 컴포넌트를 가져옵니다.
                 RectTransform rect = content_Text.rectTransform;
 

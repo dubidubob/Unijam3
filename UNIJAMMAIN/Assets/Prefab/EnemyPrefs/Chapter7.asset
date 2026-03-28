@@ -74,6 +74,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154169424216065
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -140,6 +141,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 6
           WASD_Pattern: AWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSAWDSXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -150,9 +152,10 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: 01230123
+          WASD_Pattern: 012301230123012301230123
           speedUpRate: 1
           spawnBeat: 4
           moveBeat: 2
@@ -160,6 +163,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154192467460096
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -185,6 +189,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 1
@@ -195,6 +200,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154192467460097
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -220,12 +226,13 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154192467460098
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 17
-        startDelayBeat: 2
+        durationBeat: 18
+        startDelayBeat: 1
         bpm: 162
         timeScale: 1
         preGenerateBeat: 2
@@ -237,7 +244,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: AXXXDXXXWXXX(AD)X(AD)XWXXXWXXX(AW)XXX(WD)XXX
+          WASD_Pattern: AXXXDXXXWXXX(AD)X(AD)XWXXXWXXX(AW)XXX(WD)XXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -245,6 +252,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154192467460099
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -270,6 +278,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: 
@@ -280,6 +289,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154199782588416
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -297,7 +307,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: WXXXWXXXWXXXWXWXWXXXWXXXWXXXWXXX(AD)XXX(AD)XXX(AD)XXXWXWXWXWXWX(AD)X(AD)X(AWD)X(AWD)
+          WASD_Pattern: XWXXXWXXXWXXXWXWXWXXXWXXXWXXXWXXX(AD)XXX(AD)XXX(AD)XXXWXWXWXWXWX(AD)X(AD)X(AWD)X(AWD)
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -305,6 +315,18 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: XXXXXXXXXXXXXX1X2X3XXXX4XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          speedUpRate: 1
+          spawnBeat: 0.5
+          moveBeat: 2
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154199782588417
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -330,6 +352,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154199782588418
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -397,6 +420,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154199782588420
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -422,6 +446,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 0
           monsterType: 1
           WASD_Pattern: SXXDXXWXAXXSXXDXWXXAXXSXDXXWXXAX
@@ -432,6 +457,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154199782588421
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -457,6 +483,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 0
           monsterType: 1
           WASD_Pattern: AXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)XAXXDXXAXXWXWXDXXAXXWXWXXX(AD)X(AD)X
@@ -467,6 +494,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154239622971392
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -492,6 +520,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
           WASD_Pattern: WXXWXXWX(AD)XX(AD)XX(AD)X(AWD)XX(AWD)XX(AWD)X(ASD)XX(ASD)XX(ASD)X
@@ -502,6 +531,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154239622971393
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -527,6 +557,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154239622971394
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -544,7 +575,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX
+          WASD_Pattern: WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXX/WXWX/AAXX/WXWX/DDXXXXXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -552,6 +583,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154239622971395
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -567,7 +599,7 @@ MonoBehaviour:
         stretchX_rate: 0
         stretchY_rate: 0
         monsterDatas:
-        - isIn: 1
+        - isIn: 0
           monsterType: 1
           WASD_Pattern: (AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)X(AD)XSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
           speedUpRate: 1
@@ -577,8 +609,9 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
-          monsterType: 6
+          monsterType: 15
           WASD_Pattern: (AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XX(AD)X(AD)X(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XXWXWX(AD)(AD)XX
           speedUpRate: 1
           spawnBeat: 0.5
@@ -587,6 +620,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154239622971396
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -612,6 +646,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154239622971397
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -629,7 +664,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: "DXXXDDXD\tDXXXXXXX\tAXXXAAXA\tAXXXXXXXXXX"
+          WASD_Pattern: "XDXXXDDXD\tDXXXXXXX\tAXXXAAXA\tAXXXXXXXXXX"
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -637,6 +672,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154239622971398
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -662,6 +698,18 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
+        - isIn: 1
+          monsterType: 1
+          WASD_Pattern: 0101010101010101010101
+          speedUpRate: 1
+          spawnBeat: 4
+          moveBeat: 2
+          hiding: 0
+          dir: 0
+          cameraActionDuration: 0
+          floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 7504154239622971399
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -679,7 +727,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 6
-          WASD_Pattern: "DXXXDDXD\tDXXXXXXX\tAXXXAAXA\tAXXXXXXXXXX"
+          WASD_Pattern: "XDXXXDDXD\tDXXXXXXX\tAXXXAAXA\tAXXXXXXXXXX"
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -687,9 +735,10 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
         - isIn: 1
           monsterType: 1
-          WASD_Pattern: DXXDDXDDXXXXXXXAXXAAXAAXXXXXXXDXXDDXDDXXXXXXXAXXAAXAAXXXXXXX
+          WASD_Pattern: 0
           speedUpRate: 1
           spawnBeat: 4
           moveBeat: 2
@@ -697,6 +746,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972795589099540
       type: {class: TutorialEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -763,6 +813,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972795589099542
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -788,12 +839,13 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972795589099543
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
         isIn: 1
-        durationBeat: 32
-        startDelayBeat: 1
+        durationBeat: 33
+        startDelayBeat: 0
         bpm: 162
         timeScale: 1
         preGenerateBeat: 0
@@ -804,8 +856,8 @@ MonoBehaviour:
         stretchY_rate: 0
         monsterDatas:
         - isIn: 1
-          monsterType: 6
-          WASD_Pattern: AXAXAXXDXAXADXAXAXAXDXXAXAXADXXXAXAXAXXDXAXADXAXAXAXDXXAXAXADXXXXXXXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX
+          monsterType: 15
+          WASD_Pattern: XAXAXAXXDXAXADXAXAXAXDXXAXAXADXXXAXAXAXXDXAXADXAXAXAXDXXAXAXADXXXXXXXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -813,6 +865,7 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0
     - rid: 9186972795589099544
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
@@ -830,7 +883,7 @@ MonoBehaviour:
         monsterDatas:
         - isIn: 1
           monsterType: 0
-          WASD_Pattern: X(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX
+          WASD_Pattern: (AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXX(AD)X(AD)X(AD)XX(WS)X(AD)X(AD)(WS)X(AD)X(AD)X(AD)X(WS)XX(AD)X(AD)X(AD)(WS)XXXX
           speedUpRate: 1
           spawnBeat: 0.5
           moveBeat: 2
@@ -838,3 +891,4 @@ MonoBehaviour:
           dir: 0
           cameraActionDuration: 0
           floatDuration: 0
+          slamAnimationDuration: 0

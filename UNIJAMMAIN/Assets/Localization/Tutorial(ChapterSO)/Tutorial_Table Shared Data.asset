@@ -79,6 +79,10 @@ MonoBehaviour:
     m_Key: CH2_Mid_03
     m_Metadata:
       m_Items: []
+  - m_Id: 10177057345372160
+    m_Key: CH2_Mid_04
+    m_Metadata:
+      m_Items: []
   - m_Id: 846767270948879
     m_Key: CH3_Intro_01
     m_Metadata:
@@ -133,6 +137,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6953233707565056
     m_Key: CH5_Intro_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9631275076681728
+    m_Key: CH5_Intro_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9631275135401984
+    m_Key: CH5_Intro_05
     m_Metadata:
       m_Items: []
   - m_Id: 846767270948891
@@ -191,12 +203,20 @@ MonoBehaviour:
     m_Key: CHEDM_Intro_02
     m_Metadata:
       m_Items: []
+  - m_Id: 7777608321073152
+    m_Key: CHEDM_Intro_03
+    m_Metadata:
+      m_Items: []
   - m_Id: 6953233707565061
     m_Key: CHNight_Intro_01
     m_Metadata:
       m_Items: []
   - m_Id: 6953233707565062
     m_Key: CHNight_Intro_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7777608396570624
+    m_Key: CHNight_Intro_03
     m_Metadata:
       m_Items: []
   m_Metadata:
