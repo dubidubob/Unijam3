@@ -155,6 +155,13 @@ public class ResultUI : MonoBehaviour
 
             // lateUpCanvasGroup 등장 (0.5초 동안 페이드 인 -> 실제값 0.2초 유지)
             Managers.Sound.Play("SFX/Results/5Info_V2");
+
+            if (isNewEventUnlockedThisTime)
+            {
+                Managers.Sound.Play("SFX/UI/BeadsAlarm", Define.Sound.SFX, 1f, 1.5f);
+                isNewEventUnlockedThisTime = false; // 소리 냈으니 다시 초기화
+            }
+
             await lateUpCanvasGroup.DOFade(1f, 0.2f).SetUpdate(true).SetLink(gameObject).AsyncWaitForCompletion();
 
             if (IngameData.ChapterIdx == 7 && !IngameData.boolPracticeMode) // 마지막이라면 엔딩씬으로 이동, 연습모드도 아니어야 함
@@ -306,12 +313,15 @@ public class ResultUI : MonoBehaviour
             // 정상적인 취소이므로 무시
         }
     }
+    private bool isNewEventUnlockedThisTime = false;
 
     public void UI_Setting_UnlockNewEventStageInfo()
     {
         newEventUnlockTxt.alpha = 1; // "새로운 이벤트 스테이지가 해금되었습니다.";
         string key = "GameClear_EventStageInfo_Text"; // TODO: chapterIdx로 받도록 수정할 것.
         newEventUnlockTxt.text = LocalizationManager.Get(key, "멘트를 찾을 수 없습니다.");
+
+        isNewEventUnlockedThisTime = true;
     }
 
     private void RankImpactSoundPlay(Define.Rank rank)

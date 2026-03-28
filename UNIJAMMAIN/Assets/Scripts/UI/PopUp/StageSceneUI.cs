@@ -259,7 +259,17 @@ public class StageSceneUI : UI_Popup
         downButton = GetButton((int)Buttons.DownButton);
         var startButton = GetButton((int)Buttons.StartButton);
         var practiceButton = GetButton((int)Buttons.PracticeModeButton);
-        GetButton((int)Buttons.ToMain).gameObject.AddUIEvent(ToMainButtonClicked);
+        //GetButton((int)Buttons.ToMain).gameObject.AddUIEvent(ToMainButtonClicked);
+        var toMainBtn = GetButton((int)Buttons.ToMain);
+        if (toMainBtn != null)
+        {
+            // 1. 클릭했을 때 메인으로 가기 (기존)
+            toMainBtn.gameObject.AddUIEvent(ToMainButtonClicked);
+
+            // 2. 마우스 올렸을 때(Hover) OnPointerEnter 함수가 실행되도록 연결! (추가)
+            AddPointerEvent(toMainBtn, (eventData) => OnPointerEnter(toMainBtn), EventTriggerType.PointerEnter);
+            AddPointerEvent(toMainBtn, (eventData) => OnPointerExit(toMainBtn), EventTriggerType.PointerExit);
+        }
 
         // 각 버튼의 클릭 이벤트 및 마우스 오버/이탈 이벤트 연결
         if (upButton != null)

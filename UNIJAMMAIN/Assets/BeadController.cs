@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Cysharp.Threading.Tasks;
+using UnityEngine.EventSystems;
 
 public class BeadController : MonoBehaviour
 {
@@ -82,6 +83,31 @@ public class BeadController : MonoBehaviour
         RestoreCurrentMapStateInstant();
 
         WindMoveAction().Forget();
+    }
+
+    private void AddHoverSoundEvent(GameObject beadObj)
+    {
+        if (beadObj == null) return;
+
+        // 구슬에 이벤트 트리거(마우스 감지기)가 없으면 달아줍니다.
+        EventTrigger trigger = beadObj.GetComponent<EventTrigger>();
+        if (trigger == null)
+        {
+            trigger = beadObj.AddComponent<EventTrigger>();
+        }
+
+        // 혹시 소리가 두 번 나는 걸 방지하기 위해 깔끔하게 정리
+        trigger.triggers.RemoveAll(entry => entry.eventID == EventTriggerType.PointerEnter);
+
+        // 마우스가 올라갔을 때(PointerEnter) 실행할 소리 연결!
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerEnter;
+        entry.callback.AddListener((data) => {
+            // 원하시는 구슬 호버 사운드 이름과 볼륨(1.5f)으로 변경하세요!
+            Managers.Sound.Play("SFX/UI/BeadsHover", Define.Sound.SFX, 1f, 1.5f);
+        });
+
+        trigger.triggers.Add(entry);
     }
 
     // 🌟 [새로 추가하는 함수] 씬 로딩 시 현재 스테이지 데이터를 읽어 즉시 맵과 카메라를 맞춥니다.
@@ -452,6 +478,8 @@ public class BeadController : MonoBehaviour
 
         // 활성화
         target.SetActive(true);
+
+        AddHoverSoundEvent(target);
 
         // 리스트에도 자동 추가 (나중에 클릭용 인덱스 대응 유지)
         if (bead.ToString().StartsWith("story"))
