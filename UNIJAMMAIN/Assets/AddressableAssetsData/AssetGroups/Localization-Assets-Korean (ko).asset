@@ -107,14 +107,14 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c153a21c3391c8842904e28a5fb7926e
-    m_Address: MainCredits_ko
+  - m_GUID: bf1d44c9e3ba1ee459c9da11f85f2410
+    m_Address: Ending_Deukdo_V3_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c7fa3963520e74b44b8d54f7e64acfda
-    m_Address: Ending_Deukdo_V2_ko
+  - m_GUID: c153a21c3391c8842904e28a5fb7926e
+    m_Address: MainCredits_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
