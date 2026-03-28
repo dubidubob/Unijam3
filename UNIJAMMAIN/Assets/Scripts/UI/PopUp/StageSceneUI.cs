@@ -1084,28 +1084,57 @@ public class StageSceneUI : UI_Popup
     }
 
     #endregion
+
     IEnumerator InitWorldCanvasOnce()
     {
-        // 🔥 해상도 / 창모드 반영 대기
+        // 1. 유니티가 창 크기를 결정할 시간을 줍니다.
         yield return null;
 
-        Canvas.ForceUpdateCanvases();
-        
-        // WorldSpace 설정 단 한 번
+        // 2. RenderMode를 바꾸기 전에 CanvasScaler를 먼저 끕니다. (방해 금지)
+        CanvasScaler scaler = mycanvas.GetComponent<CanvasScaler>();
+        if (scaler != null) scaler.enabled = false;
+
+        // 3. World Space로 전환
         mycanvas.renderMode = RenderMode.WorldSpace;
         mycanvas.worldCamera = Camera.main;
-        mycanvas.overrideSorting = false;
-        // 🔥 CanvasScaler 완전 차단
-        CanvasScaler scaler = mycanvas.GetComponent<CanvasScaler>();
-        if (scaler != null)
-            scaler.enabled = false;
 
-        // 🔥 모든 스케일 리셋
+        // 🌟 [핵심] 창 크기가 1280이든 800이든 무시하고 캔버스를 1920x1080으로 강제 확장
         RectTransform rt = mycanvas.GetComponent<RectTransform>();
-        rt.localScale = Vector3.one*0.009259259f; // 이게 정해진 스케일
+        rt.sizeDelta = new Vector2(1920f, 1080f);
+        rt.pivot = new Vector2(0.5f, 0.5f); // 피벗 중앙 고정
+        rt.anchoredPosition = Vector2.zero;   // 위치 초기화
 
-        transform.localScale = Vector3.one* 0.009259259f;
+        // 4. 스케일 적용 (1920 * 0.0092... ≒ 17.77 프리유닛)
+        float fixedScale = 0.009259259f;
+        rt.localScale = new Vector3(fixedScale, fixedScale, 1f);
+
+        // 5. 변경사항 즉시 물리적 반영
+        Canvas.ForceUpdateCanvases();
+        yield return null;
     }
+
+    //IEnumerator InitWorldCanvasOnce()
+    //{
+    //    // 🔥 해상도 / 창모드 반영 대기
+    //    yield return null;
+
+    //    Canvas.ForceUpdateCanvases();
+
+    //    // WorldSpace 설정 단 한 번
+    //    mycanvas.renderMode = RenderMode.WorldSpace;
+    //    mycanvas.worldCamera = Camera.main;
+    //    mycanvas.overrideSorting = false;
+    //    // 🔥 CanvasScaler 완전 차단
+    //    CanvasScaler scaler = mycanvas.GetComponent<CanvasScaler>();
+    //    if (scaler != null)
+    //        scaler.enabled = false;
+
+    //    // 🔥 모든 스케일 리셋
+    //    RectTransform rt = mycanvas.GetComponent<RectTransform>();
+    //    rt.localScale = Vector3.one*0.009259259f; // 이게 정해진 스케일
+
+    //    transform.localScale = Vector3.one* 0.009259259f;
+    //}
 
     #region 키보드액션 관련 함수
     public bool IsStageUnlocked(int index)

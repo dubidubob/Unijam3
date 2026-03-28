@@ -64,26 +64,45 @@ public class BeadController : MonoBehaviour
 
 
     private Bounds bgWorldBounds;
-    private void Start()
+
+    private IEnumerator Start()
     {
-        if (blackPanel != null)
-        {
-            blackPanel.alpha = 0f;
-            blackPanel.blocksRaycasts = false;
-        }
+        // 초기화
+        if (blackPanel != null) blackPanel.alpha = 0f;
         if (uiCamera == null) uiCamera = Camera.main;
 
-        // ❌ (삭제) 기존에 무조건 겨울맵을 밖으로 치우던 코드는 삭제합니다.
-        // map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -4000); 
+        // StageSceneUI가 캔버스를 1920으로 다 늘릴 때까지 3프레임 대기
+        yield return null;
+        yield return null;
+        yield return null;
 
+        // 이제서야 1920 기준으로 좌표를 땁니다.
         CacheBackgroundBounds();
-        LoadBeadStateActive(); // 구슬 활성화
-
-        // 🌟 [추가] 씬에 진입했을 때, 비드를 클릭한 상태로 즉시(Instant) 복구합니다.
+        LoadBeadStateActive();
         RestoreCurrentMapStateInstant();
 
         WindMoveAction().Forget();
     }
+    //private void Start()
+    //{
+    //    if (blackPanel != null)
+    //    {
+    //        blackPanel.alpha = 0f;
+    //        blackPanel.blocksRaycasts = false;
+    //    }
+    //    if (uiCamera == null) uiCamera = Camera.main;
+
+    //    // ❌ (삭제) 기존에 무조건 겨울맵을 밖으로 치우던 코드는 삭제합니다.
+    //    // map_EventWinter.GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -4000); 
+
+    //    CacheBackgroundBounds();
+    //    LoadBeadStateActive(); // 구슬 활성화
+
+    //    // 🌟 [추가] 씬에 진입했을 때, 비드를 클릭한 상태로 즉시(Instant) 복구합니다.
+    //    RestoreCurrentMapStateInstant();
+
+    //    WindMoveAction().Forget();
+    //}
 
     private void AddHoverSoundEvent(GameObject beadObj)
     {
@@ -271,30 +290,50 @@ public class BeadController : MonoBehaviour
 
     private IEnumerator CoZoomAndFade(RectTransform target,int idx)
     {
-        // 0. 해상도 변경사항 물리적 강제 갱신
         Canvas.ForceUpdateCanvases();
 
-        // 1. 초기값 저장
         Vector3 startCamPos = uiCamera.transform.position;
         float startCamSize = uiCamera.orthographicSize;
         float time = 0f;
 
-        // 2. [수정] 월드 좌표를 직접 가져오되, Z축은 카메라의 시작 위치를 엄격히 따름
-        // TransformPoint를 쓰지 않고 타겟의 world position을 직접 활용합니다.
-        Vector3 targetWorldPos = target.position;
+        // 🔥 [핵심 수정] Canvas Scaler에 의해 찌그러진 좌표를 무시하고
+        // 어떤 해상도에서든 "월드 공간 상의 절대 위치"를 가져옵니다.
+        // target.position은 Screen Space가 아닌 World Space 상의 좌표를 반환합니다.
+        //Vector3 targetWorldPos = target.position;
+        Vector3 targetWorldPos = target.TransformPoint(Vector3.zero);
 
-        // 만약 피벗이 중앙이 아니라서 틀어지는 경우를 대비해 센터 보정 추가
-        Vector3 targetCenterOffset = (Vector3)target.rect.center;
-        // 로컬 오프셋을 월드 스케일에 맞춰 변환하여 더함
-        targetWorldPos += target.TransformDirection(targetCenterOffset);
-
+        // Z축은 카메라 위치 유지
         Vector3 targetCamPos = new Vector3(targetWorldPos.x, targetWorldPos.y, startCamPos.z);
 
-        // 3. 타겟 위치를 구한 직후, 배경 범위를 벗어나지 않도록 안전하게 제한 (실시간 갱신)
+        // [배경 밖으로 나가지 않게 제한] - 이 부분도 실시간 좌표 기준으로 작동하게 둡니다.
         if (backgroundRect != null)
         {
             targetCamPos = GetSafeClampedPosition(targetCamPos, targetZoomSize);
         }
+        //// 0. 해상도 변경사항 물리적 강제 갱신
+        //Canvas.ForceUpdateCanvases();
+
+        //// 1. 초기값 저장
+        //Vector3 startCamPos = uiCamera.transform.position;
+        //float startCamSize = uiCamera.orthographicSize;
+        //float time = 0f;
+
+        //// 2. [수정] 월드 좌표를 직접 가져오되, Z축은 카메라의 시작 위치를 엄격히 따름
+        //// TransformPoint를 쓰지 않고 타겟의 world position을 직접 활용합니다.
+        //Vector3 targetWorldPos = target.position;
+
+        //// 만약 피벗이 중앙이 아니라서 틀어지는 경우를 대비해 센터 보정 추가
+        //Vector3 targetCenterOffset = (Vector3)target.rect.center;
+        //// 로컬 오프셋을 월드 스케일에 맞춰 변환하여 더함
+        //targetWorldPos += target.TransformDirection(targetCenterOffset);
+
+        //Vector3 targetCamPos = new Vector3(targetWorldPos.x, targetWorldPos.y, startCamPos.z);
+
+        //// 3. 타겟 위치를 구한 직후, 배경 범위를 벗어나지 않도록 안전하게 제한 (실시간 갱신)
+        //if (backgroundRect != null)
+        //{
+        //    targetCamPos = GetSafeClampedPosition(targetCamPos, targetZoomSize);
+        //}
 
         // [Phase 1] 이동 로직 (동일)
         blackPanel.DOFade(0.95f, effectDuration / 2f).SetUpdate(true).SetEase(Ease.OutSine);
