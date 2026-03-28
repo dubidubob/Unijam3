@@ -65,6 +65,12 @@ public class StageSceneUI : UI_Popup
     [SerializeField] public Sprite backGroundDarkSprite;
     [SerializeField] public StageSceneLocalizationController localizationController;
 
+    [Header("Info Panel Settings")]
+    [SerializeField] private GameObject infoPanel;        // 커다란 도움말 패널 이미지
+    [SerializeField] private Button infoOpenButton;       // F1 아이콘 버튼
+    [SerializeField] private Button infoPanelButton;      // // 도움말 패널 자체 (클릭해서 끄기 위함)
+    private Coroutine autoCloseCoroutine;
+
 
     // 비트 컨트롤러 관련한 변수
     public bool isEventMap = false; // 현재 이벤트맵으로 이동되어있는지, 스토리맵과 관련된 효과 연출등 off
@@ -109,6 +115,16 @@ public class StageSceneUI : UI_Popup
 
     private void Update()
     {
+
+        // 로딩 중이 아닐 때만 키를 받도록 방어
+        if (SceneLoadingManager.IsLoading) return;
+
+        // 🌟 F1 키를 누르면 도움말 패널 켜고 끄기
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            ToggleInfoPanel();
+        }
+
         // ESC버튼
         // ▼▼▼ 로딩 중이 아닐 때만 ESC 키를 받도록 조건 추가 ▼▼▼
         if (Input.GetKeyDown(KeyCode.Escape) && !SceneLoadingManager.IsLoading)
@@ -240,6 +256,10 @@ public class StageSceneUI : UI_Popup
         {
             startButton.gameObject.SetActive(false);
         }
+
+        if (infoOpenButton != null) infoOpenButton.onClick.AddListener(ToggleInfoPanel);
+        if (infoPanelButton != null) infoPanelButton.onClick.AddListener(ToggleInfoPanel);
+        if (infoPanel != null) infoPanel.SetActive(false); // 시작할 땐 무조건 꺼두기
 
         // 두 번 호출되므로, (StageScene에서 한 번 이미 호출함) 주석처리함.
         //Managers.Sound.Play("BGM/MainScene_V2", Define.Sound.BGM);
@@ -1141,6 +1161,62 @@ public class StageSceneUI : UI_Popup
     public Button GetSelectedButton()
     {
         return _selectedButton;
+    }
+
+    public void ToggleInfoPanel()
+    {
+        if (infoPanel == null) return;
+
+        // 1. 투명도를 조절할 CanvasGroup 컴포넌트가 없다면 코드로 자동 추가해줍니다.
+        CanvasGroup cg = infoPanel.GetComponent<CanvasGroup>();
+        if (cg == null) cg = infoPanel.AddComponent<CanvasGroup>();
+
+        // 2. 진행 중인 애니메이션이 있다면 겹치지 않게 강제 종료
+        cg.DOKill();
+
+        bool isNowActive = infoPanel.activeSelf;
+
+        if (!isNowActive)
+        {
+            // [패널 켜기]
+            infoPanel.SetActive(true);
+            cg.alpha = 0f; // 완전 투명한 상태에서 시작
+
+            // 0.15초 동안 불투명하게(1f) 스르륵 나타남 (게임 일시정지 상태여도 작동하게 SetUpdate(true) 적용)
+            cg.DOFade(1f, 0.15f).SetUpdate(true);
+            Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX, 1f, 1f);
+
+            // 10초 자동 꺼짐 코루틴 시작! (이전 타이머가 있다면 끄고 새로 시작)
+            if (autoCloseCoroutine != null) StopCoroutine(autoCloseCoroutine);
+            autoCloseCoroutine = StartCoroutine(AutoCloseInfoPanelRoutine(10f));
+        }
+        else
+        {
+            // [패널 끄기]
+            // 유저가 직접 껐으므로 10초 타이머는 취소시킵니다.
+            if (autoCloseCoroutine != null) StopCoroutine(autoCloseCoroutine);
+
+            Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX, 1f, 1f);
+
+            // 0.15초 동안 투명해지며, 투명해지는 애니메이션이 완전히 끝나면(OnComplete) SetActive를 꺼줍니다.
+            cg.DOFade(0f, 0.15f).SetUpdate(true).OnComplete(() =>
+            {
+                infoPanel.SetActive(false);
+            });
+        }
+    }
+
+    // 10초 뒤에 자동으로 꺼주는 타이머 함수
+    private IEnumerator AutoCloseInfoPanelRoutine(float delay)
+    {
+        // 현실 시간(Realtime)으로 delay(10초)만큼 대기합니다.
+        yield return new WaitForSecondsRealtime(delay);
+
+        // 10초 뒤에도 패널이 켜져있다면 ToggleInfoPanel을 한 번 더 불러서 스르륵 꺼줍니다.
+        if (infoPanel != null && infoPanel.activeSelf)
+        {
+            ToggleInfoPanel();
+        }
     }
 
     #endregion
