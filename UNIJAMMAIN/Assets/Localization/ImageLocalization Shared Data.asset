@@ -157,9 +157,9 @@ MonoBehaviour:
         - m_KeyId: 67608058134528
           m_TableCodes:
           - en
-          - zh-Hans
           - ja
           - ko
+          - zh-Hans
         - m_KeyId: 67639901290496
           m_TableCodes:
           - en
