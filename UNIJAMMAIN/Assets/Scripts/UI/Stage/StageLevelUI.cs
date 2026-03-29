@@ -47,7 +47,7 @@ public class StageLevelSceneUI : MonoBehaviour
 
         canvasGroup.blocksRaycasts = true;
         isMoving = true;
-        stageSceneUI.isAnimating = true;
+        
 
         tmpText.text = "";
         tmpText.transform.localScale = Vector3.zero;
