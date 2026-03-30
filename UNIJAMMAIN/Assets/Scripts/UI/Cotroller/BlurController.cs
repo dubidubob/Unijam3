@@ -90,6 +90,12 @@ public class BlurController : MonoBehaviour
             PracticeModeInfoOn().Forget();
         }
 
+        if (backGroundController != null && backGroundController.sharedMaterial != null)
+        {
+            backGroundController.sharedMaterial.DOKill();
+            backGroundController.sharedMaterial.SetFloat("_Saturation", 1f);
+        }
+
         ScrollComboImages(this.GetCancellationTokenOnDestroy()).Forget();
         AnimateComboShine(this.GetCancellationTokenOnDestroy()).Forget();
     }
@@ -368,19 +374,19 @@ public class BlurController : MonoBehaviour
     }
 
     bool isSaturationSeqCool = false;
+    // 클래스 멤버 변수로 트윈 추적용 변수 선언
+    private Tween _saturationTween;
+
     private void SettingSaturation()
     {
-        if (isSaturationSeqCool) return;
-        isSaturationSeqCool = true;
+        // 1. 목표 채도값 계산 (currentIndex가 0일 때 1.0이 되도록 보정)
+        float targetAlpha = 1f - (currentIndex * invLength);
 
-        Sequence seq = DOTween.Sequence();
+        // 2. 기존에 실행 중이던 채도 트윈이 있다면 깔끔하게 취소 (원상복구 씹힘 방지)
+        _saturationTween?.Kill();
 
-        // 사용처
-        float targetAlpha = 1f - ((currentIndex + 1) * invLength);
-
-        seq.Join(backGroundController.sharedMaterial.DOFloat(targetAlpha, "_Saturation", 0.3f)); // damageImage와 동시에 페이드
-
-        seq.OnComplete(() => isSaturationSeqCool = false);
+        // 3. 최신 목표값을 향해 새 트윈을 실행
+        _saturationTween = backGroundController.sharedMaterial.DOFloat(targetAlpha, "_Saturation", 0.3f);
     }
     // [추가] 쉐이크 트윈만 따로 관리하기 위한 변수
     private Tween _damageShakeTween;
