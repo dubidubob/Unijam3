@@ -818,14 +818,14 @@ public class StageSceneUI : UI_Popup
                 .SetEase(moveEase)
                 .OnComplete(() =>
                 {
-                    if (!stageLevelSceneUI.isMoving) // 레벨을 띄우고있지않을때만 animating false로
+
+                    if (!stageLevelSceneUI.isMoving)
                     {
-                       isAnimating = false;
+     
+
+                        isAnimating = false;
                     }
-                    else
-                    {
-                        isAnimating = true;
-                    }
+                   
                     UpdateNavigationButtons();
                 });
 

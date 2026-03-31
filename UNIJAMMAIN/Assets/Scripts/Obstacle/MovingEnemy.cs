@@ -57,7 +57,7 @@ public class MovingEnemy : MonoBehaviour
     private Define.MonsterType _monsterType;
 
     private float movingDistanceTmp;
-    private int attackValue = 10;
+    private int attackValue = 7;
     private Sprite orginSprite;
 
     private float backwardDuration, knockbackDistance;

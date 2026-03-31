@@ -23,6 +23,7 @@ public class StageLevelSceneUI : MonoBehaviour
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
         canvasGroup.alpha = 0f;
+        isMoving = false;
     }
 
     public IEnumerator SetStageLevelSceneUI(int nowStageLevel)
@@ -36,6 +37,7 @@ public class StageLevelSceneUI : MonoBehaviour
         else
         {
             yield break;
+
         }
 
         stageSceneUI.isAnimating = true;

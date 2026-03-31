@@ -27,7 +27,7 @@ public class DiagonalMonster : MonoBehaviour
     private float _moveBeat;
     private DG.Tweening.Sequence jumpSequence;
 
-    private int attackValue = 20;
+    private int attackValue = 15;
     private int healingValue = 2;
 
     // UniTask 취소 토큰 소스
