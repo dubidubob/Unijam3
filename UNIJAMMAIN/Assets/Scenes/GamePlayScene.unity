@@ -11565,7 +11565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTest: 1
-  TestStageIndex: 10
+  TestStageIndex: 6
   isSinkStage: 0
   monsterDatabase: {fileID: 11400000, guid: 5fd34e10ac527b442b80fef0dd7910c3, type: 2}
   backGround: {fileID: 1698842289}
@@ -11580,7 +11580,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f79b0244702436f4ebf04ef16cb5abdf, type: 2}
   - {fileID: 11400000, guid: 994ee462123f6c74fb568a841b59c1dc, type: 2}
   - {fileID: 11400000, guid: 788691d3e6d269c4eaabcfbe0608bb5f, type: 2}
-  - {fileID: 11400000, guid: 34f77c21629ef8743905c8baa6718838, type: 2}
+  - {fileID: 11400000, guid: 23e7bd9f68855d049b6db2c92d1f39c9, type: 2}
   - {fileID: 11400000, guid: b8a3024e81df9f44ea015cc04b0b436a, type: 2}
   - {fileID: 11400000, guid: 6fc515c901a1b7843b4a6051201b00af, type: 2}
   - {fileID: 11400000, guid: 72567280c88f6644cab170b42ae95122, type: 2}
