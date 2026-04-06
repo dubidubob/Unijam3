@@ -8,6 +8,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using Kino;
 using UnityEngine.Localization;
+using Cysharp.Threading.Tasks;
 public class StageSceneUI : UI_Popup
 {
     private Button _selectedButton = null;
@@ -562,7 +563,13 @@ public class StageSceneUI : UI_Popup
         }
     }
 
-    bool isFirst = true;
+    [SerializeField] CanvasGroup GamePing_Info_CanvasGroup;
+    private async UniTask GamePingPopUp()
+    {
+        GamePing_Info_CanvasGroup.DOFade(1, 0.5f);
+        await UniTask.WaitForSeconds(1.3f);
+        GamePing_Info_CanvasGroup.DOFade(0, 0.5f);
+    }
     public void StageButtonClicked(Button button, int stageIndex)
     {
      
@@ -573,6 +580,12 @@ public class StageSceneUI : UI_Popup
             Managers.Sound.Play("SFX/UI/StageBlocked", Define.Sound.SFX);
 
             ClearStageSelection();
+            if(stageIndex<3||stageIndex==8)
+            {
+                return;
+            }
+
+            GamePingPopUp().Forget();
             return;
         }
 
@@ -652,7 +665,7 @@ public class StageSceneUI : UI_Popup
             // 함수 하나로 해금 여부 판별
             bool isUnlocked = IsStageUnlocked(i);
 
-            if (isUnlocked)
+            if (isUnlocked&&(i<3||i==8))
             {
                 if (_selectedButton != null && _selectedButton == button)
                 {
@@ -668,6 +681,7 @@ public class StageSceneUI : UI_Popup
                 SetButtonState(button, ButtonState.DeActive);
             }
         }
+    
     }
 
     private bool practiveModeButtonisClicked = false;
@@ -1143,21 +1157,19 @@ public class StageSceneUI : UI_Popup
     #region 키보드액션 관련 함수
     public bool IsStageUnlocked(int index)
     {
-        // 0~7: 일반 스토리 스테이지 (Stage 1~8)
-        if (index < 8)
+        // 기획: 0, 1, 2, 3장 해금
+        if (index >= 0 && index < 3)
         {
-            return index <= IngameData._unLockStageIndex;
+            return true;
         }
-        // 8 이상: 이벤트 스테이지 (Stage 9, 10, 11)
-        else
+
+        // 기획: 8번 (이벤트 첫 번째 스테이지) 해금
+        if (index == 8)
         {
-            if (index == 8)
-                return (IngameData._unLockStageIndex >= 2 || IngameData._isStoryCompleteClear);
-            else if (index == 9)
-                return (IngameData._unLockStageIndex >= 4 || IngameData._isStoryCompleteClear);
-            else if (index >= 10)
-                return IngameData._isStoryCompleteClear;
+            return true;
         }
+
+        // 그 외의 모든 스테이지는 무조건 잠금 처리
         return false;
     }
 

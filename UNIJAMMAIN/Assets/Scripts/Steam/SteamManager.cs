@@ -23,6 +23,7 @@ public class SteamManager : MonoBehaviour
 
     protected virtual void Awake()
     {
+        return;
 #if UNITY_EDITOR
         return;
 #endif
@@ -86,6 +87,7 @@ public class SteamManager : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        return;
 #if UNITY_EDITOR
         return;
 #endif

@@ -9,6 +9,7 @@ public class SteamAchievementManager
 
     public void Init()
     {
+        return;
 #if UNITY_EDITOR
         return;
 #endif
@@ -44,6 +45,7 @@ public class SteamAchievementManager
         
     public void UnlockAchievement(string achievementID)
     {
+        return;
 #if UNITY_EDITOR
         return;
 #endif
@@ -115,6 +117,7 @@ public class SteamAchievementManager
 
     public void SetStat(string statName, int value)
     {
+        return;
 #if UNITY_EDITOR
         return;
 #endif
