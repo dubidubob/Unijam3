@@ -111,18 +111,7 @@ MonoBehaviour:
         movieDuration: 0
         movieWaitForStartDuration: 0
         style: 0
-        monsterDatas:
-        - isIn: 0
-          monsterType: 0
-          WASD_Pattern: AXXXXXXX/AXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXAXXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXXAXXXXXXX
-          speedUpRate: 1
-          spawnBeat: 0.125
-          moveBeat: 3
-          hiding: 0
-          dir: 0
-          cameraActionDuration: 0
-          floatDuration: 0
-          slamAnimationDuration: 0
+        monsterDatas: []
     - rid: 7096145094514311173
       type: {class: PhaseEvent, ns: , asm: Assembly-CSharp}
       data:
