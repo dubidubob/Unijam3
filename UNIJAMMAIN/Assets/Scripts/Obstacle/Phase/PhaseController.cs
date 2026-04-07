@@ -351,7 +351,7 @@ public class PhaseController : MonoBehaviour
 
     private float perfectWeight = 1.0f;
     private float goodWeight = 0.5f;
-    private float missPenalty = 3.5f; // 놓쳤을 때의 감점!
+    private float missPenalty = 3.0f; // 놓쳤을 때의 감점!
 
     private float CalculateScore()
     {
