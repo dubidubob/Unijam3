@@ -665,7 +665,7 @@ public class StageSceneUI : UI_Popup
             // 함수 하나로 해금 여부 판별
             bool isUnlocked = IsStageUnlocked(i);
 
-            if (isUnlocked&&(i<3||i==8))
+            if (isUnlocked&&(i<4||i==8||i==9))
             {
                 if (_selectedButton != null && _selectedButton == button)
                 {
@@ -1158,13 +1158,13 @@ public class StageSceneUI : UI_Popup
     public bool IsStageUnlocked(int index)
     {
         // 기획: 0, 1, 2, 3장 해금
-        if (index >= 0 && index < 3)
+        if (index >= 0 && index <  4)
         {
             return true;
         }
 
         // 기획: 8번 (이벤트 첫 번째 스테이지) 해금
-        if (index == 8)
+        if (index == 8||index==9)
         {
             return true;
         }
