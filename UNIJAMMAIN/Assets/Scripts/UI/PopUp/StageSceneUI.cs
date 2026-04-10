@@ -567,7 +567,7 @@ public class StageSceneUI : UI_Popup
     private async UniTask GamePingPopUp()
     {
         GamePing_Info_CanvasGroup.DOFade(1, 0.5f);
-        await UniTask.WaitForSeconds(1.3f);
+        await UniTask.WaitForSeconds(2.5f);
         GamePing_Info_CanvasGroup.DOFade(0, 0.5f);
     }
     public void StageButtonClicked(Button button, int stageIndex)
