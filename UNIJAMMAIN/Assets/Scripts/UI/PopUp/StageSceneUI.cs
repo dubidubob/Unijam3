@@ -72,6 +72,8 @@ public class StageSceneUI : UI_Popup
     [SerializeField] private Button infoPanelButton;      // // 도움말 패널 자체 (클릭해서 끄기 위함)
     private Coroutine autoCloseCoroutine;
 
+    private bool isInfoPanelOpen = false;
+
 
     // 비트 컨트롤러 관련한 변수
     public bool isEventMap = false; // 현재 이벤트맵으로 이동되어있는지, 스토리맵과 관련된 효과 연출등 off
@@ -564,28 +566,59 @@ public class StageSceneUI : UI_Popup
     }
 
     [SerializeField] CanvasGroup GamePing_Info_CanvasGroup;
-    private async UniTask GamePingPopUp()
+    [SerializeField] private TMP_Text gamePingText;
+    private Tween gamePingTween; // 현재 진행 중인 팝업 애니메이션을 기억할 변수
+
+    private void GamePingPopUp(string message)
     {
-        GamePing_Info_CanvasGroup.DOFade(1, 0.5f);
-        await UniTask.WaitForSeconds(2.5f);
-        GamePing_Info_CanvasGroup.DOFade(0, 0.5f);
+        // 1. 애니메이션 시작 전에 글자를 먼저 갈아끼웁니다.
+        if (gamePingText != null)
+        {
+            gamePingText.text = message;
+        }
+
+        // 2. 진행 중인 애니메이션 끄기 (광클 방지)
+        if (gamePingTween != null)
+        {
+            gamePingTween.Kill();
+        }
+
+        // 3. 팝업 애니메이션 실행
+        gamePingTween = DOTween.Sequence()
+            .Append(GamePing_Info_CanvasGroup.DOFade(1, 0.5f))
+            .AppendInterval(2.0f)
+            .Append(GamePing_Info_CanvasGroup.DOFade(0, 0.5f));
     }
+
     public void StageButtonClicked(Button button, int stageIndex)
     {
-     
+
 
         // 해금 판별 함수를 사용해 클릭 여부를 결정합니다.
         if (!IsStageUnlocked(stageIndex - 1))
         {
             Managers.Sound.Play("SFX/UI/StageBlocked", Define.Sound.SFX);
-
             ClearStageSelection();
-            if(stageIndex<3||stageIndex==8)
+
+            int index = stageIndex - 1;
+
+            // 스토리 챕터 (제4장, 제5장, 제6장, 제7장)
+            if (index == 4 || index == 5 || index == 6 || index == 7)
             {
-                return;
+                string storyMsg = "초입의 수련을 성공적으로 마쳤습니다.\n" +
+                                  "산 정상을 넘어선 피안으로의 여정, 당신을 증명할 업적들까지.\n" +
+                                  "<color=#9EA9FF>지금 스팀에서 만나보세요!</color>";
+                GamePingPopUp(storyMsg);
+            }
+            // 이벤트 챕터 (E3. 달빛 질주)
+            else if (index == 10)
+            {
+                string e3Msg = "<color=#E5D063>아니, 여기까지 찾아 오다니.<color=#E5D063>\n" +
+                               "<color=#E5D063>수도승 자네가 이런 속세에 왔다는 것은 비밀로 하겠소...<color=#E5D063>\n" +
+                               "<color=#9EA9FF>그러니, 그 대가로 스팀을 확인하게나!</color>";
+                GamePingPopUp(e3Msg);
             }
 
-            GamePingPopUp().Forget();
             return;
         }
 
@@ -1222,41 +1255,46 @@ public class StageSceneUI : UI_Popup
     {
         if (infoPanel == null) return;
 
-        // 1. 투명도를 조절할 CanvasGroup 컴포넌트가 없다면 코드로 자동 추가해줍니다.
         CanvasGroup cg = infoPanel.GetComponent<CanvasGroup>();
         if (cg == null) cg = infoPanel.AddComponent<CanvasGroup>();
 
-        // 2. 진행 중인 애니메이션이 있다면 겹치지 않게 강제 종료
+        // 1. 상태 뒤집기
+        isInfoPanelOpen = !isInfoPanelOpen;
+
+        // 2. 현재 진행 중인 애니메이션을 바로 그 자리(현재 투명도)에서 즉시 멈춥니다!
         cg.DOKill();
 
-        bool isNowActive = infoPanel.activeSelf;
+        if (autoCloseCoroutine != null)
+        {
+            StopCoroutine(autoCloseCoroutine);
+            autoCloseCoroutine = null;
+        }
 
-        if (!isNowActive)
+        if (isInfoPanelOpen)
         {
             // [패널 켜기]
-            infoPanel.SetActive(true);
-            cg.alpha = 0f; // 완전 투명한 상태에서 시작
+            infoPanel.SetActive(true); // 무조건 활성화
 
-            // 0.15초 동안 불투명하게(1f) 스르륵 나타남 (게임 일시정지 상태여도 작동하게 SetUpdate(true) 적용)
+            // 현재 멈춰있는 투명도에서부터 1(불투명)까지 다시 차오릅니다.
             cg.DOFade(1f, 0.15f).SetUpdate(true);
             Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX, 1f, 1f);
 
-            // 10초 자동 꺼짐 코루틴 시작! (이전 타이머가 있다면 끄고 새로 시작)
-            if (autoCloseCoroutine != null) StopCoroutine(autoCloseCoroutine);
             autoCloseCoroutine = StartCoroutine(AutoCloseInfoPanelRoutine(10f));
         }
         else
         {
             // [패널 끄기]
-            // 유저가 직접 껐으므로 10초 타이머는 취소시킵니다.
-            if (autoCloseCoroutine != null) StopCoroutine(autoCloseCoroutine);
-
             Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX, 1f, 1f);
 
-            // 0.15초 동안 투명해지며, 투명해지는 애니메이션이 완전히 끝나면(OnComplete) SetActive를 꺼줍니다.
+            // 현재 투명도에서부터 0까지 스르륵 사라집니다.
             cg.DOFade(0f, 0.15f).SetUpdate(true).OnComplete(() =>
             {
-                infoPanel.SetActive(false);
+                // [핵심 방어막] 투명도가 0이 된 시점에 검사합니다.
+                // 만약 유저가 그새 다시 클릭해서 isInfoPanelOpen이 true로 바뀌었다면, 끄지 않고 냅둡니다!
+                if (isInfoPanelOpen == false)
+                {
+                    infoPanel.SetActive(false);
+                }
             });
         }
     }
