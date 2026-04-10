@@ -139,7 +139,7 @@ public class KeyboardStageSceneUIController : MonoBehaviour
 
         if (focus && !isStartButtonFocused)
         {
-            Managers.Sound.Play("SFX/UI/StageHover3", Define.Sound.SFX, 1f, 2f);
+            Managers.Sound.Play("SFX/UI/StageHover3", Define.Sound.SFX, 1f, 1f);
         }
 
         isStartButtonFocused = focus;
