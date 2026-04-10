@@ -11578,14 +11578,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6e285dcab7264cd499c9e463c89a4f91, type: 2}
   - {fileID: 11400000, guid: aefbff3a4136a7f4192480fda9815699, type: 2}
   - {fileID: 11400000, guid: f79b0244702436f4ebf04ef16cb5abdf, type: 2}
-  - {fileID: 11400000, guid: 994ee462123f6c74fb568a841b59c1dc, type: 2}
-  - {fileID: 11400000, guid: 788691d3e6d269c4eaabcfbe0608bb5f, type: 2}
-  - {fileID: 11400000, guid: 23e7bd9f68855d049b6db2c92d1f39c9, type: 2}
-  - {fileID: 11400000, guid: b8a3024e81df9f44ea015cc04b0b436a, type: 2}
-  - {fileID: 11400000, guid: 6fc515c901a1b7843b4a6051201b00af, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 72567280c88f6644cab170b42ae95122, type: 2}
   - {fileID: 11400000, guid: 42ce1de19fd2ed144940e30cffc59a05, type: 2}
-  - {fileID: 11400000, guid: 35be0e1c40b064443b80266d936d5bdf, type: 2}
+  - {fileID: 0}
   startMotions:
     startCountUI: {fileID: 1997952375}
     playerActionUI: {fileID: 460754923}
