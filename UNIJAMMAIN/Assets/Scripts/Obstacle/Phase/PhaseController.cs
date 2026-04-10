@@ -534,6 +534,9 @@ public class PhaseController : MonoBehaviour
         }
 
         startMotions.playerActionUI.StartMonkAnimAfter123Count();
+
+        // 3, 2, 1 끝나고 정상 게임 상태로 전환
+        Managers.Game.currentPlayerState = GameManager.PlayerState.Normal;
     }
     #endregion
 
