@@ -106,6 +106,8 @@ public class PrologueController : MonoBehaviour
         //LocalizationManager.LoadAll();
         LoadPrologueSequenceData("Localization/PrologueTable"); // 경로에 맞게 수정
 
+        Managers.UI.ShowPopUpUI<InGameOption_PopUp>().ClosePopUPUI();
+
         // 두 시퀀스를 병렬(Parallel)로 실행
         if (SceneLoadingManager.Instance != null)
         {
@@ -152,6 +154,38 @@ public class PrologueController : MonoBehaviour
             obj.gameObject.SetActive(false);
         }
     }
+
+    // ==========================================
+    // ▼▼▼ ESC 옵션창 & 일시정지 제어용 ▼▼▼
+    // ==========================================
+    private bool isPopUp = false;
+    private InGameOption_PopUp optionPopUp;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPopUp)
+            {
+                if (optionPopUp != null) optionPopUp.ContinuesButtonClicked();
+                isPopUp = false;
+            }
+            else
+            {
+                // 1. 시간 멈춤
+                Time.timeScale = 0f;
+
+                // 2. 전체 귀를 막는 대신, BGM 소스만 찾아서 멈춤! (효과음 살리기)
+                AudioSource bgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+                if (bgm != null) bgm.Pause();
+
+                // 3. 팝업 소환
+                optionPopUp = Managers.UI.ShowPopUpUI<InGameOption_PopUp>();
+                isPopUp = true;
+            }
+        }
+    }
+    // ==========================================
 
     private void LoadPrologueSequenceData(string resourcePath)
     {
@@ -232,6 +266,8 @@ public class PrologueController : MonoBehaviour
 
         // 주의: 더 이상 SplitCsv 도우미 함수는 필요하지 않으므로 삭제하셔도 됩니다.
     }
+
+
 
     // ==========================================
     // 1. 프롤로그 연출 시퀀스 (배경 및 오브젝트 병렬)

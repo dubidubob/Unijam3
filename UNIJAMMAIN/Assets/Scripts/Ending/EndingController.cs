@@ -166,6 +166,8 @@ public class EndingController : MonoBehaviour
         LoadEndingSequenceData("Localization/EndingTable");
         LocalizationManager.LoadAll();
 
+        Managers.UI.ShowPopUpUI<InGameOption_PopUp>().ClosePopUPUI();
+
 
         if (SceneLoadingManager.Instance != null)
         {
@@ -212,6 +214,38 @@ public class EndingController : MonoBehaviour
         c.a = alpha;
         graphic.color = c;
     }
+
+    // ==========================================
+    // ▼▼▼ ESC 옵션창 & 일시정지 제어용 ▼▼▼
+    // ==========================================
+    private bool isPopUp = false;
+    private InGameOption_PopUp optionPopUp;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPopUp)
+            {
+                if (optionPopUp != null) optionPopUp.ContinuesButtonClicked();
+                isPopUp = false;
+            }
+            else
+            {
+                // 1. 시간 멈춤
+                Time.timeScale = 0f;
+
+                // 2. 전체 귀를 막는 대신, BGM 소스만 찾아서 멈춤! (효과음 살리기)
+                AudioSource bgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+                if (bgm != null) bgm.Pause();
+
+                // 3. 팝업 소환
+                optionPopUp = Managers.UI.ShowPopUpUI<InGameOption_PopUp>();
+                isPopUp = true;
+            }
+        }
+    }
+    // ==========================================
 
     private void LoadEndingSequenceData(string resourcePath)
     {
