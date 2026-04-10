@@ -65,42 +65,88 @@ public class InGameOption_PopUp : UI_Popup
         Debug.Log("SFX 버튼 클릭됨");
     }
 
+    //// ReStart 버튼 클릭 시 호출
+    //public void ReStartButtonClicked(PointerEventData eventData)
+    //{
+    //    // 팝업을 닫고, 게임 시간을 재개한 후, 현재 씬을 다시 로드합니다.
+    //    PauseManager.ControlTime(true);
+    //    Managers.Sound.StopBGM();
+
+    //    SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+    //}
+
     // ReStart 버튼 클릭 시 호출
     public void ReStartButtonClicked(PointerEventData eventData)
     {
-        // 팝업을 닫고, 게임 시간을 재개한 후, 현재 씬을 다시 로드합니다.
+        // 1. 인게임 예외처리 (프롤로그/엔딩에서는 무시됨)
+        if (main != null) main.isPopUp = false;
+
         PauseManager.ControlTime(true);
         Managers.Sound.StopBGM();
 
-        SceneLoadingManager.Instance.LoadScene("GamePlayScene");
+        // 2. 하드코딩 삭제! 현재 활성화된 씬의 이름을 스스로 가져옵니다.
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // 3. 가져온 씬 이름으로 다시 로드!
+        SceneLoadingManager.Instance.LoadScene(currentSceneName);
     }
 
-    // Out (게임 종료/메인 화면) 버튼 클릭 시 호출
+    //// Out (게임 종료/메인 화면) 버튼 클릭 시 호출
+    //public void OutButtonClicked(PointerEventData eventData)
+    //{
+    //    // 팝업을 닫고, 게임 시간을 재개한 후, 'StageScene'으로 이동합니다.
+    //    main.isPopUp = false;
+
+    //    PauseManager.ControlTime(true);
+    //    Managers.Sound.StopBGM();
+
+    //    SceneLoadingManager.Instance.LoadScene("StageScene");
+    //}
+
+    // Out (나가기) 버튼 클릭 시
     public void OutButtonClicked(PointerEventData eventData)
     {
-        // 팝업을 닫고, 게임 시간을 재개한 후, 'StageScene'으로 이동합니다.
-        main.isPopUp = false;
-       
+        if (main != null) main.isPopUp = false;
+
         PauseManager.ControlTime(true);
         Managers.Sound.StopBGM();
+
+        // (AudioListener.pause = false; 지우기!)
 
         SceneLoadingManager.Instance.LoadScene("StageScene");
     }
 
-    // Continues (계속하기) 버튼 클릭 시 호출
-    public void ContinuesButtonClicked(PointerEventData eventData=null)
-    {
-        // PauseManager를 호출하여 게임 시간을 재개합니다.
+    //// Continues (계속하기) 버튼 클릭 시 호출
+    //public void ContinuesButtonClicked(PointerEventData eventData=null)
+    //{
+    //    // PauseManager를 호출하여 게임 시간을 재개합니다.
 
+    //    Managers.Sound.PlayInOptionSoundMusic(false);
+
+
+    //    main.isPopUp = false;
+    //    // 팝업 UI를 닫습니다.
+    //    ClosePopUPUI();
+    //    PauseManager.ControlTime(false);
+
+    //}
+
+    // Continues (계속하기) 버튼 클릭 시
+    public void ContinuesButtonClicked(PointerEventData eventData = null)
+    {
         Managers.Sound.PlayInOptionSoundMusic(false);
 
+        if (main != null) main.isPopUp = false;
 
-        main.isPopUp = false;
-        // 팝업 UI를 닫습니다.
         ClosePopUPUI();
         PauseManager.ControlTime(false);
 
+        // BGM 일시정지 해제! (원래 위치부터 자연스럽게 이어짐)
+        AudioSource bgm = Managers.Sound.GetAudioSource(Define.Sound.BGM);
+        if (bgm != null) bgm.UnPause();
     }
+
+
     public void GetMainUI(MainGame mainGame)
     {
         main = mainGame;
