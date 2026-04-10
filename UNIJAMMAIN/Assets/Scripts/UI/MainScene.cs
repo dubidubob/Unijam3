@@ -123,6 +123,10 @@ public class MainScene : UI_Popup
             image_Monster1.SetNativeSize();
             image_Monster2.SetNativeSize();
             image_YinYang.DOFade(0.6f, 0);
+
+            toStartText.alpha = 0;
+
+            StartGameSequenceAsync().Forget();
         }
 
         //  로컬라이제이션 완료 대기 후 로고 액션 시작
@@ -197,7 +201,7 @@ public class MainScene : UI_Popup
 
     private async UniTask ActionLogo()
     {
-        // ★ 핵심 추가: UI 캔버스가 레이아웃을 계산할 수 있도록 딱 한 프레임만 대기!
+        // 핵심 추가: UI 캔버스가 레이아웃을 계산할 수 있도록 딱 한 프레임만 대기!
         await UniTask.Yield(PlayerLoopTiming.Update);
 
         StartCoroutine(NotifyManagerWhenReady());
@@ -284,14 +288,38 @@ public class MainScene : UI_Popup
         toStartText.fontMaterial.SetFloat("_UnderlayOffsetY", 0f);
 
         toStartSequence?.Kill();
-        toStartSequence = DOTween.Sequence();
+        //toStartSequence = DOTween.Sequence();
         float originalScale = toStartText.transform.localScale.x;
 
-        toStartSequence.Append(toStartText.DOFade(0.2f, 0.6f));
-        toStartSequence.Append(toStartText.DOFade(1f, 0.6f));
-        toStartSequence.Join(toStartText.transform.DOScale(originalScale * 1.05f, 1.2f).SetEase(Ease.InOutSine));
-        toStartSequence.Join(toStartText.transform.DOScale(originalScale, 1.2f).SetEase(Ease.InOutSine).SetDelay(1.2f));
-        toStartSequence.SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        // 2. 처음에는 아예 안 보이게 설정 (Alpha = 0)
+        toStartText.alpha = 0;
+
+        // 3. 등장 시퀀스 생성 (0에서 1로 스르륵)
+        toStartSequence = DOTween.Sequence();
+
+        // 1초 동안 0에서 1로 페이드 인 (이건 한 번만 실행됨)
+        toStartSequence.Append(toStartText.DOFade(1f, 1.0f));
+
+        // [무한 비대칭 호흡 루프] 
+        toStartSequence.OnComplete(() =>
+        {
+            Sequence breatheSeq = DOTween.Sequence();
+
+            // 핵심 1: '내뱉기' (빠르게 어두워짐 0.8초)
+            // 1.0(밝음)에서 0.3(어두움)으로 가파르게 내려갑니다.
+            breatheSeq.Append(toStartText.DOFade(0.6f, 1.2f).SetEase(Ease.InOutSine));
+            breatheSeq.Join(toStartText.transform.DOScale(originalScale * 0.97f, 1.2f).SetEase(Ease.InOutSine));
+
+            // 핵심 2: '들이마시기' (천천히 밝아짐 2.0초)
+            // 0.3(어두움)에서 다시 1.0(밝음)으로 아주 완만하게 올라옵니다.
+            // 여기서 밝아지는 시간을 길게(2.0f) 줘서 예준님이 원한 리듬을 잡았습니다.
+            breatheSeq.Append(toStartText.DOFade(1f, 1.6f).SetEase(Ease.InOutSine));
+            breatheSeq.Join(toStartText.transform.DOScale(originalScale, 1.5f).SetEase(Ease.InOutSine));
+
+            // 루프 설정: 끝점(1.0)과 시작점(1.0)이 같아서 '확' 변하는 느낌 없이 무한 반복됩니다.
+            breatheSeq.SetLoops(-1);
+            toStartSequence = breatheSeq;
+        });
     }
 
     private async UniTask PlayComingAnimation()
