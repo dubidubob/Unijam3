@@ -33,10 +33,20 @@ public class HitJudge
 
     public void UpdateRankCnt(RankNode rankNode, Vector2 target)
     {
-        if(Managers.Game.currentPlayerState==GameManager.PlayerState.Ready) // 시작전이라면 받지않기
+
+        Debug.Log("HitJudge 진입! 현재 플레이어 상태: " + Managers.Game.currentPlayerState);
+
+
+        if (Managers.Game.currentPlayerState==GameManager.PlayerState.Ready) // 시작전이라면 받지않기
         {
             return;
         }
+
+        //if (!IngameData.boolPracticeMode && Managers.Game.currentPlayerState == GameManager.PlayerState.Ready)
+        //{
+        //    return;
+        //}
+
         switch (rankNode.RankT)
         {
             case EvaluateType.Attacked:

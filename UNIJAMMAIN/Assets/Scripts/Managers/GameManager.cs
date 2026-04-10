@@ -251,14 +251,17 @@ public class GameManager
         isComboEffect = false;
         ComboContinue?.Invoke(Combo);
 
-        if (Health > 0)
+        if (!IngameData.boolPracticeMode)
         {
-            Health -= value;
-        }
+            if (Health > 0)
+            {
+                Health -= value;
+            }
 
-        if(Health<=10)
-        {
-            blur.isHp10Down_Warning = true;
+            if (Health <= 10)
+            {
+                blur.isHp10Down_Warning = true;
+            }
         }
 
         HealthUpdate?.Invoke(Health);
