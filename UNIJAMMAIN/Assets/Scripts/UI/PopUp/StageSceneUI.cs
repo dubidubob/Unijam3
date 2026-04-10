@@ -135,6 +135,17 @@ public class StageSceneUI : UI_Popup
             //ToMain으로의 버튼
             ToMainButtonClicked(null);
         }
+
+        if (currentPageLevel == 1 && !isAnimating && !isInfoPanelOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
+                if (downButton != null && downButton.interactable)
+                {
+                    DownButtonClicked(null); // 아래층으로 이동하는 함수 강제 실행
+                }
+            }
+        }
     }
 
 
@@ -366,6 +377,8 @@ public class StageSceneUI : UI_Popup
 
     public void OnPointerEnter(Button button)
     {
+        if (isAnimating) return;
+
         if (_selectedButton == button || !button.interactable) return;
         // [추가/수정] 마우스가 올라간 버튼이 '시작하기' 버튼인지 확인
         var startBtn = GetButton((int)Buttons.StartButton);
@@ -387,6 +400,8 @@ public class StageSceneUI : UI_Popup
 
     public void OnPointerExit(Button button)
     {
+        if (isAnimating) return;
+
         if (_hoveredButton == button)
         {
             _hoveredButton = null;
@@ -432,6 +447,19 @@ public class StageSceneUI : UI_Popup
                     currentPageLevel = 1;
                     MoveTo(yPos: -295f);
                     Managers.Sound.Play("SFX/UI/GoTo456Stage_V1", Define.Sound.SFX, 1f, 1f);
+
+                    // 팝업 문구 준비
+                    string storyMsg = "초입의 수련을 성공적으로 마쳤습니다.\n" +
+                                      "산 정상을 넘어선 피안으로의 여정, 당신을 증명할 업적들까지.\n" +
+                                      "<color=#9EA9FF>지금 스팀에서 만나보세요!</color>";
+
+                    // 맵 이동 시간(1.6초)을 고려하여 1.2초 뒤에 팝업을 띄웁니다.
+                    DOVirtual.DelayedCall(1.2f, () =>
+                    {
+                        GamePingPopUp(storyMsg);
+                    });
+
+
                     break;
                 }
 
@@ -592,7 +620,7 @@ public class StageSceneUI : UI_Popup
 
     public void StageButtonClicked(Button button, int stageIndex)
     {
-
+        if (isAnimating) return;
 
         // 해금 판별 함수를 사용해 클릭 여부를 결정합니다.
         if (!IsStageUnlocked(stageIndex - 1))
