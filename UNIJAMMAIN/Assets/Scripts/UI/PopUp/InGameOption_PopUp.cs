@@ -113,6 +113,12 @@ public class InGameOption_PopUp : UI_Popup
 
         // (AudioListener.pause = false; 지우기!)
 
+        if (SceneManager.GetActiveScene().name == "PrologueScene")
+        {
+            // 여기서 강제로 "다 봤음" 처리를 해버리는 겁니다!
+            IngameData._isPrologueWatched = true;
+        }
+
         SceneLoadingManager.Instance.LoadScene("StageScene");
     }
 
