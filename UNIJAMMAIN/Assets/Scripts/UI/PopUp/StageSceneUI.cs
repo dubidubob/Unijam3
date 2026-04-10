@@ -386,7 +386,7 @@ public class StageSceneUI : UI_Popup
         if (button == startBtn)
         {
             // 시작 버튼에 마우스를 올렸을 때 나는 소리
-            Managers.Sound.Play("SFX/UI/StageHover3", Define.Sound.SFX, 1f, 2f);
+            Managers.Sound.Play("SFX/UI/StageHover3", Define.Sound.SFX, 1f, 1f);
         }
         else
         {
