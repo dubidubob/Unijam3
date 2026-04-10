@@ -8,7 +8,7 @@ public class SFXController : MonoBehaviour
     public Image image;
     // Define the volume levels. Note that Unity uses 0.0f to 1.0f for volume.
     // Sequence: 25% -> 50% -> 75% -> 100% -> 0%
-    private readonly float[] _volumeLevels = { 0.0f, 0.15f, 0.3f, 0.45f, 0.6f, 0.75f };
+    private readonly float[] _volumeLevels = { 0.0f, 0.075f, 0.15f, 0.225f, 0.3f, 0.375f };
     [SerializeField] private Sprite[] sprite;
 
     private void Awake()
@@ -24,7 +24,7 @@ public class SFXController : MonoBehaviour
         {
             // �ӽ� �迭�� ����� ���� ������ ��ȯ�մϴ�.
             // (readonly ����� static �޼ҵ�/������Ƽ���� ���� ������ �ȵǱ� ����)
-            float[] tempLevels = { 0.0f, 0.15f, 0.3f, 0.45f, 0.6f, 0.75f };
+            float[] tempLevels = { 0.0f, 0.075f, 0.15f, 0.225f, 0.3f, 0.375f };
             return tempLevels[_currentSFXVolumeStep];
         }
     }
