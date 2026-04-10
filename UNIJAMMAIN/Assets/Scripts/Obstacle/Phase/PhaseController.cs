@@ -358,6 +358,8 @@ public class PhaseController : MonoBehaviour
         float perfectCnt = IngameData.PerfectMobCnt;
         float goodCnt = IngameData.GoodMobCnt;
         float totalCnt = IngameData.TotalMobCnt;
+
+        // 부동소수점 오류 감안하여 강제로 올퍼펙이면 100점으로 꽂아두기!
         if (perfectCnt >= totalCnt)
         {
             Debug.Log("Perfect진입");
@@ -379,8 +381,8 @@ public class PhaseController : MonoBehaviour
         float maxCombo = IngameData.MaxCombo; 
         float comboBonus = (maxCombo / totalCnt) * 10f;
 
-        // 최종 점수 (반올림하여 정수로 만드는 것을 추천)
-        return Mathf.Round(baseScore + comboBonus);
+        // 최종 점수 (내림처리 하나라도 good이 뜨면 100점은 절대 안나오게끔)
+        return Mathf.Floor(baseScore + comboBonus);
     }
 
 
