@@ -1155,18 +1155,28 @@ public class StageSceneUI : UI_Popup
     //}
 
     #region 키보드액션 관련 함수
-    public bool IsStageUnlocked(int index)
+    public bool IsStageUnlocked(int index)  
     {
         // 기획: 0, 1, 2, 3장 해금
-        if (index >= 0 && index <  4)
+        if (index< 4)
         {
-            return true;
+            return index <= IngameData._unLockStageIndex;
         }
 
         // 기획: 8번 (이벤트 첫 번째 스테이지) 해금
-        if (index == 8||index==9)
+        if (index == 8)
         {
-            return true;
+            if (IngameData._unLockStageIndex >= 1)
+            {
+                return true;
+            }
+        }
+        if(index==9)
+        {
+            if(IngameData._unLockStageIndex>=3)
+            {
+                return true;
+            }
         }
 
         // 그 외의 모든 스테이지는 무조건 잠금 처리
