@@ -69,7 +69,7 @@ public class StageSceneUI : UI_Popup
     [SerializeField] private GameObject infoPanel;        // 커다란 도움말 패널 이미지
     [SerializeField] private Button infoOpenButton;       // F1 아이콘 버튼
     [SerializeField] private Button infoPanelButton;      // // 도움말 패널 자체 (클릭해서 끄기 위함)
-    private Coroutine autoCloseCoroutine;
+    //private Coroutine autoCloseCoroutine;
 
     private bool isInfoPanelOpen = false;
 
@@ -1216,17 +1216,17 @@ public class StageSceneUI : UI_Popup
 
         // 1. 상태 뒤집기
         isInfoPanelOpen = !isInfoPanelOpen;
-  
 
         // 2. 진행 중인 애니메이션이 있다면 겹치지 않게 강제 종료
         cg.DOKill();
 
-        if (autoCloseCoroutine != null)
-        {
-            StopCoroutine(autoCloseCoroutine);
-            autoCloseCoroutine = null;
-        }
-
+        // ▼▼▼ 삭제할 부분 시작 ▼▼▼
+        // if (autoCloseCoroutine != null)
+        // {
+        //     StopCoroutine(autoCloseCoroutine);
+        //     autoCloseCoroutine = null;
+        // }
+        // ▲▲▲ 삭제할 부분 끝 ▲▲▲
 
         if (isInfoPanelOpen)
         {
@@ -1237,7 +1237,9 @@ public class StageSceneUI : UI_Popup
             cg.DOFade(1f, 0.15f).SetUpdate(true);
             Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX, 1f, 1f);
 
-            autoCloseCoroutine = StartCoroutine(AutoCloseInfoPanelRoutine(10f));
+            // ▼▼▼ 삭제할 부분 시작 ▼▼▼
+            // autoCloseCoroutine = StartCoroutine(AutoCloseInfoPanelRoutine(10f));
+            // ▲▲▲ 삭제할 부분 끝 ▲▲▲
         }
         else
         {
@@ -1246,7 +1248,6 @@ public class StageSceneUI : UI_Popup
             // 0.15초 동안 투명해지며, 투명해지는 애니메이션이 완전히 끝나면(OnComplete) SetActive를 꺼줍니다.
             cg.DOFade(0f, 0.15f).SetUpdate(true).OnComplete(() =>
             {
-
                 if (isInfoPanelOpen == false)
                 {
                     infoPanel.SetActive(false);
@@ -1255,18 +1256,67 @@ public class StageSceneUI : UI_Popup
         }
     }
 
-    // 10초 뒤에 자동으로 꺼주는 타이머 함수
-    private IEnumerator AutoCloseInfoPanelRoutine(float delay)
-    {
-        // 현실 시간(Realtime)으로 delay(10초)만큼 대기합니다.
-        yield return new WaitForSecondsRealtime(delay);
+    //public void ToggleInfoPanel()
+    //{
+    //    if (infoPanel == null) return;
 
-        // 10초 뒤에도 패널이 켜져있다면 ToggleInfoPanel을 한 번 더 불러서 스르륵 꺼줍니다.
-        if (infoPanel != null && infoPanel.activeSelf)
-        {
-            ToggleInfoPanel();
-        }
-    }
+    //    // 1. 투명도를 조절할 CanvasGroup 컴포넌트가 없다면 코드로 자동 추가해줍니다.
+    //    CanvasGroup cg = infoPanel.GetComponent<CanvasGroup>();
+    //    if (cg == null) cg = infoPanel.AddComponent<CanvasGroup>();
+
+    //    // 1. 상태 뒤집기
+    //    isInfoPanelOpen = !isInfoPanelOpen;
+
+
+    //    // 2. 진행 중인 애니메이션이 있다면 겹치지 않게 강제 종료
+    //    cg.DOKill();
+
+    //    if (autoCloseCoroutine != null)
+    //    {
+    //        StopCoroutine(autoCloseCoroutine);
+    //        autoCloseCoroutine = null;
+    //    }
+
+
+    //    if (isInfoPanelOpen)
+    //    {
+    //        // [패널 켜기]
+    //        infoPanel.SetActive(true);
+
+    //        // 0.15초 동안 불투명하게(1f) 스르륵 나타남 (게임 일시정지 상태여도 작동하게 SetUpdate(true) 적용)
+    //        cg.DOFade(1f, 0.15f).SetUpdate(true);
+    //        Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX, 1f, 1f);
+
+    //        autoCloseCoroutine = StartCoroutine(AutoCloseInfoPanelRoutine(10f));
+    //    }
+    //    else
+    //    {
+    //        Managers.Sound.Play("SFX/UI/StageHover", Define.Sound.SFX, 1f, 1f);
+
+    //        // 0.15초 동안 투명해지며, 투명해지는 애니메이션이 완전히 끝나면(OnComplete) SetActive를 꺼줍니다.
+    //        cg.DOFade(0f, 0.15f).SetUpdate(true).OnComplete(() =>
+    //        {
+
+    //            if (isInfoPanelOpen == false)
+    //            {
+    //                infoPanel.SetActive(false);
+    //            }
+    //        });
+    //    }
+    //}
+
+    // 10초 뒤에 자동으로 꺼주는 타이머 함수
+    //private IEnumerator AutoCloseInfoPanelRoutine(float delay)
+    //{
+    //    // 현실 시간(Realtime)으로 delay(10초)만큼 대기합니다.
+    //    yield return new WaitForSecondsRealtime(delay);
+
+    //    // 10초 뒤에도 패널이 켜져있다면 ToggleInfoPanel을 한 번 더 불러서 스르륵 꺼줍니다.
+    //    if (infoPanel != null && infoPanel.activeSelf)
+    //    {
+    //        ToggleInfoPanel();
+    //    }
+    //}
 
     #endregion
 }

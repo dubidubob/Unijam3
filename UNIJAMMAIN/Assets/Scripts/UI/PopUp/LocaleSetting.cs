@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.Localization.Settings;
 
 public class LocaleSetting : MonoBehaviour
@@ -37,7 +38,11 @@ public class LocaleSetting : MonoBehaviour
         // 플레이어가 직접 클릭했으므로 true를 기본값으로 넘겨 설정이 저장되게 함
         LocalizationManager.ChangeLanguage((Language)index, true);
 
-        Application.Quit();
+        // 언어 변경 시 초기씬으로
+        SceneManager.LoadScene("InitScene");
+        // 언어 변경 시 게임 종료 시키는 코드
+        //Application.Quit();
+
     }
 
     // 중복되던 ChangeLanguage(), GetCodeFromLanguage() 제거 완료 (매니저 로직 사용)
